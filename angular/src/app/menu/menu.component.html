@@ -1,0 +1,56 @@
+<td-layout>
+  <td-layout-manage-list opened="true" mode="side">
+    <md-toolbar td-sidenav-content>
+        <div style="text-align: center">
+          <h5><md-icon class="md-18">flash_on</md-icon> FILTER </h5>
+        </div>
+    </md-toolbar>
+
+    <md-nav-list td-sidenav-content style="padding: 5%; width: 90%">
+
+    <div class ="filter-group">
+        <md-checkbox>Favourites</md-checkbox>
+        <md-checkbox>Starter</md-checkbox>
+        <md-checkbox>Main dishes</md-checkbox>
+        <md-checkbox>Dessert</md-checkbox>
+    </div>
+
+    <div class ="filter-group">
+        <md-checkbox>Vegetarian</md-checkbox>
+        <md-checkbox>Vegan</md-checkbox>
+    </div>
+
+    <div class ="filter-group">
+        <md-checkbox>Rice</md-checkbox>
+        <md-checkbox>Nodle</md-checkbox>
+        <md-checkbox>Curry</md-checkbox>
+    </div>
+
+    <div class ="filter-group">
+      Price
+      <md-slider thumb-label="true" min="0" max="50" step="1" value="0"></md-slider>
+    </div>
+
+    <div class ="filter-group">
+      Likes
+      <md-slider thumb-label="true" min="0" max="500" step="10" value="0"></md-slider>
+    </div>
+
+    <div style="text-align: center">
+      <button md-raised-button color="primary" class="text-upper">Clear Filter</button>
+    </div>
+    
+    </md-nav-list>
+
+    <div td-toolbar-content layout="row">
+      <md-select placeholder="Sort By">
+        <md-option value="value1">value1</md-option>
+        <md-option value="value2">value2</md-option>
+        <md-option value="value3">value3</md-option>
+      </md-select>
+    </div>
+
+    ... main content
+
+  </td-layout-manage-list>
+</td-layout>

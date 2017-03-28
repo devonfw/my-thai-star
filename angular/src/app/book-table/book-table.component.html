@@ -1,0 +1,142 @@
+<td-layout>
+  <md-sidenav-container class="background-layout">
+
+    <md-sidenav #sidenav align="end" class="sidenav">
+      <div>
+        <div class ="property-text-center" class = "bottom-border">
+          <h3><md-icon class="md-18">bookmark</md-icon> RESUME BOOKING </h3>
+        </div>
+
+        <div layout="row" style = "padding-bottom: 25%" class ="bottom-border sidenav-button">
+          <h4>ORDER MENU</h4>
+          <button md-button color="primary" class="text-upper">View menu</button>
+        </div>
+
+        <div style = "padding-bottom: 30%">
+          <h4>BOOK TABLE</h4>
+          <div layout="row" class ="sidenav-info">
+            <span class="sidenav-info-text">Invitation number</span>
+            <span>0000000000</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Date</span>
+            <span>00/00/0000</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Hour</span>
+            <span>00:00</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Name</span>
+            <span>Name</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">email</span>
+            <span>email@email.com</span>
+          </div>
+          <md-checkbox color="primary" class="sidenav-info-text margin-checkbox">Accept terms</md-checkbox>
+        </div>
+
+        <div style="text-align: right">
+          <button md-button (click)="sidenav.close()" class="text-upper">Cancel</button>
+          <button md-button color="primary" class="text-upper">Send</button>
+        </div>
+      </div>
+
+    </md-sidenav>
+
+    <md-tab-group>
+      <md-tab label="Book a table">
+        <md-card style ="margin: 2%">
+        <md-card-title>Book table</md-card-title>
+        <md-divider></md-divider>
+        <md-card-content>
+          <form>
+            <div layout="row" layout-margin>
+              <md-input-container flex>
+                <input mdInput placeholder="Date" type="date">
+              </md-input-container>
+              <md-input-container flex>
+                <input mdInput placeholder="Time" type="time">
+              </md-input-container>
+            </div>
+
+            <div layout="row" layout-margin>
+              <md-input-container flex>
+                <input mdInput placeholder="Name">
+              </md-input-container>
+              <md-input-container flex>
+                <input mdInput placeholder="Surname">
+              </md-input-container>
+            </div>
+
+            <div layout="row" layout-margin>
+              <md-input-container flex>
+                <input mdInput placeholder="Adults" type="number">
+              </md-input-container>
+              <md-input-container flex>
+                <input mdInput placeholder="Kids" type="number">
+              </md-input-container>
+            </div>
+          </form>
+        </md-card-content>
+        <md-divider></md-divider>
+        <md-card-actions style="text-align: right">
+          <button md-button (click)="sidenav.open()" color="primary" class="text-upper">Book a table</button>
+        </md-card-actions>
+      </md-card>
+
+      </md-tab>
+      <md-tab label="Invite friends">
+        <md-card style ="margin: 2%">
+        <md-card-title>Invite friends</md-card-title>
+        <md-divider></md-divider>
+        <md-card-content>
+          <form>
+            <div layout="row" layout-margin>
+              <md-input-container flex>
+                <input mdInput placeholder="Date" type="date">
+              </md-input-container>
+              <md-input-container flex>
+                <input mdInput placeholder="Time" type="time">
+              </md-input-container>
+            </div>
+
+            <div style="border:1px solid darkgrey">
+              <div layout="row" layout-margin>
+                <md-input-container flex>
+                  <input mdInput placeholder="Name" disabled>
+                </md-input-container>
+                <md-input-container flex>
+                  <input mdInput placeholder="email" disabled>
+                </md-input-container>
+                <div layout="row" layout-margin>
+                  <a md-icon-button mdTooltip="Remove invitation"><md-icon>remove_circle_outline</md-icon></a>      
+                </div>
+              </div>
+
+              <md-divider></md-divider>
+
+              <div layout="row" layout-margin>
+                <md-input-container flex>
+                  <input mdInput placeholder="Name">
+                </md-input-container>
+                <md-input-container flex>
+                  <input mdInput placeholder="email">
+                </md-input-container>
+                <div layout="row" layout-margin>
+                  <a md-icon-button mdTooltip="Add invitation"><md-icon>add_circle_outline</md-icon></a>      
+                </div>
+              </div>
+            </div>  
+          </form>
+        </md-card-content>
+        <md-divider></md-divider>
+        <md-card-actions style="text-align: right">
+          <button md-button (click)="sidenav.open()" color="primary" class="text-upper">Invite friends</button>
+        </md-card-actions>
+      </md-card>
+      </md-tab>
+    </md-tab-group>
+  </md-sidenav-container>
+</td-layout>

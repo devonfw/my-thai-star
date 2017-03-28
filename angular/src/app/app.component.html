@@ -1,0 +1,30 @@
+<td-layout-nav>
+
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>My Thai Star</span>
+    <nav md-tab-nav-bar>
+      <a md-tab-link
+        routerLink="/restaurant"
+        routerLinkActive #restaurant="routerLinkActive"
+        [class.navBottomBorder]="restaurant.isActive">
+        HOME
+      </a>
+      <a md-tab-link
+        routerLink="/menu"
+        routerLinkActive #menu="routerLinkActive"
+        [class.navBottomBorder]="menu.isActive">
+        MENU
+      </a>
+      <a md-tab-link
+        routerLink="/bookTable"
+        routerLinkActive #bookTable="routerLinkActive"
+        [class.navBottomBorder]="bookTable.isActive">
+        BOOK TABLE
+      </a>
+    </nav>
+    <span flex></span>
+    <a md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></a>
+    <a md-icon-button mdTooltip="Bookmark"><md-icon>bookmark</md-icon></a>
+  </div>
+  <router-outlet></router-outlet>
+</td-layout-nav>
