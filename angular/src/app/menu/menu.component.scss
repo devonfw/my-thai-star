@@ -2,7 +2,12 @@
   display: inline-flex;
   flex-direction: column;
   border-bottom: 1px solid grey;
-  margin-bottom:7%;
-  padding-bottom:7%;
+  margin-bottom:5%;
+  padding-bottom:5%;
   width: 100%
 }
+
+.property-text-bold {
+  font-weight: bold;
+}
+

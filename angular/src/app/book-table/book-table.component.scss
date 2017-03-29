@@ -11,12 +11,17 @@
   text-align: center;
 }
 
+.property-text-bold {
+  font-weight: bold;
+}
+
 .sidenav-info-text {
   color: lightslategrey
 }
 
 .sidenav-info {
-  margin-bottom: 20px;
+  font-size: 0.8em;  
+  margin-bottom: 15px;
   justify-content: space-between
 }
 
@@ -30,4 +35,13 @@
 
 .sidenav-button {
   justify-content: space-between;
+}
+
+.subtitle-card {
+  color: lightslategrey;
+  margin-bottom: 15px;
+}
+
+.title-card {
+  font-size: 1.17em;
 }

@@ -12,7 +12,7 @@
           <button md-button color="primary" class="text-upper">View menu</button>
         </div>
 
-        <div style = "padding-bottom: 30%">
+        <div style = "padding-bottom: 20%">
           <h4>BOOK TABLE</h4>
           <div layout="row" class ="sidenav-info">
             <span class="sidenav-info-text">Invitation number</span>
@@ -31,111 +31,130 @@
             <span>Name</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">email</span>
+            <span class="sidenav-info-text">Email</span>
             <span>email@email.com</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Adults</span>
+            <span>4</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Kids</span>
+            <span>2</span>
           </div>
           <md-checkbox color="primary" class="sidenav-info-text margin-checkbox">Accept terms</md-checkbox>
         </div>
 
         <div style="text-align: right">
-          <button md-button (click)="sidenav.close()" class="text-upper">Cancel</button>
-          <button md-button color="primary" class="text-upper">Send</button>
+          <button md-button (click)="sidenav.close()" class="text-upper property-text-bold">Cancel</button>
+          <button md-button color="accent" class="text-upper property-text-bold">Send</button>
         </div>
       </div>
 
     </md-sidenav>
 
-    <md-tab-group>
-      <md-tab label="Book a table">
-        <md-card style ="margin: 2%">
-        <md-card-title>Book table</md-card-title>
-        <md-divider></md-divider>
-        <md-card-content>
-          <form>
-            <div layout="row" layout-margin>
-              <md-input-container flex>
-                <input mdInput placeholder="Date" type="date">
-              </md-input-container>
-              <md-input-container flex>
-                <input mdInput placeholder="Time" type="time">
-              </md-input-container>
-            </div>
-
-            <div layout="row" layout-margin>
-              <md-input-container flex>
-                <input mdInput placeholder="Name">
-              </md-input-container>
-              <md-input-container flex>
-                <input mdInput placeholder="Surname">
-              </md-input-container>
-            </div>
-
-            <div layout="row" layout-margin>
-              <md-input-container flex>
-                <input mdInput placeholder="Adults" type="number">
-              </md-input-container>
-              <md-input-container flex>
-                <input mdInput placeholder="Kids" type="number">
-              </md-input-container>
-            </div>
-          </form>
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions style="text-align: right">
-          <button md-button (click)="sidenav.open()" color="primary" class="text-upper">Book a table</button>
-        </md-card-actions>
-      </md-card>
-
-      </md-tab>
-      <md-tab label="Invite friends">
-        <md-card style ="margin: 2%">
-        <md-card-title>Invite friends</md-card-title>
-        <md-divider></md-divider>
-        <md-card-content>
-          <form>
-            <div layout="row" layout-margin>
-              <md-input-container flex>
-                <input mdInput placeholder="Date" type="date">
-              </md-input-container>
-              <md-input-container flex>
-                <input mdInput placeholder="Time" type="time">
-              </md-input-container>
-            </div>
-
-            <div style="border:1px solid darkgrey">
-              <div layout="row" layout-margin>
-                <md-input-container flex>
-                  <input mdInput placeholder="Name" disabled>
-                </md-input-container>
-                <md-input-container flex>
-                  <input mdInput placeholder="email" disabled>
-                </md-input-container>
-                <div layout="row" layout-margin>
-                  <a md-icon-button mdTooltip="Remove invitation"><md-icon>remove_circle_outline</md-icon></a>      
-                </div>
+    <md-tab-group md-stretch-tabs>
+      <md-tab label="Book a table" style = "height: 100%">
+        <md-card style ="margin: 3%; margin-left: 5%; margin-right: 5%">
+          <div layout="row" flex>
+            <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
+            <form style ="width: 100%; margin: 30px">
+              <div layout="column" flex>
+                <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+                <span class ="subtitle-card">You can book a table and an order menu</span>
               </div>
+              <div layout= "column" flex>
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Date and time" type="datetime-local">
+                </md-input-container>
 
-              <md-divider></md-divider>
-
-              <div layout="row" layout-margin>
-                <md-input-container flex>
+                <md-input-container dividerColor="accent" flex>
                   <input mdInput placeholder="Name">
                 </md-input-container>
-                <md-input-container flex>
-                  <input mdInput placeholder="email">
+
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Email">
                 </md-input-container>
-                <div layout="row" layout-margin>
-                  <a md-icon-button mdTooltip="Add invitation"><md-icon>add_circle_outline</md-icon></a>      
-                </div>
+
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Adults" type="number">
+                </md-input-container>
+
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Kids" type="number">
+                </md-input-container>
               </div>
-            </div>  
-          </form>
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions style="text-align: right">
-          <button md-button (click)="sidenav.open()" color="primary" class="text-upper">Invite friends</button>
-        </md-card-actions>
-      </md-card>
+              <div style="text-align: right">
+                <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
+              </div>
+            </form>
+          </div>
+        </md-card>
+      </md-tab>
+      <md-tab label="Invite friends" style = "height: 100%">
+        <md-card style ="margin: 3%; margin-left: 5%; margin-right: 5%">
+          <div layout="row" flex>
+            <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
+            <div style ="width: 100%; margin: 15px">
+              <div layout="row" style="justify-content: space-between; border-bottom: 1px solid grey" flex>
+                <span class="title-card property-text-bold">ADD YOUR FRIEND</span>
+                <button md-icon-button><md-icon class="md-36" color="accent">add</md-icon></button>
+              </div>
+              <div style="border-bottom: 1px solid grey" layout= "column" flex>
+                <md-list>
+                  <md-list-item>
+                    <md-icon class="md-36">account_circle</md-icon>
+                    <div layout="row" style="justify-content: space-between" flex>
+                      <span style ="margin-left:20px">Name</span>
+                      <span style ="margin-right:10px">email@email.com</span>
+                    </div>
+                    <md-icon class="md-24">clear</md-icon>                      
+                  </md-list-item>
+                  <md-divider></md-divider>
+                  <md-list-item>
+                    <md-icon class="md-36">account_circle</md-icon>
+                    <div layout="row" style="justify-content: space-between" flex>
+                      <span style ="margin-left:20px">Name</span>
+                      <span style ="margin-right:10px">email@email.com</span>
+                    </div>
+                    <md-icon class="md-24">clear</md-icon>                      
+                  </md-list-item>
+                  <md-divider></md-divider>
+                  <md-list-item>
+                    <md-icon class="md-36">account_circle</md-icon>
+                    <div layout="row" style="justify-content: space-between" flex>
+                      <span style ="margin-left:20px">Name</span>
+                      <span style ="margin-right:10px">email@email.com</span>
+                    </div>
+                    <md-icon class="md-24">clear</md-icon>                      
+                  </md-list-item>
+                  <md-divider></md-divider>                  
+                </md-list>
+              </div>
+              <form style ="margin-top: 15px">
+                <div layout="column" flex style="margin-bottom: 15px">
+                  <span class="title-card property-text-bold">ADD YOUR INFORMATION AND BOOKING DATE</span>
+                </div>
+                <div layout= "column" flex>
+                  <md-input-container dividerColor="accent" flex>
+                    <input mdInput placeholder="Date and time" type="datetime-local">
+                  </md-input-container>
+
+                  <md-input-container dividerColor="accent" flex>
+                    <input mdInput placeholder="Name">
+                  </md-input-container>
+
+                  <md-input-container dividerColor="accent" flex>
+                    <input mdInput placeholder="Email">
+                  </md-input-container>
+                </div>
+              </form>
+              <div style="text-align: right">
+                <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Invite friends</button>
+              </div>
+            </div>
+          </div>
+        </md-card>
       </md-tab>
     </md-tab-group>
   </md-sidenav-container>

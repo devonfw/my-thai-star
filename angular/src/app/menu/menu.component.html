@@ -1,56 +1,130 @@
-<td-layout>
-  <td-layout-manage-list opened="true" mode="side">
-    <md-toolbar td-sidenav-content>
-        <div style="text-align: center">
-          <h5><md-icon class="md-18">flash_on</md-icon> FILTER </h5>
+<div flex style = "padding: 1%">
+  <div layout="row" style= "justify-content: space-between; border-bottom: 1px solid lightgrey">
+    <div>
+      <md-icon>search</md-icon>
+      <md-input-container>
+        <input mdInput placeholder="Search here">
+      </md-input-container>
+    </div>
+    <md-select style="width:30%" placeholder="Sort By">
+      <md-option>
+        options1
+      </md-option>
+      <md-option>
+        options2
+      </md-option>
+        <md-option>
+        options3
+      </md-option>
+    </md-select>
+  </div>
+  <div layout="column" style= "border-bottom: 1px solid lightgrey" flex>
+    <h3>FILTERS</h3>
+    <div layout="row" style = "margin-bottom: 10px; justify-content: space-between" flex>
+      <md-checkbox>Main dishes</md-checkbox>
+      <md-checkbox>Starter</md-checkbox>
+      <md-checkbox>Dessert</md-checkbox>
+      <md-checkbox>Noodle</md-checkbox>      
+      <md-checkbox>Rice</md-checkbox>
+      <md-checkbox>Curry</md-checkbox>
+      <md-checkbox>Vegan</md-checkbox>      
+      <md-checkbox>Vegetarian</md-checkbox>
+      <md-checkbox>Favourites</md-checkbox>
+    </div>
+    <div layout="row" flex>
+      <div layout="column" flex>
+        <span style ="margin-bottom: -10px">Price</span>
+        <md-slider
+          max="50"
+          min="1"
+          step="1"
+          thumb-label="true"
+          tick-interval="10">
+        </md-slider>
+      </div>
+
+      <div layout="column" flex>
+        <span style ="margin-bottom: -10px">Likes</span>
+        <md-slider
+          max=500
+          min=0
+          step=5
+          thumb-label="true"
+          tick-interval="25">
+        </md-slider>
+      </div>
+
+    </div>
+  </div>
+  <div style="text-align: right">
+    <button md-button class="text-upper property-text-bold">Clear filters</button>
+    <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
+  </div>
+</div>
+
+<md-grid-list cols="2">
+  <md-grid-tile>
+    <md-card style="margin-right: 5%">
+      <img md-card-image src="https://placekitten.com/g/600/400">
+      <md-card-content>
+        <div class="property-margin-right property-text-center">
+          <h3>OUR MENU</h3>
+          <p class ="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
+          </p>
         </div>
-    </md-toolbar>
-
-    <md-nav-list td-sidenav-content style="padding: 5%; width: 90%">
-
-    <div class ="filter-group">
-        <md-checkbox>Favourites</md-checkbox>
-        <md-checkbox>Starter</md-checkbox>
-        <md-checkbox>Main dishes</md-checkbox>
-        <md-checkbox>Dessert</md-checkbox>
-    </div>
-
-    <div class ="filter-group">
-        <md-checkbox>Vegetarian</md-checkbox>
-        <md-checkbox>Vegan</md-checkbox>
-    </div>
-
-    <div class ="filter-group">
-        <md-checkbox>Rice</md-checkbox>
-        <md-checkbox>Nodle</md-checkbox>
-        <md-checkbox>Curry</md-checkbox>
-    </div>
-
-    <div class ="filter-group">
-      Price
-      <md-slider thumb-label="true" min="0" max="50" step="1" value="0"></md-slider>
-    </div>
-
-    <div class ="filter-group">
-      Likes
-      <md-slider thumb-label="true" min="0" max="500" step="10" value="0"></md-slider>
-    </div>
-
-    <div style="text-align: center">
-      <button md-raised-button color="primary" class="text-upper">Clear Filter</button>
-    </div>
-    
-    </md-nav-list>
-
-    <div td-toolbar-content layout="row">
-      <md-select placeholder="Sort By">
-        <md-option value="value1">value1</md-option>
-        <md-option value="value2">value2</md-option>
-        <md-option value="value3">value3</md-option>
-      </md-select>
-    </div>
-
-    ... main content
-
-  </td-layout-manage-list>
-</td-layout>
+      </md-card-content>
+      <md-card-actions style="text-align: center">
+        <button md-raised-button color="accent">VIEW MENU</button>
+      </md-card-actions>
+    </md-card>
+  </md-grid-tile>
+  <md-grid-tile>
+    <md-card style="margin-right: 5%">
+      <img md-card-image src="https://placekitten.com/g/600/400">
+      <md-card-content>
+        <div class="property-margin-right property-text-center">
+          <h3>OUR MENU</h3>
+          <p class ="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
+          </p>
+        </div>
+      </md-card-content>
+      <md-card-actions style="text-align: center">
+        <button md-raised-button color="accent">VIEW MENU</button>
+      </md-card-actions>
+    </md-card>
+  </md-grid-tile>
+  <md-grid-tile>
+    <md-card style="margin-right: 5%">
+      <img md-card-image src="https://placekitten.com/g/600/400">
+      <md-card-content>
+        <div class="property-margin-right property-text-center">
+          <h3>OUR MENU</h3>
+          <p class ="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
+          </p>
+        </div>
+      </md-card-content>
+      <md-card-actions style="text-align: center">
+        <button md-raised-button color="accent">VIEW MENU</button>
+      </md-card-actions>
+    </md-card>
+  </md-grid-tile>
+  <md-grid-tile>
+    <md-card style="margin-right: 5%">
+      <img md-card-image src="https://placekitten.com/g/600/400">
+      <md-card-content>
+        <div class="property-margin-right property-text-center">
+          <h3>OUR MENU</h3>
+          <p class ="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
+          </p>
+        </div>
+      </md-card-content>
+      <md-card-actions style="text-align: center">
+        <button md-raised-button color="accent">VIEW MENU</button>
+      </md-card-actions>
+    </md-card>
+  </md-grid-tile>
+</md-grid-list>

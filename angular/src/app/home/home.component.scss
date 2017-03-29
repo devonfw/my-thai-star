@@ -6,7 +6,21 @@
   text-align: center;
 }
 
-.fit-image {
-  height: 100%;
-  width: 100%;
+.card-text {
+  font-size: smaller
+}
+
+.card-over {
+  margin-left: 5%;
+  margin-top: -75px;
+  width: 90%;
+}
+
+.home-title {
+  padding: 3%;
+  padding-bottom: 20%;
+  padding-top: 7%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('http://img.freepik.com/free-photo/wooden-texture_1208-334.jpg?size=338&ext=jpg')
 }

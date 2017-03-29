@@ -1,7 +1,9 @@
 <td-layout-nav>
 
   <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <a md-icon-button><md-icon>star_border</md-icon></a>    
     <span>My Thai Star</span>
+    <span flex></span>
     <nav md-tab-nav-bar>
       <a md-tab-link
         routerLink="/restaurant"
@@ -22,9 +24,15 @@
         BOOK TABLE
       </a>
     </nav>
-    <span flex></span>
-    <a md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></a>
-    <a md-icon-button mdTooltip="Bookmark"><md-icon>bookmark</md-icon></a>
+    <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
+    <button md-icon-button mdTooltip="Bookmark"><md-icon>format_list_bulleted</md-icon></button>
   </div>
   <router-outlet></router-outlet>
+  <td-layout-footer>
+    <div layout="row" layout-align="center center" flex>
+      MY THAI STAR 2017
+      <span flex></span>
+      Devonfw
+    </div>
+  </td-layout-footer>
 </td-layout-nav>
