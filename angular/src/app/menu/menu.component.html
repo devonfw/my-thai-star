@@ -1,12 +1,11 @@
-<div flex style = "padding: 1%">
-  <div layout="row" style= "justify-content: space-between; border-bottom: 1px solid lightgrey">
+
+<div style= "background-color: white">
+  <div layout="row" style= "justify-content: space-between; padding-left: 2%; padding-right: 2%; border-bottom: 1px solid lightgrey">
     <div>
-      <md-icon>search</md-icon>
-      <md-input-container>
-        <input mdInput placeholder="Search here">
-      </md-input-container>
+      <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
+      </td-search-box>
     </div>
-    <md-select style="width:30%" placeholder="Sort By">
+    <md-select style="padding-top:1%; width:30%" placeholder="Sort By">
       <md-option>
         options1
       </md-option>
@@ -18,9 +17,9 @@
       </md-option>
     </md-select>
   </div>
-  <div layout="column" style= "border-bottom: 1px solid lightgrey" flex>
-    <h3>FILTERS</h3>
-    <div layout="row" style = "margin-bottom: 10px; justify-content: space-between" flex>
+  <div layout="column" style= "padding-left: 2%; padding-right: 2%; border-bottom: 1px solid lightgrey" flex>
+    <span class ="filter-title">FILTERS</span>
+    <div layout="row" style = "justify-content: space-between; flex-wrap: wrap; margin-bottom: 5px" flex>
       <md-checkbox>Main dishes</md-checkbox>
       <md-checkbox>Starter</md-checkbox>
       <md-checkbox>Dessert</md-checkbox>
@@ -32,8 +31,8 @@
       <md-checkbox>Favourites</md-checkbox>
     </div>
     <div layout="row" flex>
-      <div layout="column" flex>
-        <span style ="margin-bottom: -10px">Price</span>
+      <div layout="column"  style ="flex-wrap: wrap" flex>
+        <span style ="margin-bottom: -15px">Price</span>
         <md-slider
           max="50"
           min="1"
@@ -42,9 +41,8 @@
           tick-interval="10">
         </md-slider>
       </div>
-
       <div layout="column" flex>
-        <span style ="margin-bottom: -10px">Likes</span>
+        <span style ="margin-bottom: -15px">Likes</span>
         <md-slider
           max=500
           min=0
@@ -53,78 +51,122 @@
           tick-interval="25">
         </md-slider>
       </div>
-
     </div>
   </div>
-  <div style="text-align: right">
+  <div style="padding-right:2%; text-align: right">
     <button md-button class="text-upper property-text-bold">Clear filters</button>
     <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
   </div>
 </div>
 
-<md-grid-list cols="2">
-  <md-grid-tile>
-    <md-card style="margin-right: 5%">
-      <img md-card-image src="https://placekitten.com/g/600/400">
-      <md-card-content>
-        <div class="property-margin-right property-text-center">
-          <h3>OUR MENU</h3>
-          <p class ="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-          </p>
-        </div>
-      </md-card-content>
-      <md-card-actions style="text-align: center">
-        <button md-raised-button color="accent">VIEW MENU</button>
-      </md-card-actions>
+<div flex layout="row" style="background-color: lightgray; justify-content: space-around; flex-wrap: wrap">
+    <md-card style= "width: 45%">
+      <div layout="row" flex>
+        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
+        <form style ="width: 100%; margin: 30px">
+          <div layout="column" flex>
+            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+            <span class ="subtitle-card">You can book a table and an order menu</span>
+          </div>
+          <div layout= "column" flex>
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Date and time" type="datetime-local">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Name">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Email">
+            </md-input-container>
+          </div>
+          <div style="text-align: right">
+            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
+          </div>
+        </form>
+      </div>
     </md-card>
-  </md-grid-tile>
-  <md-grid-tile>
-    <md-card style="margin-right: 5%">
-      <img md-card-image src="https://placekitten.com/g/600/400">
-      <md-card-content>
-        <div class="property-margin-right property-text-center">
-          <h3>OUR MENU</h3>
-          <p class ="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-          </p>
-        </div>
-      </md-card-content>
-      <md-card-actions style="text-align: center">
-        <button md-raised-button color="accent">VIEW MENU</button>
-      </md-card-actions>
+    <md-card style= "width: 45%">
+      <div layout="row" flex>
+        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
+        <form style ="width: 100%; margin: 30px">
+          <div layout="column" flex>
+            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+            <span class ="subtitle-card">You can book a table and an order menu</span>
+          </div>
+          <div layout= "column" flex>
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Date and time" type="datetime-local">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Name">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Email">
+            </md-input-container>
+          </div>
+          <div style="text-align: right">
+            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
+          </div>
+        </form>
+      </div>
     </md-card>
-  </md-grid-tile>
-  <md-grid-tile>
-    <md-card style="margin-right: 5%">
-      <img md-card-image src="https://placekitten.com/g/600/400">
-      <md-card-content>
-        <div class="property-margin-right property-text-center">
-          <h3>OUR MENU</h3>
-          <p class ="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-          </p>
-        </div>
-      </md-card-content>
-      <md-card-actions style="text-align: center">
-        <button md-raised-button color="accent">VIEW MENU</button>
-      </md-card-actions>
+    <md-card style= "width: 45%">
+      <div layout="row" flex>
+        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
+        <form style ="width: 100%; margin: 30px">
+          <div layout="column" flex>
+            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+            <span class ="subtitle-card">You can book a table and an order menu</span>
+          </div>
+          <div layout= "column" flex>
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Date and time" type="datetime-local">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Name">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Email">
+            </md-input-container>
+          </div>
+          <div style="text-align: right">
+            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
+          </div>
+        </form>
+      </div>
     </md-card>
-  </md-grid-tile>
-  <md-grid-tile>
-    <md-card style="margin-right: 5%">
-      <img md-card-image src="https://placekitten.com/g/600/400">
-      <md-card-content>
-        <div class="property-margin-right property-text-center">
-          <h3>OUR MENU</h3>
-          <p class ="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-          </p>
-        </div>
-      </md-card-content>
-      <md-card-actions style="text-align: center">
-        <button md-raised-button color="accent">VIEW MENU</button>
-      </md-card-actions>
+    <md-card style= "width: 45%">
+      <div layout="row" flex>
+        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
+        <form style ="width: 100%; margin: 30px">
+          <div layout="column" flex>
+            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+            <span class ="subtitle-card">You can book a table and an order menu</span>
+          </div>
+          <div layout= "column" flex>
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Date and time" type="datetime-local">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Name">
+            </md-input-container>
+
+            <md-input-container dividerColor="accent" flex>
+              <input mdInput placeholder="Email">
+            </md-input-container>
+          </div>
+          <div style="text-align: right">
+            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
+          </div>
+        </form>
+      </div>
     </md-card>
-  </md-grid-tile>
-</md-grid-list>
+  </div>
+
