@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
+import { MenuCardComponent } from './menu-card/menu-card.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MenuComponent } from './menu/menu.component';
     HomeComponent,
     BookTableComponent,
     MenuComponent,
+    MenuCardComponent,
   ],
   imports: [
     BrowserModule,

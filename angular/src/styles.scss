@@ -1,18 +1,23 @@
-// Custom style for loading elements without height
-.will-load {
-    min-height: 80px;
-}
-// Href line height wasn't right for md-icon-button
-a[md-icon-button] {
-    line-height: 36px;
+.property-text-center {
+    text-align: center;
 }
 
-// Capitalize
-.text-capital {
-  text-transform: capitalize;
+.property-text-right {
+    text-align: right;
 }
 
-// Lighter font weight in sub-toolbars
-td-layout-manage-list .mat-toolbar {
-    font-weight: 400;
+.property-text-bold {
+    font-weight: bold;
+}
+
+.justify-space-around {
+    justify-content: space-around;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
 }

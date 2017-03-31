@@ -1,18 +1,24 @@
 <td-layout>
-  <md-sidenav-container>
+  <md-sidenav-container style= "height:100%">
 
     <md-sidenav #sidenav align="end" class="sidenav">
-      <div>
-        <div class ="property-text-center" class = "bottom-border">
-          <h3><md-icon class="md-18">bookmark</md-icon> RESUME BOOKING </h3>
+      <div layout="column" class="justify-space-between" style ="height: 100%">
+        <div>
+          <div>
+            <md-icon>format_list_bulleted</md-icon>
+            <span class="property-text-center property-text-bold">RESUME BOOKING </span>
+          </div>
+          <div layout="column" class ="justify-space-between">
+            <h4 class ="bottom-border">ORDER MENU</h4>
+            <div layout="row">
+              <span class="sidenav-info-text ">Do you want to order a menu?</span>
+              <button md-button color="primary" class="text-upper">View menu</button>
+            </div>
+          </div>
         </div>
 
-        <div layout="row" style = "padding-bottom: 25%" class ="bottom-border sidenav-button">
-          <h4>ORDER MENU</h4>
-          <button md-button color="primary" class="text-upper">View menu</button>
-        </div>
 
-        <div style = "padding-bottom: 20%">
+        <div style = "border-top: 1px solid lightgrey">
           <h4>BOOK TABLE</h4>
           <div layout="row" class ="sidenav-info">
             <span class="sidenav-info-text">Invitation number</span>
@@ -53,8 +59,8 @@
 
     </md-sidenav>
 
-    <md-tab-group md-stretch-tabs>
-      <md-tab label="Book a table" style = "background-color: white" >
+    <md-tab-group>
+      <md-tab label="Book a table">
         <md-card style ="margin: 3%; margin-left: 5%; margin-right: 5%">
           <div layout="row" flex>
             <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
@@ -108,7 +114,7 @@
                       <span style ="margin-left:20px">Name</span>
                       <span style ="margin-right:10px">email@email.com</span>
                     </div>
-                    <md-icon class="md-24">clear</md-icon>                      
+                    <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
                   <md-divider></md-divider>
                   <md-list-item>
@@ -117,7 +123,7 @@
                       <span style ="margin-left:20px">Name</span>
                       <span style ="margin-right:10px">email@email.com</span>
                     </div>
-                    <md-icon class="md-24">clear</md-icon>                      
+                    <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
                   <md-divider></md-divider>
                   <md-list-item>
@@ -126,7 +132,7 @@
                       <span style ="margin-left:20px">Name</span>
                       <span style ="margin-right:10px">email@email.com</span>
                     </div>
-                    <md-icon class="md-24">clear</md-icon>                      
+                    <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
                   <md-divider></md-divider>                  
                 </md-list>
@@ -157,5 +163,5 @@
         </md-card>
       </md-tab>
     </md-tab-group>
-  </md-sidenav-container>
+  </md-sidenav-container>    
 </td-layout>

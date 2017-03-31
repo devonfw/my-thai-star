@@ -1,172 +1,126 @@
+<td-layout>
+  <md-sidenav-container>
 
-<div style= "background-color: white">
-  <div layout="row" style= "justify-content: space-between; padding-left: 2%; padding-right: 2%; border-bottom: 1px solid lightgrey">
-    <div>
-      <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
-      </td-search-box>
+<md-sidenav #sidenav align="end" class="sidenav">
+      <div layout="column" class="justify-space-between" style ="height: 100%">
+        <div>
+          <div>
+            <md-icon>format_list_bulleted</md-icon>
+            <span class="property-text-center property-text-bold">RESUME BOOKING </span>
+          </div>
+          <div layout="column" class ="justify-space-between">
+            <h4 class ="bottom-border">ORDER MENU</h4>
+            <div layout="row">
+              <span class="sidenav-info-text ">Do you want to order a menu?</span>
+              <button md-button color="primary" class="text-upper">View menu</button>
+            </div>
+          </div>
+        </div>
+
+        <div style = "border-top: 1px solid lightgrey">
+          <h4>BOOK TABLE</h4>
+          <div layout="row" class ="sidenav-info">
+            <span class="sidenav-info-text">Invitation number</span>
+            <span>0000000000</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Date</span>
+            <span>00/00/0000</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Hour</span>
+            <span>00:00</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Name</span>
+            <span>Name</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Email</span>
+            <span>email@email.com</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Adults</span>
+            <span>4</span>
+          </div>
+          <div layout="row" class="sidenav-info">
+            <span class="sidenav-info-text">Kids</span>
+            <span>2</span>
+          </div>
+          <md-checkbox color="primary" class="sidenav-info-text margin-checkbox">Accept terms</md-checkbox>
+        </div>
+
+        <div style="text-align: right">
+          <button md-button (click)="sidenav.close()" class="text-upper property-text-bold">Cancel</button>
+          <button md-button color="accent" class="text-upper property-text-bold">Send</button>
+        </div>
+      </div>
+
+    </md-sidenav>
+    <div style= "height:100%; background-color: white">
+      <div layout="row" class="justify-space-between pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey">
+        <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
+        </td-search-box>
+        <md-select class="pad-top-sm" style="width:30%" placeholder="Sort By">
+          <md-option>
+            options1
+          </md-option>
+          <md-option>
+            options2
+          </md-option>
+            <md-option>
+            options3
+          </md-option>
+        </md-select>
+      </div>
+      <div layout="column" class ="pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
+        <span class ="filter-title">FILTERS</span>
+        <div layout="row" class="justify-space-between flex-wrap" style="margin-bottom: 5px" flex>
+          <md-checkbox>Main dishes</md-checkbox>
+          <md-checkbox>Starter</md-checkbox>
+          <md-checkbox>Dessert</md-checkbox>
+          <md-checkbox>Noodle</md-checkbox>      
+          <md-checkbox>Rice</md-checkbox>
+          <md-checkbox>Curry</md-checkbox>
+          <md-checkbox>Vegan</md-checkbox>      
+          <md-checkbox>Vegetarian</md-checkbox>
+          <md-checkbox>Favourites</md-checkbox>
+        </div>
+        <div layout="row" class="push-top-sm" flex>
+          <div layout="column"  style ="flex-wrap: wrap" flex>
+            <span class ="pull-bottom-md">Price</span>
+            <md-slider
+              max="50"
+              min="1"
+              step="1"
+              thumb-label="true"
+              tick-interval="10">
+            </md-slider>
+          </div>
+          <div layout="column" flex>
+            <span class ="pull-bottom-md">Likes</span>
+            <md-slider
+              max=500
+              min=0
+              step=5
+              thumb-label="true"
+              tick-interval="25">
+            </md-slider>
+          </div>
+        </div>
+      </div>
+      <div  class="property-text-right">
+        <button md-button class="text-upper property-text-bold">Clear filters</button>
+        <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
+      </div>
     </div>
-    <md-select style="padding-top:1%; width:30%" placeholder="Sort By">
-      <md-option>
-        options1
-      </md-option>
-      <md-option>
-        options2
-      </md-option>
-        <md-option>
-        options3
-      </md-option>
-    </md-select>
-  </div>
-  <div layout="column" style= "padding-left: 2%; padding-right: 2%; border-bottom: 1px solid lightgrey" flex>
-    <span class ="filter-title">FILTERS</span>
-    <div layout="row" style = "justify-content: space-between; flex-wrap: wrap; margin-bottom: 5px" flex>
-      <md-checkbox>Main dishes</md-checkbox>
-      <md-checkbox>Starter</md-checkbox>
-      <md-checkbox>Dessert</md-checkbox>
-      <md-checkbox>Noodle</md-checkbox>      
-      <md-checkbox>Rice</md-checkbox>
-      <md-checkbox>Curry</md-checkbox>
-      <md-checkbox>Vegan</md-checkbox>      
-      <md-checkbox>Vegetarian</md-checkbox>
-      <md-checkbox>Favourites</md-checkbox>
+
+    <div flex layout="row" class="justify-space-around flex-wrap">
+      <app-menu-card></app-menu-card>
+      <app-menu-card></app-menu-card>
+      <app-menu-card></app-menu-card>
+      <app-menu-card></app-menu-card>
     </div>
-    <div layout="row" flex>
-      <div layout="column"  style ="flex-wrap: wrap" flex>
-        <span style ="margin-bottom: -15px">Price</span>
-        <md-slider
-          max="50"
-          min="1"
-          step="1"
-          thumb-label="true"
-          tick-interval="10">
-        </md-slider>
-      </div>
-      <div layout="column" flex>
-        <span style ="margin-bottom: -15px">Likes</span>
-        <md-slider
-          max=500
-          min=0
-          step=5
-          thumb-label="true"
-          tick-interval="25">
-        </md-slider>
-      </div>
-    </div>
-  </div>
-  <div style="padding-right:2%; text-align: right">
-    <button md-button class="text-upper property-text-bold">Clear filters</button>
-    <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
-  </div>
-</div>
 
-<div flex layout="row" style="background-color: lightgray; justify-content: space-around; flex-wrap: wrap">
-    <md-card style= "width: 45%">
-      <div layout="row" flex>
-        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
-        <form style ="width: 100%; margin: 30px">
-          <div layout="column" flex>
-            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-            <span class ="subtitle-card">You can book a table and an order menu</span>
-          </div>
-          <div layout= "column" flex>
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Date and time" type="datetime-local">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Name">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Email">
-            </md-input-container>
-          </div>
-          <div style="text-align: right">
-            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
-          </div>
-        </form>
-      </div>
-    </md-card>
-    <md-card style= "width: 45%">
-      <div layout="row" flex>
-        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
-        <form style ="width: 100%; margin: 30px">
-          <div layout="column" flex>
-            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-            <span class ="subtitle-card">You can book a table and an order menu</span>
-          </div>
-          <div layout= "column" flex>
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Date and time" type="datetime-local">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Name">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Email">
-            </md-input-container>
-          </div>
-          <div style="text-align: right">
-            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
-          </div>
-        </form>
-      </div>
-    </md-card>
-    <md-card style= "width: 45%">
-      <div layout="row" flex>
-        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
-        <form style ="width: 100%; margin: 30px">
-          <div layout="column" flex>
-            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-            <span class ="subtitle-card">You can book a table and an order menu</span>
-          </div>
-          <div layout= "column" flex>
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Date and time" type="datetime-local">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Name">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Email">
-            </md-input-container>
-          </div>
-          <div style="text-align: right">
-            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
-          </div>
-        </form>
-      </div>
-    </md-card>
-    <md-card style= "width: 45%">
-      <div layout="row" flex>
-        <img md-card-image style ="width:45%" src="https://placekitten.com/g/600/400">
-        <form style ="width: 100%; margin: 30px">
-          <div layout="column" flex>
-            <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-            <span class ="subtitle-card">You can book a table and an order menu</span>
-          </div>
-          <div layout= "column" flex>
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Date and time" type="datetime-local">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Name">
-            </md-input-container>
-
-            <md-input-container dividerColor="accent" flex>
-              <input mdInput placeholder="Email">
-            </md-input-container>
-          </div>
-          <div style="text-align: right">
-            <button md-button (click)="sidenav.open()" color="accent" class="text-upper">Book table</button>
-          </div>
-        </form>
-      </div>
-    </md-card>
-  </div>
-
+  </md-sidenav-container>
+</td-layout>

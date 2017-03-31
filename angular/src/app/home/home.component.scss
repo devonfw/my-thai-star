@@ -1,9 +1,13 @@
-.property-text-center {
-  text-align: center;
+.title-color {
+  color: white;
 }
 
-.card-text {
-  font-size: smaller
+.title {
+  font-size: 3em;
+}
+
+.subtitle {
+  font-size: 1em;
 }
 
 .card-over {
@@ -13,9 +17,7 @@
 }
 
 .home-title {
-  padding-bottom: 20%;
-  padding-top: 7%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('http://img.freepik.com/free-photo/wooden-texture_1208-334.jpg?size=338&ext=jpg')
+  padding-bottom: 25%;
+  padding-top: 5%;
+  background-color: saddlebrown;
 }

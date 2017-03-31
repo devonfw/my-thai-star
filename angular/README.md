@@ -1,1 +1,1 @@
-Restaurant app trial and playground
+MyThaiStar restaurant
