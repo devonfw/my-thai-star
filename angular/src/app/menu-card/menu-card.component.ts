@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-menu-card',
   templateUrl: './menu-card.component.html',
   styleUrls: ['./menu-card.component.scss']
 })
-export class MenuCardComponent implements OnInit {
+export class MenuCardComponent {
 
-  constructor() { }
+  favouriteSelected: boolean = false;
 
-  ngOnInit() {
+  changeFavouriteState(): void {
+    this.favouriteSelected = !this.favouriteSelected;
   }
 
 }

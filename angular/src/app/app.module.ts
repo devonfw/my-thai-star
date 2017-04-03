@@ -11,6 +11,7 @@ import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MenuCardComponent } from './menu-card/menu-card.component';
     BookTableComponent,
     MenuComponent,
     MenuCardComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,67 +1,13 @@
 <td-layout>
   <md-sidenav-container>
     <md-sidenav #sidenav align="end" class="pad">
-      <div layout="column" class="justify-space-between" style ="height: 100%">
-        <div>
-          <div>
-            <md-icon>format_list_bulleted</md-icon>
-            <span class="property-text-center property-text-bold">RESUME BOOKING </span>
-          </div>
-          <div layout="column" class ="justify-space-between">
-            <h4 class ="bottom-border">ORDER MENU</h4>
-            <div layout="row">
-              <span class="sidenav-info-text ">Do you want to order a menu?</span>
-              <button md-button color="primary" class="text-upper">View menu</button>
-            </div>
-          </div>
-        </div>
-
-
-        <div style = "border-top: 1px solid lightgrey">
-          <h4>BOOK TABLE</h4>
-          <div layout="row" class ="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Invitation number</span>
-            <span>0000000000</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Date</span>
-            <span>00/00/0000</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Hour</span>
-            <span>00:00</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Name</span>
-            <span>Name</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Email</span>
-            <span>email@email.com</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Adults</span>
-            <span>4</span>
-          </div>
-          <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text push-bottom-sm">Kids</span>
-            <span>2</span>
-          </div>
-          <md-checkbox color="primary" class="sidenav-info-text push-bottom-sm push-left">Accept terms</md-checkbox>
-        </div>
-
-        <div style="text-align: right">
-          <button md-button (click)="sidenav.close()" class="text-upper property-text-bold">Cancel</button>
-          <button md-button color="accent" class="text-upper property-text-bold">Send</button>
-        </div>
-      </div>
-
+      <app-sidenav></app-sidenav>
     </md-sidenav>
     <div style= "height:100%; background-color: white">
       <div layout="row" class="justify-space-between pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey">
         <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
         </td-search-box>
-        <md-select class="pad-top-sm" style="width:30%" placeholder="Sort By">
+        <md-select class="pull-bottom" style="width:30%; margin-top: 1%" placeholder="Sort By">
           <md-option>
             options1
           </md-option>
@@ -115,12 +61,11 @@
       </div>
     </div>
 
-    <div flex layout="row" class="justify-space-around flex-wrap">
+    <div flex layout="row" class="pad justify-space-around flex-wrap">
       <app-menu-card></app-menu-card>
       <app-menu-card></app-menu-card>
       <app-menu-card></app-menu-card>
       <app-menu-card></app-menu-card>
     </div>
-
   </md-sidenav-container>
 </td-layout>

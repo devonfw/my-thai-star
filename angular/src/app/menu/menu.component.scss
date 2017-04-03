@@ -21,3 +21,15 @@
 .bottom-border {
   border-bottom: 1px solid grey;
 }
+
+@media (min-width: 1300px){
+  app-menu-card {
+    width: 50%
+  }
+}
+
+@media (max-width: 1300px){
+  app-menu-card {
+    width: 75%
+  }
+}

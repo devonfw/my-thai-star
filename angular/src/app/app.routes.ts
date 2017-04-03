@@ -7,7 +7,6 @@ const routes: Routes = [
   { path: '',   redirectTo: '/restaurant', pathMatch: 'full' },
   {component: HomeComponent, path: 'restaurant'},
   {component: MenuComponent, path: 'menu'},
-  {component: BookTableComponent, path: 'bookTable'},
-];
+  {component: BookTableComponent, path: 'bookTable'}];
 
 export const appRoutes: any = RouterModule.forRoot(routes);

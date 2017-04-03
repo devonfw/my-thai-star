@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookTableComponent } from './book-table.component';
 import { CovalentCoreModule } from '@covalent/core';
+import { SidenavComponent } from "../sidenav/sidenav.component";
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -9,7 +10,7 @@ describe('BookTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookTableComponent ],
+      declarations: [ BookTableComponent, SidenavComponent ],
       imports: [
         CovalentCoreModule.forRoot()
       ],

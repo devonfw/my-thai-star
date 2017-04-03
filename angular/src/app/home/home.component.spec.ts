@@ -1,3 +1,4 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
@@ -11,7 +12,8 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
       imports: [
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
+        RouterTestingModule
       ],
     })
     .compileComponents();

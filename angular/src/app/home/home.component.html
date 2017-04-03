@@ -5,7 +5,6 @@
       <span class= "title-color pull-top-xl subtitle">More than just delicious food</span>
     </div>
   </div>
-
   <md-card class="card-over">
     <div layout="row" class="pad" flex>
       <md-card class="push-lg">
@@ -19,7 +18,7 @@
           </div>
         </md-card-content>
         <md-card-actions class="property-text-center">
-          <button md-raised-button color="accent">VIEW MENU</button>
+          <button md-raised-button color="accent" (click)="navigateTo('menu')">VIEW MENU</button>
         </md-card-actions>
       </md-card>
       
@@ -27,14 +26,14 @@
         <img md-card-image src="http://www.holiday.phuket.com/images/charm-thai3.jpg">
         <md-card-content>
           <div class="property-text-center pad">
-            <h3>OUR MENU</h3>
+            <h3>OUR RESTAURANT</h3>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
             </p>
           </div>
         </md-card-content>
         <md-card-actions class="property-text-center">
-          <button md-raised-button color="accent">BOOK A TABLE</button>
+          <button md-raised-button color="accent" (click)="navigateTo('bookTable')">BOOK A TABLE</button>
         </md-card-actions>
       </md-card>
     </div>
