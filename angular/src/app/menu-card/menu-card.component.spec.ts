@@ -1,3 +1,4 @@
+import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuCardComponent } from './menu-card.component';
@@ -8,7 +9,10 @@ describe('MenuCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuCardComponent ]
+      declarations: [ MenuCardComponent ],
+      imports: [
+        CovalentCoreModule.forRoot()
+      ],
     })
     .compileComponents();
   }));
