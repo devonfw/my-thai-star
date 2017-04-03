@@ -1,7 +1,7 @@
 <td-layout>
   <md-sidenav-container style= "height:100%">
 
-    <md-sidenav #sidenav align="end" class="sidenav">
+    <md-sidenav #sidenav align="end" class="pad">
       <div layout="column" class="justify-space-between" style ="height: 100%">
         <div>
           <div>
@@ -21,34 +21,34 @@
         <div style = "border-top: 1px solid lightgrey">
           <h4>BOOK TABLE</h4>
           <div layout="row" class ="sidenav-info">
-            <span class="sidenav-info-text">Invitation number</span>
+            <span class="sidenav-info-text push-bottom-sm">Invitation number</span>
             <span>0000000000</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Date</span>
+            <span class="sidenav-info-text push-bottom-sm">Date</span>
             <span>00/00/0000</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Hour</span>
+            <span class="sidenav-info-text push-bottom-sm">Hour</span>
             <span>00:00</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Name</span>
+            <span class="sidenav-info-text push-bottom-sm">Name</span>
             <span>Name</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Email</span>
+            <span class="sidenav-info-text push-bottom-sm">Email</span>
             <span>email@email.com</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Adults</span>
+            <span class="sidenav-info-text push-bottom-sm">Adults</span>
             <span>4</span>
           </div>
           <div layout="row" class="sidenav-info">
-            <span class="sidenav-info-text">Kids</span>
+            <span class="sidenav-info-text push-bottom-sm">Kids</span>
             <span>2</span>
           </div>
-          <md-checkbox color="primary" class="sidenav-info-text margin-checkbox">Accept terms</md-checkbox>
+          <md-checkbox color="primary" class="sidenav-info-text push-bottom-sm push-left">Accept terms</md-checkbox>
         </div>
 
         <div style="text-align: right">
@@ -61,13 +61,13 @@
 
     <md-tab-group>
       <md-tab label="Book a table">
-        <md-card style ="margin: 3%; margin-left: 5%; margin-right: 5%">
+        <md-card class ="push push-left-lg; push-right-lg">
           <div layout="row" flex>
             <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
-            <form style ="width: 100%; margin: 30px">
+            <form class="push-lg" style ="width: 100%">
               <div layout="column" flex>
                 <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-                <span class ="subtitle-card">You can book a table and an order menu</span>
+                <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
               </div>
               <div layout= "column" flex>
                 <md-input-container dividerColor="accent" flex>
@@ -98,10 +98,10 @@
         </md-card>
       </md-tab>
       <md-tab label="Invite friends">
-        <md-card style ="margin: 3%; margin-left: 5%; margin-right: 5%">
+        <md-card class ="push push-left-lg; push-right-lg">
           <div layout="row" flex>
             <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
-            <div style ="width: 100%; margin: 15px">
+            <div class="push" style ="width: 100%">
               <div layout="row" style="justify-content: space-between; border-bottom: 1px solid grey" flex>
                 <span class="title-card property-text-bold">ADD YOUR FRIEND</span>
                 <button md-icon-button><md-icon class="md-36" color="accent">add</md-icon></button>
@@ -111,8 +111,8 @@
                   <md-list-item>
                     <md-icon class="md-36">account_circle</md-icon>
                     <div layout="row" style="justify-content: space-between" flex>
-                      <span style ="margin-left:20px">Name</span>
-                      <span style ="margin-right:10px">email@email.com</span>
+                      <span class ="push-left">Name</span>
+                      <span class ="push-right-sm">email@email.com</span>
                     </div>
                     <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
@@ -120,8 +120,8 @@
                   <md-list-item>
                     <md-icon class="md-36">account_circle</md-icon>
                     <div layout="row" style="justify-content: space-between" flex>
-                      <span style ="margin-left:20px">Name</span>
-                      <span style ="margin-right:10px">email@email.com</span>
+                      <span class ="push-left">Name</span>
+                      <span class ="push-right-sm">email@email.com</span>
                     </div>
                     <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
@@ -129,16 +129,16 @@
                   <md-list-item>
                     <md-icon class="md-36">account_circle</md-icon>
                     <div layout="row" style="justify-content: space-between" flex>
-                      <span style ="margin-left:20px">Name</span>
-                      <span style ="margin-right:10px">email@email.com</span>
+                      <span class ="push-left">Name</span>
+                      <span class ="push-right-sm">email@email.com</span>
                     </div>
                     <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
                   </md-list-item>
                   <md-divider></md-divider>                  
                 </md-list>
               </div>
-              <form style ="margin-top: 15px">
-                <div layout="column" flex style="margin-bottom: 15px">
+              <form class ="push-top">
+                <div layout="column" class="push-bottom" flex>
                   <span class="title-card property-text-bold">ADD YOUR INFORMATION AND BOOKING DATE</span>
                 </div>
                 <div layout= "column" flex>
