@@ -1,8 +1,8 @@
 <td-layout-nav>
-
   <div td-toolbar-content layout="row" layout-align="center center" flex>
     <a md-icon-button><md-icon>star_border</md-icon></a>    
     <span>My Thai Star</span>
+    
     <span flex></span>
     <nav md-tab-nav-bar>
       <a md-tab-link
@@ -27,7 +27,6 @@
     <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
     <button md-icon-button mdTooltip="Bookmark"><md-icon>format_list_bulleted</md-icon></button>
   </div>
-  <router-outlet></router-outlet>
   <td-layout-footer>
     <div layout="row" layout-align="center center" flex>
       <span>MY THAI STAR 2017</span>
@@ -35,4 +34,10 @@
       <span>Devonfw</span>
     </div>
   </td-layout-footer>
+  <md-sidenav-container style= "height:100%">
+    <md-sidenav (close)="closeSideNav()" [opened]="sidenav.opened" align="end" class="pad">
+      <app-sidenav></app-sidenav>
+    </md-sidenav>
+    <router-outlet></router-outlet>
+  </md-sidenav-container>
 </td-layout-nav>

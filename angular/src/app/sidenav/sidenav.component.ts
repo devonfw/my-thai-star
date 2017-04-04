@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { SidenavSharedServiceService } from './sidenav-shared-service.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
 
-  constructor() { }
+  constructor(private sidenav: SidenavSharedServiceService) {
+  }
 
-  ngOnInit() {
+  closeSidenav(): void {
+    this.sidenav.closeSideNav();
   }
 
 }

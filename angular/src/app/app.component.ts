@@ -1,3 +1,4 @@
+import { SidenavSharedServiceService } from './sidenav/sidenav-shared-service.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+
+  constructor(private sidenav: SidenavSharedServiceService) {
+  }
+
+  closeSideNav(): void {
+    this.sidenav.closeSideNav();
+  }
 
 }

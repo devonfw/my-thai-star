@@ -1,71 +1,66 @@
 <td-layout>
-  <md-sidenav-container>
-    <md-sidenav #sidenav align="end" class="pad">
-      <app-sidenav></app-sidenav>
-    </md-sidenav>
-    <div style= "height:100%; background-color: white">
-      <div layout="row" class="justify-space-between pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey">
-        <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
-        </td-search-box>
-        <md-select class="pull-bottom" style="width:30%; margin-top: 1%" placeholder="Sort By">
+  <div style= "background-color: white">
+    <div layout="row" class="justify-space-between pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey">
+      <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
+      </td-search-box>
+      <md-select class="pull-bottom" style="width:30%; margin-top: 1%" placeholder="Sort By">
+        <md-option>
+          options1
+        </md-option>
+        <md-option>
+          options2
+        </md-option>
           <md-option>
-            options1
-          </md-option>
-          <md-option>
-            options2
-          </md-option>
-            <md-option>
-            options3
-          </md-option>
-        </md-select>
+          options3
+        </md-option>
+      </md-select>
+    </div>
+    <div layout="column" class ="pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
+      <span class ="filter-title">FILTERS</span>
+      <div layout="row" class="justify-space-between flex-wrap" style="margin-bottom: 5px" flex>
+        <md-checkbox>Main dishes</md-checkbox>
+        <md-checkbox>Starter</md-checkbox>
+        <md-checkbox>Dessert</md-checkbox>
+        <md-checkbox>Noodle</md-checkbox>      
+        <md-checkbox>Rice</md-checkbox>
+        <md-checkbox>Curry</md-checkbox>
+        <md-checkbox>Vegan</md-checkbox>      
+        <md-checkbox>Vegetarian</md-checkbox>
+        <md-checkbox>Favourites</md-checkbox>
       </div>
-      <div layout="column" class ="pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
-        <span class ="filter-title">FILTERS</span>
-        <div layout="row" class="justify-space-between flex-wrap" style="margin-bottom: 5px" flex>
-          <md-checkbox>Main dishes</md-checkbox>
-          <md-checkbox>Starter</md-checkbox>
-          <md-checkbox>Dessert</md-checkbox>
-          <md-checkbox>Noodle</md-checkbox>      
-          <md-checkbox>Rice</md-checkbox>
-          <md-checkbox>Curry</md-checkbox>
-          <md-checkbox>Vegan</md-checkbox>      
-          <md-checkbox>Vegetarian</md-checkbox>
-          <md-checkbox>Favourites</md-checkbox>
+      <div layout="row" class="push-top-sm" flex>
+        <div layout="column"  style ="flex-wrap: wrap" flex>
+          <span class ="pull-bottom-md">Price</span>
+          <md-slider
+            max="50"
+            min="1"
+            step="1"
+            thumb-label="true"
+            tick-interval="10">
+          </md-slider>
         </div>
-        <div layout="row" class="push-top-sm" flex>
-          <div layout="column"  style ="flex-wrap: wrap" flex>
-            <span class ="pull-bottom-md">Price</span>
-            <md-slider
-              max="50"
-              min="1"
-              step="1"
-              thumb-label="true"
-              tick-interval="10">
-            </md-slider>
-          </div>
-          <div layout="column" flex>
-            <span class ="pull-bottom-md">Likes</span>
-            <md-slider
-              max=500
-              min=0
-              step=5
-              thumb-label="true"
-              tick-interval="25">
-            </md-slider>
-          </div>
+        <div layout="column" flex>
+          <span class ="pull-bottom-md">Likes</span>
+          <md-slider
+            max=500
+            min=0
+            step=5
+            thumb-label="true"
+            tick-interval="25">
+          </md-slider>
         </div>
-      </div>
-      <div  class="property-text-right">
-        <button md-button class="text-upper property-text-bold">Clear filters</button>
-        <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
+    <div  class="property-text-right">
+      <button md-button class="text-upper property-text-bold">Clear filters</button>
+      <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
+    </div>
+  </div>
 
-    <div flex layout="row" class="pad justify-space-around flex-wrap">
-      <app-menu-card></app-menu-card>
-      <app-menu-card></app-menu-card>
-      <app-menu-card></app-menu-card>
-      <app-menu-card></app-menu-card>
-    </div>
-  </md-sidenav-container>
+  <div flex layout="row" class="pad justify-space-around flex-wrap">
+    <app-menu-card></app-menu-card>
+    <app-menu-card></app-menu-card>
+    <app-menu-card></app-menu-card>
+    <app-menu-card></app-menu-card>
+  </div>
 </td-layout>

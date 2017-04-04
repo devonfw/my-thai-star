@@ -1,3 +1,4 @@
+import { SidenavSharedServiceService } from './sidenav/sidenav-shared-service.service';
 import { NgModule, Type } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
@@ -30,6 +31,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     appRoutes,
   ],
   providers: [
+    SidenavSharedServiceService
   ],
   entryComponents: [ ],
   bootstrap: [ AppComponent ],

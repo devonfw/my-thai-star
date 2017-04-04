@@ -7,5 +7,4 @@ import {MenuCardComponent} from '../menu-card/menu-card.component';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
-
 }

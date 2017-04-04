@@ -1,3 +1,4 @@
+import { SidenavSharedServiceService } from '../sidenav/sidenav-shared-service.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -8,6 +9,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class MenuCardComponent {
 
   favouriteSelected: boolean = false;
+
+  constructor(private sidenav: SidenavSharedServiceService) {
+  }
+
+  openSidenav(): void {
+    this.sidenav.openSideNav();
+  }
 
   changeFavouriteState(): void {
     this.favouriteSelected = !this.favouriteSelected;

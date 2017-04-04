@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
 import { CovalentCoreModule } from '@covalent/core';
 import { MenuCardComponent } from '../menu-card/menu-card.component';
-import { SidenavComponent } from "../sidenav/sidenav.component";
+import { SidenavSharedServiceService } from '../sidenav/sidenav-shared-service.service';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -11,7 +11,8 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent, MenuCardComponent, SidenavComponent ],
+      declarations: [ MenuComponent, MenuCardComponent ],
+      providers: [SidenavSharedServiceService],
       imports: [
         CovalentCoreModule.forRoot()
       ],

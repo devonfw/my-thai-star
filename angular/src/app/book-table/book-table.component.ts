@@ -1,3 +1,4 @@
+import { SidenavSharedServiceService } from '../sidenav/sidenav-shared-service.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,4 +9,10 @@ import { Component } from '@angular/core';
 
 export class BookTableComponent {
 
+  constructor(private sidenav: SidenavSharedServiceService) {
+  }
+
+  openSidenav(): void {
+    this.sidenav.openSideNav();
+  }
 }
