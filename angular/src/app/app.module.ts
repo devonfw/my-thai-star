@@ -1,4 +1,3 @@
-import { SidenavSharedServiceService } from './sidenav/sidenav-shared-service.service';
 import { NgModule, Type } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
@@ -13,6 +12,8 @@ import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { SidenavSharedServiceService } from './sidenav/shared/sidenav-shared-service.service';
+import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MenuComponent,
     MenuCardComponent,
     SidenavComponent,
+    SidenavOrderComponent,
   ],
   imports: [
     BrowserModule,

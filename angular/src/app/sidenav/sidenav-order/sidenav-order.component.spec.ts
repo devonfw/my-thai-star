@@ -1,27 +1,27 @@
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
 
-import { MenuCardComponent } from './menu-card.component';
+import { SidenavOrderComponent } from './sidenav-order.component';
 
-describe('MenuCardComponent', () => {
-  let component: MenuCardComponent;
-  let fixture: ComponentFixture<MenuCardComponent>;
+describe('SidenavOrderComponent', () => {
+  let component: SidenavOrderComponent;
+  let fixture: ComponentFixture<SidenavOrderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuCardComponent ],
-      providers: [SidenavSharedServiceService],
+      declarations: [ SidenavOrderComponent ],
       imports: [
         CovalentCoreModule.forRoot()
-      ],
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuCardComponent);
+    fixture = TestBed.createComponent(SidenavOrderComponent);
     component = fixture.componentInstance;
+    component.order = [];
+    component.order.ingredients = ['ingredient'];
     fixture.detectChanges();
   });
 

@@ -1,51 +1,24 @@
 <div layout="column" class="justify-space-between" style ="height: 100%">
-  <div>
+  <div layout="column" flex>
     <div>
-      <md-icon>format_list_bulleted</md-icon>
       <span class="property-text-center property-text-bold">RESUME BOOKING </span>
     </div>
-    <div layout="column" class ="justify-space-between">
-      <h4 class ="bottom-border">ORDER MENU</h4>
-      <div layout="row">
+    <div layout="column">
+      <h4 class="pad-bottom-sm" style="border-bottom: 1px solid grey">ORDER MENU</h4>
+      <div layout="row" *ngIf="orders.length < 1">
         <span class="sidenav-info-text ">Do you want to order a menu?</span>
         <button md-button color="primary" class="text-upper">View menu</button>
       </div>
+      <div class="pull-top" [class.scrollOrders]="orders.length > 7">
+        <sidenav-order *ngFor="let order of orders" [order]="order"></sidenav-order>
+      </div>
+    </div>
+    <span flex></span>
+    <div layout="row" style="border-top: 1px solid gray" class="justify-space-between">
+      <h3>Total</h3>
+      <h3>{{totalPrice}} €</h3>
     </div>
   </div>
-
-  <div style = "border-top: 1px solid lightgrey">
-    <h4>BOOK TABLE</h4>
-    <div layout="row" class ="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Invitation number</span>
-      <span>0000000000</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Date</span>
-      <span>00/00/0000</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Hour</span>
-      <span>00:00</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Name</span>
-      <span>Name</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Email</span>
-      <span>email@email.com</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Adults</span>
-      <span>4</span>
-    </div>
-    <div layout="row" class="sidenav-info">
-      <span class="sidenav-info-text push-bottom-sm">Kids</span>
-      <span>2</span>
-    </div>
-    <md-checkbox color="primary" class="sidenav-info-text push-bottom-sm push-left">Accept terms</md-checkbox>
-  </div>
-
   <div style="text-align: right">
     <button md-button (click)="closeSidenav()" class="text-upper property-text-bold">Cancel</button>
     <button md-button color="accent" class="text-upper property-text-bold">Send</button>

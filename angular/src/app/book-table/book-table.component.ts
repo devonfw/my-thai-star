@@ -1,4 +1,4 @@
-import { SidenavSharedServiceService } from '../sidenav/sidenav-shared-service.service';
+import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
 import { Component } from '@angular/core';
 
 @Component({

@@ -1,0 +1,24 @@
+.orderName {
+    font-weight: bold;
+}
+
+.removeOrderComment {
+    font-size: 0.75em;
+    cursor: pointer;
+    color: orangered;
+}
+
+.addOrderComment {
+    font-size: 0.75em;
+    cursor: pointer;
+    color: seagreen;
+}
+
+.orderIngredients {
+    font-size: 0.75em;
+    color: gray;
+}
+
+.hideButton {
+    visibility: hidden;
+}
