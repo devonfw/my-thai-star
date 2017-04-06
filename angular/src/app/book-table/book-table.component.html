@@ -1,10 +1,16 @@
 <td-layout>
-  <md-tab-group>
-    <md-tab label="Book a table">
-      <md-card class ="push push-left-lg; push-right-lg">
+  <div class="property-text-center" flex>
+    <h3>You can invite your friend to lunch or book a table</h3>
+  </div>
+  <md-card class="push-lg">
+    <md-tab-group md-stretch-tabs>
+      <md-tab label="Book a table">
         <div layout="row" flex>
-          <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
-          <form class="push-lg" style ="width: 100%">
+
+          <div layout="column" class= "menu-image" flex>
+          </div>
+
+          <form class="pad" style ="width: 50%">
             <div layout="column" flex>
               <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
               <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
@@ -35,51 +41,17 @@
             </div>
           </form>
         </div>
-      </md-card>
-    </md-tab>
-    <md-tab label="Invite friends">
-      <md-card class ="push push-left-lg; push-right-lg">
+      </md-tab>
+
+      <md-tab label="Invite friends">
         <div layout="row" flex>
-          <img md-card-image style ="width:50%" src="https://placekitten.com/g/600/400">
-          <div class="push" style ="width: 100%">
-            <div layout="row" style="justify-content: space-between; border-bottom: 1px solid grey" flex>
-              <span class="title-card property-text-bold">ADD YOUR FRIEND</span>
-              <button md-icon-button><md-icon class="md-36" color="accent">add</md-icon></button>
-            </div>
-            <div style="border-bottom: 1px solid grey" layout= "column" flex>
-              <md-list>
-                <md-list-item>
-                  <md-icon class="md-36">account_circle</md-icon>
-                  <div layout="row" style="justify-content: space-between" flex>
-                    <span class ="push-left">Name</span>
-                    <span class ="push-right-sm">email@email.com</span>
-                  </div>
-                  <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item>
-                  <md-icon class="md-36">account_circle</md-icon>
-                  <div layout="row" style="justify-content: space-between" flex>
-                    <span class ="push-left">Name</span>
-                    <span class ="push-right-sm">email@email.com</span>
-                  </div>
-                  <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item>
-                  <md-icon class="md-36">account_circle</md-icon>
-                  <div layout="row" style="justify-content: space-between" flex>
-                    <span class ="push-left">Name</span>
-                    <span class ="push-right-sm">email@email.com</span>
-                  </div>
-                  <button md-icon-button><md-icon class="md-24">clear</md-icon></button>                   
-                </md-list-item>
-                <md-divider></md-divider>                  
-              </md-list>
-            </div>
-            <form class ="push-top">
+
+          <div layout="column" class= "invite-image" flex>
+          </div>
+          <div class="pad" style="width:50%">
+            <form>
               <div layout="column" class="push-bottom" flex>
-                <span class="title-card property-text-bold">ADD YOUR INFORMATION AND BOOKING DATE</span>
+                <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
               </div>
               <div layout= "column" flex>
                 <md-input-container dividerColor="accent" flex>
@@ -95,12 +67,31 @@
                 </md-input-container>
               </div>
             </form>
+            <h4>Friends</h4>
+            <md-chip-list>
+              <md-chip style="margin-bottom: 5px">
+                  genericemail.1231@gmail.com
+                  <button md-icon-button class="pull-bottom-xs pull-top-xs pull-right-xs md-18"><md-icon>cancel</md-icon></button>
+              </md-chip>
+              <md-chip style="margin-bottom: 5px">
+                  genericemail.1231@gmail.com
+                  <button md-icon-button class="pull-bottom-xs pull-top-xs pull-right-xs md-18"><md-icon>cancel</md-icon></button>
+              </md-chip>
+              <md-chip style="margin-bottom: 5px">
+                  genericemail.1231@gmail.com
+                  <button md-icon-button class="pull-bottom-xs pull-top-xs pull-right-xs md-18"><md-icon>cancel</md-icon></button>
+              </md-chip>
+              <md-chip style="margin-bottom: 5px">
+                  genericemail.1231@gmail.com
+                  <button md-icon-button class="pull-bottom-xs pull-top-xs pull-right-xs md-18"><md-icon>cancel</md-icon></button>
+              </md-chip>
+            </md-chip-list>
             <div style="text-align: right">
               <button md-button (click)="openSidenav()" color="accent" class="text-upper">Invite friends</button>
             </div>
           </div>
         </div>
-      </md-card>
-    </md-tab>
-  </md-tab-group>
+      </md-tab>
+    </md-tab-group>
+  </md-card>
 </td-layout>

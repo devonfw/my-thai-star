@@ -3,7 +3,7 @@
 
     <div layout="column" class= "menu-image" flex>
       <button md-fab (click)="changeFavouriteState()" class="push-sm favourite-button">
-        <md-icon [class.fab-on]="!favouriteSelected" [class.fab-off]="favouriteSelected">star</md-icon>
+        <md-icon [class.fab-on]="!orderInfo.favourite" [class.fab-off]="orderInfo.favourite">star</md-icon>
       </button>
       <span flex></span>
       <div style="background-color: rgba(0,0,0,0.3)" flex>
@@ -25,23 +25,19 @@
     <div layout="column" class= "pad" flex>
       <div layout="row">
         <md-icon color="warn" class="md-18 push-right-sm">favorite</md-icon>
-        <span>61</span>
+        <span>{{orderInfo.likes}}</span>
         <span flex></span>
         <span class="price">7.6 €</span>
       </div>
-      <h3 class="text-upper pull-top-sm">Green Curry</h3>
+      <h3 class="text-upper pull-top-sm">{{orderInfo.orderName}}</h3>
       <span class="push-bottom-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.
-        Pellentesque habitant morbi tristique.
+        {{orderInfo.orderDescription}}
       </span>
       <div layout ="column">
-        <md-checkbox class="push-bottom-sm">Tofu +1€</md-checkbox>
-        <md-checkbox class="push-bottom-sm">Chiken +1€</md-checkbox>      
-        <md-checkbox class="push-bottom-sm">Pork +2€</md-checkbox>
+        <md-checkbox class="push-bottom-sm" *ngFor="let option of orderInfo.options">{{option.name}} +{{option.price}}€</md-checkbox>
       </div>
       <div class="property-text-right">
-        <button md-button (click)="openSidenav()" color="accent" class="text-upper property-text-bold">Add to order</button>
+        <button md-button (click)="addOrderMenu()" color="accent" class="text-upper property-text-bold">Add to order</button>
       </div>
     </div>
   </div>

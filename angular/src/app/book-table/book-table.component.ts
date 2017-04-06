@@ -1,4 +1,3 @@
-import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,10 +8,19 @@ import { Component } from '@angular/core';
 
 export class BookTableComponent {
 
-  constructor(private sidenav: SidenavSharedServiceService) {
-  }
+  items: string[] = [
+    'stepper',
+    'expansion-panel',
+    'markdown',
+    'highlight',
+    'loading',
+    'media',
+    'chips',
+    'http',
+    'json-formatter',
+    'pipes',
+    'need more?',
+  ];
 
-  openSidenav(): void {
-    this.sidenav.openSideNav();
-  }
+  itemsRequireMatch: string[] = this.items.slice(0, 6);
 }

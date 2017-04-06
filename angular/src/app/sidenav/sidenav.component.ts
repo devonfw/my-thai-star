@@ -18,7 +18,6 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.orders = this.sidenav.getOrderData();
-    this.bookTableData = this.sidenav.getBookTableData();
   };
 
   closeSidenav(): void {

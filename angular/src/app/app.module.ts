@@ -1,7 +1,7 @@
 import { NgModule, Type } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
-import { CovalentCoreModule } from '@covalent/core';
+import { CovalentChipsModule, CovalentCoreModule } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CovalentMarkdownModule } from '@covalent/markdown';
 
@@ -23,14 +23,12 @@ import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.com
     MenuComponent,
     MenuCardComponent,
     SidenavComponent,
-    SidenavOrderComponent,
+    SidenavOrderComponent
   ],
   imports: [
     BrowserModule,
     CovalentCoreModule.forRoot(),
-    CovalentHighlightModule.forRoot(),
-    CovalentMarkdownModule.forRoot(),
-    appRoutes,
+    appRoutes
   ],
   providers: [
     SidenavSharedServiceService
