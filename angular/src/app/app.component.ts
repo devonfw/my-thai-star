@@ -15,4 +15,8 @@ export class AppComponent {
     this.sidenav.closeSideNav();
   }
 
+  openSideNav(): void {
+    this.sidenav.openSideNav();
+  }
+
 }

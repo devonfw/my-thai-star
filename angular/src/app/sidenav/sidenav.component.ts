@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavSharedServiceService } from './shared/sidenav-shared-service.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-sidenav',
@@ -11,7 +12,6 @@ export class SidenavComponent implements OnInit {
 
   orders: any[];
   bookTableData: any;
-  totalPrice: number = 15;
 
   constructor(private sidenav: SidenavSharedServiceService) {
   }
@@ -24,4 +24,15 @@ export class SidenavComponent implements OnInit {
     this.sidenav.closeSideNav();
   };
 
+  reloadOrders(): void {
+    this.orders = this.sidenav.getOrderData();
+  }
+
+  calculateTotal(): number {
+    let sum: number = 0;
+    _.forEach(this.orders, function(o) {
+      sum += o.number * o.price;
+    });
+    return sum;
+  }
 }

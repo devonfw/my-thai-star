@@ -1,6 +1,6 @@
 <div layout="row" class="pad-top-sm pad-right-sm" style="border-bottom: 1px solid lightgrey" flex>
   
-  <button md-icon-button class="push-bottom-xs"><md-icon>clear</md-icon></button>
+  <button md-icon-button (click)="removeOrder()" class="push-bottom-xs"><md-icon>clear</md-icon></button>
   
   <div layout="column" class="pull-top-xs" flex>
     <span class="orderName">{{order.orderName}}</span>
@@ -20,10 +20,10 @@
   </button>
 
   <div layout="row" class="push-bottom-xs" flex>
-    <button md-icon-button><md-icon color="accent">remove</md-icon></button>  
+    <button md-icon-button (click)="decreaseOrder()"><md-icon color="accent">remove</md-icon></button>  
     <span class="push-top-sm">{{order.number}}</span>               
-    <button md-icon-button><md-icon color="accent">add</md-icon></button>                  
+    <button md-icon-button (click)="increaseOrder()"><md-icon color="accent">add</md-icon></button>                  
   </div>
 
-  <span class="push-top-sm">{{order.price | number : '1.2-2'}} €</span>
+  <span class="push-top-sm">{{order.price * order.number | number : '2.2-2'}} €</span>
 </div>
