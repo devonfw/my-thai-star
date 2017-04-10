@@ -1,0 +1,41 @@
+<span md-dialog-title class="text-upper">Book table</span>
+<md-dialog-content>
+  <div layout="column" class="push-bottom-sm" flex>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Date</span>
+      <span>00/00/0000</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Hour</span>
+      <span>00:00</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Name</span>
+      <span>Name</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray" ></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Email</span>
+      <span>email@email.com</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Adults</span>
+      <span>4</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>Invitation number</span>
+      <span>2</span>
+    </div>
+    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+  </div>
+</md-dialog-content>
+<md-dialog-actions>
+  <div style="width:100%; text-align:right">
+    <button md-button md-dialog-close class="text-upper">Cancel</button>
+    <button md-button (click)="sendBooking()" color="accent" class="text-upper">Send</button>
+  </div>
+</md-dialog-actions>

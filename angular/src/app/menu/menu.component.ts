@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MenuCardComponent} from '../menu-card/menu-card.component';
+import {MenuCardComponent} from './menu-card/menu-card.component';
 
 @Component({
   selector: 'app-menu',

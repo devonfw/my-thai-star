@@ -1,3 +1,4 @@
+import { SidenavSharedServiceService } from '../shared/sidenav-shared-service.service';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -10,6 +11,7 @@ describe('SidenavOrderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavOrderComponent ],
+      providers: [SidenavSharedServiceService],
       imports: [
         CovalentCoreModule.forRoot()
       ]

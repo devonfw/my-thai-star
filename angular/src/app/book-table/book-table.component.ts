@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { TdDialogService } from '@covalent/core/dialogs/services/dialog.service';
+import { ComponentType, MdDialog } from '@angular/material';
+import { Component, ViewContainerRef } from '@angular/core';
+import _ from 'lodash';
+import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
+import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 
 @Component({
   selector: 'app-book-table',
@@ -8,19 +13,31 @@ import { Component } from '@angular/core';
 
 export class BookTableComponent {
 
-  items: string[] = [
-    'stepper',
-    'expansion-panel',
-    'markdown',
-    'highlight',
-    'loading',
-    'media',
-    'chips',
-    'http',
-    'json-formatter',
-    'pipes',
-    'need more?',
-  ];
+  emailList: string[] = [];
 
-  itemsRequireMatch: string[] = this.items.slice(0, 6);
+  constructor(public dialog: MdDialog, private _dialogService: TdDialogService,
+              private _viewContainerRef: ViewContainerRef) {}
+
+  addChip(value: string): void {
+    this.emailList.push(value);
+  }
+
+  removeChip(value: string): void {
+    _.remove(this.emailList, function(s) {
+      return s === value;
+    });
+  }
+
+  showBookTableDialog(): void {
+    this.dialog.open(BookTableDialogComponent, {
+      width: '40%'
+    });
+  }
+
+  showInviteDialog(): void {
+    this.dialog.open(InvitationDialogComponent, {
+      width: '40%'
+    });
+  }
+
 }

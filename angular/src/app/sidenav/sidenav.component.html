@@ -6,13 +6,17 @@
         <span>RESUME BOOKING</span>
       </div>
     </div>
-    <div layout="column" class="pull-top">
+    <div layout="column" class="pull-top" style="max-height: 60%">
       <h4 class="pad-bottom-sm" style="border-bottom: 1px solid grey">ORDER MENU</h4>
-      <div class="pull-top" [class.scrollOrders]="orders.length > 6">
+      <div layout="row" *ngIf="orders.length < 1" style="align-items:center" class="justify-space-between push-bottom-lg">
+        <span>You have not selected any order</span>
+        <button md-button color="accent" (click)="closeSidenav()" class="text-upper property-text-bold">View Menu</button>
+      </div>
+      <div class="pull-top" [class.scrollOrders]="orders.length > 5">
         <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
       </div>
     </div>
-    <div layout="row" class="justify-space-between">
+    <div *ngIf="orders.length > 0" layout="row" class="justify-space-between">
       <h3>Total</h3>
       <h3>{{calculateTotal() | number : '1.2-2'}} €</h3>
     </div>

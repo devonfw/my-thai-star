@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
+import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared-service.service';
 
 @Component({
   selector: 'app-menu-card',

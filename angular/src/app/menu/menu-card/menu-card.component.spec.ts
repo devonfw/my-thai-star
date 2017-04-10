@@ -1,6 +1,6 @@
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
+import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared-service.service';
 
 import { MenuCardComponent } from './menu-card.component';
 
