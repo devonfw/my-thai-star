@@ -3,37 +3,34 @@
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between">
       <span>Date</span>
-      <span>00/00/0000</span>
+      <span>{{data.date}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Hour</span>
-      <span>00:00</span>
+      <span>{{data.time}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Name</span>
-      <span>Name</span>
+      <span>{{data.name}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Email</span>
-      <span>email@email.com</span>
+      <span>{{data.email}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Friends</span>
       <div layout="column" style="text-align:right; width:50%">
-        <span>e@gmail.com</span>
-        <span>e@gmail.com</span>
-        <span>email@gmail.com</span>
-        <span>email@gmail.com</span>
+        <span *ngFor="let inv of data.invitations">{{inv}}</span>
       </div>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Invitation number</span>
-      <span>2</span>
+      <span>1231231232</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
   </div>

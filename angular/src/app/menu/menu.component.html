@@ -61,9 +61,6 @@
   </div>
 
   <div flex layout="row" class="pad justify-space-around flex-wrap">
-    <app-menu-card></app-menu-card>
-    <app-menu-card></app-menu-card>
-    <app-menu-card></app-menu-card>
-    <app-menu-card></app-menu-card>
+    <app-menu-card *ngFor="let menu of menus" [menu]="menu"></app-menu-card>
   </div>
 </td-layout>

@@ -13,30 +13,21 @@ import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog
 
 export class BookTableComponent {
 
-  emailList: string[] = [];
+  invitationModel: string[] = [];
 
-  constructor(public dialog: MdDialog, private _dialogService: TdDialogService,
-              private _viewContainerRef: ViewContainerRef) {}
+  constructor(public dialog: MdDialog) {}
 
-  addChip(value: string): void {
-    this.emailList.push(value);
-  }
-
-  removeChip(value: string): void {
-    _.remove(this.emailList, function(s) {
-      return s === value;
-    });
-  }
-
-  showBookTableDialog(): void {
+  showBookTableDialog(form): void {
     this.dialog.open(BookTableDialogComponent, {
-      width: '40%'
+      width: '40%',
+      data: form
     });
   }
 
-  showInviteDialog(): void {
+  showInviteDialog(form): void {
     this.dialog.open(InvitationDialogComponent, {
-      width: '40%'
+      width: '40%',
+      data: form
     });
   }
 

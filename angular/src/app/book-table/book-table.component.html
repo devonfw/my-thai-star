@@ -10,34 +10,34 @@
           <div layout="column" class= "menu-image" flex>
           </div>
           <div style ="width: 50%">
-            <form class="pad">
+            <form class="pad" #bookForm="ngForm">
               <div layout="column" flex>
                 <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
                 <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
               </div>
               <div layout= "column" flex>
                 <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Date and time" type="datetime-local">
+                  <input mdInput placeholder="Date and time" ngModel name="dateTime" type="datetime-local" required>
                 </md-input-container>
 
                 <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Name">
+                  <input mdInput placeholder="Name" ngModel name="name" required>
                 </md-input-container>
 
                 <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Email">
+                  <input mdInput placeholder="Email" ngModel name="email" required>
                 </md-input-container>
 
                 <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Adults" type="number">
+                  <input mdInput placeholder="Adults" ngModel name="adults" type="number" required>
                 </md-input-container>
 
                 <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Kids" type="number">
+                  <input mdInput placeholder="Kids" ngModel name="kids" type="number" required>
                 </md-input-container>
               </div>
               <div style="text-align: right">
-                <button md-button (click)="showBookTableDialog()" color="accent" class="text-upper">Book table</button>
+                <button md-button (click)="showBookTableDialog(bookForm.form.value)" [disabled]="!bookForm.form.valid" color="accent" class="text-upper">Book table</button>
               </div>
             </form>
           </div>
@@ -51,28 +51,28 @@
           </div>
           <div style="width:50%">
             <div class="pad">
-              <form>
+              <form #invitationForm="ngForm">
                 <div layout="column" class="push-bottom" flex>
                   <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
                 </div>
                 <div layout= "column" flex>
                   <md-input-container dividerColor="accent" flex>
-                    <input mdInput placeholder="Date and time" type="datetime-local">
+                    <input mdInput placeholder="Date and time" ngModel name="dateTime" type="datetime-local" required>
                   </md-input-container>
 
                   <md-input-container dividerColor="accent" flex>
-                    <input mdInput placeholder="Name">
+                    <input mdInput placeholder="Name" ngModel name="name" required>
                   </md-input-container>
 
                   <md-input-container dividerColor="accent" flex>
-                    <input mdInput placeholder="Email">
+                    <input mdInput placeholder="Email" ngModel name="email" required>
                   </md-input-container>
                 </div>
+                <h4>Friends</h4>
+                <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="invitations" placeholder="Enter invitation email"></td-chips>
               </form>
-              <h4>Friends</h4>
-              <td-chips class="pad-bottom-sm" placeholder="Enter invitation email" (add)="addChip($event)" (remove)="removeChip($event)"></td-chips>
               <div style="text-align: right">
-                <button md-button (click)="showInviteDialog()" color="accent" class="text-upper">Invite friends</button>
+                <button md-button (click)="showInviteDialog(invitationForm.form.value)" [disabled]="!invitationForm.form.valid" color="accent" class="text-upper">Invite friends</button>
               </div>
             </div>
           </div>
