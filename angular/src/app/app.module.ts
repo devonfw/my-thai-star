@@ -2,6 +2,7 @@ import { MaterialModule } from '@angular/material';
 import { NgModule, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CovalentChipsModule, CovalentCoreModule } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
@@ -36,7 +37,8 @@ import { BookTableDialogComponent } from './book-table/book-table-dialog/book-ta
     MaterialModule,
     CovalentCoreModule.forRoot(),
     appRoutes,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     SidenavSharedServiceService

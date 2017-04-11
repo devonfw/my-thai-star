@@ -1,6 +1,5 @@
-import { EventEmitter } from '@angular/forms/src/facade/async';
 import { SidenavSharedServiceService } from '../shared/sidenav-shared-service.service';
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'sidenav-order',
