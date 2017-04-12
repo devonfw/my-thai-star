@@ -25,7 +25,7 @@
       </a>
     </nav>
     <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
-    <button md-icon-button (click)="openSideNav()" mdTooltip="Orders"><md-icon>format_list_bulleted</md-icon></button>
+    <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>format_list_bulleted</md-icon></button>
   </div>
   <td-layout-footer>
     <div layout="row" layout-align="center center" flex>
@@ -35,7 +35,7 @@
     </div>
   </td-layout-footer>
   <md-sidenav-container style= "height:100%">
-    <md-sidenav (close)="closeSideNav()" [opened]="sidenav.opened" align="end" class="pad-sm">
+    <md-sidenav (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end" class="pad-sm">
       <app-sidenav></app-sidenav>
     </md-sidenav>
     <router-outlet></router-outlet>

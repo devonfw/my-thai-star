@@ -11,12 +11,8 @@ export class AppComponent {
   constructor(private sidenav: SidenavSharedServiceService) {
   }
 
-  closeSideNav(): void {
-    this.sidenav.closeSideNav();
-  }
-
-  openSideNav(): void {
-    this.sidenav.openSideNav();
+  openCloseSideNav(sidenavOpened: boolean): void {
+    sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }
 
 }

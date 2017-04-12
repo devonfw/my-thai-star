@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavSharedServiceService } from './shared/sidenav-shared-service.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
@@ -13,7 +14,7 @@ export class SidenavComponent implements OnInit {
   orders: any[];
   bookTableData: any;
 
-  constructor(private sidenav: SidenavSharedServiceService) {
+  constructor(private router: Router, private sidenav: SidenavSharedServiceService) {
   }
 
   ngOnInit(): void {
@@ -24,6 +25,11 @@ export class SidenavComponent implements OnInit {
     this.sidenav.closeSideNav();
   };
 
+  navigateMenu(): void {
+    this.closeSidenav();
+    this.router.navigate(['menu']);
+  };
+
   reloadOrders(): void {
     this.orders = this.sidenav.getOrderData();
   }
@@ -32,6 +38,11 @@ export class SidenavComponent implements OnInit {
     let sum: number = 0;
     _.forEach(this.orders, function(o) {
       sum += o.number * o.price;
+      _.forEach(o.options, function(value, key) {
+        if(value.selected) {
+          sum = sum + value.price;
+        }
+      });
     });
     return sum;
   }

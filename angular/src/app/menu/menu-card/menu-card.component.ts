@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared-service.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-menu-card',
@@ -9,7 +10,6 @@ import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared
 export class MenuCardComponent {
 
   @Input('menu') menuInfo: any;
-  backgroundImg: any;
 
   constructor(private sidenav: SidenavSharedServiceService) {
   }
@@ -25,6 +25,10 @@ export class MenuCardComponent {
 
   changeFavouriteState(): void {
     this.menuInfo.favourite = !this.menuInfo.favourite;
+  }
+
+  selectedOption(option): void {
+    option.selected ? option.selected = false : option.selected = true;
   }
 
 }

@@ -5,11 +5,11 @@
   <div layout="column" class="pull-top-xs" flex>
     <span class="orderName">{{order.orderName}}</span>
     <div layout="row">
-        <span class="orderIngredients" *ngIf="order.ingredients.length < 1"> - </span>
-        <span class="orderIngredients" *ngFor="let ingredient of order.ingredients; let i = index">
-          {{ingredient}}
-          <label *ngIf="i < order.ingredients.length -1 && order.ingredients.length > 1">, </label>
-        </span>
+      <span class="orderIngredients" *ngIf="ingredients.length < 1"> - </span>
+      <span class="orderIngredients" *ngFor="let ingredient of ingredients; let i = index">
+        {{ingredient.name}}
+        <label *ngIf="i < ingredients.length -1 && ingredients.length > 1">, </label>
+      </span>
     </div>
     <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.comment">Remove comment</label>
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.comment">Add comment</label>
@@ -25,5 +25,5 @@
     <button md-icon-button (click)="increaseOrder()"><md-icon color="accent">add</md-icon></button>                  
   </div>
 
-  <span class="push-top-sm">{{order.price * order.number | number : '2.2-2'}} €</span>
+  <span class="push-top-sm">{{calculateOrderPrice() | number : '2.2-2'}} €</span>
 </div>

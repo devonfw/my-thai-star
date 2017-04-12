@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuComponent } from './menu.component';
@@ -14,6 +15,7 @@ describe('MenuComponent', () => {
       declarations: [ MenuComponent, MenuCardComponent ],
       providers: [SidenavSharedServiceService],
       imports: [
+        BrowserAnimationsModule,
         CovalentCoreModule.forRoot()
       ],
     })

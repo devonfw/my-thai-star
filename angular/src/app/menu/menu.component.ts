@@ -13,7 +13,7 @@ export class MenuComponent {
       orderDescription: 'Lorem ipsum dolor sit amet. Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.',
       price: 5.90,
       image: '../../assets/images/basil-fried.jpg',
-      options: [{name: 'Tofu', price: 1}, {name: 'Chiken', price: 1}, {name: 'Pork', price: 2}],
+      options: [{name: 'Tofu', price: 1, selected: false}, {name: 'Chiken', price: 1, selected: false}, {name: 'Pork', price: 2, selected: false}],
       likes: 21,
       favourite: false
     }, {
@@ -21,7 +21,7 @@ export class MenuComponent {
       orderDescription: 'Consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.',
       price: 9.00,
       image: '../../assets/images/garlic-paradise.jpg',
-      options: [{name: 'Tofu', price: 1}, {name: 'Chiken', price: 1}, {name: 'Pork', price: 2}],
+      options: [{name: 'Tofu', price: 1, selected: false}, {name: 'Chiken', price: 1, selected: false}, {name: 'Pork', price: 2, selected: false}],
       likes: 10,
       favourite: false
     }, {
@@ -29,7 +29,7 @@ export class MenuComponent {
       orderDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.',
       price: 7.60,
       image: '../../assets/images/green-curry.jpg',
-      options: [{name: 'Tofu', price: 1}, {name: 'Chiken', price: 1}, {name: 'Pork', price: 2}],
+      options: [{name: 'Tofu', price: 1, selected: false}, {name: 'Chiken', price: 1, selected: false}, {name: 'Pork', price: 2, selected: false}],
       likes: 61,
       favourite: false
     },{
@@ -37,7 +37,7 @@ export class MenuComponent {
       orderDescription: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
       price: 8.50,
       image: '../../assets/images/dish.png',
-      options: [{name: 'Tofu', price: 1}, {name: 'Chiken', price: 1}, {name: 'Pork', price: 2}],
+      options: [{name: 'Tofu', price: 1, selected: false}, {name: 'Chiken', price: 1, selected: false}, {name: 'Pork', price: 2, selected: false}],
       likes: 48,
       favourite: false
     }]

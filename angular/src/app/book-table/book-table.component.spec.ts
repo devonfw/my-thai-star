@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookTableComponent } from './book-table.component';
@@ -13,6 +14,7 @@ describe('BookTableComponent', () => {
       declarations: [ BookTableComponent ],
       providers: [ SidenavSharedServiceService ],
       imports: [
+        BrowserAnimationsModule,
         CovalentCoreModule.forRoot()
       ],
     })

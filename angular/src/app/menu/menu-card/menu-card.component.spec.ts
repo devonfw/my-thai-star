@@ -22,6 +22,15 @@ describe('MenuCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MenuCardComponent);
     component = fixture.componentInstance;
+    component.menuInfo = {
+      orderName: '',
+      orderDescription: '',
+      price: 0,
+      image: '',
+      options: [{}],
+      likes: 0,
+      favourite: false
+    }
     fixture.detectChanges();
   });
 
