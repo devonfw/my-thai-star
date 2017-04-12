@@ -26,7 +26,6 @@ export class SidenavSharedServiceService {
       this.increaseOrder(order);
     } else {
       order.number = 1;
-      order.id = this.orders[this.orders.length - 1];
       this.orders.push(JSON.parse(JSON.stringify(order)));
     }
   }

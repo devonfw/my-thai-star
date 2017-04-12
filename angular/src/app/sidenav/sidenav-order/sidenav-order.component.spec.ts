@@ -13,7 +13,7 @@ describe('SidenavOrderComponent', () => {
       declarations: [ SidenavOrderComponent ],
       providers: [SidenavSharedServiceService],
       imports: [
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
       ]
     })
     .compileComponents();
