@@ -15,22 +15,14 @@ const rootSchema = [`
     reservations: [Reservation]
     reservation(id:Int!): Reservation  
   }
+
+  type Mutation {
+    addUser(login:String!, email:String!):User
+    inviteFriend (reservationId: Int!, userLogin: String!): Reservation
+    createReservation(reservation: ReservationInput!):Reservation
+  }
   
 `];
-
-
-//   type Mutation {
-//     addFriend(
-//       user: User
-//       friendToAdd: String!
-//     ):User
-//     inviteFriend(
-//       friendToInvite: String!
-//     ): Reservation
-//     makeReservation(
-//       reservationId: Int!,
-//     ): Reservation
-//   }
 
 const rootResolvers = {
   Query: {
@@ -46,7 +38,7 @@ const rootResolvers = {
       return context.Users.getUser(login);
     },
     currentUser(root, args, context) {
-      return context.user || null;
+      return context.currentUser || null;
     },
 
     reservations(root, args, context){
@@ -56,6 +48,17 @@ const rootResolvers = {
       return context.Reservations.getById(id);
     }
 
+  },
+  Mutation: {
+    addUser(_, {login, email}, context){
+      return context.Users.create(login, email);
+    },
+    inviteFriend(_, {reservationId, userLogin}, context){
+      return context.Reservations.addParticipant(reservationId, userLogin);
+    },
+    createReservation(_, {reservation}, context){
+      return context.Reservations.create(reservation, context.currentUser);
+    }
   }
 };
 

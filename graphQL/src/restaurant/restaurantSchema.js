@@ -19,7 +19,16 @@ exports.schema = [`
         name: String!
         type: ReservationType!
         owner: User
+        date: String!
+        time: String!
         participants: [User]
+    }
+
+    input ReservationInput {
+        name: String!
+        date: String!
+        time: String!
+        participants: [String!]
     }
 `];
 
