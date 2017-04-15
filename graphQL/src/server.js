@@ -4,6 +4,7 @@ const {buildSchema} = require('graphql');
 const {graphqlExpress, graphiqlExpress} = require('graphql-server-express');
 
 const {initPassport} = require('./passport');
+const mailTransporter = require('./mailTransport');
 const session = require('express-session');
 const executableSchema = require('./restaurant/rootSchema');
 const {Users, Reservations} = require('./restaurant/models');
@@ -11,21 +12,10 @@ const {Users, Reservations} = require('./restaurant/models');
 const {storage} = require('./restaurant/in-memory');
 
 
-// TODO: Move config to external file
-const configDefaults = {
-  port: 4000,
-  hostname: 'localhost',
-  prodMode: false, 
-  endpoints: {
-    graphql: '/graphql',
-    graphiql: '/graphiql'
-  }
-}
 
+exports.run = (envConfig) => {
 
-exports.run = (configOverride) => {
-
-  const config = Object.assign({}, configDefaults, configOverride);
+  const config = Object.assign({}, require('./config'), envConfig);
 
   // TODO: configure connector, planned variants - in memory, based on mongodb (or postgresql), on top of API 
   const connector = storage;
@@ -37,10 +27,7 @@ exports.run = (configOverride) => {
   const app = express();
 
   app.use(bodyParser.json()); 
-  app.use(session({ cookie: { maxAge: 60000 }, 
-                    secret: 'mySecretSaltForHash',
-                    resave: false, 
-                    saveUninitialized: false}));  
+  app.use(session(config.session));  
   
   app.use(require("connect-flash")());
   app.use(passport.initialize());
@@ -91,6 +78,34 @@ exports.run = (configOverride) => {
 
   if (!config.prodMode) {
     app.use(config.endpoints.graphiql, passport.authenticate('basic'),  graphiqlExpress({endpointURL: config.endpoints.graphql}));
+
+    app.post('/mailSenderCheck', (req, res) => {
+      const email = req.body.email;
+
+      const exampleMessage = {
+          from: 'My Thai Star <my.thai.star.devonfw@gmail.com>',
+          // Comma separated list of recipients
+          to: `"Test" <${email}>`,
+          subject: 'Nodemailer is unicode friendly ✔', 
+          // plaintext body
+          text: 'Hello to myself!',
+          // HTML body
+          html:'<p><b>Hello</b> to myself <img src="cid:note@node"/></p>'+
+              '<p>Here\'s a nyan cat for you as an embedded attachment:<br/></p>'
+      };
+
+      mailTransporter.sendMail(exampleMessage, function(error){
+        if(error){
+            res.status(500).json({
+              message: 'Error occured when sending email',
+              details: error.message,
+            });
+            return;
+        }
+        res.json({message:`Example message successfully sent to ${email}!`});
+      });
+
+    });
   }
 
 
