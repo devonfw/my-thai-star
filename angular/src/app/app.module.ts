@@ -49,4 +49,4 @@ import { BookTableDialogComponent } from './book-table/book-table-dialog/book-ta
   ],
   bootstrap: [ AppComponent ],
 })
-export class AppModule {}
+export class AppModule { }
