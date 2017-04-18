@@ -24,7 +24,8 @@ const reservations = [{
         owner: 'user1',
         date: '13-04-2017',
         time: '10:30',
-        participants: ['user1','user2'],
+        participants: ['user2@test.com', 'externalUser@test.com'],
+        invitations:[],
     },{
         id: 2,
         name: 'Second test reservation',
@@ -33,6 +34,19 @@ const reservations = [{
         date: '20-04-2017',
         time: '10:30',
         participants: [],
+        invitations:[],
+    }];
+
+const invitations = [{
+        id: 1,
+        reservation: 1,
+        status: 'PENDING',
+        invited: 'user2@test.com'
+    },{
+        id: 2,
+        reservation: 1,
+        status: 'PENDING',
+        invited: 'externalUser@test.com'
     }];
 
 
@@ -43,12 +57,16 @@ function* idSequence(initial) {
 }
 
 
-var resIdGen = idSequence(max(map(reservations, 'id'))+1);
+const resIdGen = idSequence(max(map(reservations, 'id'))+1);
+const invIdGen = idSequence(max(map(invitations, 'id'))+1);
 
 // --- storage public API ---
 
 
 const removeSensitiveData = (user) =>{
+    if (!user){
+        return null;
+    }
     const safeUser = Object.assign({}, user);
     safeUser.pswd = undefined;
     return safeUser;
@@ -94,24 +112,49 @@ exports.storage = {
     getReservations() {
         return reservations;
     },
-    addParticipant(reservationId, userLogin) {
-        const reservationToUpdate = this.getReservation(reservationId);
-        if (!includes(reservationToUpdate.participants, userLogin)) {
-            reservationToUpdate.participants.push(userLogin);
+    addParticipant(reservationId, userEmail) {
+        const reservation = this.getReservation(reservationId);
+        if (!includes(reservation.participants, userEmail)) {
+            reservation.participants.push(userEmail);
         }
-        return reservationToUpdate;
+        return reservation;
+    },
+    addInvitation(reservationId, invitationId) {
+        const reservation = this.getReservation(reservationId);
+        if (!includes(reservation.invitations, invitationId)) {
+            reservation.invitations.push(invitationId);
+        }
+        return reservation;
     },
     createReservation(inReservation, owner) {
-        const newReservation = Object.assign({}, inReservation, {
+        const newReservation = Object.assign({}, {
+            id: resIdGen.next().value,
             owner: owner.login,
             type: 'NEW',
-            id: resIdGen.next().value,
-        });
+            invitations: [],
+            participants: [],
+        }, inReservation);
         reservations.push(newReservation);
-        this.addReservationForUser(newReservation.owner, newReservation.id);
         return newReservation;
     },
 
+
+    getInvitation(searchId) {
+        return find(invitations, {id: searchId});
+    },
+    getInvitations(){
+        return invitations;
+    },
+    createInvitation(reservationId, invitedLogin) {
+        const newInvitation = {
+            id: invIdGen.next().value,
+            reservation: reservationId,
+            invited: invitedLogin,
+            status: 'PENDING',
+        };
+        invitations.push(newInvitation);
+        return newInvitation;
+    },
 
 
 

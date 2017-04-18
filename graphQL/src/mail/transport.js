@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const config = require('./config');
+const config = require('../config');
 
 // Read more here:
 // http://stackoverflow.com/questions/24098461/nodemailer-gmail-what-exactly-is-a-refresh-token-and-how-do-i-get-one

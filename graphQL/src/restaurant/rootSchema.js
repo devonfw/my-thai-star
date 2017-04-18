@@ -14,6 +14,9 @@ const rootSchema = [`
 
     reservations: [Reservation]
     reservation(id:Int!): Reservation  
+
+    invitations: [Invitation]
+    invitation(id:Int!): Invitation  
   }
 
   type Mutation {
@@ -46,7 +49,14 @@ const rootResolvers = {
     },
     reservation(root, {id}, context){
       return context.Reservations.getById(id);
-    }
+    },
+
+    invitations(root, args, context){
+      return context.Invitations.getAll();
+    },
+    invitation(root, {id}, context){
+      return context.Invitations.getById(id);
+    },
 
   },
   Mutation: {

@@ -4,10 +4,11 @@ const {buildSchema} = require('graphql');
 const {graphqlExpress, graphiqlExpress} = require('graphql-server-express');
 
 const {initPassport} = require('./passport');
-const mailTransporter = require('./mailTransport');
+const mailTransporter = require('./mail/transport');
+const mailer = {sendInvitation, sendConfirmation, sendRejection, sendCancellation} =  require('./mail/mailer');
 const session = require('express-session');
 const executableSchema = require('./restaurant/rootSchema');
-const {Users, Reservations} = require('./restaurant/models');
+const {Users, Reservations, Invitations} = require('./restaurant/models');
 
 const {storage} = require('./restaurant/in-memory');
 
@@ -63,14 +64,15 @@ exports.run = (envConfig) => {
       throw new Error('Query too large');
     }
 
-    const options = {connector};
+    const options = {connector, mailer};
 
     return {
       schema: executableSchema,
       context: {
         currentUser: req.user,
         Users: new Users(options),
-        Reservations: new Reservations(options)
+        Reservations: new Reservations(options),
+        Invitations: new Invitations(options),
       }
     }
   }));
@@ -94,7 +96,7 @@ exports.run = (envConfig) => {
               '<p>Here\'s a nyan cat for you as an embedded attachment:<br/></p>'
       };
 
-      mailTransporter.sendMail(exampleMessage, function(error){
+      mailTransporter.sendMail(exampleMessage, (error) => {
         if(error){
             res.status(500).json({
               message: 'Error occured when sending email',

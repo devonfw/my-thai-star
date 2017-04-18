@@ -22,6 +22,7 @@ exports.schema = [`
         date: String!
         time: String!
         participants: [User]
+        invitations: [Invitation]
     }
 
     input ReservationInput {
@@ -30,20 +31,48 @@ exports.schema = [`
         time: String!
         participants: [String!]
     }
+
+
+    enum InvitationStatus {
+        PENDING
+        ACCEPTED
+        REJECTED
+        CANCELLED
+    } 
+
+    type Invitation {
+        id: Int!
+        reservation: Reservation!
+        status: InvitationStatus!
+        invited: User!
+    }
+
+
 `];
 
 exports.resolvers = {
   User: {
-      reservations(root, {id}, context){
+      reservations(root, args, context){
           return root.reservations.map((id) => context.Reservations.getById(id));
       },
   },
   Reservation: {
-      owner(root, {id}, context){
+      owner(root, args, context){
           return context.Users.getByLogin(root.owner);
       },
-      participants(root, {id}, context){
-          return root.participants.map((login) => context.Users.getByLogin(login));
-      }
+      participants(root, args, context){
+          return root.participants.map((email) => context.Users.getByEmail(email));
+      },
+      invitations(root, args, context){
+          return root.invitations.map((id) => context.Invitations.getById(id));
+      },
+  },
+  Invitation: {
+      reservation(root, args, context){
+          return context.Reservations.getById(root.reservation);
+      },
+      invited(root,  args, context){
+          return  context.Users.getByEmail(root.invited);
+      },
   },
 };
