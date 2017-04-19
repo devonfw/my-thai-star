@@ -69,19 +69,21 @@ exports.Invitations = class Invitations {
 
   reject(invitationToken){
     const invitation = this.connector.rejectInvitation(invitationToken);
-    if (invitation) {
+    if (invitation && invitation.status !== 'CANCELLED') {
       const reservation = this.connector.getReservation(invitation.reservation);
       this.mailer.sendRejection(reservation, this.connector.getUser(reservation.owner), invitation.invited);
     }
+    return invitation;
   }
 
   
   accept(invitationToken){
     const invitation = this.connector.acceptInvitation(invitationToken);
-    if (invitation) {
+    if (invitation && invitation.status !== 'CANCELLED') {
       const reservation = this.connector.getReservation(invitation.reservation);
       this.mailer.sendAcceptance(reservation, this.connector.getUser(reservation.owner), invitation.invited);
     }
+    return invitation;
   }
 }
 

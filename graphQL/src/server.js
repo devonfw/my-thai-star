@@ -71,9 +71,15 @@ exports.run = (envConfig) => {
     const token = req.params.token;
     const invitation = models.Invitations.reject(token);
 
-    res.send(`
-      <p>Thank you letting us know that you will <strong>not</strong> be able to join us.</p>
-    `);
+    if (invitation.status !== 'CANCELLED'){
+      res.send(`
+        <p>Thank you letting us know that you will <strong>not</strong> be able to join us.</p>
+      `);
+    } else {
+      res.send(`
+        <p>Reservation was already cancelled by the owner</p>
+      `);
+    }
   });
 
 
@@ -81,9 +87,15 @@ exports.run = (envConfig) => {
     const token = req.params.token;
     const invitation = models.Invitations.accept(token);
 
-    res.send(`
-      <p>Thanks for the confirmation, see you in My Thai Star </p>
-    `);
+    if (invitation.status !== 'CANCELLED'){
+      res.send(`
+        <p>Thanks for the confirmation, see you in My Thai Star </p>
+      `);
+    } else {
+      res.send(`
+        <p>Reservation was already cancelled by the owner</p>
+      `);
+    }
   });
 
   app.get('/reservation/cancel/:id', passport.authenticate('basic'), function(req, res){

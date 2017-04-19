@@ -169,7 +169,9 @@ exports.storage = {
         if (!invitation) {
             return null;
         }
-        invitation.status='REJECTED';
+        if (invitation.status !== 'CANCELLED'){
+            invitation.status='REJECTED';
+        }
         return invitation;
     },
     cancelInvitation(invitationId){
@@ -185,7 +187,9 @@ exports.storage = {
         if (!invitation) {
             return null;
         }
-        invitation.status='ACCEPTED';
+        if (invitation.status !== 'CANCELLED'){
+            invitation.status='ACCEPTED';
+        }
         return invitation;
     },
 
