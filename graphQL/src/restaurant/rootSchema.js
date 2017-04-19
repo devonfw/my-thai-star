@@ -3,6 +3,9 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 const { schema, resolvers} = require('./restaurantSchema');
 
+
+// TODO: At some point of time remove queries that allow access to data 
+// not owned by the user (or add some roles and check privileges)
 const rootSchema = [`
   type Query {
     # Hello World to confirm that graphQL works fine

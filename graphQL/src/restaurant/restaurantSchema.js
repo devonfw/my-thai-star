@@ -11,7 +11,7 @@ exports.schema = [`
     enum ReservationType {
         NEW
         ACTIVE
-        CANCELED
+        CANCELLED
     }   
 
     type Reservation {
@@ -42,6 +42,7 @@ exports.schema = [`
 
     type Invitation {
         id: Int!
+        token: String!
         reservation: Reservation!
         status: InvitationStatus!
         invited: User!

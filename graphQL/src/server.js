@@ -5,7 +5,7 @@ const {graphqlExpress, graphiqlExpress} = require('graphql-server-express');
 
 const {initPassport} = require('./passport');
 const mailTransporter = require('./mail/transport');
-const mailer = {sendInvitation, sendConfirmation, sendRejection, sendCancellation} =  require('./mail/mailer');
+const mailer = {sendInvitation, sendConfirmation, sendAcceptance, sendRejection, sendCancellation} =  require('./mail/mailer');
 const session = require('express-session');
 const executableSchema = require('./restaurant/rootSchema');
 const {Users, Reservations, Invitations} = require('./restaurant/models');
@@ -36,6 +36,16 @@ exports.run = (envConfig) => {
 
 
 
+    const options = {connector, mailer};
+
+    const models = {
+        Users: new Users(options),
+        Reservations: new Reservations(options),
+        Invitations: new Invitations(options),
+    };
+
+
+
   app.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err); }
@@ -55,6 +65,44 @@ exports.run = (envConfig) => {
 
 
 
+  // TODO: response filled with HTML only for demo purposes. Should be removed later on. 
+
+  app.get('/invitation/reject/:token', function(req, res){
+    const token = req.params.token;
+    const invitation = models.Invitations.reject(token);
+
+    res.send(`
+      <p>Thank you letting us know that you will <strong>not</strong> be able to join us.</p>
+    `);
+  });
+
+
+  app.get('/invitation/accept/:token', function(req, res){
+    const token = req.params.token;
+    const invitation = models.Invitations.accept(token);
+
+    res.send(`
+      <p>Thanks for the confirmation, see you in My Thai Star </p>
+    `);
+  });
+
+  app.get('/reservation/cancel/:id', passport.authenticate('basic'), function(req, res){
+    const id = +req.params.id;
+
+    const reservation = models.Reservations.getById(id);
+    if (reservation && req.user && req.user.login === reservation.owner) {
+      models.Reservations.cancel(id);
+      res.send(`
+        <p>Reservation cancelled</p>
+      `);
+    } else {
+      res.send(`
+        <p>You can cancel only reservations owned by you</p>
+      `);
+    }
+  });
+
+
   app.use(config.endpoints.graphql, authenticationMiddleware, graphqlExpress(req => {
 
     // Get the query, the same way express-graphql does it
@@ -68,12 +116,9 @@ exports.run = (envConfig) => {
 
     return {
       schema: executableSchema,
-      context: {
+      context: Object.assign({}, models, {
         currentUser: req.user,
-        Users: new Users(options),
-        Reservations: new Reservations(options),
-        Invitations: new Invitations(options),
-      }
+      }),
     }
   }));
 

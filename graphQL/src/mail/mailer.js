@@ -1,4 +1,5 @@
 const transporter = require('./transport');
+const config = require('../config');
 
 const msgFrom = 'My Thai Star <my.thai.star.devonfw@gmail.com>';
 
@@ -18,40 +19,66 @@ exports.sendInvitation = (reservation, invitation) => {
         subject: 'My Thai Star invitation', 
         // plaintext body
         text: `Hey!
-        It looks like ${reservation.owner} invited you for a meal. There are others who might join you: ${reservation.participants}.
+        It looks like ${reservation.owner} invited you for a meal. There are others who might join you, full list of participants: ${reservation.participants}. Will you be there?
+
+        Accept: http://${config.hostname}:${config.port}/invitation/accept/${invitation.token}
+        Reject: http://${config.hostname}:${config.port}/invitation/reject/${invitation.token}
+
         We hope to see you in My Thai Star!`,
         // HTML body
         html:`<p>Hey!</p>
-        <p>It looks like ${reservation.owner} invited you for a meal. There are others who might join you: ${reservation.participants}.</p>
+        <p>It looks like ${reservation.owner} invited you for a meal. There are others who might join you, full list of participants: ${reservation.participants}. Will you be there?</p>
+
+        <a href="http://${config.hostname}:${config.port}/invitation/accept/${invitation.token}">Accept</a>
+        <a href="http://${config.hostname}:${config.port}/invitation/reject/${invitation.token}">Reject</a>
+
         <p>We hope to see you in My Thai Star!</p>`
     };
 
     send(invitationMsg);
 }
 
-exports.sendConfirmation = (reservation, participant) => {
+exports.sendConfirmation = (reservation, owner) => {
     const confirmationMsg = {
         from: msgFrom,
-        to: `${reservation.owner}`,
-        subject: 'My Thai Star - reservation confirmed', 
+        to: `${owner.email}`,
+        subject: 'My Thai Star - reservation confirmation', 
         // plaintext body
-        text: ``,
+        text: `Thanks for making a reservation (reservation details here). 
+        
+        If you would like to cancel it, please go to: http://${config.hostname}:${config.port}/reservation/cancel/${reservation.id}`,
         // HTML body
-        html:``
+        html:`<p>Thanks for making a reservation (reservation details here).</p>
+        
+        <p>If you would like to cancel it, please click <a href="http://${config.hostname}:${config.port}/reservation/cancel/${reservation.id}">here</a></p>`
     };
 
     send(confirmationMsg);
 }
 
-exports.sendRejection = (reservation, participant) => {
+exports.sendAcceptance = (reservation, owner, participant) => {
+    const confirmationMsg = {
+        from: msgFrom,
+        to: `${owner.email}`,
+        subject: 'My Thai Star - reservation accepted', 
+        // plaintext body
+        text: `${participant} confirmed to join you on (reservation details here). Invitation was accepted.`,
+        // HTML body
+        html:`<p>${participant} confirmed to join you on (reservation details here). Invitation was accepted.</p>`
+    };
+
+    send(confirmationMsg);
+}
+
+exports.sendRejection = (reservation, owner, participant) => {
     const rejectionMsg = {
         from: msgFrom,
-        to: `${reservation.owner}`,
-        subject: 'My Thai Star - reservation confirmed', 
+        to: `${owner.email}`,
+        subject: 'My Thai Star - reservation rejected', 
         // plaintext body
-        text: ``,
+        text: `It looks like ${participant} will not be able to join you on (reservation details here). Invitation was rejected`,
         // HTML body
-        html:``
+        html:`<p>It looks like ${participant} will not be able to join you on (reservation details here). Invitation was rejected</p>`
     };
 
     send(rejectionMsg);
@@ -63,10 +90,10 @@ exports.sendCancellation = (reservation) => {
         to: `${reservation.participants}`,
         subject: 'My Thai Star - reservation cancelled', 
         // plaintext body
-        text: ``,
+        text: `Reservation (reservation details here) was cancelled by the owner`,
         // HTML body
-        html:``
+        html:`<p>Reservation (reservation details here) was cancelled by the owner</p>`,
     };
-
+    
     send(cancellationMsg);
 }

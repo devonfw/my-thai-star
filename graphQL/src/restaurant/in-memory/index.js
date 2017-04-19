@@ -137,23 +137,56 @@ exports.storage = {
         reservations.push(newReservation);
         return newReservation;
     },
+    cancelReservation(reservationId){
+        const reservation = this.getReservation(reservationId);
+        reservation.type = 'CANCELLED';
+        return reservation;
+    },
 
 
     getInvitation(searchId) {
         return find(invitations, {id: searchId});
     },
+    getInvitationByToken(searchToken) {
+        return find(invitations, {token: searchToken});
+    },
     getInvitations(){
         return invitations;
     },
-    createInvitation(reservationId, invitedLogin) {
+    createInvitation(reservationId, invitedLogin, token) {
         const newInvitation = {
             id: invIdGen.next().value,
+            token: token,
             reservation: reservationId,
             invited: invitedLogin,
             status: 'PENDING',
         };
         invitations.push(newInvitation);
         return newInvitation;
+    },
+    rejectInvitation(invitationToken){
+        const invitation  = this.getInvitationByToken(invitationToken);
+        if (!invitation) {
+            return null;
+        }
+        invitation.status='REJECTED';
+        return invitation;
+    },
+    cancelInvitation(invitationId){
+        const invitation  = this.getInvitation(invitationId);
+        if (!invitation) {
+            return null;
+        }
+        invitation.status='CANCELLED';
+        return invitation;
+    },
+    acceptInvitation(invitationToken){
+        const invitation  = this.getInvitationByToken(invitationToken);
+        if (!invitation) {
+            return null;
+        }
+        invitation.status='ACCEPTED';
+        return invitation;
     },
 
 
