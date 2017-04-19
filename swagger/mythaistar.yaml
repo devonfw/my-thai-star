@@ -1,0 +1,145 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: My Thai Star
+  description: Contracts between (Angular2/Xamarin) and (oasp4fn/oasp4j/oasp4net)
+  version: "1.0.0"
+# the domain of the service
+host: api.uber.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /getdishes:
+    get:
+      summary: Product Types
+      description: |
+        The Products endpoint returns information about the *Uber* products
+        offered at a given location. The response includes the display name
+        and other details about each product, and lists the products in the
+        proper display order.
+      parameters:
+        - name: latitude
+          in: query
+          description: Latitude component of location.
+          required: true
+          type: number
+          format: double
+        - name: longitude
+          in: query
+          description: Longitude component of location.
+          required: true
+          type: number
+          format: double
+      tags:
+        - Products
+      responses:
+        200:
+          description: An array of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  OrderView:
+    type: array
+    items:
+      $ref: "#/definitions/DishView"
+  DishView:
+    type: object
+    properties:
+      orderName:
+        type: string
+        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+      orderDescription:
+        type: string
+        description: Description of product.
+      price:
+        type: string
+        description: Display name of product.
+  ImageView:
+    type: object
+    properties:
+      name:
+        type: string
+        description: A name that the image has. More informative than a URL or a MIME string
+      content:
+        type: string
+        description: Either the URL where the image is located or the MIME stream that has to be parsed on client-side
+      type:
+        type: string
+        enum: [BINARY,URL]
+        description: Describes wether the Image itself is a location (url) or a MIME stream.
+      extension:
+        type: string
+        description: The type of file the Image is (.jpg, .png, ...). Necessary when the MIME stream parsing is required.
+  ExtraView:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the extra ingredient
+      price:
+        type: number
+        description: The price of the extra ingredient
+      selected:
+        type: boolean
+        description: Defines if the extra ingredient will be added or not the ExtraDish.
+  ReservationView:
+    type: object
+    properties:
+      event:
+        type: object
+        allOf:
+          - $ref: "#/definitions/Event"
+      email:
+        type: string
+        description: The email of the user that has set up the Reservation.
+      adults:
+        type: integer
+        description: The number of adults that are attending.
+      kids:
+        type: integer
+        description: The number of kids that are attending.
+  InvitationView:
+    type: object
+    properties:
+      event:
+        type: object
+        allOf:
+          - $ref: "#/definitions/Event"
+      nameOwner:
+        type: string
+        description: The name of the user that sent the Invitation.
+      emailOwner:
+        type: string
+        description: The emial of the user that sent the Invitation.
+      friends:
+        type: array
+        description: All the emails the Invitation is sent to.
+        items:
+          type: string
+      invitationNumber:
+        type: integer
+        description: Identifier of the Invitation
+  Event:
+    type: object
+    properties:
+      date:
+        type: string
+        description: the date (month/day/year) when the Event is happening.
+      hour:
+        type: string
+        description: The Date's time when the Event is happening.
+      name:
+        type: string
+        description: The name of the Event.
