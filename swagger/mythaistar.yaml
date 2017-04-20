@@ -6,7 +6,7 @@ info:
   description: Contracts between (Angular2/Xamarin) and (oasp4fn/oasp4j/oasp4net)
   version: "1.0.0"
 # the domain of the service
-host: api.uber.com
+host: localhost:3000
 # array of all schemes that your API supports
 schemes:
   - https
@@ -44,7 +44,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Product'
+              $ref: '#/definitions/DishView'
         default:
           description: Unexpected error
           schema:
@@ -66,6 +66,19 @@ definitions:
       price:
         type: string
         description: Display name of product.
+      image:
+        type: string
+        description: path to the image of dish
+      options:
+        type: array
+        items:
+          $ref: "#/definitions/ExtraView"
+      likes:
+        type: number
+        description: number of likes
+      favourite:
+        type: boolean
+        description: TODO
   ImageView:
     type: object
     properties:
@@ -99,8 +112,7 @@ definitions:
     properties:
       event:
         type: object
-        allOf:
-          - $ref: "#/definitions/Event"
+        $ref: "#/definitions/Event"
       email:
         type: string
         description: The email of the user that has set up the Reservation.
@@ -115,8 +127,7 @@ definitions:
     properties:
       event:
         type: object
-        allOf:
-          - $ref: "#/definitions/Event"
+        $ref: "#/definitions/Event"
       nameOwner:
         type: string
         description: The name of the user that sent the Invitation.
@@ -143,3 +154,13 @@ definitions:
       name:
         type: string
         description: The name of the Event.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
