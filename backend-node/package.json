@@ -1,0 +1,32 @@
+{
+  "name": "mythaistar-node",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run build && node ./out/app",
+    "eb": "npm install && npm run build && node ./out/app",
+    "serve": "npm run build && nodemon ./out/app localhost 3000",
+    "build": "tsc",
+    "debug": "npm run build && node --inspect out/app.js",
+    "test": "mocha --opts mocha.opts"
+  },
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "^2.41.0",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/body-parser": "^1.16.3",
+    "@types/chai": "^3.5.0",
+    "@types/cors": "^2.8.1",
+    "@types/express": "^4.0.35",
+    "@types/mocha": "^2.2.41",
+    "chai": "^3.5.0",
+    "nodemon": "^1.11.0",
+    "typescript": "^2.2.2"
+  }
+}
