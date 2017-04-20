@@ -16,28 +16,18 @@ produces:
   - application/json
 paths:
   /getdishes:
-    get:
-      summary: Product Types
-      description: |
-        The Products endpoint returns information about the *Uber* products
-        offered at a given location. The response includes the display name
-        and other details about each product, and lists the products in the
-        proper display order.
+    post:
+      summary: Show Dishes
+      description: TODO
+      produces:
+        - application/json
       parameters:
-        - name: latitude
-          in: query
-          description: Latitude component of location.
+        - name: filter
+          in: body
+          description: TODO
           required: true
-          type: number
-          format: double
-        - name: longitude
-          in: query
-          description: Longitude component of location.
-          required: true
-          type: number
-          format: double
-      tags:
-        - Products
+          schema:
+            $ref = "#/definitions/Filter"
       responses:
         200:
           description: An array of products
@@ -154,6 +144,42 @@ definitions:
       name:
         type: string
         description: The name of the Event.
+  Filter:
+    type: object
+    properties:
+      main:
+        type: boolean
+        description: TODO
+      starter:
+        type: boolean
+        description: TODO
+      dessert:
+        type: boolean
+        description: TODO
+      noodle:
+        type: boolean
+        description: TODO
+      rice:
+        type: boolean
+        description: TODO
+      curry:
+        type: boolean
+        description: TODO
+      vegan:
+        type: boolean
+        description: TODO
+      vegetarian:
+        type: boolean
+        description: TODO
+      favourites:
+        type: boolean
+        description: TODO
+      price:
+        type: number
+        description: TODO
+      likes:
+        type: integer
+        description: TODO
   Error:
     type: object
     properties:
@@ -161,6 +187,4 @@ definitions:
         type: integer
         format: int32
       message:
-        type: string
-      fields:
         type: string
