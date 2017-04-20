@@ -32,7 +32,7 @@ export class BookTableDialogComponent implements OnInit {
 
   sendBooking (): void {
     this.service.sendBooking({"data": "to_be_sent"}).subscribe(data => {
-      console.log(data.message)
+      console.log(data.dishes)
     })
   }
 }

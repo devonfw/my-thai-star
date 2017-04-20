@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared-service.service';
 import * as _ from 'lodash';
 
@@ -7,12 +7,15 @@ import * as _ from 'lodash';
   templateUrl: './menu-card.component.html',
   styleUrls: ['./menu-card.component.scss']
 })
-export class MenuCardComponent {
+export class MenuCardComponent implements OnInit {
 
   @Input('menu') menuInfo: any;
 
-  constructor(private sidenav: SidenavSharedServiceService) {
-  }
+  constructor(
+    private sidenav: SidenavSharedServiceService
+  ) { }
+
+  ngOnInit() { }
 
   openSidenav(): void {
     this.sidenav.openSideNav();

@@ -3,14 +3,13 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class BookTableService {
+export class GetDishesService {
 
   constructor(
     private http: Http
   ) { }
-  
-  // RECEIVES THE BOOKING DATA (YET TO SPECIFY ON CLIENT-SIDE)
-  sendBooking (data: any) : Observable<any> {
+
+  getDishes () : Observable<any> {
     return this.http.get('/v1/getdishes')
                     .map(res => res.json());
   }

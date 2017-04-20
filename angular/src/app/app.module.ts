@@ -26,6 +26,7 @@ import { BookTableDialogComponent } from './book-table/book-table-dialog/book-ta
 import { SidenavSharedServiceService } from './sidenav/shared/sidenav-shared-service.service';
 import { CreateInvitationService } from './shared/services/create-invitation.service';
 import { BookTableService } from './shared/services/book-table.service';
+import { GetDishesService } from './shared/services/get-dishes.service';
 
 // BACKEND
 import { backendProvider } from './shared/backend/mock-backend';
@@ -54,6 +55,7 @@ import { backendProvider } from './shared/backend/mock-backend';
   providers: [
     SidenavSharedServiceService,
     BookTableService,
+    GetDishesService,
     CreateInvitationService,
     backendProvider,
     MockBackend,

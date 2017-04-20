@@ -14,6 +14,7 @@ schemes:
 basePath: /v1
 produces:
   - application/json
+
 paths:
   /getdishes:
     post:
