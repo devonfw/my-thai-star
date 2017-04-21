@@ -49,10 +49,43 @@ exports.schema = [`
     }
 
 
+  enum DishCategory {
+        STARTER
+        MAIN
+        DESSERT
+        VEGGY
+        VEGAN
+    } 
+
+    type Dish {
+        id: Int!
+        name: String!
+        description: String!
+        image: String!
+        category: [DishCategory]
+        price: Float!
+        rating: Float
+        likes: Int
+        ingredients: [Ingredient]
+    }
+
+
+    type Ingredient {
+        id: Int!
+        name: String!
+        description: String!
+        image: String!
+        price: Float
+    }
+
+
 `];
 
 exports.resolvers = {
   User: {
+      friends(root, args, context){
+        return root.friends.map((login)=> context.Users.getByLogin(login));
+      },
       reservations(root, args, context){
           return root.reservations.map((id) => context.Reservations.getById(id));
       },
@@ -76,4 +109,12 @@ exports.resolvers = {
           return  context.Users.getByEmail(root.invited);
       },
   },
+  Dish: {
+      ingredients(root, args, context){
+          return root.ingredients.map((id) => context.Ingredients.get(id));
+      },
+  },
+  Ingredient: {
+  },
+
 };

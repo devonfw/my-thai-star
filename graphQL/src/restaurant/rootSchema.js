@@ -2,6 +2,7 @@ const { merge } = require('lodash');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const { schema, resolvers} = require('./restaurantSchema');
+const pagingSchemaFactory = require('./pagingSchemaFactory');
 
 
 // TODO: At some point of time remove queries that allow access to data 
@@ -20,6 +21,11 @@ const rootSchema = [`
 
     invitations: [Invitation]
     invitation(id:Int!): Invitation  
+
+    dishes: [Dish]
+    dishesPaginated(first:Int, after:String): DishPage
+
+
   }
 
   type Mutation {
@@ -61,6 +67,11 @@ const rootResolvers = {
       return context.Invitations.getById(id);
     },
 
+    dishes(root, args, context){
+      return context.Dishes.getAll();
+    },
+    dishesPaginated: pagingSchemaFactory.buildQueryResolver('Dishes'),
+
   },
   Mutation: {
     addUser(_, {login, email}, context){
@@ -75,10 +86,12 @@ const rootResolvers = {
   }
 };
 
+const DishSchema = pagingSchemaFactory.buildSchema('Dish');
+
 // Put schema together into one array of schema strings
 // and one map of resolvers, like makeExecutableSchema expects
-const restaurantSchema = [...rootSchema, ...schema];
-const restaurantResolvers = merge(rootResolvers, resolvers);
+const restaurantSchema = [...rootSchema, ...schema, ...DishSchema.schema];
+const restaurantResolvers = merge(rootResolvers, resolvers, DishSchema.resolvers);
 
 
 const executableSchema = makeExecutableSchema({

@@ -5,10 +5,10 @@ const {graphqlExpress, graphiqlExpress} = require('graphql-server-express');
 
 const {initPassport} = require('./passport');
 const mailTransporter = require('./mail/transport');
-const mailer = {sendInvitation, sendConfirmation, sendAcceptance, sendRejection, sendCancellation} =  require('./mail/mailer');
+const mailer =  require('./mail/mailer');
 const session = require('express-session');
 const executableSchema = require('./restaurant/rootSchema');
-const {Users, Reservations, Invitations} = require('./restaurant/models');
+const modelClasses = require('./restaurant/models');
 
 const {storage} = require('./restaurant/in-memory');
 
@@ -36,13 +36,13 @@ exports.run = (envConfig) => {
 
 
 
-    const options = {connector, mailer};
+  const options = {connector, mailer};
 
-    const models = {
-        Users: new Users(options),
-        Reservations: new Reservations(options),
-        Invitations: new Invitations(options),
-    };
+  const models = Object.keys(modelClasses)
+    .reduce((modelsAcc, modelName) => {
+      modelsAcc[modelName]= new modelClasses[modelName](options)
+      return modelsAcc;
+    }, {});
 
 
 

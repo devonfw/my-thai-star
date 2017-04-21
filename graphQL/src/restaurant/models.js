@@ -111,3 +111,43 @@ exports.Users = class Users {
     return this.connector.createUser(login, email);
   }
 }
+
+
+exports.Dishes = class Dishes {
+  constructor({ connector }) {
+    this.connector = connector;
+  }
+
+  get(id) {
+    return this.connector.getDish(id);
+  }
+
+  getAll(){
+    return this.connector.getDishes();
+  }
+
+  getRange(sliceIndex, count) {
+    return this.getAll().slice(sliceIndex, sliceIndex+count);
+  }
+
+  getCount(){
+    return this.getAll().length;
+  }
+  
+  findIndex(id){
+    return this.getAll().indexOf(this.get(id));
+  }
+
+}
+
+
+exports.Ingredients = class Ingredients {
+  constructor({ connector }) {
+    this.connector = connector;
+  }
+
+  get(id) {
+    return this.connector.getIngredient(id);
+  }
+
+}

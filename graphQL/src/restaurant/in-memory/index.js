@@ -50,6 +50,71 @@ const invitations = [{
     }];
 
 
+const dishes = [{
+        id: 1,
+        name: 'Pad Thai',
+        description: 'Pad Thai description',
+        image: 'http://todo.link',
+        category: ['MAIN'],
+        price: '8.50',
+        rating: '4.4',
+        likes: 10,
+        ingredients: [1, 3],
+    },{
+        id: 2,
+        name: 'Curry Rice',
+        description: 'Curry Rice description',
+        image: 'http://todo.link',
+        category: ['MAIN'],
+        price: '5.50',
+        rating: '4.1',
+        likes: 10,
+        ingredients: [2],
+    },{
+        id: 3,
+        name: 'Pad Thai 2',
+        description: 'Pad Thai 2 description',
+        image: 'http://todo.link',
+        category: ['MAIN'],
+        price: '8.50',
+        rating: '4.4',
+        likes: 10,
+        ingredients: [1, 3],
+    },{
+        id: 4,
+        name: 'Curry Rice 2',
+        description: 'Curry Rice 2 description',
+        image: 'http://todo.link',
+        category: ['MAIN'],
+        price: '5.50',
+        rating: '4.1',
+        likes: 10,
+        ingredients: [2],
+    }];
+
+
+const ingredients = [{
+        id: 1,
+        name: 'noodle',
+        description: 'Noodle description',
+        image: 'http://todo.link',
+        price: '2.5'
+    },{
+        id: 2,
+        name: 'rice',
+        description: 'Rice description',
+        image: 'http://todo.link',
+        price: '2'
+    },{
+        id: 3,
+        name: 'chicken',
+        description: 'Chicken description',
+        image: 'http://todo.link',
+        price: '3'
+    }];
+
+
+
 function* idSequence(initial) {
   var i = initial;
   while(true)
@@ -60,7 +125,6 @@ function* idSequence(initial) {
 const resIdGen = idSequence(max(map(reservations, 'id'))+1);
 const invIdGen = idSequence(max(map(invitations, 'id'))+1);
 
-// --- storage public API ---
 
 
 const removeSensitiveData = (user) =>{
@@ -73,8 +137,12 @@ const removeSensitiveData = (user) =>{
 }
 
 
+// --- storage public API ---
 
 exports.storage = {
+
+    // -----------    User    -----------
+
     getUser(searchLogin) {
         return removeSensitiveData(find(users, {login: searchLogin}));
     },
@@ -105,6 +173,7 @@ exports.storage = {
         return updatedUser;
     },
 
+    // -----------    Reservation    -----------
 
     getReservation(searchId) {
         return find(reservations, {id: searchId});
@@ -143,6 +212,8 @@ exports.storage = {
         return reservation;
     },
 
+
+    // -----------    Invitation    -----------
 
     getInvitation(searchId) {
         return find(invitations, {id: searchId});
@@ -193,7 +264,22 @@ exports.storage = {
         return invitation;
     },
 
+    // -----------    Dish    -----------
 
+    getDish(searchId) {
+        return find(dishes, {id: searchId});
+    },
+
+    getDishes() {
+        return dishes;
+    },
+
+
+    // -----------    Ingredient    -----------
+
+    getIngredient(searchId) {
+        return find(ingredients, {id: searchId});
+    },
 
     verifyCredentials(username, password){
         const matchedUser = find(users, {login: username});
