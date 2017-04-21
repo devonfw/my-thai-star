@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && node ./out/app",
-    "eb": "npm install && npm run build && node ./out/app",
-    "serve": "npm run build && nodemon ./out/app localhost 3000",
+    "start": "npm run build && node ./out/src/app",
+    "eb": "npm install && npm run build && node ./out/src/app",
+    "serve": "npm run build && nodemon ./out/src/app localhost 3000",
     "build": "tsc",
-    "debug": "npm run build && node --inspect out/app.js",
+    "debug": "npm run build && node --inspect out/src/app.js",
     "test": "mocha --opts mocha.opts"
   },
   "private": true,
