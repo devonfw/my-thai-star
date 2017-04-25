@@ -230,13 +230,3 @@ tables.forEach((params) => {
         }
     });
 });
-
-/*dynamodb.getItem({
-    TableName: "Image",
-    Key: {
-        Id: {S: "dynamodb.png"},
-    },
-}, (err: any, data: any) => {
-    if (err) console.log(err);
-    else console.log(data);
-});*/

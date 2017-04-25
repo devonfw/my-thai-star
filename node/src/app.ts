@@ -2,12 +2,12 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as express from "express";
 
-import { dishesGET } from "./routes/dishes";
+import * as dishes from "./routes/dishes";
 import { indexGET } from "./routes/index";
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
-
+app.disable('x-powered-by');
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 /**
  * API routes
  */
-app.get("/v1/getdishes", dishesGET);
+app.use("/v1/getdishes", dishes.router);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
