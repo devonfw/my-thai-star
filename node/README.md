@@ -6,6 +6,10 @@ No more dependencies out of the package.json are needed, so the first command re
 
     $ npm install
 
+or 
+
+    $ yarn
+
 Although, for the environment to work properly, some packages have to be installed globally, so you have to execute these commands next:
 
     $ npm install -g mocha
@@ -16,6 +20,16 @@ Although, for the environment to work properly, some packages have to be install
 
     $ npm install -g nodemon
 
+or
+
+    $ yarn global add mocha
+
+    $ yarn global add ts-node
+
+    $ yarn global add typescript
+
+    $ yarn global add nodemon
+
 ## Execution
 
 ### Build
@@ -24,11 +38,19 @@ To compile all typescript sources you should run:
 
     $ npm run build
 
+or 
+
+    $ yarn build
+
 ### Start
 
 To switch on the server and send some http petitions on your localhost (http://localhost:3000), run the command:
 
     $ npm run start
+
+or
+
+    $ yarn start
 
 Before switch on the server, this command compile all sources too.
 
@@ -46,3 +68,7 @@ Not implemented yet.
 Build and monitors the server, with the nodemon command instead of node:
 
     $ npm run serve
+
+or
+
+    $ yarn run serve
