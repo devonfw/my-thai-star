@@ -24,14 +24,13 @@ export class SidenavOrderComponent implements OnInit {
 }
 
   removeComment(): void {
-    this.snackBar.open('Comment correctly removed', 'ok', {
-      duration: 2000,
-    });
+    this.order.comment = undefined;
   }
 
   addComment(): void {
-    this.dialog.open(CommentDialogComponent, {
-      width: '40%'
+    let dialogRef = this.dialog.open(CommentDialogComponent);
+    dialogRef.afterClosed().subscribe((result: string) => {
+      this.order.comment = result;
     });
   }
 

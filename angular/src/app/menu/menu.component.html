@@ -1,64 +1,70 @@
 <td-layout>
+  <form #filterForm="ngForm">
   <div style= "background-color: white">
-    <div layout="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
-      <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
-      </td-search-box>
-      <md-select style="width:20%" placeholder="Sort By">
-        <md-option>
-          options1
-        </md-option>
-        <md-option>
-          options2
-        </md-option>
-          <md-option>
-          options3
-        </md-option>
-      </md-select>
-    </div>
-    <div layout="column" class ="pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
-      <span class ="filter-title">FILTERS</span>
-      <div layout="row" class="justify-space-between flex-wrap" style="margin-bottom: 5px" flex>
-        <md-checkbox>Main dishes</md-checkbox>
-        <md-checkbox>Starter</md-checkbox>
-        <md-checkbox>Dessert</md-checkbox>
-        <span style="border-right: 1px solid lightgray"></span>
-        <md-checkbox>Noodle</md-checkbox>
-        <md-checkbox>Rice</md-checkbox>
-        <md-checkbox>Curry</md-checkbox>
-        <span style="border-right: 1px solid lightgray"></span>        
-        <md-checkbox>Vegan</md-checkbox>
-        <md-checkbox>Vegetarian</md-checkbox>
-        <span style="border-right: 1px solid lightgray"></span>        
-        <md-checkbox>Favourites</md-checkbox>
+      <div layout="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
+        <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
+        </td-search-box>
+        <md-select style="width:20%" ngModel name="sorting" placeholder="Sort By">
+          <md-option value="price">
+            Price
+          </md-option>
+          <md-option value="likes">
+            Likes
+          </md-option>
+            <md-option value="favourites">
+            Favourites
+          </md-option>
+        </md-select>
       </div>
-      <div layout="row" class="push-top-sm" flex>
-        <div layout="column" flex>
-          <span class ="pull-bottom-md">Price</span>
-          <md-slider
-            max="50"
-            min="1"
-            step="1"
-            thumb-label="true"
-            tick-interval="10">
-          </md-slider>
+      <div layout="column" class ="pad-left-md pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
+        <span class ="filter-title">FILTERS</span>
+        <div layout="row" class="justify-space-between flex-wrap" style="margin-bottom: 5px" flex>
+          <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
+          <md-checkbox ngModel name="starter">Starter</md-checkbox>
+          <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>
+          <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
+          <md-checkbox ngModel name="rice">Rice</md-checkbox>
+          <md-checkbox ngModel name="curry">Curry</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>        
+          <md-checkbox ngModel name="vegan">Vegan</md-checkbox>
+          <md-checkbox ngModel name="vegetarian">Vegetarian</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>        
+          <md-checkbox ngModel name="favourites">Favourites</md-checkbox>
         </div>
-        <div layout="column" flex>
-          <span class ="pull-bottom-md">Likes</span>
-          <md-slider
-            max=500
-            min=0
-            step=5
-            thumb-label="true"
-            tick-interval="25">
-          </md-slider>
+        <div layout="row" class="push-top-sm" flex>
+          <div layout="column" flex>
+            <span class ="pull-bottom-md">Price</span>
+            <md-slider
+              ngModel
+              name="price"
+              max="50"
+              min="1"
+              step="1"
+              thumb-label="true"
+              tick-interval="10">
+            </md-slider>
+          </div>
+          <div layout="column" flex>
+            <span class ="pull-bottom-md">Likes</span>
+            <md-slider
+              ngModel
+              name="likes"
+              max=500
+              min=0
+              step=5
+              thumb-label="true"
+              tick-interval="25">
+            </md-slider>
+          </div>
         </div>
       </div>
+      <div  class="property-text-right">
+        <button md-button class="text-upper property-text-bold">Clear filters</button>
+        <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
+      </div>
     </div>
-    <div  class="property-text-right">
-      <button md-button class="text-upper property-text-bold">Clear filters</button>
-      <button md-button color="accent" class="text-upper property-text-bold">Apply filters</button>
-    </div>
-  </div>
+  </form>
 
   <div flex layout="row" class="pad justify-space-around flex-wrap">
     <app-menu-card *ngFor="let menu of menus" [menu]="menu"></app-menu-card>

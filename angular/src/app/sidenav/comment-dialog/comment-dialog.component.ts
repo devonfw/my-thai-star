@@ -11,8 +11,8 @@ export class CommentDialogComponent {
   constructor(private dialog: MdDialogRef<CommentDialogComponent>) {
   }
 
-  sendComment(): void {
-    this.dialog.close();
+  sendComment(comment: string): void {
+    this.dialog.close(comment);
   }
 
 }
