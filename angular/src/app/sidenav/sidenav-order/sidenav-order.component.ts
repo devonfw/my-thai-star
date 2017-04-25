@@ -1,4 +1,4 @@
-import { SidenavSharedServiceService } from '../shared/sidenav-shared-service.service';
+import { SidenavService } from '../shared/sidenav.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
@@ -13,7 +13,7 @@ export class SidenavOrderComponent implements OnInit {
   @Output('removeOrder') removeEmitter = new EventEmitter();
   ingredients: string[] = [];
 
-  constructor(private sidenav: SidenavSharedServiceService) {
+  constructor(private sidenav: SidenavService) {
 
   }
 

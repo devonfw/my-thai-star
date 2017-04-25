@@ -23,7 +23,7 @@ import { InvitationDialogComponent } from './book-table/invitation-dialog/invita
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
 
 // SERVICES
-import { SidenavSharedServiceService } from './sidenav/shared/sidenav-shared-service.service';
+import { SidenavService } from './sidenav/shared/sidenav.service';
 import { InvitationDialogService } from './book-table/invitation-dialog/shared/invitation-dialog.service';
 import { BookTableDialogService } from './book-table/book-table-dialog/shared/book-table-dialog.service';
 import { MenuService } from './menu/shared/menu.service';
@@ -53,7 +53,7 @@ import { backendProvider } from './shared/backend/mock-backend';
     HttpModule
   ],
   providers: [
-    SidenavSharedServiceService,
+    SidenavService,
     BookTableDialogService,
     InvitationDialogService,
     MenuService,

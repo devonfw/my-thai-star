@@ -1,4 +1,4 @@
-import { SidenavSharedServiceService } from './sidenav/shared/sidenav-shared-service.service';
+import { SidenavService } from './sidenav/shared/sidenav.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor(private sidenav: SidenavSharedServiceService) {
+  constructor(private sidenav: SidenavService) {
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {

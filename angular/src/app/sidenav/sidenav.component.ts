@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SidenavSharedServiceService } from './shared/sidenav-shared-service.service';
+import { SidenavService } from './shared/sidenav.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import * as _ from 'lodash';
 
@@ -14,7 +14,7 @@ export class SidenavComponent implements OnInit {
   orders: any[];
   bookTableData: any;
 
-  constructor(private router: Router, private sidenav: SidenavSharedServiceService) {
+  constructor(private router: Router, private sidenav: SidenavService) {
   }
 
   ngOnInit(): void {

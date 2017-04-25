@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SidenavSharedServiceService } from '../../sidenav/shared/sidenav-shared-service.service';
+import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -11,7 +11,7 @@ export class MenuCardComponent {
 
   @Input('menu') menuInfo: any;
 
-  constructor(private sidenav: SidenavSharedServiceService) {
+  constructor(private sidenav: SidenavService) {
   }
 
   openSidenav(): void {

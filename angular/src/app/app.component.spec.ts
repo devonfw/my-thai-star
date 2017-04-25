@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CovalentCoreModule } from '@covalent/core';
 
 import { AppComponent } from './app.component';
-import { SidenavSharedServiceService } from './sidenav/shared/sidenav-shared-service.service';
+import { SidenavService } from './sidenav/shared/sidenav.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component'
 
@@ -14,7 +14,7 @@ describe('AppComponent', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, SidenavComponent, SidenavOrderComponent ],
-      providers: [SidenavSharedServiceService],
+      providers: [SidenavService],
       imports: [
         RouterTestingModule,
         CovalentCoreModule.forRoot()

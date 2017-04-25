@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookTableComponent } from './book-table.component';
 import { CovalentCoreModule } from '@covalent/core';
-import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
+import { SidenavService } from '../sidenav/shared/sidenav.service';
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -12,7 +12,7 @@ describe('BookTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookTableComponent ],
-      providers: [ SidenavSharedServiceService ],
+      providers: [ SidenavService ],
       imports: [
         BrowserAnimationsModule,
         CovalentCoreModule.forRoot()
