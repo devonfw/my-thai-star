@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuCardComponent } from './menu-card/menu-card.component';
-import { GetDishesService } from './../shared/services/get-dishes.service';
+import { MenuService } from './shared/menu.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit{
-    menus = [];
-    constructor (
-      private service: GetDishesService
-    ) { }
+export class MenuComponent implements OnInit {
 
-    ngOnInit() {
-      this.service.getDishes().subscribe(data => {
+    menus: any = [];
+
+    constructor (private menuService: MenuService) {
+    }
+
+    ngOnInit(): void {
+      this.menuService.getDishes().subscribe((data: any) => {
         this.menus = data.dishes;
       });
     }
-  
+
 }

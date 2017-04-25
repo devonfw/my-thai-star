@@ -1,14 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { CreateInvitationService } from './create-invitation.service';
+import { InvitationDialogService } from './invitation-dialog.service';
 
 describe('InviationDialogService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CreateInvitationService]
+      providers: [InvitationDialogService]
     });
   });
 
-  it('should ...', inject([CreateInvitationService], (service: CreateInvitationService) => {
+  it('should ...', inject([InvitationDialogService], (service: InvitationDialogService) => {
     expect(service).toBeTruthy();
   }));
 });

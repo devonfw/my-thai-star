@@ -5,6 +5,7 @@ import { MenuComponent } from './menu.component';
 import { CovalentCoreModule } from '@covalent/core';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { SidenavSharedServiceService } from '../sidenav/shared/sidenav-shared-service.service';
+import { MenuService } from './shared/menu.service';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -13,7 +14,7 @@ describe('MenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenuComponent, MenuCardComponent ],
-      providers: [SidenavSharedServiceService],
+      providers: [SidenavSharedServiceService, MenuService],
       imports: [
         BrowserAnimationsModule,
         CovalentCoreModule.forRoot()

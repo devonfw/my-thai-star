@@ -17,7 +17,7 @@ export class BookTableComponent {
 
   constructor(public dialog: MdDialog) {}
 
-  showBookTableDialog(form): void {
+  showBookTableDialog(form: any): void {
     this.dialog.open(BookTableDialogComponent, {
       width: '40%',
       data: form

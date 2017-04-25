@@ -25,6 +25,7 @@ export class InvitationDialogComponent {
 
   sendInvitation(): void {
     alert('invitation sended');
+    this.dialog.close();
   }
 
 }
