@@ -1,4 +1,6 @@
 import { SidenavService } from '../shared/sidenav.service';
+import { MdDialog, MdSnackBar } from '@angular/material';
+import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
@@ -13,7 +15,7 @@ export class SidenavOrderComponent implements OnInit {
   @Output('removeOrder') removeEmitter = new EventEmitter();
   ingredients: string[] = [];
 
-  constructor(private sidenav: SidenavService) {
+  constructor(private sidenav: SidenavService, public snackBar: MdSnackBar, public dialog: MdDialog) {
 
   }
 
@@ -22,11 +24,15 @@ export class SidenavOrderComponent implements OnInit {
 }
 
   removeComment(): void {
-    alert("comment removed");
+    this.snackBar.open('Comment correctly removed', 'ok', {
+      duration: 2000,
+    });
   }
 
   addComment(): void {
-    alert("comment added");
+    this.dialog.open(CommentDialogComponent, {
+      width: '40%'
+    });
   }
 
   increaseOrder(): void {

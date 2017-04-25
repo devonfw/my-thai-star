@@ -21,6 +21,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
+import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.component';
 
 // SERVICES
 import { SidenavService } from './sidenav/shared/sidenav.service';
@@ -41,7 +42,8 @@ import { backendProvider } from './shared/backend/mock-backend';
     SidenavComponent,
     SidenavOrderComponent,
     InvitationDialogComponent,
-    BookTableDialogComponent
+    BookTableDialogComponent,
+    CommentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { backendProvider } from './shared/backend/mock-backend';
   ],
   entryComponents: [
     BookTableDialogComponent,
-    InvitationDialogComponent
+    InvitationDialogComponent,
+    CommentDialogComponent
   ],
   bootstrap: [ AppComponent ],
 })
