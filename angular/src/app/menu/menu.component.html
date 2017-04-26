@@ -2,16 +2,16 @@
   <form #filterForm="ngForm">
   <div style= "background-color: white">
       <div layout="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
-        <td-search-box backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
+        <td-search-box [debounce]="1" #searchField (searchDebounce)="searchInputTerm = $event" backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
         </td-search-box>
-        <md-select style="width:20%" ngModel name="sorting" placeholder="Sort By">
+        <md-select style="width:20%" ngModel name="sorting" #sorting placeholder="Sort By">
           <md-option value="price">
             Price
           </md-option>
           <md-option value="likes">
             Likes
           </md-option>
-            <md-option value="favourites">
+          <md-option value="favourites">
             Favourites
           </md-option>
         </md-select>
@@ -36,6 +36,7 @@
           <div layout="column" flex>
             <span class ="pull-bottom-md">Price</span>
             <md-slider
+              #price
               ngModel
               name="price"
               max="50"
@@ -48,6 +49,7 @@
           <div layout="column" flex>
             <span class ="pull-bottom-md">Likes</span>
             <md-slider
+              #likes
               ngModel
               name="likes"
               max=500
@@ -59,8 +61,8 @@
           </div>
         </div>
       </div>
-      <div  class="property-text-right">
-        <button md-button class="text-upper property-text-bold">Clear filters</button>
+      <div class="property-text-right">
+        <button md-button (click)="clearFilters(filterForm.form, searchField, price, likes)" class="text-upper property-text-bold">Clear filters</button>
         <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
