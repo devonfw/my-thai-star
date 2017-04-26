@@ -1,3 +1,4 @@
+import { Md2Module } from 'md2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -15,7 +16,8 @@ describe('BookTableComponent', () => {
       providers: [ SidenavService ],
       imports: [
         BrowserAnimationsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
+        Md2Module
       ],
     })
     .compileComponents();

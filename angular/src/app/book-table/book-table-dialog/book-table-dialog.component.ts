@@ -1,27 +1,29 @@
 import { MdDialogRef } from '@angular/material';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { BookTableDialogService } from './shared/book-table-dialog.service';
 
 @Component({
   selector: 'app-book-table-dialog',
   templateUrl: './book-table-dialog.component.html',
   styleUrls: ['./book-table-dialog.component.scss']
 })
-export class BookTableDialogComponent {
+export class BookTableDialogComponent implements OnInit {
 
-  data: any = {
-    date: '',
-    time: '',
-    name: '',
-    email: '',
-    adults: 0,
-    kids: 0
-  };
+  data: any;
 
-  constructor (private dialog: MdDialogRef<BookTableDialogComponent>) {
+  constructor (private bookingService: BookTableDialogService, private dialog: MdDialogRef<BookTableDialogComponent>) {
     this.data = dialog.config.data;
-    this.data.date = moment(dialog.config.data.dateTime, moment.ISO_8601).format('L');
-    this.data.time = moment(dialog.config.data.dateTime, moment.ISO_8601).format('LT');
+
+  }
+
+  ngOnInit(): void {
+    this.data = this.dialog.config.data;
+    this.data.date = moment(this.dialog.config.data.dateTime).format('DD/MM/YYYY');
+    this.data.time = moment(this.dialog.config.data.dateTime).format('LT');
+    this.bookingService.getTableId().subscribe( (data) => {
+      this.data.tableId = data.tableId;
+    });
   }
 
   sendBooking (): void {

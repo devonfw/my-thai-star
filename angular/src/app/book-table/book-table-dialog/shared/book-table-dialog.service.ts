@@ -8,4 +8,9 @@ export class BookTableDialogService {
   constructor(private http: Http) {
   }
 
+  getTableId(): Observable<any> {
+    return this.http.get('/v1/getbookingid')
+                    .map((res: any) => res.json());
+  }
+
 }

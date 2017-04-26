@@ -10,6 +10,7 @@ import { MenuService } from './shared/menu.service';
 export class MenuComponent implements OnInit {
 
     menus: any = [];
+    searchInputTerm: string;
 
     constructor (private menuService: MenuService) {
     }
@@ -21,7 +22,14 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters): void {
-      console.log(filters)
+      filters.searchTerm = this.searchInputTerm;
+    }
+
+    clearFilters(form, search, price, likes): void {
+      form.reset();
+      search.value = undefined;
+      likes.value = 0;
+      price.value = 0;
     }
 
 }

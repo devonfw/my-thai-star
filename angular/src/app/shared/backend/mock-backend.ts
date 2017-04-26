@@ -9,11 +9,18 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
         setTimeout(() => {
             // DEFINE OPERATIONS
             if (connection.request.url.endsWith('/v1/getdishes')) {
-                // debugger
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
                             dishes: dishes
+                        }
+                    })));
+            }
+            if (connection.request.url.endsWith('/v1/getbookingid')) {
+                connection.mockRespond(new Response(new ResponseOptions({
+                        status: 200,
+                        body: {
+                            tableId: Math.floor(1000000000 + Math.random() * 9000000000)
                         }
                     })));
             }
