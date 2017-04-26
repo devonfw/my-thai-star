@@ -69,3 +69,7 @@ out/
 
 # Visual Studio Code Settings
 .vscode/
+
+##################################
+
+src/data-collector/

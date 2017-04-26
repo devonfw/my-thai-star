@@ -72,3 +72,7 @@ Build and monitors the server, with the nodemon command instead of node:
 or
 
     $ yarn run serve
+
+### Database
+
+TODO

@@ -1,5 +1,8 @@
 import { Request, Response, Router as eRouter } from "express";
 import { OrderView } from "../model/interfaces";
+import db from "../logic";
+import * as api from "../model/interfaces";
+
 export const router = eRouter();
 
 router.get("/", (req: Request, res: Response) => {
@@ -55,6 +58,11 @@ router.get("/", (req: Request, res: Response) => {
                 price: 8.50,
         }];
 
-        // console.log(req.get("token"));
-        res.json(mockMenus);
+        db.getDihses((err: api.Error, dishes: api.DishView[]) => {
+                if (err){
+                        res.status(500).json(err);
+                }else{
+                        res.json(dishes);
+                }
+        });
 });
