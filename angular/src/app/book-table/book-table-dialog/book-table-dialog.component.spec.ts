@@ -1,3 +1,4 @@
+import { Md2Module } from 'md2';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -13,6 +14,7 @@ describe('BookTableDialogComponent', () => {
       declarations: [ BookTableDialogComponent ],
       imports: [
         CovalentCoreModule.forRoot(),
+        Md2Module
       ],
     })
     .compileComponents();
