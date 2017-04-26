@@ -21,7 +21,6 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters): void {
-      console.log(filters)
     }
 
 }

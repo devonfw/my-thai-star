@@ -16,9 +16,8 @@
                 <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
               </div>
               <div layout= "column" flex>
-                <md-input-container dividerColor="accent" flex>
-                  <input mdInput placeholder="Date and time" ngModel name="dateTime" type="datetime-local" required>
-                </md-input-container>
+
+                <md2-datepicker ngModel name="dateTime" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
 
                 <md-input-container dividerColor="accent" flex>
                   <input mdInput placeholder="Name" ngModel name="name" required>
@@ -56,9 +55,7 @@
                   <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
                 </div>
                 <div layout= "column" flex>
-                  <md-input-container dividerColor="accent" flex>
-                    <input mdInput placeholder="Date and time" ngModel name="dateTime" type="datetime-local" required>
-                  </md-input-container>
+                  <md2-datepicker ngModel name="dateTime" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
 
                   <md-input-container dividerColor="accent" flex>
                     <input mdInput placeholder="Name" ngModel name="name" required>

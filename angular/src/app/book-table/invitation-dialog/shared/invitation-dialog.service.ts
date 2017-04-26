@@ -1,10 +1,17 @@
+import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-// import { InvitationView } from '../models/interfaces';
+import { Http } from '@angular/http';
+
 
 @Injectable()
 export class InvitationDialogService {
-  // invitation: InvitationView;
-  constructor() {
+
+  constructor(private http: Http) {
+  }
+
+  getTableId(): Observable<any> {
+    return this.http.get('/v1/getbookingid')
+                    .map((res: any) => res.json());
   }
 
 }
