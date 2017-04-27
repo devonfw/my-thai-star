@@ -1,29 +1,32 @@
 <td-layout-nav>
   <div td-toolbar-content layout="row" layout-align="center center" flex>
-    <a md-icon-button><md-icon>star_border</md-icon></a>    
+    <a md-icon-button class="forMobile" (click)="mobileSidenavOpened = !mobileSidenavOpened"><md-icon>dehaze</md-icon></a>
+    <a md-icon-button><md-icon>star_border</md-icon></a>
     <span>My Thai Star</span>
     
     <span flex></span>
-    <nav md-tab-nav-bar>
-      <a md-tab-link
-        routerLink="/restaurant"
-        routerLinkActive #restaurant="routerLinkActive"
-        [class.navBottomBorder]="restaurant.isActive">
-        HOME
-      </a>
-      <a md-tab-link
-        routerLink="/menu"
-        routerLinkActive #menu="routerLinkActive"
-        [class.navBottomBorder]="menu.isActive">
-        MENU
-      </a>
-      <a md-tab-link
-        routerLink="/bookTable"
-        routerLinkActive #bookTable="routerLinkActive"
-        [class.navBottomBorder]="bookTable.isActive">
-        BOOK TABLE
-      </a>
-    </nav>
+    <div class="forDesktop">
+      <nav md-tab-nav-bar>
+        <a md-tab-link
+          routerLink="/restaurant"
+          routerLinkActive #restaurant="routerLinkActive"
+          [class.navBottomBorder]="restaurant.isActive">
+          HOME
+        </a>
+        <a md-tab-link
+          routerLink="/menu"
+          routerLinkActive #menu="routerLinkActive"
+          [class.navBottomBorder]="menu.isActive">
+          MENU
+        </a>
+        <a md-tab-link
+          routerLink="/bookTable"
+          routerLinkActive #bookTable="routerLinkActive"
+          [class.navBottomBorder]="bookTable.isActive">
+          BOOK TABLE
+        </a>
+      </nav>
+    </div>
     <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
     <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>format_list_bulleted</md-icon></button>
   </div>
@@ -35,9 +38,28 @@
     </div>
   </td-layout-footer>
   <md-sidenav-container style= "height:100%">
-    <md-sidenav (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end" class="pad-sm">
+
+    <md-sidenav class="sidenavMobile pad-sm" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
       <app-sidenav></app-sidenav>
     </md-sidenav>
+
+    <md-sidenav (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav style="width: 75%">
+        <md-nav-list menu-items>
+          <a md-list-item (click)="navigateTo('restaurant')">
+            <md-icon>home</md-icon>
+            HOME
+          </a>
+          <a md-list-item (click)="navigateTo('menu')">
+            <md-icon>restaurant_menu</md-icon>
+            MENU
+          </a>
+          <a md-list-item (click)="navigateTo('bookTable')">
+            <md-icon>bookmark</md-icon>
+            BOOK TABLE
+          </a>
+        </md-nav-list>
+    </md-sidenav>
+
     <router-outlet></router-outlet>
   </md-sidenav-container>
 </td-layout-nav>

@@ -14,3 +14,18 @@ nav a{
 md-sidenav {
   width: 400px;
 }
+
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+  .sidenavMobile {
+    width: 95%;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}

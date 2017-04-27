@@ -33,3 +33,18 @@
     width: 75%
   }
 }
+
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+  .sortingBy {
+    width: 30%;
+  }
+}

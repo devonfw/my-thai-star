@@ -1,5 +1,6 @@
-import { SidenavService } from './sidenav/shared/sidenav.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SidenavService } from './sidenav/shared/sidenav.service';
 
 @Component({
   selector: 'qs-app',
@@ -8,11 +9,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor(private sidenav: SidenavService) {
+  mobileSidenavOpened: boolean = false;
+
+  constructor(private router: Router, private sidenav: SidenavService) {
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
     sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+    this.mobileSidenavOpened = false;
+  }
+
 
 }

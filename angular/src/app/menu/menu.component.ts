@@ -10,6 +10,7 @@ import { MenuService } from './shared/menu.service';
 export class MenuComponent implements OnInit {
 
     menus: any = [];
+    expandIcon: string = 'expand_more';
     searchInputTerm: string;
 
     constructor (private menuService: MenuService) {
@@ -30,6 +31,10 @@ export class MenuComponent implements OnInit {
       search.value = undefined;
       likes.value = 0;
       price.value = 0;
+    }
+
+    changeExpandIcon(): void {
+      this.expandIcon === 'expand_more' ? this.expandIcon = 'expand_less' : this.expandIcon = 'expand_more';
     }
 
 }

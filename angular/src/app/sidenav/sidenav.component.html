@@ -12,7 +12,10 @@
         <span>You have not selected any order</span>
         <button md-button color="accent" (click)="navigateMenu()" class="text-upper property-text-bold">View Menu</button>
       </div>
-      <div class="pull-top" [class.scrollOrders]="orders.length > 5">
+      <div class="pull-top forDesktop" [class.scrollOrders]="orders.length > 5">
+        <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
+      </div>
+      <div class="pull-top forMobile" [class.scrollOrders]="orders.length > 3">
         <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
       </div>
     </div>

@@ -52,3 +52,15 @@
   background-image: url('../../assets/images/home-background.jpg');
   background-size: cover;
 }
+
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}
