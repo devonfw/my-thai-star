@@ -5,28 +5,38 @@
   "scripts": {
     "start": "npm run build && node ./out/src/app",
     "eb": "npm install && npm run build && node ./out/src/app",
-    "serve": "npm run build && nodemon ./out/src/app localhost 3000",
+    "serve": "start tsc -w && start nodemon ./out/src/app localhost 3000",
     "build": "tsc",
     "debug": "npm run build && node --inspect out/src/app.js",
-    "test": "mocha --opts mocha.opts"
+    "test": "mocha --opts mocha.opts",
+    "database-create": "node ./out/src/database/createTables",
+    "database-delete": "node ./out/src/database/deleteTables",
+    "database-feed": "node ./out/src/database/insertData",
+    "database": "npm run database-delete && npm run database-create && npm run database-feed"
   },
   "private": true,
   "dependencies": {
-    "aws-sdk": "^2.41.0",
+    "aws-sdk": "2.20.0",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@types/aws-sdk": "^2.7.0",
     "@types/body-parser": "^1.16.3",
     "@types/chai": "^3.5.0",
     "@types/cors": "^2.8.1",
     "@types/express": "^4.0.35",
     "@types/mocha": "^2.2.41",
+    "@types/uuid": "^2.0.29",
     "chai": "^3.5.0",
     "nodemon": "^1.11.0",
     "typescript": "^2.2.2"
+  },
+  "optionalDependencies": {
+    "@types/lodash": "^4.14.63",
+    "@types/node": "^7.0.13",
+    "lodash": "^4.17.4"
   }
 }

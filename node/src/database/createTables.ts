@@ -13,13 +13,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -32,13 +32,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -51,13 +51,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -70,13 +70,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -89,13 +89,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -108,13 +108,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -127,13 +127,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -146,13 +146,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -165,13 +165,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -184,13 +184,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -203,13 +203,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
+                AttributeName: "id",
                 KeyType: "HASH",
             },
         ],
@@ -225,8 +225,8 @@ tables.forEach((params) => {
     dynamodb.createTable(params, (err: Error, data: any) => {
         if (err) {
             console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
+        } /*else {
             console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
-        }
+        }*/
     });
 });

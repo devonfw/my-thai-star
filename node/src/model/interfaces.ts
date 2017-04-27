@@ -48,3 +48,8 @@ export interface Event {
     date: string;
     hour: string;
 }
+
+export interface Error{
+    code: number;
+    message: string;
+}
