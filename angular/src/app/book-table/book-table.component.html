@@ -1,14 +1,15 @@
 <td-layout>
-  <div class="property-text-center pad-top-sm" flex>
+  <div class="property-text-center pad-top-sm pad-right-sm pad-left-sm" flex>
     <h3>You can invite your friends to lunch or book a table</h3>
   </div>
-  <md-card class="push-lg">
+  <md-card class="push-lg forDesktop">
     <md-tab-group md-stretch-tabs>
       <md-tab label="Book a table">
         <div layout="row" flex>
 
           <div layout="column" class= "menu-image" flex>
           </div>
+
           <div style ="width: 50%">
             <form class="pad" #bookForm="ngForm">
               <div layout="column" flex>
@@ -34,6 +35,9 @@
                 <md-input-container dividerColor="accent" flex>
                   <input mdInput placeholder="Kids" ngModel name="kids" type="number" required>
                 </md-input-container>
+
+                <md-checkbox #terms>Accept terms</md-checkbox>
+                
               </div>
               <div style="text-align: right">
                 <button md-button (click)="showBookTableDialog(bookForm.form.value)" [disabled]="!bookForm.form.valid" color="accent" class="text-upper">Book table</button>
@@ -64,6 +68,7 @@
                   <md-input-container dividerColor="accent" flex>
                     <input mdInput placeholder="Email" ngModel name="email" required>
                   </md-input-container>
+
                 </div>
                 <h4>Friends</h4>
                 <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="invitations" placeholder="Enter invitation email"></td-chips>
@@ -71,6 +76,77 @@
               <div style="text-align: right">
                 <button md-button (click)="showInviteDialog(invitationForm.form.value)" [disabled]="!invitationForm.form.valid" color="accent" class="text-upper">Invite friends</button>
               </div>
+            </div>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </md-card>
+
+  <md-card class="push-sm forMobile">
+    <md-tab-group md-stretch-tabs>
+      <md-tab label="Book a table">
+        <div layout="column" flex>
+          <img md-card-image src='../../assets/images/slider-1.jpg'>
+          <form class="pad" #bookMobileForm="ngForm">
+            <div layout="column" flex>
+              <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
+              <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
+            </div>
+            <div layout= "column" flex>
+
+              <md2-datepicker ngModel name="dateTime" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
+
+              <md-input-container dividerColor="accent" flex>
+                <input mdInput placeholder="Name" ngModel name="name" required>
+              </md-input-container>
+
+              <md-input-container dividerColor="accent" flex>
+                <input mdInput placeholder="Email" ngModel name="email" required>
+              </md-input-container>
+
+              <md-input-container dividerColor="accent" flex>
+                <input mdInput placeholder="Adults" ngModel name="adults" type="number" required>
+              </md-input-container>
+
+              <md-input-container dividerColor="accent" flex>
+                <input mdInput placeholder="Kids" ngModel name="kids" type="number" required>
+              </md-input-container>
+
+              <md-checkbox #terms>Accept terms</md-checkbox>
+
+            </div>
+            <div style="text-align: right">
+              <button md-button (click)="showBookTableDialog(bookMobileForm.form.value)" [disabled]="!bookMobileForm.form.valid" color="accent" class="text-upper">Book table</button>
+            </div>
+          </form>
+        </div>
+      </md-tab>
+
+      <md-tab label="Invite friends">
+        <div layout="column" flex>
+          <img md-card-image src='../../assets/images/slider-2.jpg'>
+          <div class="pad">
+            <form #invitationMobileForm="ngForm">
+              <div layout="column" class="push-bottom" flex>
+                <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
+              </div>
+              <div layout= "column" flex>
+                <md2-datepicker ngModel name="dateTime" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
+
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Name" ngModel name="name" required>
+                </md-input-container>
+
+                <md-input-container dividerColor="accent" flex>
+                  <input mdInput placeholder="Email" ngModel name="email" required>
+                </md-input-container>
+              </div>
+              <h4>Friends</h4>
+              <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="invitations" placeholder="Enter invitation email"></td-chips>
+            </form>
+            <div style="text-align: right">
+              <button md-button (click)="showInviteDialog(invitationMobileForm.form.value)" [disabled]="!invitationMobileForm.form.valid" color="accent" class="text-upper">Invite friends</button>
             </div>
           </div>
         </div>

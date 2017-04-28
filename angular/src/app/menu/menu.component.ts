@@ -11,7 +11,6 @@ export class MenuComponent implements OnInit {
 
     menus: any = [];
     expandIcon: string = 'expand_more';
-    searchInputTerm: string;
 
     constructor (private menuService: MenuService) {
     }
@@ -23,12 +22,11 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters): void {
-      filters.searchTerm = this.searchInputTerm;
+      // call to filter function service
     }
 
     clearFilters(form, search, price, likes): void {
       form.reset();
-      search.value = undefined;
       likes.value = 0;
       price.value = 0;
     }

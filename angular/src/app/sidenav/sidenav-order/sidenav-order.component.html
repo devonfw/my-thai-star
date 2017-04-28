@@ -1,6 +1,6 @@
 <div layout="row" class="pad-top-sm pad-right-sm" style="border-bottom: 1px solid lightgrey" flex>
   
-  <button md-icon-button (click)="removeOrder()" class="push-bottom-xs"><md-icon>clear</md-icon></button>
+  <button md-icon-button (click)="removeOrder()" class="push-bottom-xs"><md-icon style="color: lightgray">clear</md-icon></button>
   
   <div layout="column" class="pull-top-xs" flex>
     <span class="orderName">{{order.orderName}}</span>
@@ -15,8 +15,8 @@
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.comment">Add comment</label>
   </div>
 
-  <button md-icon-button (click)="openCommentDialog()" [class.hideButton]="!order.comment" class="push-bottom-xs" [mdTooltip]="order.comment" mdTooltipPosition="above">
-    <md-icon color="accent">remove_red_eye</md-icon>
+  <button md-icon-button (click)="openCommentDialog()" [class.hideButton]="!order.comment" class="push-bottom-xs" mdTooltipPosition="above">
+    <md-icon color="accent">speaker_notes</md-icon>
   </button>
 
   <div layout="row" class="push-bottom-xs" flex>

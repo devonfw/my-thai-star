@@ -28,9 +28,9 @@
       </nav>
     </div>
     <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
-    <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>format_list_bulleted</md-icon></button>
+    <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
   </div>
-  <td-layout-footer>
+  <td-layout-footer class="forDesktop">
     <div layout="row" layout-align="center center" flex>
       <span>MY THAI STAR 2017</span>
       <span flex></span>
@@ -39,25 +39,25 @@
   </td-layout-footer>
   <md-sidenav-container style= "height:100%">
 
-    <md-sidenav class="sidenavMobile pad-sm" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
+    <md-sidenav class="sidenavMobile" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
       <app-sidenav></app-sidenav>
     </md-sidenav>
 
-    <md-sidenav (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav style="width: 75%">
-        <md-nav-list menu-items>
-          <a md-list-item (click)="navigateTo('restaurant')">
-            <md-icon>home</md-icon>
-            HOME
-          </a>
-          <a md-list-item (click)="navigateTo('menu')">
-            <md-icon>restaurant_menu</md-icon>
-            MENU
-          </a>
-          <a md-list-item (click)="navigateTo('bookTable')">
-            <md-icon>bookmark</md-icon>
-            BOOK TABLE
-          </a>
-        </md-nav-list>
+    <md-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
+      <md-nav-list menu-items>
+        <a md-list-item (click)="navigateTo('restaurant')">
+          <md-icon>home</md-icon>
+          HOME
+        </a>
+        <a md-list-item (click)="navigateTo('menu')">
+          <md-icon>restaurant_menu</md-icon>
+          MENU
+        </a>
+        <a md-list-item (click)="navigateTo('bookTable')">
+          <md-icon>bookmark</md-icon>
+          BOOK TABLE
+        </a>
+      </md-nav-list>
     </md-sidenav>
 
     <router-outlet></router-outlet>

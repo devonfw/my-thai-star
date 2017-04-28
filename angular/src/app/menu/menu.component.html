@@ -3,9 +3,16 @@
     <div style= "background-color: white">
       
       <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
-        <div>
-          <td-search-box [debounce]="1" #searchField (searchDebounce)="searchInputTerm = $event" backIcon="arrow_back" placeholder="Search here" showUnderline ="true" alwaysVisible="true">
-          </td-search-box>
+        <div layout="row" style="align-items:center" flex>
+          <button md-icon-button><md-icon>search</md-icon></button>
+          <md-input-container dividerColor="accent" class="searchBy">
+            <input mdInput placeholder="Search our dishes" ngModel name="searchTerm">
+          </md-input-container>
+        </div>
+        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%">
+          <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
+          <md-checkbox ngModel name="starter">Starter</md-checkbox>
+          <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
         </div>
         <div class="pad-sm sortingBy">
           <md-select style="width: 100%" ngModel name="sorting" #sorting placeholder="Sort By">
@@ -22,7 +29,73 @@
         </div>
       </div>
 
-      <td-expansion-panel label="label" sublabel="sublabel" (expanded)="changeExpandIcon()" (collapsed)="changeExpandIcon()">
+      <div layout="row" class="justify-space-between forDesktop" style="border-bottom:1px solid lightgrey; align-items:center" flex>
+        <span class ="pad-sm filter-title">FILTERS</span>
+      </div>
+
+      <div layout="column" class ="pad-left-md pad-top pad-right-md forDesktop" style= "border-bottom: 1px solid lightgrey" flex>
+        
+        <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
+          <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
+            <md-checkbox ngModel name="rice">Rice</md-checkbox>
+            <md-checkbox ngModel name="curry">Curry</md-checkbox>
+          </div>    
+          <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <md-checkbox ngModel name="vegan">Vegan</md-checkbox>
+            <md-checkbox ngModel name="vegetarian">Vegetarian</md-checkbox>
+          </div>   
+          <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <md-checkbox ngModel name="favourites">Favourites</md-checkbox>
+          </div>
+        </div>
+
+        <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
+          <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
+          <md-checkbox ngModel name="starter">Starter</md-checkbox>
+          <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>
+          <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
+          <md-checkbox ngModel name="rice">Rice</md-checkbox>
+          <md-checkbox ngModel name="curry">Curry</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>        
+          <md-checkbox ngModel name="vegan">Vegan</md-checkbox>
+          <md-checkbox ngModel name="vegetarian">Vegetarian</md-checkbox>
+          <span style="border-right: 1px solid lightgray"></span>        
+          <md-checkbox ngModel name="favourites">Favourites</md-checkbox>
+        </div>
+
+        <div layout-gt-xs="row" class="push-top-sm" flex>
+          <div flex-gt-xs="50" layout="column" flex>
+            <span class ="pull-bottom-md">Price</span>
+            <md-slider
+              #price
+              ngModel
+              name="price"
+              max="50"
+              min="1"
+              step="1"
+              thumb-label="true"
+              tick-interval="10">
+            </md-slider>
+          </div>
+          <div flex-gt-xs="50" layout="column" flex>
+            <span class ="pull-bottom-md">Likes</span>
+            <md-slider
+              #likes
+              ngModel
+              name="likes"
+              max=500
+              min=0
+              step=5
+              thumb-label="true"
+              tick-interval="25">
+            </md-slider>
+          </div>
+        </div>
+      </div>
+
+      <td-expansion-panel class="forMobile" label="label" sublabel="sublabel" (expanded)="changeExpandIcon()" (collapsed)="changeExpandIcon()">
         <ng-template td-expansion-panel-header>
           <div layout="row" class="justify-space-between" style="border-bottom:1px solid lightgrey; align-items:center" flex>
             <span class ="pad-sm filter-title">FILTERS</span>
@@ -32,11 +105,6 @@
         <div layout="column" class ="pad-left-md pad-top pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
           
           <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
-              <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
-              <md-checkbox ngModel name="starter">Starter</md-checkbox>
-              <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
-            </div>
             <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
               <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
               <md-checkbox ngModel name="rice">Rice</md-checkbox>
@@ -103,7 +171,12 @@
     </div>
   </form>
 
-  <div flex layout="row" class="pad justify-space-around flex-wrap">
+  <div flex layout="row" class="forDesktop pad justify-space-around flex-wrap">
     <app-menu-card *ngFor="let menu of menus" [menu]="menu"></app-menu-card>
   </div>
+
+  <div flex layout="row" class="forMobile flex-wrap">
+    <app-menu-card-mobile *ngFor="let menu of menus" [menu]="menu"></app-menu-card-mobile>
+  </div>
+
 </td-layout>

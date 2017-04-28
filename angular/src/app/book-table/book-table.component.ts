@@ -14,19 +14,22 @@ import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog
 export class BookTableComponent {
 
   invitationModel: string[] = [];
+  screenSize: string;
 
   constructor(public dialog: MdDialog) {}
 
   showBookTableDialog(form: any): void {
+    window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
     this.dialog.open(BookTableDialogComponent, {
-      width: '40%',
+      width: this.screenSize,
       data: form
     });
   }
 
   showInviteDialog(form): void {
+    window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
     this.dialog.open(InvitationDialogComponent, {
-      width: '40%',
+      width: this.screenSize,
       data: form
     });
   }

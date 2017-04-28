@@ -28,3 +28,15 @@
   background-repeat: no-repeat;
   background-image: url('../../assets/images/slider-2.jpg');
 }
+
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}

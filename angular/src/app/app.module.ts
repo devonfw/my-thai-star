@@ -23,6 +23,7 @@ import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.com
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
 import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.component';
+import { MenuCardMobileComponent } from './menu/menu-card-mobile/menu-card-mobile.component';
 
 // SERVICES
 import { SidenavService } from './sidenav/shared/sidenav.service';
@@ -40,6 +41,7 @@ import { backendProvider } from './shared/backend/mock-backend';
     BookTableComponent,
     MenuComponent,
     MenuCardComponent,
+    MenuCardMobileComponent,
     SidenavComponent,
     SidenavOrderComponent,
     InvitationDialogComponent,
