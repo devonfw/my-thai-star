@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 /**
  * API routes
  */
-app.use("/v1/getdishes", dishes.router);
+app.use("/mythaistar/services/rest/dishcomponent/v1/dishes", dishes.router);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

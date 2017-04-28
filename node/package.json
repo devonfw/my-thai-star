@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && node ./out/src/app",
+    "start": "node ./out/src/app",
     "eb": "npm install && npm run build && node ./out/src/app",
     "serve": "start tsc -w && start nodemon ./out/src/app localhost 3000",
     "build": "tsc",
@@ -11,8 +11,8 @@
     "test": "mocha --opts mocha.opts",
     "database-create": "node ./out/src/database/createTables",
     "database-delete": "node ./out/src/database/deleteTables",
-    "database-feed": "node ./out/src/database/insertData",
-    "database": "npm run database-delete && npm run database-create && npm run database-feed"
+    "database-seed": "node ./out/src/database/insertData",
+    "database": "npm run database-delete && npm run database-create && npm run database-seed"
   },
   "private": true,
   "dependencies": {

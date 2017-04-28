@@ -9,6 +9,7 @@ const conf = {
 
 const dynamodb = new AWS.DynamoDB(conf);
 
+/*
 const tables = [
     {
         TableName: "Category",
@@ -49,8 +50,29 @@ tables.forEach((params) => {
     dynamodb.deleteTable(params, (err: Error, data: any) => {
         if (err) {
             console.error("Unable to delete table. Error JSON:", JSON.stringify(err, null, 2));
-        } /*else {
-            console.log("Deleted table. Table description JSON:", JSON.stringify(data, null, 2));
-        }*/
+        }
     });
-})
+});*/
+
+
+dynamodb.listTables().eachPage((err, data) => {
+    if (err) {
+        console.error(err); // an error occurred
+        return false;
+    } else if (data && data.TableNames) {
+        
+        data.TableNames.map((elem) => {
+            return {
+                TableName: elem,
+            }
+        }).forEach((params) => {
+            dynamodb.deleteTable(params, (err: Error, data: any) => {
+                if (err) {
+                    console.error("Unable to delete table. Error JSON:", JSON.stringify(err, null, 2));
+                }
+            });
+        });
+    }
+
+    return true;
+});

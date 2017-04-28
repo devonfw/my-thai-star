@@ -8,69 +8,137 @@ import fn from "../data-collector/src/index";
 const creds = new Credentials("akid", "secret", "session");
 fn.setDB(dynamo, { endpoint: "http://localhost:8000/", region: "us-west-2", credentials: creds });
 
-fn.insert('Dish', {
-    id: uuid.v1(),
-    //favourite: false,
-    image: "../../assets/images/basil-fried.jpg",
-    likes: 21,
-    orderDescription:
+const Dishes = [
+    {
+    // Id: uuid.v1(),
+    Id: "1",
+    // favourite: false,
+    Image: "../../assets/images/basil-fried.jpg",
+    Likes: 21,
+    Description:
     "Lorem ipsum dolor sit amet. Proin fermentum lobortis neque. " +
     "Pellentesque habitant morbi tristique.",
-    orderName: "Red Curry",
-    price: 5.90,
-}).then((res: string) => {
-    console.log('\nInsert of the Dish: orderName: "Red Curry"');
-    console.log(res);
-}, (err: Error) => {
-    console.log(err)
-});
-
-fn.insert('Dish', {
-    id: uuid.v1(),
+    Name: "Red Curry",
+    Price: 5.90,
+}, {
+    // Id: uuid.v1(),
+    Id: "2",
     //favourite: false,
-    image: "../../assets/images/garlic-paradise.jpg",
-    likes: 10,
-    orderDescription:
+    Image: "../../assets/images/garlic-paradise.jpg",
+    Likes: 10,
+    Description:
     "Consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. " +
     "Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.",
-    orderName: "Purple Curry",
-    price: 9.00,
-}).then((res: string) => {
-    console.log('\nInsert of the Dish: orderName: "Purple Curry"');
-    console.log(res);
-}, (err: Error) => {
-    console.log(err)
-});
-
-fn.insert('Dish', {
-    id: uuid.v1(),
+    Name: "Purple Curry",
+    Price: 9.00,
+}, {
+    // Id: uuid.v1(),
+    Id: "3",
     //favourite: false,
-    image: "../../assets/images/green-curry.jpg",
-    likes: 61,
-    orderDescription:
+    Image: "../../assets/images/green-curry.jpg",
+    Likes: 61,
+    Description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
     "Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.",
-    orderName: "Green Curry",
-    price: 7.60,
-}).then((res: string) => {
-    console.log('\nInsert of the Dish: orderName: "Green Curry"');
-    console.log(res);
-}, (err: Error) => {
-    console.log(err)
-});
-
-fn.insert('Dish', {
-    id: uuid.v1(),
+    Name: "Green Curry",
+    Price: 7.60,
+},{
+    // Id: uuid.v1(),
+    Id: "4",
     //favourite: false,
-    image: "../../assets/images/dish.png",
-    likes: 48,
-    orderDescription: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
-    orderName: "Yellow Curry",
-    price: 8.50,
-}).then((res: string) => {
-    console.log('\nInsert of the Dish: orderName: "Yellow Curry"');
+    Image: "../../assets/images/dish.png",
+    Likes: 48,
+    Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
+    Name: "Yellow Curry",
+    Price: 8.50,
+}];
+
+const Ingredients = [
+    { 
+        Id: "1",
+        Name: "Tofu", 
+        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
+        Price: 1, 
+    }, { 
+        Id: "2",
+        Name: "Chiken", 
+        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
+        Price: 1, 
+    }, { 
+        Id: "3",
+        Name: "Pork", 
+        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
+        Price: 2, 
+    }];
+
+const DishIngredient = [
+    {
+        Id: uuid.v1(),
+        IdDish: "1",
+        IdIngredient: "1"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "1",
+        IdIngredient: "2"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "1",
+        IdIngredient: "3"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "2",
+        IdIngredient: "1"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "2",
+        IdIngredient: "2"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "2",
+        IdIngredient: "3"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "3",
+        IdIngredient: "1"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "3",
+        IdIngredient: "2"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "3",
+        IdIngredient: "3"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "4",
+        IdIngredient: "1"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "4",
+        IdIngredient: "2"
+    }, {
+        Id: uuid.v1(),
+        IdDish: "4",
+        IdIngredient: "3"
+    }];
+
+fn.insert('Dish', Dishes).then((res: string) => {
+    console.log('\nAll dishes inserted');
     console.log(res);
 }, (err: Error) => {
     console.log(err)
 });
 
+fn.insert("Ingredient", Ingredients).then((res: string) => {
+    console.log('\nAll ingredients inserted');
+    console.log(res);
+}, (err: Error) => {
+    console.log(err)
+});
+
+fn.insert("DishIngredient", DishIngredient).then((res: string) => {
+    console.log('\nAll ingredients inserted');
+    console.log(res);
+}, (err: Error) => {
+    console.log(err)
+});

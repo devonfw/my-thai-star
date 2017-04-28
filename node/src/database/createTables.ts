@@ -13,13 +13,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -32,13 +32,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -51,13 +51,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -70,13 +70,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -89,13 +89,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -108,13 +108,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -122,18 +122,18 @@ const tables = [
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "ReservationMenu",
+        TableName: "OrderDishExtraIngredient",
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -141,18 +141,18 @@ const tables = [
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "Reservation",
+        TableName: "UserFavourite",
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -165,13 +165,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -184,13 +184,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -203,13 +203,13 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 AttributeType: "S",
             },
         ],
         KeySchema: [
             {
-                AttributeName: "id",
+                AttributeName: "Id",
                 KeyType: "HASH",
             },
         ],
@@ -218,6 +218,63 @@ const tables = [
             WriteCapacityUnits: 1,
         },
         TableName: "UserRole",
+    },
+    {
+        AttributeDefinitions: [
+            {
+                AttributeName: "Id",
+                AttributeType: "S",
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: "Id",
+                KeyType: "HASH",
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: "OrderLine",
+    },
+    {
+        AttributeDefinitions: [
+            {
+                AttributeName: "Id",
+                AttributeType: "S",
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: "Id",
+                KeyType: "HASH",
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: "Order",
+    },
+    {
+        AttributeDefinitions: [
+            {
+                AttributeName: "Id",
+                AttributeType: "S",
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: "Id",
+                KeyType: "HASH",
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: "Reservation",
     },
 ];
 
