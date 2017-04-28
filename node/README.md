@@ -2,7 +2,7 @@
 
 ### Dependencies
 
-No more dependencies out of the package.json are needed, so the first command required for the installation is:
+The first command required for the installation is:
 
     $ npm install
 
@@ -29,6 +29,39 @@ or
     $ yarn global add typescript
 
     $ yarn global add nodemon
+
+Finally, we need to clone serverless-data-collector into our project:
+Clone serverless-data-collector into project:
+
+    $ mkdir src/data-collector
+    $ cd src/data-collector
+    $ git clone https://github.com/devonfw/serverless-data-collector.git .
+
+## Database
+
+First of all, download DynamoDB in order to work with it in local: [http://docs.aws.amazon.com/...](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
+
+### Running DynamoDB Local:
+
+    $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar
+
+### Create tables:
+
+Delete all tables:
+
+    $ npm run database-delete
+
+Create all tables:
+
+    $ npm run database-create
+
+Insert all data:
+
+    $ npm run database-seeds
+
+To delete+create+insert data:
+
+    $ npm run database
 
 ## Execution
 
@@ -72,7 +105,3 @@ Build and monitors the server, with the nodemon command instead of node:
 or
 
     $ yarn run serve
-
-### Database
-
-TODO
