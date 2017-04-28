@@ -28,7 +28,9 @@
       </nav>
     </div>
     <button md-icon-button mdTooltip="User"><md-icon>account_circle</md-icon></button>
-    <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
+    <td-notification-count color="accent" [notifications]="sidenav.getNumberOrders()">
+      <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
+    </td-notification-count>
   </div>
   <td-layout-footer class="forDesktop">
     <div layout="row" layout-align="center center" flex>

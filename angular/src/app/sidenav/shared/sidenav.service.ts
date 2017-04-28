@@ -6,7 +6,7 @@ export class SidenavService {
 
   opened: boolean = false;
 
-  orders: any[] = [
+  orders: any = [
   ];
 
   public openSideNav(): void {
@@ -19,6 +19,10 @@ export class SidenavService {
 
   public getOrderData(): any[] {
     return this.orders;
+  };
+
+  public getNumberOrders(): any[] {
+    return this.orders.length;
   };
 
   public addOrder(order: any): void {
