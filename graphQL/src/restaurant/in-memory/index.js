@@ -41,7 +41,7 @@ const invitations = [{
         id: 1,
         reservation: 1,
         status: 'PENDING',
-        invited: 'user2@test.com'
+        invited: 'tehi@lenovog4.com'
     },{
         id: 2,
         reservation: 1,
