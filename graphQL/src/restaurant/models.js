@@ -22,8 +22,8 @@ exports.Reservations = class Reservations {
     return this.connector.getReservations();
   }
 
-  addParticipant(reservationId, userLogin) {
-    return this.connector.addParticipant(reservationId, userLogin);
+  addParticipant(reservationId, userEmail) {
+    return this.connector.addParticipant(reservationId, userEmail);
   }
 
   create(inReservation, owner) {
@@ -107,8 +107,8 @@ exports.Users = class Users {
     return this.connector.getUsers();
   }
 
-  create(login, email){
-    return this.connector.createUser(login, email);
+  create(login, email, pswd){
+    return this.connector.createUser(login, email, pswd);
   }
 }
 

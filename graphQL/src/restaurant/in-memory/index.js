@@ -3,13 +3,13 @@ const { find, filter, includes, max, map } = require('lodash');
 // --- static storage with some initial data for tests ---
 
 const users = [{
-        email: 'user1@test.com',
+        email: 'jefi@honor-8.com',
         login: 'user1',
         pswd: 'user1',
         friends: ['user2'],
         reservations: [1, 2]
     },{
-        email: 'user2@test.com',
+        email: 'tehi@lenovog4.com',
         login: 'user2',
         pswd: 'user2',
         friends: [],
@@ -24,7 +24,7 @@ const reservations = [{
         owner: 'user1',
         date: '13-04-2017',
         time: '10:30',
-        participants: ['user2@test.com', 'externalUser@test.com'],
+        participants: ['jefi@honor-8.com', 'externalUser@test.com'],
         invitations:[],
     },{
         id: 2,
@@ -152,8 +152,8 @@ exports.storage = {
     getUsers() {
         return users.map(removeSensitiveData);
     },
-    createUser(login, email) {
-        const newUser = {login, email};
+    createUser(login, email, pswd) {
+        const newUser = {login, email, pswd, reservations:[], friends:[]};
         users.push(newUser);
         return newUser;
     },

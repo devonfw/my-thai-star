@@ -37,7 +37,7 @@ exports.buildQueryResolver = (inModelName) => (root, { first = 10, after }, cont
     const modelName = capitalizeFirstLetter(inModelName.toLowerCase());
     const model = context[modelName];
 
-    let afterIndex = 0;
+    let afterIndex = -1;
 
     // Get ID from after argument or default to first item.
     if (typeof after === "string") {
