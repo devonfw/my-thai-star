@@ -36,7 +36,7 @@ export class SidenavComponent implements OnInit {
 
   calculateTotal(): number {
     let sum: number = 0;
-    _.forEach(this.orders, function(o) {
+    _.forEach(this.orders, function(o) { // Remark: reduce function could be used, use arrow functions
       sum += o.number * o.price;
       _.forEach(o.options, function(value, key) {
         if(value.selected) {

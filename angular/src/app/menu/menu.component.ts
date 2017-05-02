@@ -38,6 +38,7 @@ export class MenuComponent implements OnInit {
 
     changeExpandIcon(): void {
       this.expandIcon === 'expand_more' ? this.expandIcon = 'expand_less' : this.expandIcon = 'expand_more';
+      // Remark: Maybe simpler: this.expandIcon = (this.expandIcon === 'expand_more') ? 'expand_less' : 'expand_more';
     }
 
 }

@@ -33,6 +33,9 @@ import { MenuService } from './menu/shared/menu.service';
 // BACKEND
 import { backendProvider } from './shared/backend/mock-backend';
 
+// Remark: Imho it would be nice if app module consists mainly from othe rmodules imports. e.g.:
+// https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,7 @@ import { backendProvider } from './shared/backend/mock-backend';
     InvitationDialogService,
     MenuService,
     backendProvider,
-    MockBackend,
+    MockBackend, // Remark: MockBackend as a test utility should not be imported on app module level. 
     BaseRequestOptions
   ],
   entryComponents: [
