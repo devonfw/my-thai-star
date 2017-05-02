@@ -4,8 +4,9 @@
   "description": "Example implementation of restaurant backend with graph QL",
   "scripts": {
     "start": "node src/index.js",
+    "prod": "npm run lint && set prodMode=true && node src/index.js",
     "dev": "nodemon src/index.js --watch src --exec node",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "test": "jest && npm run lint",
     "test:watch": "jest --watch"
   },
@@ -27,6 +28,9 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
     "jest": "^19.0.2",
     "nodemon": "^1.11.0"
   }

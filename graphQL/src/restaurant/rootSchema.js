@@ -1,11 +1,11 @@
 const { merge } = require('lodash');
 const { makeExecutableSchema } = require('graphql-tools');
 
-const { schema, resolvers} = require('./restaurantSchema');
+const { schema, resolvers } = require('./restaurantSchema');
 const pagingSchemaFactory = require('./pagingSchemaFactory');
 
 
-// TODO: At some point of time remove queries that allow access to data 
+// TODO: At some point of time remove queries that allow access to data
 // not owned by the user (or add some roles and check privileges)
 const rootSchema = [`
   type Query {
@@ -41,8 +41,8 @@ const rootResolvers = {
     hello() {
       return 'World';
     },
-    
-    
+
+
     users(root, args, context) {
       return context.Users.getAll();
     },
@@ -53,37 +53,37 @@ const rootResolvers = {
       return context.currentUser || null;
     },
 
-    reservations(root, args, context){
+    reservations(root, args, context) {
       return context.Reservations.getAll();
     },
-    reservation(root, {id}, context){
+    reservation(root, { id }, context) {
       return context.Reservations.getById(id);
     },
 
-    invitations(root, args, context){
+    invitations(root, args, context) {
       return context.Invitations.getAll();
     },
-    invitation(root, {id}, context){
+    invitation(root, { id }, context) {
       return context.Invitations.getById(id);
     },
 
-    dishes(root, args, context){
+    dishes(root, args, context) {
       return context.Dishes.getAll();
     },
     dishesPaginated: pagingSchemaFactory.buildQueryResolver('Dishes'),
 
   },
   Mutation: {
-    addUser(_, {login, email, pswd}, context){
+    addUser(_, { login, email, pswd }, context) {
       return context.Users.create(login, email, pswd);
     },
-    inviteFriend(_, {reservationId, userEmail}, context){
+    inviteFriend(_, { reservationId, userEmail }, context) {
       return context.Reservations.addParticipant(reservationId, userEmail);
     },
-    createReservation(_, {reservation}, context){
+    createReservation(_, { reservation }, context) {
       return context.Reservations.create(reservation, context.currentUser);
-    }
-  }
+    },
+  },
 };
 
 const DishSchema = pagingSchemaFactory.buildSchema('Dish');

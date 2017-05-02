@@ -1,11 +1,10 @@
 const crypto = require('crypto');
 
 
-const randomValueHex  = (length) => 
+const randomValueHex = length =>
         crypto.randomBytes(Math.ceil(length / 2))
           .toString('hex') // convert to hexadecimal format
           .slice(0, length);   // return required number of characters
-
 
 
 exports.Reservations = class Reservations {
@@ -17,8 +16,8 @@ exports.Reservations = class Reservations {
   getById(id) {
     return this.connector.getReservation(id);
   }
-  
-  getAll(){
+
+  getAll() {
     return this.connector.getReservations();
   }
 
@@ -30,7 +29,7 @@ exports.Reservations = class Reservations {
     const newReservation = this.connector.createReservation(inReservation, owner);
     this.connector.addReservationForUser(newReservation.owner, newReservation.id);
     newReservation.participants
-      .map((email) => this.connector.createInvitation(newReservation.id, email, randomValueHex(64)))
+      .map(email => this.connector.createInvitation(newReservation.id, email, randomValueHex(64)))
       .forEach((invitation) => {
         this.connector.addInvitation(newReservation.id, invitation.id);
         this.mailer.sendInvitation(newReservation, invitation);
@@ -40,14 +39,14 @@ exports.Reservations = class Reservations {
     return newReservation;
   }
 
-  cancel(reservationId){
+  cancel(reservationId) {
     const reservation = this.connector.cancelReservation(reservationId);
 
     reservation.invitations
-      .map((invitationId) => this.connector.cancelInvitation(invitationId));
+      .map(invitationId => this.connector.cancelInvitation(invitationId));
     this.mailer.sendCancellation(reservation);
   }
-}
+};
 
 exports.Invitations = class Invitations {
   constructor({ connector, mailer }) {
@@ -58,16 +57,16 @@ exports.Invitations = class Invitations {
   getById(id) {
     return this.connector.getInvitation(id);
   }
-  
+
   getByToken(token) {
     return this.connector.getInvitationByToken(token);
   }
-  
-  getAll(){
+
+  getAll() {
     return this.connector.getInvitations();
   }
 
-  reject(invitationToken){
+  reject(invitationToken) {
     const invitation = this.connector.rejectInvitation(invitationToken);
     if (invitation && invitation.status !== 'CANCELLED') {
       const reservation = this.connector.getReservation(invitation.reservation);
@@ -76,8 +75,8 @@ exports.Invitations = class Invitations {
     return invitation;
   }
 
-  
-  accept(invitationToken){
+
+  accept(invitationToken) {
     const invitation = this.connector.acceptInvitation(invitationToken);
     if (invitation && invitation.status !== 'CANCELLED') {
       const reservation = this.connector.getReservation(invitation.reservation);
@@ -85,7 +84,7 @@ exports.Invitations = class Invitations {
     }
     return invitation;
   }
-}
+};
 
 exports.Users = class Users {
   constructor({ connector }) {
@@ -103,14 +102,14 @@ exports.Users = class Users {
     };
   }
 
-  getAll(){
+  getAll() {
     return this.connector.getUsers();
   }
 
-  create(login, email, pswd){
+  create(login, email, pswd) {
     return this.connector.createUser(login, email, pswd);
   }
-}
+};
 
 
 exports.Dishes = class Dishes {
@@ -122,23 +121,23 @@ exports.Dishes = class Dishes {
     return this.connector.getDish(id);
   }
 
-  getAll(){
+  getAll() {
     return this.connector.getDishes();
   }
 
   getRange(sliceIndex, count) {
-    return this.getAll().slice(sliceIndex, sliceIndex+count);
+    return this.getAll().slice(sliceIndex, sliceIndex + count);
   }
 
-  getCount(){
+  getCount() {
     return this.getAll().length;
   }
-  
-  findIndex(id){
+
+  findIndex(id) {
     return this.getAll().indexOf(this.get(id));
   }
 
-}
+};
 
 
 exports.Ingredients = class Ingredients {
@@ -150,4 +149,4 @@ exports.Ingredients = class Ingredients {
     return this.connector.getIngredient(id);
   }
 
-}
+};

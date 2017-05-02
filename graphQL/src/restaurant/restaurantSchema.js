@@ -83,36 +83,36 @@ exports.schema = [`
 
 exports.resolvers = {
   User: {
-      friends(root, args, context){
-        return root.friends.map((login)=> context.Users.getByLogin(login));
-      },
-      reservations(root, args, context){
-          return root.reservations.map((id) => context.Reservations.getById(id));
-      },
+    friends(root, args, context) {
+      return root.friends.map(login => context.Users.getByLogin(login));
+    },
+    reservations(root, args, context) {
+      return root.reservations.map(id => context.Reservations.getById(id));
+    },
   },
   Reservation: {
-      owner(root, args, context){
-          return context.Users.getByLogin(root.owner);
-      },
-      participants(root, args, context){
-          return root.participants.map((email) => context.Users.getByEmail(email));
-      },
-      invitations(root, args, context){
-          return root.invitations.map((id) => context.Invitations.getById(id));
-      },
+    owner(root, args, context) {
+      return context.Users.getByLogin(root.owner);
+    },
+    participants(root, args, context) {
+      return root.participants.map(email => context.Users.getByEmail(email));
+    },
+    invitations(root, args, context) {
+      return root.invitations.map(id => context.Invitations.getById(id));
+    },
   },
   Invitation: {
-      reservation(root, args, context){
-          return context.Reservations.getById(root.reservation);
-      },
-      invited(root,  args, context){
-          return  context.Users.getByEmail(root.invited);
-      },
+    reservation(root, args, context) {
+      return context.Reservations.getById(root.reservation);
+    },
+    invited(root, args, context) {
+      return context.Users.getByEmail(root.invited);
+    },
   },
   Dish: {
-      ingredients(root, args, context){
-          return root.ingredients.map((id) => context.Ingredients.get(id));
-      },
+    ingredients(root, args, context) {
+      return root.ingredients.map(id => context.Ingredients.get(id));
+    },
   },
   Ingredient: {
   },
