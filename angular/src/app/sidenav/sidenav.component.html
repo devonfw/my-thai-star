@@ -1,4 +1,3 @@
-
 <div layout="column" class="justify-space-between" style ="height: 100%">
   <div layout="column" flex>
     <md-toolbar>
@@ -8,36 +7,31 @@
         <span style="font-weight: bold; font-size: 0.7em">RESUME BOOKING</span>
       </div>
     </md-toolbar>
-    <div class="pad-sm">
-      <div layout="column" class="pull-top" style="max-height: 60%">
-        <h4 class="pad-bottom-sm" style="border-bottom: 1px solid lightgrey">ORDER MENU</h4>
-        <div layout="row" *ngIf="orders.length < 1" style="align-items:center" class="justify-space-between push-bottom-lg">
-          <span>You have not selected any order</span>
-          <button md-button color="accent" (click)="navigateMenu()" class="text-upper property-text-bold">View Menu</button>
-        </div>
-        <div class="pull-top forDesktop" [class.scrollOrders]="orders.length > 5">
-          <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
-        </div>
-        <div class="pull-top forMobile" [class.scrollOrders]="orders.length > 3">
-          <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
-        </div>
+    <div layout="column" class="pull-top pad-sm" style="max-height: 60%">
+      <h4 class="pad-bottom-sm" style="border-bottom: 1px solid lightgrey">ORDER MENU</h4>
+      <div layout="row" *ngIf="orders.length < 1" style="align-items:center" class="justify-space-between push-bottom-lg">
+        <span>You have not selected any order</span>
+        <button md-button color="accent" (click)="navigateMenu()" class="text-upper property-text-bold">View Menu</button>
       </div>
-      <div *ngIf="orders.length > 0" layout="row" class="justify-space-between">
-        <h3>Total</h3>
-        <h3>{{calculateTotal() | number : '1.2-2'}} €</h3>
+      <div class="pull-top" [class.scrollOrders]="orders.length > 3">
+        <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
       </div>
-      <div layout="column">
-        <md-card *ngIf="invitationId.value.length === 0" style="background-color:bisque">
-          <div layout="row" class="pad-sm" style="align-items:center" flex>
-            <md-icon class="md-18 pad-right-sm">report_problem</md-icon>
-            <span class="invitationAlert">To order a menu is necessary to have an invitation ID</span>
-          </div>
-        </md-card>
-        <md-input-container class="push-left" dividerColor="accent" flex>
-          <input mdInput #invitationId type="number" placeholder="Invitation ID">
-        </md-input-container>
-        <md-checkbox #terms class="push-left">Accept terms</md-checkbox>
-      </div>
+    </div>
+    <div *ngIf="orders.length > 0" layout="row" class="justify-space-between pad-sm">
+      <h3>Total</h3>
+      <h3>{{calculateTotal() | number : '1.2-2'}} €</h3>
+    </div>
+    <div layout="column" class="pad-sm">
+      <md-card *ngIf="invitationId.value.length === 0" style="background-color:bisque">
+        <div layout="row" class="pad-sm" style="align-items:center" flex>
+          <md-icon class="md-18 pad-right-sm">report_problem</md-icon>
+          <span class="invitationAlert">To order a menu is necessary to have an invitation ID</span>
+        </div>
+      </md-card>
+      <md-input-container class="push-left" dividerColor="accent" flex>
+        <input mdInput #invitationId type="number" placeholder="Invitation ID">
+      </md-input-container>
+      <md-checkbox #terms class="push-left">Accept terms</md-checkbox>
     </div>
   </div>
   <div style="text-align: right">

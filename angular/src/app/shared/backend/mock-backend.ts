@@ -16,6 +16,7 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                         }
                     })));
             }
+
             if (connection.request.url.endsWith('/v1/getbookingid')) {
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
@@ -24,6 +25,43 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                         }
                     })));
             }
+
+            if (connection.request.url.endsWith('/v1/postfilters')) {
+                let params = JSON.parse(connection.request.getBody());
+                let filteredMenu;
+                if (params.searchTerm){
+                    filteredMenu = dishes.slice(0, 1);
+                } else {
+                    filteredMenu = dishes;
+                }
+                connection.mockRespond(new Response(new ResponseOptions({
+                        status: 200,
+                        body: {
+                            dishes: filteredMenu
+                        }
+                    })));
+            }
+
+            if (connection.request.url.endsWith('/v1/postbooking')) {
+                let params = JSON.parse(connection.request.getBody());
+                connection.mockRespond(new Response(new ResponseOptions({
+                        status: 200,
+                        body: {
+                            tableId: Math.floor(1000000000 + Math.random() * 9000000000)
+                        }
+                    })));
+            }
+
+            if (connection.request.url.endsWith('/v1/postinvitation')) {
+                let params = JSON.parse(connection.request.getBody());
+                connection.mockRespond(new Response(new ResponseOptions({
+                        status: 200,
+                        body: {
+                            tableId: Math.floor(1000000000 + Math.random() * 9000000000)
+                        }
+                    })));
+            }
+
         }, 0);
     });
 

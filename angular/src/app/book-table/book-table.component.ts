@@ -20,17 +20,23 @@ export class BookTableComponent {
 
   showBookTableDialog(form: any): void {
     window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
-    this.dialog.open(BookTableDialogComponent, {
+    let dialogRef = this.dialog.open(BookTableDialogComponent, {
       width: this.screenSize,
-      data: form
+      data: form.value
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      form.reset();
     });
   }
 
   showInviteDialog(form): void {
     window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
-    this.dialog.open(InvitationDialogComponent, {
+    let dialogRef = this.dialog.open(InvitationDialogComponent, {
       width: this.screenSize,
-      data: form
+      data: form.value
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      form.reset();
     });
   }
 

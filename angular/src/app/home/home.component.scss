@@ -41,16 +41,16 @@
 }
 
 .card-over {
-  margin-left: 5%;
   margin-top: -75px;
-  width: 90%;
 }
 
 .home-title {
   padding-bottom: 25%;
   padding-top: 5%;
-  background-image: url('../../assets/images/home-background.jpg');
-  background-size: cover;
+  background-image: url('../../assets/images/background-dish.png'), url('../../assets/images/star.png'), url('../../assets/images/Wood2.jpg');
+  background-position: bottom, top, center;
+  background-size: cover, 15%, cover;
+  background-repeat: no-repeat, no-repeat, repeat;
 }
 
 @media (max-width: 600px) {

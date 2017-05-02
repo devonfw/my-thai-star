@@ -1,7 +1,6 @@
 <md-card>
-  <div layout="row" flex>
-
-    <div layout="column" class= "menu-image" [style.background-image]="'url(' + menuInfo.image + ')'" flex>
+  <div layout-gt-xs="row">
+    <div flex-gt-xs="50" layout="column" class= "menu-image" [style.background-image]="'url(' + menuInfo.image + ')'">
       <button md-fab (click)="changeFavouriteState()" class="push-sm favourite-button">
         <md-icon [class.fab-on]="!menuInfo.favourite" [class.fab-off]="menuInfo.favourite">star</md-icon>
       </button>
@@ -22,7 +21,7 @@
       </div>
     </div>
 
-    <div layout="column" class= "pad" flex>
+    <div flex-gt-xs="50" layout="column" class= "pad">
       <div layout="row">
         <md-icon color="warn" class="md-18 push-right-sm">favorite</md-icon>
         <span>{{menuInfo.likes}}</span>
@@ -33,7 +32,9 @@
       <span class="push-bottom-sm">
         {{menuInfo.orderDescription}}
       </span>
-      <md-checkbox class="push-bottom-sm" *ngFor="let option of menuInfo.options" (change)="selectedOption(option)">{{option.name}} +{{option.price}}€</md-checkbox>
+      <div layout-gt-xs="column" layout-xs="row" class="justify-space-between">
+        <md-checkbox class="push-bottom-sm" *ngFor="let option of menuInfo.options" (change)="selectedOption(option)">{{option.name}} +{{option.price}}€</md-checkbox>
+      </div>
       <div class="property-text-right">
         <button md-button (click)="addOrderMenu()" color="accent" class="text-upper property-text-bold">Add to order</button>
       </div>

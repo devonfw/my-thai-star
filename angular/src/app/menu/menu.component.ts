@@ -22,13 +22,18 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters): void {
-      // call to filter function service
+      this.menuService.postFilters(filters).subscribe((data: any) => {
+        this.menus = data.dishes;
+      });
     }
 
     clearFilters(form, search, price, likes): void {
-      form.reset();
       likes.value = 0;
       price.value = 0;
+      form.reset();
+      this.menuService.postFilters(form.value).subscribe((data: any) => {
+        this.menus = data.dishes;
+      });
     }
 
     changeExpandIcon(): void {

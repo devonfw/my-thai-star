@@ -15,7 +15,7 @@
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.comment">Add comment</label>
   </div>
 
-  <button md-icon-button (click)="openCommentDialog()" [class.hideButton]="!order.comment" class="push-bottom-xs" mdTooltipPosition="above">
+  <button md-icon-button mdTooltip="Comment" (click)="openCommentDialog()" [class.hideButton]="!order.comment" class="push-bottom-xs" mdTooltipPosition="above">
     <md-icon color="accent">speaker_notes</md-icon>
   </button>
 

@@ -1,6 +1,6 @@
-import { MdDialogRef } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { InvitationDialogService } from './shared/invitation-dialog.service'
 
 @Component({
@@ -12,7 +12,9 @@ export class InvitationDialogComponent implements OnInit {
 
   data: any;
 
-  constructor(private invitationService: InvitationDialogService, private dialog: MdDialogRef<InvitationDialogComponent>) {
+  constructor(private snackBar: MdSnackBar,
+              private invitationService: InvitationDialogService,
+              private dialog: MdDialogRef<InvitationDialogComponent>) {
   }
 
   ngOnInit(): void {
@@ -25,7 +27,11 @@ export class InvitationDialogComponent implements OnInit {
   }
 
   sendInvitation(): void {
-    alert('invitation sended');
+    this.invitationService.postInvitationTable(this.data).subscribe( (data) => {
+      this.snackBar.open('Table succesfully booked with id: ' + data.tableId, '', {
+        duration: 7000,
+      });
+    });
     this.dialog.close();
   }
 

@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { BookTableDialogService } from './shared/book-table-dialog.service';
@@ -12,7 +12,7 @@ export class BookTableDialogComponent implements OnInit {
 
   data: any;
 
-  constructor (private bookingService: BookTableDialogService, private dialog: MdDialogRef<BookTableDialogComponent>) {
+  constructor (public snackBar: MdSnackBar, private bookingService: BookTableDialogService, private dialog: MdDialogRef<BookTableDialogComponent>) {
     this.data = dialog.config.data;
 
   }
@@ -27,7 +27,11 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking (): void {
-    alert('booking sended');
+    this.bookingService.postBookingTable(this.data).subscribe( (data) => {
+      this.snackBar.open('Table succesfully booked with id: ' + data.tableId, '', {
+        duration: 7000,
+      });
+    });
     this.dialog.close();
   }
 
