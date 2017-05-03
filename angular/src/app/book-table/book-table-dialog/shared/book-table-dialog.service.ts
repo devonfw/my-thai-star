@@ -11,6 +11,7 @@ export class BookTableDialogService {
   constructor(private http: Http) {
   }
 
+  // Remark: Code duplication. Please have a look at invitations-dialog-service, also a separate service for reservations/invitations would solve it.
   getTableId(): Observable<any> {
     return this.http.get(this.BO.getbookingid)
                     .map((res: any) => res.json());

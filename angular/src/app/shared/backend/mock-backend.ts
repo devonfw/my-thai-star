@@ -69,6 +69,14 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
 }
 
 export let backendProvider = {
+    // Remark: Why overriding Http provider (quite low level) instead of crating dedicated services for dishes and reservations,
+    // which would define contracts required for specific data kinds. Then one could implement separate provides for those services
+    // (mock, offline, online, etc.). For mock implementation it would be enough to wrap data with observables
+    // (Observables will be a common interface for Http as well). For an example of such dedicated providers,
+    // which can be switched via env variables take a look here:
+    // - https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/shared/legoShopOffline.service.ts
+    // - https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/shared/legoShopOnline.service.ts
+    // = https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/lego-shop/legoShop.module.ts 
     provide: Http,
     useFactory: backendFactory,
     deps: [MockBackend, BaseRequestOptions]

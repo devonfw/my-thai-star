@@ -10,6 +10,7 @@ import { InvitationDialogService } from './shared/invitation-dialog.service'
 })
 export class InvitationDialogComponent implements OnInit {
 
+  // Remark: Again, no information about the type.
   data: any;
 
   constructor(private snackBar: MdSnackBar,

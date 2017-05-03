@@ -10,7 +10,7 @@ import { BookTableDialogService } from './shared/book-table-dialog.service';
 })
 export class BookTableDialogComponent implements OnInit {
 
-  data: any;
+  data: any; // Remark: Missing model type
 
   constructor (public snackBar: MdSnackBar, private bookingService: BookTableDialogService, private dialog: MdDialogRef<BookTableDialogComponent>) {
     this.data = dialog.config.data;

@@ -9,7 +9,8 @@ import * as _ from 'lodash';
 })
 export class MenuCardComponent {
 
-  @Input('menu') menuInfo: any;
+  // Remark: Model type missing for menu info.
+  @Input('menu') menuInfo: any; 
 
   constructor(private sidenav: SidenavService) {
   }
