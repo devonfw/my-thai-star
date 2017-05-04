@@ -1,4 +1,6 @@
-export let dishes = [{
+import { Dish } from './dishes/dish';
+
+export const dishes: Dish[] = [{
                         favourite: false,
                         image: '../../../assets/images/basil-fried.jpg',
                         likes: 21,

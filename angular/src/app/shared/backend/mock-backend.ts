@@ -8,7 +8,7 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
         // WRAP IN TIMEOUT TO SIMULATE SERVER API CALL
         setTimeout(() => {
             // DEFINE OPERATIONS
-            if (connection.request.url.endsWith('/v1/getdishes')) {
+            if (connection.request.url.endsWith('/v1/dishes')) {
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
@@ -17,6 +17,7 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                     })));
             }
 
+            // Remark: REST paths should not include http keywords
             if (connection.request.url.endsWith('/v1/getbookingid')) {
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,

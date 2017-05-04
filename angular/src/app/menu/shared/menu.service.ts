@@ -1,3 +1,5 @@
+import { IDishesDataService } from '../../shared/backend/dishes/dishes-data-service';
+import { Dish } from '../../shared/backend/dishes/dish';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
 import { Http } from '@angular/http';
@@ -7,17 +9,15 @@ import { BusinessOperations } from '../../shared/BusinessOperations';
 @Injectable()
 export class MenuService {
 
+  // TODO: Remove BusinessOperations from here
   BO: BusinessOperations = new BusinessOperations();
 
-  constructor(private http: Http) {
-  }
+  // TODO: Remove Http dependency from here.
+  constructor(private http: Http, private dishesDataService: IDishesDataService) {}
 
-  // Remark: Dishes model missing, a type should be already defined.
-  // Remark: There should be a separate Dishes service, abstracting the way how reservations are retrieved
-  // and injectable indepedently to other components.
-  getDishes(): Observable<any> {
-    return this.http.get(this.BO.getdishes)
-                    .map((res: any) => res.json());
+
+  getDishes(): Observable<Dish[]> {
+    return this.dishesDataService.get();
   }
 
   postFilters(filters: FormGroup): Observable<any> {

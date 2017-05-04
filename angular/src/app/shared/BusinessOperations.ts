@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { config } from '../config';
 
 @Injectable()
 export class BusinessOperations {
 
+  public static restServiceRoot: string = config.restServiceRoot;
+
+  // TODO: Re-implement and remove section below 
   public serverPath: string = '/v1/';
 
-  public getdishes: string =  this.serverPath + 'getdishes';
   public getbookingid: string = this.serverPath + 'getbookingid';
 
   public postfilters: string = this.serverPath + 'postfilters';
