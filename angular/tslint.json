@@ -121,7 +121,7 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": true,
+    "one-variable-per-declaration": [true],
     "quotemark": [
       true,
       "single",
@@ -184,8 +184,8 @@
       "check-type"
     ],
     // ANGULAR 2 Rules
-    "directive-selector": [true, "attribute", "qs", "camelCase"],
-    "component-selector": [true, "element", "qs", "kebab-case"],
+    "directive-selector": [true, "attribute", "app", "camelCase"],
+    "component-selector": [true, "element", "app", "kebab-case"],
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "use-input-property-decorator": true,
