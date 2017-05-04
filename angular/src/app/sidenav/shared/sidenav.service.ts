@@ -27,8 +27,12 @@ export class SidenavService {
     return this.orders.length;
   };
 
+  public findOrder(order) {
+    return _.find(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); });
+  }
+
   public addOrder(order: any): void {
-    if (_.find(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); })) {
+    if (this.findOrder(order)) {
       this.increaseOrder(order);
     } else {
       order.number = 1;
@@ -39,30 +43,16 @@ export class SidenavService {
     // handling out of the box (adding the order will be probably async anyway, as server needs to be notified).
   }
 
-  public increaseOrder(order): void {
-    // Remark: code duplication. At least a predicate can be defined and reused (twice here, four times in decrease Order),
-    // once in removeOrder
-    _.find(this.orders, function(o) {
-      return o.orderName === order.orderName && _.isEqual(o.options, order.options);
-    }).number = _.find(this.orders, function(o) {
-      return o.orderName === order.orderName && _.isEqual(o.options, order.options);
-    }).number + 1;
+  public increaseOrder(order): number {
+    return this.findOrder(order).number = this.findOrder(order).number + 1;
   }
 
-  public decreaseOrder(order): void {
-    _.find(this.orders, function(o) {
-      return o.orderName === order.orderName && _.isEqual(o.options, order.options);
-    }).number = _.find(this.orders, function(o) {
-      return o.orderName === order.orderName && _.isEqual(o.options, order.options);
-    }).number - 1;
-
-    if (_.find(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); }).number < 1) {
-      _.remove(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); });
-    }
+  public decreaseOrder(order): number {
+    return this.findOrder(order).number = this.findOrder(order).number - 1;
   }
 
-  public removeOrder(order): void {
-    _.remove(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); });
+  public removeOrder(order) {
+    return _.remove(this.orders, function(o) { return o.orderName === order.orderName && _.isEqual(o.options, order.options); });
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MdDialogRef, MdSnackBar } from '@angular/material';
-import { InvitationDialogService } from './shared/invitation-dialog.service'
+import { BookTableService } from '../shared/book-table.service'
 
 @Component({
   selector: 'app-invitation-dialog',
@@ -14,7 +14,7 @@ export class InvitationDialogComponent implements OnInit {
   data: any;
 
   constructor(private snackBar: MdSnackBar,
-              private invitationService: InvitationDialogService,
+              private invitationService: BookTableService,
               private dialog: MdDialogRef<InvitationDialogComponent>) {
   }
 

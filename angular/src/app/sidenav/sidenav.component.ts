@@ -25,25 +25,25 @@ export class SidenavComponent implements OnInit {
     this.sidenav.closeSideNav();
   };
 
-  navigateMenu(): void {
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
     this.closeSidenav();
-    this.router.navigate(['menu']);
-  };
+  }
 
   reloadOrders(): void {
     this.orders = this.sidenav.getOrderData();
   }
 
   calculateTotal(): number {
-    let sum: number = 0;
-    _.forEach(this.orders, function(o) { // Remark: reduce function could be used, use arrow functions
-      sum += o.number * o.price;
-      _.forEach(o.options, function(value, key) {
-        if(value.selected) {
-          sum = sum + value.price;
-        }
-      });
-    });
-    return sum;
+    return _.reduce(this.orders, (sum: number, order): number => {
+           return sum + (order.price +
+           _.reduce(order.options, (sum2: number, option): number => {
+             if (option.selected) {
+               return sum2 + option.price;
+             } else {
+               return sum2;
+             }
+           }, 0)) * order.number;
+         }, 0);
   }
 }

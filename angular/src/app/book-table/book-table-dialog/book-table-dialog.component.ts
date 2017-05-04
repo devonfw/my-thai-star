@@ -1,7 +1,7 @@
 import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { BookTableDialogService } from './shared/book-table-dialog.service';
+import { BookTableService } from '../shared/book-table.service';
 
 @Component({
   selector: 'app-book-table-dialog',
@@ -12,9 +12,10 @@ export class BookTableDialogComponent implements OnInit {
 
   data: any; // Remark: Missing model type
 
-  constructor (public snackBar: MdSnackBar, private bookingService: BookTableDialogService, private dialog: MdDialogRef<BookTableDialogComponent>) {
+  constructor (public snackBar: MdSnackBar,
+               private bookingService: BookTableService,
+               private dialog: MdDialogRef<BookTableDialogComponent>) {
     this.data = dialog.config.data;
-
   }
 
   ngOnInit(): void {
@@ -32,7 +33,7 @@ export class BookTableDialogComponent implements OnInit {
         duration: 7000,
       });
     });
-    this.dialog.close();
+    this.dialog.close(true);
   }
 
 }

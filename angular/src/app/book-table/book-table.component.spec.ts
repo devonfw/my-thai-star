@@ -5,6 +5,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTableComponent } from './book-table.component';
 import { CovalentCoreModule } from '@covalent/core';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
+import { WindowService } from '../shared/windowService/windowService.service';
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -13,7 +14,7 @@ describe('BookTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookTableComponent ],
-      providers: [ SidenavService ],
+      providers: [ SidenavService, WindowService ],
       imports: [
         BrowserAnimationsModule,
         CovalentCoreModule.forRoot(),

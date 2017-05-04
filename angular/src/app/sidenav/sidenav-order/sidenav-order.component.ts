@@ -23,8 +23,8 @@ export class SidenavOrderComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.ingredients = _.filter(this.order.options, function(o) { return o.selected === true; }); // Remark: use arrow functions
+  ngOnInit(): void {
+    this.ingredients = _.filter(this.order.options, (o) => { return o.selected === true; });
 }
 
   removeComment(): void {
@@ -55,13 +55,13 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   calculateOrderPrice(): number {
-    let total = this.order.price * this.order.number;
-    _.forEach(this.order.options, function(value, key) { // Remark: reduce can be used here, use arrow functions
-      if(value.selected) {
-        total = total + value.price;
-      }
-    });
-    return total;
+    return _.reduce(this.order.options, (total: number, o): number => {
+             if (o.selected) {
+               return total + o.price;
+             } else {
+               return total;
+             }
+          }, this.order.price) * this.order.number;
   }
 
   openCommentDialog(): void {

@@ -1,16 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule} from '@angular/http';
-import { BookTableDialogService } from './book-table-dialog.service';
+import { BookTableService } from './book-table.service';
 
-describe('BookTableDialogService', () => {
+describe('BookTableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [BookTableDialogService]
+      providers: [BookTableService]
     });
   });
 
-  it('should ...', inject([BookTableDialogService], (service: BookTableDialogService) => {
+  it('should ...', inject([BookTableService], (service: BookTableService) => {
     expect(service).toBeTruthy();
   }));
 });

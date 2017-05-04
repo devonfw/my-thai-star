@@ -26,14 +26,14 @@ import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.
 
 // SERVICES
 import { SidenavService } from './sidenav/shared/sidenav.service';
-import { InvitationDialogService } from './book-table/invitation-dialog/shared/invitation-dialog.service';
-import { BookTableDialogService } from './book-table/book-table-dialog/shared/book-table-dialog.service';
+import { BookTableService } from './book-table/shared/book-table.service';
 import { MenuService } from './menu/shared/menu.service';
+import { WindowService } from './shared/windowService/windowService.service';
 
 // BACKEND
 import { backendProvider } from './shared/backend/mock-backend';
 
-// Remark: Imho it would be nice if app module consists mainly from othe rmodules imports. e.g.:
+// Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
 
 @NgModule({
@@ -61,12 +61,12 @@ import { backendProvider } from './shared/backend/mock-backend';
   ],
   providers: [
     SidenavService,
-    BookTableDialogService,
-    InvitationDialogService,
+    BookTableService,
     MenuService,
     backendProvider,
     MockBackend, // Remark: MockBackend as a test utility should not be imported on app module level. 
-    BaseRequestOptions
+    BaseRequestOptions,
+    WindowService
   ],
   entryComponents: [
     BookTableDialogComponent,

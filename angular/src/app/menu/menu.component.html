@@ -72,7 +72,7 @@
             <div flex-gt-xs="50" layout="column" flex>
               <span class ="pull-bottom-md">Price</span>
               <md-slider
-                #priceM
+                #price
                 ngModel
                 name="price"
                 max="50"
@@ -85,7 +85,7 @@
             <div flex-gt-xs="50" layout="column" flex>
               <span class ="pull-bottom-md">Likes</span>
               <md-slider
-                #likesM
+                #likes
                 ngModel
                 name="likes"
                 max=500
@@ -99,8 +99,7 @@
         </div>
       </td-expansion-panel>
       <div class="property-text-right">
-        <button md-button (click)="clearFilters(filterForm.form, searchField, price, likes)" class="text-upper property-text-bold forDesktop">Clear filters</button>
-        <button md-button (click)="clearFilters(filterForm.form, searchField, priceM, likesM)" class="text-upper property-text-bold forMobile">Clear filters</button>
+        <button md-button (click)="clearFilters(filterForm.form, searchField, price, likes)" class="text-upper property-text-bold">Clear filters</button>
         <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
