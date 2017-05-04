@@ -14,3 +14,14 @@ router.get("/", (req: Request, res: Response) => {
                 }
         });
 });
+
+router.post("/", (req: Request, res: Response) => { 
+        //res.send(req.body);
+        bussiness.getCategories(req.body,(err: api.Error, dishes: api.DishView[]) => {
+                if (err) {
+                        res.status(500).json(err);
+                } else {
+                        res.json(dishes);
+                }
+        });
+});

@@ -1,59 +1,87 @@
 import { Credentials } from "aws-sdk";
-import * as dynamo from "./data-collector/src/adapters/fn-dynamo";
-import * as s3 from "./data-collector/src/adapters/fn-s3";
 import fn from "./data-collector/src/index";
+import dynamo from './data-collector/src/adapters/fn-dynamo';
+import * as types from "./model/interfaces";
 import * as _ from "lodash";
+import * as util from "./utils/utilFunctions"
 
 // Dynamo
 const creds = new Credentials("akid", "secret", "session");
 fn.setDB(dynamo, { endpoint: "http://localhost:8000/", region: "us-west-2", credentials: creds });
 
+const maxPrice = 50;
+
 export default {
     getDihses: async (callback: Function) => {
-        /* Older way to get all dishes. I dont like it.
-        try {
-            let res = await fn.table('Ingredient').
-                table('DishIngredient').
-                join('Id', 'IdIngredient').
-                //table('Ingredient').
-                //join('IdIngredient', 'Id').
-                promise();
-            let res2 = await fn.table("Dish").
-                promise();
-
-            res2 = res2.map((elem: any) => {
-                return {
-                    image: elem.Image,
-                    likes: elem.Likes,
-                    orderDescription: elem.Description,
-                    orderName: elem.Name,
-                    price: elem.Price,
-                    options: res.filter((elem2: any) => {
-                        return elem2.IdDish === elem.Id;
-                    }).map((elem2: any) => {
-                        return _.pick(elem2, ["Name", "Price", "Description"]);
-                    }).map((elem2: any) => {
-                        return {
-                            name: elem2.Name,
-                            price: elem2.Price,
-                            description: elem2.Description,
-                        };
-                    }),
-                    favourite: false,
-                }
-            });
-
-            callback(null, res2);
-        } catch (err) {
-            callback(err);
-        }*/
         try {
             let tables = await fn.table('Dish').
-                map(renameProperties("Dish")).
+                map(util.renameProperties("Dish")).
                 table('DishIngredient').
                 join('DishId', 'IdDish').
                 table('Ingredient').
                 join('IdIngredient', 'Id').
+                reduce((acum: any, elem: any) => {
+                    if (acum[elem.DishName]) {
+                        acum[elem.DishName].extras.push({ name: elem.Name, price: elem.Price, selected: false });
+                    } else {
+                        acum[elem.DishName] = {
+                            favourite: false,
+                            image: elem.DishImage,
+                            likes: elem.DishLikes,
+                            extras: [{ name: elem.Name, price: elem.Price, selected: false }],
+                            orderDescription: elem.DishDescription,
+                            orderName: elem.DishName,
+                            price: elem.DishPrice,
+                        };
+                    }
+                    return acum;
+                }, {}).
+                promise();
+
+            let res = util.objectToArray(tables);
+
+            callback(null, res);
+        } catch (err) {
+            console.log(err);
+            callback(err);
+        }
+    },
+
+    getCategories: async (filter: types.FilterView, callback: Function) => {
+        let order = util.checkFilter(filter);
+
+        try {
+            let catId: string[] | undefined = (filter.categories === null || filter.categories === undefined) ? 
+                undefined : 
+                filter.categories.map((elem: types.CategoryView) => elem.id.toString());
+
+            let categories: string[] = await fn.table('Category', catId).
+                table('DishCategory').
+                join('Id', 'IdCategory').
+                project(['IdDish']).
+                map((elem: any) => elem["IdDish"]).
+                promise();
+
+            let s: Set<string> = new Set(categories);
+
+            if (filter.isFab) {
+                // TODO: take id using the authorization token
+                let fav = await fn.table('User', "1").
+                    promise();
+
+                let s2: Set<string> = new Set(<string[]>fav.Favorites);
+
+                s = util.setIntersection(s, s2);
+            }
+
+            let dishes = await fn.table('Dish', [...s]).
+                map(util.renameProperties("Dish")).
+                table('DishIngredient').
+                join('DishId', 'IdDish').
+                table('Ingredient').
+                join('IdIngredient', 'Id').
+                where('DishPrice', filter.maxPrice, '<=').
+                where('DishLikes', filter.minLikes, '>=').
                 reduce((acum: any, elem: any) => {
                     if (acum[elem.DishName]) {
                         acum[elem.DishName].options.push({ name: elem.Name, price: elem.Price, selected: false });
@@ -72,26 +100,15 @@ export default {
                 }, {}).
                 promise();
 
-            let res = [];
-            for (let o in tables) {
-                res.push(tables[o]);
+            dishes = util.objectToArray(dishes);
+
+            if(filter.searchBy){
+                dishes = _.filter(dishes, (o: any) => _.lowerCase(o.orderName).includes(_.lowerCase(filter.searchBy)));
             }
 
-            callback(null, res);
-        } catch (err) {
-            callback(err);
+            callback(null, _.orderBy(dishes, order));
+        } catch (error) {
+            callback(error);
         }
-    }
-}
-
-function renameProperties(prefix: string) {
-    return (element: any) => {
-        let ob: any = {};
-
-        for(let o in element){
-            ob[prefix+o] = element[o];
-        }
-
-        return ob;
     }
 }
