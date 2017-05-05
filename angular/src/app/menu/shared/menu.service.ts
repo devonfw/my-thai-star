@@ -1,7 +1,8 @@
-import { BusinessOperations } from '../../shared/BusinessOperations';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { BusinessOperations } from '../../shared/BusinessOperations';
 
 @Injectable()
 export class MenuService {
@@ -19,7 +20,7 @@ export class MenuService {
                     .map((res: any) => res.json());
   }
 
-  postFilters(filters): Observable<any> {
+  postFilters(filters: FormGroup): Observable<any> {
     return this.http.post(this.BO.postfilters, filters)
                     .map((res: any) => res.json());
   }

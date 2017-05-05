@@ -16,7 +16,7 @@ describe('SidenavComponent', () => {
       providers: [SidenavService],
       imports: [
         RouterTestingModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
       ],
     })
     .compileComponents();

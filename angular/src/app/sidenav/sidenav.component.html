@@ -14,7 +14,7 @@
         <button md-button color="accent" (click)="navigateTo('menu')">View Menu</button>
       </div>
       <div class="pull-top" [class.scrollOrders]="orders.length > 3">
-        <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
+        <app-sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></app-sidenav-order>
       </div>
     </div>
     <div *ngIf="orders.length > 0" layout="row" class="justify-space-between pad-sm">

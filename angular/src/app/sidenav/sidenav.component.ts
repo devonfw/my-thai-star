@@ -2,17 +2,17 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
+import { ExtraView, OrderView } from '../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
 
-  orders: any[];
-  bookTableData: any;
+  orders: OrderView[];
 
   constructor(private router: Router, private sidenav: SidenavService) {
   }
@@ -35,9 +35,9 @@ export class SidenavComponent implements OnInit {
   }
 
   calculateTotal(): number {
-    return _.reduce(this.orders, (sum: number, order): number => {
+    return _.reduce(this.orders, (sum: number, order: OrderView): number => {
            return sum + (order.price +
-           _.reduce(order.options, (sum2: number, option): number => {
+           _.reduce(order.options, (sum2: number, option: ExtraView): number => {
              if (option.selected) {
                return sum2 + option.price;
              } else {

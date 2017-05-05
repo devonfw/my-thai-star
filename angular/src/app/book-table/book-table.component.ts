@@ -1,4 +1,5 @@
-import { ComponentType, MdDialog } from '@angular/material';
+import { FormGroup } from '@angular/forms';
+import { ComponentType, MdDialog, MdDialogRef } from '@angular/material';
 import { Component, ViewContainerRef } from '@angular/core';
 import { TdDialogService } from '@covalent/core/dialogs/services/dialog.service';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
@@ -9,7 +10,7 @@ import _ from 'lodash';
 @Component({
   selector: 'app-book-table',
   templateUrl: './book-table.component.html',
-  styleUrls: ['./book-table.component.scss']
+  styleUrls: ['./book-table.component.scss'],
 })
 
 export class BookTableComponent {
@@ -22,26 +23,26 @@ export class BookTableComponent {
     this._window = window.nativeWindow;
   }
 
-  showBookTableDialog(form: any): void {
+  showBookTableDialog(form: FormGroup): void {
     this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
-    let dialogRef = this.dialog.open(BookTableDialogComponent, {
+    let dialogRef: MdDialogRef<BookTableDialogComponent> = this.dialog.open(BookTableDialogComponent, {
       width: this.screenSize,
-      data: form.value
+      data: form.value,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         form.reset();
       }
     });
   }
 
-  showInviteDialog(form): void {
+  showInviteDialog(form: FormGroup): void {
     this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
-    let dialogRef = this.dialog.open(InvitationDialogComponent, {
+    let dialogRef: MdDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
       width: this.screenSize,
-      data: form.value
+      data: form.value,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         form.reset();
       }

@@ -5,7 +5,7 @@ import { CovalentCoreModule } from '@covalent/core';
 import { AppComponent } from './app.component';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component'
+import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -17,8 +17,8 @@ describe('AppComponent', () => {
       providers: [SidenavService],
       imports: [
         RouterTestingModule,
-        CovalentCoreModule.forRoot()
-      ]
+        CovalentCoreModule.forRoot(),
+      ],
     });
     TestBed.compileComponents();
   });

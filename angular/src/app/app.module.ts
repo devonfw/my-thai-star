@@ -47,7 +47,7 @@ import { backendProvider } from './shared/backend/mock-backend';
     SidenavOrderComponent,
     InvitationDialogComponent,
     BookTableDialogComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,21 +57,21 @@ import { backendProvider } from './shared/backend/mock-backend';
     FormsModule,
     BrowserAnimationsModule,
     HttpModule,
-    Md2Module
+    Md2Module,
   ],
   providers: [
     SidenavService,
     BookTableService,
     MenuService,
     backendProvider,
-    MockBackend, // Remark: MockBackend as a test utility should not be imported on app module level. 
+    MockBackend,
     BaseRequestOptions,
-    WindowService
+    WindowService,
   ],
   entryComponents: [
     BookTableDialogComponent,
     InvitationDialogComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
   ],
   bootstrap: [ AppComponent ],
 })

@@ -13,7 +13,7 @@ describe('HomeComponent', () => {
       declarations: [ HomeComponent ],
       imports: [
         CovalentCoreModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule,
       ],
     })
     .compileComponents();

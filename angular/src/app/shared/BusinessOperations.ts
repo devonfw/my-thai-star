@@ -11,9 +11,5 @@ export class BusinessOperations {
   public postfilters: string = this.serverPath + 'postfilters';
   public postbookingtable: string = this.serverPath + 'postbooking';
   public postbookinginvitation: string = this.serverPath + 'postinvitation';
-  
-  constructor () { }
-
-
 
 }

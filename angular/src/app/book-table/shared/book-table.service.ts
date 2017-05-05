@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BusinessOperations } from '../../shared/BusinessOperations';
+import { ReservationView, InvitationView } from '../../shared/models/interfaces';
 
 @Injectable()
 export class BookTableService {
@@ -16,13 +17,13 @@ export class BookTableService {
                     .map((res: any) => res.json());
   }
 
-  postBookingTable(bookInfo): Observable<any> {
+  postBookingTable(bookInfo: ReservationView): Observable<any> {
     return this.http.post(this.BO.postbookingtable, bookInfo)
                     .map((res: any) => res.json());
   }
 
-  postInvitationTable(bookInfo): Observable<any> {
-    return this.http.post(this.BO.postbookinginvitation, bookInfo)
+  postInvitationTable(invitationInfo: InvitationView): Observable<any> {
+    return this.http.post(this.BO.postbookinginvitation, invitationInfo)
                     .map((res: any) => res.json());
   }
 

@@ -1,19 +1,21 @@
+import { ANY_STATE } from '@angular/animations/browser/src/dsl/animation_transition_expr';
 import { SidenavService } from '../shared/sidenav.service';
-import { MdDialog, MdSnackBar } from '@angular/material';
+import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
+import { ExtraView, OrderView } from '../../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'sidenav-order',
+  selector: 'app-sidenav-order',
   templateUrl: './sidenav-order.component.html',
-  styleUrls: ['./sidenav-order.component.scss']
+  styleUrls: ['./sidenav-order.component.scss'],
 })
 export class SidenavOrderComponent implements OnInit {
 
-  @Input('order') order: any;
-  @Output('removeOrder') removeEmitter = new EventEmitter();
+  @Input('order') order: OrderView;
+  @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
   ingredients: string[] = [];
 
   constructor(private sidenav: SidenavService,
@@ -24,7 +26,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ingredients = _.filter(this.order.options, (o) => { return o.selected === true; });
+    this.ingredients = _.filter(this.order.options, (o: ExtraView) => { return o.selected === true; });
 }
 
   removeComment(): void {
@@ -32,7 +34,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   addComment(): void {
-    let dialogRef = this.dialog.open(CommentDialogComponent);
+    let dialogRef: MdDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
     dialogRef.afterClosed().subscribe((result: string) => {
       this.order.comment = result;
     });
@@ -55,7 +57,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   calculateOrderPrice(): number {
-    return _.reduce(this.order.options, (total: number, o): number => {
+    return _.reduce(this.order.options, (total: number, o: ExtraView): number => {
              if (o.selected) {
                return total + o.price;
              } else {

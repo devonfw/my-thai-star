@@ -1,16 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
+import { DishView, ExtraView, OrderView } from '../../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-menu-card',
   templateUrl: './menu-card.component.html',
-  styleUrls: ['./menu-card.component.scss']
+  styleUrls: ['./menu-card.component.scss'],
 })
 export class MenuCardComponent {
 
-  // Remark: Model type missing for menu info.
-  @Input('menu') menuInfo: any; 
+  @Input('menu') menuInfo: DishView;
 
   constructor(private sidenav: SidenavService) {
   }
@@ -20,7 +20,16 @@ export class MenuCardComponent {
   }
 
   addOrderMenu(): void {
-    this.sidenav.addOrder(this.menuInfo);
+    let order: OrderView = {
+      orderName: this.menuInfo.orderName,
+      price: this.menuInfo.price,
+      options: this.menuInfo.options,
+      number: 1,
+      comment: '',
+    };
+    order.orderName = this.menuInfo.orderName;
+    order.options = this.menuInfo.options;
+    this.sidenav.addOrder(order);
     this.openSidenav();
   }
 
@@ -28,7 +37,7 @@ export class MenuCardComponent {
     this.menuInfo.favourite = !this.menuInfo.favourite;
   }
 
-  selectedOption(option): void {
+  selectedOption(option: ExtraView): void {
     option.selected ? option.selected = false : option.selected = true;
   }
 
