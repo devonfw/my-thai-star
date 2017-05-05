@@ -26,10 +26,10 @@ describe('MenuCardComponent', () => {
       orderName: '',
       orderDescription: '',
       price: 0,
-      image: '',
-      options: [{}],
+      image: 'string',
+      options: [],
       likes: 0,
-      favourite: false,
+      favourite: true,
     };
     fixture.detectChanges();
   });
