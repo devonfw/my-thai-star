@@ -121,7 +121,7 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": true,
+    "one-variable-per-declaration": [true],
     "quotemark": [
       true,
       "single",
