@@ -7,14 +7,14 @@
         <span style="font-weight: bold; font-size: 0.7em">RESUME BOOKING</span>
       </div>
     </md-toolbar>
-    <div layout="column" class="pull-top pad-sm" style="max-height: 60%">
+    <div layout="column" class="pull-top pad-sm">
       <h4 class="pad-bottom-sm" style="border-bottom: 1px solid lightgrey">ORDER MENU</h4>
       <div layout="row" *ngIf="orders.length < 1" style="align-items:center" class="justify-space-between push-bottom-lg">
         <span>You have not selected any order</span>
-        <button md-button color="accent" (click)="navigateMenu()" class="text-upper property-text-bold">View Menu</button>
+        <button md-button color="accent" (click)="navigateTo('menu')">View Menu</button>
       </div>
       <div class="pull-top" [class.scrollOrders]="orders.length > 3">
-        <sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></sidenav-order>
+        <app-sidenav-order *ngFor="let order of orders" [order]="order" (removeOrder)="reloadOrders()"></app-sidenav-order>
       </div>
     </div>
     <div *ngIf="orders.length > 0" layout="row" class="justify-space-between pad-sm">
@@ -22,10 +22,11 @@
       <h3>{{calculateTotal() | number : '1.2-2'}} €</h3>
     </div>
     <div layout="column" class="pad-sm">
-      <md-card *ngIf="invitationId.value.length === 0" style="background-color:bisque">
-        <div layout="row" class="pad-sm" style="align-items:center" flex>
+      <md-card *ngIf="invitationId.value.length === 0" class="pad-sm" style="background-color:bisque">
+        <div layout="row" class="justify-space-around" style="align-items:center" flex>
           <md-icon class="md-18 pad-right-sm">report_problem</md-icon>
-          <span class="invitationAlert">To order a menu is necessary to have an invitation ID</span>
+          <span flex="65" class="invitationAlert">To order a menu it is necessary to obtain a invitation id. Neither you enter your already known invitation id or you book a table </span>
+          <button md-button color="accent" (click)="navigateTo('bookTable')">Book a table</button>
         </div>
       </md-card>
       <md-input-container class="push-left" dividerColor="accent" flex>

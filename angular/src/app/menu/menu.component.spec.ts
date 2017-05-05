@@ -17,7 +17,7 @@ describe('MenuComponent', () => {
       providers: [SidenavService, MenuService],
       imports: [
         BrowserAnimationsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
       ],
     })
     .compileComponents();

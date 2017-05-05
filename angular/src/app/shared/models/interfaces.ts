@@ -1,15 +1,19 @@
-export interface OrderView {
-    dishes: Array<DishView>;
-}
-
 export interface DishView {
     orderName: string;
     orderDescription: string;
     price: number;
     image: string;
-    options: Array<ExtraView>
+    options: ExtraView[];
     likes: number;
     favourite: boolean;
+}
+
+export interface OrderView {
+    orderName: string;
+    price: number;
+    options: ExtraView[];
+    number: number;
+    comment: string;
 }
 
 interface ImageView {
@@ -29,22 +33,19 @@ export interface ExtraView {
 
 export interface ReservationView {
     event: Event;
-    email: string;
     adults: number;
     kids: number;
-    invitationNumber: number;
 }
 
 export interface InvitationView {
     event: Event;
-    nameOwner: string;
-    emailOwner: string;
-    friends: Array<string>;
-    invitationNumber: number;
+    friends: string[];
 }
 
 export interface Event {
-    name: string;
     date: string;
     hour: string;
+    nameOwner: string;
+    emailOwner: string;
+    tableId: number;
 }

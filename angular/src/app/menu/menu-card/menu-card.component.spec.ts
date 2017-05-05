@@ -13,7 +13,7 @@ describe('MenuCardComponent', () => {
       declarations: [ MenuCardComponent ],
       providers: [SidenavService],
       imports: [
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
       ],
     })
     .compileComponents();
@@ -29,8 +29,8 @@ describe('MenuCardComponent', () => {
       image: '',
       options: [{}],
       likes: 0,
-      favourite: false
-    }
+      favourite: false,
+    };
     fixture.detectChanges();
   });
 

@@ -10,6 +10,4 @@ const routes: Routes = [
   {component: MenuComponent, path: 'menu'},
   {component: BookTableComponent, path: 'bookTable'}];
 
-// Remark: We have typescript on board, so please use types where those are avaiable, 
-// overusing "any" is not that good (I fixed it here, but you will find more examples in the code base)
 export const appRoutes: ModuleWithProviders = RouterModule.forRoot(routes);

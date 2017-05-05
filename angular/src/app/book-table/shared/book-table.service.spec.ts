@@ -1,16 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule} from '@angular/http';
-import { MenuService } from './menu.service';
+import { BookTableService } from './book-table.service';
 
-describe('MenuService', () => {
+describe('BookTableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [MenuService],
+      providers: [BookTableService],
     });
   });
 
-  it('should ...', inject([MenuService], (service: MenuService) => {
+  it('should ...', inject([BookTableService], (service: BookTableService) => {
     expect(service).toBeTruthy();
   }));
 });

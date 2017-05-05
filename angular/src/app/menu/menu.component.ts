@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
+import { DishView } from '../shared/models/interfaces';
+import { MdSlider } from '@angular/material';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
 
-    menus: any = [];
+    menus: DishView[] = [];
     expandIcon: string = 'expand_more';
 
     constructor (private menuService: MenuService) {
@@ -21,13 +24,13 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    applyFilters(filters): void {
+    applyFilters(filters: FormGroup): void {
       this.menuService.postFilters(filters).subscribe((data: any) => {
         this.menus = data.dishes;
       });
     }
 
-    clearFilters(form, search, price, likes): void {
+    clearFilters(form: FormGroup, price: MdSlider, likes: MdSlider): void {
       likes.value = 0;
       price.value = 0;
       form.reset();
@@ -37,8 +40,7 @@ export class MenuComponent implements OnInit {
     }
 
     changeExpandIcon(): void {
-      this.expandIcon === 'expand_more' ? this.expandIcon = 'expand_less' : this.expandIcon = 'expand_more';
-      // Remark: Maybe simpler: this.expandIcon = (this.expandIcon === 'expand_more') ? 'expand_less' : 'expand_more';
+      this.expandIcon = (this.expandIcon === 'expand_more') ? 'expand_less' : 'expand_more';
     }
 
 }

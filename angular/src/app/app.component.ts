@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 
 @Component({
-  selector: 'qs-app',
+  selector: 'app-main',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -22,6 +22,4 @@ export class AppComponent {
     this.router.navigate([route]);
     this.mobileSidenavOpened = false;
   }
-
-
 }

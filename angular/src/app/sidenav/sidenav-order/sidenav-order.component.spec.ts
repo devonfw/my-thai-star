@@ -14,7 +14,7 @@ describe('SidenavOrderComponent', () => {
       providers: [SidenavService],
       imports: [
         CovalentCoreModule.forRoot(),
-      ]
+      ],
     })
     .compileComponents();
   }));

@@ -3,34 +3,34 @@
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between">
       <span>Date</span>
-      <span>{{data.date}}</span>
+      <span>{{data.event.date}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Hour</span>
-      <span>{{data.time}}</span>
+      <span>{{data.event.hour}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Name</span>
-      <span>{{data.name}}</span>
+      <span>{{data.event.nameOwner}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Email</span>
-      <span>{{data.email}}</span>
+      <span>{{data.event.emailOwner}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Friends</span>
       <div layout="column" style="text-align:right; width:50%">
-        <span *ngFor="let inv of data.invitations">{{inv}}</span>
+        <span *ngFor="let inv of data.friends">{{inv}}</span>
       </div>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
     <div layout="row" class="justify-space-between">
       <span>Invitation number</span>
-      <span>{{data.tableId}}</span>
+      <span>{{data.event.tableId}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
   </div>
