@@ -6,9 +6,7 @@ import { IDishesDataService } from './dishes/dishes-data-service';
 import { DishesInMemoryService } from './dishes/dishes-in-memory.service';
 import { DishesRestService } from './dishes/dishes-rest.service';
 
-
-
-function getDishDataService(): Provider {
+export function getDishDataService(): Provider {
     switch (environment.backendType) {
       case BackendType.REST:
         return  { provide: IDishesDataService, useClass: DishesRestService };
