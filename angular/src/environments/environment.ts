@@ -3,6 +3,14 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-export const environment: {production: boolean} = {
+export enum BackendType {
+  IN_MEMORY,
+  REST,
+  GRAPHQL,
+}
+
+
+export const environment: {production: boolean, backendType: BackendType} = {
   production: false,
+  backendType: BackendType.IN_MEMORY,
 };

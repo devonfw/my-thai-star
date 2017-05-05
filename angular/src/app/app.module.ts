@@ -10,6 +10,7 @@ import { CovalentMarkdownModule } from '@covalent/markdown';
 import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { Md2Module }  from 'md2';
+import { BackendModule } from './shared/backend/backend.module';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -58,6 +59,7 @@ import { backendProvider } from './shared/backend/mock-backend';
     BrowserAnimationsModule,
     HttpModule,
     Md2Module,
+    BackendModule,
   ],
   providers: [
     SidenavService,
