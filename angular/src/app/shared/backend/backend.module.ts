@@ -6,7 +6,7 @@ import { IDishesDataService } from './dishes/dishes-data-service';
 import { DishesInMemoryService } from './dishes/dishes-in-memory.service';
 import { DishesRestService } from './dishes/dishes-rest.service';
 
-export function getDishDataService(): Provider {
+/*export function getDishDataService(): Provider {
     switch (environment.backendType) {
       case BackendType.REST:
         return  { provide: IDishesDataService, useClass: DishesRestService };
@@ -15,7 +15,7 @@ export function getDishDataService(): Provider {
         return  { provide: IDishesDataService, useClass: DishesInMemoryService };
       }
     }
-};
+};*/
 
 
 @NgModule({
@@ -24,6 +24,10 @@ export function getDishDataService(): Provider {
     HttpModule,
   ],
   declarations: [],
-  providers: [getDishDataService()],
+  providers: [
+    ((environment.backendType) === BackendType.REST ?
+    { provide: IDishesDataService, useClass: DishesRestService } :
+    { provide: IDishesDataService, useClass: DishesInMemoryService }),
+  ],
 })
 export class BackendModule { }
