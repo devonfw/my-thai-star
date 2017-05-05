@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { DishView } from '../../shared/models/interfaces';
 import { BusinessOperations } from '../../shared/BusinessOperations';
 
 @Injectable()
@@ -16,8 +17,9 @@ export class MenuService {
   constructor(private http: Http, private dishesDataService: IDishesDataService) {}
 
 
-  getDishes(): Observable<Dish[]> {
-    return this.dishesDataService.get();
+  getDishes(): Observable<DishView[]> {
+    return this.dishesDataService.get()
+            .map((dishes: Dish[]) => dishes as DishView[]); // TODO: Replace with a converter
   }
 
   postFilters(filters: FormGroup): Observable<any> {
