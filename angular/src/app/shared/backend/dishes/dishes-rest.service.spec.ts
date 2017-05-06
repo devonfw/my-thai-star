@@ -20,7 +20,7 @@ describe('DishesRestService', () => {
             useFactory: (mockBackend: MockBackend, options: BaseRequestOptions) => {
                 return new Http(mockBackend, options);
             },
-            deps: [MockBackend, BaseRequestOptions]
+            deps: [MockBackend, BaseRequestOptions],
         },
         MockBackend,
         BaseRequestOptions,

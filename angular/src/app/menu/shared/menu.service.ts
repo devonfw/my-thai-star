@@ -1,4 +1,4 @@
-import { IDishesDataService } from '../../shared/backend/dishes/dishes-data-service';
+import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
 import { Dish } from '../../shared/backend/dishes/dish';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
@@ -14,7 +14,7 @@ export class MenuService {
   BO: BusinessOperations = new BusinessOperations();
 
   // TODO: Remove Http dependency from here.
-  constructor(private http: Http, private dishesDataService: IDishesDataService) {}
+  constructor(private http: Http, private dishesDataService: DishesDataService) {}
 
 
   getDishes(): Observable<DishView[]> {
