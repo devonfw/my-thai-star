@@ -1,5 +1,4 @@
 import { SidenavService } from '../shared/sidenav.service';
-import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PriceCalculatorService } from '../shared/price-calculator.service';

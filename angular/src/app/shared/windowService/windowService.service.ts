@@ -6,7 +6,11 @@ function getWindow (): any {
 
 @Injectable()
 export class WindowService {
-    get nativeWindow (): any {
+    get nativeWindow(): any {
         return getWindow();
+    }
+
+    responsiveWidth(): string {
+       return (getWindow().innerWidth > 800) ? '40%' : '80%';
     }
 }

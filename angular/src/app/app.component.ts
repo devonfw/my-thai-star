@@ -15,15 +15,12 @@ import { AuthService } from './shared/authentication/auth.service';
 export class AppComponent {
 
   mobileSidenavOpened: boolean = false;
-  _window: Window;
-  screenSize: string;
 
   constructor(public window: WindowService,
               private router: Router,
               private sidenav: SidenavService,
               public dialog: MdDialog,
               public auth: AuthService) {
-    this._window = window.nativeWindow;
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -36,9 +33,8 @@ export class AppComponent {
   }
 
   openLoginDialog(): void {
-    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '80%';
     let dialogRef: MdDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
-      width: this.screenSize,
+      width: this.window.responsiveWidth(),
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {

@@ -16,17 +16,13 @@ import _ from 'lodash';
 export class BookTableComponent {
 
   invitationModel: string[] = [];
-  screenSize: string;
-  _window: Window;
 
   constructor(public window: WindowService, public dialog: MdDialog) {
-    this._window = window.nativeWindow;
   }
 
   showBookTableDialog(form: FormGroup): void {
-    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '80%';
     let dialogRef: MdDialogRef<BookTableDialogComponent> = this.dialog.open(BookTableDialogComponent, {
-      width: this.screenSize,
+      width: this.window.responsiveWidth(),
       data: form.value,
     });
     dialogRef.afterClosed().subscribe((result: boolean) => {
@@ -37,9 +33,8 @@ export class BookTableComponent {
   }
 
   showInviteDialog(form: FormGroup): void {
-    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '80%';
     let dialogRef: MdDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
-      width: this.screenSize,
+      width: this.window.responsiveWidth(),
       data: form.value,
     });
     dialogRef.afterClosed().subscribe((result: boolean) => {
