@@ -5,11 +5,9 @@ import { PriceCalculatorService } from './price-calculator.service';
 
 describe('PriceCalculatorService', () => {
 
-
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PriceCalculatorService]
+      providers: [PriceCalculatorService],
     });
   });
 
@@ -17,9 +15,7 @@ describe('PriceCalculatorService', () => {
     expect(service).toBeTruthy();
   }));
 
-
   describe('check getPrice method', () => {
-
 
     it('should calculate price for single order without extras', inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
@@ -181,7 +177,6 @@ describe('PriceCalculatorService', () => {
       expect(service.getPrice(order)).toEqual(order.price + extraTofu.price);
     }));
 
-
     it('should calculate price for multiple orders with multiple extra ingredients selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraRice: ExtraView = {
@@ -250,7 +245,7 @@ describe('PriceCalculatorService', () => {
 
   });
   describe('check getTotalPrice method', () => {
-    it('should calculate price for mutliple orders of different kind without extras', 
+    it('should calculate price for mutliple orders of different kind without extras',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
 
       const orderWithoutExtras: OrderView = {
@@ -274,7 +269,7 @@ describe('PriceCalculatorService', () => {
         .toEqual(orderWithoutExtras.price + expensiveOrderWithoutExtras.price * expensiveOrderWithoutExtras.number);
     }));
 
-    it('should calculate price for mutliple orders of different kind without extras', 
+    it('should calculate price for mutliple orders of different kind without extras',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
 
       const extraRice: ExtraView = {

@@ -10,7 +10,9 @@ export class ReservationCockpitComponent {
 
   expandIcon: string = 'expand_more';
 
-  constructor() { }
+  constructor() {
+     // constructor
+  }
 
   applyFilters(filters: FormGroup): void {
     // apply the filters

@@ -6,7 +6,6 @@ import * as _ from 'lodash';
 @Injectable()
 export class PriceCalculatorService {
 
-
   getPrice(order: OrderView): number {
     const extrasPrice: number = _.chain(order.options)
      .filter((extra: ExtraView) => extra.selected)

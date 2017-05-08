@@ -33,11 +33,9 @@ export class SidenavComponent implements OnInit {
     this.closeSidenav();
   }
 
-
   reloadOrders(): void {
     this.orders = this.sidenav.getOrderData();
   }
-
 
   calculateTotal(): number {
     return this.calculator.getTotalPrice(this.orders);

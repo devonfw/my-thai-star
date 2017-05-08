@@ -1,3 +1,4 @@
+import { Provider } from '@angular/core/core';
 import { DishView } from '../models/interfaces';
 import { Http, BaseRequestOptions, RequestMethod, ResponseOptions, Response } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -76,7 +77,7 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
     return new Http(backend, options);
 }
 
-export let backendProvider = {
+export let backendProvider: Provider = {
     // Remark: Why overriding Http provider (quite low level) instead of crating dedicated services for dishes and reservations,
     // which would define contracts required for specific data kinds. Then one could implement separate provides for those services
     // (mock, offline, online, etc.). For mock implementation it would be enough to wrap data with observables
