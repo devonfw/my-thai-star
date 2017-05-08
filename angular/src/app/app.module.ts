@@ -27,6 +27,7 @@ import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.
 
 // SERVICES
 import { SidenavService } from './sidenav/shared/sidenav.service';
+import { PriceCalculatorService } from './sidenav/shared/price-calculator.service';
 import { BookTableService } from './book-table/shared/book-table.service';
 import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
@@ -62,7 +63,8 @@ import { backendProvider } from './shared/backend/mock-backend';
     BackendModule,
   ],
   providers: [
-    SidenavService,
+    SidenavService, // TODO: Seaprate module for side nav that exports this provider
+    PriceCalculatorService, // TODO: Seaprate module for side nav that exports this provider
     BookTableService,
     MenuService,
     backendProvider,
