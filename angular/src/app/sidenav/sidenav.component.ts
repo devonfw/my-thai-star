@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
+import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { ExtraView, OrderView } from '../shared/models/interfaces';
 import * as _ from 'lodash';
@@ -14,8 +15,10 @@ export class SidenavComponent implements OnInit {
 
   orders: OrderView[];
 
-  constructor(private router: Router, private sidenav: SidenavService) {
-  }
+  constructor(private router: Router,
+    private sidenav: SidenavService,
+    private calculator: PriceCalculatorService,
+  ) {}
 
   ngOnInit(): void {
     this.orders = this.sidenav.getOrderData();
@@ -30,20 +33,13 @@ export class SidenavComponent implements OnInit {
     this.closeSidenav();
   }
 
+
   reloadOrders(): void {
     this.orders = this.sidenav.getOrderData();
   }
 
+
   calculateTotal(): number {
-    return _.reduce(this.orders, (sum: number, order: OrderView): number => {
-           return sum + (order.price +
-           _.reduce(order.options, (sum2: number, option: ExtraView): number => {
-             if (option.selected) {
-               return sum2 + option.price;
-             } else {
-               return sum2;
-             }
-           }, 0)) * order.number;
-         }, 0);
+    return this.calculator.getTotalPrice(this.orders);
   }
 }

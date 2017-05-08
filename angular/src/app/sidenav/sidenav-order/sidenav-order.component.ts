@@ -1,5 +1,6 @@
 import { ANY_STATE } from '@angular/animations/browser/src/dsl/animation_transition_expr';
 import { SidenavService } from '../shared/sidenav.service';
+import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -21,13 +22,13 @@ export class SidenavOrderComponent implements OnInit {
   constructor(private sidenav: SidenavService,
               public snackBar: MdSnackBar,
               public dialog: MdDialog,
-              private _dialogService: TdDialogService) {
-
-  }
+              private _dialogService: TdDialogService,
+              private calculator: PriceCalculatorService,
+  ) {}
 
   ngOnInit(): void {
-    this.ingredients = _.filter(this.order.options, (o: ExtraView) => { return o.selected === true; });
-}
+    this.ingredients = _.filter(this.order.options, (extra: ExtraView) => extra.selected);
+  }
 
   removeComment(): void {
     this.order.comment = undefined;
@@ -57,13 +58,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   calculateOrderPrice(): number {
-    return _.reduce(this.order.options, (total: number, o: ExtraView): number => {
-             if (o.selected) {
-               return total + o.price;
-             } else {
-               return total;
-             }
-          }, this.order.price) * this.order.number;
+    return this.calculator.getPrice(this.order);
   }
 
   openCommentDialog(): void {
