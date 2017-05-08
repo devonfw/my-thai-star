@@ -1,191 +1,391 @@
-# this is an example of the Uber API
-# as a demonstration of an API spec in YAML
 swagger: '2.0'
 info:
-  title: My Thai Star
-  description: Contracts between (Angular2/Xamarin) and (oasp4fn/oasp4j/oasp4net)
-  version: "1.0.0"
-# the domain of the service
-host: localhost:3000
-# array of all schemes that your API supports
+  version: v1
+  title: My Thai Star API
+host: 'localhost:8080'
 schemes:
-  - https
-# will be prefixed to all paths
-basePath: /v1
-produces:
-  - application/json
-
+  - http
 paths:
-  /getdishes:
+  /mythaistar/services/rest/Dishmanagement/v1/Dish/Search:
     post:
-      summary: Show Dishes
-      description: TODO
+      tags:
+        - Dish
+      summary: Gets the  list of available dishes regarding the filter options
+      operationId: Dish_Dish/Search
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
       produces:
         - application/json
+        - text/json
+        - application/xml
+        - text/xml
       parameters:
-        - name: filter
+        - name: filterView
           in: body
-          description: TODO
+          description: >-
+            Contains the criteria values to perform the search. Case of null or
+            empty values will return the full set of dishes.
           required: true
           schema:
-            $ref = "#/definitions/Filter"
+            $ref: '#/definitions/FilterView'
       responses:
-        200:
-          description: An array of products
+        '200':
+          description: Ok. The search process has beencompleted with no error.
           schema:
             type: array
             items:
               $ref: '#/definitions/DishView'
-        default:
-          description: Unexpected error
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Mailmanagement/v1/Reservation/UpdateInvitation:
+    get:
+      tags:
+        - Mail
+      summary: Method to accept or decline an invitation
+      operationId: Mail_Reservation/UpdateInvitation
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: guestToken
+          in: query
+          description: Token generated in the reservation process where guests are invited.
+          required: true
+          type: string
+        - name: guestResponse
+          in: query
+          description: >-
+            True : The user accepts the invitation. False: The user declines the
+            invitation.
+          required: true
+          type: boolean
+      responses:
+        '204':
+          description: 'Ok, no content. The search process has beencompleted with no error.'
           schema:
-            $ref: '#/definitions/Error'
+            type: object
+        '400':
+          description: >-
+            Bad request. The invitation cannot be cancelled because the request
+            is 10 minutes before the event after being accepted before.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Mailmanagement/v1/Reservation/CancelInvitation:
+    get:
+      tags:
+        - Mail
+      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be canceled if the cancelation request is not send an hour before the reservation"
+      operationId: Mail_Reservation/CancelInvitation
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: reservationToken
+          in: query
+          description: >-
+            Token generated in the reservation process where guests are invited.
+            Mandatory
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. Invitation canceled'
+          schema:
+            type: object
+        '400':
+          description: >-
+            Bad Request. Incorrect Invitation token given or parse error.The
+            invitation cannot be cancelled because the request is an hour before
+            the event.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Ordermanagement/v1/Order:
+    post:
+      tags:
+        - Order
+      summary: >-
+        Order the order. Given an order view, the server side will prepare the
+        different order lines.
+      operationId: Order_Order
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: orderView
+          in: body
+          description: >-
+            The model of the ordert to be processed on the server side. The
+            InvitationToken field is mandatory.
+          required: true
+          schema:
+            $ref: '#/definitions/OrderView'
+      responses:
+        '201':
+          description: Ok. Created
+          schema:
+            type: object
+        '400':
+          description: Bad Request. No Invitation token given.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Ordermanagement/v1/Delete:
+    delete:
+      tags:
+        - Order
+      summary: >-
+        Method to delete the order. Once the order is deleted the system will
+        send a cancelation email to all guests.
+      operationId: Order_Delete
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: reservationToken
+          in: query
+          description: ''
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. Invitation canceled'
+          schema:
+            type: object
+        '400':
+          description: Bad Request. Incorrect Invitation token given or parse error.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Reservationmanagement/v1/Reservation:
+    post:
+      tags:
+        - Reservation
+      summary: Method to make a reservation with potentiel guests.
+      operationId: Reservation_Reservation
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: reservationView
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/ReservationView'
+      responses:
+        '200':
+          description: Ok.
+          schema:
+            type: string
+        '400':
+          description: Bad request. Parser data error.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
 definitions:
-  OrderView:
-    type: array
-    items:
-      $ref: "#/definitions/DishView"
-  DishView:
+  FilterView:
+    description: ''
     type: object
     properties:
-      orderName:
-        type: string
-        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-      orderDescription:
-        type: string
-        description: Description of product.
-      price:
-        type: string
-        description: Display name of product.
-      image:
-        type: string
-        description: path to the image of dish
-      options:
+      catgories:
+        description: ''
         type: array
         items:
-          $ref: "#/definitions/ExtraView"
-      likes:
+          $ref: '#/definitions/CategoryView'
+      maxPrice:
+        format: double
         type: number
-        description: number of likes
-      favourite:
+      minLikes:
+        format: int32
+        type: integer
+      searchBy:
+        type: string
+      showOrder:
+        format: int32
+        type: integer
+      isFav:
         type: boolean
-        description: TODO
-  ImageView:
+  CategoryView:
     type: object
     properties:
-      name:
+      Id:
+        format: int64
+        type: integer
+      Name:
         type: string
-        description: A name that the image has. More informative than a URL or a MIME string
-      content:
+      Description:
         type: string
-        description: Either the URL where the image is located or the MIME stream that has to be parsed on client-side
-      type:
-        type: string
-        enum: [BINARY,URL]
-        description: Describes wether the Image itself is a location (url) or a MIME stream.
-      extension:
-        type: string
-        description: The type of file the Image is (.jpg, .png, ...). Necessary when the MIME stream parsing is required.
-  ExtraView:
+      Group:
+        format: int32
+        type: integer
+      Selected:
+        type: boolean
+      ShowOrder:
+        format: int32
+        type: integer
+  DishView:
+    description: Dish entity which represents a single dish structure from menu
     type: object
     properties:
+      id:
+        format: int64
+        type: integer
       name:
         type: string
-        description: The name of the extra ingredient
+      description:
+        type: string
       price:
+        format: double
         type: number
-        description: The price of the extra ingredient
+      image:
+        $ref: '#/definitions/ImageView'
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraIngredientView'
+      favourite:
+        $ref: '#/definitions/FavouriteView'
+  ImageView:
+    description: >-
+      Structure to define the image object. The content if contains binary data
+      must be represented in Base64String
+    type: object
+    properties:
+      Name:
+        type: string
+      Content:
+        type: string
+      Type:
+        description: Binary or Url
+        type: string
+      Extension:
+        type: string
+  ExtraIngredientView:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
       selected:
         type: boolean
-        description: Defines if the extra ingredient will be added or not the ExtraDish.
-  ReservationView:
+      price:
+        format: double
+        type: number
+  FavouriteView:
     type: object
     properties:
-      event:
-        type: object
-        $ref: "#/definitions/Event"
-      email:
-        type: string
-        description: The email of the user that has set up the Reservation.
-      adults:
+      IsFav:
+        type: boolean
+      Likes:
+        format: int32
         type: integer
-        description: The number of adults that are attending.
-      kids:
-        type: integer
-        description: The number of kids that are attending.
-  InvitationView:
+  OrderView:
+    description: >-
+      InvitationToken contains the direct Reservation Token or Invitation token
+      dependig on the type of the reservation
     type: object
     properties:
-      event:
-        type: object
-        $ref: "#/definitions/Event"
-      nameOwner:
-        type: string
-        description: The name of the user that sent the Invitation.
-      emailOwner:
-        type: string
-        description: The emial of the user that sent the Invitation.
-      friends:
+      lines:
+        description: Contains the lines of the chosen order from client.
         type: array
-        description: All the emails the Invitation is sent to.
         items:
-          type: string
-      invitationNumber:
+          $ref: '#/definitions/OrderLineView'
+      invitationId:
+        description: >-
+          contains the direct Reservation Token or Invitation token dependig on
+          the type of the reservation.
+        type: string
+  OrderLineView:
+    type: object
+    properties:
+      idDish:
+        format: int64
         type: integer
-        description: Identifier of the Invitation
-  Event:
+      extras:
+        description: >-
+          Contains a list with the id of the extra ingredients that have been
+          selected by the client
+        type: array
+        items:
+          format: int64
+          type: integer
+      amount:
+        format: int32
+        type: integer
+      comment:
+        type: string
+  ReservationView:
     type: object
     properties:
       date:
         type: string
-        description: the date (month/day/year) when the Event is happening.
-      hour:
-        type: string
-        description: The Date's time when the Event is happening.
+      type:
+        $ref: '#/definitions/ReservationType'
       name:
         type: string
-        description: The name of the Event.
-  Filter:
-    type: object
-    properties:
-      main:
-        type: boolean
-        description: TODO
-      starter:
-        type: boolean
-        description: TODO
-      dessert:
-        type: boolean
-        description: TODO
-      noodle:
-        type: boolean
-        description: TODO
-      rice:
-        type: boolean
-        description: TODO
-      curry:
-        type: boolean
-        description: TODO
-      vegan:
-        type: boolean
-        description: TODO
-      vegetarian:
-        type: boolean
-        description: TODO
-      favourites:
-        type: boolean
-        description: TODO
-      price:
-        type: number
-        description: TODO
-      likes:
-        type: integer
-        description: TODO
-  Error:
-    type: object
-    properties:
-      code:
-        type: integer
+      email:
+        type: string
+      assistants:
         format: int32
-      message:
+        type: integer
+      guestList:
+        type: array
+        items:
+          type: string
+  ReservationType:
+    type: object
+    properties:
+      name:
         type: string
