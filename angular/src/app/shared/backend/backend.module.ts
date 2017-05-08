@@ -1,8 +1,19 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { DishesDataService } from './dishes/dishes-data-service';
 import { LoginDataService } from './login/login-data-service';
+
+export enum BackendType {
+  IN_MEMORY,
+  REST,
+  GRAPHQL,
+}
+
+export class BackendConfig {
+  restServiceRoot: string;
+  environmentType: BackendType;
+}
 
 @NgModule({
   imports: [
@@ -12,7 +23,25 @@ import { LoginDataService } from './login/login-data-service';
   declarations: [],
   providers: [
     DishesDataService,
-    LoginDataService],
+    LoginDataService,
+  ],
 })
 
-export class BackendModule { }
+export class BackendModule {
+
+  constructor (@Optional() @SkipSelf() parentModule: BackendModule) {
+    if (parentModule) {
+      throw new Error('BackendModule is already loaded. Import it in the AppModule only');
+    }
+  }
+
+  static forRoot(backendConfig: BackendConfig): ModuleWithProviders {
+    return {
+      ngModule: BackendModule,
+      providers: [
+        {provide: BackendConfig, useValue: backendConfig},
+      ],
+    };
+  }
+
+ }

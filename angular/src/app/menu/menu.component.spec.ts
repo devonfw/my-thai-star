@@ -18,7 +18,7 @@ describe('MenuComponent', () => {
       providers: [SidenavService, MenuService],
       imports: [
         BrowserAnimationsModule,
-        BackendModule,
+        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         CovalentCoreModule.forRoot(),
       ],
     })

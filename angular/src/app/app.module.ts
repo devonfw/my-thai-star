@@ -11,6 +11,8 @@ import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from
 import { MockBackend } from '@angular/http/testing';
 import { Md2Module }  from 'md2';
 import { BackendModule } from './shared/backend/backend.module';
+import { config } from './config';
+import { environment as env } from '../environments/environment';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -68,7 +70,7 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
     BrowserAnimationsModule,
     HttpModule,
     Md2Module,
-    BackendModule,
+    BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
   ],
   providers: [
     SidenavService, // TODO: Seaprate module for side nav that exports this provider
