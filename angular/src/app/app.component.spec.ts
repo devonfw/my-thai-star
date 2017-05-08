@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CovalentCoreModule } from '@covalent/core';
 
 import { SidenavService } from './sidenav/shared/sidenav.service';
+import { PriceCalculatorService } from './sidenav/shared/price-calculator.service';
 import { WindowService } from './shared/windowService/windowService.service';
 import { LoginDataService } from './shared/backend/login/login-data-service';
 import { AuthService } from './shared/authentication/auth.service';
@@ -17,7 +18,7 @@ describe('AppComponent', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, SidenavComponent, SidenavOrderComponent ],
-      providers: [SidenavService, WindowService, AuthService, LoginDataService],
+      providers: [PriceCalculatorService, SidenavService, WindowService, AuthService, LoginDataService],
       imports: [
         RouterTestingModule,
         CovalentCoreModule.forRoot(),
