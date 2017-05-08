@@ -5,6 +5,7 @@ import { LoginInfo } from '../backend/login/loginInfo';
 @Injectable()
 export class AuthService {
     isLogged: boolean = false;
+    user: string = '';
 
     constructor(public loginDataService: LoginDataService) { }
 
@@ -14,6 +15,7 @@ export class AuthService {
             .subscribe((login: LoginInfo) => {
                 if (login) {
                     this.isLogged = true;
+                    this.user = login.name;
                 } else {
                     this.isLogged = false;
                 }

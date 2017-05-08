@@ -7,6 +7,7 @@ import { PriceCalculatorService } from './sidenav/shared/price-calculator.servic
 import { WindowService } from './shared/windowService/windowService.service';
 import { LoginDataService } from './shared/backend/login/login-data-service';
 import { AuthService } from './shared/authentication/auth.service';
+import { PriceCalculatorService } from './sidenav/shared/price-calculator.service';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
@@ -18,7 +19,7 @@ describe('AppComponent', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, SidenavComponent, SidenavOrderComponent ],
-      providers: [PriceCalculatorService, SidenavService, WindowService, AuthService, LoginDataService],
+      providers: [SidenavService, WindowService, AuthService, LoginDataService, PriceCalculatorService],
       imports: [
         RouterTestingModule,
         CovalentCoreModule.forRoot(),

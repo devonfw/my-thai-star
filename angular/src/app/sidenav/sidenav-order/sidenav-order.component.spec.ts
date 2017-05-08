@@ -2,6 +2,7 @@ import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { OrderView } from '../../shared/models/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
 
@@ -12,7 +13,7 @@ describe('SidenavOrderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavOrderComponent ],
-      providers: [PriceCalculatorService, SidenavService],
+      providers: [SidenavService, PriceCalculatorService],
       imports: [
         CovalentCoreModule.forRoot(),
       ],

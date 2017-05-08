@@ -48,7 +48,7 @@
     <td-notification-count *ngIf="!auth.isLogged" color="accent" [notifications]="sidenav.getNumberOrders()">
       <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
     </td-notification-count>
-    <span *ngIf="auth.isLogged">Welcome waiter <md-icon>person_outline</md-icon></span>
+    <span *ngIf="auth.isLogged">Welcome {{auth.user}} <md-icon>person_outline</md-icon></span>
     <button *ngIf="auth.isLogged" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
   </div>
   <td-layout-footer class="forDesktop">

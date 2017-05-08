@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isLogged) { return true; }
 
     // Open login error snack bar
-    this.snackBar.open('Wrong username or password, please try again', '', {
+    this.snackBar.open('Access denied, please try again', '', {
       duration: 4000,
     });
 

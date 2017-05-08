@@ -23,13 +23,13 @@
 }
 
 @media (min-width: 1300px){
-  app-menu-card {
+  public-menu-card {
     width: 50%
   }
 }
 
 @media (max-width: 1300px){
-  app-menu-card {
+  public-menu-card {
     width: 75%
   }
 }
@@ -41,7 +41,7 @@
   .searchBy {
     width: 100%;
   }
-  app-menu-card {
+  public-menu-card {
     width: 100%
   }
 }

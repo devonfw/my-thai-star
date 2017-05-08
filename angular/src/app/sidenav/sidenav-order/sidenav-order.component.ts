@@ -1,4 +1,3 @@
-import { ANY_STATE } from '@angular/animations/browser/src/dsl/animation_transition_expr';
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
