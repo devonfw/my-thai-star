@@ -14,7 +14,7 @@ export class DishesRestService implements IDishesDataService {
 
  constructor(private injector: Injector) {
    this.http = this.injector.get(Http);
- };
+ }
 
  get(): Observable<Dish[]> {
   return this.http.get(`${BusinessOperations.restServiceRoot}${this.dishesRestPath}`)

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { DishesDataService } from './dishes/dishes-data-service';
-
+import { LoginDataService } from './login/login-data-service';
 
 @NgModule({
   imports: [
@@ -10,6 +10,9 @@ import { DishesDataService } from './dishes/dishes-data-service';
     HttpModule,
   ],
   declarations: [],
-  providers: [DishesDataService],
+  providers: [
+    DishesDataService,
+    LoginDataService],
 })
+
 export class BackendModule { }

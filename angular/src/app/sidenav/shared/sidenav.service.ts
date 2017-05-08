@@ -12,19 +12,19 @@ export class SidenavService {
 
   public openSideNav(): void {
     this.opened = true;
-  };
+  }
 
   public closeSideNav(): void {
     this.opened = false;
-  };
+  }
 
   public getOrderData(): any[] {
     return this.orders;
-  };
+  }
 
   public getNumberOrders(): number {
     return this.orders.length;
-  };
+  }
 
   public findOrder(order: OrderView): OrderView {
     return _.find(this.orders, function(o: OrderView): OrderView {

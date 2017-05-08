@@ -23,7 +23,6 @@ export class DishesDataService implements IDishesDataService {
 
     get(): Observable<Dish[]> {
         return this.usedImplementation.get();
-    };
-
+    }
 
 }

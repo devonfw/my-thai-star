@@ -1,4 +1,5 @@
 import { Dish } from './dishes/dish';
+import { LoginInfo } from './login/loginInfo';
 
 export const dishes: Dish[] = [{
                         favourite: false,
@@ -51,3 +52,14 @@ export const dishes: Dish[] = [{
                         orderName: 'Yellow Curry',
                         price: 8.50,
                 }];
+
+export const users: LoginInfo[] = [{
+                        username: 'user1',
+                        password: 'password',
+                      }, {
+                        username: 'user2',
+                        password: 'password',
+                      }, {
+                        username: 'user3',
+                        password: 'password',
+                      }];

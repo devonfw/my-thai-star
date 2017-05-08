@@ -5,7 +5,7 @@ import { ReservationView } from '../../shared/models/interfaces';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-book-table-dialog',
+  selector: 'public-book-table-dialog',
   templateUrl: './book-table-dialog.component.html',
   styleUrls: ['./book-table-dialog.component.scss'],
 })

@@ -9,7 +9,6 @@ export enum BackendType {
   GRAPHQL,
 }
 
-
 export const environment: {production: boolean, backendType: BackendType} = {
   production: false,
   backendType: BackendType.IN_MEMORY,

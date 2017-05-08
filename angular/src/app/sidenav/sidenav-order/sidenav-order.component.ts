@@ -9,7 +9,7 @@ import { ExtraView, OrderView } from '../../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-sidenav-order',
+  selector: 'public-sidenav-order',
   templateUrl: './sidenav-order.component.html',
   styleUrls: ['./sidenav-order.component.scss'],
 })

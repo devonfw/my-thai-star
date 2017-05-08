@@ -8,7 +8,7 @@ import { WindowService } from '../shared/windowService/windowService.service';
 import _ from 'lodash';
 
 @Component({
-  selector: 'app-book-table',
+  selector: 'public-book-table',
   templateUrl: './book-table.component.html',
   styleUrls: ['./book-table.component.scss'],
 })
@@ -24,7 +24,7 @@ export class BookTableComponent {
   }
 
   showBookTableDialog(form: FormGroup): void {
-    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
+    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '80%';
     let dialogRef: MdDialogRef<BookTableDialogComponent> = this.dialog.open(BookTableDialogComponent, {
       width: this.screenSize,
       data: form.value,
@@ -37,7 +37,7 @@ export class BookTableComponent {
   }
 
   showInviteDialog(form: FormGroup): void {
-    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '90%';
+    this._window.innerWidth > 800 ? this.screenSize = '40%' : this.screenSize = '80%';
     let dialogRef: MdDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
       width: this.screenSize,
       data: form.value,

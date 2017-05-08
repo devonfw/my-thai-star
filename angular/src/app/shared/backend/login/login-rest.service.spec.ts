@@ -7,14 +7,14 @@ import {
     ResponseOptions,
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { DishesRestService } from './dishes-rest.service';
+import { LoginRestService } from './login-rest.service';
 
 describe('DishesRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [
-        DishesRestService,
+        LoginRestService,
         {
             provide: Http,
             useFactory: (mockBackend: MockBackend, options: BaseRequestOptions) => {
@@ -28,7 +28,7 @@ describe('DishesRestService', () => {
     });
   });
 
-  it('should ...', inject([DishesRestService], (service: DishesRestService) => {
+  it('should ...', inject([LoginRestService], (service: LoginRestService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -6,7 +6,7 @@ export class BusinessOperations {
 
   public static restServiceRoot: string = config.restServiceRoot;
 
-  // TODO: Re-implement and remove section below 
+  // TODO: Re-implement and remove section below
   public serverPath: string = '/v1/';
 
   public getbookingid: string = this.serverPath + 'getbookingid';
@@ -14,5 +14,4 @@ export class BusinessOperations {
   public postfilters: string = this.serverPath + 'postfilters';
   public postbookingtable: string = this.serverPath + 'postbooking';
   public postbookinginvitation: string = this.serverPath + 'postinvitation';
-
 }

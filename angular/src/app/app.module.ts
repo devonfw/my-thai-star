@@ -31,9 +31,14 @@ import { PriceCalculatorService } from './sidenav/shared/price-calculator.servic
 import { BookTableService } from './book-table/shared/book-table.service';
 import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
+import { AuthGuard } from './shared/authentication/auth-guard.service';
+import { AuthService } from './shared/authentication/auth.service';
 
 // BACKEND
 import { backendProvider } from './shared/backend/mock-backend';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
+import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
@@ -50,6 +55,9 @@ import { backendProvider } from './shared/backend/mock-backend';
     InvitationDialogComponent,
     BookTableDialogComponent,
     CommentDialogComponent,
+    LoginDialogComponent,
+    OrderCockpitComponent,
+    ReservationCockpitComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,11 +79,14 @@ import { backendProvider } from './shared/backend/mock-backend';
     MockBackend,
     BaseRequestOptions,
     WindowService,
+    AuthGuard,
+    AuthService,
   ],
   entryComponents: [
     BookTableDialogComponent,
     InvitationDialogComponent,
     CommentDialogComponent,
+    LoginDialogComponent,
   ],
   bootstrap: [ AppComponent ],
 })

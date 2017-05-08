@@ -1,8 +1,9 @@
+import { DishView } from '../models/interfaces';
 import { Http, BaseRequestOptions, RequestMethod, ResponseOptions, Response } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { dishes } from './mock-data';
 
-export function backendFactory(backend: MockBackend, options: BaseRequestOptions) {
+export function backendFactory(backend: MockBackend, options: BaseRequestOptions): Http {
     backend.connections.subscribe((connection: MockConnection) => {
 
         // WRAP IN TIMEOUT TO SIMULATE SERVER API CALL
@@ -12,8 +13,8 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
-                            dishes: dishes
-                        }
+                            dishes: dishes,
+                        },
                     })));
             }
 
@@ -23,16 +24,16 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                         status: 200,
                         body: {
                             event: {
-                                tableId: Math.floor(1000000000 + Math.random() * 9000000000)
-                            }
-                        }
+                                tableId: Math.floor(1000000000 + Math.random() * 9000000000),
+                            },
+                        },
                     })));
             }
 
             if (connection.request.url.endsWith('/v1/postfilters')) {
-                let params = JSON.parse(connection.request.getBody());
-                let filteredMenu;
-                if (params.searchTerm){
+                let params: any = JSON.parse(connection.request.getBody());
+                let filteredMenu: DishView[];
+                if (params.searchTerm) {
                     filteredMenu = dishes.slice(0, 1);
                 } else {
                     filteredMenu = dishes;
@@ -40,32 +41,32 @@ export function backendFactory(backend: MockBackend, options: BaseRequestOptions
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
-                            dishes: filteredMenu
-                        }
+                            dishes: filteredMenu,
+                        },
                     })));
             }
 
             if (connection.request.url.endsWith('/v1/postbooking')) {
-                let params = JSON.parse(connection.request.getBody());
+                let params: any = JSON.parse(connection.request.getBody());
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
                             event: {
-                                tableId: Math.floor(1000000000 + Math.random() * 9000000000)
-                            }
-                        }
+                                tableId: Math.floor(1000000000 + Math.random() * 9000000000),
+                            },
+                        },
                     })));
             }
 
             if (connection.request.url.endsWith('/v1/postinvitation')) {
-                let params = JSON.parse(connection.request.getBody());
+                let params: any = JSON.parse(connection.request.getBody());
                 connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
                             event: {
-                                tableId: Math.floor(1000000000 + Math.random() * 9000000000)
-                            }
-                        }
+                                tableId: Math.floor(1000000000 + Math.random() * 9000000000),
+                            },
+                        },
                     })));
             }
 
@@ -83,8 +84,8 @@ export let backendProvider = {
     // which can be switched via env variables take a look here:
     // - https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/shared/legoShopOffline.service.ts
     // - https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/shared/legoShopOnline.service.ts
-    // = https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/lego-shop/legoShop.module.ts 
+    // = https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/lego-shop/legoShop.module.ts
     provide: Http,
     useFactory: backendFactory,
-    deps: [MockBackend, BaseRequestOptions]
+    deps: [MockBackend, BaseRequestOptions],
 };

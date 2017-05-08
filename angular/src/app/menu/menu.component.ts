@@ -6,7 +6,7 @@ import { DishView } from '../shared/models/interfaces';
 import { MdSlider } from '@angular/material';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'public-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })

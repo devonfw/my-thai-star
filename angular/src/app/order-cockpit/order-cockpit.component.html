@@ -99,14 +99,10 @@
         </div>
       </td-expansion-panel>
       <div class="property-text-right">
-        <button md-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
+        <button md-button (click)="clearFilters()" class="text-upper property-text-bold">Clear filters</button>
         <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
   </form>
-
-  <div flex layout="row" class="justify-space-around flex-wrap">
-    <public-menu-card *ngFor="let menu of menus" [menu]="menu"></public-menu-card>
-  </div>
-
+  ORDERS
 </td-layout>

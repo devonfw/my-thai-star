@@ -4,7 +4,7 @@ import { DishView, ExtraView, OrderView } from '../../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-menu-card',
+  selector: 'public-menu-card',
   templateUrl: './menu-card.component.html',
   styleUrls: ['./menu-card.component.scss'],
 })

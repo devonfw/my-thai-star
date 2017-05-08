@@ -7,7 +7,7 @@ import { ExtraView, OrderView } from '../shared/models/interfaces';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-sidenav',
+  selector: 'public-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
@@ -22,11 +22,11 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.orders = this.sidenav.getOrderData();
-  };
+  }
 
   closeSidenav(): void {
     this.sidenav.closeSideNav();
-  };
+  }
 
   navigateTo(route: string): void {
     this.router.navigate([route]);

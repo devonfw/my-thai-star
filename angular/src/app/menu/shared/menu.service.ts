@@ -16,7 +16,6 @@ export class MenuService {
   // TODO: Remove Http dependency from here.
   constructor(private http: Http, private dishesDataService: DishesDataService) {}
 
-
   getDishes(): Observable<DishView[]> {
     return this.dishesDataService.get()
             .map((dishes: Dish[]) => dishes as DishView[]); // TODO: Replace with a converter

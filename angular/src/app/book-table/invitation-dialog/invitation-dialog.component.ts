@@ -5,7 +5,7 @@ import { InvitationView } from '../../shared/models/interfaces';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-invitation-dialog',
+  selector: 'public-invitation-dialog',
   templateUrl: './invitation-dialog.component.html',
   styleUrls: ['./invitation-dialog.component.scss'],
 })

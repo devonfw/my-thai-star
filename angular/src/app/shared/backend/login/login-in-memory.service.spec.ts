@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DishesInMemoryService } from './dishes-in-memory.service';
+import { LoginInMemoryService } from './login-in-memory.service';
 
 describe('DishesInMemoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DishesInMemoryService],
+      providers: [LoginInMemoryService],
     });
   });
 
-  it('should ...', inject([DishesInMemoryService], (service: DishesInMemoryService) => {
+  it('should ...', inject([LoginInMemoryService], (service: LoginInMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });
