@@ -3,11 +3,7 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-export enum BackendType {
-  IN_MEMORY,
-  REST,
-  GRAPHQL,
-}
+import { BackendType } from '../app/shared/backend/backend.module';
 
 export const environment: {production: boolean, backendType: BackendType} = {
   production: false,

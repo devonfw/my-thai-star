@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CovalentCoreModule } from '@covalent/core';
+import { BackendModule } from './shared/backend/backend.module';
 
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { PriceCalculatorService } from './sidenav/shared/price-calculator.service';
@@ -21,6 +22,7 @@ describe('AppComponent', () => {
       providers: [SidenavService, WindowService, AuthService, LoginDataService, PriceCalculatorService],
       imports: [
         RouterTestingModule,
+        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         CovalentCoreModule.forRoot(),
       ],
     });
