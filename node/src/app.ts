@@ -31,3 +31,5 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 app.listen(app.get('port'), () => {
     console.log('MyThaiStar server listening on port ' + app.get('port'));
 });
+
+module.exports = app;
