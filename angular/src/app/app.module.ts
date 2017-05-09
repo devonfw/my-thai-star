@@ -1,3 +1,6 @@
+import { config } from './config';
+import { environment as env } from '../environments/environment';
+
 // MODULES
 import { MaterialModule } from '@angular/material';
 import { NgModule, Type } from '@angular/core';
@@ -11,8 +14,7 @@ import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from
 import { MockBackend } from '@angular/http/testing';
 import { Md2Module }  from 'md2';
 import { BackendModule } from './shared/backend/backend.module';
-import { config } from './config';
-import { environment as env } from '../environments/environment';
+import { SidenavModule } from './sidenav/sidenav.module';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -21,15 +23,11 @@ import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu/menu-card/menu-card.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
+
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
-import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.component';
 
 // SERVICES
-import { SidenavService } from './sidenav/shared/sidenav.service';
-import { PriceCalculatorService } from './sidenav/shared/price-calculator.service';
 import { BookTableService } from './book-table/shared/book-table.service';
 import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
@@ -52,11 +50,8 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
     BookTableComponent,
     MenuComponent,
     MenuCardComponent,
-    SidenavComponent,
-    SidenavOrderComponent,
     InvitationDialogComponent,
     BookTableDialogComponent,
-    CommentDialogComponent,
     LoginDialogComponent,
     OrderCockpitComponent,
     ReservationCockpitComponent,
@@ -71,10 +66,9 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
     HttpModule,
     Md2Module,
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
+    SidenavModule,
   ],
   providers: [
-    SidenavService, // TODO: Seaprate module for side nav that exports this provider
-    PriceCalculatorService, // TODO: Seaprate module for side nav that exports this provider
     BookTableService,
     MenuService,
     backendProvider,
@@ -87,7 +81,6 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
   entryComponents: [
     BookTableDialogComponent,
     InvitationDialogComponent,
-    CommentDialogComponent,
     LoginDialogComponent,
   ],
   bootstrap: [ AppComponent ],
