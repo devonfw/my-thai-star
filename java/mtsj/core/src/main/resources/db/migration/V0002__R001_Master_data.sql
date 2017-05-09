@@ -20,3 +20,25 @@ INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUE
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (6, 1, 4, 1);
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (7, 1, 5, 0);
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (8, 1, 5, 1);
+
+--Category
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (0, 1, 'Main Dishes', 'Main Dishes', 0);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (1, 1, 'Starter', 'Starter Dishes', 1);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (2, 1, 'Dessert', 'Dessert', 2);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (3, 1, 'Noodle', 'Dishes that contain noodles', 2);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (4, 1, 'Rice', 'Dishes that contain rice', 2);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (5, 1, 'Curry', 'Dishes with curry', 2);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (6, 1, 'Vegan', 'Vegan food', 2);
+INSERT INTO Category (id, modificationCounter, name, description, showOrder) VALUES (7, 1, 'Vegetarian', 'Vegetarian food', 2);
+
+--DishCategory
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (0, 1, 0, 0);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (1, 1, 0, 4);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (2, 1, 0, 7);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (3, 1, 1, 0);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (4, 1, 2, 0);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (5, 1, 2, 5);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (6, 1, 3, 6);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (7, 1, 3, 7);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (8, 1, 4, 1);
+INSERT INTO DishCategory (id, modificationCounter, idDish, idCategory) VALUES (9, 1, 5, 1);

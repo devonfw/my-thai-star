@@ -60,7 +60,7 @@ CREATE TABLE Category (
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
-  idgroup BIGINT,
+  --idGroup BIGINT,
   showOrder INTEGER,
   CONSTRAINT PK_Category PRIMARY KEY(id)
 );
