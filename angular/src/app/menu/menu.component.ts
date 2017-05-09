@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
 
     applyFilters(filters: FormGroup): void {
       this.menuService.postFilters(filters).subscribe((data: any) => {
-        this.menus = data.dishes;
+        this.menus = data;
       });
     }
 
@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
       price.value = 0;
       form.reset();
       this.menuService.postFilters(form.value).subscribe((data: any) => {
-        this.menus = data.dishes;
+        this.menus = data;
       });
     }
 

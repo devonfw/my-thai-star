@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Dish } from './dish';
+import { Filter } from './filter';
 
 import { BackendConfig, BackendType } from '../backend.module';
 import { DishesInMemoryService } from './dishes-in-memory.service';
@@ -24,6 +25,10 @@ export class DishesDataService implements IDishesDataService {
 
     get(): Observable<Dish[]> {
         return this.usedImplementation.get();
+    }
+
+    filter(filters: Filter): Observable<Dish[]> {
+        return this.usedImplementation.filter(filters);
     }
 
 }
