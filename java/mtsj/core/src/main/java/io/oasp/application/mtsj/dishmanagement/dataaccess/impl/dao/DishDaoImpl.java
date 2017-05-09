@@ -1,6 +1,9 @@
 package io.oasp.application.mtsj.dishmanagement.dataaccess.impl.dao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -40,34 +43,63 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     DishEntity dish = Alias.alias(DishEntity.class);
     EntityPathBase<DishEntity> alias = Alias.$(dish);
-    Category category = Alias.alias(Category.class);
-    EntityPathBase<Category> aliasC = Alias.$(category);
+
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    String name = criteria.getName();
-    if (name != null) {
-      query.where(Alias.$(dish.getName()).eq(name));
+    String searchBy = criteria.getSearchBy();
+    if (searchBy != null) {
+      query.where(Alias.$(dish.getName()).contains(searchBy).or(Alias.$(dish.getDescription()).contains(searchBy)));
     }
-    String description = criteria.getDescription();
-    if (description != null) {
-      query.where(Alias.$(dish.getDescription()).eq(description));
-    }
-    BigDecimal price = criteria.getPrice();
+
+    BigDecimal price = criteria.getMaxPrice();
     if (price != null) {
-      query.where(Alias.$(dish.getPrice()).eq(price));
+      query.where(Alias.$(dish.getPrice()).lt(price));
     }
-    String image = criteria.getImage();
-    if (image != null) {
-      query.where(Alias.$(dish.getImage()).eq(image));
+
+    PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
+
+    Collection<Category> categories = criteria.getCategories();
+    if (!categories.isEmpty()) {
+      entitiesList = categoryFilter(entitiesList, categories);
     }
-    // Collection<Category> categories = criteria.getCategories();
-    // if (categories.size() > 0){
-    // query.innerJoin()
-    // for (Category c : categories) {
-    // query.innerJoin(criteria.getCategories(), category)
-    // }
-    // }
-    return findPaginated(criteria, query, alias);
+
+    return entitiesList;
   }
 
+  private PaginatedListTo<DishEntity> categoryFilter(PaginatedListTo<DishEntity> pl, Collection<Category> categories) {
+
+    List<DishEntity> dishEntities = pl.getResult();
+    List<DishEntity> dishEntitiesF = new ArrayList<>();
+    for (DishEntity dishEntity : dishEntities) {
+
+      List<Category> entityCats = (List<Category>) dishEntity.getCategories();
+      for (Category entityCat : entityCats) {
+        for (Category category : categories) {
+          if (category.getId() == entityCat.getId()) {
+            if (!dishAlreadyAdded(dishEntitiesF, dishEntity)) {
+              dishEntitiesF.add(dishEntity);
+              System.out.println("ID: " + dishEntity.getId() + "  NAME: " + dishEntity.getName());
+              break;
+            }
+
+          }
+        }
+      }
+
+    }
+
+    return new PaginatedListTo<>(dishEntitiesF, pl.getPagination());
+  }
+
+  private boolean dishAlreadyAdded(List<DishEntity> dishEntitiesFiltered, DishEntity dishEntity) {
+
+    boolean result = false;
+    for (DishEntity entity : dishEntitiesFiltered) {
+      if (entity.getId() == dishEntity.getId()) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
 }

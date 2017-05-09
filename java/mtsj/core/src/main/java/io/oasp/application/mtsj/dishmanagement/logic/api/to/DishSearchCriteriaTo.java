@@ -2,10 +2,8 @@ package io.oasp.application.mtsj.dishmanagement.logic.api.to;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Category;
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
@@ -16,17 +14,113 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
-  private String name;
-
-  private String description;
-
-  private BigDecimal price;
-
-  private String image;
-
-  private List<Ingredient> extras;
-
   private Collection<Category> categories;
+
+  private BigDecimal maxPrice;
+
+  private int minLikes;
+
+  private String searchBy;
+
+  private int showOrder;
+
+  private boolean isFav;
+
+  /**
+   * @return categories
+   */
+  public Collection<Category> getCategories() {
+
+    return this.categories;
+  }
+
+  /**
+   * @param categories new value of {@link #getcategories}.
+   */
+  public void setCategories(Collection<Category> categories) {
+
+    this.categories = categories;
+  }
+
+  /**
+   * @return maxPrice
+   */
+  public BigDecimal getMaxPrice() {
+
+    return this.maxPrice;
+  }
+
+  /**
+   * @param maxPrice new value of {@link #getmaxPrice}.
+   */
+  public void setMaxPrice(BigDecimal maxPrice) {
+
+    this.maxPrice = maxPrice;
+  }
+
+  /**
+   * @return minLikes
+   */
+  public int getMinLikes() {
+
+    return this.minLikes;
+  }
+
+  /**
+   * @param minLikes new value of {@link #getminLikes}.
+   */
+  public void setMinLikes(int minLikes) {
+
+    this.minLikes = minLikes;
+  }
+
+  /**
+   * @return searchBy
+   */
+  public String getSearchBy() {
+
+    return this.searchBy;
+  }
+
+  /**
+   * @param searchBy new value of {@link #getsearchBy}.
+   */
+  public void setSearchBy(String searchBy) {
+
+    this.searchBy = searchBy;
+  }
+
+  /**
+   * @return showOrder
+   */
+  public int getShowOrder() {
+
+    return this.showOrder;
+  }
+
+  /**
+   * @param showOrder new value of {@link #getshowOrder}.
+   */
+  public void setShowOrder(int showOrder) {
+
+    this.showOrder = showOrder;
+  }
+
+  /**
+   * @return isFav
+   */
+  public boolean isFav() {
+
+    return this.isFav;
+  }
+
+  /**
+   * @param isFav new value of {@link #getisFav}.
+   */
+  public void setFav(boolean isFav) {
+
+    this.isFav = isFav;
+  }
 
   /**
    * The constructor.
@@ -34,66 +128,6 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   public DishSearchCriteriaTo() {
 
     super();
-  }
-
-  public String getName() {
-
-    return this.name;
-  }
-
-  public void setName(String name) {
-
-    this.name = name;
-  }
-
-  public String getDescription() {
-
-    return this.description;
-  }
-
-  public void setDescription(String description) {
-
-    this.description = description;
-  }
-
-  public BigDecimal getPrice() {
-
-    return this.price;
-  }
-
-  public void setPrice(BigDecimal price) {
-
-    this.price = price;
-  }
-
-  public String getImage() {
-
-    return this.image;
-  }
-
-  public void setImage(String image) {
-
-    this.image = image;
-  }
-
-  public List<Ingredient> getExtras() {
-
-    return this.extras;
-  }
-
-  public void setExtras(List<Ingredient> extras) {
-
-    this.extras = extras;
-  }
-
-  public Collection<Category> getCategories() {
-
-    return this.categories;
-  }
-
-  public void setCategories(Collection<Category> categories) {
-
-    this.categories = categories;
   }
 
 }
