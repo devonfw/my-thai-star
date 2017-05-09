@@ -15,7 +15,7 @@ fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', cred
 const maxPrice = 50;
 
 export default {
-    getDihses: async (callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+    /*getDihses: async (callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         try {
             /* Old way to do this with other database structure
             let tables = await fn.table('Dish').
@@ -42,24 +42,24 @@ export default {
                 }, {}).
                 promise();
 
-            let res = util.objectToArray(tables);*/
+            let res = util.objectToArray(tables);// *//*
 
-            const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
+    const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
 
-            const dishes: types.IDishView[] = await fn.table('Dish').map(util.relation(ingredients, 'extras', 'id')).
-            map(util.dishToDishview()).
-                promise();
+    const dishes: types.IDishView[] = await fn.table('Dish').map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
+    map(util.dishToDishview()).
+        promise();
 
-            callback(null, dishes);
-        } catch (err) {
-            callback(err);
-        }
-    },
+    callback(null, dishes);
+} catch (err) {
+    callback(err);
+}
+},*/
 
-    getDishesFiltered: async (filter: types.IFilterView,
-                              callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+    getDishes: async (filter: types.IFilterView,
+                      callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         // check filter values. Put the correct if neccessary
-        const order = util.checkFilter(filter);
+        util.checkFilter(filter);
 
         try {
             // filter by category
@@ -70,6 +70,7 @@ export default {
             let dishCategories: string[] = [];
             let dishIdSet: Set<string> | undefined;
 
+            // get the dish ids if we are filtering by category
             if (catId) {
                 dishCategories = await fn.table('Category', catId).
                     map((elem: dbtypes.ICategory) => elem.dishes).
@@ -79,7 +80,7 @@ export default {
 
             }
 
-            // filter by fav
+            // filter by fav, TODO: check if user is correct
             if (filter.isFab) {
                 // TODO: take id using the authorization token
                 const fav = await fn.table('User', '1').
@@ -90,24 +91,21 @@ export default {
                 dishIdSet = (dishIdSet !== undefined) ? util.setIntersection(dishIdSet, s2) : s2;
             }
 
+            // get dishes from database
             if (dishIdSet === undefined || dishIdSet.size > 0) {
                 const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
 
                 const dishes: types.IDishView[] = await fn.
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
-                    map(util.relation(ingredients, 'extras', 'id')).
+                    map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
                     where('price', filter.maxPrice, '<=').
                     filter((o: any) => _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))).
                     map(util.dishToDishview()).
                     promise();
 
-                // TODO: filtrar por likes
+                // TODO: filter by likes
 
-                /*if (filter.searchBy) {
-                    dishes = _.filter(dishes, (o: any) => _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy)));
-                }*/
-
-                callback(null, _.orderBy(dishes, order));
+                callback(null, dishes);
             } else {
                 callback(null, []);
             }

@@ -20,7 +20,7 @@ export function renameProperties(prefix: string) {
     };
 }
 
-export function relation(table2: any, propArray: string, propT2: string) {
+export function relationArrayOfIds(table2: any, propArray: string, propT2: string) {
     return (elem: any) => {
         let aux;
 
@@ -36,13 +36,12 @@ export function relation(table2: any, propArray: string, propT2: string) {
 
 export function dishToDishview() {
     return (element: any) => {
+        element.id = Number(element.id);
         // TODO: get fav & likes
         element.favourite = {
             isFav: false,
             likes: 20,
         };
-
-        element.tweet = [];
 
         element.extras.forEach((element2: any) => {
             delete (element2.description);
@@ -100,12 +99,5 @@ export function checkFilter(filter: types.IFilterView) {
     filter.minLikes = filter.minLikes || 0;
     filter.searchBy = filter.searchBy || '';
     filter.isFab = filter.isFab || false;
-
-    if (filter.order === 1) {
-        return 'price';
-    } else if (filter.order === 2) {
-        return 'noseque';
-    }
-
-    return 'name';
+    filter.categories = filter.categories || null;
 }

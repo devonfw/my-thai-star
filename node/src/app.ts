@@ -6,7 +6,7 @@ import * as dishes from './routes/dishes';
 import { indexGET } from './routes/index';
 
 const app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.disable('x-powered-by');
 
 app.use(cors());
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 /**
  * API routes
  */
-app.use('/mythaistar/services/rest/dishcomponent/v1/dishes', dishes.router);
+app.use('/mythaistar/services/rest/Dishmanagement/v1/Dish/Search', dishes.router);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

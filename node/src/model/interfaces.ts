@@ -1,49 +1,33 @@
-/*
-export interface DishView {
-    orderName: string;
-    orderDescription: string;
-    price: number;
-    image: string;
-    options: Array<ExtraView>
-    likes: number;
-    favourite: boolean;
-}*/
-
+//
 export interface IDishView {
     id: number;
     name: string;
     description: string;
     price: number;
-    image: string;
-    extras: IExtraView[];
+    image: IImageView;
+    extras: IExtraIngredientView[];
     favourite: IFavouriteView;
-    tweet: ITweetView[];
 }
 
+//
 interface IImageView {
     name: string;
     content: string;
-    type: IImageType;
+    type: string; // Binary or Url
     extension: string;
 }
 
 enum IImageType { BINARY, URL }
 
-export interface IExtraView {
+//
+export interface IExtraIngredientView {
     id: number;
     name: string;
     price: number;
     selected: boolean;
 }
 
-export interface IReservationView {
-    event: IEvent;
-    email: string;
-    adults: number;
-    kids: number;
-    invitationNumber: number;
-}
-
+/*
 export interface IInvitationView {
     event: IEvent;
     nameOwner: string;
@@ -56,14 +40,15 @@ export interface IEvent {
     name: string;
     date: string;
     hour: string;
-}
+}*/
 
 export interface IError {
     code: number;
     message: string;
 }
 
-export interface IReservation {
+//
+export interface IReservationView {
     date: string;
     type: IReservationType;
     name: string;
@@ -72,48 +57,47 @@ export interface IReservation {
     guestList: string[];
 }
 
+//
 export interface IReservationType {
     name: string;
-    value: number;
 }
 
+//
 export interface IOrderView {
     lines: IOrderLineView[];
-    invitation: string;
+    invitationId: string;
 }
 
+//
 export interface IOrderLineView {
-    dish: IDishView;
-    extras: IExtraView[];
+    idDish: number;
+    extras: number[];
     amount: number;
     comment: string;
 }
 
+//
 export interface IFilterView {
     categories: ICategoryView[];
     maxPrice: number;
     minLikes: number;
     searchBy: string;
-    order: number;
+    showOrder: number;
     isFab: boolean;
 }
 
+//
 export interface ICategoryView {
     id: number;
     name: string;
     description: string;
     group: number;
     selected: boolean;
-    order: number;
+    showOrder: number;
 }
 
+//
 export interface IFavouriteView {
     isFav: boolean;
     likes: number;
-}
-
-enum ImageType { Binary = 0, Url }
-
-export interface ITweetView {
-    prueba: string;
 }

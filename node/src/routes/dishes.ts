@@ -4,7 +4,7 @@ import * as types from '../model/interfaces';
 
 export const router = eRouter();
 
-router.get('/', (req: Request, res: Response) => {
+/*router.get('/', (req: Request, res: Response) => {
         bussiness.getDihses((err: types.IError, dishes: types.IDishView[]) => {
                 if (err) {
                         res.status(500).json(err);
@@ -12,15 +12,17 @@ router.get('/', (req: Request, res: Response) => {
                         res.json(dishes);
                 }
         });
-});
+});*/
 
 router.post('/', (req: Request, res: Response) => {
         // res.send(req.body);
-        bussiness.getDishesFiltered(req.body, (err: types.IError, dishes: types.IDishView[]) => {
+
+        bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
                 if (err) {
                         res.status(500).json(err);
                 } else {
                         res.json(dishes);
                 }
         });
+
 });
