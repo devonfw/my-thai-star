@@ -1,3 +1,4 @@
+import {DishesGraphQlService} from './dishes-graph-ql.service';
 import { Observable } from 'rxjs/Observable';
 import { Dish } from './dish';
 
@@ -17,6 +18,8 @@ export class DishesDataService implements IDishesDataService {
         const backendConfig: BackendConfig =   this.injector.get(BackendConfig);
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new DishesInMemoryService();
+        } else if (backendConfig.environmentType === BackendType.GRAPHQL)  {
+            this.usedImplementation = new DishesGraphQlService(this.injector);
         } else { // default
             this.usedImplementation = new DishesRestService(this.injector);
         }
