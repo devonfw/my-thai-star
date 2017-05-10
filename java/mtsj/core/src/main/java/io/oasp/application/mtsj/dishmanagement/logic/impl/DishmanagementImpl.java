@@ -88,4 +88,13 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     return this.dishDao;
   }
 
+  /**
+   * @param dishDao the {@link DishDao} to {@link Inject}.
+   */
+  @Inject
+  public void setDishDao(DishDao dishDao) {
+
+    this.dishDao = dishDao;
+  }
+
 }
