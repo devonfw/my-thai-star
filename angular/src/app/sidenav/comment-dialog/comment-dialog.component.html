@@ -10,6 +10,6 @@
 <md-dialog-actions>
   <div style="width:100%; text-align:right">
     <button md-button md-dialog-close class="text-upper">Cancel</button>
-    <button md-button [disabled]="!comment.value.length > 0" (click)="sendComment(comment.value)" color="accent" class="text-upper">Send</button>
+    <button md-button [disabled]="!comment.value.length" (click)="sendComment(comment.value)" color="accent" class="text-upper">Send</button>
   </div>
 </md-dialog-actions>

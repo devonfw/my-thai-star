@@ -29,13 +29,7 @@
         </div>
       </div>
 
-      <td-expansion-panel (expanded)="changeExpandIcon()" (collapsed)="changeExpandIcon()">
-        <ng-template td-expansion-panel-header>
-          <div layout="row" class="justify-space-between" style="border-bottom:1px solid lightgrey; align-items:center" flex>
-            <span class ="pad-sm filter-title">FILTERS</span>
-            <a md-icon-button><md-icon class="md-36">{{expandIcon}}</md-icon></a>
-          </div>
-        </ng-template>
+      <td-expansion-panel label="FILTERS">
         <div layout="column" class ="pad-left-md pad-top pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
           
           <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>

@@ -1,7 +1,8 @@
 import { MdDialogRef, MdSnackBar } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { BookTableService } from '../shared/book-table.service';
 import { ReservationView } from '../../shared/models/interfaces';
+import {MD_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
 
 @Component({
@@ -15,23 +16,23 @@ export class BookTableDialogComponent implements OnInit {
 
   constructor (public snackBar: MdSnackBar,
                public bookingService: BookTableService,
-               private dialog: MdDialogRef<BookTableDialogComponent>) {
+               private dialog: MdDialogRef<BookTableDialogComponent>,
+               @Inject(MD_DIALOG_DATA) dialogData: any) {
+                 this.data = dialogData;
   }
 
   ngOnInit(): void {
     this.data = {
-      event: {
-        date: moment(this.dialog.config.data.dateTime).format('DD/MM/YYYY'),
-        hour: moment(this.dialog.config.data.dateTime).format('LT'),
-        nameOwner: this.dialog.config.data.name,
-        emailOwner: this.dialog.config.data.email,
-        reservationId: -1,
-      },
-      adults: this.dialog.config.data.adults,
-      kids: this.dialog.config.data.kids,
+      date: moment(this.data.date).format('DD/MM/YYYY'),
+      hour: moment(this.data.date).format('LT'),
+      nameOwner: this.data.nameOwner,
+      emailOwner: this.data.emailOwner,
+      reservationId: -1,
+      adults: this.data.adults,
+      kids: this.data.kids,
     };
     this.bookingService.getTableId().subscribe( (reservationId: number) => {
-      this.data.event.reservationId = reservationId;
+      this.data.reservationId = reservationId;
     });
   }
 
