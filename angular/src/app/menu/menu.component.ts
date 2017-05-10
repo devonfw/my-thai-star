@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    applyFilters(filters: any): void {
+    applyFilters(filters: Filter): void {
       this.menuService.postFilters(filters).subscribe((data: any) => {
         this.menus = data;
       });

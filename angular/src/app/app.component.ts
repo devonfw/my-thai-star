@@ -17,8 +17,8 @@ export class AppComponent {
   mobileSidenavOpened: boolean = false;
 
   constructor(public window: WindowService,
-              private router: Router,
-              private sidenav: SidenavService,
+              public router: Router,
+              public sidenav: SidenavService,
               public dialog: MdDialog,
               public auth: AuthService) {
   }

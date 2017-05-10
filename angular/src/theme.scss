@@ -28,51 +28,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include covalent-markdown-theme($theme);
 @include covalent-highlight-theme();
 
-// Active icon color in list nav
-md-nav-list {
-    [md-list-item].active {
-        md-icon[md-list-avatar] {
-            background-color: mat-color($accent);
-            color: mat-color($accent, default-contrast)
-        }
-        md-icon[md-list-icon] {
-            color: mat-color($accent);
-        }
-    }
-}
-
-// Custom theme examples
-.white-orange {
-    $primary2: mat-palette($mat-grey, 50);
-    $accent2:  mat-palette($mat-orange, 800);
-    $warn2:    mat-palette($mat-red, 600);
-
-    $white-orange: mat-light-theme($primary2, $accent2, $warn2);
-
-    @include angular-material-theme($white-orange);
-    @include covalent-theme($white-orange);
-}
-.dark-grey-blue {
-    $primary3: mat-palette($mat-blue-grey, 800);
-    $accent3:  mat-palette($mat-teal, 500);
-    $warn3:    mat-palette($mat-red, 600);
-
-    $dark-grey-blue: mat-dark-theme($primary3, $accent3, $warn3);
-
-    @include angular-material-theme($dark-grey-blue);
-    @include covalent-theme($dark-grey-blue);
-}
-.light-blue-red {
-    $primary4: mat-palette($mat-light-blue, 700);
-    $accent4:  mat-palette($mat-red, 700);
-    $warn4:    mat-palette($mat-deep-orange, 800);
-
-    $light-blue-red: mat-light-theme($primary4, $accent4, $warn4);
-
-    @include angular-material-theme($light-blue-red);
-    @include covalent-theme($light-blue-red);
-}
-
 /* ------------------------------------------------------------------------------- */
 $foreground: map-get($theme, foreground);
 $background: map-get($theme, background);

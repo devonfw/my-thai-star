@@ -32,22 +32,22 @@ export interface ExtraView {
 }
 
 export interface ReservationView {
-    event: Event;
-    adults: number;
-    kids: number;
-}
-
-export interface InvitationView {
-    event: Event;
-    friends: string[];
-}
-
-export interface Event {
     date: string;
     hour: string;
     nameOwner: string;
     emailOwner: string;
     reservationId: number;
+    adults: number;
+    kids: number;
+}
+
+export interface InvitationView {
+    date: string;
+    hour: string;
+    nameOwner: string;
+    emailOwner: string;
+    reservationId: number;
+    friends: string[];
 }
 
 export interface Filter {
