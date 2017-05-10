@@ -14,7 +14,7 @@ export const router = eRouter();
         });
 });*/
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/v1/Dish/Search', (req: Request, res: Response) => {
         // res.send(req.body);
 
         bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
