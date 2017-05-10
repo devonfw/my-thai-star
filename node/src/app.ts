@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as dishes from './routes/dishes';
 import { indexGET } from './routes/index';
 
-const app = express();
+export const app = express();
 app.set('port', process.env.PORT || 8080);
 app.disable('x-powered-by');
 
@@ -31,5 +31,3 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 app.listen(app.get('port'), () => {
     console.log('MyThaiStar server listening on port ' + app.get('port'));
 });
-
-module.exports = app;

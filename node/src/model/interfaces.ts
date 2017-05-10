@@ -10,14 +10,12 @@ export interface IDishView {
 }
 
 //
-interface IImageView {
+export interface IImageView {
     name: string;
     content: string;
     type: string; // Binary or Url
     extension: string;
 }
-
-enum IImageType { BINARY, URL }
 
 //
 export interface IExtraIngredientView {

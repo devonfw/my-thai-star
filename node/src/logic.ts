@@ -13,7 +13,7 @@ import * as util from './utils/utilFunctions';
 const creds = new Credentials('akid', 'secret', 'session');
 fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
 let creds;
-if (process.env.MODE === 'test') {
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
     fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
 } else {
@@ -108,7 +108,10 @@ export default {
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
                     where('price', filter.maxPrice, '<=').
-                    filter((o: any) => _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))).
+                    filter((o: any) => {
+                        return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
+                        || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
+                    }).
                     map(util.dishToDishview()).
                     promise();
 

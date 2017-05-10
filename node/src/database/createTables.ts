@@ -11,7 +11,7 @@ const conf = {
 const dynamodb = new AWS.DynamoDB(conf);*/
 let creds;
 let conf;
-if (process.env.MODE === 'test') {
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new AWS.Credentials('akid', 'secret', 'session');
     conf = {
         credentials: creds,
