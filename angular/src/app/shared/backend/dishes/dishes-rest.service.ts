@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { BusinessOperations } from '../../BusinessOperations';
 import { Dish } from './dish';
 import { Filter } from './filter';
 import {IDishesDataService} from './dishes-data-service-interface';

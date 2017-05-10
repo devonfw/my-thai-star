@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { BusinessOperations } from '../../BusinessOperations';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo } from './bookingInfo';
 import { ReservationInfo } from './reservationInfo';
