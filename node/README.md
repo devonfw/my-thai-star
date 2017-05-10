@@ -4,11 +4,13 @@
 
 The first command required for the installation is:
 
-    $ npm install
+~~$ npm install~~
 
 or 
 
     $ yarn
+
+Use yarn instead npm in order to get the correct package version. With some new version of typescript and aws-sdk it will not work. It will be solved asap.
 
 Although, for the environment to work properly, some packages have to be installed globally, so you have to execute these commands next:
 
@@ -77,7 +79,7 @@ or
 
 ### Start
 
-To switch on the server and send some http petitions on your localhost (http://localhost:3000), run the command:
+To switch on the server and send some http petitions on your localhost (http://localhost:8080), run the command:
 
     $ npm run start
 
@@ -85,12 +87,17 @@ or
 
     $ yarn start
 
-Before switch on the server, this command compile all sources too.
-
-
 ### Testing
 
-Not implemented yet.
+In order to run all unit test, run the command:
+
+    $ npm run test
+
+or
+
+    $ yarn test
+
+It uses a new dynamodb connection and migrate & seed all tables. Then it starts a server at port 9080 and then it run all unit test.
 
 ### Debugging
 

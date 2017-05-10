@@ -1,11 +1,31 @@
 import * as AWS from 'aws-sdk';
-
+/*
 const creds = new AWS.Credentials('akid', 'secret', 'session');
 const conf = {
     credentials: creds,
     endpoint: 'http://localhost:8000/',
     region: 'us-west-2',
 };
+
+const dynamodb = new AWS.DynamoDB(conf);*/
+
+let creds;
+let conf;
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    creds = new AWS.Credentials('akid', 'secret', 'session');
+    conf = {
+        credentials: creds,
+        endpoint: 'http://localhost:8000/',
+        region: 'us-west-2',
+    };
+} else {
+    creds = new AWS.Credentials('akid2', 'secret2', 'session2');
+    conf = {
+        credentials: creds,
+        endpoint: 'http://localhost:8000/',
+        region: 'us-west-2',
+    };
+}
 
 const dynamodb = new AWS.DynamoDB(conf);
 

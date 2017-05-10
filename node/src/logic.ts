@@ -9,8 +9,17 @@ import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
 
 // Dynamo
+/*
 const creds = new Credentials('akid', 'secret', 'session');
-fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
+let creds;
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    creds = new Credentials('akid', 'secret', 'session');
+    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+} else {
+    creds = new Credentials('akid2', 'secret2', 'session2');
+    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+}
 
 const maxPrice = 50;
 
@@ -99,7 +108,10 @@ export default {
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
                     where('price', filter.maxPrice, '<=').
-                    filter((o: any) => _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))).
+                    filter((o: any) => {
+                        return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
+                        || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
+                    }).
                     map(util.dishToDishview()).
                     promise();
 

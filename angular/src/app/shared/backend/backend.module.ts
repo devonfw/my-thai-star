@@ -4,6 +4,8 @@ import { HttpModule } from '@angular/http';
 import { DishesDataService } from './dishes/dishes-data-service';
 import { LoginDataService } from './login/login-data-service';
 import { BookingDataService } from './booking/booking-data-service';
+import { provideClient } from './graphql-client';
+import { ApolloModule } from 'apollo-angular';
 
 export enum BackendType {
   IN_MEMORY,
@@ -20,6 +22,7 @@ export class BackendConfig {
   imports: [
     CommonModule,
     HttpModule,
+    ApolloModule.forRoot(provideClient),
   ],
   declarations: [],
   providers: [
