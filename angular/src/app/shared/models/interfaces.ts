@@ -47,5 +47,21 @@ export interface Event {
     hour: string;
     nameOwner: string;
     emailOwner: string;
-    tableId: number;
+    reservationId: number;
+}
+
+export interface Filter {
+    favourite: boolean;
+    searchTerm: string;
+    sortBy: string;
+    price: number;
+    likes: number;
+    main: boolean;
+    starter: boolean;
+    dessert: boolean;
+    noodle: boolean;
+    rice: boolean;
+    curry: boolean;
+    vegan: boolean;
+    vegetarian: boolean;
 }

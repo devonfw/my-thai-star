@@ -11,7 +11,6 @@ import { CovalentChipsModule, CovalentCoreModule } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CovalentMarkdownModule } from '@covalent/markdown';
 import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
 import { Md2Module }  from 'md2';
 import { BackendModule } from './shared/backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
@@ -23,9 +22,12 @@ import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu/menu-card/menu-card.component';
+import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
+import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 // SERVICES
 import { BookTableService } from './book-table/shared/book-table.service';
@@ -33,12 +35,6 @@ import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
 import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { AuthService } from './shared/authentication/auth.service';
-
-// BACKEND
-import { backendProvider } from './shared/backend/mock-backend';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
-import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
@@ -71,8 +67,6 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
   providers: [
     BookTableService,
     MenuService,
-    backendProvider,
-    MockBackend,
     BaseRequestOptions,
     WindowService,
     AuthGuard,

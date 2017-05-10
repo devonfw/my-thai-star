@@ -10,12 +10,12 @@
           </md-input-container>
         </div>
         <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%">
-          <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
+          <md-checkbox ngModel name="main">Main dishes</md-checkbox>
           <md-checkbox ngModel name="starter">Starter</md-checkbox>
           <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
         </div>
         <div class="pad-sm sortingBy">
-          <md-select style="width: 100%" ngModel name="sorting" #sorting placeholder="Sort By">
+          <md-select style="width: 100%" ngModel name="sortBy" #sorting placeholder="Sort By">
             <md-option value="price">
               Price
             </md-option>
@@ -54,7 +54,7 @@
           </div>
 
           <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
-            <md-checkbox ngModel name="mainDishes">Main dishes</md-checkbox>
+            <md-checkbox ngModel name="main">Main dishes</md-checkbox>
             <md-checkbox ngModel name="starter">Starter</md-checkbox>
             <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
             <span style="border-right: 1px solid lightgray"></span>

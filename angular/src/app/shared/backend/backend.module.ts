@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { DishesDataService } from './dishes/dishes-data-service';
 import { LoginDataService } from './login/login-data-service';
+import { BookingDataService } from './booking/booking-data-service';
 
 export enum BackendType {
   IN_MEMORY,
@@ -24,6 +25,7 @@ export class BackendConfig {
   providers: [
     DishesDataService,
     LoginDataService,
+    BookingDataService,
   ],
 })
 

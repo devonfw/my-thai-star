@@ -14,7 +14,7 @@ export class BookTableDialogComponent implements OnInit {
   data: ReservationView;
 
   constructor (public snackBar: MdSnackBar,
-               private bookingService: BookTableService,
+               public bookingService: BookTableService,
                private dialog: MdDialogRef<BookTableDialogComponent>) {
   }
 
@@ -25,13 +25,13 @@ export class BookTableDialogComponent implements OnInit {
         hour: moment(this.dialog.config.data.dateTime).format('LT'),
         nameOwner: this.dialog.config.data.name,
         emailOwner: this.dialog.config.data.email,
-        tableId: this.dialog.config.data.tableId,
+        reservationId: -1,
       },
       adults: this.dialog.config.data.adults,
       kids: this.dialog.config.data.kids,
     };
-    this.bookingService.getTableId().subscribe( (data: ReservationView) => {
-      this.data.event.tableId = data.event.tableId;
+    this.bookingService.getTableId().subscribe( (reservationId: number) => {
+      this.data.event.reservationId = reservationId;
     });
   }
 

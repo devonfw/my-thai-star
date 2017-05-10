@@ -25,12 +25,12 @@ export class InvitationDialogComponent implements OnInit {
         hour: moment(this.dialog.config.data.dateTime).format('LT'),
         nameOwner: this.dialog.config.data.name,
         emailOwner: this.dialog.config.data.email,
-        tableId: this.dialog.config.data.tableId,
+        reservationId: -1,
       },
       friends: this.dialog.config.data.friends,
     };
-    this.invitationService.getTableId().subscribe( (result: InvitationView) => {
-      this.data.event.tableId = result.event.tableId;
+    this.invitationService.getTableId().subscribe( (reservationId: number) => {
+      this.data.event.reservationId = reservationId;
     });
   }
 

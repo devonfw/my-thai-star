@@ -4,15 +4,12 @@ export class Filter {
     sortBy: string;
     price: number;
     likes: number;
-    category: {
-        main: boolean;
-        starter: boolean;
-        dessert: boolean;
-        noodle: boolean;
-        rice: boolean;
-        curry: boolean;
-        vegan: boolean;
-        vegetarian: boolean;
-        favourites: boolean;
-    };
+    main: boolean;
+    starter: boolean;
+    dessert: boolean;
+    noodle: boolean;
+    rice: boolean;
+    curry: boolean;
+    vegan: boolean;
+    vegetarian: boolean;
 }

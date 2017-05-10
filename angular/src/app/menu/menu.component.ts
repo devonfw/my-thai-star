@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
-import { DishView } from '../shared/models/interfaces';
+import { DishView, Filter } from '../shared/models/interfaces';
 import { MdSlider } from '@angular/material';
 
 @Component({
@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    applyFilters(filters: FormGroup): void {
+    applyFilters(filters: any): void {
       this.menuService.postFilters(filters).subscribe((data: any) => {
         this.menus = data;
       });

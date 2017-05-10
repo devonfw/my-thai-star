@@ -5,6 +5,7 @@ import { BusinessOperations } from '../../BusinessOperations';
 import { Dish } from './dish';
 import { Filter } from './filter';
 import {IDishesDataService} from './dishes-data-service-interface';
+import { config } from '../../../config';
 
 @Injectable()
 export class DishesRestService implements IDishesDataService {
@@ -19,12 +20,12 @@ export class DishesRestService implements IDishesDataService {
  }
 
  get(): Observable<Dish[]> {
-   return this.http.get(`${BusinessOperations.restServiceRoot}${this.dishesRestPath}`)
+   return this.http.get(`${config.restServiceRoot}${this.dishesRestPath}`)
                    .map((res: Response) => res.json());
  }
 
  filter(filters: Filter): Observable<Dish[]> {
-    return this.http.post(`${BusinessOperations.restServiceRoot}${this.filtersRestPath}`, {filters: filters})
+    return this.http.post(`${config.restServiceRoot}${this.filtersRestPath}`, {filters: filters})
                     .map((res: Response) => res.json());
  }
 
