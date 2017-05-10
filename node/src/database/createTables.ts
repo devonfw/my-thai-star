@@ -1,11 +1,31 @@
-import * as AWS from "aws-sdk";
+import * as AWS from 'aws-sdk';
 
-const creds = new AWS.Credentials("akid", "secret", "session");
+/*
+const creds = new AWS.Credentials('akid', 'secret', 'session');
 const conf = {
     credentials: creds,
-    endpoint: "http://localhost:8000/",
-    region: "us-west-2",
+    endpoint: 'http://localhost:8000/',
+    region: 'us-west-2',
 };
+
+const dynamodb = new AWS.DynamoDB(conf);*/
+let creds;
+let conf;
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    creds = new AWS.Credentials('akid', 'secret', 'session');
+    conf = {
+        credentials: creds,
+        endpoint: 'http://localhost:8000/',
+        region: 'us-west-2',
+    };
+} else {
+    creds = new AWS.Credentials('akid2', 'secret2', 'session2');
+    conf = {
+        credentials: creds,
+        endpoint: 'http://localhost:8000/',
+        region: 'us-west-2',
+    };
+}
 
 const dynamodb = new AWS.DynamoDB(conf);
 
@@ -13,275 +33,226 @@ const tables = [
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
+            },
+            {
+                AttributeName: 'name',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
+            },
+            {
+                AttributeName: 'name',
+                KeyType: 'RANGE',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "Dish",
+        TableName: 'Dish',
+    },
+    {
+     AttributeDefinitions: [
+            {
+                AttributeName: 'id',
+                AttributeType: 'S',
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: 'id',
+                KeyType: 'HASH',
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: 'Category',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "DishCategory",
+        TableName: 'Ingredient',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "Category",
+        TableName: 'OrderDishExtraIngredient',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "DishIngredient",
+        TableName: 'Invitation',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "Ingredient",
+        TableName: 'InvitationGuest',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "OrderDishExtraIngredient",
+        TableName: 'User',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "UserFavourite",
+        TableName: 'UserRole',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "Invitation",
+        TableName: 'OrderLine',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "InvitationGuest",
+        TableName: 'Order',
     },
     {
         AttributeDefinitions: [
             {
-                AttributeName: "Id",
-                AttributeType: "S",
+                AttributeName: 'id',
+                AttributeType: 'S',
             },
         ],
         KeySchema: [
             {
-                AttributeName: "Id",
-                KeyType: "HASH",
+                AttributeName: 'id',
+                KeyType: 'HASH',
             },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: "User",
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: "Id",
-                AttributeType: "S",
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: "Id",
-                KeyType: "HASH",
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: "UserRole",
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: "Id",
-                AttributeType: "S",
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: "Id",
-                KeyType: "HASH",
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: "OrderLine",
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: "Id",
-                AttributeType: "S",
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: "Id",
-                KeyType: "HASH",
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: "Order",
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: "Id",
-                AttributeType: "S",
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: "Id",
-                KeyType: "HASH",
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: "Reservation",
+        TableName: 'Reservation',
     },
 ];
 
 tables.forEach((params) => {
     dynamodb.createTable(params, (err: Error, data: any) => {
         if (err) {
-            console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+            console.error('Unable to create table ' + params.TableName + '. Error JSON:', JSON.stringify(err, null, 2));
         } /*else {
             console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
         }*/

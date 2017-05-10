@@ -6,7 +6,7 @@ describe('BookTableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [BookTableService]
+      providers: [BookTableService],
     });
   });
 

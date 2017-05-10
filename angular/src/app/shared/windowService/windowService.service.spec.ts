@@ -6,7 +6,7 @@ describe('WindowService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [WindowService]
+      providers: [WindowService],
     });
   });
 

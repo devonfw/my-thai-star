@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
 import { MdDialogRef, MdSnackBar } from '@angular/material';
-import { BookTableService } from '../shared/book-table.service'
+import { BookTableService } from '../shared/book-table.service';
+import { InvitationView } from '../../shared/models/interfaces';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-invitation-dialog',
+  selector: 'public-invitation-dialog',
   templateUrl: './invitation-dialog.component.html',
-  styleUrls: ['./invitation-dialog.component.scss']
+  styleUrls: ['./invitation-dialog.component.scss'],
 })
 export class InvitationDialogComponent implements OnInit {
 
-  // Remark: Again, no information about the type.
-  data: any;
+  data: InvitationView;
 
   constructor(private snackBar: MdSnackBar,
               private invitationService: BookTableService,
@@ -19,21 +19,28 @@ export class InvitationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data = this.dialog.config.data;
-    this.data.date = moment(this.dialog.config.data.dateTime, moment.ISO_8601).format('L');
-    this.data.time = moment(this.dialog.config.data.dateTime, moment.ISO_8601).format('LT');
-    this.invitationService.getTableId().subscribe( (data) => {
-      this.data.tableId = data.tableId;
+    this.data = {
+      event: {
+        date: moment(this.dialog.config.data.dateTime).format('DD/MM/YYYY'),
+        hour: moment(this.dialog.config.data.dateTime).format('LT'),
+        nameOwner: this.dialog.config.data.name,
+        emailOwner: this.dialog.config.data.email,
+        tableId: this.dialog.config.data.tableId,
+      },
+      friends: this.dialog.config.data.friends,
+    };
+    this.invitationService.getTableId().subscribe( (result: InvitationView) => {
+      this.data.event.tableId = result.event.tableId;
     });
   }
 
   sendInvitation(): void {
-    this.invitationService.postInvitationTable(this.data).subscribe( (data) => {
-      this.snackBar.open('Table succesfully booked with id: ' + data.tableId, '', {
+    this.invitationService.postInvitationTable(this.data).subscribe( () => {
+      this.snackBar.open('Table succesfully booked', 'OK', {
         duration: 7000,
       });
     });
-    this.dialog.close();
+    this.dialog.close(true);
   }
 
 }

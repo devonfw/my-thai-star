@@ -1,27 +1,28 @@
-import { Request, Response, Router as eRouter } from "express";
-import { OrderView } from "../model/interfaces";
-import bussiness from "../logic";
-import * as api from "../model/interfaces";
+import { Request, Response, Router as eRouter } from 'express';
+import bussiness from '../logic';
+import * as types from '../model/interfaces';
 
 export const router = eRouter();
 
-router.get("/", (req: Request, res: Response) => {
-        bussiness.getDihses((err: api.Error, dishes: api.DishView[]) => {
+/*router.get('/', (req: Request, res: Response) => {
+        bussiness.getDihses((err: types.IError, dishes: types.IDishView[]) => {
                 if (err) {
                         res.status(500).json(err);
                 } else {
                         res.json(dishes);
                 }
         });
-});
+});*/
 
-router.post("/", (req: Request, res: Response) => { 
-        //res.send(req.body);
-        bussiness.getCategories(req.body,(err: api.Error, dishes: api.DishView[]) => {
+router.post('/', (req: Request, res: Response) => {
+        // res.send(req.body);
+
+        bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
                 if (err) {
                         res.status(500).json(err);
                 } else {
                         res.json(dishes);
                 }
         });
+
 });

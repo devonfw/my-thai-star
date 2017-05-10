@@ -1,3 +1,6 @@
+import { config } from './config';
+import { environment as env } from '../environments/environment';
+
 // MODULES
 import { MaterialModule } from '@angular/material';
 import { NgModule, Type } from '@angular/core';
@@ -10,6 +13,8 @@ import { CovalentMarkdownModule } from '@covalent/markdown';
 import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { Md2Module }  from 'md2';
+import { BackendModule } from './shared/backend/backend.module';
+import { SidenavModule } from './sidenav/sidenav.module';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -18,20 +23,22 @@ import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu/menu-card/menu-card.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { SidenavOrderComponent } from './sidenav/sidenav-order/sidenav-order.component';
+
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
-import { CommentDialogComponent } from './sidenav/comment-dialog/comment-dialog.component';
 
 // SERVICES
-import { SidenavService } from './sidenav/shared/sidenav.service';
 import { BookTableService } from './book-table/shared/book-table.service';
 import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
+import { AuthGuard } from './shared/authentication/auth-guard.service';
+import { AuthService } from './shared/authentication/auth.service';
 
 // BACKEND
 import { backendProvider } from './shared/backend/mock-backend';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
+import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
@@ -43,11 +50,11 @@ import { backendProvider } from './shared/backend/mock-backend';
     BookTableComponent,
     MenuComponent,
     MenuCardComponent,
-    SidenavComponent,
-    SidenavOrderComponent,
     InvitationDialogComponent,
     BookTableDialogComponent,
-    CommentDialogComponent
+    LoginDialogComponent,
+    OrderCockpitComponent,
+    ReservationCockpitComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,21 +64,24 @@ import { backendProvider } from './shared/backend/mock-backend';
     FormsModule,
     BrowserAnimationsModule,
     HttpModule,
-    Md2Module
+    Md2Module,
+    BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
+    SidenavModule,
   ],
   providers: [
-    SidenavService,
     BookTableService,
     MenuService,
     backendProvider,
-    MockBackend, // Remark: MockBackend as a test utility should not be imported on app module level. 
+    MockBackend,
     BaseRequestOptions,
-    WindowService
+    WindowService,
+    AuthGuard,
+    AuthService,
   ],
   entryComponents: [
     BookTableDialogComponent,
     InvitationDialogComponent,
-    CommentDialogComponent
+    LoginDialogComponent,
   ],
   bootstrap: [ AppComponent ],
 })

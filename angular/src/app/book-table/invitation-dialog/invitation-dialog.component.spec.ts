@@ -13,7 +13,7 @@ describe('InvitationDialogComponent', () => {
       declarations: [ InvitationDialogComponent ],
       imports: [
         CovalentCoreModule.forRoot(),
-        Md2Module
+        Md2Module,
       ],
     })
     .compileComponents();

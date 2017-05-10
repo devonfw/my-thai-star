@@ -1,117 +1,101 @@
-export interface OrderView {
-    [index: number] :  DishView;
-}
-/*
-export interface DishView {
-    orderName: string;
-    orderDescription: string;
+//
+export interface IDishView {
+    id: number;
+    name: string;
+    description: string;
     price: number;
-    image: string;
-    options: Array<ExtraView>
-    likes: number;
-    favourite: boolean;
-}*/
-
-
-export interface DishView{
-	id:number;
-	name:string;
-	description:string;
-	price: number;
-	image: string;
-	extras: ExtraView[];
-	favourite: FavouriteView;
-	tweet:Array<TweetView>;
+    image: IImageView;
+    extras: IExtraIngredientView[];
+    favourite: IFavouriteView;
 }
 
-interface ImageView {
+//
+export interface IImageView {
     name: string;
     content: string;
-    type: ImageType;
+    type: string; // Binary or Url
     extension: string;
 }
 
-enum ImageType { BINARY, URL }
-
-export interface ExtraView {
+//
+export interface IExtraIngredientView {
+    id: number;
     name: string;
     price: number;
     selected: boolean;
 }
 
-export interface ReservationView {
-    event: Event;
-    email: string;
-    adults: number;
-    kids: number;
-    invitationNumber: number;
-}
-
-export interface InvitationView {
-    event: Event;
+/*
+export interface IInvitationView {
+    event: IEvent;
     nameOwner: string;
     emailOwner: string;
-    friends: Array<string>;
+    friends: string[];
     invitationNumber: number;
 }
 
-export interface Event {
+export interface IEvent {
     name: string;
     date: string;
     hour: string;
-}
+}*/
 
-export interface Error{
+export interface IError {
     code: number;
     message: string;
 }
 
-export interface Reservation {
-	date: string;
-	type: ReservationType;
-	name: string;
-	email: string;
-	assistants: number;
-	guestList: string[];
+//
+export interface IReservationView {
+    date: string;
+    type: IReservationType;
+    name: string;
+    email: string;
+    assistants: number;
+    guestList: string[];
 }
 
-export interface ReservationType{
-	name: string;
-	value: number;
+//
+export interface IReservationType {
+    name: string;
 }
 
-
-export interface OrderView{
-	lines: Array<OrderLineView>;
-	invitation: string;
+//
+export interface IOrderView {
+    lines: IOrderLineView[];
+    invitationId: string;
 }
 
-export interface OrderLineView{
-	dish: DishView;
-	extras: Array<ExtraView>;
-	amount: number;
-	comment: string;
+//
+export interface IOrderLineView {
+    idDish: number;
+    extras: number[];
+    amount: number;
+    comment: string;
 }
 
-
-
-export interface CategoryView{
-	id:number;
-	name: string;
-	description:string;
-	group: number;
-	selected: boolean;
-	order: number;
+//
+export interface IFilterView {
+    categories: ICategoryView[];
+    maxPrice: number;
+    minLikes: number;
+    searchBy: string;
+    showOrder: number;
+    isFab: boolean;
 }
 
-export interface FavouriteView{
-	isFav: boolean;
-	likes: number;
+//
+export interface ICategoryView {
+    id: number;
+    name: string;
+    description: string;
+    group: number;
+    selected: boolean;
+    showOrder: number;
 }
 
-enum ImageType {Binary=0,Url}
-
-export interface TweetView{
-    prueba: string;
+//
+export interface IFavouriteView {
+    isFav: boolean;
+    likes: number;
 }
-

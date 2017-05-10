@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 export function indexGET(req: Request, res: Response)  {
-        res.send("It Works");
+        res.send('It Works');
 }

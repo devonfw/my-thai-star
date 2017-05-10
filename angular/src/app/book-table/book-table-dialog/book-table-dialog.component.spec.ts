@@ -14,7 +14,7 @@ describe('BookTableDialogComponent', () => {
       declarations: [ BookTableDialogComponent ],
       imports: [
         CovalentCoreModule.forRoot(),
-        Md2Module
+        Md2Module,
       ],
     })
     .compileComponents();

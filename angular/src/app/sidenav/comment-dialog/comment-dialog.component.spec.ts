@@ -11,7 +11,7 @@ describe('CommentDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CommentDialogComponent ],
       imports: [
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule.forRoot(),
       ],
     })
     .compileComponents();

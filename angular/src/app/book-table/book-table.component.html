@@ -3,7 +3,7 @@
     <h3>You can invite your friends to lunch or book a table</h3>
   </div>
   <md-card class="push-lg">
-    <md-tab-group md-stretch-tabs headerPosition ="below">
+    <md-tab-group md-stretch-tabs>
 
       <md-tab label="Book a table">
         <div layout-gt-xs="row" flex>
@@ -40,7 +40,7 @@
                 </md-input-container>
 
                 <md-checkbox #termsd>Accept terms</md-checkbox>
-                
+
               </div>
               <div style="text-align: right">
                 <button md-button (click)="showBookTableDialog(bookForm.form)" [disabled]="!(bookForm.form.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
@@ -77,7 +77,7 @@
 
                 </div>
                 <h4>Friends</h4>
-                <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="invitations" placeholder="Enter invitation email"></td-chips>
+                <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="friends" placeholder="Enter invitation email"></td-chips>
               </form>
               <div style="text-align: right">
                 <button md-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!invitationForm.form.valid" color="accent" class="text-upper">Invite friends</button>

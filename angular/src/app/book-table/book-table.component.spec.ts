@@ -18,7 +18,7 @@ describe('BookTableComponent', () => {
       imports: [
         BrowserAnimationsModule,
         CovalentCoreModule.forRoot(),
-        Md2Module
+        Md2Module,
       ],
     })
     .compileComponents();

@@ -1,7 +1,8 @@
 import { SidenavService } from '../shared/sidenav.service';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { PriceCalculatorService } from '../shared/price-calculator.service';
+import { OrderView } from '../../shared/models/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
 
 describe('SidenavOrderComponent', () => {
@@ -11,10 +12,10 @@ describe('SidenavOrderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavOrderComponent ],
-      providers: [SidenavService],
+      providers: [SidenavService, PriceCalculatorService],
       imports: [
         CovalentCoreModule.forRoot(),
-      ]
+      ],
     })
     .compileComponents();
   }));
@@ -22,8 +23,16 @@ describe('SidenavOrderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SidenavOrderComponent);
     component = fixture.componentInstance;
-    component.order = [];
-    component.order.ingredients = ['ingredient'];
+    component.order = {
+            options: [
+                    { name: 'Tofu', price: 1, selected: false },
+                    { name: 'Chiken', price: 1, selected: false },
+                    { name: 'Pork', price: 2, selected: false }],
+            orderName: 'Red Curry',
+            price: 5.90,
+            number: 0,
+            comment: 'comment',
+    };
     fixture.detectChanges();
   });
 

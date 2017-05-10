@@ -1,249 +1,292 @@
-import { Credentials } from "aws-sdk";
-import * as uuid from "uuid";
+import { Credentials } from 'aws-sdk';
+import * as uuid from 'uuid';
 // import * as dynamo from "../data-collector/src/adapters/fn-dynamo";
 import dynamo from '../data-collector/src/adapters/fn-dynamo';
-import * as s3 from "../data-collector/src/adapters/fn-s3";
-import fn from "../data-collector/src/index";
-import * as types from "../model/interfaces";
+import * as s3 from '../data-collector/src/adapters/fn-s3';
+import fn from '../data-collector/src/index';
+import * as types from '../model/database';
 
 // Dynamo
-const creds = new Credentials("akid", "secret", "session");
-fn.setDB(dynamo, { endpoint: "http://localhost:8000/", region: "us-west-2", credentials: creds });
+let creds;
+if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    creds = new Credentials('akid', 'secret', 'session');
+    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+} else {
+    creds = new Credentials('akid2', 'secret2', 'session2');
+    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+}
+// fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
 
-const Dishes = [
+const Ingredients: types.IIngredient[] = [
     {
-    // Id: uuid.v1(),
-    Id: "1",
-    // favourite: false,
-    Image: "../../assets/images/basil-fried.jpg",
-    Likes: 21,
-    Description:
-    "Lorem ipsum dolor sit amet. Proin fermentum lobortis neque. " +
-    "Pellentesque habitant morbi tristique.",
-    Name: "Red Curry",
-    Price: 5.90,
-}, {
-    // Id: uuid.v1(),
-    Id: "2",
-    //favourite: false,
-    Image: "../../assets/images/garlic-paradise.jpg",
-    Likes: 10,
-    Description:
-    "Consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. " +
-    "Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.",
-    Name: "Purple Curry",
-    Price: 9.00,
-}, {
-    // Id: uuid.v1(),
-    Id: "3",
-    //favourite: false,
-    Image: "../../assets/images/green-curry.jpg",
-    Likes: 61,
-    Description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-    "Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.",
-    Name: "Green Curry",
-    Price: 7.60,
-},{
-    // Id: uuid.v1(),
-    Id: "4",
-    //favourite: false,
-    Image: "../../assets/images/dish.png",
-    Likes: 48,
-    Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
-    Name: "Yellow Curry",
-    Price: 8.50,
-}];
-
-const Ingredients = [
-    { 
-        Id: "1",
-        Name: "Tofu", 
-        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
-        Price: 1, 
-    }, { 
-        Id: "2",
-        Name: "Chiken", 
-        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
-        Price: 1, 
-    }, { 
-        Id: "3",
-        Name: "Pork", 
-        Description: "Lorem ipsum dolor. Pellentesque habitant morbi tristique.",
-        Price: 2, 
+        description:
+        'The common feature is the use of complex combinations of spices or herbs , '
+        + 'usually including fresh or dried hot chillies.',
+        id: '1',
+        name: 'Extra curry',
+        price: 1,
+    }, {
+        description: 'ofu, also known as bean curd, is a food made by coagulating '
+        + 'soy milk and then pressing the resulting curds into soft white blocks.',
+        id: '2',
+        name: 'Tofu',
+        price: 8,
+    }, {
+        description: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
+        id: '3',
+        name: 'Chiken',
+        price: 1,
+    }, {
+        description: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
+        id: '4',
+        name: 'Pork',
+        price: 2,
     }];
 
-const DishIngredient = [
+const Dishes: types.IDish[] = [
     {
-        Id: uuid.v1(),
-        IdDish: "1",
-        IdIngredient: "1"
+        description: 'This is a staple of Thai cooking. Adjust the spices to your own '
+        + 'tastes for a really great use for leftover rice!! I get the basil from a '
+        + 'local Asian market. It has a different flavor than that of regular basil '
+        + 'and makes all the difference in this recipe. It is fast and fairly easy '
+        + 'to make, but requires constant stirring',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '0',
+        image: 'Dish/basil-fried.jpg',
+        // likes: 1,
+        name: 'Thai Spicy Basil Fried Rice',
+        price: 12.9900000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "1",
-        IdIngredient: "2"
+        description: 'From the world-famous Gilroy Garlic Festival to a fierce 40-clove '
+        + 'garlic chicken in San Francisco and a gut-busting garlic sandwich in Philly, '
+        + 'we feature the tastiest places to get your garlic on.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '1',
+        image: 'Dish/garlic-paradise.jpg',
+        // likes: 50,
+        name: 'Garlic Paradise',
+        price: 7.9900000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "1",
-        IdIngredient: "3"
+        description: 'Master this aromatic, creamy & extremely tasty chicken Thai '
+        + 'green curry recipe from Jamie Oliver & treat yourself to an authentic taste of South East Asia.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '2',
+        image: 'Dish/green-curry.jpg',
+        // likes: 30,
+        name: 'Thai green chicken curry',
+        price: 14.7500000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "2",
-        IdIngredient: "1"
+        description: 'This easy no-cook peanut sauce has a terrific authentic '
+        + 'Thai taste. It is spicy and peanutty, and is perfect as a dipping sauce for chicken, '
+        + 'shrimp, and beef...or even to use tossed with warm cooked noodles for a quick pasta dish.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '3',
+        image: 'Dish/Thai-Peanut.jpg',
+        // likes: 150,
+        name: 'Thai Peanut',
+        price: 12.2500000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "2",
-        IdIngredient: "2"
+        description: 'Grill over a smoker or just brown in the oven - '
+        + 'these moreish chicken pieces are marinated in a blend of lime and '
+        + 'pineapple juice, chilli and ginger.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '4',
+        image: 'Dish/Thai-thighs.jpg',
+        // likes: 4,
+        name: 'Thai Thighs',
+        price: 8.9900000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "2",
-        IdIngredient: "3"
+        description: 'This recipe takes that same approach, but instead of lemon '
+        + 'as the primary flavor, we’re mixing up a Thai-inspired sauce of lime, '
+        + 'a little brown sugar, Sriracha, soy, fish sauce, ginger, and garlic. '
+        + 'It may sound like a lot of ingredients, but I bet you have most of these '
+        + 'sitting in your pantry already!',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '5',
+        image: 'Dish/thai-roasted.jpg',
+        // likes: 4,
+        name: 'Thai Roasted',
+        price: 22.1500000000,
     }, {
-        Id: uuid.v1(),
-        IdDish: "3",
-        IdIngredient: "1"
+        // Id: uuid.v1(),
+        description:
+        'Lorem ipsum dolor sit amet. Proin fermentum lobortis neque. ' +
+        'Pellentesque habitant morbi tristique.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '6',
+        // favourite: false,
+        image: '../../assets/images/basil-fried.jpg',
+        // likes: 21,
+        name: 'Red Curry',
+        price: 5.90,
     }, {
-        Id: uuid.v1(),
-        IdDish: "3",
-        IdIngredient: "2"
+        // Id: uuid.v1(),
+        description:
+        'Consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. ' +
+        'Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '7',
+        // favourite: false,
+        image: '../../assets/images/garlic-paradise.jpg',
+        // Likes: 10,
+        name: 'Purple Curry',
+        price: 9.00,
     }, {
-        Id: uuid.v1(),
-        IdDish: "3",
-        IdIngredient: "3"
+        // Id: uuid.v1(),
+        description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
+        'Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '8',
+        // favourite: false,
+        image: '../../assets/images/green-curry.jpg',
+        // likes: 61,
+        name: 'Green Curry',
+        price: 7.60,
     }, {
-        Id: uuid.v1(),
-        IdDish: "4",
-        IdIngredient: "1"
-    }, {
-        Id: uuid.v1(),
-        IdDish: "4",
-        IdIngredient: "2"
-    }, {
-        Id: uuid.v1(),
-        IdDish: "4",
-        IdIngredient: "3"
+        // Id: uuid.v1(),
+        description: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
+        extras: [Ingredients[0].id, Ingredients[3].id],
+        id: '9',
+        // favourite: false,
+        image: '../../assets/images/dish.png',
+        // likes: 48,
+        name: 'Yellow Curry',
+        price: 8.50,
     }];
 
-const categories = [
+const categories: types.ICategory[] = [
     {
-        Id: "1",
-	    Name: "Main dishes",
-	    Description: "Alguna tendrá",
-	    Group: 1,
-	    Order: 0,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 1,
+        id: '1',
+        name: 'Main dishes',
+        showOrder: 0,
     },
     {
-        Id: "2",
-	    Name: "Starter",
-	    Description: "Alguna tendrá",
-	    Group: 1,
-	    Order: 1,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 1,
+        id: '2',
+        name: 'Starter',
+        showOrder: 1,
     },
     {
-        Id: "3",
-	    Name: "Dessert",
-	    Description: "Alguna tendrá",
-	    Group: 1,
-	    Order: 2,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 1,
+        id: '3',
+        name: 'Dessert',
+        showOrder: 2,
     },
     {
-        Id: "4",
-	    Name: "Noodle",
-	    Description: "Alguna tendrá",
-	    Group: 2,
-	    Order: 3,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 2,
+        id: '4',
+        name: 'Noodle',
+        showOrder: 3,
     },
     {
-        Id: "5",
-	    Name: "Rice",
-	    Description: "Alguna tendrá",
-	    Group: 2,
-	    Order: 4,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 2,
+        id: '5',
+        name: 'Rice',
+        showOrder: 4,
     },
     {
-        Id: "6",
-	    Name: "Curry",
-	    Description: "Alguna tendrá",
-	    Group: 2,
-	    Order: 5,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 2,
+        id: '6',
+        name: 'Curry',
+        showOrder: 5,
     },
     {
-        Id: "7",
-	    Name: "Vegan",
-	    Description: "Alguna tendrá",
-	    Group: 3,
-	    Order: 6,
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 3,
+        id: '7',
+        name: 'Vegan',
+        showOrder: 6,
     },
     {
-        Id: "8",
-	    Name: "Vegetarian",
-	    Description: "Alguna tendrá",
-	    Group: 3,
-	    Order: 7,
-    },
-];
-
-const dishCategory = [
-    {
-        Id: uuid.v1(),
-        IdDish: "1",
-        IdCategory: "1"
-    }, {
-        Id: uuid.v1(),
-        IdDish: "1",
-        IdCategory: "2"
+        description: 'Alguna tendrá',
+        dishes: [
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+            Dishes[getRandomInt(0, Dishes.length - 1)].id,
+        ],
+        group: 3,
+        id: '8',
+        name: 'Vegetarian',
+        showOrder: 7,
     },
 ];
 
 const users = [
     {
-        Id: "1",
-        Name: "Dario",
-        Email: "dario@capge.com",
-        Favorites: [
-            "1", "3"
-        ]
-    }
-]
+        email: 'dario@capge.com',
+        favorites: [
+            '1', '3',
+        ],
+        id: '1',
+        name: 'Dario',
+    },
+];
 
 fn.insert('Dish', Dishes).then((res: string) => {
     console.log('\nAll dishes inserted');
     console.log(res);
 }, (err: Error) => {
-    console.log(err)
+    console.error(err);
 });
 
-fn.insert("Ingredient", Ingredients).then((res: string) => {
+fn.insert('Ingredient', Ingredients).then((res: string) => {
     console.log('\nAll ingredients inserted');
     console.log(res);
 }, (err: Error) => {
-    console.log(err)
+    console.error(err);
 });
 
-fn.insert("DishIngredient", DishIngredient).then((res: string) => {
-    console.log('\nAll ingredients inserted');
-    console.log(res);
-}, (err: Error) => {
-    console.log(err)
-}); 
-
-fn.insert("Category", categories).then((res: string) => {
+fn.insert('Category', categories).then((res: string) => {
     console.log('\nAll categories inserted');
     console.log(res);
 }, (err: Error) => {
-    console.log(err)
+    console.error(err);
 });
 
-fn.insert("DishCategory", dishCategory).then((res: string) => {
-    console.log('\nAll DishCategory inserted');
-    console.log(res);
-}, (err: Error) => {
-    console.log(err)
-});
-
-fn.insert("User", users).then((res: string) => {
+fn.insert('User', users).then((res: string) => {
     console.log('\nAll Users inserted');
     console.log(res);
+
+    const user2 = users[0];
 }, (err: Error) => {
-    console.log(err)
+    console.error(err);
 });
+
+function getRandomInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
