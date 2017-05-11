@@ -2,8 +2,10 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 
-import * as dishes from './routes/dishes';
-import { indexGET } from './routes/index';
+import * as dishes from './routes/dishmanagement';
+import * as mailer from './routes/mailmanagement';
+import * as order from './routes/ordermanagement';
+import * as reservation from './routes/reservationmanagement';
 
 export const app = express();
 app.set('port', process.env.PORT || 8080);
@@ -21,7 +23,10 @@ app.use(bodyParser.json());
 /**
  * API routes
  */
-app.use('/mythaistar/services/rest/Dishmanagement/v1/Dish/Search', dishes.router);
+app.use('/mythaistar/services/rest/Dishmanagement', dishes.router);
+app.use('/mythaistar/services/rest/Mailmanagement', mailer.router);
+app.use('/mythaistar/services/rest/Ordermanagement', order.router);
+app.use('/mythaistar/services/rest/Reservationmanagement', order.router);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

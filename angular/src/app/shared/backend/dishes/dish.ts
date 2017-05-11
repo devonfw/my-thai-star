@@ -6,4 +6,14 @@ export class Dish {
     orderDescription: string;
     orderName: string;
     price: number;
+    categories: {
+        main: boolean,
+        starter: boolean,
+        dessert: boolean,
+        noodle: boolean,
+        rice: boolean,
+        curry: boolean,
+        vegan: boolean,
+        vegetarian: boolean,
+    };
 }

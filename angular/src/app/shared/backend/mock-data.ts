@@ -14,6 +14,16 @@ export const dishes: Dish[] = [{
                         'Pellentesque habitant morbi tristique.',
                         orderName: 'Red Curry',
                         price: 5.90,
+                        categories: {
+                                main: true,
+                                starter: false,
+                                dessert: false,
+                                noodle: true,
+                                rice: false,
+                                curry: true,
+                                vegan: true,
+                                vegetarian: true,
+                        },
                 }, {
                         favourite: false,
                         image: '../../../assets/images/garlic-paradise.jpg',
@@ -27,6 +37,16 @@ export const dishes: Dish[] = [{
                           'Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.',
                         orderName: 'Purple Curry',
                         price: 9.00,
+                        categories: {
+                                main: false,
+                                starter: true,
+                                dessert: false,
+                                noodle: false,
+                                rice: true,
+                                curry: true,
+                                vegan: false,
+                                vegetarian: false,
+                        },
                 }, {
                         favourite: false,
                         image: '../../../assets/images/green-curry.jpg',
@@ -40,6 +60,16 @@ export const dishes: Dish[] = [{
                           'Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.',
                         orderName: 'Green Curry',
                         price: 7.60,
+                        categories: {
+                                main: false,
+                                starter: false,
+                                dessert: true,
+                                noodle: false,
+                                rice: true,
+                                curry: false,
+                                vegan: true,
+                                vegetarian: true,
+                        },
                 }, {
                         favourite: false,
                         image: '../../../assets/images/dish.png',
@@ -51,6 +81,16 @@ export const dishes: Dish[] = [{
                         orderDescription: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
                         orderName: 'Yellow Curry',
                         price: 8.50,
+                        categories: {
+                                main: true,
+                                starter: false,
+                                dessert: false,
+                                noodle: true,
+                                rice: true,
+                                curry: true,
+                                vegan: true,
+                                vegetarian: true,
+                        },
                 }];
 
 export const users: LoginInfo[] = [{

@@ -1,3 +1,4 @@
+import { Filter } from './filter';
 import { ApolloQueryResult } from 'apollo-client';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { Injectable, Injector } from '@angular/core';
@@ -36,6 +37,16 @@ class GqlDish {
     description: string;
     name: string;
     price: number;
+    categories: { // added by Roberto, please, revise
+      main: boolean,
+      starter: boolean,
+      dessert: boolean,
+      noodle: boolean,
+      rice: boolean,
+      curry: boolean,
+      vegan: boolean,
+      vegetarian: boolean,
+    };
 }
 
 class DishesQueryRepsonse {
@@ -57,6 +68,13 @@ export class DishesGraphQlService implements IDishesDataService {
       .map((dishes: GqlDish[]) => dishes.map(this.convertToBackendDish));
   }
 
+  // added by Roberto, please, revise
+  filter(filters: Filter): Observable <Dish[]> {
+    return this.apollo.watchQuery<DishesQueryRepsonse>({ query: getDishesQuery })
+      .map((result: ApolloQueryResult<DishesQueryRepsonse>) => result.data.dishes)
+      .map((dishes: GqlDish[]) => dishes.map(this.convertToBackendDish));
+  }
+
   // TODO: see the comment above
   private convertToBackendDish(dish: GqlDish): Dish {
    return {
@@ -67,6 +85,16 @@ export class DishesGraphQlService implements IDishesDataService {
         orderDescription: dish.description,
         orderName: dish.name,
         price: dish.price,
+        categories: { // added by Roberto, please, revise
+          main: dish.categories.main,
+          starter: dish.categories.main,
+          dessert: dish.categories.main,
+          noodle: dish.categories.main,
+          rice: dish.categories.main,
+          curry: dish.categories.main,
+          vegan: dish.categories.main,
+          vegetarian: dish.categories.main,
+      },
       };
   }
 }

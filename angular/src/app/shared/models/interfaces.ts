@@ -32,20 +32,36 @@ export interface ExtraView {
 }
 
 export interface ReservationView {
-    event: Event;
+    date: string;
+    hour: string;
+    nameOwner: string;
+    emailOwner: string;
+    reservationId: number;
     adults: number;
     kids: number;
 }
 
 export interface InvitationView {
-    event: Event;
-    friends: string[];
-}
-
-export interface Event {
     date: string;
     hour: string;
     nameOwner: string;
     emailOwner: string;
-    tableId: number;
+    reservationId: number;
+    friends: string[];
+}
+
+export interface Filter {
+    favourite: boolean;
+    searchTerm: string;
+    sortBy: string;
+    price: number;
+    likes: number;
+    main: boolean;
+    starter: boolean;
+    dessert: boolean;
+    noodle: boolean;
+    rice: boolean;
+    curry: boolean;
+    vegan: boolean;
+    vegetarian: boolean;
 }

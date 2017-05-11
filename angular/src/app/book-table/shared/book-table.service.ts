@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { BusinessOperations } from '../../shared/BusinessOperations';
 import { ReservationView, InvitationView } from '../../shared/models/interfaces';
+import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 
 @Injectable()
 export class BookTableService {
 
-  BO: BusinessOperations = new BusinessOperations();
-
-  constructor(private http: Http) {
+  constructor(private bookingDataService: BookingDataService) {
   }
 
-  getTableId(): Observable<any> {
-    return this.http.get(this.BO.getbookingid)
-                    .map((res: any) => res.json());
+  getTableId(): Observable<number> {
+    return this.bookingDataService.getBookingId();
   }
 
   postBookingTable(bookInfo: ReservationView): Observable<any> {
-    return this.http.post(this.BO.postbookingtable, bookInfo)
-                    .map((res: any) => res.json());
+    return this.bookingDataService.getBookingId();
   }
 
   postInvitationTable(invitationInfo: InvitationView): Observable<any> {
-    return this.http.post(this.BO.postbookinginvitation, invitationInfo)
-                    .map((res: any) => res.json());
+    return this.bookingDataService.getBookingId();
   }
 
 }
