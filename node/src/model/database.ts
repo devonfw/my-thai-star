@@ -24,32 +24,41 @@ export interface ICategory {
 }
 
 export interface IOrderLine {
-    dish: IDish;
-    quantity: number;
+    idDish: string;
+    extras: string[];
+    amount: number;
     comment: string;
 }
 
 export interface IOrder {
+    id: string;
     lines: IOrderLine[];
     canceled: boolean;
+    idReservation: string;
+    idInvitation: string;
 
 }
 
 export interface IReservation {
-    date: string;
-    type: IReservationType;
+    id: string;
+    userId: string;
     name: string;
-    email: string;
+    reservationToken: string;
+    comments: string;
+    bookingDate: string;
+    expirationDate: string;
+    creationDate: string;
+    canceled: boolean;
+    reservationType: string;
     assistants: number;
     guestList: string[];
-    order: IOrder;
-    user: string;
+    order: string;
     table: string;
 }
 
-export interface IReservationType {
-    name: string;
-    value: number;
+export interface ITable {
+    id: string;
+    seatsNumber: number;
 }
 
 export interface IInvitationGuest {
@@ -59,5 +68,14 @@ export interface IInvitationGuest {
     email: string;
     accepted: boolean;
     modificationDate: string;
-    order: IOrder;
+    order: string;
+}
+
+export interface IUser {
+    id: string;
+    userName: string;
+    password: string;
+    email: string;
+    role: string;
+    favourites: string[];
 }

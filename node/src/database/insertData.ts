@@ -246,14 +246,16 @@ const categories: types.ICategory[] = [
     },
 ];
 
-const users = [
+const users: types.IUser[] = [
     {
         email: 'dario@capge.com',
-        favorites: [
+        favourites: [
             '1', '3',
         ],
         id: '1',
-        name: 'Dario',
+        password: 'holaketal',
+        role: '2',
+        userName: 'Dario',
     },
 ];
 
