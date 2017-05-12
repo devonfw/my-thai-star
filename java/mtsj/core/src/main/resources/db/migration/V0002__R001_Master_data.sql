@@ -20,3 +20,13 @@ INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUE
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (6, 1, 4, 1);
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (7, 1, 5, 0);
 INSERT INTO DishIngredient (id, modificationCounter, idDish, idIngredient) VALUES (8, 1, 5, 1);
+
+INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (0, 1, 'customer', true);
+INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (0, 1, 'user0', 'password', 'user0@mail.com', 0);
+
+
+INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
+
+
+INSERT INTO Reservation (id, modificationCounter, idUser, name, reservationToken, comment, bookingDate, expirationDate, creationDate, canceled, reservationType, idTable) VALUES(0, 1, 0, 'user0', '0000', 'testing...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0, 0);
+

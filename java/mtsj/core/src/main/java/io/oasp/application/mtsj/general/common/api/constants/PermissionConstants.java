@@ -1,12 +1,14 @@
+
 package io.oasp.application.mtsj.general.common.api.constants;
 
+import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
+
 /**
- * Contains constants for the keys of all
- * {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission}s.
- *
+ * Contains constants for the keys of all {@link AccessControlPermission Permission}s.
  */
 public abstract class PermissionConstants {
 
-  // put your permission names from access-control-schema.xml as constants here (or generate with cobigen)
-  
+  /** {@link AccessControlPermission Permission} to find reservation. */
+  public static final String FIND_RESERVATION = "FindReservation";
+
 }

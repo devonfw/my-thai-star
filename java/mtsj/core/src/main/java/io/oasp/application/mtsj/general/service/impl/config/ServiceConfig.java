@@ -6,12 +6,10 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
-import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,6 @@ import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 
 import io.oasp.module.rest.service.impl.RestServiceExceptionFacade;
 import io.oasp.module.rest.service.impl.json.ObjectMapperFactory;
@@ -118,5 +115,4 @@ public class ServiceConfig extends WsConfigurerAdapter {
     return exceptionFacade;
   }
 
-  
 }
