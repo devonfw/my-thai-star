@@ -19,4 +19,8 @@ export class LoginDialogComponent {
     this.dialog.close(formValue);
   }
 
+  forgotPassword(): void {
+    // implement forgot password
+  }
+
 }

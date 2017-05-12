@@ -96,13 +96,13 @@ export const dishes: Dish[] = [{
 export const users: LoginInfo[] = [{
                         username: 'user1',
                         password: 'password',
-                        name: 'Name1',
+                        role: 'user',
                       }, {
                         username: 'user2',
                         password: 'password',
-                        name: 'Name2',
+                        role: 'waiter',
                       }, {
                         username: 'user3',
                         password: 'password',
-                        name: 'Name3',
+                        role: 'user',
                       }];

@@ -36,6 +36,9 @@ import { WindowService } from './shared/windowService/windowService.service';
 import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { AuthService } from './shared/authentication/auth.service';
 
+// DIRECTIVES
+import { EqualValidatorDirective } from './login-dialog/equal-validator.directive';
+
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
 
@@ -51,6 +54,7 @@ import { AuthService } from './shared/authentication/auth.service';
     LoginDialogComponent,
     OrderCockpitComponent,
     ReservationCockpitComponent,
+    EqualValidatorDirective,
   ],
   imports: [
     BrowserModule,
