@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use('/mythaistar/services/rest/Dishmanagement', dishes.router);
 app.use('/mythaistar/services/rest/Mailmanagement', mailer.router);
 app.use('/mythaistar/services/rest/Ordermanagement', order.router);
-app.use('/mythaistar/services/rest/Reservationmanagement', order.router);
+app.use('/mythaistar/services/rest/Reservationmanagement', reservation.router);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
