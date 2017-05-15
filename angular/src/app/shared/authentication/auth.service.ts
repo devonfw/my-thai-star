@@ -1,6 +1,7 @@
 import { Injectable }     from '@angular/core';
 import { LoginDataService } from '../backend/login/login-data-service';
 import { LoginInfo } from '../backend/login/loginInfo';
+import { MdSnackBar } from '@angular/material';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class AuthService {
     user: string = '';
     hasPermission: boolean = false;
 
-    constructor(public loginDataService: LoginDataService) { }
+    constructor(public snackBar: MdSnackBar, public loginDataService: LoginDataService) { }
 
     login(username: string, password: string): void {
         this.loginDataService.login(username, password)
@@ -34,5 +35,8 @@ export class AuthService {
     logout(): void {
         this.isLogged = false;
         this.hasPermission = false;
+        this.snackBar.open('Log out successful, come back soon!', 'OK', {
+            duration: 4000,
+        });
     }
 }

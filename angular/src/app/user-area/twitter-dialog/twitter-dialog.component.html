@@ -1,0 +1,20 @@
+<h4 md-dialog-title>ASSOCIATE TWITTER ACCOUNT</h4>
+<form #twitterForm="ngForm">
+  <div layout= "column" class="push-bottom-sm" flex>
+    <md-input-container color="accent" flex>
+      <input mdInput placeholder="Twitter username" ngModel name="username" required>
+    </md-input-container>
+
+    <md-input-container color="accent" flex>
+      <input mdInput placeholder="Twitter password" ngModel name="password" type="password" required>
+    </md-input-container>
+  </div>
+
+  <div style="text-align: right">
+    <button md-button md-dialog-close class="text-upper">Cancel</button>
+    <button md-raised-button (click)="twitterSubmit(twitterForm.form.value)" [disabled]="!twitterForm.form.valid" color="accent" class="text-upper">
+      <md-icon svgIcon="twitter"></md-icon>
+      <span>Log in twitter</span>
+    </button>
+  </div>
+</form>

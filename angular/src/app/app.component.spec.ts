@@ -6,9 +6,9 @@ import { BackendModule } from './shared/backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 
 import { WindowService } from './shared/windowService/windowService.service';
-import { LoginDataService } from './shared/backend/login/login-data-service';
 import { AuthService } from './shared/authentication/auth.service';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -16,8 +16,8 @@ describe('AppComponent', () => {
 
   beforeEach(async() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      providers: [WindowService, AuthService, LoginDataService],
+      declarations: [AppComponent, HeaderComponent],
+      providers: [WindowService, AuthService],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
