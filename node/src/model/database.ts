@@ -14,13 +14,18 @@ export interface IIngredient {
     description: string;
 }
 
+export interface IDishCategory {
+    id: string;
+    idDish: string;
+    idCategory: string;
+}
+
 export interface ICategory {
     id: string;
     name: string;
     description: string;
     group: number;
     showOrder: number;
-    dishes: string[];
 }
 
 export interface IOrderLine {

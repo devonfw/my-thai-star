@@ -53,15 +53,15 @@ export default {
 
             let res = util.objectToArray(tables);// *//*
 
-    const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
+const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
 
-    const dishes: types.IDishView[] = await fn.table('Dish').map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
-    map(util.dishToDishview()).
-        promise();
+const dishes: types.IDishView[] = await fn.table('Dish').map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
+map(util.dishToDishview()).
+promise();
 
-    callback(null, dishes);
+callback(null, dishes);
 } catch (err) {
-    callback(err);
+callback(err);
 }
 },*/
 
@@ -72,7 +72,7 @@ export default {
 
         try {
             // filter by category
-            const catId: string[] | undefined = (filter.categories === null || filter.categories === undefined) ?
+            const catId: string[] | undefined = (filter.categories === null || filter.categories === undefined || filter.categories.length === 0) ?
                 undefined :
                 filter.categories.map((elem: types.ICategoryView) => elem.id.toString());
 
@@ -82,10 +82,12 @@ export default {
             // get the dish ids if we are filtering by category
             if (catId) {
                 dishCategories = await fn.table('Category', catId).
-                    map((elem: dbtypes.ICategory) => elem.dishes).
+                    table('DishCategory').
+                    join('id', 'idCategory').
+                    map((elem: any) => elem.idDish).
                     promise();
 
-                dishIdSet = new Set(_.flatten(dishCategories));
+                dishIdSet = new Set(dishCategories);
 
             }
 
@@ -107,12 +109,12 @@ export default {
                 const dishes: types.IDishView[] = await fn.
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
+                    map(util.dishToDishview()).
                     where('price', filter.maxPrice, '<=').
                     filter((o: any) => {
                         return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
-                        || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
+                            || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
                     }).
-                    map(util.dishToDishview()).
                     promise();
 
                 // TODO: filter by likes
@@ -123,7 +125,11 @@ export default {
             }
 
         } catch (error) {
+            console.error(error);
             callback(error);
         }
+    },
+    createReservation: (filter: types.IReservationView,
+                        callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
     },
 };

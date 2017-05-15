@@ -158,10 +158,6 @@ const Dishes: types.IDish[] = [
 const categories: types.ICategory[] = [
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '1',
         name: 'Main dishes',
@@ -169,10 +165,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '2',
         name: 'Starter',
@@ -180,10 +172,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '3',
         name: 'Dessert',
@@ -191,10 +179,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '4',
         name: 'Noodle',
@@ -202,10 +186,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '5',
         name: 'Rice',
@@ -213,10 +193,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '6',
         name: 'Curry',
@@ -224,10 +200,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 3,
         id: '7',
         name: 'Vegan',
@@ -235,14 +207,23 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 3,
         id: '8',
         name: 'Vegetarian',
         showOrder: 7,
+    },
+];
+
+const dishCategory: types.IDishCategory[] = [
+    {
+        id: '0',
+        idDish: '0',
+        idCategory: '1',
+    },
+    {
+        id: '1',
+        idDish: '1',
+        idCategory: '1',
     },
 ];
 
@@ -275,6 +256,13 @@ fn.insert('Ingredient', Ingredients).then((res: string) => {
 
 fn.insert('Category', categories).then((res: string) => {
     console.log('\nAll categories inserted');
+    console.log(res);
+}, (err: Error) => {
+    console.error(err);
+});
+
+fn.insert('DishCategory', dishCategory).then((res: string) => {
+    console.log('\nAll dishCategory inserted');
     console.log(res);
 }, (err: Error) => {
     console.error(err);

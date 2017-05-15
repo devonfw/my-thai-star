@@ -4,25 +4,15 @@ import * as types from '../model/interfaces';
 
 export const router = eRouter();
 
-/*router.get('/', (req: Request, res: Response) => {
-        bussiness.getDihses((err: types.IError, dishes: types.IDishView[]) => {
-                if (err) {
-                        res.status(500).json(err);
-                } else {
-                        res.json(dishes);
-                }
-        });
-});*/
-
 router.post('/v1/Dish/Search', (req: Request, res: Response) => {
-        // res.send(req.body);
+    // res.send(req.body);
 
-        bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
-                if (err) {
-                        res.status(500).json(err);
-                } else {
-                        res.json(dishes);
-                }
-        });
+    bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            res.json(dishes);
+        }
+    });
 
 });
