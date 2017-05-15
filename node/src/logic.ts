@@ -7,6 +7,7 @@ import fn from './data-collector/src/index';
 import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
+import * as moment from 'moment';
 
 // Dynamo
 /*
@@ -129,7 +130,28 @@ callback(err);
             callback(error);
         }
     },
-    createReservation: (filter: types.IReservationView,
-                        callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+    createReservation: async (res: types.IReservationView,
+                              callback: (err: types.IError | null, resToken?: string) => void) => {
+        const date = moment();
+        const reservation: dbtypes.IReservation = {
+            id: date.valueOf().toString(),
+            // TODO: get user from session or check if is a guest
+            userId: '1',
+            name: res.name,
+            email: res.email,
+            // comments: null,
+            reservationToken: res.type.name + date.format('YYYYMMDDHHmmssSSSS'),
+            bookingDate: res.date,
+            expirationDate: res.date, // TODO: modify this, maybe add 1 hour or delete this property
+            creationDate: date.toJSON(),
+            canceled: false,
+            reservationType: res.type.name,
+            assistants: (res.type.name === 'CRS') ? res.assistants : null,
+            guestList: (res.type.name === 'CRS') ? null : res.guestList,
+        };
+
+        fn.insert('Reservation', reservation).promise(); /* await? */
+
+        callback(null, reservation.reservationToken);
     },
 };

@@ -43,12 +43,12 @@ export function dishToDishview() {
             likes: 20,
         };
 
-        element.image = {
-            name: element.image,
-            content: '',
-            type: 'url',
-            extension: element.image.split('.').pop(),
-        };
+        // element.image = {
+        //     name: element.image,
+        //     content: '',
+        //     type: 'url',
+        //     extension: element.image.split('.').pop(),
+        // };
 
         element.extras.forEach((element2: any) => {
             delete (element2.description);

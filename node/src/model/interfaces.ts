@@ -43,7 +43,7 @@ export function isDishView(elem: any): elem is IDishView {
 //
 export interface IImageView {
     name: string;
-    content: string;
+    content?: string;
     type: string; // Binary or Url
     extension: string;
 }
@@ -52,7 +52,7 @@ export function isImageView(elem: any): elem is IImageView {
     if (elem.name === undefined || typeof elem.name !== 'string') {
         return false;
     }
-    if (elem.content === undefined || typeof elem.content !== 'string') {
+    if (elem.content !== undefined && typeof elem.content !== 'string') {
         return false;
     }
     if (elem.type === undefined || typeof elem.type !== 'string') {

@@ -3,8 +3,15 @@ export interface IDish {
     name: string;
     description: string;
     price: number;
-    image: string;
+    image: IImage;
     extras: string[];
+}
+
+export interface IImage {
+    name: string;
+    content?: string;
+    type: string;
+    extension: string;
 }
 
 export interface IIngredient {
@@ -48,17 +55,18 @@ export interface IReservation {
     id: string;
     userId: string;
     name: string;
+    email: string;
     reservationToken: string;
-    comments: string;
+    // comments: string | null;
     bookingDate: string;
     expirationDate: string;
     creationDate: string;
     canceled: boolean;
     reservationType: string;
-    assistants: number;
-    guestList: string[];
-    order: string;
-    table: string;
+    assistants?: number | null;
+    guestList?: string[] | null;
+    order?: string | null;
+    table?: string | null;
 }
 
 export interface ITable {
@@ -71,7 +79,7 @@ export interface IInvitationGuest {
     idReservation: string;
     guestToken: string;
     email: string;
-    accepted: boolean;
+    accepted: boolean | null;
     modificationDate: string;
     order: string;
 }
