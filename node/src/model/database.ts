@@ -53,7 +53,7 @@ export interface IOrder {
 
 export interface IReservation {
     id: string;
-    userId: string;
+    userId?: string;
     name: string;
     email: string;
     reservationToken: string;
@@ -81,7 +81,7 @@ export interface IInvitationGuest {
     email: string;
     accepted: boolean | null;
     modificationDate: string;
-    order: string;
+    order?: string;
 }
 
 export interface IUser {

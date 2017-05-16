@@ -8,6 +8,7 @@ import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
 import * as moment from 'moment';
+import * as md5 from 'md5';
 
 // Dynamo
 /*
@@ -119,7 +120,6 @@ callback(err);
                     promise();
 
                 // TODO: filter by likes
-
                 callback(null, dishes);
             } else {
                 callback(null, []);
@@ -130,28 +130,82 @@ callback(err);
             callback(error);
         }
     },
-    createReservation: async (res: types.IReservationView,
+    createReservation: async (reserv: types.IReservationView,
                               callback: (err: types.IError | null, resToken?: string) => void) => {
         const date = moment();
-        const reservation: dbtypes.IReservation = {
-            id: date.valueOf().toString(),
-            // TODO: get user from session or check if is a guest
-            userId: '1',
-            name: res.name,
-            email: res.email,
-            // comments: null,
-            reservationToken: res.type.name + date.format('YYYYMMDDHHmmssSSSS'),
-            bookingDate: res.date,
-            expirationDate: res.date, // TODO: modify this, maybe add 1 hour or delete this property
-            creationDate: date.toJSON(),
-            canceled: false,
-            reservationType: res.type.name,
-            assistants: (res.type.name === 'CRS') ? res.assistants : null,
-            guestList: (res.type.name === 'CRS') ? null : res.guestList,
-        };
+        const bookDate = moment(reserv.date);
 
-        fn.insert('Reservation', reservation).promise(); /* await? */
+        try {
+            const reservation: dbtypes.IReservation = {
+                id: util.getNanoTime().toString(),
+                // TODO: get user from session or check if is a guest
+                // userId: '1',
+                name: reserv.name,
+                email: reserv.email,
+                reservationToken: 'CRS_' + moment().format('YYYYMMDD') + '_' + md5(reserv.email + moment().format('YYYYMMDDHHmmss')),
+                bookingDate: bookDate.toJSON(),
+                expirationDate: bookDate.add(1, 'hour').toJSON(), // TODO: modify this, maybe add 1 hour or delete this property
+                creationDate: date.toJSON(),
+                canceled: false,
+                reservationType: reserv.type.name,
+                assistants: (reserv.type.name === 'reservation') ? reserv.assistants : null,
+                guestList: null,
+                table: (reserv.type.name === 'reservation') ? util.getTable() : undefined,
+            };
 
-        callback(null, reservation.reservationToken);
+            const inv: dbtypes.IInvitationGuest[] = [];
+
+            if (reserv.type.name === 'invitation' && reserv.guestList.length > 0) {
+                // remove possible duplicates
+                const emails: Set<string> = new Set(reserv.guestList);
+
+                emails.forEach((elem: string) => {
+                    const nanoTime = util.getNanoTime();
+                    const now = moment();
+                    inv.push({
+                        id: nanoTime.toString(),
+                        idReservation: reservation.reservationToken,
+                        guestToken: 'GRS_' + now.format('YYYYMMDD') + '_' + md5(elem + now.format('YYYYMMDDHHmmss')),
+                        email: elem,
+                        accepted: null,
+                        modificationDate: now.toJSON(),
+                        order: undefined,
+                    });
+                });
+
+                reservation.guestList = inv.map((elem: any): string => elem.id);
+            }
+
+            // TODO: send all mails
+
+            callback(null, reservation.reservationToken);
+
+            await fn.insert('Reservation', reservation).promise();
+            if (inv.length > 0 || false) {
+                await fn.insert('InvitationGuest', inv).promise();
+            }
+
+            // const res = await fn.table('Reservation').promise();
+            // const res2 = await fn.table('InvitationGuest').promise();
+            // console.log(res);
+            // console.log('\n\n\n');
+            // console.log(res2);
+        } catch (err) {
+            console.log(err);
+            callback(err);
+        }
+    },
+    createOrder: async (res: types.IOrderView, callback: (err: types.IError | null) => void) => {
+        // check if exsist the token
+        let register: dbtypes.IReservation[] | dbtypes.IInvitationGuest[];
+        if (res.invitationId.startsWith('CRS')) {
+            register = await fn.table('Reservation').where('reservationToken', res.invitationId, '=').promise();
+        } else {
+            register = await fn.table('InvitationGuest').where('guestToken', res.invitationId, '=').promise();
+        }
+
+        if (register.length === 0) {
+            callback({ code: 400, message: 'muy mal' });
+        }
     },
 };

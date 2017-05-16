@@ -34,6 +34,21 @@ export function relationArrayOfIds(table2: any, propArray: string, propT2: strin
     };
 }
 
+export function getTable(){
+    return '1';
+}
+
+export function getNanoTime(){
+    const hrTime = process.hrtime();
+    return hrTime[0] * 1000000000 + hrTime[1];
+}
+
+export function validEmail(email: string): boolean {
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    return mailformat.test(email);
+}
+
 export function dishToDishview() {
     return (element: any) => {
         element.id = Number(element.id);

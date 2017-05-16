@@ -9,7 +9,7 @@ router.post('/v1/Dish/Search', (req: Request, res: Response) => {
 
     bussiness.getDishes(req.body, (err: types.IError, dishes: types.IDishView[]) => {
         if (err) {
-            res.status(500).json(err);
+            res.status(500).json({message: err.message});
         } else {
             res.json(dishes);
         }

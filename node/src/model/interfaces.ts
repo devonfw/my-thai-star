@@ -122,11 +122,11 @@ export function isReservationView(elem: any): elem is IReservationView {
         return false;
     }
     if (elem.guestList === undefined || !(elem.guestList instanceof Array) ||
-        elem.guestList.map((e: any) => {
+        (elem.guestList.length > 0 && elem.guestList.map((e: any) => {
             return typeof e !== 'string';
         }).reduce((elem1: any, elem2: any) => {
             return elem1 || elem2;
-        })) {
+        }))) {
         return false;
     }
     return true;
