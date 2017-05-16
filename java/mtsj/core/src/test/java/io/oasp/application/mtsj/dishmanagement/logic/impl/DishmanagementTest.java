@@ -41,6 +41,9 @@ public class DishmanagementTest extends ComponentTest {
     assertThat(result).isNotNull();
   }
 
+  /**
+   * This test filters all the available dishes that match the SearchCriteria object
+   */
   @Test
   public void filterDishes() {
 
