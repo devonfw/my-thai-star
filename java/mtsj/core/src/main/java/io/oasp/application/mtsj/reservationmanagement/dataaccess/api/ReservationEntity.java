@@ -3,7 +3,11 @@ package io.oasp.application.mtsj.reservationmanagement.dataaccess.api;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
@@ -16,8 +20,6 @@ import io.oasp.application.mtsj.reservationmanagement.common.api.Reservation;
 @Entity
 @Table(name = "Reservation")
 public class ReservationEntity extends ApplicationPersistenceEntity implements Reservation {
-
-  private long idUser;
 
   @NotNull
   private String name;
@@ -40,28 +42,14 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
 
   private boolean canceled;
 
-  private ReservationType reservationType;
+  private ReservationTypeEntity reservationType;
 
   private TableEntity table;
 
   private static final long serialVersionUID = 1L;
 
-  /**
-   * @return idUser
-   */
-  @Override
-  public long getIdUser() {
-
-    return this.idUser;
-  }
-
-  /**
-   * @param idUser new value of {@link #getIdUser}.
-   */
-  @Override
-  public void setIdUser(long idUser) {
-
-    this.idUser = idUser;
+  public ReservationEntity() {
+    super();
   }
 
   /**
@@ -190,45 +178,72 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
     this.canceled = canceled;
   }
 
-  /**
-   * @return reservationType
-   */
   @Override
-  public int getReservationType() {
+  @Transient
+  public Long getReservationTypeId() {
 
-    return this.reservationType;
+    if (this.reservationType == null) {
+      return null;
+    }
+    return this.reservationType.getId();
   }
 
-  /**
-   * @param reservationType new value of {@link #getReservationType}.
-   */
   @Override
-  public void setReservationType(int reservationType) {
+  public void setReservationTypeId(Long reservationTypeId) {
 
-    this.reservationType = reservationType;
+    if (reservationTypeId == null) {
+      this.reservationType = null;
+    } else {
+      ReservationTypeEntity reservationTypeEntity = new ReservationTypeEntity();
+      reservationTypeEntity.setId(reservationTypeId);
+      this.reservationType = reservationTypeEntity;
+    }
   }
 
-  /**
-   * @return Table
-   */
   @Override
+  @Transient
+  public Long getTableId() {
+
+    if (this.table == null) {
+      return null;
+    }
+    return this.table.getId();
+  }
+
+  @Override
+  public void setTableId(Long tableId) {
+
+    if (tableId == null) {
+      this.table = null;
+    } else {
+      TableEntity tableEntity = new TableEntity();
+      tableEntity.setId(tableId);
+      this.table = tableEntity;
+    }
+  }
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "idTable")
   public TableEntity getTable() {
 
     return this.table;
   }
 
-  /**
-   * @param Table new value of {@link #getTable}.
-   */
-  @Override
   public void setTable(TableEntity table) {
 
     this.table = table;
   }
 
-  public long getIdTable() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "reservationType")
+  public ReservationTypeEntity getReservationType() {
 
-    return this.table.getId();
+    return this.reservationType;
+  }
+
+  public void setReservationType(ReservationTypeEntity reservationType) {
+
+    this.reservationType = reservationType;
   }
 
 }

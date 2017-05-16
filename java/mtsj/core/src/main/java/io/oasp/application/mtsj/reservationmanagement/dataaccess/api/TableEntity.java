@@ -1,11 +1,12 @@
 package io.oasp.application.mtsj.reservationmanagement.dataaccess.api;
 
+import javax.persistence.Entity;
+
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.reservationmanagement.common.api.Table;
 
-/**
- * @author rudiazma
- */
+@Entity
+@javax.persistence.Table(name = "Table")
 public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private static final long serialVersionUID = 1L;

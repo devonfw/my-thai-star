@@ -27,6 +27,9 @@ INSERT INTO User(id, modificationCounter, username, password, email, idRole) VAL
 
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 
+INSERT INTO ReservationType(id, modificationCounter, name) VALUES (0, 1, 'type0');
+INSERT INTO ReservationType(id, modificationCounter, name) VALUES (1, 1, 'type1');
+
 
 INSERT INTO Reservation (id, modificationCounter, idUser, name, reservationToken, comment, bookingDate, expirationDate, creationDate, canceled, reservationType, idTable) VALUES(0, 1, 0, 'user0', '0000', 'testing...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0, 0);
 
