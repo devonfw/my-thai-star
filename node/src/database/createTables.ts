@@ -36,19 +36,11 @@ const tables = [
                 AttributeName: 'id',
                 AttributeType: 'S',
             },
-            {
-                AttributeName: 'name',
-                AttributeType: 'S',
-            },
         ],
         KeySchema: [
             {
                 AttributeName: 'id',
                 KeyType: 'HASH',
-            },
-            {
-                AttributeName: 'name',
-                KeyType: 'RANGE',
             },
         ],
         ProvisionedThroughput: {
@@ -77,6 +69,25 @@ const tables = [
         TableName: 'Category',
     },
     {
+     AttributeDefinitions: [
+            {
+                AttributeName: 'id',
+                AttributeType: 'S',
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: 'id',
+                KeyType: 'HASH',
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: 'DishCategory',
+    },
+    {
         AttributeDefinitions: [
             {
                 AttributeName: 'id',
@@ -94,44 +105,6 @@ const tables = [
             WriteCapacityUnits: 1,
         },
         TableName: 'Ingredient',
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: 'id',
-                AttributeType: 'S',
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: 'id',
-                KeyType: 'HASH',
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: 'OrderDishExtraIngredient',
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: 'id',
-                AttributeType: 'S',
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: 'id',
-                KeyType: 'HASH',
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
-        TableName: 'Invitation',
     },
     {
         AttributeDefinitions: [
@@ -207,25 +180,6 @@ const tables = [
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: 'OrderLine',
-    },
-    {
-        AttributeDefinitions: [
-            {
-                AttributeName: 'id',
-                AttributeType: 'S',
-            },
-        ],
-        KeySchema: [
-            {
-                AttributeName: 'id',
-                KeyType: 'HASH',
-            },
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits: 1,
-            WriteCapacityUnits: 1,
-        },
         TableName: 'Order',
     },
     {
@@ -246,6 +200,25 @@ const tables = [
             WriteCapacityUnits: 1,
         },
         TableName: 'Reservation',
+    },
+    {
+        AttributeDefinitions: [
+            {
+                AttributeName: 'id',
+                AttributeType: 'S',
+            },
+        ],
+        KeySchema: [
+            {
+                AttributeName: 'id',
+                KeyType: 'HASH',
+            },
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+        },
+        TableName: 'Table',
     },
 ];
 

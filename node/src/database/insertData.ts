@@ -52,7 +52,12 @@ const Dishes: types.IDish[] = [
         + 'to make, but requires constant stirring',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '0',
-        image: 'Dish/basil-fried.jpg',
+        image: {
+            name: 'Dish/basil-fried.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 1,
         name: 'Thai Spicy Basil Fried Rice',
         price: 12.9900000000,
@@ -62,7 +67,12 @@ const Dishes: types.IDish[] = [
         + 'we feature the tastiest places to get your garlic on.',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '1',
-        image: 'Dish/garlic-paradise.jpg',
+        image: {
+            name: 'Dish/garlic-paradise.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 50,
         name: 'Garlic Paradise',
         price: 7.9900000000,
@@ -71,7 +81,12 @@ const Dishes: types.IDish[] = [
         + 'green curry recipe from Jamie Oliver & treat yourself to an authentic taste of South East Asia.',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '2',
-        image: 'Dish/green-curry.jpg',
+        image: {
+            name: 'Dish/green-curry.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 30,
         name: 'Thai green chicken curry',
         price: 14.7500000000,
@@ -81,7 +96,12 @@ const Dishes: types.IDish[] = [
         + 'shrimp, and beef...or even to use tossed with warm cooked noodles for a quick pasta dish.',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '3',
-        image: 'Dish/Thai-Peanut.jpg',
+        image: {
+            name: 'Dish/Thai-Peanut.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 150,
         name: 'Thai Peanut',
         price: 12.2500000000,
@@ -91,7 +111,12 @@ const Dishes: types.IDish[] = [
         + 'pineapple juice, chilli and ginger.',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '4',
-        image: 'Dish/Thai-thighs.jpg',
+        image: {
+            name: 'Dish/Thai-thighs.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 4,
         name: 'Thai Thighs',
         price: 8.9900000000,
@@ -103,7 +128,12 @@ const Dishes: types.IDish[] = [
         + 'sitting in your pantry already!',
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '5',
-        image: 'Dish/thai-roasted.jpg',
+        image: {
+            name: 'Dish/thai-roasted.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 4,
         name: 'Thai Roasted',
         price: 22.1500000000,
@@ -115,7 +145,12 @@ const Dishes: types.IDish[] = [
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '6',
         // favourite: false,
-        image: '../../assets/images/basil-fried.jpg',
+        image: {
+            name: '../../assets/images/basil-fried.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 21,
         name: 'Red Curry',
         price: 5.90,
@@ -127,7 +162,12 @@ const Dishes: types.IDish[] = [
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '7',
         // favourite: false,
-        image: '../../assets/images/garlic-paradise.jpg',
+        image: {
+            name: '../../assets/images/garlic-paradise.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // Likes: 10,
         name: 'Purple Curry',
         price: 9.00,
@@ -139,7 +179,12 @@ const Dishes: types.IDish[] = [
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '8',
         // favourite: false,
-        image: '../../assets/images/green-curry.jpg',
+        image: {
+            name: '../../assets/images/green-curry.jpg',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 61,
         name: 'Green Curry',
         price: 7.60,
@@ -149,7 +194,12 @@ const Dishes: types.IDish[] = [
         extras: [Ingredients[0].id, Ingredients[3].id],
         id: '9',
         // favourite: false,
-        image: '../../assets/images/dish.png',
+        image: {
+            name: '../../assets/images/dish.png',
+            // content: '',
+            type: 'url',
+            extension: 'jpg',
+        },
         // likes: 48,
         name: 'Yellow Curry',
         price: 8.50,
@@ -158,10 +208,6 @@ const Dishes: types.IDish[] = [
 const categories: types.ICategory[] = [
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '1',
         name: 'Main dishes',
@@ -169,10 +215,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '2',
         name: 'Starter',
@@ -180,10 +222,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 1,
         id: '3',
         name: 'Dessert',
@@ -191,10 +229,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '4',
         name: 'Noodle',
@@ -202,10 +236,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '5',
         name: 'Rice',
@@ -213,10 +243,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 2,
         id: '6',
         name: 'Curry',
@@ -224,10 +250,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 3,
         id: '7',
         name: 'Vegan',
@@ -235,10 +257,6 @@ const categories: types.ICategory[] = [
     },
     {
         description: 'Alguna tendrá',
-        dishes: [
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-            Dishes[getRandomInt(0, Dishes.length - 1)].id,
-        ],
         group: 3,
         id: '8',
         name: 'Vegetarian',
@@ -246,14 +264,29 @@ const categories: types.ICategory[] = [
     },
 ];
 
-const users = [
+const dishCategory: types.IDishCategory[] = [
+    {
+        id: '0',
+        idDish: '0',
+        idCategory: '1',
+    },
+    {
+        id: '1',
+        idDish: '1',
+        idCategory: '1',
+    },
+];
+
+const users: types.IUser[] = [
     {
         email: 'dario@capge.com',
-        favorites: [
+        favourites: [
             '1', '3',
         ],
         id: '1',
-        name: 'Dario',
+        password: 'holaketal',
+        role: '2',
+        userName: 'Dario',
     },
 ];
 
@@ -273,6 +306,13 @@ fn.insert('Ingredient', Ingredients).then((res: string) => {
 
 fn.insert('Category', categories).then((res: string) => {
     console.log('\nAll categories inserted');
+    console.log(res);
+}, (err: Error) => {
+    console.error(err);
+});
+
+fn.insert('DishCategory', dishCategory).then((res: string) => {
+    console.log('\nAll dishCategory inserted');
     console.log(res);
 }, (err: Error) => {
     console.error(err);

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
-import { FormGroup } from '@angular/forms/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'public-login-dialog',
@@ -17,6 +17,10 @@ export class LoginDialogComponent {
 
   signInSubmit(formValue: FormGroup): void {
     this.dialog.close(formValue);
+  }
+
+  forgotPassword(): void {
+    // implement forgot password
   }
 
 }

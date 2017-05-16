@@ -3,8 +3,15 @@ export interface IDish {
     name: string;
     description: string;
     price: number;
-    image: string;
+    image: IImage;
     extras: string[];
+}
+
+export interface IImage {
+    name: string;
+    content?: string;
+    type: string;
+    extension: string;
 }
 
 export interface IIngredient {
@@ -14,42 +21,57 @@ export interface IIngredient {
     description: string;
 }
 
+export interface IDishCategory {
+    id: string;
+    idDish: string;
+    idCategory: string;
+}
+
 export interface ICategory {
     id: string;
     name: string;
     description: string;
     group: number;
     showOrder: number;
-    dishes: string[];
 }
 
 export interface IOrderLine {
-    dish: IDish;
-    quantity: number;
+    idDish: string;
+    extras: string[];
+    amount: number;
     comment: string;
 }
 
 export interface IOrder {
+    id: string;
     lines: IOrderLine[];
     canceled: boolean;
+    idReservation: string;
+    idInvitation: string;
 
 }
 
 export interface IReservation {
-    date: string;
-    type: IReservationType;
+    id: string;
+    userId: string;
     name: string;
     email: string;
-    assistants: number;
-    guestList: string[];
-    order: IOrder;
-    user: string;
-    table: string;
+    reservationToken: string;
+    // comments: string | null;
+    bookingDate: string;
+    expirationDate: string;
+    creationDate: string;
+    canceled: boolean;
+    reservationType: string;
+    assistants?: number | null;
+    guestList?: string[] | null;
+    order?: string | null;
+    table?: string | null;
 }
 
-export interface IReservationType {
-    name: string;
-    value: number;
+export interface ITable {
+    id: string;
+    seatsNumber: number;
 }
 
 export interface IInvitationGuest {
@@ -57,7 +79,16 @@ export interface IInvitationGuest {
     idReservation: string;
     guestToken: string;
     email: string;
-    accepted: boolean;
+    accepted: boolean | null;
     modificationDate: string;
-    order: IOrder;
+    order: string;
+}
+
+export interface IUser {
+    id: string;
+    userName: string;
+    password: string;
+    email: string;
+    role: string;
+    favourites: string[];
 }

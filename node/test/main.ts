@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import bussiness from '../src/logic';
 import { app as server } from '../src/app';
-import { IDishView, IExtraIngredientView, IImageView, IFavouriteView } from '../src/model/interfaces';
+import { isDishView } from '../src/model/interfaces';
 import * as _ from 'lodash';
 
 // configure chai-http
@@ -67,68 +67,3 @@ describe('Get dishes', () => {
         });
     });
 });
-
-function isImageView(elem: any): elem is IImageView {
-    if (elem.name === undefined || typeof elem.name !== 'string') {
-        return false;
-    }
-    if (elem.content === undefined || typeof elem.content !== 'string') {
-        return false;
-    }
-    if (elem.type === undefined || typeof elem.type !== 'string') {
-        return false;
-    }
-    if (elem.extension === undefined || typeof elem.extension !== 'string') {
-        return false;
-    }
-
-    return true;
-}
-
-function isExtraIngredientView(elem: any): elem is IExtraIngredientView {
-    if (elem.id === undefined || typeof elem.id !== 'number') {
-        return false;
-    }
-    if (elem.name === undefined || typeof elem.name !== 'string') {
-        return false;
-    }
-    if (elem.price === undefined || typeof elem.price !== 'number') {
-        return false;
-    }
-    if (elem.selected === undefined || typeof elem.selected !== 'boolean') {
-        return false;
-    }
-
-    return true;
-}
-
-function isFavouriteView(elem: any): elem is IFavouriteView {
-    return true;
-}
-
-function isDishView(elem: any): elem is IDishView {
-    if (elem.id === undefined || typeof elem.id !== 'number') {
-        return false;
-    }
-    if (elem.name === undefined || typeof elem.name !== 'string') {
-        return false;
-    }
-    if (elem.description === undefined || typeof elem.description !== 'string') {
-        return false;
-    }
-    if (elem.price === undefined || typeof elem.price !== 'number') {
-        return false;
-    }
-    if (elem.image === undefined || !isImageView(elem.image)) {
-        return false;
-    }
-    if (elem.extras === undefined || !(elem.extras instanceof Array)
-        && !isExtraIngredientView(elem.extras)) {
-        return false;
-    }
-    if (elem.favourite === undefined || !isFavouriteView(elem.favourite)) {
-        return false;
-    }
-
-    return true;
-}

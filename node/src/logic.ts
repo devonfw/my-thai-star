@@ -7,6 +7,7 @@ import fn from './data-collector/src/index';
 import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
+import * as moment from 'moment';
 
 // Dynamo
 /*
@@ -53,15 +54,15 @@ export default {
 
             let res = util.objectToArray(tables);// *//*
 
-    const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
+const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
 
-    const dishes: types.IDishView[] = await fn.table('Dish').map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
-    map(util.dishToDishview()).
-        promise();
+const dishes: types.IDishView[] = await fn.table('Dish').map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
+map(util.dishToDishview()).
+promise();
 
-    callback(null, dishes);
+callback(null, dishes);
 } catch (err) {
-    callback(err);
+callback(err);
 }
 },*/
 
@@ -72,7 +73,7 @@ export default {
 
         try {
             // filter by category
-            const catId: string[] | undefined = (filter.categories === null || filter.categories === undefined) ?
+            const catId: string[] | undefined = (filter.categories === null || filter.categories === undefined || filter.categories.length === 0) ?
                 undefined :
                 filter.categories.map((elem: types.ICategoryView) => elem.id.toString());
 
@@ -82,10 +83,12 @@ export default {
             // get the dish ids if we are filtering by category
             if (catId) {
                 dishCategories = await fn.table('Category', catId).
-                    map((elem: dbtypes.ICategory) => elem.dishes).
+                    table('DishCategory').
+                    join('id', 'idCategory').
+                    map((elem: any) => elem.idDish).
                     promise();
 
-                dishIdSet = new Set(_.flatten(dishCategories));
+                dishIdSet = new Set(dishCategories);
 
             }
 
@@ -107,12 +110,12 @@ export default {
                 const dishes: types.IDishView[] = await fn.
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
+                    map(util.dishToDishview()).
                     where('price', filter.maxPrice, '<=').
                     filter((o: any) => {
                         return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
-                        || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
+                            || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
                     }).
-                    map(util.dishToDishview()).
                     promise();
 
                 // TODO: filter by likes
@@ -123,7 +126,32 @@ export default {
             }
 
         } catch (error) {
+            console.error(error);
             callback(error);
         }
+    },
+    createReservation: async (res: types.IReservationView,
+                              callback: (err: types.IError | null, resToken?: string) => void) => {
+        const date = moment();
+        const reservation: dbtypes.IReservation = {
+            id: date.valueOf().toString(),
+            // TODO: get user from session or check if is a guest
+            userId: '1',
+            name: res.name,
+            email: res.email,
+            // comments: null,
+            reservationToken: res.type.name + date.format('YYYYMMDDHHmmssSSSS'),
+            bookingDate: res.date,
+            expirationDate: res.date, // TODO: modify this, maybe add 1 hour or delete this property
+            creationDate: date.toJSON(),
+            canceled: false,
+            reservationType: res.type.name,
+            assistants: (res.type.name === 'CRS') ? res.assistants : null,
+            guestList: (res.type.name === 'CRS') ? null : res.guestList,
+        };
+
+        fn.insert('Reservation', reservation).promise(); /* await? */
+
+        callback(null, reservation.reservationToken);
     },
 };

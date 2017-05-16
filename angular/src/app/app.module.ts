@@ -27,7 +27,10 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
 
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { LoginDialogComponent } from './user-area/login-dialog/login-dialog.component';
+import { HeaderComponent } from './header/header.component';
+import { PasswordDialogComponent } from './user-area/password-dialog/password-dialog.component';
+import { TwitterDialogComponent } from './user-area/twitter-dialog/twitter-dialog.component';
 
 // SERVICES
 import { BookTableService } from './book-table/shared/book-table.service';
@@ -35,6 +38,9 @@ import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
 import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { AuthService } from './shared/authentication/auth.service';
+
+// DIRECTIVES
+import { EqualValidatorDirective } from './user-area/login-dialog/equal-validator.directive';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
@@ -51,6 +57,10 @@ import { AuthService } from './shared/authentication/auth.service';
     LoginDialogComponent,
     OrderCockpitComponent,
     ReservationCockpitComponent,
+    EqualValidatorDirective,
+    HeaderComponent,
+    PasswordDialogComponent,
+    TwitterDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +86,8 @@ import { AuthService } from './shared/authentication/auth.service';
     BookTableDialogComponent,
     InvitationDialogComponent,
     LoginDialogComponent,
+    PasswordDialogComponent,
+    TwitterDialogComponent,
   ],
   bootstrap: [ AppComponent ],
 })

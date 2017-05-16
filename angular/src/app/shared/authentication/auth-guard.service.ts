@@ -14,12 +14,20 @@ export class AuthGuard implements CanActivate {
               private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isLogged) { return true; }
+    if (this.authService.isLogged && this.authService.hasPermission) {
+      return true;
+    }
 
-    // Open login error snack bar
-    this.snackBar.open('Access denied, please try again', '', {
-      duration: 4000,
-    });
+    // Open login snack bar
+    if (!this.authService.isLogged) {
+      this.snackBar.open('Access denied, please try again', 'OK', {
+        duration: 4000,
+      });
+    } else {
+      this.snackBar.open('Login successful', 'OK', {
+        duration: 4000,
+      });
+    }
 
     if (this.router.url === '/') {
       this.router.navigate(['/restaurant']);

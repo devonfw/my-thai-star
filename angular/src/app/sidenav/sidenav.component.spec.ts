@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -16,6 +17,7 @@ describe('SidenavComponent', () => {
       declarations: [ SidenavComponent, SidenavOrderComponent ],
       providers: [PriceCalculatorService, SidenavService],
       imports: [
+        BrowserAnimationsModule,
         RouterTestingModule,
         CovalentCoreModule.forRoot(),
       ],

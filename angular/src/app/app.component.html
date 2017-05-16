@@ -1,59 +1,7 @@
 <td-layout-nav>
   <!-- Remark: html duplication, I mark it only here, but you will find more examples in the code base -->
-  <div td-toolbar-content layout="row" layout-align="center center" flex>
-    <a md-icon-button class="forMobile" (click)="mobileSidenavOpened = !mobileSidenavOpened"><md-icon>dehaze</md-icon></a>
-    <a md-icon-button><md-icon>star_border</md-icon></a>
-    <span>My Thai Star</span>
-    
-    <span flex></span>
-    <div *ngIf="!auth.isLogged" class="forDesktop">
-      <nav md-tab-nav-bar>
-        <a md-tab-link
-          routerLink="/restaurant"
-          routerLinkActive #restaurant="routerLinkActive"
-          [class.navBottomBorder]="restaurant.isActive">
-          HOME
-        </a>
-        <a md-tab-link
-          routerLink="/menu"
-          routerLinkActive #menu="routerLinkActive"
-          [class.navBottomBorder]="menu.isActive">
-          MENU
-        </a>
-        <a md-tab-link
-          routerLink="/bookTable"
-          routerLinkActive #bookTable="routerLinkActive"
-          [class.navBottomBorder]="bookTable.isActive">
-          BOOK TABLE
-        </a>
-      </nav>
-    </div>
-    <div *ngIf="auth.isLogged" class="forDesktop">
-      <nav md-tab-nav-bar>
-        <a md-tab-link
-          routerLink="/orders"
-          routerLinkActive #orders="routerLinkActive"
-          [class.navBottomBorder]="orders.isActive">
-          ORDERS
-        </a>
-        <a md-tab-link
-          routerLink="/reservations"
-          routerLinkActive #reservations="routerLinkActive"
-          [class.navBottomBorder]="reservations.isActive">
-          RESERVATIONS
-        </a>
-      </nav>
-    </div>
-    <button *ngIf="!auth.isLogged" md-icon-button (click)="openLoginDialog()" mdTooltip="User"><md-icon>person_outline</md-icon></button>
-    <td-notification-count *ngIf="!auth.isLogged" color="accent" [notifications]="sidenav.getNumberOrders()">
-      <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
-    </td-notification-count>
-    <div *ngIf="auth.isLogged" layout="row" style="align-items:center">
-      <span>Welcome {{auth.user}}</span>
-       <md-icon>person_outline</md-icon>
-      <button md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
-    </div>
-  </div>
+  <public-header (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened" td-toolbar-content flex></public-header>
+
   <td-layout-footer class="forDesktop">
     <div layout="row" layout-align="center center" flex>
       <span>MY THAI STAR 2017</span>
@@ -61,6 +9,7 @@
       <span>Devonfw</span>
     </div>
   </td-layout-footer>
+
   <md-sidenav-container style= "height:100%">
 
     <md-sidenav class="sidenavMobile" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
@@ -68,7 +17,7 @@
     </md-sidenav>
 
     <md-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-      <md-nav-list menu-items *ngIf="!auth.isLogged">
+      <md-nav-list menu-items *ngIf="!auth.hasPermission">
         <a md-list-item (click)="navigateTo('restaurant')">
           <md-icon>home</md-icon>
           HOME
@@ -82,12 +31,12 @@
           BOOK TABLE
         </a>
       </md-nav-list>
-      <md-nav-list menu-items *ngIf="auth.isLogged">
-        <a md-list-item (click)="navigateTo('restaurant')">
+      <md-nav-list menu-items *ngIf="auth.hasPermission">
+        <a md-list-item (click)="navigateTo('orders')">
           <md-icon>home</md-icon>
           ORDERS
         </a>
-        <a md-list-item (click)="navigateTo('menu')">
+        <a md-list-item (click)="navigateTo('reservations')">
           <md-icon>restaurant_menu</md-icon>
           RESERVATIONS
         </a>
@@ -95,5 +44,6 @@
     </md-sidenav>
 
     <router-outlet></router-outlet>
+
   </md-sidenav-container>
 </td-layout-nav>

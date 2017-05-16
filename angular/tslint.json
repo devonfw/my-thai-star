@@ -184,7 +184,7 @@
       "check-type"
     ],
     // ANGULAR 2 Rules
-    "directive-selector": [true, "attribute", ["public", "cockpit"], "camelCase"],
+    "directive-selector": [true, "attribute", [""], "camelCase"],
     "component-selector": [true, "element", ["public", "cockpit"], "kebab-case"],
     "component-class-suffix": true,
     "directive-class-suffix": true,
