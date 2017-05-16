@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.oasp.application.mtsj.reservationmanagement.logic.api.Reservationmanagement;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestEto;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
@@ -143,5 +145,45 @@ public interface ReservationmanagementRestService {
   @POST
   public PaginatedListTo<ReservationTypeEto> findReservationTypesByPost(
       ReservationTypeSearchCriteriaTo searchCriteriaTo);
+
+  /**
+   * Delegates to {@link Reservationmanagement#findInvitationGuest}.
+   *
+   * @param id the ID of the {@link InvitationGuestEto}
+   * @return the {@link InvitationGuestEto}
+   */
+  @GET
+  @Path("/invitationguest/{id}/")
+  public InvitationGuestEto getInvitationGuest(@PathParam("id") long id);
+
+  /**
+   * Delegates to {@link Reservationmanagement#saveInvitationGuest}.
+   *
+   * @param invitationguest the {@link InvitationGuestEto} to be saved
+   * @return the recently created {@link InvitationGuestEto}
+   */
+  @POST
+  @Path("/invitationguest/")
+  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationguest);
+
+  /**
+   * Delegates to {@link Reservationmanagement#deleteInvitationGuest}.
+   *
+   * @param id ID of the {@link InvitationGuestEto} to be deleted
+   */
+  @DELETE
+  @Path("/invitationguest/{id}/")
+  public void deleteInvitationGuest(@PathParam("id") long id);
+
+  /**
+   * Delegates to {@link Reservationmanagement#findInvitationGuestEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding invitationguests.
+   * @return the {@link PaginatedListTo list} of matching {@link InvitationGuestEto}s.
+   */
+  @Path("/invitationguest/search")
+  @POST
+  public PaginatedListTo<InvitationGuestEto> findInvitationGuestsByPost(
+      InvitationGuestSearchCriteriaTo searchCriteriaTo);
 
 }

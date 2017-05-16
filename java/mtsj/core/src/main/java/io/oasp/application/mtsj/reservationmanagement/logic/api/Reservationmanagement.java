@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.reservationmanagement.logic.api;
 
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestEto;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
@@ -108,5 +110,37 @@ public interface Reservationmanagement {
    * @return the new {@link ReservationTypeEto} that has been saved with ID and version.
    */
   ReservationTypeEto saveReservationType(ReservationTypeEto reservationType);
+
+  /**
+   * Returns a InvitationGuest by its id 'id'.
+   *
+   * @param id The id 'id' of the InvitationGuest.
+   * @return The {@link InvitationGuestEto} with id 'id'
+   */
+  InvitationGuestEto findInvitationGuest(Long id);
+
+  /**
+   * Returns a paginated list of InvitationGuests matching the search criteria.
+   *
+   * @param criteria the {@link InvitationGuestSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link InvitationGuestEto}s.
+   */
+  PaginatedListTo<InvitationGuestEto> findInvitationGuestEtos(InvitationGuestSearchCriteriaTo criteria);
+
+  /**
+   * Deletes a invitationGuest from the database by its id 'invitationGuestId'.
+   *
+   * @param invitationGuestId Id of the invitationGuest to delete
+   * @return boolean <code>true</code> if the invitationGuest can be deleted, <code>false</code> otherwise
+   */
+  boolean deleteInvitationGuest(Long invitationGuestId);
+
+  /**
+   * Saves a invitationGuest and store it in the database.
+   *
+   * @param invitationGuest the {@link InvitationGuestEto} to create.
+   * @return the new {@link InvitationGuestEto} that has been saved with ID and version.
+   */
+  InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest);
 
 }

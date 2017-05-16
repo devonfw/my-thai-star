@@ -10,13 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.InvitationGuestEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.ReservationEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.ReservationTypeEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.TableEntity;
+import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.dao.InvitationGuestDao;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.dao.ReservationDao;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.dao.ReservationTypeDao;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.dao.TableDao;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.Reservationmanagement;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestEto;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
@@ -54,6 +58,12 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
    */
   @Inject
   private ReservationTypeDao reservationTypeDao;
+
+  /**
+   * @see #getInvitationGuestDao()
+   */
+  @Inject
+  private InvitationGuestDao invitationGuestDao;
 
   /**
    * The constructor.
@@ -202,6 +212,53 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
   public ReservationTypeDao getReservationTypeDao() {
 
     return this.reservationTypeDao;
+  }
+
+  @Override
+  public InvitationGuestEto findInvitationGuest(Long id) {
+
+    LOG.debug("Get InvitationGuest with id {} from database.", id);
+    return getBeanMapper().map(getInvitationGuestDao().findOne(id), InvitationGuestEto.class);
+  }
+
+  @Override
+  public PaginatedListTo<InvitationGuestEto> findInvitationGuestEtos(InvitationGuestSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<InvitationGuestEntity> invitationguests = getInvitationGuestDao().findInvitationGuests(criteria);
+    return mapPaginatedEntityList(invitationguests, InvitationGuestEto.class);
+  }
+
+  @Override
+  public boolean deleteInvitationGuest(Long invitationGuestId) {
+
+    InvitationGuestEntity invitationGuest = getInvitationGuestDao().find(invitationGuestId);
+    getInvitationGuestDao().delete(invitationGuest);
+    LOG.debug("The invitationGuest with id '{}' has been deleted.", invitationGuestId);
+    return true;
+  }
+
+  @Override
+  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest) {
+
+    Objects.requireNonNull(invitationGuest, "invitationGuest");
+    InvitationGuestEntity invitationGuestEntity = getBeanMapper().map(invitationGuest, InvitationGuestEntity.class);
+
+    // initialize, validate invitationGuestEntity here if necessary
+    InvitationGuestEntity resultEntity = getInvitationGuestDao().save(invitationGuestEntity);
+    LOG.debug("InvitationGuest with id '{}' has been created.", resultEntity.getId());
+
+    return getBeanMapper().map(resultEntity, InvitationGuestEto.class);
+  }
+
+  /**
+   * Returns the field 'invitationGuestDao'.
+   *
+   * @return the {@link InvitationGuestDao} instance.
+   */
+  public InvitationGuestDao getInvitationGuestDao() {
+
+    return this.invitationGuestDao;
   }
 
 }

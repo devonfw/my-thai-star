@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.oasp.application.mtsj.reservationmanagement.logic.api.Reservationmanagement;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestEto;
+import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
@@ -93,6 +95,31 @@ public class ReservationmanagementRestServiceImpl implements Reservationmanageme
       ReservationTypeSearchCriteriaTo searchCriteriaTo) {
 
     return this.reservationmanagement.findReservationTypeEtos(searchCriteriaTo);
+  }
+
+  @Override
+  public InvitationGuestEto getInvitationGuest(long id) {
+
+    return this.reservationmanagement.findInvitationGuest(id);
+  }
+
+  @Override
+  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationguest) {
+
+    return this.reservationmanagement.saveInvitationGuest(invitationguest);
+  }
+
+  @Override
+  public void deleteInvitationGuest(long id) {
+
+    this.reservationmanagement.deleteInvitationGuest(id);
+  }
+
+  @Override
+  public PaginatedListTo<InvitationGuestEto> findInvitationGuestsByPost(
+      InvitationGuestSearchCriteriaTo searchCriteriaTo) {
+
+    return this.reservationmanagement.findInvitationGuestEtos(searchCriteriaTo);
   }
 
 }
