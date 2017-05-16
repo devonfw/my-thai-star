@@ -1,11 +1,11 @@
 package io.oasp.application.mtsj.reservationmanagement.logic.api;
 
+import java.security.NoSuchAlgorithmException;
+
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
-import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
-import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
@@ -76,40 +76,9 @@ public interface Reservationmanagement {
    *
    * @param reservation the {@link ReservationEto} to create.
    * @return the new {@link ReservationEto} that has been saved with ID and version.
+   * @throws NoSuchAlgorithmException
    */
-  ReservationEto saveReservation(ReservationEto reservation);
-
-  /**
-   * Returns a ReservationType by its id 'id'.
-   *
-   * @param id The id 'id' of the ReservationType.
-   * @return The {@link ReservationTypeEto} with id 'id'
-   */
-  ReservationTypeEto findReservationType(Long id);
-
-  /**
-   * Returns a paginated list of ReservationTypes matching the search criteria.
-   *
-   * @param criteria the {@link ReservationTypeSearchCriteriaTo}.
-   * @return the {@link List} of matching {@link ReservationTypeEto}s.
-   */
-  PaginatedListTo<ReservationTypeEto> findReservationTypeEtos(ReservationTypeSearchCriteriaTo criteria);
-
-  /**
-   * Deletes a reservationType from the database by its id 'reservationTypeId'.
-   *
-   * @param reservationTypeId Id of the reservationType to delete
-   * @return boolean <code>true</code> if the reservationType can be deleted, <code>false</code> otherwise
-   */
-  boolean deleteReservationType(Long reservationTypeId);
-
-  /**
-   * Saves a reservationType and store it in the database.
-   *
-   * @param reservationType the {@link ReservationTypeEto} to create.
-   * @return the new {@link ReservationTypeEto} that has been saved with ID and version.
-   */
-  ReservationTypeEto saveReservationType(ReservationTypeEto reservationType);
+  ReservationEto saveReservation(ReservationEto reservation) throws NoSuchAlgorithmException;
 
   /**
    * Returns a InvitationGuest by its id 'id'.
@@ -144,7 +113,6 @@ public interface Reservationmanagement {
   InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest);
 
   /**
-   *
    */
   void cancelInvitation(String reservationToken);
 

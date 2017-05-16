@@ -2,12 +2,12 @@ package io.oasp.application.mtsj.reservationmanagement.logic.api.to;
 
 import java.sql.Timestamp;
 
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.application.mtsj.reservationmanagement.common.api.Reservation}s.
- *
  */
 public class ReservationSearchCriteriaTo extends SearchCriteriaTo {
 
@@ -27,9 +27,11 @@ public class ReservationSearchCriteriaTo extends SearchCriteriaTo {
 
   private Boolean canceled;
 
-  private Long reservationTypeId;
+  private ReservationType reservationType;
 
   private Long tableId;
+
+  private String email;
 
   /**
    * The constructor.
@@ -109,14 +111,14 @@ public class ReservationSearchCriteriaTo extends SearchCriteriaTo {
     this.canceled = canceled;
   }
 
-  public Long getReservationTypeId() {
+  public ReservationType getReservationType() {
 
-    return this.reservationTypeId;
+    return this.reservationType;
   }
 
-  public void setReservationTypeId(Long reservationTypeId) {
+  public void setReservationType(ReservationType reservationTypeId) {
 
-    this.reservationTypeId = reservationTypeId;
+    this.reservationType = this.reservationType;
   }
 
   public Long getTableId() {
@@ -127,6 +129,16 @@ public class ReservationSearchCriteriaTo extends SearchCriteriaTo {
   public void setTableId(Long tableId) {
 
     this.tableId = tableId;
+  }
+
+  public String getEmail() {
+
+    return email;
+  }
+
+  public void setEmail(String email) {
+
+    this.email = email;
   }
 
 }

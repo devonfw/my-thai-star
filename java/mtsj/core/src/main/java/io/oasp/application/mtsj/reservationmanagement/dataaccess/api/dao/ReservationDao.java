@@ -17,4 +17,5 @@ public interface ReservationDao extends ApplicationDao<ReservationEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link ReservationEntity} objects.
    */
   PaginatedListTo<ReservationEntity> findReservations(ReservationSearchCriteriaTo criteria);
+
 }

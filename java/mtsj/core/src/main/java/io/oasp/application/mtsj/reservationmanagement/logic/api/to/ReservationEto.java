@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.reservationmanagement.common.api.Reservation;
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 
 /**
  * Entity transport object of Reservation
@@ -26,9 +27,11 @@ public class ReservationEto extends AbstractEto implements Reservation {
 
   private boolean canceled;
 
-  private Long reservationTypeId;
+  private ReservationType reservationType;
 
   private Long tableId;
+
+  private String email;
 
   @Override
   public String getName() {
@@ -115,15 +118,15 @@ public class ReservationEto extends AbstractEto implements Reservation {
   }
 
   @Override
-  public Long getReservationTypeId() {
+  public ReservationType getReservationType() {
 
-    return this.reservationTypeId;
+    return this.reservationType;
   }
 
   @Override
-  public void setReservationTypeId(Long reservationTypeId) {
+  public void setReservationType(ReservationType reservationType) {
 
-    this.reservationTypeId = reservationTypeId;
+    this.reservationType = reservationType;
   }
 
   @Override
@@ -151,7 +154,7 @@ public class ReservationEto extends AbstractEto implements Reservation {
     result = prime * result + ((this.creationDate == null) ? 0 : this.creationDate.hashCode());
     result = prime * result + ((Boolean) this.canceled).hashCode();
 
-    result = prime * result + ((this.reservationTypeId == null) ? 0 : this.reservationTypeId.hashCode());
+    result = prime * result + ((this.reservationType == null) ? 0 : this.reservationType.hashCode());
 
     result = prime * result + ((this.tableId == null) ? 0 : this.tableId.hashCode());
     return result;
@@ -217,11 +220,11 @@ public class ReservationEto extends AbstractEto implements Reservation {
       return false;
     }
 
-    if (this.reservationTypeId == null) {
-      if (other.reservationTypeId != null) {
+    if (this.reservationType == null) {
+      if (other.reservationType != null) {
         return false;
       }
-    } else if (!this.reservationTypeId.equals(other.reservationTypeId)) {
+    } else if (!this.reservationType.equals(other.reservationType)) {
       return false;
     }
 
@@ -234,4 +237,17 @@ public class ReservationEto extends AbstractEto implements Reservation {
     }
     return true;
   }
+
+  @Override
+  public String getEmail() {
+
+    return email;
+  }
+
+  @Override
+  public void setEmail(String email) {
+
+    this.email = email;
+  }
+
 }

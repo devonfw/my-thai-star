@@ -35,14 +35,6 @@ CREATE TABLE User (
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
--- *** ReservationType ***
-CREATE TABLE ReservationType (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR (255) NOT NULL,
-  CONSTRAINT PK_ReservationType PRIMARY KEY(id)
-);
-
 -- *** Reservation ***
 CREATE TABLE Reservation (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -51,16 +43,16 @@ CREATE TABLE Reservation (
   name VARCHAR (255),
   reservationToken VARCHAR (60),
   comment VARCHAR (4000),
+  email VARCHAR(255),
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
   canceled BOOLEAN NOT NULL DEFAULT ((0)) ,
-  reservationType BIGINT,
+  reservationType INTEGER,
   idTable BIGINT,
   CONSTRAINT PK_Reservation PRIMARY KEY(id),
   CONSTRAINT FK_Reservation_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_Reservation_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK,
-  CONSTRAINT FK_Reservation_reservationType FOREIGN KEY(reservationType) REFERENCES ReservationType(id) NOCHECK
+  CONSTRAINT FK_Reservation_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
 );
 
 -- *** Category ***

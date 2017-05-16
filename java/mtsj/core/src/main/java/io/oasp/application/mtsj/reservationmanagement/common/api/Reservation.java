@@ -3,6 +3,7 @@ package io.oasp.application.mtsj.reservationmanagement.common.api;
 import java.sql.Timestamp;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 
 public interface Reservation extends ApplicationEntity {
 
@@ -34,12 +35,16 @@ public interface Reservation extends ApplicationEntity {
 
   public void setCanceled(boolean canceled);
 
-  public Long getReservationTypeId();
+  public ReservationType getReservationType();
 
-  public void setReservationTypeId(Long reservationTypeId);
+  public void setReservationType(ReservationType reservationType);
 
   public Long getTableId();
 
   public void setTableId(Long tableId);
+
+  public String getEmail();
+
+  public void setEmail(String email);
 
 }

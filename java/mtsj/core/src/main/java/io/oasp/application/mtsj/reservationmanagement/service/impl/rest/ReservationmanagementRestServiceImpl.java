@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.reservationmanagement.service.impl.rest;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -8,8 +10,6 @@ import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGue
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
-import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeEto;
-import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationTypeSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.reservationmanagement.service.api.rest.ReservationmanagementRestService;
@@ -55,7 +55,7 @@ public class ReservationmanagementRestServiceImpl implements Reservationmanageme
   }
 
   @Override
-  public ReservationEto saveReservation(ReservationEto reservation) {
+  public ReservationEto saveReservation(ReservationEto reservation) throws NoSuchAlgorithmException {
 
     return this.reservationmanagement.saveReservation(reservation);
   }
@@ -70,31 +70,6 @@ public class ReservationmanagementRestServiceImpl implements Reservationmanageme
   public PaginatedListTo<ReservationEto> findReservationsByPost(ReservationSearchCriteriaTo searchCriteriaTo) {
 
     return this.reservationmanagement.findReservationEtos(searchCriteriaTo);
-  }
-
-  @Override
-  public ReservationTypeEto getReservationType(long id) {
-
-    return this.reservationmanagement.findReservationType(id);
-  }
-
-  @Override
-  public ReservationTypeEto saveReservationType(ReservationTypeEto reservationtype) {
-
-    return this.reservationmanagement.saveReservationType(reservationtype);
-  }
-
-  @Override
-  public void deleteReservationType(long id) {
-
-    this.reservationmanagement.deleteReservationType(id);
-  }
-
-  @Override
-  public PaginatedListTo<ReservationTypeEto> findReservationTypesByPost(
-      ReservationTypeSearchCriteriaTo searchCriteriaTo) {
-
-    return this.reservationmanagement.findReservationTypeEtos(searchCriteriaTo);
   }
 
   @Override

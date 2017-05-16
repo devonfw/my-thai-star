@@ -9,6 +9,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.ReservationEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.dao.ReservationDao;
 import io.oasp.application.mtsj.reservationmanagement.logic.api.to.ReservationSearchCriteriaTo;
@@ -67,17 +68,13 @@ public class ReservationDaoImpl extends ApplicationDaoImpl<ReservationEntity> im
     }
     boolean canceled = criteria.isCanceled();
     query.where(Alias.$(reservation.isCanceled()).eq(canceled));
-    Long reservationType = criteria.getReservationTypeId();
-    if (reservationType != null) {
-      if (reservation.getReservationType() != null) {
-        query.where(Alias.$(reservation.getReservationType().getId()).eq(reservationType));
-      }
+    ReservationType reservationType = criteria.getReservationType();
+    if (reservationType != null && reservation.getReservationType() != null) {
+      query.where(Alias.$(reservation.getReservationType()).eq(reservationType));
     }
     Long table = criteria.getTableId();
-    if (table != null) {
-      if (reservation.getTable() != null) {
-        query.where(Alias.$(reservation.getTable().getId()).eq(table));
-      }
+    if (table != null && reservation.getTable() != null) {
+      query.where(Alias.$(reservation.getTable().getId()).eq(table));
     }
     return findPaginated(criteria, query, alias);
   }

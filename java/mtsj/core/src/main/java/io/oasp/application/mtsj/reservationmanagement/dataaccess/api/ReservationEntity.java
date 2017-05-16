@@ -2,6 +2,7 @@ package io.oasp.application.mtsj.reservationmanagement.dataaccess.api;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -28,6 +29,8 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
 
   private String comment;
 
+  private String email;
+
   @NotNull
   @Future
   private Timestamp bookingDate;
@@ -38,15 +41,14 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
 
   private boolean canceled;
 
-  private ReservationTypeEntity reservationType;
-
-  private ReservationType type;
+  private ReservationType reservationType;
 
   private TableEntity table;
 
   private static final long serialVersionUID = 1L;
 
   public ReservationEntity() {
+
     super();
     this.canceled = false;
 
@@ -73,6 +75,7 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
   /**
    * @return reservationToken
    */
+  @Column(name = "reservationToken", unique = true)
   @Override
   public String getReservationToken() {
 
@@ -180,28 +183,6 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
 
   @Override
   @Transient
-  public Long getReservationTypeId() {
-
-    if (this.reservationType == null) {
-      return null;
-    }
-    return this.reservationType.getId();
-  }
-
-  @Override
-  public void setReservationTypeId(Long reservationTypeId) {
-
-    if (reservationTypeId == null) {
-      this.reservationType = null;
-    } else {
-      ReservationTypeEntity reservationTypeEntity = new ReservationTypeEntity();
-      reservationTypeEntity.setId(reservationTypeId);
-      this.reservationType = reservationTypeEntity;
-    }
-  }
-
-  @Override
-  @Transient
   public Long getTableId() {
 
     if (this.table == null) {
@@ -234,16 +215,29 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
     this.table = table;
   }
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "reservationType")
-  public ReservationTypeEntity getReservationType() {
+  @Override
+  public ReservationType getReservationType() {
 
     return this.reservationType;
   }
 
-  public void setReservationType(ReservationTypeEntity reservationType) {
+  @Override
+  public void setReservationType(ReservationType reservationType) {
 
     this.reservationType = reservationType;
+  }
+
+  @Override
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  @Override
+  public void setEmail(String email) {
+
+    this.email = email;
+
   }
 
 }
