@@ -122,4 +122,11 @@ public class ReservationmanagementRestServiceImpl implements Reservationmanageme
     return this.reservationmanagement.findInvitationGuestEtos(searchCriteriaTo);
   }
 
+  @Override
+  public void cancelInvitation(String reservationToken) {
+
+    this.reservationmanagement.cancelInvitation(reservationToken);
+
+  }
+
 }

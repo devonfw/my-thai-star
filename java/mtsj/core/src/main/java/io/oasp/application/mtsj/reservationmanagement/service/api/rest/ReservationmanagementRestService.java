@@ -107,6 +107,15 @@ public interface ReservationmanagementRestService {
   public PaginatedListTo<ReservationEto> findReservationsByPost(ReservationSearchCriteriaTo searchCriteriaTo);
 
   /**
+   * Cancels an reservation of type Invitation
+   *
+   * @param reservationToken the token of the reservation to cancel
+   */
+  @GET
+  @Path("/reservation/CancelInvitation")
+  public void cancelInvitation(String reservationToken);
+
+  /**
    * Delegates to {@link Reservationmanagement#findReservationType}.
    *
    * @param id the ID of the {@link ReservationTypeEto}

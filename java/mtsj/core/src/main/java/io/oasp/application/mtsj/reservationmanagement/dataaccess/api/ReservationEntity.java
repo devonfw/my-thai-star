@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.reservationmanagement.common.api.Reservation;
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 
 /**
  * @author rudiazma
@@ -21,7 +22,6 @@ import io.oasp.application.mtsj.reservationmanagement.common.api.Reservation;
 @Table(name = "Reservation")
 public class ReservationEntity extends ApplicationPersistenceEntity implements Reservation {
 
-  @NotNull
   private String name;
 
   private String reservationToken;
@@ -32,17 +32,15 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
   @Future
   private Timestamp bookingDate;
 
-  @NotNull
-  @Future
   private Timestamp expirationDate;
 
-  @NotNull
-  @Future
   private Timestamp creationDate;
 
   private boolean canceled;
 
   private ReservationTypeEntity reservationType;
+
+  private ReservationType type;
 
   private TableEntity table;
 
@@ -50,6 +48,8 @@ public class ReservationEntity extends ApplicationPersistenceEntity implements R
 
   public ReservationEntity() {
     super();
+    this.canceled = false;
+
   }
 
   /**

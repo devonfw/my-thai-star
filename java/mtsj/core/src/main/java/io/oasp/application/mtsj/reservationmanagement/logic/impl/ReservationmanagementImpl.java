@@ -1,5 +1,9 @@
 package io.oasp.application.mtsj.reservationmanagement.logic.impl;
 
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -150,11 +154,37 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
     Objects.requireNonNull(reservation, "reservation");
     ReservationEntity reservationEntity = getBeanMapper().map(reservation, ReservationEntity.class);
 
-    // initialize, validate reservationEntity here if necessary
+    reservationEntity.setReservationToken(buildReservationToken(reservationEntity));
+
+    Timestamp creationDate = Timestamp.from(Instant.now());
+
+    reservationEntity.setCreationDate(creationDate);
+
+    reservationEntity
+        .setExpirationDate(Timestamp.from(reservationEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
+
     ReservationEntity resultEntity = getReservationDao().save(reservationEntity);
     LOG.debug("Reservation with id '{}' has been created.", resultEntity.getId());
 
     return getBeanMapper().map(resultEntity, ReservationEto.class);
+  }
+
+  /**
+   *
+   */
+  private String buildReservationToken(ReservationEntity reservation) {
+
+    Instant now = Instant.now();
+    String date =
+        String.format("%04d", now.get(ChronoField.YEAR)) + String.format("%02d", now.get(ChronoField.MONTH_OF_YEAR))
+            + String.format("%02d", now.get(ChronoField.DAY_OF_MONTH));
+    String time = String.format("%02d", now.get(ChronoField.HOUR_OF_DAY))
+        + String.format("%02d", now.get(ChronoField.MINUTE_OF_HOUR))
+        + String.format("%02d", now.get(ChronoField.SECOND_OF_MINUTE))
+        + String.format("%03d", now.get(ChronoField.MILLI_OF_SECOND)) + "Z";
+
+    return reservation.getReservationTypeId() + date + time;
+
   }
 
   /**
@@ -212,6 +242,20 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
   public ReservationTypeDao getReservationTypeDao() {
 
     return this.reservationTypeDao;
+  }
+
+  @Override
+  public void cancelInvitation(String reservationToken) {
+
+    Objects.requireNonNull(reservationToken, "reservationToken");
+    ReservationSearchCriteriaTo criteria = new ReservationSearchCriteriaTo();
+    criteria.setReservationToken(reservationToken);
+
+    ReservationEntity toCancel = getReservationDao().findReservations(criteria).getResult().get(0);
+    if (toCancel.getReservationType().getName().equals("GRS")) {
+      toCancel.setCanceled(true);
+      getReservationDao().save(toCancel);
+    }
   }
 
   @Override

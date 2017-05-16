@@ -143,4 +143,9 @@ public interface Reservationmanagement {
    */
   InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest);
 
+  /**
+   *
+   */
+  void cancelInvitation(String reservationToken);
+
 }
