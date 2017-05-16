@@ -31,8 +31,12 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.bookTable(booking);
     }
 
-    bookTableFriends(reservation: ReservationInfo): Observable<number> {
-        return this.usedImplementation.bookTableFriends(reservation);
+    getOrders(): Observable<BookingInfo[]> {
+        return this.usedImplementation.getOrders();
+    }
+
+    getReservations(): Observable<BookingInfo[]> {
+        return this.usedImplementation.getReservations();
     }
 
 }

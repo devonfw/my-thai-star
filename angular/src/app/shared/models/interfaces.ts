@@ -34,20 +34,14 @@ export interface ExtraView {
 export interface ReservationView {
     date: string;
     hour: string;
+    creationDate: string;
+    creationHour: string;
     nameOwner: string;
     emailOwner: string;
     reservationId: number;
-    adults: number;
-    kids: number;
-}
-
-export interface InvitationView {
-    date: string;
-    hour: string;
-    nameOwner: string;
-    emailOwner: string;
-    reservationId: number;
-    friends: string[];
+    adults?: number;
+    kids?: number;
+    friends?: string[];
 }
 
 export interface Filter {

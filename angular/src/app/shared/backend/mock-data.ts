@@ -1,3 +1,4 @@
+import { ReservationView } from '../models/interfaces';
 import { Dish } from './dishes/dish';
 import { LoginInfo } from './login/loginInfo';
 
@@ -105,4 +106,46 @@ export const users: LoginInfo[] = [{
                         username: 'user3',
                         password: 'password',
                         role: 'user',
+                      }];
+
+export const bookedTables: ReservationView[] = [{
+                        date: '19/03/2017',
+                        hour: '21:45',
+                        creationDate: '17/03/2017 10:45',
+                        creationHour: '10:45',
+                        nameOwner: 'James',
+                        emailOwner: 'email@email.com',
+                        reservationId: 0,
+                        friends: ['emailFriend1@email.com', 'emailFriend1@email.com'],
+                      }, {
+                        date: '19/03/2017',
+                        hour: '21:45',
+                        creationDate: '17/03/2017 10:45',
+                        creationHour: '10:45',
+                        nameOwner: 'James',
+                        emailOwner: 'email@email.com',
+                        reservationId: 1,
+                        friends: ['emailFriend1@email.com'],
+                      }, {
+                        date: '19/03/2017',
+                        hour: '21:45',
+                        creationDate: '17/03/2017 10:45',
+                        creationHour: '10:45',
+                        nameOwner: 'James',
+                        emailOwner: 'email@email.com',
+                        reservationId: 2,
+                        friends: [],
+                      }, {
+                        date: '19/03/2017',
+                        hour: '21:45',
+                        creationDate: '17/03/2017 10:45',
+                        creationHour: '10:45',
+                        nameOwner: 'James',
+                        emailOwner: 'email@email.com',
+                        reservationId: 3,
+                        friends: ['emailFriend1@email.com',
+                                  'emailFriend1@email.com',
+                                  'emailFriend1@email.com',
+                                  'emailFriend1@email.com',
+                                  'emailFriend1@email.com'],
                       }];

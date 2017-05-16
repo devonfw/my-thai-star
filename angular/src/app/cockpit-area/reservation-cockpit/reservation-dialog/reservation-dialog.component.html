@@ -1,0 +1,24 @@
+<h3 md-dialog-title>RESERVATION DETAILS - REFERENCE NUMBER {{data.reservationId}} </h3>
+<md-divider></md-divider>
+<td-data-table
+  #dataTable
+  [data]="datat"
+  [columns]="columnst">
+</td-data-table>
+<td-data-table
+  #dataOrders
+  [data]="filteredData"
+  [columns]="columnso">
+  <ng-template tdDataTableTemplate="decision" let-value="value" let-row="row" let-column="column">
+    <md-icon color="accent" *ngIf="value === 'yes'">check</md-icon>
+    <md-icon color="warn" *ngIf="value === 'no'">clear</md-icon>
+    <md-icon *ngIf="value === ''">remove</md-icon>
+  </ng-template>
+</td-data-table>
+<td-paging-bar #pagingBar [firstLast]="false" [pageSizes]="[5, 10, 15]" [total]="datao.length" (change)="page($event)">
+  <span td-paging-bar-label hide-xs>Rows per page:</span>
+  {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+</td-paging-bar>
+<div style="text-align: right">
+  <button md-button md-dialog-close color="accent" class="text-upper">Close</button>
+</div>

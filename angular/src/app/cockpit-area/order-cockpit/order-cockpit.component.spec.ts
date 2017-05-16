@@ -3,6 +3,8 @@ import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
+import { OrderCockpitService } from './shared/order-cockpit.service';
+import { BackendModule } from '../../shared/backend/backend.module';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -11,8 +13,10 @@ describe('OrderCockpitComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrderCockpitComponent ],
+      providers: [ OrderCockpitService ],
       imports: [
         CovalentCoreModule.forRoot(),
+        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         BrowserAnimationsModule,
       ],
     })

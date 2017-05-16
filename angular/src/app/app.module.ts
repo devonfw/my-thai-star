@@ -22,15 +22,17 @@ import { appRoutes } from './app.routes';
 import { BookTableComponent } from './book-table/book-table.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuCardComponent } from './menu/menu-card/menu-card.component';
-import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
-import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
+import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
+import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
+import { HeaderComponent } from './header/header.component';
 
 import { InvitationDialogComponent } from './book-table/invitation-dialog/invitation-dialog.component';
 import { BookTableDialogComponent } from './book-table/book-table-dialog/book-table-dialog.component';
 import { LoginDialogComponent } from './user-area/login-dialog/login-dialog.component';
-import { HeaderComponent } from './header/header.component';
 import { PasswordDialogComponent } from './user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from './user-area/twitter-dialog/twitter-dialog.component';
+import { OrderDialogComponent } from './cockpit-area/order-cockpit/order-dialog/order-dialog.component';
+import { ReservationDialogComponent } from './cockpit-area/reservation-cockpit/reservation-dialog/reservation-dialog.component';
 
 // SERVICES
 import { BookTableService } from './book-table/shared/book-table.service';
@@ -38,6 +40,8 @@ import { MenuService } from './menu/shared/menu.service';
 import { WindowService } from './shared/windowService/windowService.service';
 import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { AuthService } from './shared/authentication/auth.service';
+import { OrderCockpitService } from './cockpit-area/order-cockpit/shared/order-cockpit.service';
+import { ReservationCockpitService } from './cockpit-area/reservation-cockpit/shared/reservation-cockpit.service';
 
 // DIRECTIVES
 import { EqualValidatorDirective } from './user-area/login-dialog/equal-validator.directive';
@@ -61,6 +65,8 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     HeaderComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
+    OrderDialogComponent,
+    ReservationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +87,8 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     WindowService,
     AuthGuard,
     AuthService,
+    OrderCockpitService,
+    ReservationCockpitService,
   ],
   entryComponents: [
     BookTableDialogComponent,
@@ -88,6 +96,8 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     LoginDialogComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
+    OrderDialogComponent,
+    ReservationDialogComponent,
   ],
   bootstrap: [ AppComponent ],
 })

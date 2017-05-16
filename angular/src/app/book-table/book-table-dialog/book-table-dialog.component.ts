@@ -25,6 +25,8 @@ export class BookTableDialogComponent implements OnInit {
     this.data = {
       date: moment(this.data.date).format('DD/MM/YYYY'),
       hour: moment(this.data.date).format('LT'),
+      creationDate: moment().format('DD/MM/YYYY'),
+      creationHour: moment().format('LT'),
       nameOwner: this.data.nameOwner,
       emailOwner: this.data.emailOwner,
       reservationId: -1,

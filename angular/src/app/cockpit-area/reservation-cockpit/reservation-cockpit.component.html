@@ -1,9 +1,7 @@
 <td-layout>
   <form #filterForm="ngForm">
     <div style= "background-color: white">
-      
-
-      <td-expansion-panel label="FILTER ORDERS">
+      <td-expansion-panel label="FILTER">
         <div layout-gt-xs="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
           <div layout="row" class="justify-space-around" style="align-items:center" flex>
             <md-input-container color="accent" class="searchBy">
@@ -24,7 +22,27 @@
       </td-expansion-panel>
     </div>
   </form>
-
-  RESERVATION
-
+  <md-card>
+    <md-card-title>RESERVATIONS</md-card-title>
+    <md-divider></md-divider>
+    <td-data-table
+      #dataTable
+      [data]="filteredData"
+      [columns]="columns"
+      [sortable]="true"
+      selectable="true"
+      multiple="false"
+      [sortOrder]="sortOrder"
+      (rowSelect)="selected($event)"
+      [sortOrder]="sortOrder"
+      (sortChange)="sort($event)">
+    </td-data-table>
+    <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+      <h3>No results to display.</h3>
+    </div>
+    <td-paging-bar #pagingBar [pageSizes]="[8, 16, 24]" [total]="filteredTotal" (change)="page($event)">
+      <span td-paging-bar-label hide-xs>Rows per page:</span>
+      {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+    </td-paging-bar>
+  </md-card>
 </td-layout>

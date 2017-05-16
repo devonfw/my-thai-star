@@ -12,6 +12,8 @@ export class BookingRestService implements IBookingDataService {
      private readonly reservationIdRestPath: string = '/reservationid';
      private readonly booktableRestPath: string = '/booktable';
      private readonly reservetableRestPath: string = '/reservetable';
+     private readonly getOrdersRestPath: string = '/getorders';
+     private readonly getReservationsRestPath: string = '/getreservations';
 
      private http: Http;
 
@@ -29,8 +31,13 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-    bookTableFriends(reservation: ReservationInfo): Observable<number> {
-        return this.http.post(`${config.restServiceRoot}${this.reservetableRestPath}`, {reservation: reservation})
+     getOrders(): Observable<BookingInfo[]> {
+        return this.http.get(`${config.restServiceRoot}${this.getOrdersRestPath}`)
+              .map((res: Response) => res.json());
+     }
+
+     getReservations(): Observable<BookingInfo[]> {
+        return this.http.get(`${config.restServiceRoot}${this.getReservationsRestPath}`)
                         .map((res: Response) => res.json());
      }
 
