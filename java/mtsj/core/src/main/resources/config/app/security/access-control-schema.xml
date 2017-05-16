@@ -2,42 +2,9 @@
 <access-control-schema>
   <group id="ReadMasterData" type="group">
     <permissions>
-      <!-- BEGIN ARCHETYPE SKIP -->
-      <!-- reservationmanagement -->
-      <permission id="FindReservation"/>
-      <!-- END ARCHETYPE SKIP -->
+      
     </permissions>
   </group>
 
-  <!-- BEGIN ARCHETYPE SKIP -->
-  <group id="Waiter" type="role">
-    <inherits>
-      <group-ref>Barkeeper</group-ref>
-    </inherits>
-    <permissions>
-      <!-- reservationmanagement -->
-    </permissions>
-  </group>
-  <group id="Barkeeper" type="role">
-    <inherits>
-      <group-ref>Cook</group-ref>
-    </inherits>
-    <permissions>
-    </permissions>
-  </group>
-  <group id="Cook" type="role">
-    <inherits>
-      <group-ref>ReadMasterData</group-ref>
-    </inherits>
-    <permissions>
-    </permissions>
-  </group>
-  <group id="Chief" type="role">
-    <inherits>
-      <group-ref>Waiter</group-ref>
-    </inherits>
-    <permissions>
-    </permissions>
-  </group>
-  <!-- END ARCHETYPE SKIP -->
+  
 </access-control-schema>
