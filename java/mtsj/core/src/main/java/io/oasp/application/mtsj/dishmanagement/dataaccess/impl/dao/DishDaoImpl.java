@@ -72,7 +72,7 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     List<DishEntity> dishEntitiesF = new ArrayList<>();
     for (DishEntity dishEntity : dishEntities) {
 
-      List<Category> entityCats = (List<Category>) dishEntity.getCategories();
+      List<Category> entityCats = dishEntity.getCategories();
       for (Category entityCat : entityCats) {
         for (Category category : categories) {
           if (category.getId() == entityCat.getId()) {
@@ -102,4 +102,5 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     }
     return result;
   }
+
 }

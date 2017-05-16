@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.dishmanagement.logic.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -14,6 +16,8 @@ import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
+import io.oasp.application.mtsj.imagemanagement.logic.api.Imagemanagement;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -32,6 +36,9 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
    */
   @Inject
   private DishDao dishDao;
+
+  @Inject
+  private Imagemanagement imageManagement;
 
   /**
    * The constructor.
@@ -53,6 +60,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
     PaginatedListTo<DishEntity> dishs = getDishDao().findDishs(criteria);
+    dishs = getImage(dishs);
     return mapPaginatedEntityList(dishs, DishEto.class);
   }
 
@@ -95,6 +103,17 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   public void setDishDao(DishDao dishDao) {
 
     this.dishDao = dishDao;
+  }
+
+  private PaginatedListTo<DishEntity> getImage(PaginatedListTo<DishEntity> entities) {
+
+    List<DishEntity> dishes = entities.getResult();
+    List<DishEntity> dishesImg = new ArrayList<>();
+    for (DishEntity dish : dishes) {
+      dish.setImage(getBeanMapper().map(this.imageManagement.findImage(dish.getIdImage()), ImageEntity.class));
+      dishesImg.add(dish);
+    }
+    return new PaginatedListTo<>(dishesImg, entities.getPagination());
   }
 
 }

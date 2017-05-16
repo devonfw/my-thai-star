@@ -1,7 +1,7 @@
 package io.oasp.application.mtsj.dishmanagement.logic.api.to;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Category;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
@@ -14,7 +14,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
-  private Collection<Category> categories;
+  private List<Category> categories;
 
   private BigDecimal maxPrice;
 
@@ -27,17 +27,25 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   private boolean isFav;
 
   /**
+   * The constructor.
+   */
+  public DishSearchCriteriaTo() {
+
+    super();
+  }
+
+  /**
    * @return categories
    */
-  public Collection<Category> getCategories() {
+  public List<Category> getCategories() {
 
     return this.categories;
   }
 
   /**
-   * @param categories new value of {@link #getcategories}.
+   * @param categories new value of {@link #getCategories}.
    */
-  public void setCategories(Collection<Category> categories) {
+  public void setCategories(List<Category> categories) {
 
     this.categories = categories;
   }
@@ -51,7 +59,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @param maxPrice new value of {@link #getmaxPrice}.
+   * @param maxPrice new value of {@link #getMaxPrice}.
    */
   public void setMaxPrice(BigDecimal maxPrice) {
 
@@ -67,7 +75,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @param minLikes new value of {@link #getminLikes}.
+   * @param minLikes new value of {@link #getMinLikes}.
    */
   public void setMinLikes(int minLikes) {
 
@@ -83,7 +91,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @param searchBy new value of {@link #getsearchBy}.
+   * @param searchBy new value of {@link #getSearchBy}.
    */
   public void setSearchBy(String searchBy) {
 
@@ -99,7 +107,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @param showOrder new value of {@link #getshowOrder}.
+   * @param showOrder new value of {@link #getShowOrder}.
    */
   public void setShowOrder(int showOrder) {
 
@@ -115,19 +123,11 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @param isFav new value of {@link #getisFav}.
+   * @param isFav new value of {@link #isFav}.
    */
   public void setFav(boolean isFav) {
 
     this.isFav = isFav;
-  }
-
-  /**
-   * The constructor.
-   */
-  public DishSearchCriteriaTo() {
-
-    super();
   }
 
 }

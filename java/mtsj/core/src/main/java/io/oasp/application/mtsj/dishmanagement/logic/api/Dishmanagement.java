@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.dishmanagement.logic.api;
 
+import java.util.List;
+
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;

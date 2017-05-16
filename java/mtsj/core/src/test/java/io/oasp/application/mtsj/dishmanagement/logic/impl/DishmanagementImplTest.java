@@ -71,7 +71,6 @@ public class DishmanagementImplTest extends ModuleTest {
 
     DishEntity dish = mock(DishEntity.class);
     DishEto eto = new DishEto();
-    // Long id = Long.parseLong("1");
     when(this.dishDao.findOne(1L)).thenReturn(dish);
     when(this.beanMapper.map(dish, DishEto.class)).thenReturn(eto);
 

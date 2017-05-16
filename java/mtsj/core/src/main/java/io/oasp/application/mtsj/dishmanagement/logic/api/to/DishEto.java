@@ -1,13 +1,12 @@
 package io.oasp.application.mtsj.dishmanagement.logic.api.to;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Category;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
+import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
 /**
  * Entity transport object of Dish
@@ -22,11 +21,9 @@ public class DishEto extends AbstractEto implements Dish {
 
   private BigDecimal price;
 
-  private String image;
+  private Image image;
 
   private List<Ingredient> extras;
-
-  private Collection<Category> categories;
 
   @Override
   public String getName() {
@@ -65,18 +62,6 @@ public class DishEto extends AbstractEto implements Dish {
   }
 
   @Override
-  public String getImage() {
-
-    return this.image;
-  }
-
-  @Override
-  public void setImage(String image) {
-
-    this.image = image;
-  }
-
-  @Override
   public List<Ingredient> getExtras() {
 
     return this.extras;
@@ -88,16 +73,14 @@ public class DishEto extends AbstractEto implements Dish {
     this.extras = extras;
   }
 
-  @Override
-  public Collection<Category> getCategories() {
+  public Image getImage() {
 
-    return this.categories;
+    return this.image;
   }
 
-  @Override
-  public void setCategories(Collection<Category> categories) {
+  public void setImage(Image image) {
 
-    this.categories = categories;
+    this.image = image;
   }
 
   @Override
@@ -162,13 +145,7 @@ public class DishEto extends AbstractEto implements Dish {
     } else if (!this.extras.equals(other.extras)) {
       return false;
     }
-    if (this.categories == null) {
-      if (other.categories != null) {
-        return false;
-      }
-    } else if (!this.categories.equals(other.categories)) {
-      return false;
-    }
+
     return true;
   }
 

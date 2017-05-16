@@ -6,16 +6,18 @@ import javax.persistence.Table;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 /**
- * @author pparrado
- *
+ * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
+ * {@link DishCategory}.
  */
 @Entity
 @Table(name = "DishCategory")
 public class DishCategory extends ApplicationPersistenceEntity {
 
+  private static final long serialVersionUID = 1L;
+
   private Long idDish;
 
-  private Long IdCategory;
+  private Long idCategory;
 
   /**
    * @return idDish
@@ -26,7 +28,7 @@ public class DishCategory extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param idDish new value of {@link #getidDish}.
+   * @param idDish new value of {@link #getIdDish}.
    */
   public void setIdDish(Long idDish) {
 
@@ -38,15 +40,15 @@ public class DishCategory extends ApplicationPersistenceEntity {
    */
   public Long getIdCategory() {
 
-    return this.IdCategory;
+    return this.idCategory;
   }
 
   /**
-   * @param idCategory new value of {@link #getidCategory}.
+   * @param idCategory new value of {@link #getIdCategory}.
    */
   public void setIdCategory(Long idCategory) {
 
-    this.IdCategory = idCategory;
+    this.idCategory = idCategory;
   }
 
 }

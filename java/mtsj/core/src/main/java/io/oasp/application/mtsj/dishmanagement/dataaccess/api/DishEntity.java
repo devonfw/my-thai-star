@@ -1,7 +1,6 @@
 package io.oasp.application.mtsj.dishmanagement.dataaccess.api;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,9 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
 /**
  * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -22,19 +23,21 @@ import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEnt
 @Table(name = "Dish")
 public class DishEntity extends ApplicationPersistenceEntity implements Dish {
 
+  private static final long serialVersionUID = 1L;
+
   private String name;
 
   private String description;
 
   private BigDecimal price;
 
-  private String image;
+  private Long idImage;
+
+  private Image image;
 
   private List<Ingredient> extras;
 
-  private Collection<Category> categories;
-
-  private static final long serialVersionUID = 1L;
+  private List<Category> categories;
 
   /**
    * @return name
@@ -45,7 +48,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
-   * @param name new value of {@link #getname}.
+   * @param name new value of {@link #getName}.
    */
   public void setName(String name) {
 
@@ -61,7 +64,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
-   * @param description new value of {@link #getdescription}.
+   * @param description new value of {@link #getDescription}.
    */
   public void setDescription(String description) {
 
@@ -77,7 +80,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
-   * @param price new value of {@link #getprice}.
+   * @param price new value of {@link #getPrice}.
    */
   public void setPrice(BigDecimal price) {
 
@@ -85,17 +88,35 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
+   * @return idImage
+   */
+  public Long getIdImage() {
+
+    return this.idImage;
+  }
+
+  /**
+   * @param idImage new value of {@link #getIdImage}.
+   */
+  public void setIdImage(Long idImage) {
+
+    this.idImage = idImage;
+  }
+
+  /**
    * @return image
    */
-  public String getImage() {
+  @Transient
+  public Image getImage() {
 
     return this.image;
   }
 
   /**
-   * @param image new value of {@link #getimage}.
+   * @param image new value of {@link #getImage}.
    */
-  public void setImage(String image) {
+  @Transient
+  public void setImage(Image image) {
 
     this.image = image;
   }
@@ -113,7 +134,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
-   * @param extras new value of {@link #getextras}.
+   * @param extras new value of {@link #getExtras}.
    */
   public void setExtras(List<Ingredient> extras) {
 
@@ -127,15 +148,15 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   @Column(name = "idCategory")
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))
-  public Collection<Category> getCategories() {
+  public List<Category> getCategories() {
 
     return this.categories;
   }
 
   /**
-   * @param categories new value of {@link #getcategories}.
+   * @param categories new value of {@link #getCategories}.
    */
-  public void setCategories(Collection<Category> categories) {
+  public void setCategories(List<Category> categories) {
 
     this.categories = categories;
   }

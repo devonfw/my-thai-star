@@ -11,11 +11,17 @@ public class DishCto extends AbstractCto {
 
   private DishEto dish;
 
+  /**
+   * @return dish
+   */
   public DishEto getDish() {
 
-    return dish;
+    return this.dish;
   }
 
+  /**
+   * @param dish the dish to set
+   */
   public void setDish(DishEto dish) {
 
     this.dish = dish;

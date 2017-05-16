@@ -19,7 +19,7 @@ public class Favourite {
   }
 
   /**
-   * @param isFav new value of {@link #getisFav}.
+   * @param isFav new value of {@link #isFav}.
    */
   public void setFav(boolean isFav) {
 
@@ -35,7 +35,7 @@ public class Favourite {
   }
 
   /**
-   * @param likes new value of {@link #getlikes}.
+   * @param likes new value of {@link #getLikes}.
    */
   public void setLikes(int likes) {
 

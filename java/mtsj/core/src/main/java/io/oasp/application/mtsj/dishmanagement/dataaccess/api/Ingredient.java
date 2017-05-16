@@ -8,8 +8,8 @@ import javax.persistence.Table;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 /**
- * temp entity
- *
+ * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
+ * {@link Ingredient}.
  */
 @Entity
 @Table(name = "Ingredient")
@@ -32,7 +32,7 @@ public class Ingredient extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param name new value of {@link #getname}.
+   * @param name new value of {@link #getName}.
    */
   public void setName(String name) {
 
@@ -48,7 +48,7 @@ public class Ingredient extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param description new value of {@link #getdescription}.
+   * @param description new value of {@link #getDescription}.
    */
   public void setDescription(String description) {
 
@@ -64,19 +64,11 @@ public class Ingredient extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param price new value of {@link #getprice}.
+   * @param price new value of {@link #getPrice}.
    */
   public void setPrice(BigDecimal price) {
 
     this.price = price;
-  }
-
-  /**
-   * @return serialversionuid
-   */
-  public static long getSerialversionuid() {
-
-    return serialVersionUID;
   }
 
 }

@@ -6,12 +6,14 @@ import javax.persistence.Table;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 /**
- * @author pparrado
- *
+ * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
+ * {@link Category}.
  */
 @Entity
 @Table(name = "Category")
 public class Category extends ApplicationPersistenceEntity {
+
+  private static final long serialVersionUID = 1L;
 
   private String name;
 
@@ -28,7 +30,7 @@ public class Category extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param name new value of {@link #getname}.
+   * @param name new value of {@link #getName}.
    */
   public void setName(String name) {
 
@@ -44,7 +46,7 @@ public class Category extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param description new value of {@link #getdescription}.
+   * @param description new value of {@link #getDescription}.
    */
   public void setDescription(String description) {
 
@@ -60,7 +62,7 @@ public class Category extends ApplicationPersistenceEntity {
   }
 
   /**
-   * @param showOrder new value of {@link #getshowOrder}.
+   * @param showOrder new value of {@link #getShowOrder}.
    */
   public void setShowOrder(int showOrder) {
 
