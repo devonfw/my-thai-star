@@ -41,7 +41,13 @@ export interface ReservationView {
     reservationId: number;
     adults?: number;
     kids?: number;
-    friends?: string[];
+    friends?: FriendsInvite[];
+    orders?: OrderView[];
+}
+
+export interface FriendsInvite {
+    email: string;
+    acceptance: string;
 }
 
 export interface Filter {

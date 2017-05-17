@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo } from './bookingInfo';
-import { ReservationInfo } from './reservationInfo';
 import { bookedTables } from '../mock-data';
 import * as _ from 'lodash';
 
@@ -21,8 +20,16 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(bookedTables);
     }
 
+    getOrder(id: number): Observable<BookingInfo> {
+        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.reservationId === id; }));
+    }
+
     getReservations(): Observable<BookingInfo[]> {
-        return Observable.of(bookedTables);
+        return Observable.of(_.filter(bookedTables, (booking: BookingInfo) => { return booking.friends.length > 0; }));
+    }
+
+    getReservation(id: number): Observable<BookingInfo> {
+        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.reservationId === id; }));
     }
 
 }

@@ -9,9 +9,14 @@ export class ReservationCockpitService {
   constructor(private bookingDataService: BookingDataService) {
   }
 
-  getOrders(): Observable<ReservationView[]> {
-    return this.bookingDataService.getOrders()
+  getReservations(): Observable<ReservationView[]> {
+    return this.bookingDataService.getReservations()
                .map((orders: ReservationView[]) => orders as ReservationView[]);
+  }
+
+  getReservation(tableId: number): Observable<ReservationView> {
+    return this.bookingDataService.getReservation(tableId)
+               .map((orders: ReservationView) => orders as ReservationView);
   }
 
 }

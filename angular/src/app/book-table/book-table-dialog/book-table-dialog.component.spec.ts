@@ -1,7 +1,7 @@
 import { Md2Module } from 'md2';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CovalentModule } from '../../shared/covalent.module';
 
 import { BookTableDialogComponent } from './book-table-dialog.component';
 
@@ -13,7 +13,7 @@ describe('BookTableDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookTableDialogComponent ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         Md2Module,
       ],
     })

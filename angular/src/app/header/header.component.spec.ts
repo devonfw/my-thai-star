@@ -5,7 +5,8 @@ import { LoginDataService } from '../shared/backend/login/login-data-service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BackendModule } from '../shared/backend/backend.module';
-import { CovalentCoreModule } from '@covalent/core';
+import { CovalentModule } from '../shared/covalent.module';
+
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { AppComponent } from '../app.component';
 
@@ -23,7 +24,7 @@ describe('HeaderComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         SidenavModule,
       ],
     });

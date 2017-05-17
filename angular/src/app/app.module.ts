@@ -2,18 +2,15 @@ import { config } from './config';
 import { environment as env } from '../environments/environment';
 
 // MODULES
-import { MaterialModule } from '@angular/material';
 import { NgModule, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CovalentChipsModule, CovalentCoreModule } from '@covalent/core';
-import { CovalentHighlightModule } from '@covalent/highlight';
-import { CovalentMarkdownModule } from '@covalent/markdown';
-import { HttpModule, XHRBackend, RequestOptions, Http, BaseRequestOptions } from '@angular/http';
+import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { Md2Module }  from 'md2';
 import { BackendModule } from './shared/backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
+import { CovalentModule } from './shared/covalent.module';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -70,8 +67,6 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
   ],
   imports: [
     BrowserModule,
-    MaterialModule,
-    CovalentCoreModule.forRoot(),
     appRoutes,
     FormsModule,
     BrowserAnimationsModule,
@@ -79,6 +74,7 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     Md2Module,
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
     SidenavModule,
+    CovalentModule,
   ],
   providers: [
     BookTableService,

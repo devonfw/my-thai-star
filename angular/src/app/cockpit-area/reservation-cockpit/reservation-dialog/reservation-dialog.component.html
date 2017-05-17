@@ -9,7 +9,7 @@
   #dataOrders
   [data]="filteredData"
   [columns]="columnso">
-  <ng-template tdDataTableTemplate="decision" let-value="value" let-row="row" let-column="column">
+  <ng-template tdDataTableTemplate="acceptance" let-value="value" let-row="row" let-column="column">
     <md-icon color="accent" *ngIf="value === 'yes'">check</md-icon>
     <md-icon color="warn" *ngIf="value === 'no'">clear</md-icon>
     <md-icon *ngIf="value === ''">remove</md-icon>

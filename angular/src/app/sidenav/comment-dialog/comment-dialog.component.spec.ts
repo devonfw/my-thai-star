@@ -1,7 +1,8 @@
-import { CovalentCoreModule } from '@covalent/core';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentDialogComponent } from './comment-dialog.component';
+import { CovalentModule } from '../../shared/covalent.module';
 
 describe('CommentDialogComponent', () => {
   let component: CommentDialogComponent;
@@ -11,7 +12,7 @@ describe('CommentDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CommentDialogComponent ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
       ],
     })
     .compileComponents();
