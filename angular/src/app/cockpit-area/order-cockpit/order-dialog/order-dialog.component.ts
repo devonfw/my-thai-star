@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
+import { ExtraView, OrderView, ReservationView } from '../../../shared/models/interfaces';
+import { OrderCockpitService } from '../shared/order-cockpit.service';
+import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -9,41 +13,28 @@ import {MD_DIALOG_DATA} from '@angular/material';
 })
 export class OrderDialogComponent implements OnInit {
 
-  data: any;
-
-  datat: any[] = [{
-      dateTime: '09/03/2017 21:00',
-      creationdateTime: '09/03/2017 21:00',
-      owner: 'owner1',
-      email: 'email1@gmail.com',
-      tableNumber: 102560,
-  }];
-
   columnst: ITdDataTableColumn[] = [
-    { name: 'dateTime', label: 'Reservation date time'},
-    { name: 'creationdateTime', label: 'Creation date time'},
-    { name: 'owner', label: 'Owner' },
-    { name: 'email', label: 'Email' },
-    { name: 'tableNumber', label: 'Table'},
+    { name: 'date', label: 'Reservation date'},
+    { name: 'hour', label: 'Reservation hour'},
+    { name: 'creationDate', label: 'Creation date'},
+    { name: 'creationHour', label: 'Creation time'},
+    { name: 'nameOwner', label: 'Owner' },
+    { name: 'emailOwner', label: 'Email' },
+    { name: 'reservationId', label: 'Table'},
   ];
 
-  datao: any[] = [
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    { name: 'Pad Kee Mao', comment: 'awdadas das das das ', extra: 'Tofu, Pork', number: '1', price: '6.50€'},
-    ];
-
   columnso: ITdDataTableColumn[] = [
-    { name: 'name', label: 'Dish'},
+    { name: 'orderName', label: 'Dish'},
     { name: 'comment', label: 'Comments'},
-    { name: 'extra', label: 'Extra' },
+    { name: 'options', label: 'Extra' },
     { name: 'number', label: 'Quantity' },
     { name: 'price', label: 'Price'},
   ];
+
+  reservationId: number;
+  datao: OrderView[] = [];
+
+  datat: ReservationView[] = [];
 
   fromRow: number = 1;
   currentPage: number = 1;
@@ -51,11 +42,25 @@ export class OrderDialogComponent implements OnInit {
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
+              private priceCalculator: PriceCalculatorService,
+              private orderCockpitService: OrderCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
-                 this.data = dialogData.row;
+                 this.reservationId = dialogData.row.reservationId;
   }
 
   ngOnInit(): void {
+    this.orderCockpitService.getOrder(this.reservationId).subscribe( (order: ReservationView) => {
+      this.datat.push(order);
+      this.datao = JSON.parse(JSON.stringify(order.orders));
+      _.map(this.datao, (o: OrderView) => {
+        o.price = this.priceCalculator.getPrice(o);
+        if (o.options.constructor === Array) {
+          o.options = _.reduce(o.options, (result: string, opt: ExtraView) => {
+            return result + ' ' + opt.name + ',';
+          }, '').slice(0, -1);
+        }
+      });
+    });
     this.filter();
   }
 
@@ -70,6 +75,10 @@ export class OrderDialogComponent implements OnInit {
     let newData: any[] = this.datao;
     newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
     this.filteredData = newData;
+  }
+
+  calculateTotal(): number {
+    return this.priceCalculator.getTotalPrice(this.datao);
   }
 
 }

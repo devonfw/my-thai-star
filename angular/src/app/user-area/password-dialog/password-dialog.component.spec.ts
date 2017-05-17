@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CovalentCoreModule } from '@covalent/core';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PasswordDialogComponent } from './password-dialog.component';
+import { CovalentModule } from '../../shared/covalent.module';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
@@ -12,7 +13,7 @@ describe('PasswordDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PasswordDialogComponent ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         BrowserAnimationsModule,
       ],
     })

@@ -8,5 +8,25 @@ export class BookingInfo {
     reservationId: number;
     adults?: number;
     kids?: number;
-    friends?: string[];
+    orders?: OrderInfo[];
+    friends?: FriendsInvite[];
+}
+
+export class FriendsInvite {
+    email: string;
+    acceptance: string;
+}
+
+export class OrderInfo {
+    orderName: string;
+    price: number;
+    options: ExtraInfo[];
+    number: number;
+    comment: string;
+}
+
+export class ExtraInfo {
+    name: string;
+    price: number;
+    selected: boolean;
 }

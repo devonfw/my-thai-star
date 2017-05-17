@@ -1,8 +1,9 @@
-import { CovalentCoreModule } from '@covalent/core';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 
 import { MenuCardComponent } from './menu-card.component';
+import { CovalentModule } from '../../shared/covalent.module';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;
@@ -13,7 +14,7 @@ describe('MenuCardComponent', () => {
       declarations: [ MenuCardComponent ],
       providers: [SidenavService],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
       ],
     })
     .compileComponents();

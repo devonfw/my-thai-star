@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CovalentCoreModule } from '@covalent/core';
+import { CovalentModule } from '../../shared/covalent.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
@@ -15,7 +15,7 @@ describe('OrderCockpitComponent', () => {
       declarations: [ OrderCockpitComponent ],
       providers: [ OrderCockpitService ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         BrowserAnimationsModule,
       ],

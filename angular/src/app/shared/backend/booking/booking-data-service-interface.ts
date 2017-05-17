@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import { BookingInfo } from './bookingInfo';
-import { ReservationInfo } from './reservationInfo';
 
 export interface IBookingDataService {
 
     getBookingId(): Observable<number>;
     getOrders(): Observable<BookingInfo[]>;
+    getOrder(id: number): Observable<BookingInfo>;
     getReservations(): Observable<BookingInfo[]>;
+    getReservation(id: number): Observable<BookingInfo>;
     bookTable(booking: BookingInfo): Observable<number>;
 
 }

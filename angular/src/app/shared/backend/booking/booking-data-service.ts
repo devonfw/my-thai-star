@@ -7,7 +7,6 @@ import { OnInit, Injector, Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo } from './bookingInfo';
-import { ReservationInfo } from './reservationInfo';
 
 @Injectable()
 export class BookingDataService implements IBookingDataService {
@@ -35,8 +34,16 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.getOrders();
     }
 
+    getOrder(id: number): Observable<BookingInfo> {
+        return this.usedImplementation.getOrder(id);
+    }
+
     getReservations(): Observable<BookingInfo[]> {
         return this.usedImplementation.getReservations();
+    }
+
+    getReservation(id: number): Observable<BookingInfo> {
+        return this.usedImplementation.getReservation(id);
     }
 
 }

@@ -21,7 +21,8 @@ export class OrderCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date and time'},
+    { name: 'date', label: 'Reservation date'},
+    { name: 'hour', label: 'Reservation time'},
     { name: 'emailOwner', label: 'Email' },
     { name: 'reservationId', label: 'Reference number'},
   ];
