@@ -76,27 +76,27 @@ CREATE TABLE Image (
   CONSTRAINT PK_Image PRIMARY KEY(id)
 );
 
--- *** Dish ***
-CREATE TABLE Dish (
+-- *** Plate ***
+CREATE TABLE Plate (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
   idImage BIGINT UNIQUE NOT NULL,
-  CONSTRAINT PK_Dish PRIMARY KEY(id),
-  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
+  CONSTRAINT PK_Plate PRIMARY KEY(id),
+  CONSTRAINT FK_Plate_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
 );
 
--- *** DishCategory ***
-CREATE TABLE DishCategory (
+-- *** PlateCategory ***
+CREATE TABLE PlateCategory (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
+  idPlate BIGINT NOT NULL,
   idCategory BIGINT NOT NULL,
-  CONSTRAINT PK_DishCategory PRIMARY KEY(id),
-  CONSTRAINT FK_DishCategory_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishCategory_idCategory FOREIGN KEY(idCategory) REFERENCES Category(id) NOCHECK  
+  CONSTRAINT PK_PlateCategory PRIMARY KEY(id),
+  CONSTRAINT FK_PlateCategory_idPlate FOREIGN KEY(idPlate) REFERENCES Plate(id) NOCHECK,
+  CONSTRAINT FK_PlateCategory_idCategory FOREIGN KEY(idCategory) REFERENCES Category(id) NOCHECK  
 );
 
 -- *** Ingredient ***
@@ -109,15 +109,15 @@ CREATE TABLE Ingredient (
   CONSTRAINT PK_Ingredient PRIMARY KEY(id)
 );
 
--- *** DishIngredient ***
-CREATE TABLE DishIngredient (
+-- *** PlateIngredient ***
+CREATE TABLE PlateIngredient (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
+  idPlate BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
-  CONSTRAINT PK_DishIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_DishIngredient_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
+  CONSTRAINT PK_PlateIngredient PRIMARY KEY(id),
+  CONSTRAINT FK_PlateIngredient_idPlate FOREIGN KEY(idPlate) REFERENCES Plate(id) NOCHECK,
+  CONSTRAINT FK_PlateIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
 );
 
 -- *** InvitationGuest ***
@@ -133,7 +133,7 @@ CREATE TABLE InvitationGuest (
   CONSTRAINT FK_InvitationGuest_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK
 );
 
--- *** OrderDish ***
+-- *** OrderPlate ***
 CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
@@ -149,24 +149,24 @@ CREATE TABLE Orders (
 CREATE TABLE OrderLine (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
+  idPlate BIGINT NOT NULL,
   quantity INTEGER,
   comment VARCHAR (255),
   idOrder BIGINT NOT NULL,
   CONSTRAINT PK_OrderLine PRIMARY KEY(id),
-  CONSTRAINT FK_OrderLine_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
+  CONSTRAINT FK_OrderLine_idPlate FOREIGN KEY(idPlate) REFERENCES Plate(id) NOCHECK,
   CONSTRAINT FK_OrderLine_idOrder FOREIGN KEY(idOrder) REFERENCES Orders(id) NOCHECK
 );
 
--- *** OrderDishExtraIngredient ***
-CREATE TABLE OrderDishExtraIngredient (
+-- *** OrderPlateExtraIngredient ***
+CREATE TABLE OrderPlateExtraIngredient (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idOrderLine BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
-  CONSTRAINT PK_OrderDishExtraIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_OrderDishExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id) NOCHECK,
-  CONSTRAINT FK_OrderDishExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
+  CONSTRAINT PK_OrderPlateExtraIngredient PRIMARY KEY(id),
+  CONSTRAINT FK_OrderPlateExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id) NOCHECK,
+  CONSTRAINT FK_OrderPlateExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
 );
 
 -- *** UserFavourite ***
@@ -174,10 +174,10 @@ CREATE TABLE UserFavourite (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT NOT NULL,
-  idDish BIGINT NOT NULL,
+  idPlate BIGINT NOT NULL,
   CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
   CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
+  CONSTRAINT FK_UserFavourite_idPlate FOREIGN KEY(idPlate) REFERENCES Plate(id) NOCHECK
 );
 
 -- *************************************************************************
