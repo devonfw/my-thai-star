@@ -138,8 +138,7 @@ CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idReservation BIGINT NOT NULL,
-  idInvitationGuest BIGINT,
-  canceled BOOLEAN,
+  idInvitationGuest BIGINT
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitationGuest FOREIGN KEY(idInvitationGuest) REFERENCES InvitationGuest(id) NOCHECK
@@ -150,7 +149,7 @@ CREATE TABLE OrderLine (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idDish BIGINT NOT NULL,
-  quantity INTEGER,
+  amount INTEGER,
   comment VARCHAR (255),
   idOrder BIGINT NOT NULL,
   CONSTRAINT PK_OrderLine PRIMARY KEY(id),
