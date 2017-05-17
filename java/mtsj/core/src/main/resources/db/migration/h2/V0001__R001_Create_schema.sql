@@ -43,6 +43,7 @@ CREATE TABLE Reservation (
   name VARCHAR (255),
   reservationToken VARCHAR (60),
   comment VARCHAR (4000),
+  email VARCHAR(255),
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
@@ -166,13 +167,6 @@ CREATE TABLE OrderDishExtraIngredient (
   CONSTRAINT PK_OrderDishExtraIngredient PRIMARY KEY(id),
   CONSTRAINT FK_OrderDishExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id) NOCHECK,
   CONSTRAINT FK_OrderDishExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
-);
-
--- *** ReservationType ***
-CREATE TABLE ReservationType (
-  id INTEGER NOT NULL AUTO_INCREMENT,
-  name VARCHAR (255) NOT NULL,
-  CONSTRAINT PK_ReservationType PRIMARY KEY(id)
 );
 
 -- *** UserFavourite ***
