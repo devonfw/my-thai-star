@@ -60,9 +60,19 @@ CREATE TABLE Category (
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
-  idgroup BIGINT,
   showOrder INTEGER,
-  CONSTRAINT PK_Category PRIMARY KEY(id)
+  CONSTRAINT PK_Category PRIMARY KEY(id),
+);
+
+-- *** Image ***
+CREATE TABLE Image (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  name VARCHAR(255),
+  content VARCHAR(2147483647),
+  imageType INTEGER,
+  extension VARCHAR(5),
+  CONSTRAINT PK_Image PRIMARY KEY(id)
 );
 
 -- *** Dish ***
@@ -72,9 +82,9 @@ CREATE TABLE Dish (
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
-  --image BLOB(2147483647),
-  image VARCHAR(2147483647),
-  CONSTRAINT PK_Dish PRIMARY KEY(id)
+  idImage BIGINT UNIQUE NOT NULL,
+  CONSTRAINT PK_Dish PRIMARY KEY(id),
+  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
 );
 
 -- *** DishCategory ***
