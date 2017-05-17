@@ -1,5 +1,5 @@
 import { Md2Module } from 'md2';
-import { CovalentCoreModule } from '@covalent/core';
+import { CovalentModule } from '../../shared/covalent.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InvitationDialogComponent } from './invitation-dialog.component';
@@ -12,7 +12,7 @@ describe('InvitationDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ InvitationDialogComponent ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         Md2Module,
       ],
     })

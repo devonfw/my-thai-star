@@ -16,9 +16,6 @@ import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEnt
 import io.oasp.application.mtsj.reservationmanagement.common.api.Reservation;
 import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 
-/**
- * @author rudiazma
- */
 @Entity
 @Table(name = "Reservation")
 public class ReservationEntity extends ApplicationPersistenceEntity implements Reservation {

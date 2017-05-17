@@ -1,4 +1,4 @@
-<div layout="row" layout-align="center center" flex>
+<div layout="row" layout-align="center center" style="align-items:center" flex>
   <a md-icon-button class="forMobile" (click)="openCloseSideNavMobile()"><md-icon>dehaze</md-icon></a>
   <a md-icon-button><md-icon>star_border</md-icon></a>
   <span>My Thai Star</span>
@@ -45,7 +45,7 @@
   <button *ngIf="!auth.isLogged" md-icon-button (click)="openLoginDialog()" mdTooltip="User"><md-icon>person_outline</md-icon></button>
   <div *ngIf="auth.isLogged" layout="row" style="align-items:center">
     <button md-icon-button [mdMenuTriggerFor]="toolbarMenu1"><md-icon>account_circle</md-icon></button>
-    <span class="forDesktop">Welcome {{auth.user}}</span>
+    <span class="forDesktop">{{auth.user}}</span>
     <button class="forDesktop" *ngIf="!auth.isLogged" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
     <md-menu #toolbarMenu1="mdMenu">
       <button md-menu-item (click)="openResetDialog()" *ngIf="!auth.hasPermission">
@@ -56,6 +56,7 @@
         <md-icon>send</md-icon>
         <span>Twitter account</span>
       </button>
+      <md-divider></md-divider>
       <button md-menu-item (click)="logout()">
         <md-icon>exit_to_app</md-icon>
         <span>Sign out</span>

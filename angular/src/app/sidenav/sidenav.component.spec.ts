@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CovalentCoreModule } from '@covalent/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavComponent } from './sidenav.component';
@@ -7,6 +6,7 @@ import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CovalentModule } from '../shared/covalent.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -19,7 +19,7 @@ describe('SidenavComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule,
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
       ],
     })
     .compileComponents();

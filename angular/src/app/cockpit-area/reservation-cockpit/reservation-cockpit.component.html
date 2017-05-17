@@ -30,10 +30,9 @@
       [data]="filteredData"
       [columns]="columns"
       [sortable]="true"
-      selectable="true"
-      multiple="false"
+      clickable="true"
       [sortOrder]="sortOrder"
-      (rowSelect)="selected($event)"
+      (rowClick)="selected($event)"
       [sortOrder]="sortOrder"
       (sortChange)="sort($event)">
     </td-data-table>

@@ -1,8 +1,9 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CovalentCoreModule } from '@covalent/core';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BackendModule } from '../../shared/backend/backend.module';
+import { CovalentModule } from '../../shared/covalent.module';
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
 import { ReservationCockpitService } from './shared/reservation-cockpit.service';
 
@@ -15,7 +16,7 @@ describe('ReservationCockpitComponent', () => {
       declarations: [ ReservationCockpitComponent ],
       providers: [  ReservationCockpitService ],
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         BrowserAnimationsModule,
       ],

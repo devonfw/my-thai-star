@@ -34,10 +34,9 @@
       [columns]="columns"
       [sortable]="true"
       [sortBy]="sortBy"
-      selectable="true"
-      multiple="false"
+      clickable="true"
       [sortOrder]="sortOrder"
-      (rowSelect)="selected($event)"
+      (rowClick)="selected($event)"
       (sortChange)="sort($event)">
     </td-data-table>
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">

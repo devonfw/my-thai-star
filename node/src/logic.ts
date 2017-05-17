@@ -143,9 +143,9 @@ callback(err);
                 name: reserv.name,
                 email: reserv.email,
                 reservationToken: 'CRS_' + moment().format('YYYYMMDD') + '_' + md5(reserv.email + moment().format('YYYYMMDDHHmmss')),
-                bookingDate: bookDate.toJSON(),
-                expirationDate: bookDate.add(1, 'hour').toJSON(), // TODO: modify this, maybe add 1 hour or delete this property
-                creationDate: date.toJSON(),
+                bookingDate: bookDate.format('YYYY-MM-DD HH:mm:ss.SSS'),
+                expirationDate: bookDate.subtract(1, 'hour').format('YYYY-MM-DD HH:mm:ss.SSS'), // TODO: modify this, maybe add 1 hour or delete this property
+                creationDate: date.format('YYYY-MM-DD HH:mm:ss.SSS'),
                 canceled: false,
                 reservationType: reserv.type.name,
                 assistants: (reserv.type.name === 'reservation') ? reserv.assistants : null,
@@ -160,15 +160,14 @@ callback(err);
                 const emails: Set<string> = new Set(reserv.guestList);
 
                 emails.forEach((elem: string) => {
-                    const nanoTime = util.getNanoTime();
                     const now = moment();
                     inv.push({
-                        id: nanoTime.toString(),
-                        idReservation: reservation.reservationToken,
+                        id: util.getNanoTime().toString(),
+                        idReservation: reservation.id,
                         guestToken: 'GRS_' + now.format('YYYYMMDD') + '_' + md5(elem + now.format('YYYYMMDDHHmmss')),
                         email: elem,
                         accepted: null,
-                        modificationDate: now.toJSON(),
+                        modificationDate: now.format('YYYY-MM-DD HH:mm:ss.SSS'),
                         order: undefined,
                     });
                 });
@@ -176,36 +175,112 @@ callback(err);
                 reservation.guestList = inv.map((elem: any): string => elem.id);
             }
 
-            // TODO: send all mails
-
-            callback(null, reservation.reservationToken);
-
+            // wait for the insertion and check if there are a exception
             await fn.insert('Reservation', reservation).promise();
             if (inv.length > 0 || false) {
                 await fn.insert('InvitationGuest', inv).promise();
             }
 
-            // const res = await fn.table('Reservation').promise();
-            // const res2 = await fn.table('InvitationGuest').promise();
-            // console.log(res);
-            // console.log('\n\n\n');
-            // console.log(res2);
+            callback(null, reservation.reservationToken);
+
+            // TODO: send all mails
         } catch (err) {
             console.log(err);
             callback(err);
         }
     },
-    createOrder: async (res: types.IOrderView, callback: (err: types.IError | null) => void) => {
-        // check if exsist the token
-        let register: dbtypes.IReservation[] | dbtypes.IInvitationGuest[];
-        if (res.invitationId.startsWith('CRS')) {
-            register = await fn.table('Reservation').where('reservationToken', res.invitationId, '=').promise();
-        } else {
-            register = await fn.table('InvitationGuest').where('guestToken', res.invitationId, '=').promise();
-        }
+    createOrder: async (order: types.IOrderView, callback: (err: types.IError | null) => void) => {
+        try {
+            // check if exsist the token
+            let reg: any[];
+            if (order.invitationId.startsWith('CRS')) {
+                reg = await fn.table('Reservation').where('reservationToken', order.invitationId, '=').promise();
+            } else {
+                reg = await fn.table('InvitationGuest').where('guestToken', order.invitationId, '=').promise();
+            }
 
-        if (register.length === 0) {
-            callback({ code: 400, message: 'muy mal' });
+            // Possible errors
+            // Not found
+            if (reg.length === 0) {
+                callback({ code: 400, message: 'No Invitation token given' });
+                return;
+            }
+            // Reservation canceled
+            if (order.invitationId.startsWith('CRS')) {
+                if (reg[0].canceled !== undefined && reg[0].canceled === true) {
+                    callback({ code: 500, message: 'The reservation is canceled' });
+                    return;
+                }
+            } else {
+                const reg2 = await fn.table('Reservation', reg[0].idReservation).promise();
+                if (reg2[0].canceled !== undefined && reg2[0].canceled === true) {
+                    callback({ code: 500, message: 'The reservation is canceled' });
+                    return;
+                }
+            }
+            // Order already registered
+            if (reg[0].order !== undefined) {
+                callback({ code: 500, message: 'You have a order, cant create a new one' });
+                return;
+            }
+
+            const ord: dbtypes.IOrder = {
+                id: util.getNanoTime().toString(),
+                lines: (order.lines.length > 0) ? order.lines.map((elem: types.IOrderLineView): dbtypes.IOrderLine => {
+                    return {
+                        idDish: elem.idDish.toString(),
+                        extras: (elem.extras.length > 0) ? elem.extras.map((elem2: number) => elem2.toString()) : [],
+                        amount: elem.amount,
+                        comment: elem.comment,
+                    };
+                }) : [],
+                idReservation: (reg[0].idReservation !== undefined) ? reg[0].idReservation : reg[0].id,
+                idInvitation: (reg[0].idReservation !== undefined) ? reg[0].id : undefined,
+            };
+
+            reg[0].order = ord.id;
+
+            await fn.insert('Order', ord).promise();
+
+            if (order.invitationId.startsWith('CRS')) {
+                await fn.insert('Reservation', reg[0]).promise();
+            } else {
+                await fn.insert('InvitationGuest', reg[0]).promise();
+            }
+
+            callback(null);
+        } catch (err) {
+            console.log(err);
+            callback({code: err.statusCode, message: err.message});
+        }
+    },
+    cancelOrder: async (order: string, callback: (err: types.IError | null) => void) => {
+        try{
+            let reg: any[];
+            if (order.startsWith('CRS')) {
+                reg = await fn.table('Reservation').where('reservationToken', order, '=').promise();
+            } else {
+                reg = await fn.table('InvitationGuest').where('guestToken', order, '=').promise();
+            }
+
+            if (reg.length === 0) {
+                callback({ code: 400, message: 'Invalid Invitation token given' });
+                return;
+            }
+
+            await fn.delete('Order', reg[0].order).promise();
+
+            reg[0].order = undefined;
+
+            if (order.startsWith('CRS')) {
+                await fn.insert('Reservation', reg[0]).promise();
+            } else {
+                await fn.insert('InvitationGuest', reg[0]).promise();
+            }
+            callback(null);
+        }catch (err){
+            console.log(err);
+            callback({code: err.statusCode, message: err.message});
         }
     },
 };

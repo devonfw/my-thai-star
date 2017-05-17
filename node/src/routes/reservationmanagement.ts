@@ -10,7 +10,7 @@ router.post('/v1/Reservation', (req: Request, res: Response) => {
     // check if param is correct
     if (!types.isReservationView(req.body)) {
         res.status(400).json({ message: 'Parser data error' });
-    } else if (!moment(req.body.date).isValid() || moment(req.body.date).diff(moment()) < 0) {
+    } else if (!moment(req.body.date).isValid() || moment(req.body.date).diff(moment().add(1, 'hour')) < 0) {
         // check if date is future
         res.status(400).json({ message: 'Given date must be future' });
     } else if (!validEmail(req.body.email)) {

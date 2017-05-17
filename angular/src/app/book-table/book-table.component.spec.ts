@@ -1,9 +1,9 @@
 import { Md2Module } from 'md2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CovalentModule } from '../shared/covalent.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookTableComponent } from './book-table.component';
-import { CovalentCoreModule } from '@covalent/core';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { WindowService } from '../shared/windowService/windowService.service';
 
@@ -17,7 +17,7 @@ describe('BookTableComponent', () => {
       providers: [ SidenavService, WindowService ],
       imports: [
         BrowserAnimationsModule,
-        CovalentCoreModule.forRoot(),
+        CovalentModule,
         Md2Module,
       ],
     })

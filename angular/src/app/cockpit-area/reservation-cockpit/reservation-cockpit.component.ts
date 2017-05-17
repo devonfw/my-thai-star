@@ -21,7 +21,8 @@ export class ReservationCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date and time'},
+    { name: 'date', label: 'Reservation date'},
+    { name: 'hour', label: 'Reservation time'},
     { name: 'emailOwner', label: 'Email' },
     { name: 'reservationId', label: 'Reference number'},
   ];
@@ -40,7 +41,7 @@ export class ReservationCockpitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit(): void {
-    this.reservationCockpitService.getOrders().subscribe((reservations: ReservationView[]) => {
+    this.reservationCockpitService.getReservations().subscribe((reservations: ReservationView[]) => {
       this.data = reservations;
       this.filteredData = reservations;
       this.filteredTotal = reservations.length;
