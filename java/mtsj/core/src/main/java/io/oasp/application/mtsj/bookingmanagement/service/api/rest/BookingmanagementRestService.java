@@ -14,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestEto;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
@@ -108,52 +108,52 @@ public interface BookingmanagementRestService {
   public PaginatedListTo<BookingEto> findBookingsByPost(BookingSearchCriteriaTo searchCriteriaTo);
 
   /**
-   * Cancels an booking of type Invitation
+   * Cancels an booking of type Invited
    *
    * @param bookingToken the token of the booking to cancel
    */
   @POST
-  @Path("/booking/CancelInvitation")
-  public void cancelInvitation(String bookingToken);
+  @Path("/booking/CancelInvited")
+  public void cancelInvited(String bookingToken);
 
   /**
-   * Delegates to {@link Bookingmanagement#findInvitationGuest}.
+   * Delegates to {@link Bookingmanagement#findInvitedGuest}.
    *
-   * @param id the ID of the {@link InvitationGuestEto}
-   * @return the {@link InvitationGuestEto}
+   * @param id the ID of the {@link InvitedGuestEto}
+   * @return the {@link InvitedGuestEto}
    */
   @GET
-  @Path("/invitationguest/{id}/")
-  public InvitationGuestEto getInvitationGuest(@PathParam("id") long id);
+  @Path("/invitedguest/{id}/")
+  public InvitedGuestEto getInvitedGuest(@PathParam("id") long id);
 
   /**
-   * Delegates to {@link Bookingmanagement#saveInvitationGuest}.
+   * Delegates to {@link Bookingmanagement#saveInvitedGuest}.
    *
-   * @param invitationguest the {@link InvitationGuestEto} to be saved
-   * @return the recently created {@link InvitationGuestEto}
+   * @param invitedguest the {@link InvitedGuestEto} to be saved
+   * @return the recently created {@link InvitedGuestEto}
    */
   @POST
-  @Path("/invitationguest/")
-  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationguest);
+  @Path("/invitedguest/")
+  public InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedguest);
 
   /**
-   * Delegates to {@link Bookingmanagement#deleteInvitationGuest}.
+   * Delegates to {@link Bookingmanagement#deleteInvitedGuest}.
    *
-   * @param id ID of the {@link InvitationGuestEto} to be deleted
+   * @param id ID of the {@link InvitedGuestEto} to be deleted
    */
   @DELETE
-  @Path("/invitationguest/{id}/")
-  public void deleteInvitationGuest(@PathParam("id") long id);
+  @Path("/invitedguest/{id}/")
+  public void deleteInvitedGuest(@PathParam("id") long id);
 
   /**
-   * Delegates to {@link Bookingmanagement#findInvitationGuestEtos}.
+   * Delegates to {@link Bookingmanagement#findInvitedGuestEtos}.
    *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding invitationguests.
-   * @return the {@link PaginatedListTo list} of matching {@link InvitationGuestEto}s.
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding invitedguests.
+   * @return the {@link PaginatedListTo list} of matching {@link InvitedGuestEto}s.
    */
-  @Path("/invitationguest/search")
+  @Path("/invitedguest/search")
   @POST
-  public PaginatedListTo<InvitationGuestEto> findInvitationGuestsByPost(
-      InvitationGuestSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(
+      InvitedGuestSearchCriteriaTo searchCriteriaTo);
 
 }

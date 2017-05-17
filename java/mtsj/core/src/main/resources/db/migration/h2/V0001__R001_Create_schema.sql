@@ -120,8 +120,8 @@ CREATE TABLE PlateIngredient (
   CONSTRAINT FK_PlateIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
 );
 
--- *** InvitationGuest ***
-CREATE TABLE InvitationGuest (
+-- *** InvitedGuest ***
+CREATE TABLE InvitedGuest (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
@@ -129,8 +129,8 @@ CREATE TABLE InvitationGuest (
   email VARCHAR (60),
   accepted BOOLEAN,
   modificationDate TIMESTAMP,
-  CONSTRAINT PK_InvitationGuest PRIMARY KEY(id),
-  CONSTRAINT FK_InvitationGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
+  CONSTRAINT PK_InvitedGuest PRIMARY KEY(id),
+  CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
 );
 
 -- *** OrderPlate ***
@@ -138,11 +138,11 @@ CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
-  idInvitationGuest BIGINT,
+  idInvitedGuest BIGINT,
   canceled BOOLEAN,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
-  CONSTRAINT FK_Order_idInvitationGuest FOREIGN KEY(idInvitationGuest) REFERENCES InvitationGuest(id) NOCHECK
+  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
 );
 
 -- *** OrderLine ***

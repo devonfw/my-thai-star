@@ -4,8 +4,8 @@ import java.security.NoSuchAlgorithmException;
 
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestEto;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
@@ -81,39 +81,39 @@ public interface Bookingmanagement {
   BookingEto saveBooking(BookingEto booking) throws NoSuchAlgorithmException;
 
   /**
-   * Returns a InvitationGuest by its id 'id'.
+   * Returns a InvitedGuest by its id 'id'.
    *
-   * @param id The id 'id' of the InvitationGuest.
-   * @return The {@link InvitationGuestEto} with id 'id'
+   * @param id The id 'id' of the InvitedGuest.
+   * @return The {@link InvitedGuestEto} with id 'id'
    */
-  InvitationGuestEto findInvitationGuest(Long id);
+  InvitedGuestEto findInvitedGuest(Long id);
 
   /**
-   * Returns a paginated list of InvitationGuests matching the search criteria.
+   * Returns a paginated list of InvitedGuests matching the search criteria.
    *
-   * @param criteria the {@link InvitationGuestSearchCriteriaTo}.
-   * @return the {@link List} of matching {@link InvitationGuestEto}s.
+   * @param criteria the {@link InvitedGuestSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link InvitedGuestEto}s.
    */
-  PaginatedListTo<InvitationGuestEto> findInvitationGuestEtos(InvitationGuestSearchCriteriaTo criteria);
+  PaginatedListTo<InvitedGuestEto> findInvitedGuestEtos(InvitedGuestSearchCriteriaTo criteria);
 
   /**
-   * Deletes a invitationGuest from the database by its id 'invitationGuestId'.
+   * Deletes a invitedGuest from the database by its id 'invitedGuestId'.
    *
-   * @param invitationGuestId Id of the invitationGuest to delete
-   * @return boolean <code>true</code> if the invitationGuest can be deleted, <code>false</code> otherwise
+   * @param invitedGuestId Id of the invitedGuest to delete
+   * @return boolean <code>true</code> if the invitedGuest can be deleted, <code>false</code> otherwise
    */
-  boolean deleteInvitationGuest(Long invitationGuestId);
+  boolean deleteInvitedGuest(Long invitedGuestId);
 
   /**
-   * Saves a invitationGuest and store it in the database.
+   * Saves a invitedGuest and store it in the database.
    *
-   * @param invitationGuest the {@link InvitationGuestEto} to create.
-   * @return the new {@link InvitationGuestEto} that has been saved with ID and version.
+   * @param invitedGuest the {@link InvitedGuestEto} to create.
+   * @return the new {@link InvitedGuestEto} that has been saved with ID and version.
    */
-  InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest);
+  InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedGuest);
 
   /**
    */
-  void cancelInvitation(String bookingToken);
+  void cancelInvited(String bookingToken);
 
 }

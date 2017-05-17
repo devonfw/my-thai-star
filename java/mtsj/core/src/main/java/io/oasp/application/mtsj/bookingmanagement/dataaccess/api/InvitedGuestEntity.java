@@ -9,12 +9,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import io.oasp.application.mtsj.bookingmanagement.common.api.InvitationGuest;
+import io.oasp.application.mtsj.bookingmanagement.common.api.InvitedGuest;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 @Entity
-@Table(name = "InvitationGuest")
-public class InvitationGuestEntity extends ApplicationPersistenceEntity implements InvitationGuest {
+@Table(name = "InvitedGuest")
+public class InvitedGuestEntity extends ApplicationPersistenceEntity implements InvitedGuest {
 
   private BookingEntity booking;
 

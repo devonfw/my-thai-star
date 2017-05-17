@@ -6,10 +6,10 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
- * used to find {@link io.oasp.application.mtsj.bookingmanagement.common.api.InvitationGuest}s.
+ * used to find {@link io.oasp.application.mtsj.bookingmanagement.common.api.InvitedGuest}s.
  *
  */
-public class InvitationGuestSearchCriteriaTo extends SearchCriteriaTo {
+public class InvitedGuestSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class InvitationGuestSearchCriteriaTo extends SearchCriteriaTo {
   /**
    * The constructor.
    */
-  public InvitationGuestSearchCriteriaTo() {
+  public InvitedGuestSearchCriteriaTo() {
 
     super();
   }
