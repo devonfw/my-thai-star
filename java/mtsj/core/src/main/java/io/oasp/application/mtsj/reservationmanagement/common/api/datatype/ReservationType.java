@@ -1,9 +1,5 @@
 package io.oasp.application.mtsj.reservationmanagement.common.api.datatype;
 
-/**
- * @author rudiazma
- *
- */
 public enum ReservationType {
   /** */
   Reservation,
