@@ -35,24 +35,24 @@ CREATE TABLE User (
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
--- *** Reservation ***
-CREATE TABLE Reservation (
+-- *** Booking ***
+CREATE TABLE Booking (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255),
-  reservationToken VARCHAR (60),
+  bookingToken VARCHAR (60),
   comment VARCHAR (4000),
   email VARCHAR(255),
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
   canceled BOOLEAN NOT NULL DEFAULT ((0)) ,
-  reservationType INTEGER,
+  bookingType INTEGER,
   idTable BIGINT,
-  CONSTRAINT PK_Reservation PRIMARY KEY(id),
-  CONSTRAINT FK_Reservation_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_Reservation_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
+  CONSTRAINT PK_Booking PRIMARY KEY(id),
+  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
 );
 
 -- *** Category ***
@@ -124,24 +124,24 @@ CREATE TABLE PlateIngredient (
 CREATE TABLE InvitationGuest (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idReservation BIGINT NOT NULL,
+  idBooking BIGINT NOT NULL,
   guestToken VARCHAR (60),
   email VARCHAR (60),
   accepted BOOLEAN,
   modificationDate TIMESTAMP,
   CONSTRAINT PK_InvitationGuest PRIMARY KEY(id),
-  CONSTRAINT FK_InvitationGuest_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK
+  CONSTRAINT FK_InvitationGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
 );
 
 -- *** OrderPlate ***
 CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idReservation BIGINT NOT NULL,
+  idBooking BIGINT NOT NULL,
   idInvitationGuest BIGINT,
   canceled BOOLEAN,
   CONSTRAINT PK_Order PRIMARY KEY(id),
-  CONSTRAINT FK_Order_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK,
+  CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitationGuest FOREIGN KEY(idInvitationGuest) REFERENCES InvitationGuest(id) NOCHECK
 );
 
