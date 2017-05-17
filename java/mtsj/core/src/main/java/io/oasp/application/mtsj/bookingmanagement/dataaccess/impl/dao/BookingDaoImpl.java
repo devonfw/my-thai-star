@@ -1,6 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.dataaccess.impl.dao;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -13,6 +14,8 @@ import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.BookingDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -76,7 +79,79 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
     if (table != null && booking.getTable() != null) {
       query.where(Alias.$(booking.getTable().getId()).eq(table));
     }
+
+    addOrderBy(query, alias, booking, criteria.getSort());
     return findPaginated(criteria, query, alias);
+  }
+
+  private void addOrderBy(JPAQuery query, EntityPathBase<BookingEntity> alias, BookingEntity booking,
+      List<OrderByTo> sort) {
+
+    if (sort != null && !sort.isEmpty()) {
+      for (OrderByTo orderEntry : sort) {
+        if ("name".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getName()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getName()).desc());
+          }
+        } else if ("bookingToken".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getBookingToken()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getBookingToken()).desc());
+          }
+        } else if ("comment".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getComment()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getComment()).desc());
+          }
+        } else if ("email".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getEmail()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getEmail()).desc());
+          }
+        } else if ("bookingDate".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getBookingDate()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getBookingDate()).desc());
+          }
+        } else if ("expirationDate".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getExpirationDate()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getExpirationDate()).desc());
+          }
+        } else if ("creationDate".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getCreationDate()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getCreationDate()).desc());
+          }
+        } else if ("canceled".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.isCanceled()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.isCanceled()).desc());
+          }
+        } else if ("bookingType".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getBookingType()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getBookingType()).desc());
+          }
+        } else if ("table".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getTableId()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getTableId()).desc());
+          }
+        }
+      }
+    }
   }
 
 }

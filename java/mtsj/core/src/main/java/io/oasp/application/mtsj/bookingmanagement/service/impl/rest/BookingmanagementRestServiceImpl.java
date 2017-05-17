@@ -91,8 +91,7 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
-  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(
-      InvitedGuestSearchCriteriaTo searchCriteriaTo) {
+  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(InvitedGuestSearchCriteriaTo searchCriteriaTo) {
 
     return this.bookingmanagement.findInvitedGuestEtos(searchCriteriaTo);
   }
