@@ -8,8 +8,8 @@ import javax.inject.Named;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestEto;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.service.api.rest.BookingmanagementRestService;
@@ -73,34 +73,34 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
-  public InvitationGuestEto getInvitationGuest(long id) {
+  public InvitedGuestEto getInvitedGuest(long id) {
 
-    return this.bookingmanagement.findInvitationGuest(id);
+    return this.bookingmanagement.findInvitedGuest(id);
   }
 
   @Override
-  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationguest) {
+  public InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedguest) {
 
-    return this.bookingmanagement.saveInvitationGuest(invitationguest);
+    return this.bookingmanagement.saveInvitedGuest(invitedguest);
   }
 
   @Override
-  public void deleteInvitationGuest(long id) {
+  public void deleteInvitedGuest(long id) {
 
-    this.bookingmanagement.deleteInvitationGuest(id);
+    this.bookingmanagement.deleteInvitedGuest(id);
   }
 
   @Override
-  public PaginatedListTo<InvitationGuestEto> findInvitationGuestsByPost(
-      InvitationGuestSearchCriteriaTo searchCriteriaTo) {
+  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(
+      InvitedGuestSearchCriteriaTo searchCriteriaTo) {
 
-    return this.bookingmanagement.findInvitationGuestEtos(searchCriteriaTo);
+    return this.bookingmanagement.findInvitedGuestEtos(searchCriteriaTo);
   }
 
   @Override
-  public void cancelInvitation(String bookingToken) {
+  public void cancelInvited(String bookingToken) {
 
-    this.bookingmanagement.cancelInvitation(bookingToken);
+    this.bookingmanagement.cancelInvited(bookingToken);
 
   }
 

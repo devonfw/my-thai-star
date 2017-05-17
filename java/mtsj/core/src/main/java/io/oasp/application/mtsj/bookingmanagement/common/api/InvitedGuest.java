@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
 
-public interface InvitationGuest extends ApplicationEntity {
+public interface InvitedGuest extends ApplicationEntity {
 
   public Long getBookingId();
 

@@ -17,16 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
-import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitationGuestEntity;
+import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.BookingDao;
-import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitationGuestDao;
+import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitedGuestDao;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.TableDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestEto;
-import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitationGuestSearchCriteriaTo;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
@@ -57,10 +57,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   private BookingDao bookingDao;
 
   /**
-   * @see #getInvitationGuestDao()
+   * @see #getInvitedGuestDao()
    */
   @Inject
-  private InvitationGuestDao invitationGuestDao;
+  private InvitedGuestDao invitedGuestDao;
 
   /**
    * The constructor.
@@ -209,70 +209,70 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public void cancelInvitation(String bookingToken) {
+  public void cancelInvited(String bookingToken) {
 
     Objects.requireNonNull(bookingToken, "bookingToken");
     BookingSearchCriteriaTo criteria = new BookingSearchCriteriaTo();
     criteria.setBookingToken(bookingToken);
 
     BookingEntity toCancel = getBookingDao().findBookings(criteria).getResult().get(0);
-    if (toCancel.getBookingType().isInvitationBooking()) {
+    if (toCancel.getBookingType().isInvitedBooking()) {
       toCancel.setCanceled(true);
       getBookingDao().save(toCancel);
     }
   }
 
   @Override
-  public InvitationGuestEto findInvitationGuest(Long id) {
+  public InvitedGuestEto findInvitedGuest(Long id) {
 
-    LOG.debug("Get InvitationGuest with id {} from database.", id);
-    return getBeanMapper().map(getInvitationGuestDao().findOne(id), InvitationGuestEto.class);
+    LOG.debug("Get InvitedGuest with id {} from database.", id);
+    return getBeanMapper().map(getInvitedGuestDao().findOne(id), InvitedGuestEto.class);
   }
 
   @Override
-  public PaginatedListTo<InvitationGuestEto> findInvitationGuestEtos(InvitationGuestSearchCriteriaTo criteria) {
+  public PaginatedListTo<InvitedGuestEto> findInvitedGuestEtos(InvitedGuestSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedListTo<InvitationGuestEntity> invitationguests = getInvitationGuestDao().findInvitationGuests(criteria);
-    return mapPaginatedEntityList(invitationguests, InvitationGuestEto.class);
+    PaginatedListTo<InvitedGuestEntity> invitedguests = getInvitedGuestDao().findInvitedGuests(criteria);
+    return mapPaginatedEntityList(invitedguests, InvitedGuestEto.class);
   }
 
   @Override
-  public boolean deleteInvitationGuest(Long invitationGuestId) {
+  public boolean deleteInvitedGuest(Long invitedGuestId) {
 
-    InvitationGuestEntity invitationGuest = getInvitationGuestDao().find(invitationGuestId);
-    getInvitationGuestDao().delete(invitationGuest);
-    LOG.debug("The invitationGuest with id '{}' has been deleted.", invitationGuestId);
+    InvitedGuestEntity invitedGuest = getInvitedGuestDao().find(invitedGuestId);
+    getInvitedGuestDao().delete(invitedGuest);
+    LOG.debug("The invitedGuest with id '{}' has been deleted.", invitedGuestId);
     return true;
   }
 
   @Override
-  public InvitationGuestEto saveInvitationGuest(InvitationGuestEto invitationGuest) {
+  public InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedGuest) {
 
-    Objects.requireNonNull(invitationGuest, "invitationGuest");
-    InvitationGuestEntity invitationGuestEntity = getBeanMapper().map(invitationGuest, InvitationGuestEntity.class);
+    Objects.requireNonNull(invitedGuest, "invitedGuest");
+    InvitedGuestEntity invitedGuestEntity = getBeanMapper().map(invitedGuest, InvitedGuestEntity.class);
 
     try {
-      invitationGuestEntity.setGuestToken(buildBookingToken(invitationGuestEntity.getEmail(), BookingType.Invitation));
+      invitedGuestEntity.setGuestToken(buildBookingToken(invitedGuestEntity.getEmail(), BookingType.Invited));
     } catch (NoSuchAlgorithmException e) {
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
-    // initialize, validate invitationGuestEntity here if necessary
-    InvitationGuestEntity resultEntity = getInvitationGuestDao().save(invitationGuestEntity);
-    LOG.debug("InvitationGuest with id '{}' has been created.", resultEntity.getId());
+    // initialize, validate invitedGuestEntity here if necessary
+    InvitedGuestEntity resultEntity = getInvitedGuestDao().save(invitedGuestEntity);
+    LOG.debug("InvitedGuest with id '{}' has been created.", resultEntity.getId());
 
-    return getBeanMapper().map(resultEntity, InvitationGuestEto.class);
+    return getBeanMapper().map(resultEntity, InvitedGuestEto.class);
   }
 
   /**
-   * Returns the field 'invitationGuestDao'.
+   * Returns the field 'invitedGuestDao'.
    *
-   * @return the {@link InvitationGuestDao} instance.
+   * @return the {@link InvitedGuestDao} instance.
    */
-  public InvitationGuestDao getInvitationGuestDao() {
+  public InvitedGuestDao getInvitedGuestDao() {
 
-    return this.invitationGuestDao;
+    return this.invitedGuestDao;
   }
 
 }

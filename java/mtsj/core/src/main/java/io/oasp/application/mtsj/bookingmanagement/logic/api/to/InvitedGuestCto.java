@@ -3,24 +3,24 @@ package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 
 /**
- * Composite transport object of InvitationGuest
+ * Composite transport object of InvitedGuest
  */
-public class InvitationGuestCto extends AbstractCto {
+public class InvitedGuestCto extends AbstractCto {
 
   private static final long serialVersionUID = 1L;
 
-  private InvitationGuestEto invitationGuest;
+  private InvitedGuestEto invitedGuest;
 
   private BookingEto booking;
 
-  public InvitationGuestEto getInvitationGuest() {
+  public InvitedGuestEto getInvitedGuest() {
 
-    return this.invitationGuest;
+    return this.invitedGuest;
   }
 
-  public void setInvitationGuest(InvitationGuestEto invitationGuest) {
+  public void setInvitedGuest(InvitedGuestEto invitedGuest) {
 
-    this.invitationGuest = invitationGuest;
+    this.invitedGuest = invitedGuest;
   }
 
   public BookingEto getBooking() {

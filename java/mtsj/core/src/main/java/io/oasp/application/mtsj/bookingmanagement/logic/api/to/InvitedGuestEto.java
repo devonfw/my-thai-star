@@ -2,13 +2,13 @@ package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 
 import java.sql.Timestamp;
 
-import io.oasp.application.mtsj.bookingmanagement.common.api.InvitationGuest;
+import io.oasp.application.mtsj.bookingmanagement.common.api.InvitedGuest;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 
 /**
- * Entity transport object of InvitationGuest
+ * Entity transport object of InvitedGuest
  */
-public class InvitationGuestEto extends AbstractEto implements InvitationGuest {
+public class InvitedGuestEto extends AbstractEto implements InvitedGuest {
 
   private static final long serialVersionUID = 1L;
 
@@ -109,7 +109,7 @@ public class InvitationGuestEto extends AbstractEto implements InvitationGuest {
     if (!super.equals(obj)) {
       return false;
     }
-    InvitationGuestEto other = (InvitationGuestEto) obj;
+    InvitedGuestEto other = (InvitedGuestEto) obj;
 
     if (this.bookingId == null) {
       if (other.bookingId != null) {

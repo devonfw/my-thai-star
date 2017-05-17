@@ -5,11 +5,11 @@ public enum BookingType {
   Booking,
 
   /**  */
-  Invitation;
+  Invited;
 
-  public boolean isInvitationBooking() {
+  public boolean isInvitedBooking() {
 
-    return (this == Invitation);
+    return (this == Invited);
   }
 
   public boolean isCommonBooking() {
