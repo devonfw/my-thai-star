@@ -153,7 +153,6 @@ public interface BookingmanagementRestService {
    */
   @Path("/invitedguest/search")
   @POST
-  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(
-      InvitedGuestSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(InvitedGuestSearchCriteriaTo searchCriteriaTo);
 
 }

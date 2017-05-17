@@ -11,8 +11,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 public interface InvitedGuestDao extends ApplicationDao<InvitedGuestEntity> {
 
   /**
-   * Finds the {@link InvitedGuestEntity invitedguests} matching the given
-   * {@link InvitedGuestSearchCriteriaTo}.
+   * Finds the {@link InvitedGuestEntity invitedguests} matching the given {@link InvitedGuestSearchCriteriaTo}.
    *
    * @param criteria is the {@link InvitedGuestSearchCriteriaTo}.
    * @return the {@link PaginatedListTo} with the matching {@link InvitedGuestEntity} objects.

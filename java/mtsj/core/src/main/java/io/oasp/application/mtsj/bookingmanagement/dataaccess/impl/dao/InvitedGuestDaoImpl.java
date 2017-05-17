@@ -1,6 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.dataaccess.impl.dao;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -12,6 +13,8 @@ import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEnt
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitedGuestDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -61,7 +64,49 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     if (modificationDate != null) {
       query.where(Alias.$(invitedguest.getModificationDate()).eq(modificationDate));
     }
+
+    addOrderBy(query, alias, invitedguest, criteria.getSort());
     return findPaginated(criteria, query, alias);
+  }
+
+  private void addOrderBy(JPAQuery query, EntityPathBase<InvitedGuestEntity> alias, InvitedGuestEntity invitedguest,
+      List<OrderByTo> sort) {
+
+    if (sort != null && !sort.isEmpty()) {
+      for (OrderByTo orderEntry : sort) {
+        if ("booking".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(invitedguest.getBookingId()).asc());
+          } else {
+            query.orderBy(Alias.$(invitedguest.getBookingId()).desc());
+          }
+        } else if ("guestToken".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(invitedguest.getGuestToken()).asc());
+          } else {
+            query.orderBy(Alias.$(invitedguest.getGuestToken()).desc());
+          }
+        } else if ("email".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(invitedguest.getEmail()).asc());
+          } else {
+            query.orderBy(Alias.$(invitedguest.getEmail()).desc());
+          }
+        } else if ("accepted".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(invitedguest.isAccepted()).asc());
+          } else {
+            query.orderBy(Alias.$(invitedguest.isAccepted()).desc());
+          }
+        } else if ("modificationDate".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(invitedguest.getModificationDate()).asc());
+          } else {
+            query.orderBy(Alias.$(invitedguest.getModificationDate()).desc());
+          }
+        }
+      }
+    }
   }
 
 }
