@@ -16,6 +16,8 @@ import io.oasp.application.mtsj.platemanagement.dataaccess.api.Category;
 import io.oasp.application.mtsj.platemanagement.dataaccess.api.PlateEntity;
 import io.oasp.application.mtsj.platemanagement.dataaccess.api.dao.PlateDao;
 import io.oasp.application.mtsj.platemanagement.logic.api.to.PlateSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -55,7 +57,7 @@ public class PlateDaoImpl extends ApplicationDaoImpl<PlateEntity> implements Pla
     if (price != null) {
       query.where(Alias.$(plate.getPrice()).lt(price));
     }
-
+    addOrderBy(query, alias, plate, criteria.getSort());
     PaginatedListTo<PlateEntity> entitiesList = findPaginated(criteria, query, alias);
 
     Collection<Category> categories = criteria.getCategories();
@@ -79,7 +81,6 @@ public class PlateDaoImpl extends ApplicationDaoImpl<PlateEntity> implements Pla
           if (category.getId() == entityCat.getId()) {
             if (!plateAlreadyAdded(plateEntitiesF, plateEntity)) {
               plateEntitiesF.add(plateEntity);
-              System.out.println("ID: " + plateEntity.getId() + "  NAME: " + plateEntity.getName());
               break;
             }
 
@@ -102,6 +103,40 @@ public class PlateDaoImpl extends ApplicationDaoImpl<PlateEntity> implements Pla
       }
     }
     return result;
+  }
+
+  private void addOrderBy(JPAQuery query, EntityPathBase<PlateEntity> alias, PlateEntity plate, List<OrderByTo> sort) {
+
+    if (sort != null && !sort.isEmpty()) {
+      for (OrderByTo orderEntry : sort) {
+        if ("name".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getName()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getName()).desc());
+          }
+        } else if ("description".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getDescription()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getDescription()).desc());
+          }
+        } else if ("price".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getPrice()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getPrice()).desc());
+          }
+        } /*
+           * else if ("idImage".equals(orderEntry.getName())) { if
+           * (OrderDirection.ASC.equals(orderEntry.getDirection())) { query.orderBy(Alias.$(plate.getIdImage()).asc());
+           * } else { query.orderBy(Alias.$(plate.getIdImage()).desc()); } } else if
+           * ("image".equals(orderEntry.getName())) { if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+           * query.orderBy(Alias.$(plate.getImage()).asc()); } else { query.orderBy(Alias.$(plate.getImage()).desc()); }
+           * }
+           */
+      }
+    }
   }
 
 }
