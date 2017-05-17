@@ -6,18 +6,18 @@ package io.oasp.application.mtsj.reservationmanagement.common.api.datatype;
  */
 public enum ReservationType {
   /** */
-  CRS,
+  Reservation,
 
   /**  */
-  GRS;
+  Invitation;
 
   public boolean isInvitationReservation() {
 
-    return (this == GRS);
+    return (this == Invitation);
   }
 
   public boolean isCommonReservation() {
 
-    return (this == CRS);
+    return (this == Reservation);
   }
 }

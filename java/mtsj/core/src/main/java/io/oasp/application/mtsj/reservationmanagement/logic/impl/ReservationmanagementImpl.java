@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.reservationmanagement.common.api.datatype.ReservationType;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.InvitationGuestEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.ReservationEntity;
 import io.oasp.application.mtsj.reservationmanagement.dataaccess.api.TableEntity;
@@ -141,14 +142,15 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
   }
 
   @Override
-  public ReservationEto saveReservation(ReservationEto reservation) throws NoSuchAlgorithmException {
+  public ReservationEto saveReservation(ReservationEto reservation) {
 
     Objects.requireNonNull(reservation, "reservation");
     ReservationEntity reservationEntity = getBeanMapper().map(reservation, ReservationEntity.class);
 
     try {
-      reservationEntity.setReservationToken(buildReservationToken(reservationEntity));
-    } catch (Exception e) {
+      reservationEntity
+          .setReservationToken(buildReservationToken(reservationEntity.getEmail(), ReservationType.Reservation));
+    } catch (NoSuchAlgorithmException e) {
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
@@ -166,29 +168,35 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
   }
 
   /**
+   * Builds a token for guest or reservation depending of the type
+   *
+   * @param email the email of host or guest
+   * @param type the type of the token
    * @throws NoSuchAlgorithmException
    */
-  private String buildReservationToken(ReservationEntity reservation) throws NoSuchAlgorithmException {
+  private String buildReservationToken(String email, ReservationType type) throws NoSuchAlgorithmException {
 
     Instant now = Instant.now();
     String date =
         String.format("%04d", now.get(ChronoField.YEAR)) + String.format("%02d", now.get(ChronoField.MONTH_OF_YEAR))
-            + String.format("%02d", now.get(ChronoField.DAY_OF_MONTH));
+            + String.format("%02d", now.get(ChronoField.DAY_OF_MONTH)) + "_";
 
     String time = String.format("%02d", now.get(ChronoField.HOUR_OF_DAY))
         + String.format("%02d", now.get(ChronoField.MINUTE_OF_HOUR))
-        + String.format("%02d", now.get(ChronoField.SECOND_OF_MINUTE))
-        + String.format("%03d", now.get(ChronoField.MILLI_OF_SECOND)) + "Z";
+        + String.format("%02d", now.get(ChronoField.SECOND_OF_MINUTE));
 
     MessageDigest md = MessageDigest.getInstance("MD5");
-    md.update((reservation.getEmail() + date + time).getBytes());
+    md.update((email + date + time).getBytes());
     byte[] digest = md.digest();
     StringBuilder sb = new StringBuilder();
     for (byte b : digest) {
       sb.append(String.format("%02x", b & 0xff));
     }
-    return reservation.getReservationType() + "_" + sb;
-
+    if (type.isCommonReservation()) {
+      return "CRS_" + sb;
+    } else {
+      return "GRS_" + sb;
+    }
   }
 
   /**
@@ -244,6 +252,13 @@ public class ReservationmanagementImpl extends AbstractComponentFacade implement
 
     Objects.requireNonNull(invitationGuest, "invitationGuest");
     InvitationGuestEntity invitationGuestEntity = getBeanMapper().map(invitationGuest, InvitationGuestEntity.class);
+
+    try {
+      invitationGuestEntity
+          .setGuestToken(buildReservationToken(invitationGuestEntity.getEmail(), ReservationType.Invitation));
+    } catch (NoSuchAlgorithmException e) {
+      LOG.debug("MD5 Algorithm not available at the enviroment");
+    }
 
     // initialize, validate invitationGuestEntity here if necessary
     InvitationGuestEntity resultEntity = getInvitationGuestDao().save(invitationGuestEntity);
