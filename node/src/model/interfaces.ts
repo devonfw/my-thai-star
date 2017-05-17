@@ -150,12 +150,48 @@ export interface IOrderView {
     invitationId: string;
 }
 
+export function isOrderView(elem: any): elem is IOrderView {
+    if (elem.lines === undefined || !(elem.lines instanceof Array) ||
+        (elem.lines.length > 0 && elem.lines.map((e: any) => {
+            return !isOrderLineView(e);
+        }).reduce((elem1: any, elem2: any) => {
+            return elem1 || elem2;
+        }))) {
+        return false;
+    }
+    if (elem.invitationId === undefined || typeof elem.invitationId !== 'string') {
+        return false;
+    }
+    return true;
+}
+
 //
 export interface IOrderLineView {
     idDish: number;
     extras: number[];
     amount: number;
     comment: string;
+}
+
+export function isOrderLineView(elem: any): elem is IOrderLineView {
+    if (elem.idDish === undefined || typeof elem.idDish !== 'number') {
+        return false;
+    }
+    if (elem.extras === undefined || !(elem.extras instanceof Array) ||
+        (elem.extras.length > 0 && elem.extras.map((e: any) => {
+            return typeof e !== 'number';
+        }).reduce((elem1: any, elem2: any) => {
+            return elem1 || elem2;
+        }))) {
+        return false;
+    }
+    if (elem.amount === undefined || typeof elem.amount !== 'number') {
+        return false;
+    }
+    if (elem.comment === undefined || typeof elem.comment !== 'string') {
+        return false;
+    }
+    return true;
 }
 
 //

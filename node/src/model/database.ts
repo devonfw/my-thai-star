@@ -45,9 +45,9 @@ export interface IOrderLine {
 export interface IOrder {
     id: string;
     lines: IOrderLine[];
-    canceled: boolean;
+    // canceled: boolean;
     idReservation: string;
-    idInvitation: string;
+    idInvitation?: string;
 
 }
 
