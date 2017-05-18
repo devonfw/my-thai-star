@@ -44,7 +44,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   @Override
   public void setIdDish(Long idDish) {
 
-    this.idDish = this.idDish;
+    this.idDish = idDish;
   }
 
   @Override

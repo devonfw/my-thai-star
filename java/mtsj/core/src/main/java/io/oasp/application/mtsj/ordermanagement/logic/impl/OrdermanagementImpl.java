@@ -1,9 +1,11 @@
 package io.oasp.application.mtsj.ordermanagement.logic.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +78,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @Transactional
   public OrderEto saveOrder(OrderEto order) {
 
     Objects.requireNonNull(order, "order");
@@ -83,8 +86,20 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     // initialize, validate orderEntity here if necessary
     getOrderDao().save(orderEntity);
-    LOG.debug("Order with id '{}' has been created.", orderEntity.getId());
+    LOG.info("Order with id '{}' has been created.", orderEntity.getId());
+    List<OrderLineEntity> orderLines = order.getLines();
+    for (OrderLineEntity orderLine : orderLines) {
+      OrderLineEto lineEto = getBeanMapper().map(orderLine, OrderLineEto.class);
 
+      if (lineEto.getIdDish() == null) {
+        Long idDish = orderLine.getIdDish();
+        LOG.debug("idDish is: " + idDish);
+        lineEto.setIdDish(idDish);
+      }
+      lineEto.setOrderId(orderEntity.getId());
+      saveOrderLine(lineEto);
+      LOG.info("OrderLine with id '{}' has been created.", lineEto.getId());
+    }
     return getBeanMapper().map(orderEntity, OrderEto.class);
   }
 
