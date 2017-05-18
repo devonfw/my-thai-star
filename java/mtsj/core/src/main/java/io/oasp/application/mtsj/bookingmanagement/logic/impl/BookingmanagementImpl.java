@@ -97,9 +97,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   @Override
   public TableEto saveTable(TableEto table) {
 
+    System.out.println("entra");
     Objects.requireNonNull(table, "table");
     TableEntity tableEntity = getBeanMapper().map(table, TableEntity.class);
-
+    System.out.println(tableEntity.getSeatsNumber());
     // initialize, validate tableEntity here if necessary
     TableEntity resultEntity = getTableDao().save(tableEntity);
     LOG.debug("Table with id '{}' has been created.", resultEntity.getId());
