@@ -16,40 +16,40 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idReservation;
+  private Long idBooking;
 
-  private Long idInvitationGuest;
+  private Long idInvitedGuest;
 
   /**
    * @return idReservation
    */
-  public Long getIdReservation() {
+  public Long getIdBooking() {
 
-    return this.idReservation;
+    return this.idBooking;
   }
 
   /**
-   * @param idReservation new value of {@link #getIdReservation}.
+   * @param idBooking new value of {@link #getIdBooking}.
    */
-  public void setIdReservation(Long idReservation) {
+  public void setIdBooking(Long idBooking) {
 
-    this.idReservation = idReservation;
+    this.idBooking = idBooking;
   }
 
   /**
-   * @return idInvitationGuest
+   * @return idInvitedGuest
    */
-  public Long getIdInvitationGuest() {
+  public Long getIdInvitedGuest() {
 
-    return this.idInvitationGuest;
+    return this.idInvitedGuest;
   }
 
   /**
-   * @param idInvitationGuest new value of {@link #getIdInvitationGuest}.
+   * @param idInvitedGuest new value of {@link #getIdInvitedGuest}.
    */
-  public void setIdInvitationGuest(Long idInvitationGuest) {
+  public void setIdInvitedGuest(Long idInvitedGuest) {
 
-    this.idInvitationGuest = idInvitationGuest;
+    this.idInvitedGuest = idInvitedGuest;
   }
 
 }

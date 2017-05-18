@@ -1,7 +1,7 @@
 package io.oasp.application.mtsj.imagemanagement.common.api;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
-import io.oasp.application.mtsj.general.common.api.datatype.ImageType;
+import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 
 /**
  * Interface for {@link Image}
@@ -30,23 +30,23 @@ public interface Image extends ApplicationEntity {
   public void setContent(String content);
 
   /**
-   * @return imageType of the {@link Image}
+   * @return contentType of the {@link Image}
    */
-  public ImageType getImageType();
+  public ContentType getContentType();
 
   /**
-   * @param imageType of the {@link Image}
+   * @param contentType of the {@link Image}
    */
-  public void setImageType(ImageType imageType);
+  public void setContentType(ContentType contentType);
 
   /**
-   * @return extension of the {@link Image}
+   * @return mimeType of the {@link Image}
    */
-  public String getExtension();
+  public String getMimeType();
 
   /**
-   * @param extension of the {@link Image}
+   * @param mimeType of the {@link Image}
    */
-  public void setExtension(String extension);
+  public void setMimeType(String mimeType);
 
 }

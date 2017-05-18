@@ -6,7 +6,7 @@ import com.mysema.query.alias.Alias;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ImageType;
+import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.dao.ImageDao;
@@ -48,13 +48,13 @@ public class ImageDaoImpl extends ApplicationDaoImpl<ImageEntity> implements Ima
     if (content != null) {
       query.where(Alias.$(image.getContent()).eq(content));
     }
-    ImageType imageType = criteria.getImageType();
-    if (imageType != null) {
-      query.where(Alias.$(image.getImageType()).eq(imageType));
+    ContentType contentType = criteria.getContentType();
+    if (contentType != null) {
+      query.where(Alias.$(image.getContentType()).eq(contentType));
     }
-    String extension = criteria.getExtension();
-    if (extension != null) {
-      query.where(Alias.$(image.getExtension()).eq(extension));
+    String mimeType = criteria.getMimeType();
+    if (mimeType != null) {
+      query.where(Alias.$(image.getMimeType()).eq(mimeType));
     }
     return findPaginated(criteria, query, alias);
   }

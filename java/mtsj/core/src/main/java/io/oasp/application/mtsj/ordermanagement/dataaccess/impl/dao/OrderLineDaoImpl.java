@@ -49,9 +49,9 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
         query.where(Alias.$(orderline.getOrder().getId()).eq(order));
       }
     }
-    Long idPlate = criteria.getIdPlate();
-    if (idPlate != null) {
-      query.where(Alias.$(orderline.getIdPlate()).eq(idPlate));
+    Long idDish = criteria.getIdDish();
+    if (idDish != null) {
+      query.where(Alias.$(orderline.getIdDish()).eq(idDish));
     }
     // int amount = criteria.getAmount();
     // query.where(Alias.$(orderline.getAmount()).eq(amount));
@@ -76,9 +76,9 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
           }
         } else if ("idDish".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(orderline.getIdPlate()).asc());
+            query.orderBy(Alias.$(orderline.getIdDish()).asc());
           } else {
-            query.orderBy(Alias.$(orderline.getIdPlate()).desc());
+            query.orderBy(Alias.$(orderline.getIdDish()).desc());
           }
         } else if ("amount".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

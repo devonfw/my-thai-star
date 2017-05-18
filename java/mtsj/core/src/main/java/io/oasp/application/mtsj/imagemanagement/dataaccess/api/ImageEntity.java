@@ -3,7 +3,7 @@ package io.oasp.application.mtsj.imagemanagement.dataaccess.api;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ImageType;
+import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
@@ -20,9 +20,9 @@ public class ImageEntity extends ApplicationPersistenceEntity implements Image {
 
   private String content;
 
-  private ImageType imageType;
+  private ContentType contentType;
 
-  private String extension;
+  private String mimeType;
 
   /**
    * @return name
@@ -57,35 +57,35 @@ public class ImageEntity extends ApplicationPersistenceEntity implements Image {
   }
 
   /**
-   * @return imageType
+   * @return contentType
    */
-  public ImageType getImageType() {
+  public ContentType getContentType() {
 
-    return this.imageType;
+    return this.contentType;
   }
 
   /**
-   * @param imageType new value of {@link #getImageType}.
+   * @param contentType new value of {@link #getContentType}.
    */
-  public void setImageType(ImageType imageType) {
+  public void setContentType(ContentType contentType) {
 
-    this.imageType = imageType;
+    this.contentType = contentType;
   }
 
   /**
-   * @return extension
+   * @return mimeType
    */
-  public String getExtension() {
+  public String getMimeType() {
 
-    return this.extension;
+    return this.mimeType;
   }
 
   /**
-   * @param extension new value of {@link #getExtension}.
+   * @param mimeType new value of {@link #getMimeType}.
    */
-  public void setExtension(String extension) {
+  public void setMimeType(String mimeType) {
 
-    this.extension = extension;
+    this.mimeType = mimeType;
   }
 
 }

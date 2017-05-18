@@ -2,8 +2,8 @@ package io.oasp.application.mtsj.ordermanagement.common.api;
 
 import java.util.List;
 
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
-import io.oasp.application.mtsj.platemanagement.dataaccess.api.Ingredient;
 
 public interface OrderLine extends ApplicationEntity {
 
@@ -11,9 +11,9 @@ public interface OrderLine extends ApplicationEntity {
 
   public void setOrderId(Long orderId);
 
-  public Long getIdPlate();
+  public Long getIdDish();
 
-  public void setIdPlate(Long idDish);
+  public void setIdDish(Long idDish);
 
   public List<Ingredient> getExtras();
 

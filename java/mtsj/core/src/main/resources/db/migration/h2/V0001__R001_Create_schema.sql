@@ -71,8 +71,8 @@ CREATE TABLE Image (
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
   content VARCHAR(2147483647),
-  imageType INTEGER,
-  extension VARCHAR(5),
+  contentType INTEGER,
+  mimeType VARCHAR(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)
 );
 
@@ -139,7 +139,6 @@ CREATE TABLE Orders (
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
-  canceled BOOLEAN,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK

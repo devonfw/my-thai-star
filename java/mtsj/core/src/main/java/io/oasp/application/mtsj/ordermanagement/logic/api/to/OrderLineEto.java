@@ -2,9 +2,9 @@ package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
 import java.util.List;
 
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
-import io.oasp.application.mtsj.platemanagement.dataaccess.api.Ingredient;
 
 /**
  * Entity transport object of OrderLine
@@ -15,7 +15,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
 
   private Long orderId;
 
-  private Long idPlate;
+  private Long idDish;
 
   private List<Ingredient> extras;
 
@@ -36,15 +36,15 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   }
 
   @Override
-  public Long getIdPlate() {
+  public Long getIdDish() {
 
-    return this.idPlate;
+    return this.idDish;
   }
 
   @Override
-  public void setIdPlate(Long idDish) {
+  public void setIdDish(Long idDish) {
 
-    this.idPlate = this.idPlate;
+    this.idDish = this.idDish;
   }
 
   @Override
@@ -90,7 +90,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     int result = super.hashCode();
 
     result = prime * result + ((this.orderId == null) ? 0 : this.orderId.hashCode());
-    result = prime * result + ((this.idPlate == null) ? 0 : this.idPlate.hashCode());
+    result = prime * result + ((this.idDish == null) ? 0 : this.idDish.hashCode());
     result = prime * result + ((this.extras == null) ? 0 : this.extras.hashCode());
     result = prime * result + ((Integer) this.amount).hashCode();
     result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
@@ -119,11 +119,11 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     } else if (!this.orderId.equals(other.orderId)) {
       return false;
     }
-    if (this.idPlate == null) {
-      if (other.idPlate != null) {
+    if (this.idDish == null) {
+      if (other.idDish != null) {
         return false;
       }
-    } else if (!this.idPlate.equals(other.idPlate)) {
+    } else if (!this.idDish.equals(other.idDish)) {
       return false;
     }
     if (this.extras == null) {

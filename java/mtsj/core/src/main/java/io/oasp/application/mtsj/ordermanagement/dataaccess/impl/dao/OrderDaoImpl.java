@@ -43,13 +43,13 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     EntityPathBase<OrderEntity> alias = Alias.$(order);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    Long idReservation = criteria.getIdReservation();
-    if (idReservation != null) {
-      query.where(Alias.$(order.getIdReservation()).eq(idReservation));
+    Long idBooking = criteria.getIdBooking();
+    if (idBooking != null) {
+      query.where(Alias.$(order.getIdBooking()).eq(idBooking));
     }
     Long idInvitationGuest = criteria.getIdInvitationGuest();
     if (idInvitationGuest != null) {
-      query.where(Alias.$(order.getIdInvitationGuest()).eq(idInvitationGuest));
+      query.where(Alias.$(order.getIdInvitedGuest()).eq(idInvitationGuest));
     }
     addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
@@ -61,15 +61,15 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
       for (OrderByTo orderEntry : sort) {
         if ("idReservation".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(order.getIdReservation()).asc());
+            query.orderBy(Alias.$(order.getIdBooking()).asc());
           } else {
-            query.orderBy(Alias.$(order.getIdReservation()).desc());
+            query.orderBy(Alias.$(order.getIdBooking()).desc());
           }
         } else if ("idInvitationGuest".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(order.getIdInvitationGuest()).asc());
+            query.orderBy(Alias.$(order.getIdInvitedGuest()).asc());
           } else {
-            query.orderBy(Alias.$(order.getIdInvitationGuest()).desc());
+            query.orderBy(Alias.$(order.getIdInvitedGuest()).desc());
           }
         }
       }

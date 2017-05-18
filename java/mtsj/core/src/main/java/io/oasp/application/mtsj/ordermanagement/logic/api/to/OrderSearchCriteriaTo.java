@@ -11,9 +11,9 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idReservation;
+  private Long idBooking;
 
-  private Long idInvitationGuest;
+  private Long idInvitedGuest;
 
   /**
    * The constructor.
@@ -23,24 +23,24 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
     super();
   }
 
-  public Long getIdReservation() {
+  public Long getIdBooking() {
 
-    return idReservation;
+    return this.idBooking;
   }
 
-  public void setIdReservation(Long idReservation) {
+  public void setIdBooking(Long idBooking) {
 
-    this.idReservation = idReservation;
+    this.idBooking = idBooking;
   }
 
   public Long getIdInvitationGuest() {
 
-    return idInvitationGuest;
+    return this.idInvitedGuest;
   }
 
-  public void setIdInvitationGuest(Long idInvitationGuest) {
+  public void setIdInvitedGuest(Long idInvitedGuest) {
 
-    this.idInvitationGuest = idInvitationGuest;
+    this.idInvitedGuest = idInvitedGuest;
   }
 
 }

@@ -10,32 +10,32 @@ public class OrderEto extends AbstractEto implements Order {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idReservation;
+  private Long idBooking;
 
-  private Long idInvitationGuest;
+  private Long idInvitedGuest;
 
   @Override
-  public Long getIdReservation() {
+  public Long getIdBooking() {
 
-    return idReservation;
+    return this.idBooking;
   }
 
   @Override
-  public void setIdReservation(Long idReservation) {
+  public void setIdBooking(Long idBooking) {
 
-    this.idReservation = idReservation;
+    this.idBooking = idBooking;
   }
 
   @Override
-  public Long getIdInvitationGuest() {
+  public Long getIdInvitedGuest() {
 
-    return idInvitationGuest;
+    return this.idInvitedGuest;
   }
 
   @Override
-  public void setIdInvitationGuest(Long idInvitationGuest) {
+  public void setIdInvitedGuest(Long idInvitedGuest) {
 
-    this.idInvitationGuest = idInvitationGuest;
+    this.idInvitedGuest = idInvitedGuest;
   }
 
   @Override
@@ -43,8 +43,8 @@ public class OrderEto extends AbstractEto implements Order {
 
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((this.idReservation == null) ? 0 : this.idReservation.hashCode());
-    result = prime * result + ((this.idInvitationGuest == null) ? 0 : this.idInvitationGuest.hashCode());
+    result = prime * result + ((this.idBooking == null) ? 0 : this.idBooking.hashCode());
+    result = prime * result + ((this.idInvitedGuest == null) ? 0 : this.idInvitedGuest.hashCode());
     return result;
   }
 
@@ -62,18 +62,18 @@ public class OrderEto extends AbstractEto implements Order {
       return false;
     }
     OrderEto other = (OrderEto) obj;
-    if (this.idReservation == null) {
-      if (other.idReservation != null) {
+    if (this.idBooking == null) {
+      if (other.idBooking != null) {
         return false;
       }
-    } else if (!this.idReservation.equals(other.idReservation)) {
+    } else if (!this.idBooking.equals(other.idBooking)) {
       return false;
     }
-    if (this.idInvitationGuest == null) {
-      if (other.idInvitationGuest != null) {
+    if (this.idInvitedGuest == null) {
+      if (other.idInvitedGuest != null) {
         return false;
       }
-    } else if (!this.idInvitationGuest.equals(other.idInvitationGuest)) {
+    } else if (!this.idInvitedGuest.equals(other.idInvitedGuest)) {
       return false;
     }
     return true;

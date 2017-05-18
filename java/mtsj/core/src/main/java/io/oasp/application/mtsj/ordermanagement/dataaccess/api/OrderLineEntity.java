@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
-import io.oasp.application.mtsj.platemanagement.dataaccess.api.Ingredient;
 
 /**
  * Entity for OrderLine objects to manage each one of the lines of an order.
@@ -25,7 +25,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private OrderEntity order;
 
-  private Long idPlate;
+  private Long idDish;
 
   private List<Ingredient> extras;
 
@@ -56,17 +56,17 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return idDish
    */
-  public Long getIdPlate() {
+  public Long getIdDish() {
 
-    return this.idPlate;
+    return this.idDish;
   }
 
   /**
-   * @param idPlate new value of {@link #getIdPlate}.
+   * @param idDish new value of {@link #getIdDish}.
    */
-  public void setIdPlate(Long idPlate) {
+  public void setIdDish(Long idDish) {
 
-    this.idPlate = idPlate;
+    this.idDish = idDish;
   }
 
   /**
@@ -74,7 +74,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
    */
   @ManyToMany(fetch = FetchType.EAGER)
   @Column(name = "idIngredient")
-  @JoinTable(name = "OrderPlateExtraIngredient", joinColumns = {
+  @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
   public List<Ingredient> getExtras() {
 

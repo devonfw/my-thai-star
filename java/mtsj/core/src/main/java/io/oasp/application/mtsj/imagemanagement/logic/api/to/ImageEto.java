@@ -1,6 +1,6 @@
 package io.oasp.application.mtsj.imagemanagement.logic.api.to;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ImageType;
+import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
@@ -15,9 +15,9 @@ public class ImageEto extends AbstractEto implements Image {
 
   private String content;
 
-  private ImageType imageType;
+  private ContentType contentType;
 
-  private String extension;
+  private String mimeType;
 
   @Override
   public String getName() {
@@ -44,27 +44,27 @@ public class ImageEto extends AbstractEto implements Image {
   }
 
   @Override
-  public ImageType getImageType() {
+  public ContentType getContentType() {
 
-    return this.imageType;
+    return this.contentType;
   }
 
   @Override
-  public void setImageType(ImageType imageType) {
+  public void setContentType(ContentType contentType) {
 
-    this.imageType = imageType;
+    this.contentType = contentType;
   }
 
   @Override
-  public String getExtension() {
+  public String getMimeType() {
 
-    return this.extension;
+    return this.mimeType;
   }
 
   @Override
-  public void setExtension(String extension) {
+  public void setMimeType(String mimeType) {
 
-    this.extension = extension;
+    this.mimeType = mimeType;
   }
 
   @Override
@@ -74,8 +74,8 @@ public class ImageEto extends AbstractEto implements Image {
     int result = super.hashCode();
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.content == null) ? 0 : this.content.hashCode());
-    result = prime * result + ((this.imageType == null) ? 0 : this.imageType.hashCode());
-    result = prime * result + ((this.extension == null) ? 0 : this.extension.hashCode());
+    result = prime * result + ((this.contentType == null) ? 0 : this.contentType.hashCode());
+    result = prime * result + ((this.mimeType == null) ? 0 : this.mimeType.hashCode());
     return result;
   }
 
@@ -107,18 +107,18 @@ public class ImageEto extends AbstractEto implements Image {
     } else if (!this.content.equals(other.content)) {
       return false;
     }
-    if (this.imageType == null) {
-      if (other.imageType != null) {
+    if (this.contentType == null) {
+      if (other.contentType != null) {
         return false;
       }
-    } else if (!this.imageType.equals(other.imageType)) {
+    } else if (!this.contentType.equals(other.contentType)) {
       return false;
     }
-    if (this.extension == null) {
-      if (other.extension != null) {
+    if (this.mimeType == null) {
+      if (other.mimeType != null) {
         return false;
       }
-    } else if (!this.extension.equals(other.extension)) {
+    } else if (!this.mimeType.equals(other.mimeType)) {
       return false;
     }
     return true;
