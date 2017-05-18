@@ -16,7 +16,7 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
 
   private Long orderId;
 
-  private Long idDish;
+  private Long idPlate;
 
   private List<Ingredient> extras;
 
@@ -42,14 +42,14 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
     this.orderId = orderId;
   }
 
-  public Long getIdDish() {
+  public Long getIdPlate() {
 
-    return this.idDish;
+    return this.idPlate;
   }
 
-  public void setIdDish(Long idDish) {
+  public void setIdPlate(Long idPlate) {
 
-    this.idDish = idDish;
+    this.idPlate = idPlate;
   }
 
   public List<Ingredient> getExtras() {

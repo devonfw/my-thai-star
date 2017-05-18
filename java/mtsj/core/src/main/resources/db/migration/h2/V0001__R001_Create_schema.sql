@@ -138,10 +138,10 @@ CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idReservation BIGINT NOT NULL,
-  idInvitationGuest BIGINT
-  CONSTRAINT PK_Order PRIMARY KEY(id),
-  CONSTRAINT FK_Order_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK,
-  CONSTRAINT FK_Order_idInvitationGuest FOREIGN KEY(idInvitationGuest) REFERENCES InvitationGuest(id) NOCHECK
+  idInvitationGuest BIGINT,
+  CONSTRAINT PK_Orders PRIMARY KEY(id),
+  CONSTRAINT FK_Orders_idReservation FOREIGN KEY(idReservation) REFERENCES Reservation(id) NOCHECK,
+  CONSTRAINT FK_Orders_idInvitationGuest FOREIGN KEY(idInvitationGuest) REFERENCES InvitationGuest(id) NOCHECK
 );
 
 -- *** OrderLine ***

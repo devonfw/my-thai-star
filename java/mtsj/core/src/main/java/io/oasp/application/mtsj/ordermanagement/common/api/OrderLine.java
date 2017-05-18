@@ -11,9 +11,9 @@ public interface OrderLine extends ApplicationEntity {
 
   public void setOrderId(Long orderId);
 
-  public Long getIdDish();
+  public Long getIdPlate();
 
-  public void setIdDish(Long idDish);
+  public void setIdPlate(Long idDish);
 
   public List<Ingredient> getExtras();
 

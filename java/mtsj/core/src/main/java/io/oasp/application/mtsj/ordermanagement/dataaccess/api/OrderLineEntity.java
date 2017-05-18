@@ -25,7 +25,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private OrderEntity order;
 
-  private Long idDish;
+  private Long idPlate;
 
   private List<Ingredient> extras;
 
@@ -46,7 +46,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param order new value of {@link #getorder}.
+   * @param order new value of {@link #getOrder}.
    */
   public void setOrder(OrderEntity order) {
 
@@ -56,17 +56,17 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return idDish
    */
-  public Long getIdDish() {
+  public Long getIdPlate() {
 
-    return this.idDish;
+    return this.idPlate;
   }
 
   /**
-   * @param idDish new value of {@link #getidDish}.
+   * @param idPlate new value of {@link #getIdPlate}.
    */
-  public void setIdDish(Long idDish) {
+  public void setIdPlate(Long idPlate) {
 
-    this.idDish = idDish;
+    this.idPlate = idPlate;
   }
 
   /**
@@ -82,7 +82,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param extras new value of {@link #getextras}.
+   * @param extras new value of {@link #getExtras}.
    */
   public void setExtras(List<Ingredient> extras) {
 
@@ -98,7 +98,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param amount new value of {@link #getamount}.
+   * @param amount new value of {@link #getAmount}.
    */
   public void setAmount(int amount) {
 
@@ -114,7 +114,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param comment new value of {@link #getcomment}.
+   * @param comment new value of {@link #getComment}.
    */
   public void setComment(String comment) {
 

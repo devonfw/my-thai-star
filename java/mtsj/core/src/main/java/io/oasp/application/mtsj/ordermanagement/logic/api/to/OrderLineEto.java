@@ -15,7 +15,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
 
   private Long orderId;
 
-  private Long idDish;
+  private Long idPlate;
 
   private List<Ingredient> extras;
 
@@ -26,7 +26,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   @Override
   public Long getOrderId() {
 
-    return orderId;
+    return this.orderId;
   }
 
   @Override
@@ -36,21 +36,21 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   }
 
   @Override
-  public Long getIdDish() {
+  public Long getIdPlate() {
 
-    return idDish;
+    return this.idPlate;
   }
 
   @Override
-  public void setIdDish(Long idDish) {
+  public void setIdPlate(Long idDish) {
 
-    this.idDish = idDish;
+    this.idPlate = this.idPlate;
   }
 
   @Override
   public List<Ingredient> getExtras() {
 
-    return extras;
+    return this.extras;
   }
 
   @Override
@@ -62,7 +62,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   @Override
   public int getAmount() {
 
-    return amount;
+    return this.amount;
   }
 
   @Override
@@ -74,7 +74,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   @Override
   public String getComment() {
 
-    return comment;
+    return this.comment;
   }
 
   @Override
@@ -90,9 +90,9 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     int result = super.hashCode();
 
     result = prime * result + ((this.orderId == null) ? 0 : this.orderId.hashCode());
-    result = prime * result + ((this.idDish == null) ? 0 : this.idDish.hashCode());
+    result = prime * result + ((this.idPlate == null) ? 0 : this.idPlate.hashCode());
     result = prime * result + ((this.extras == null) ? 0 : this.extras.hashCode());
-    result = prime * result + ((Integer) amount).hashCode();
+    result = prime * result + ((Integer) this.amount).hashCode();
     result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
     return result;
   }
@@ -119,11 +119,11 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     } else if (!this.orderId.equals(other.orderId)) {
       return false;
     }
-    if (this.idDish == null) {
-      if (other.idDish != null) {
+    if (this.idPlate == null) {
+      if (other.idPlate != null) {
         return false;
       }
-    } else if (!this.idDish.equals(other.idDish)) {
+    } else if (!this.idPlate.equals(other.idPlate)) {
       return false;
     }
     if (this.extras == null) {
