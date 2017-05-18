@@ -1,13 +1,13 @@
 package io.oasp.application.mtsj.general.common.api;
 
-import io.oasp.application.mtsj.general.common.api.datatype.Role;
-
 import java.security.Principal;
+
+import io.oasp.application.mtsj.general.common.api.datatype.Role;
 
 /**
  * This is the interface for the profile of a user interacting with this application. Currently this can only be a
- * {@link io.oasp.application.mtsj.staffmanagement.dataaccess.api.StaffMemberEntity} however in the future a
- * customer may login and make a reservation, etc.<br/>
+ * {@link io.oasp.application.mtsj.staffmanagement.dataaccess.api.StaffMemberEntity} however in the future a customer
+ * may login and make a booking, etc.<br/>
  * TODO: Also an external system may access the application via some service. Then there would be no user profile or it
  * would be empty...
  *

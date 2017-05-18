@@ -6,12 +6,12 @@ host: 'localhost:8080'
 schemes:
   - http
 paths:
-  /mythaistar/services/rest/Dishmanagement/v1/Dish/Search:
+  /api/Dish/Search:
     post:
       tags:
         - Dish
       summary: Gets the  list of available dishes regarding the filter options
-      operationId: Dish_Dish/Search
+      operationId: Dish_Search
       consumes:
         - application/json
         - text/json
@@ -45,7 +45,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Mailmanagement/v1/Reservation/UpdateInvitation:
+  /api/Mail/Reservation/UpdateInvitation:
     get:
       tags:
         - Mail
@@ -85,7 +85,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Mailmanagement/v1/Reservation/CancelInvitation:
+  /api/Mail/Reservation/CancelInvitation:
     get:
       tags:
         - Mail
@@ -121,7 +121,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Ordermanagement/v1/Order:
+  /api/Order/Order:
     post:
       tags:
         - Order
@@ -162,7 +162,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Ordermanagement/v1/Delete:
+  /api/Order/Delete:
     delete:
       tags:
         - Order
@@ -195,11 +195,14 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Reservationmanagement/v1/Reservation:
+  /api/Reservation/Reservation:
     post:
       tags:
         - Reservation
-      summary: Method to make a reservation with potentiel guests.
+      summary: >-
+        Method to make a reservation with potentiel guests. The method returns
+        the reservation token with the format:
+        {(CRS_|GRS_)}{now.Year}{now.Month:00}{now.Day:00}{_}{MD5({Guest-email}{now.Year}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00})}
       operationId: Reservation_Reservation
       consumes:
         - application/json
@@ -220,7 +223,7 @@ paths:
           schema:
             $ref: '#/definitions/ReservationView'
       responses:
-        '200':
+        '201':
           description: Ok.
           schema:
             type: string
@@ -255,22 +258,24 @@ definitions:
         type: integer
       isFav:
         type: boolean
+      sortBy:
+        type: string
   CategoryView:
     type: object
     properties:
-      Id:
+      id:
         format: int64
         type: integer
-      Name:
+      name:
         type: string
-      Description:
+      description:
         type: string
-      Group:
+      group:
         format: int32
         type: integer
-      Selected:
+      selected:
         type: boolean
-      ShowOrder:
+      showOrder:
         format: int32
         type: integer
   DishView:
@@ -301,14 +306,14 @@ definitions:
       must be represented in Base64String
     type: object
     properties:
-      Name:
+      name:
         type: string
-      Content:
+      content:
         type: string
-      Type:
+      type:
         description: Binary or Url
         type: string
-      Extension:
+      extension:
         type: string
   ExtraIngredientView:
     type: object
@@ -326,9 +331,9 @@ definitions:
   FavouriteView:
     type: object
     properties:
-      IsFav:
+      isFav:
         type: boolean
-      Likes:
+      likes:
         format: int32
         type: integer
   OrderView:
