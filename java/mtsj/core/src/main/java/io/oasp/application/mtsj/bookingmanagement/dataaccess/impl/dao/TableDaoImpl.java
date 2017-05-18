@@ -43,8 +43,10 @@ public class TableDaoImpl extends ApplicationDaoImpl<TableEntity> implements Tab
     EntityPathBase<TableEntity> alias = Alias.$(table);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    int seatsNumber = criteria.getSeatsNumber();
-    query.where(Alias.$(table.getSeatsNumber()).eq(seatsNumber));
+    Integer seatsNumber = criteria.getSeatsNumber();
+    if (seatsNumber != null) {
+      query.where(Alias.$(table.getSeatsNumber()).eq(seatsNumber));
+    }
 
     addOrderBy(query, alias, table, criteria.getSort());
     return findPaginated(criteria, query, alias);

@@ -58,8 +58,10 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     if (email != null) {
       query.where(Alias.$(invitedguest.getEmail()).eq(email));
     }
-    boolean accepted = criteria.isAccepted();
-    query.where(Alias.$(invitedguest.isAccepted()).eq(accepted));
+    Boolean accepted = criteria.isAccepted();
+    if (accepted != null) {
+      query.where(Alias.$(invitedguest.isAccepted()).eq(accepted));
+    }
     Timestamp modificationDate = criteria.getModificationDate();
     if (modificationDate != null) {
       query.where(Alias.$(invitedguest.getModificationDate()).eq(modificationDate));

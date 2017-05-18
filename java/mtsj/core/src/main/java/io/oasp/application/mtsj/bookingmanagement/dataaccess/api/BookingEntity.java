@@ -36,7 +36,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private Timestamp creationDate;
 
-  private boolean canceled;
+  private Boolean canceled;
 
   private BookingType bookingType;
 

@@ -22,7 +22,7 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
 
   private String email;
 
-  private boolean accepted;
+  private Boolean accepted;
 
   private Timestamp modificationDate;
 

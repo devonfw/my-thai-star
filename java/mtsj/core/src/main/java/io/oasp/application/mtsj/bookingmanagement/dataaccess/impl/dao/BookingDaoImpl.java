@@ -69,8 +69,10 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
     if (creationDate != null) {
       query.where(Alias.$(booking.getCreationDate()).eq(creationDate));
     }
-    boolean canceled = criteria.isCanceled();
-    query.where(Alias.$(booking.isCanceled()).eq(canceled));
+    Boolean canceled = criteria.isCanceled();
+    if (canceled != null) {
+      query.where(Alias.$(booking.isCanceled()).eq(canceled));
+    }
     BookingType bookingType = criteria.getBookingType();
     if (bookingType != null && booking.getBookingType() != null) {
       query.where(Alias.$(booking.getBookingType()).eq(bookingType));

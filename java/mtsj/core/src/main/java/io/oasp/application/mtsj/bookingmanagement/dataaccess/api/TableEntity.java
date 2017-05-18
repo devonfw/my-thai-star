@@ -11,7 +11,7 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private static final long serialVersionUID = 1L;
 
-  private int seatsNumber;
+  private Integer seatsNumber;
 
   @Override
   public int getSeatsNumber() {
