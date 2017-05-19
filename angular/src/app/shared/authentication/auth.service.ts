@@ -3,7 +3,7 @@ import { Injectable }     from '@angular/core';
 import { LoginDataService } from '../backend/login/login-data-service';
 import { LoginInfo } from '../backend/login/loginInfo';
 import { MdSnackBar } from '@angular/material';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
         this.loginDataService.login(username, password)
             .map((login: LoginInfo) => login as LoginInfo) // TODO: Replace with a converter
             .subscribe((login: LoginInfo) => {
-                if (!_.isEmpty(login)) {
+                if (!isEmpty(login)) {
                     this.isLogged = true;
                     this.user = login.username;
                     if (login.role === 'waiter') {

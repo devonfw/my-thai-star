@@ -4,7 +4,6 @@ import { BookTableService } from '../shared/book-table.service';
 import { ReservationView } from '../../shared/models/interfaces';
 import {MD_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'public-invitation-dialog',

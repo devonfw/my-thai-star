@@ -4,7 +4,7 @@ import { ExtraView, OrderView, ReservationView } from '../../../shared/models/in
 import { OrderCockpitService } from '../shared/order-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
-import * as _ from 'lodash';
+import {map, reduce} from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -53,9 +53,9 @@ export class OrderDialogComponent implements OnInit {
       this.datat.push(order);
       this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       this.datao = JSON.parse(JSON.stringify(order.orders));
-      _.map(this.datao, (o: OrderView) => {
+      map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
-        o.extras = _.reduce(o.extras, (result: string, opt: ExtraView) => {
+        o.extras = reduce(o.extras, (result: string, opt: ExtraView) => {
           if (opt.selected) {
             return result + ' ' + opt.name + ',';
           } else {

@@ -4,13 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo } from './bookingInfo';
 import { bookedTables } from '../mock-data';
-import * as _ from 'lodash';
+import { maxBy, find, filter } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
 
     getBookingId(): Observable<number> {
-        return Observable.of(_.maxBy(bookedTables, (table: BookingInfo) => { return table.bookingId; }).bookingId + 1);
+        return Observable.of(maxBy(bookedTables, (table: BookingInfo) => { return table.bookingId; }).bookingId + 1);
     }
 
     bookTable(booking: BookingInfo): Observable<number> {
@@ -22,19 +22,19 @@ export class BookingInMemoryService implements IBookingDataService {
     }
 
     getOrder(id: number): Observable<BookingInfo> {
-        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === id; }));
+        return Observable.of(find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === id; }));
     }
 
     getReservations(): Observable<BookingInfo[]> {
-        return Observable.of(_.filter(bookedTables, (booking: BookingInfo) => { return booking.friends.length > 0; }));
+        return Observable.of(filter(bookedTables, (booking: BookingInfo) => { return booking.friends.length > 0; }));
     }
 
     getReservation(id: number): Observable<BookingInfo> {
-        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === id; }));
+        return Observable.of(find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === id; }));
     }
 
     saveOrders(orders: OrderList): Observable<number> {
-        let tableBooked: BookingInfo = _.find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === orders.bookingId; });
+        let tableBooked: BookingInfo = find(bookedTables, (booking: BookingInfo) => { return booking.bookingId === orders.bookingId; });
         if (tableBooked) {
             tableBooked.orders.push.apply(tableBooked.orders, orders.orders);
             return Observable.of(1);

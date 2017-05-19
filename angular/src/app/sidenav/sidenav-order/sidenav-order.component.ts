@@ -5,7 +5,7 @@ import { CommentDialogComponent } from '../comment-dialog/comment-dialog.compone
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
 import { ExtraView, OrderView } from '../../shared/models/interfaces';
-import * as _ from 'lodash';
+import { filter } from 'lodash';
 
 @Component({
   selector: 'public-sidenav-order',
@@ -26,7 +26,7 @@ export class SidenavOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.extras = _.filter(this.order.extras, (extra: ExtraView) => extra.selected);
+    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected);
   }
 
   removeComment(): void {
