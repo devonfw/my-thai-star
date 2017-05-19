@@ -1,3 +1,4 @@
+import { OrderList } from './orderList';
 import { Observable } from 'rxjs/Observable';
 
 import { BackendConfig, BackendType } from '../backend.module';
@@ -44,6 +45,10 @@ export class BookingDataService implements IBookingDataService {
 
     getReservation(id: number): Observable<BookingInfo> {
         return this.usedImplementation.getReservation(id);
+    }
+
+    saveOrders(orders: OrderList): Observable<number> {
+        return this.usedImplementation.saveOrders(orders);
     }
 
 }

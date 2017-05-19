@@ -3,7 +3,7 @@
     <div style= "background-color: white">
       
       <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
-        <div layout="row" style="align-items:center" flex>
+        <div layout="row" style="align-items:center" class="pad-top" flex>
           <button md-icon-button><md-icon>search</md-icon></button>
           <md-input-container color="accent" class="searchBy">
             <input mdInput placeholder="Search our dishes" ngModel name="searchTerm">
@@ -14,18 +14,19 @@
           <md-checkbox ngModel name="starter">Starter</md-checkbox>
           <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
         </div>
-        <div class="pad-sm sortingBy">
-          <md-select style="width: 100%" ngModel name="sortBy" #sorting placeholder="Sort By">
+        <div layout="row" class="pull-bottom pad-sm sortingBy">
+          <md-select style="width: 100%" ngModel name="sortName" #sorting placeholder="Sort By">
             <md-option value="price">
               Price
             </md-option>
             <md-option value="likes">
               Likes
             </md-option>
-            <md-option value="favourites">
-              Favourites
+            <md-option value="name">
+              Name
             </md-option>
           </md-select>
+          <button md-icon-button (click)="changeSortDir()" [mdTooltip]="sortDir"><md-icon>{{sortDirIcon}}</md-icon></button>
         </div>
       </div>
 

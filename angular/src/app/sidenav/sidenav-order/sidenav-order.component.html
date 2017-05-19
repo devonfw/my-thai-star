@@ -3,12 +3,12 @@
   <button md-icon-button (click)="removeOrder()" class="push-bottom-xs"><md-icon style="color: lightgray">clear</md-icon></button>
   
   <div layout="column" class="pull-top-xs" flex>
-    <span class="orderName">{{order.orderName}}</span>
+    <span class="orderName">{{order.name}}</span>
     <div layout="row">
-      <span class="orderIngredients" *ngIf="ingredients.length < 1"> - </span>
-      <span class="orderIngredients" *ngFor="let ingredient of ingredients; let i = index">
-        {{ingredient.name}}
-        <label *ngIf="i < ingredients.length -1 && ingredients.length > 1">, </label>
+      <span class="orderIngredients" *ngIf="extras.length < 1"> - </span>
+      <span class="orderIngredients" *ngFor="let extra of extras; let i = index">
+        {{extra.name}}
+        <label *ngIf="i < extras.length -1 && extras.length > 1">, </label>
       </span>
     </div>
     <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.comment">Remove comment</label>
@@ -20,8 +20,8 @@
   </button>
 
   <div layout="row" class="push-bottom-xs" flex>
-    <button md-icon-button [disabled]="order.number == 1" color="accent" (click)="decreaseOrder()"><md-icon>remove</md-icon></button>  
-    <span class="push-top-sm">{{order.number}}</span>               
+    <button md-icon-button [disabled]="order.amount == 1" color="accent" (click)="decreaseOrder()"><md-icon>remove</md-icon></button>  
+    <span class="push-top-sm">{{order.amount}}</span>               
     <button md-icon-button (click)="increaseOrder()" color="accent"><md-icon>add</md-icon></button>                  
   </div>
 

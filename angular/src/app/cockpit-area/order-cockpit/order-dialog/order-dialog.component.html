@@ -1,4 +1,4 @@
-<h3 md-dialog-title>ORDER DETAILS - REFERENCE NUMBER {{reservationId}} </h3>
+<h3 md-dialog-title>ORDER DETAILS - REFERENCE NUMBER {{bookingId}} </h3>
 <md-divider></md-divider>
 <td-data-table
   #dataTable
@@ -12,7 +12,7 @@
 </td-data-table>
 <div layout="row" class="justify-space-between pad-right pad-left">
   <h4>TOTAL</h4>
-  <h4>{{calculateTotal() | number : '2.2-2'}}</h4>
+  <h4>{{totalPrice | number : '2.2-2'}}</h4>
 </div>
 <md-divider></md-divider>
 <td-paging-bar #pagingBar [firstLast]="false" [pageSizes]="[5, 10, 15]" [total]="datao.length" (change)="page($event)">

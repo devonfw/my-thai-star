@@ -23,7 +23,7 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'creationHour', label: 'Creation time'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'reservationId', label: 'Table'},
+    { name: 'bookingId', label: 'Table'},
   ];
 
   datao: FriendsInvite[] = [];
@@ -45,7 +45,7 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reservationCockpitService.getReservation(this.data.reservationId).subscribe( (reservation: ReservationView) => {
+    this.reservationCockpitService.getReservation(this.data.bookingId).subscribe( (reservation: ReservationView) => {
       this.datat.push(reservation);
       this.datao = reservation.friends;
     });

@@ -16,10 +16,10 @@ export class DishesInMemoryService implements IDishesDataService {
 
   filter( filters: Filter): Observable <Dish[]> {
     // The category filters code probably could be improved
-    return Observable.of(_.orderBy(dishes, [filters.sortBy], ['desc'])
+    return Observable.of(_.orderBy(dishes, [filters.sortBy.name], [filters.sortBy.dir])
                           .filter((dish: Dish) => {
                             if (filters.searchTerm) {
-                              return dish.orderName.toLowerCase().includes(filters.searchTerm.toLowerCase());
+                              return dish.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
                             } else {
                               return dishes;
                             }
@@ -73,7 +73,7 @@ export class DishesInMemoryService implements IDishesDataService {
                             }
                           }).filter((dish: Dish) => {
                             if (filters.favourite) {
-                              return dish.favourite === filters.favourite;
+                              return dish.isfav === filters.favourite;
                             } else {
                               return dishes;
                             }

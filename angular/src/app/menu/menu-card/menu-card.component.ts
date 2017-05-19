@@ -21,24 +21,22 @@ export class MenuCardComponent {
 
   addOrderMenu(): void {
     let order: OrderView = {
-      orderName: this.menuInfo.orderName,
+      name: this.menuInfo.name,
       price: this.menuInfo.price,
-      options: this.menuInfo.options,
-      number: 1,
+      extras: this.menuInfo.extras,
+      amount: 1,
       comment: '',
     };
-    order.orderName = this.menuInfo.orderName;
-    order.options = this.menuInfo.options;
     this.sidenav.addOrder(order);
     this.openSidenav();
   }
 
   changeFavouriteState(): void {
-    this.menuInfo.favourite = !this.menuInfo.favourite;
+    this.menuInfo.isfav = !this.menuInfo.isfav;
   }
 
-  selectedOption(option: ExtraView): void {
-    option.selected ? option.selected = false : option.selected = true;
+  selectedOption(extra: ExtraView): void {
+    extra.selected ? extra.selected = false : extra.selected = true;
   }
 
 }

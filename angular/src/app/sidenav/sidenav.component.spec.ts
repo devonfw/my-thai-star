@@ -4,6 +4,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
+import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../shared/backend/booking/booking-data-service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CovalentModule } from '../shared/covalent.module';
@@ -15,7 +17,9 @@ describe('SidenavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavComponent, SidenavOrderComponent ],
-      providers: [PriceCalculatorService, SidenavService],
+      providers: [PriceCalculatorService,
+                  SidenavService,
+                  {provide: BookingDataService, useClass: BookingInMemoryService}],
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule,

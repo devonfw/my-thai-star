@@ -16,7 +16,7 @@ export class SidenavOrderComponent implements OnInit {
 
   @Input('order') order: OrderView;
   @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
-  ingredients: string[] = [];
+  extras: string[] = [];
 
   constructor(private sidenav: SidenavService,
               public snackBar: MdSnackBar,
@@ -26,7 +26,7 @@ export class SidenavOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ingredients = _.filter(this.order.options, (extra: ExtraView) => extra.selected);
+    this.extras = _.filter(this.order.extras, (extra: ExtraView) => extra.selected);
   }
 
   removeComment(): void {
@@ -46,7 +46,7 @@ export class SidenavOrderComponent implements OnInit {
 
   decreaseOrder(): void {
     this.sidenav.decreaseOrder(this.order);
-    if (this.order.number < 1) {
+    if (this.order.amount < 1) {
       this.removeEmitter.emit();
     }
   }

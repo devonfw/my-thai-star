@@ -1,3 +1,4 @@
+import { OrderList } from './orderList';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -15,6 +16,7 @@ export class BookingRestService implements IBookingDataService {
      private readonly getOrderRestPath: string = '/getorder';
      private readonly getReservationsRestPath: string = '/getreservations';
      private readonly getReservationRestPath: string = '/getreservation';
+     private readonly saveOrdersPath: string = '/saveorders';
 
      private http: Http;
 
@@ -51,5 +53,10 @@ export class BookingRestService implements IBookingDataService {
         return this.http.get(`${config.restServiceRoot}${this.getReservationRestPath}`)
                         .map((res: Response) => res.json());
      }
+
+    saveOrders(orders: OrderList): Observable<number> {
+        return this.http.post(`${config.restServiceRoot}${this.saveOrdersPath}`, {orders: orders})
+                        .map((res: Response) => res.json());
+    }
 
 }

@@ -40,4 +40,8 @@ export class SidenavComponent implements OnInit {
   calculateTotal(): number {
     return this.calculator.getTotalPrice(this.orders);
   }
+
+  sendOrders(bookingId: number): void {
+    this.sidenav.sendOrders(_.toNumber(bookingId));
+  }
 }

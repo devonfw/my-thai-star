@@ -25,22 +25,12 @@ export class BookTableComponent {
       width: this.window.responsiveWidth(),
       data: form.value,
     });
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        form.reset();
-      }
-    });
   }
 
   showInviteDialog(form: FormGroup): void {
     let dialogRef: MdDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
       width: this.window.responsiveWidth(),
       data: form.value,
-    });
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        form.reset();
-      }
     });
   }
 

@@ -1,34 +1,30 @@
 export interface DishView {
-    orderName: string;
-    orderDescription: string;
+    name: string;
+    description: string;
     price: number;
     image: string;
-    options: ExtraView[];
+    extras: ExtraView[];
     likes: number;
-    favourite: boolean;
+    isfav: boolean;
 }
 
 export interface OrderView {
-    orderName: string;
+    name: string;
     price: number;
-    options: ExtraView[];
-    number: number;
+    extras: ExtraView[];
+    amount: number;
     comment: string;
 }
-
-interface ImageView {
-    name: string;
-    content: string;
-    type: ImageType;
-    extension: string;
-}
-
-enum ImageType { BINARY, URL }
 
 export interface ExtraView {
     name: string;
     price: number;
     selected: boolean;
+}
+
+export interface OrderList {
+    bookingId: number;
+    orders: OrderView[];
 }
 
 export interface ReservationView {
@@ -38,7 +34,7 @@ export interface ReservationView {
     creationHour: string;
     nameOwner: string;
     emailOwner: string;
-    reservationId: number;
+    bookingId: number;
     adults?: number;
     kids?: number;
     friends?: FriendsInvite[];
@@ -53,7 +49,7 @@ export interface FriendsInvite {
 export interface Filter {
     favourite: boolean;
     searchTerm: string;
-    sortBy: string;
+    sortBy: {name: string, dir: string};
     price: number;
     likes: number;
     main: boolean;

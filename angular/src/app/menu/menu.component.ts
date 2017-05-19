@@ -13,7 +13,8 @@ import { MdSlider } from '@angular/material';
 export class MenuComponent implements OnInit {
 
     menus: DishView[] = [];
-    expandIcon: string = 'expand_more';
+    sortDir: string = 'desc';
+    sortDirIcon: string = 'vertical_align_bottom';
 
     constructor (private menuService: MenuService) {
     }
@@ -24,7 +25,15 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    applyFilters(filters: Filter): void {
+    changeSortDir(): void {
+      this.sortDir = (this.sortDir === 'desc') ? 'asc' : 'desc';
+      this.sortDirIcon = (this.sortDirIcon === 'vertical_align_bottom') ? 'vertical_align_top' : 'vertical_align_bottom';
+    }
+
+    applyFilters(filters: any): void {
+      filters.sortBy = {};
+      filters.sortBy.name = filters.sortName;
+      filters.sortBy.dir = this.sortDir;
       this.menuService.postFilters(filters).subscribe((data: any) => {
         this.menus = data;
       });
@@ -34,13 +43,8 @@ export class MenuComponent implements OnInit {
       likes.value = 0;
       price.value = 0;
       form.reset();
-      this.menuService.postFilters(form.value).subscribe((data: any) => {
-        this.menus = data;
+      this.menuService.getDishes().subscribe((dishes: DishView[]) => {
+        this.menus = dishes;
       });
     }
-
-    changeExpandIcon(): void {
-      this.expandIcon = (this.expandIcon === 'expand_more') ? 'expand_less' : 'expand_more';
-    }
-
 }

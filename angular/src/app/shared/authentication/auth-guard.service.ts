@@ -22,10 +22,12 @@ export class AuthGuard implements CanActivate {
     if (!this.authService.isLogged) {
       this.snackBar.open('Access denied, please try again', 'OK', {
         duration: 4000,
+        extraClasses: ['bgc-red-600'],
       });
     } else {
       this.snackBar.open('Login successful', 'OK', {
         duration: 4000,
+        extraClasses: ['bgc-green-600'],
       });
     }
 
