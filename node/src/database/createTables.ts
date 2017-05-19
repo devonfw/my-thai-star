@@ -123,7 +123,7 @@ const tables = [
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: 'InvitationGuest',
+        TableName: 'InvitedGuest',
     },
     {
         AttributeDefinitions: [
@@ -199,7 +199,7 @@ const tables = [
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
         },
-        TableName: 'Reservation',
+        TableName: 'Booking',
     },
     {
         AttributeDefinitions: [
