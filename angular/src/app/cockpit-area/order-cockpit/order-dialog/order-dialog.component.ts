@@ -14,13 +14,11 @@ import {map, reduce} from 'lodash';
 export class OrderDialogComponent implements OnInit {
 
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation hour'},
-    { name: 'creationDate', label: 'Creation date'},
-    { name: 'creationHour', label: 'Creation time'},
+    { name: 'dateTime', label: 'Reservation date'},
+    { name: 'creationDateTime', label: 'Creation date'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'bookingId', label: 'Table'},
+    { name: 'tableId', label: 'Table'},
   ];
 
   columnso: ITdDataTableColumn[] = [
@@ -28,7 +26,7 @@ export class OrderDialogComponent implements OnInit {
     { name: 'comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
     { name: 'amount', label: 'Quantity' },
-    { name: 'price', label: 'Price'},
+    { name: 'price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 
   bookingId: number;

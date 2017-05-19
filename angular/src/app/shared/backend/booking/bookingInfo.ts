@@ -1,12 +1,11 @@
 export class BookingInfo {
-    date: string;
-    hour: string;
-    creationDate: string;
-    creationHour: string;
+    dateTime: string;
+    creationDateTime?: string;
     nameOwner: string;
     emailOwner: string;
-    bookingId: number;
-    adults?: number;
+    bookingId?: number;
+    tableId?: number;
+    assitants?: number;
     kids?: number;
     orders?: OrderInfo[];
     friends?: FriendsInvite[];

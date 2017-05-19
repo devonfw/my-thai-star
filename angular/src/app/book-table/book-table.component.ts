@@ -1,3 +1,4 @@
+import { FriendsInvite } from '../shared/backend/booking/bookingInfo';
 import { FormGroup } from '@angular/forms';
 import { ComponentType, MdDialog, MdDialogRef } from '@angular/material';
 import { Component, ViewContainerRef } from '@angular/core';

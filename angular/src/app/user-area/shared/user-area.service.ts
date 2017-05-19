@@ -13,9 +13,22 @@ export class UserAreaService {
                 public authService: AuthService,
                 public loginDataService: LoginDataService) { }
 
-    changePassword(data: any): Observable<number> {
+    changePassword(data: any): void {
         data.username = this.authService.user;
-        return this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword);
+        this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
+                             .subscribe( (res: number) => {
+                                                if (res) {
+                                                    this.snackBar.open('Password change successful', 'OK', {
+                                                        duration: 4000,
+                                                        extraClasses: ['bgc-green-500'],
+                                                    });
+                                                } else {
+                                                    this.snackBar.open('Password change error, old password do not match', 'OK', {
+                                                        duration: 4000,
+                                                        extraClasses: ['bgc-red-600'],
+                                                    });
+                                                }
+                                            });
     }
 
 }
