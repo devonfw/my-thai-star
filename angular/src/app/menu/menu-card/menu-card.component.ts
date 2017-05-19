@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { DishView, ExtraView, OrderView } from '../../shared/models/interfaces';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'public-menu-card',

@@ -4,7 +4,7 @@ import { BookingDataService } from '../../shared/backend/booking/booking-data-se
 import { Injectable } from '@angular/core';
 import { OrderView } from '../../shared/models/interfaces';
 import { MdSnackBar } from '@angular/material';
-import * as _ from 'lodash';
+import { find, isEqual, remove } from 'lodash';
 
 @Injectable()
 export class SidenavService {
@@ -33,8 +33,8 @@ export class SidenavService {
   }
 
   public findOrder(order: OrderView): OrderView {
-    return _.find(this.orders, function(o: OrderView): OrderView {
-      return o.name === order.name && _.isEqual(o.extras, order.extras);
+    return find(this.orders, function(o: OrderView): OrderView {
+      return o.name === order.name && isEqual(o.extras, order.extras);
     });
   }
 
@@ -55,8 +55,8 @@ export class SidenavService {
   }
 
   public removeOrder(order: OrderView): OrderView {
-    return _.remove(this.orders, function(o: OrderView): OrderView {
-       return o.name === order.name && _.isEqual(o.extras, order.extras);
+    return remove(this.orders, function(o: OrderView): OrderView {
+       return o.name === order.name && isEqual(o.extras, order.extras);
     });
   }
 
@@ -69,7 +69,7 @@ export class SidenavService {
     let result: Observable<number> = this.bookingDataService.saveOrders(orderList);
     result.subscribe( (res: number) => {
       if (res) {
-        _.remove(this.orders, function(o: OrderView): boolean {
+        remove(this.orders, function(o: OrderView): boolean {
             return true;
         });
 

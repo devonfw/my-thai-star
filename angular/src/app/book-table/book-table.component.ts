@@ -5,7 +5,6 @@ import { TdDialogService } from '@covalent/core/dialogs/services/dialog.service'
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../shared/windowService/windowService.service';
-import _ from 'lodash';
 
 @Component({
   selector: 'public-book-table',
