@@ -80,7 +80,7 @@ export interface IInvitedGuest {
     idBooking: string;
     guestToken: string;
     email: string;
-    accepted: boolean | null;
+    acepted?: boolean;
     modificationDate: string;
     order?: string;
 }

@@ -9,6 +9,7 @@ import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
 import * as moment from 'moment';
 import * as md5 from 'md5';
+import * as nodemailer from 'nodemailer';
 
 // Dynamo
 /*
@@ -25,6 +26,8 @@ if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
 
 const maxPrice = 50;
 const dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
+const bookingExpiration = 1;
+const bookingExpirationH = 'hour';
 
 export default {
     /*getDihses: async (callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
@@ -71,7 +74,7 @@ callback(err);
     getDishes: async (filter: types.IFilterView,
                       callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         // check filter values. Put the correct if neccessary
-        util.checkFilter(filter);
+        checkFilter(filter);
 
         try {
             // filter by category
@@ -112,7 +115,7 @@ callback(err);
                 const dishes: types.IDishView[] = await fn.
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
-                    map(util.dishToDishview()).
+                    map(dishToDishview()).
                     where('price', filter.maxPrice, '<=').
                     filter((o: any) => {
                         return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
@@ -137,6 +140,16 @@ callback(err);
         const bookDate = moment(reserv.date);
 
         try {
+            let table;
+            if (reserv.type.name === 'booking'){
+                table = await getFreeTable(reserv.date, reserv.assistants);
+
+                if (table === 'error') {
+                    callback({code: 400, message: 'No more tables'});
+                    return;
+                }
+            }
+
             const booking: dbtypes.IBooking = {
                 id: util.getNanoTime().toString(),
                 // TODO: get user from session or check if is a guest
@@ -150,7 +163,7 @@ callback(err);
                 canceled: false,
                 bookingType: reserv.type.name,
                 assistants: (reserv.type.name === 'booking') ? reserv.assistants : undefined,
-                table: (reserv.type.name === 'booking') ? util.getTable() : undefined,
+                table: (reserv.type.name === 'booking') ? table : undefined,
             };
 
             const inv: dbtypes.IInvitedGuest[] = [];
@@ -166,7 +179,6 @@ callback(err);
                         idBooking: booking.id,
                         guestToken: 'GB_' + now.format('YYYYMMDD') + '_' + md5(elem + now.format('YYYYMMDDHHmmss')),
                         email: elem,
-                        accepted: null,
                         modificationDate: now.format(dateFormat),
                         order: undefined,
                     });
@@ -418,17 +430,128 @@ callback(err);
 
         callback(null);
 
-        const reservation = await fn.table('Booking').promise();
-        const invited = await fn.table('InvitedGuest').promise();
-        const order = await fn.table('Order').promise();
+        // const reservation = await fn.table('Booking').promise();
+        // const invited = await fn.table('InvitedGuest').promise();
+        // const order = await fn.table('Order').promise();
 
-        console.log('\n\n\n');
-        console.log(reservation);
-        console.log('\n\n\n');
-        console.log(invited);
-        console.log('\n\n\n');
-        console.log(order);
+        // console.log('\n\n\n');
+        // console.log(reservation);
+        // console.log('\n\n\n');
+        // console.log(invited);
+        // console.log('\n\n\n');
+        // console.log(order);
         // TODO: send emails
 
     },
+    updateInvitation: async (token: string, response: boolean, callback: (err: types.IError | null) => void) => {
+        let reg: dbtypes.IInvitedGuest[];
+        try {
+            reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise();
+
+            // errors
+            if (reg.length === 0) {
+                callback({ code: 400, message: 'Invalid token given' });
+                return;
+            }
+
+            if (reg[0].acepted !== undefined && reg[0].acepted === false) {
+                callback({ code: 400, message: 'The invitation is canceled, you can\'t do any modification' });
+                return;
+            }
+
+            const booking = await fn.table('Booking', reg[0].idBooking).promise();
+            if (moment(booking[0].bookingDate, dateFormat).diff(moment().add(10, 'minutes')) < 0) {
+                callback({ code: 500, message: 'You can\'t do this operation at this moment' });
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+            callback(err);
+            return;
+        }
+
+        const oldAcepted = reg[0].acepted;
+        const oldModificationDate = reg[0].modificationDate;
+
+        try {
+            reg[0].acepted = response;
+            reg[0].modificationDate = moment().format(dateFormat);
+
+            await fn.insert('InvitedGuest', reg[0]).promise();
+        } catch (err) {
+            console.error(err);
+            callback(err);
+            return;
+        }
+
+        try {
+            const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise();
+
+            if (orders.length > 0) {
+                await fn.delete('Order', orders.map((elem: any) => elem.id));
+            }
+        } catch (err) {
+            console.error(err);
+            callback(err);
+            reg[0].acepted = oldAcepted;
+            reg[0].modificationDate = oldModificationDate;
+            fn.insert('InvitedGuest', reg[0]).promise();
+            return;
+        }
+
+        callback(null);
+    },
 };
+
+async function getFreeTable(date: string, assistants: number) {
+    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise(),
+        fn.table('Booking').filter((elem: dbtypes.IBooking) => {
+            const bookDate = moment(elem.bookingDate, dateFormat);
+            return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
+        }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
+
+    console.log(booking);
+
+    tables = tables.filter((elem: dbtypes.ITable) => {
+        return !booking.includes(elem.id) && elem.seatsNumber >= assistants;
+    });
+
+    if (tables.length > 0){
+        return tables[0].id;
+    }
+
+    return 'error';
+}
+
+function dishToDishview() {
+    return (element: any) => {
+        element.id = Number(element.id);
+        // TODO: get fav & likes
+        element.favourite = {
+            isFav: false,
+            likes: 20,
+        };
+
+        element.extras.forEach((element2: any) => {
+            delete (element2.description);
+            element2.selected = false;
+            return element2;
+        });
+
+        return element;
+    };
+}
+
+/**
+ * Check all params of FilterView and put the correct values if neccesary
+ *
+ * @param {types.IFilterView} filter
+ * @returns
+ */
+export function checkFilter(filter: types.IFilterView) {
+    filter.maxPrice = filter.maxPrice || 50;
+    filter.minLikes = filter.minLikes || 0;
+    filter.searchBy = filter.searchBy || '';
+    filter.isFab = filter.isFab || false;
+    filter.categories = filter.categories || [];
+}

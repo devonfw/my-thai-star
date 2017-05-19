@@ -290,6 +290,13 @@ const users: types.IUser[] = [
     },
 ];
 
+const tables: types.ITable[] = [
+    {
+        id: '1',
+        seatsNumber: 3,
+    },
+];
+
 fn.insert('Dish', Dishes).then((res: string) => {
     console.log('\nAll dishes inserted');
     console.log(res);
@@ -323,6 +330,13 @@ fn.insert('User', users).then((res: string) => {
     console.log(res);
 
     const user2 = users[0];
+}, (err: Error) => {
+    console.error(err);
+});
+
+fn.insert('Table', tables).then((res: string) => {
+    console.log('\nAll tables inserted');
+    console.log(res);
 }, (err: Error) => {
     console.error(err);
 });

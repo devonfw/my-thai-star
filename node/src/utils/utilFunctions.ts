@@ -34,10 +34,6 @@ export function relationArrayOfIds(table2: any, propArray: string, propT2: strin
     };
 }
 
-export function getTable(){
-    return '1';
-}
-
 export function getNanoTime(){
     const hrTime = process.hrtime();
     return hrTime[0] * 1000000000 + hrTime[1];
@@ -47,25 +43,6 @@ export function validEmail(email: string): boolean {
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     return mailformat.test(email);
-}
-
-export function dishToDishview() {
-    return (element: any) => {
-        element.id = Number(element.id);
-        // TODO: get fav & likes
-        element.favourite = {
-            isFav: false,
-            likes: 20,
-        };
-
-        element.extras.forEach((element2: any) => {
-            delete (element2.description);
-            element2.selected = false;
-            return element2;
-        });
-
-        return element;
-    };
 }
 
 /**
@@ -101,18 +78,4 @@ export function objectToArray(object: any) {
     }
 
     return res;
-}
-
-/**
- * Check all params of FilterView and put the correct values if neccesary
- *
- * @param {types.IFilterView} filter
- * @returns
- */
-export function checkFilter(filter: types.IFilterView) {
-    filter.maxPrice = filter.maxPrice || 50;
-    filter.minLikes = filter.minLikes || 0;
-    filter.searchBy = filter.searchBy || '';
-    filter.isFab = filter.isFab || false;
-    filter.categories = filter.categories || [];
 }
