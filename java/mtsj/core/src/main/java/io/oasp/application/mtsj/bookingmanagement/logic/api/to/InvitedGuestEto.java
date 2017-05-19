@@ -31,7 +31,7 @@ public class InvitedGuestEto extends AbstractEto implements InvitedGuest {
   @Override
   public void setBookingId(Long bookingId) {
 
-    this.bookingId = this.bookingId;
+    this.bookingId = bookingId;
   }
 
   @Override

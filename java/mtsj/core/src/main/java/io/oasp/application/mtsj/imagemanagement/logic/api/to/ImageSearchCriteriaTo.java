@@ -1,6 +1,6 @@
 package io.oasp.application.mtsj.imagemanagement.logic.api.to;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
+import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**

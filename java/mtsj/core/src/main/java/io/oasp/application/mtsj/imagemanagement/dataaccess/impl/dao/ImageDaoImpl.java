@@ -6,8 +6,8 @@ import com.mysema.query.alias.Alias;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.dao.ImageDao;
 import io.oasp.application.mtsj.imagemanagement.logic.api.to.ImageSearchCriteriaTo;

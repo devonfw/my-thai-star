@@ -19,6 +19,8 @@ public class OrderEto extends AbstractEto implements Order {
 
   private List<OrderLineEntity> lines;
 
+  private String token;
+
   public List<OrderLineEntity> getLines() {
 
     return this.lines;
@@ -92,5 +94,21 @@ public class OrderEto extends AbstractEto implements Order {
       return false;
     }
     return true;
+  }
+
+  /**
+   * @return token
+   */
+  public String getToken() {
+
+    return this.token;
+  }
+
+  /**
+   * @param token new value of {@link #getToken}.
+   */
+  public void setToken(String token) {
+
+    this.token = token;
   }
 }

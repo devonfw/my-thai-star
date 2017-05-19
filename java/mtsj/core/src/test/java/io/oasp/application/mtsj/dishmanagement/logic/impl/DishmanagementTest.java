@@ -32,7 +32,7 @@ public class DishmanagementTest extends ComponentTest {
    * This test gets all the available platees using an empty SearchCriteria object
    */
   @Test
-  public void findAllPlates() {
+  public void findAllDishes() {
 
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<Category> categories = new ArrayList<>();
@@ -45,7 +45,7 @@ public class DishmanagementTest extends ComponentTest {
    * This test filters all the available platees that match the SearchCriteria object
    */
   @Test
-  public void filterPlates() {
+  public void filterDishes() {
 
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<Category> categories = new ArrayList<>();

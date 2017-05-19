@@ -1,7 +1,7 @@
 package io.oasp.application.mtsj.imagemanagement.common.api;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
-import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
+import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 
 /**
  * Interface for {@link Image}

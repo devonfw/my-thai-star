@@ -17,7 +17,7 @@ import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEnt
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
 
 /**
- * Entity for OrderLine objects to manage each one of the lines of an order.
+ * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderLine} of an {@link OrderEntity}.
  */
 @Entity
 @Table(name = "OrderLine")

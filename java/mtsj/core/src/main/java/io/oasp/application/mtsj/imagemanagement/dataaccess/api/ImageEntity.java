@@ -3,9 +3,9 @@ package io.oasp.application.mtsj.imagemanagement.dataaccess.api;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ContentType;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.imagemanagement.common.api.Image;
+import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 
 /**
  * @author pparrado

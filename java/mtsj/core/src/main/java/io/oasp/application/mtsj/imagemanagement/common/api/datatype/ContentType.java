@@ -1,4 +1,4 @@
-package io.oasp.application.mtsj.general.common.api.datatype;
+package io.oasp.application.mtsj.imagemanagement.common.api.datatype;
 
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 
