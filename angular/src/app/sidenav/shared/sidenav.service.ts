@@ -4,7 +4,9 @@ import { BookingDataService } from '../../shared/backend/booking/booking-data-se
 import { Injectable } from '@angular/core';
 import { OrderView } from '../../shared/models/interfaces';
 import { MdSnackBar } from '@angular/material';
-import { find, isEqual, remove } from 'lodash';
+import { find, isEqual, remove, cloneDeep } from 'lodash';
+
+const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) => o.name === orderToFind.name && isEqual(o.extras, orderToFind.extras);
 
 @Injectable()
 export class SidenavService {
@@ -33,56 +35,48 @@ export class SidenavService {
   }
 
   public findOrder(order: OrderView): OrderView {
-    return find(this.orders, function(o: OrderView): OrderView {
-      return o.name === order.name && isEqual(o.extras, order.extras);
-    });
+    return find(this.orders, isOrderEqual(order));
   }
 
   public addOrder(order: OrderView): void {
     if (this.findOrder(order)) {
       this.increaseOrder(order);
     } else {
-      this.orders.push(JSON.parse(JSON.stringify(order)));
+      this.orders.push(cloneDeep(order));
     }
   }
 
   public increaseOrder(order: OrderView): number {
-    return this.findOrder(order).amount = this.findOrder(order).amount + 1;
+    return this.findOrder(order).amount += 1;
   }
 
   public decreaseOrder(order: OrderView): number {
-    return this.findOrder(order).amount = this.findOrder(order).amount - 1;
+    return this.findOrder(order).amount -= 1;
   }
 
   public removeOrder(order: OrderView): OrderView {
-    return remove(this.orders, function(o: OrderView): OrderView {
-       return o.name === order.name && isEqual(o.extras, order.extras);
-    });
+    return remove(this.orders, isOrderEqual(order));
   }
 
   public sendOrders(id: number): void {
     let orderList: OrderList = {
       bookingId: id,
-      orders: JSON.parse(JSON.stringify(this.orders)),
+      orders: cloneDeep(this.orders),
     };
     this.closeSideNav();
-    let result: Observable<number> = this.bookingDataService.saveOrders(orderList);
-    result.subscribe( (res: number) => {
-      if (res) {
-        remove(this.orders, function(o: OrderView): boolean {
-            return true;
-        });
-
-        this.snackBar.open('Order correctly noted', 'OK', {
-          duration: 4000,
-          extraClasses: ['bgc-green-600'],
-        });
-      } else {
-        this.snackBar.open('Booking ID not existing', 'OK', {
-          duration: 8000,
-          extraClasses: ['bgc-red-600'],
-        });
-      }
-    });
+    this.bookingDataService.saveOrders(orderList)
+      .subscribe(() => {
+          this.orders = [];
+          this.snackBar.open('Order correctly noted', 'OK', {
+            duration: 4000,
+            extraClasses: ['bgc-green-600'],
+          });
+      },
+      (error: any) => {
+          this.snackBar.open('Booking ID not existing', 'OK', {
+            duration: 8000,
+            extraClasses: ['bgc-red-600'],
+          });
+      });
    }
 }

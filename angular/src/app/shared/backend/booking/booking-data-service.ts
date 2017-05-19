@@ -47,7 +47,7 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.getReservation(id);
     }
 
-    saveOrders(orders: OrderList): Observable<number> {
+    saveOrders(orders: OrderList): Observable<BookingInfo> {
         return this.usedImplementation.saveOrders(orders);
     }
 
