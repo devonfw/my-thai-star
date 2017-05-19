@@ -45,7 +45,7 @@ export class HeaderComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         if (result.email) {
-          this.auth.register(result.username, result.password, result.email);
+          this.auth.register(result.email, result.password);
         } else {
           this.auth.login(result.username, result.password);
           this.router.navigate(['orders']);

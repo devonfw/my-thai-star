@@ -29,8 +29,20 @@ export class AuthService {
             });
     }
 
-    register(username: string, password: string, email: string): void {
-        // send register info
+    register(email: string, password: string): void {
+        this.loginDataService.register(email, password).subscribe( (res: number) => {
+            if (res) {
+                this.snackBar.open('Register successful', 'OK', {
+                    duration: 4000,
+                    extraClasses: ['bgc-green-500'],
+                });
+            } else {
+                this.snackBar.open('Register failed, username already in use', 'OK', {
+                    duration: 4000,
+                    extraClasses: ['bgc-red-600'],
+                });
+            }
+        });
     }
 
     logout(): void {
