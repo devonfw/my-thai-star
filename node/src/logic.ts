@@ -9,7 +9,8 @@ import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
 import * as moment from 'moment';
 import * as md5 from 'md5';
-import * as nodemailer from 'nodemailer';
+import { Mailer } from './utils/mailer';
+import * as pug from 'pug';
 
 // Dynamo
 /*
@@ -28,6 +29,7 @@ const maxPrice = 50;
 const dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 const bookingExpiration = 1;
 const bookingExpirationH = 'hour';
+const mailer = new Mailer('Gmail', 'mythaistarrestaurant@gmail.com', 'mythaistarrestaurant2501');
 
 export default {
     /*getDihses: async (callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
@@ -70,9 +72,8 @@ callback(null, dishes);
 callback(err);
 }
 },*/
-
     getDishes: async (filter: types.IFilterView,
-                      callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+        callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         // check filter values. Put the correct if neccessary
         checkFilter(filter);
 
@@ -135,17 +136,17 @@ callback(err);
         }
     },
     createBooking: async (reserv: types.IReservationView,
-                          callback: (err: types.IError | null, booToken?: string) => void) => {
+        callback: (err: types.IError | null, booToken?: string) => void) => {
         const date = moment();
-        const bookDate = moment(reserv.date);
+        const bookDate = moment(reserv.date, dateFormat);
 
         try {
             let table;
-            if (reserv.type.name === 'booking'){
+            if (reserv.type.name === 'booking') {
                 table = await getFreeTable(reserv.date, reserv.assistants);
 
                 if (table === 'error') {
-                    callback({code: 400, message: 'No more tables'});
+                    callback({ code: 400, message: 'No more tables' });
                     return;
                 }
             }
@@ -196,7 +197,29 @@ callback(err);
 
             callback(null, booking.bookingToken);
 
-            // TODO: send all mails
+            if (reserv.type.name === 'booking') {
+
+            } else {
+                mailer.sendEmail(reserv.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
+                    title: 'Invitation created',
+                    name: reserv.name,
+                    date: bookDate.format('YYYY-MM-DD'),
+                    hour: bookDate.format('HH:mm:ss'),
+                    guest: reserv.guestList,
+                }));
+
+                reserv.guestList.forEach((elem: string) => {
+                    mailer.sendEmail(elem, '[MyThaiStar] Your have a new invitation', undefined, pug.renderFile('./src/emails/createInvitationGuest.pug', {
+                        title: 'You have been invited',
+                        email: elem,
+                        name: reserv.name,
+                        hostEmail: reserv.email,
+                        date: bookDate.format('YYYY-MM-DD'),
+                        hour: bookDate.format('HH:mm:ss'),
+                        guest: reserv.guestList,
+                    }));
+                });
+            }
         } catch (err) {
             console.log(err);
             callback(err);
@@ -505,10 +528,10 @@ callback(err);
 
 async function getFreeTable(date: string, assistants: number) {
     let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise(),
-        fn.table('Booking').filter((elem: dbtypes.IBooking) => {
-            const bookDate = moment(elem.bookingDate, dateFormat);
-            return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
-        }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
+    fn.table('Booking').filter((elem: dbtypes.IBooking) => {
+        const bookDate = moment(elem.bookingDate, dateFormat);
+        return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
+    }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
 
     console.log(booking);
 
@@ -516,7 +539,7 @@ async function getFreeTable(date: string, assistants: number) {
         return !booking.includes(elem.id) && elem.seatsNumber >= assistants;
     });
 
-    if (tables.length > 0){
+    if (tables.length > 0) {
         return tables[0].id;
     }
 
