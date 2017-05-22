@@ -19,7 +19,7 @@ describe('HeaderComponent', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [WindowService, AuthService, LoginDataService],
+      providers: [WindowService, AuthService],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
