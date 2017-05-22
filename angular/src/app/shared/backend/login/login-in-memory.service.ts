@@ -9,7 +9,7 @@ import { omit, find } from 'lodash';
 export class LoginInMemoryService implements ILoginDataService {
 
   login(username: string, password: string): Observable <LoginInfo> {
-   return Observable.of(omit(find(users, { 'username': username, 'password': password }), 'password'));
+    return Observable.of(omit(find(users, { 'username': username, 'password': password }), 'password'));
   }
 
   register(email: string, password: string): Observable <number> {

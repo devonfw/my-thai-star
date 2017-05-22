@@ -1,7 +1,7 @@
 import { UserAreaService } from '../shared/user-area.service';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
-import { MdDialogRef, MdSnackBar } from '@angular/material';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'public-password-dialog',
@@ -11,8 +11,7 @@ import { MdDialogRef, MdSnackBar } from '@angular/material';
 export class PasswordDialogComponent {
 
   constructor(private dialog: MdDialogRef<PasswordDialogComponent>,
-              private userService: UserAreaService,
-              public snackBar: MdSnackBar) { }
+              private userService: UserAreaService) { }
 
   passwordSubmit(form: FormGroup): void {
     this.dialog.close();

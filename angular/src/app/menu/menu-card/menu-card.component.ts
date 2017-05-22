@@ -14,20 +14,15 @@ export class MenuCardComponent {
   constructor(private sidenav: SidenavService) {
   }
 
-  openSidenav(): void {
-    this.sidenav.openSideNav();
-  }
-
   addOrderMenu(): void {
-    let order: OrderView = {
+    this.sidenav.addOrder({
       name: this.menuInfo.name,
       price: this.menuInfo.price,
       extras: this.menuInfo.extras,
       amount: 1,
       comment: '',
-    };
-    this.sidenav.addOrder(order);
-    this.openSidenav();
+    });
+    this.sidenav.openSideNav();
   }
 
   changeFavouriteState(): void {

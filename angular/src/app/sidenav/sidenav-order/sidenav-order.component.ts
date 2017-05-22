@@ -1,6 +1,6 @@
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
-import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
@@ -19,7 +19,6 @@ export class SidenavOrderComponent implements OnInit {
   extras: string[] = [];
 
   constructor(private sidenav: SidenavService,
-              public snackBar: MdSnackBar,
               public dialog: MdDialog,
               private _dialogService: TdDialogService,
               private calculator: PriceCalculatorService,
