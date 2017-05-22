@@ -1,6 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.common.api;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
@@ -46,5 +47,9 @@ public interface Booking extends ApplicationEntity {
   public String getEmail();
 
   public void setEmail(String email);
+
+  void setInvitedEmails(List<String> invites);
+
+  public List<String> getInvitedEmails();
 
 }

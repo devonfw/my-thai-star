@@ -162,6 +162,14 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
         .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
 
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
+    if (!booking.getInvitedEmails().isEmpty()) {
+      for (String email : booking.getInvitedEmails()) {
+        InvitedGuestEto invited = new InvitedGuestEto();
+        invited.setEmail(email);
+        invited.setBookingId(bookingEntity.getId());
+        bookingEntity.getInvited().add(getBeanMapper().map(saveInvitedGuest(invited), InvitedGuestEntity.class));
+      }
+    }
     LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
 
     return getBeanMapper().map(resultEntity, BookingEto.class);

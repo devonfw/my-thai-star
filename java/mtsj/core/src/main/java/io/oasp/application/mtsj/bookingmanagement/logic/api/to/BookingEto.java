@@ -1,6 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
@@ -32,6 +33,8 @@ public class BookingEto extends AbstractEto implements Booking {
   private Long tableId;
 
   private String email;
+
+  private List<String> invitesId;
 
   @Override
   public String getName() {
@@ -139,6 +142,18 @@ public class BookingEto extends AbstractEto implements Booking {
   public void setTableId(Long tableId) {
 
     this.tableId = tableId;
+  }
+
+  @Override
+  public void setInvitedEmails(List<String> invitesId) {
+
+    this.invitesId = invitesId;
+  }
+
+  @Override
+  public List<String> getInvitedEmails() {
+
+    return this.invitesId;
   }
 
   @Override
