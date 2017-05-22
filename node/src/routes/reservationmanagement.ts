@@ -25,7 +25,7 @@ router.post('/v1/Reservation', (req: Request, res: Response) => {
         })) {
         res.status(400).json({ message: 'Invalid invitation email' });
     } else {
-        bussiness.createReservation(req.body, (err: types.IError | null, resToken?: string) => {
+        bussiness.createBooking(req.body, (err: types.IError | null, resToken?: string) => {
             if (err) {
                 res.status(500).json({ message: err.message });
             } else {

@@ -2,6 +2,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 
+import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { MenuCardComponent } from './menu-card.component';
 import { CovalentModule } from '../../shared/covalent.module';
 
@@ -12,7 +14,9 @@ describe('MenuCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenuCardComponent ],
-      providers: [SidenavService],
+      providers: [
+        SidenavService,
+        { provide: BookingDataService, useClass: BookingInMemoryService}],
       imports: [
         CovalentModule,
       ],
@@ -24,13 +28,13 @@ describe('MenuCardComponent', () => {
     fixture = TestBed.createComponent(MenuCardComponent);
     component = fixture.componentInstance;
     component.menuInfo = {
-      orderName: '',
-      orderDescription: '',
+      name: '',
+      description: '',
       price: 0,
       image: 'string',
-      options: [],
+      extras: [],
       likes: 0,
-      favourite: true,
+      isfav: true,
     };
     fixture.detectChanges();
   });

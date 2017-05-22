@@ -1,10 +1,10 @@
 export class Dish {
-    favourite: boolean;
+    isfav: boolean;
     image: string;
     likes: number;
-    options: {name: string, price: number, selected: boolean}[];
-    orderDescription: string;
-    orderName: string;
+    extras: {name: string, price: number, selected: boolean}[];
+    description: string;
+    name: string;
     price: number;
     categories: {
         main: boolean,

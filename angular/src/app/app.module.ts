@@ -39,6 +39,7 @@ import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { AuthService } from './shared/authentication/auth.service';
 import { OrderCockpitService } from './cockpit-area/order-cockpit/shared/order-cockpit.service';
 import { ReservationCockpitService } from './cockpit-area/reservation-cockpit/shared/reservation-cockpit.service';
+import { UserAreaService } from './user-area/shared/user-area.service';
 
 // DIRECTIVES
 import { EqualValidatorDirective } from './user-area/login-dialog/equal-validator.directive';
@@ -85,6 +86,7 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     AuthService,
     OrderCockpitService,
     ReservationCockpitService,
+    UserAreaService,
   ],
   entryComponents: [
     BookTableDialogComponent,

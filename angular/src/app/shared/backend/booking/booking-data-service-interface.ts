@@ -1,3 +1,4 @@
+import { OrderList } from './orderList';
 import { Observable } from 'rxjs/Observable';
 import { BookingInfo } from './bookingInfo';
 
@@ -9,5 +10,6 @@ export interface IBookingDataService {
     getReservations(): Observable<BookingInfo[]>;
     getReservation(id: number): Observable<BookingInfo>;
     bookTable(booking: BookingInfo): Observable<number>;
+    saveOrders(orders: OrderList): Observable<BookingInfo>;
 
 }

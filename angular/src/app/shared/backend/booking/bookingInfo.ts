@@ -5,7 +5,7 @@ export class BookingInfo {
     creationHour: string;
     nameOwner: string;
     emailOwner: string;
-    reservationId: number;
+    bookingId: number;
     adults?: number;
     kids?: number;
     orders?: OrderInfo[];
@@ -18,10 +18,10 @@ export class FriendsInvite {
 }
 
 export class OrderInfo {
-    orderName: string;
+    name: string;
     price: number;
-    options: ExtraInfo[];
-    number: number;
+    extras: ExtraInfo[];
+    amount: number;
     comment: string;
 }
 

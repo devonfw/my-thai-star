@@ -24,7 +24,7 @@ export class OrderCockpitComponent implements OnInit {
     { name: 'date', label: 'Reservation date'},
     { name: 'hour', label: 'Reservation time'},
     { name: 'emailOwner', label: 'Email' },
-    { name: 'reservationId', label: 'Reference number'},
+    { name: 'bookingId', label: 'Reference number'},
   ];
 
   filteredData: ReservationView[];

@@ -78,12 +78,12 @@ export class DishesGraphQlService implements IDishesDataService {
   // TODO: see the comment above
   private convertToBackendDish(dish: GqlDish): Dish {
    return {
-        favourite: false,
+        isfav: false,
         image: dish.image,
         likes: dish.likes,
-        options: dish.ingredients.map((extra: any) => ({name: extra.name, price: extra.price, selected: false})),
-        orderDescription: dish.description,
-        orderName: dish.name,
+        extras: dish.ingredients.map((extra: any) => ({name: extra.name, price: extra.price, selected: false})),
+        description: dish.description,
+        name: dish.name,
         price: dish.price,
         categories: { // added by Roberto, please, revise
           main: dish.categories.main,

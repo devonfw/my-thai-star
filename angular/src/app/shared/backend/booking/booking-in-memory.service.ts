@@ -1,15 +1,16 @@
+import { OrderList } from './orderList';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo } from './bookingInfo';
 import { bookedTables } from '../mock-data';
-import * as _ from 'lodash';
+import { maxBy, find, filter } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
 
     getBookingId(): Observable<number> {
-        return Observable.of(bookedTables[bookedTables.length - 1].reservationId + 1);
+        return Observable.of(maxBy(bookedTables, (table: BookingInfo) => table.bookingId).bookingId + 1);
     }
 
     bookTable(booking: BookingInfo): Observable<number> {
@@ -21,15 +22,24 @@ export class BookingInMemoryService implements IBookingDataService {
     }
 
     getOrder(id: number): Observable<BookingInfo> {
-        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.reservationId === id; }));
+        return Observable.of(find(bookedTables, (booking: BookingInfo) => booking.bookingId === id));
     }
 
     getReservations(): Observable<BookingInfo[]> {
-        return Observable.of(_.filter(bookedTables, (booking: BookingInfo) => { return booking.friends.length > 0; }));
+        return Observable.of(filter(bookedTables, (booking: BookingInfo) => booking.friends.length > 0));
     }
 
     getReservation(id: number): Observable<BookingInfo> {
-        return Observable.of(_.find(bookedTables, (booking: BookingInfo) => { return booking.reservationId === id; }));
+        return Observable.of(find(bookedTables, (booking: BookingInfo) => booking.bookingId === id));
+    }
+
+    saveOrders(orderList: OrderList): Observable<BookingInfo> {
+        const tableBooked: BookingInfo = find(bookedTables, (booking: BookingInfo) => booking.bookingId === orderList.bookingId);
+        if (!tableBooked) {
+            return Observable.throw(undefined);
+        }
+        tableBooked.orders = tableBooked.orders.concat(orderList.orders);
+        return Observable.of(tableBooked);
     }
 
 }

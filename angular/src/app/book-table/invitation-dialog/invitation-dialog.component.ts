@@ -28,15 +28,16 @@ export class InvitationDialogComponent implements OnInit {
       creationHour: moment().format('LT'),
       nameOwner: this.data.nameOwner,
       emailOwner: this.data.emailOwner,
-      reservationId: -1,
+      bookingId: -1,
       friends: this.data.friends,
     };
-    this.invitationService.getTableId().subscribe( (reservationId: number) => {
-      this.data.reservationId = reservationId;
+    this.invitationService.getTableId().subscribe( (bookingId: number) => {
+      this.data.bookingId = bookingId;
     });
   }
 
   sendInvitation(): void {
+    this.data.orders = [];
     this.invitationService.postInvitationTable(this.data).subscribe( () => {
       this.snackBar.open('Table succesfully booked', 'OK', {
         duration: 7000,

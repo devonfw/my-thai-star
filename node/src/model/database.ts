@@ -10,9 +10,11 @@ export interface IDish {
 export interface IImage {
     name: string;
     content?: string;
-    type: string;
-    extension: string;
+    contentType: number;
+    mimeType: string;
 }
+
+export enum ContentTypes {url = 0, binary}
 
 export interface IIngredient {
     id: string;
@@ -39,34 +41,33 @@ export interface IOrderLine {
     idDish: string;
     extras: string[];
     amount: number;
-    comment: string;
+    comment?: string;
 }
 
 export interface IOrder {
     id: string;
     lines: IOrderLine[];
     // canceled: boolean;
-    idReservation: string;
-    idInvitation?: string;
-
+    idBooking: string;
+    idInvitedGuest?: string;
 }
 
-export interface IReservation {
+export interface IBooking {
     id: string;
     userId?: string;
     name: string;
     email: string;
-    reservationToken: string;
+    bookingToken: string;
     // comments: string | null;
     bookingDate: string;
     expirationDate: string;
     creationDate: string;
     canceled: boolean;
-    reservationType: string;
-    assistants?: number | null;
-    guestList?: string[] | null;
-    order?: string | null;
-    table?: string | null;
+    bookingType: string;
+    assistants?: number;
+    guestList?: string[];
+    order?: string;
+    table?: string;
 }
 
 export interface ITable {
@@ -74,12 +75,12 @@ export interface ITable {
     seatsNumber: number;
 }
 
-export interface IInvitationGuest {
+export interface IInvitedGuest {
     id: string;
-    idReservation: string;
+    idBooking: string;
     guestToken: string;
     email: string;
-    accepted: boolean | null;
+    acepted?: boolean;
     modificationDate: string;
     order?: string;
 }

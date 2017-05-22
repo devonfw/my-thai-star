@@ -4,7 +4,7 @@ import { ExtraView, OrderView, ReservationView } from '../../../shared/models/in
 import { OrderCockpitService } from '../shared/order-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
-import * as _ from 'lodash';
+import {map, reduce} from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -20,45 +20,48 @@ export class OrderDialogComponent implements OnInit {
     { name: 'creationHour', label: 'Creation time'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'reservationId', label: 'Table'},
+    { name: 'bookingId', label: 'Table'},
   ];
 
   columnso: ITdDataTableColumn[] = [
-    { name: 'orderName', label: 'Dish'},
+    { name: 'name', label: 'Dish'},
     { name: 'comment', label: 'Comments'},
-    { name: 'options', label: 'Extra' },
-    { name: 'number', label: 'Quantity' },
+    { name: 'extras', label: 'Extra' },
+    { name: 'amount', label: 'Quantity' },
     { name: 'price', label: 'Price'},
   ];
 
-  reservationId: number;
+  bookingId: number;
   datao: OrderView[] = [];
-
   datat: ReservationView[] = [];
 
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 5;
-  filteredData: any[] = this.datao;
+  filteredData: OrderView[] = this.datao;
+  totalPrice: number;
 
   constructor(private _dataTableService: TdDataTableService,
               private priceCalculator: PriceCalculatorService,
               private orderCockpitService: OrderCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
-                 this.reservationId = dialogData.row.reservationId;
+                 this.bookingId = dialogData.row.bookingId;
   }
 
   ngOnInit(): void {
-    this.orderCockpitService.getOrder(this.reservationId).subscribe( (order: ReservationView) => {
+    this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
       this.datat.push(order);
+      this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       this.datao = JSON.parse(JSON.stringify(order.orders));
-      _.map(this.datao, (o: OrderView) => {
+      map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
-        if (o.options.constructor === Array) {
-          o.options = _.reduce(o.options, (result: string, opt: ExtraView) => {
+        o.extras = reduce(o.extras, (result: string, opt: ExtraView) => {
+          if (opt.selected) {
             return result + ' ' + opt.name + ',';
-          }, '').slice(0, -1);
-        }
+          } else {
+            return result;
+          }
+        }, '').slice(0, -1);
       });
     });
     this.filter();
@@ -76,9 +79,4 @@ export class OrderDialogComponent implements OnInit {
     newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
     this.filteredData = newData;
   }
-
-  calculateTotal(): number {
-    return this.priceCalculator.getTotalPrice(this.datao);
-  }
-
 }

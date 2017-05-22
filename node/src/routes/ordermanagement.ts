@@ -7,6 +7,8 @@ export const router = eRouter();
 router.post('/v1/Order', (req: Request, res: Response) => {
     if (req.body.invitationId === undefined) {
         res.status(400).json({ message: 'No Invitation token given' });
+    } else if (!types.isOrderView(req.body)) {
+        res.status(400).json({ message: 'Parser error' });
     } else {
         bussiness.createOrder(req.body, (err: types.IError) => {
             if (err) {
@@ -20,7 +22,7 @@ router.post('/v1/Order', (req: Request, res: Response) => {
 
 router.delete('/v1/Delete', (req: Request, res: Response) => {
     if (req.query.reservationToken === undefined) {
-        res.status(400).json({ message: 'No Invitation token given' });
+        res.status(400).json({ message: 'No booking token given' });
     } else {
         bussiness.cancelOrder(req.query.reservationToken, (err: types.IError) => {
             if (err) {

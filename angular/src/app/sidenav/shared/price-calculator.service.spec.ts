@@ -20,10 +20,10 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for single order without extras', inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 1,
-        options: [],
+        amount: 1,
+        extras: [],
       };
 
       expect(service.getPrice(order)).toEqual(order.price);
@@ -38,10 +38,10 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra rice',
+        name: 'Order with extra rice',
         comment: '',
-        number: 1,
-        options: [extraRice],
+        amount: 1,
+        extras: [extraRice],
       };
 
       expect(service.getPrice(order)).toEqual(order.price + extraRice.price);
@@ -51,10 +51,10 @@ describe('PriceCalculatorService', () => {
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 1,
-        options: [{
+        amount: 1,
+        extras: [{
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -78,10 +78,10 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra rice and tofu',
+        name: 'Order with extra rice and tofu',
         comment: '',
-        number: 1,
-        options: [extraRice, extraTofu],
+        amount: 1,
+        extras: [extraRice, extraTofu],
       };
 
       expect(service.getPrice(order)).toEqual(order.price + extraRice.price + extraTofu.price);
@@ -91,10 +91,10 @@ describe('PriceCalculatorService', () => {
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 1,
-        options: [{
+        amount: 1,
+        extras: [{
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -117,10 +117,10 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra tofu',
+        name: 'Order with extra tofu',
         comment: '',
-        number: 1,
-        options: [{
+        amount: 1,
+        extras: [{
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -133,13 +133,13 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for multiple orders without extras', inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 4,
-        options: [],
+        amount: 4,
+        extras: [],
       };
 
-      expect(service.getPrice(order)).toEqual(order.price * order.number);
+      expect(service.getPrice(order)).toEqual(order.price * order.amount);
     }));
 
     it('should calculate price for multiple orders with single extra ingredient selected',
@@ -151,13 +151,13 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra rice',
+        name: 'Order with extra rice',
         comment: '',
-        number: 4,
-        options: [extraRice],
+        amount: 4,
+        extras: [extraRice],
       };
 
-      expect(service.getPrice(order)).toEqual((order.price + extraRice.price) * order.number);
+      expect(service.getPrice(order)).toEqual((order.price + extraRice.price) * order.amount);
     }));
 
     it('should calculate price for multiple orders with multiple extra ingredients selected',
@@ -174,23 +174,23 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra rice and tofu',
+        name: 'Order with extra rice and tofu',
         comment: '',
-        number: 3,
-        options: [extraRice, extraTofu],
+        amount: 3,
+        extras: [extraRice, extraTofu],
       };
 
-      expect(service.getPrice(order)).toEqual((order.price + extraRice.price + extraTofu.price) * order.number);
+      expect(service.getPrice(order)).toEqual((order.price + extraRice.price + extraTofu.price) * order.amount);
     }));
 
     it('should calculate price for multiple orders with multiple extra ingredients - none selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 3,
-        options: [{
+        amount: 3,
+        extras: [{
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -201,7 +201,7 @@ describe('PriceCalculatorService', () => {
       }],
       };
 
-      expect(service.getPrice(order)).toEqual(order.price * order.number);
+      expect(service.getPrice(order)).toEqual(order.price * order.amount);
     }));
 
     it('should calculate price for multiple order with multiple extra ingredients, one of two available extras selected',
@@ -213,17 +213,17 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order with extra tofu',
+        name: 'Order with extra tofu',
         comment: '',
-        number: 3,
-        options: [{
+        amount: 3,
+        extras: [{
           name: 'Rice',
           price: 2.00,
           selected: false,
         }, extraTofu],
       };
 
-      expect(service.getPrice(order)).toEqual((order.price + extraTofu.price) * order.number);
+      expect(service.getPrice(order)).toEqual((order.price + extraTofu.price) * order.amount);
     }));
 
   });
@@ -233,23 +233,23 @@ describe('PriceCalculatorService', () => {
 
       const orderWithoutExtras: OrderView = {
         price: 12.50,
-        orderName: 'Order without extras',
+        name: 'Order without extras',
         comment: '',
-        number: 1,
-        options: [],
+        amount: 1,
+        extras: [],
       };
       const expensiveOrderWithoutExtras: OrderView = {
         price: 15.50,
-        orderName: 'Expensive order without extras',
+        name: 'Expensive order without extras',
         comment: '',
-        number: 1,
-        options: [],
+        amount: 1,
+        extras: [],
       };
 
       const orders: OrderView[] = [orderWithoutExtras, expensiveOrderWithoutExtras];
 
       expect(service.getTotalPrice(orders))
-        .toEqual(orderWithoutExtras.price + expensiveOrderWithoutExtras.price * expensiveOrderWithoutExtras.number);
+        .toEqual(orderWithoutExtras.price + expensiveOrderWithoutExtras.price * expensiveOrderWithoutExtras.amount);
     }));
 
     it('should calculate price for mutliple orders of different kind with extras',
@@ -268,17 +268,17 @@ describe('PriceCalculatorService', () => {
 
       const order: OrderView = {
         price: 12.50,
-        orderName: 'Order',
+        name: 'Order',
         comment: '',
-        number: 2,
-        options: [extraRice, extraTofu],
+        amount: 2,
+        extras: [extraRice, extraTofu],
       };
       const expensiveOrder: OrderView = {
         price: 15.50,
-        orderName: 'Expensive order',
+        name: 'Expensive order',
         comment: '',
-        number: 1,
-        options: [extraTofu, {
+        amount: 1,
+        extras: [extraTofu, {
           name: 'Curry',
           price: 1.50,
           selected: false,
@@ -288,8 +288,8 @@ describe('PriceCalculatorService', () => {
       const orders: OrderView[] = [order, expensiveOrder];
 
       expect(service.getTotalPrice(orders))
-        .toEqual((order.price + extraRice.price + extraTofu.price) * order.number
-        + (expensiveOrder.price + extraTofu.price) * expensiveOrder.number);
+        .toEqual((order.price + extraRice.price + extraTofu.price) * order.amount
+        + (expensiveOrder.price + extraTofu.price) * expensiveOrder.amount);
     }));
   });
 });

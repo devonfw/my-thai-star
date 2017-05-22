@@ -55,8 +55,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/basil-fried.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 1,
         name: 'Thai Spicy Basil Fried Rice',
@@ -70,8 +70,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/garlic-paradise.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 50,
         name: 'Garlic Paradise',
@@ -84,8 +84,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/green-curry.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 30,
         name: 'Thai green chicken curry',
@@ -99,8 +99,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/Thai-Peanut.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 150,
         name: 'Thai Peanut',
@@ -114,8 +114,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/Thai-thighs.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 4,
         name: 'Thai Thighs',
@@ -131,8 +131,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: 'Dish/thai-roasted.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 4,
         name: 'Thai Roasted',
@@ -148,8 +148,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: '../../assets/images/basil-fried.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 21,
         name: 'Red Curry',
@@ -165,8 +165,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: '../../assets/images/garlic-paradise.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // Likes: 10,
         name: 'Purple Curry',
@@ -182,8 +182,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: '../../assets/images/green-curry.jpg',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 61,
         name: 'Green Curry',
@@ -197,8 +197,8 @@ const Dishes: types.IDish[] = [
         image: {
             name: '../../assets/images/dish.png',
             // content: '',
-            type: 'url',
-            extension: 'jpg',
+            contentType: 0,
+            mimeType: 'image/jpg',
         },
         // likes: 48,
         name: 'Yellow Curry',
@@ -290,6 +290,13 @@ const users: types.IUser[] = [
     },
 ];
 
+const tables: types.ITable[] = [
+    {
+        id: '1',
+        seatsNumber: 3,
+    },
+];
+
 fn.insert('Dish', Dishes).then((res: string) => {
     console.log('\nAll dishes inserted');
     console.log(res);
@@ -323,6 +330,13 @@ fn.insert('User', users).then((res: string) => {
     console.log(res);
 
     const user2 = users[0];
+}, (err: Error) => {
+    console.error(err);
+});
+
+fn.insert('Table', tables).then((res: string) => {
+    console.log('\nAll tables inserted');
+    console.log(res);
 }, (err: Error) => {
     console.error(err);
 });

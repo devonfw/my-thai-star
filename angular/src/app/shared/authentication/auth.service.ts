@@ -3,7 +3,7 @@ import { Injectable }     from '@angular/core';
 import { LoginDataService } from '../backend/login/login-data-service';
 import { LoginInfo } from '../backend/login/loginInfo';
 import { MdSnackBar } from '@angular/material';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
         this.loginDataService.login(username, password)
             .map((login: LoginInfo) => login as LoginInfo) // TODO: Replace with a converter
             .subscribe((login: LoginInfo) => {
-                if (!_.isEmpty(login)) {
+                if (!isEmpty(login)) {
                     this.isLogged = true;
                     this.user = login.username;
                     if (login.role === 'waiter') {
@@ -29,8 +29,20 @@ export class AuthService {
             });
     }
 
-    register(username: string, password: string, email: string): void {
-        // send register info
+    register(email: string, password: string): void {
+        this.loginDataService.register(email, password).subscribe( (res: number) => {
+            if (res) {
+                this.snackBar.open('Register successful', 'OK', {
+                    duration: 4000,
+                    extraClasses: ['bgc-green-500'],
+                });
+            } else {
+                this.snackBar.open('Register failed, username already in use', 'OK', {
+                    duration: 4000,
+                    extraClasses: ['bgc-red-600'],
+                });
+            }
+        });
     }
 
     logout(): void {

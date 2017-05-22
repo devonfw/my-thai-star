@@ -44,8 +44,8 @@ export function isDishView(elem: any): elem is IDishView {
 export interface IImageView {
     name: string;
     content?: string;
-    type: string; // Binary or Url
-    extension: string;
+    contentType: number; // Binary or Url
+    mimeType: string;
 }
 
 export function isImageView(elem: any): elem is IImageView {
@@ -55,10 +55,10 @@ export function isImageView(elem: any): elem is IImageView {
     if (elem.content !== undefined && typeof elem.content !== 'string') {
         return false;
     }
-    if (elem.type === undefined || typeof elem.type !== 'string') {
+    if (elem.contentType === undefined || typeof elem.contentType !== 'number') {
         return false;
     }
-    if (elem.extension === undefined || typeof elem.extension !== 'string') {
+    if (elem.mimeType === undefined || typeof elem.mimeType !== 'string') {
         return false;
     }
 
@@ -152,7 +152,7 @@ export interface IOrderView {
 
 export function isOrderView(elem: any): elem is IOrderView {
     if (elem.lines === undefined || !(elem.lines instanceof Array) ||
-        (elem.lines.length > 0 && elem.lines.map((e: any) => {
+        elem.lines.length === 0 || (elem.lines.length > 0 && elem.lines.map((e: any) => {
             return !isOrderLineView(e);
         }).reduce((elem1: any, elem2: any) => {
             return elem1 || elem2;
@@ -170,7 +170,7 @@ export interface IOrderLineView {
     idDish: number;
     extras: number[];
     amount: number;
-    comment: string;
+    comment?: string;
 }
 
 export function isOrderLineView(elem: any): elem is IOrderLineView {
@@ -188,7 +188,7 @@ export function isOrderLineView(elem: any): elem is IOrderLineView {
     if (elem.amount === undefined || typeof elem.amount !== 'number') {
         return false;
     }
-    if (elem.comment === undefined || typeof elem.comment !== 'string') {
+    if (elem.comment !== undefined && typeof elem.comment !== 'string') {
         return false;
     }
     return true;

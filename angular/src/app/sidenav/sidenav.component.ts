@@ -4,7 +4,7 @@ import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { ExtraView, OrderView } from '../shared/models/interfaces';
-import * as _ from 'lodash';
+import { toNumber } from 'lodash';
 
 @Component({
   selector: 'public-sidenav',
@@ -39,5 +39,9 @@ export class SidenavComponent implements OnInit {
 
   calculateTotal(): number {
     return this.calculator.getTotalPrice(this.orders);
+  }
+
+  sendOrders(bookingId: number): void {
+    this.sidenav.sendOrders(toNumber(bookingId));
   }
 }
