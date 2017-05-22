@@ -1,4 +1,4 @@
-package io.oasp.application.mtsj.general.exception;
+package io.oasp.application.mtsj.ordermanagement.common.api.exception;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 
@@ -11,20 +11,13 @@ import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
  */
 public class NoBookingException extends NlsRuntimeException {
 
-  private String details;
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
-
   /**
    * The constructor.
    *
    * @param message the error message
    */
-  public NoBookingException(String message) {
-    super(message);
-    this.details = "blablabla";
+  public NoBookingException() {
+    super("The booking does not exist");
   }
+
 }

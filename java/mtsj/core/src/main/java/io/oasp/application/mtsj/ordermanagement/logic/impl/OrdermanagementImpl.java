@@ -16,9 +16,11 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
-import io.oasp.application.mtsj.general.exception.NoBookingException;
-import io.oasp.application.mtsj.general.exception.WrongTokenException;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
+import io.oasp.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
+import io.oasp.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
+import io.oasp.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDao;
@@ -55,13 +57,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
   @Inject
   private Bookingmanagement bookingManagement;
-
-  private final String BOOKING_DOES_NOT_EXIST = "The booking does not exist";
-
-  private final String INVITATION_DOES_NOT_EXIST = "The invitation does not exist";
-
-  private final String ORDER_ALREADY_EXIST =
-      "The order for this booking already exist. Please cancel the order before create a new one.";
 
   /**
    * The constructor.
@@ -103,45 +98,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
 
     // initialize, validate orderEntity here if necessary
-    String token = order.getToken();
-    try {
 
-      // BOOKING VALIDATION
-      if (getOrderType(token) == BookingType.Booking) {
-        BookingEto booking = getBooking(token);
-        if (booking == null) {
-          throw new NoBookingException(this.BOOKING_DOES_NOT_EXIST);
-        }
-        List<OrderEto> currentOrders = getBookingOrders(booking.getId());
-        if (!currentOrders.isEmpty()) {
-          throw new Exception(this.ORDER_ALREADY_EXIST);
-        }
-        orderEntity.setIdBooking(booking.getId());
+    orderEntity = getValidatedOrder(order.getToken(), orderEntity);
 
-        // GUEST VALIDATION
-      } else if (getOrderType(token) == BookingType.Invited) {
-
-        InvitedGuestEto guest = getInvitedGuest(token);
-        if (guest == null) {
-          throw new Exception(this.INVITATION_DOES_NOT_EXIST);
-        }
-        List<OrderEto> currentGuestOrders = getInvitedGuestOrders(guest.getId());
-        if (!currentGuestOrders.isEmpty()) {
-          throw new Exception(this.ORDER_ALREADY_EXIST);
-        }
-        orderEntity.setIdBooking(guest.getBookingId());
-        orderEntity.setIdInvitedGuest(guest.getId());
-      }
-    } catch (WrongTokenException wte) {
-      LOG.error(wte.getMessage());
-      throw wte;
-    } catch (NoBookingException nbe) {
-      LOG.error(nbe.getMessage());
-      throw nbe;
-    } catch (Exception e) {
-      LOG.error(e.getMessage());
-      return null;
-    }
     getOrderDao().save(orderEntity);
     LOG.info("Order with id '{}' has been created.", orderEntity.getId());
     List<OrderLineEntity> orderLines = order.getLines();
@@ -218,7 +177,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     } else if (token.startsWith("GB_")) {
       return BookingType.Invited;
     } else {
-      throw new WrongTokenException("Not a valid token");
+      throw new WrongTokenException();
     }
   }
 
@@ -250,6 +209,38 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
     criteria.setIdInvitedGuest(idInvitedGuest);
     return findOrderEtos(criteria).getResult();
+  }
+
+  private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
+
+    // BOOKING VALIDATION
+    if (getOrderType(token) == BookingType.Booking) {
+      BookingEto booking = getBooking(token);
+      if (booking == null) {
+        throw new NoBookingException();
+      }
+      List<OrderEto> currentOrders = getBookingOrders(booking.getId());
+      if (!currentOrders.isEmpty()) {
+        throw new OrderAlreadyExistException();
+      }
+      orderEntity.setIdBooking(booking.getId());
+
+      // GUEST VALIDATION
+    } else if (getOrderType(token) == BookingType.Invited) {
+
+      InvitedGuestEto guest = getInvitedGuest(token);
+      if (guest == null) {
+        throw new NoInviteException();
+      }
+      List<OrderEto> currentGuestOrders = getInvitedGuestOrders(guest.getId());
+      if (!currentGuestOrders.isEmpty()) {
+        throw new OrderAlreadyExistException();
+      }
+      orderEntity.setIdBooking(guest.getBookingId());
+      orderEntity.setIdInvitedGuest(guest.getId());
+    }
+
+    return orderEntity;
   }
 
 }
