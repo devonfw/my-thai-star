@@ -54,7 +54,7 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-    saveOrders(orders: OrderList): Observable<number> {
+    saveOrders(orders: OrderList): Observable<BookingInfo> {
         return this.http.post(`${config.restServiceRoot}${this.saveOrdersPath}`, {orders: orders})
                         .map((res: Response) => res.json());
     }

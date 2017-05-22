@@ -10,6 +10,6 @@ export interface IBookingDataService {
     getReservations(): Observable<BookingInfo[]>;
     getReservation(id: number): Observable<BookingInfo>;
     bookTable(booking: BookingInfo): Observable<number>;
-    saveOrders(orders: OrderList): Observable<number>;
+    saveOrders(orders: OrderList): Observable<BookingInfo>;
 
 }

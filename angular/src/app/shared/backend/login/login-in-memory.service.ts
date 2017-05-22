@@ -13,7 +13,7 @@ export class LoginInMemoryService implements ILoginDataService {
   }
 
   register(email: string, password: string): Observable <number> {
-    let register: LoginInfo = _.find(users, (user: LoginInfo) => { return user.username ===  email; });
+    let register: LoginInfo = find(users, (user: LoginInfo) => { return user.username ===  email; });
     if (register === undefined) {
       users.push({username: email, password: password, role: 'user'});
       return Observable.of(1);
@@ -23,7 +23,7 @@ export class LoginInMemoryService implements ILoginDataService {
   }
 
   changePassword(username: string, oldPassword: string, newPassword: string): Observable<number> {
-    let userChange: LoginInfo = _.find(users, (user: LoginInfo) => { return user.username ===  username && user.password === oldPassword; });
+    let userChange: LoginInfo = find(users, (user: LoginInfo) => { return user.username ===  username && user.password === oldPassword; });
     if (userChange) {
       userChange.password = newPassword;
       return Observable.of(1);
