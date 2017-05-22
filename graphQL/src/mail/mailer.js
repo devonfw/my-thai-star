@@ -27,7 +27,11 @@ exports.sendInvitation = (reservation, invitation) => {
         We hope to see you in My Thai Star!`,
         // HTML body
     html: `<p>Hey!</p>
-        <p>It looks like ${reservation.owner} invited you for a meal. There are others who might join you, full list of participants: ${reservation.participants}. Will you be there?</p>
+        <p>It looks like ${reservation.owner} invited you for a meal. There are others who might join you, full list of participants: 
+        <ul>
+          ${reservation.participants.map(participant => ('<li>' + participant + '<li>')).join('')}
+        </ul>
+        Will you be there?</p>
 
         <a href="http://${config.hostname}:${config.port}/invitation/accept/${invitation.token}">Accept</a>
         <a href="http://${config.hostname}:${config.port}/invitation/reject/${invitation.token}">Reject</a>
@@ -44,11 +48,11 @@ exports.sendConfirmation = (reservation, owner) => {
     to: `${owner.email}`,
     subject: 'My Thai Star - reservation confirmation',
         // plaintext body
-    text: `Thanks for making a reservation (reservation details here). 
+    text: `Thanks for making a reservation ${JSON.stringify(reservation)}. 
         
         If you would like to cancel it, please go to: http://${config.hostname}:${config.port}/reservation/cancel/${reservation.id}`,
         // HTML body
-    html: `<p>Thanks for making a reservation (reservation details here).</p>
+    html: `<p>Thanks for making a reservation ${JSON.stringify(reservation)}.</p>
         
         <p>If you would like to cancel it, please click <a href="http://${config.hostname}:${config.port}/reservation/cancel/${reservation.id}">here</a></p>`,
   };
@@ -62,9 +66,9 @@ exports.sendAcceptance = (reservation, owner, participant) => {
     to: `${owner.email}`,
     subject: 'My Thai Star - reservation accepted',
         // plaintext body
-    text: `${participant} confirmed to join you on (reservation details here). Invitation was accepted.`,
+    text: `${participant} confirmed to join you on ${JSON.stringify(reservation)}. Invitation was accepted.`,
         // HTML body
-    html: `<p>${participant} confirmed to join you on (reservation details here). Invitation was accepted.</p>`,
+    html: `<p>${participant} confirmed to join you on ${JSON.stringify(reservation)}. Invitation was accepted.</p>`,
   };
 
   send(confirmationMsg);
@@ -76,9 +80,9 @@ exports.sendRejection = (reservation, owner, participant) => {
     to: `${owner.email}`,
     subject: 'My Thai Star - reservation rejected',
         // plaintext body
-    text: `It looks like ${participant} will not be able to join you on (reservation details here). Invitation was rejected`,
+    text: `It looks like ${participant} will not be able to join you on ${JSON.stringify(reservation)}. Invitation was rejected`,
         // HTML body
-    html: `<p>It looks like ${participant} will not be able to join you on (reservation details here). Invitation was rejected</p>`,
+    html: `<p>It looks like ${participant} will not be able to join you on ${JSON.stringify(reservation)}. Invitation was rejected</p>`,
   };
 
   send(rejectionMsg);
@@ -90,9 +94,9 @@ exports.sendCancellation = (reservation) => {
     to: `${reservation.participants}`,
     subject: 'My Thai Star - reservation cancelled',
         // plaintext body
-    text: 'Reservation (reservation details here) was cancelled by the owner',
+    text: `Reservation: ${JSON.stringify(reservation)} was cancelled by the owner`,
         // HTML body
-    html: '<p>Reservation (reservation details here) was cancelled by the owner</p>',
+    html: `<p>Reservation: ${JSON.stringify(reservation)} was cancelled by the owner</p>`,
   };
 
   send(cancellationMsg);
