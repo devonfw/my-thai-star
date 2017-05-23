@@ -25,7 +25,7 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   public Long getIdBooking() {
 
-    return this.idBooking;
+    return idBooking;
   }
 
   public void setIdBooking(Long idBooking) {
@@ -33,9 +33,9 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
     this.idBooking = idBooking;
   }
 
-  public Long getIdInvitationGuest() {
+  public Long getIdInvitedGuest() {
 
-    return this.idInvitedGuest;
+    return idInvitedGuest;
   }
 
   public void setIdInvitedGuest(Long idInvitedGuest) {

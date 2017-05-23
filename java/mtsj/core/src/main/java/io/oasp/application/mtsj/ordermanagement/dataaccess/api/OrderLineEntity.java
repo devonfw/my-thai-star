@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
 
@@ -27,7 +27,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private Long idDish;
 
-  private List<Ingredient> extras;
+  private List<IngredientEntity> extras;
 
   private int amount;
 
@@ -76,7 +76,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   @Column(name = "idIngredient")
   @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
-  public List<Ingredient> getExtras() {
+  public List<IngredientEntity> getExtras() {
 
     return this.extras;
   }
@@ -84,7 +84,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @param extras new value of {@link #getExtras}.
    */
-  public void setExtras(List<Ingredient> extras) {
+  public void setExtras(List<IngredientEntity> extras) {
 
     this.extras = extras;
   }

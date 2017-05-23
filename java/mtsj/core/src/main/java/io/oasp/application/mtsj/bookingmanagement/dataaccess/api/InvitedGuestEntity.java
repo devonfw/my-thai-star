@@ -29,8 +29,8 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
   private static final long serialVersionUID = 1L;
 
   public InvitedGuestEntity() {
-
     super();
+    this.accepted = false;
   }
 
   /**

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
-import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
 /**
  * Entity transport object of Dish
@@ -19,9 +18,7 @@ public class DishEto extends AbstractEto implements Dish {
 
   private BigDecimal price;
 
-  private Long idImage;
-
-  private Image image;
+  private Long imageId;
 
   @Override
   public String getName() {
@@ -60,27 +57,15 @@ public class DishEto extends AbstractEto implements Dish {
   }
 
   @Override
-  public Long getIdImage() {
+  public Long getImageId() {
 
-    return this.idImage;
+    return this.imageId;
   }
 
   @Override
-  public void setIdImage(Long idImage) {
+  public void setImageId(Long imageId) {
 
-    this.idImage = idImage;
-  }
-
-  @Override
-  public Image getImage() {
-
-    return this.image;
-  }
-
-  @Override
-  public void setImage(Image image) {
-
-    this.image = image;
+    this.imageId = imageId;
   }
 
   @Override
@@ -91,8 +76,7 @@ public class DishEto extends AbstractEto implements Dish {
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
-    result = prime * result + ((this.idImage == null) ? 0 : this.idImage.hashCode());
-    result = prime * result + ((this.image == null) ? 0 : this.image.hashCode());
+    result = prime * result + ((this.imageId == null) ? 0 : this.imageId.hashCode());
 
     return result;
   }
@@ -132,18 +116,11 @@ public class DishEto extends AbstractEto implements Dish {
     } else if (!this.price.equals(other.price)) {
       return false;
     }
-    if (this.idImage == null) {
-      if (other.idImage != null) {
+    if (this.imageId == null) {
+      if (other.imageId != null) {
         return false;
       }
-    } else if (!this.idImage.equals(other.idImage)) {
-      return false;
-    }
-    if (this.image == null) {
-      if (other.image != null) {
-        return false;
-      }
-    } else if (!this.image.equals(other.image)) {
+    } else if (!this.imageId.equals(other.imageId)) {
       return false;
     }
 

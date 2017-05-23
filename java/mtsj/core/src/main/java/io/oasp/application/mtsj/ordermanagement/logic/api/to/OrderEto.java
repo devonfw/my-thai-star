@@ -1,10 +1,7 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
-import java.util.List;
-
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.ordermanagement.common.api.Order;
-import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 
 /**
  * Entity transport object of Order
@@ -17,24 +14,10 @@ public class OrderEto extends AbstractEto implements Order {
 
   private Long idInvitedGuest;
 
-  private List<OrderLineEntity> lines;
-
-  private String token;
-
-  public List<OrderLineEntity> getLines() {
-
-    return this.lines;
-  }
-
-  public void setLines(List<OrderLineEntity> lines) {
-
-    this.lines = lines;
-  }
-
   @Override
   public Long getIdBooking() {
 
-    return this.idBooking;
+    return idBooking;
   }
 
   @Override
@@ -46,7 +29,7 @@ public class OrderEto extends AbstractEto implements Order {
   @Override
   public Long getIdInvitedGuest() {
 
-    return this.idInvitedGuest;
+    return idInvitedGuest;
   }
 
   @Override
@@ -94,21 +77,5 @@ public class OrderEto extends AbstractEto implements Order {
       return false;
     }
     return true;
-  }
-
-  /**
-   * @return token
-   */
-  public String getToken() {
-
-    return this.token;
-  }
-
-  /**
-   * @param token new value of {@link #getToken}.
-   */
-  public void setToken(String token) {
-
-    this.token = token;
   }
 }

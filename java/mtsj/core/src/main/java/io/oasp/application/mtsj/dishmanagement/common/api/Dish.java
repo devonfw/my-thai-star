@@ -3,7 +3,6 @@ package io.oasp.application.mtsj.dishmanagement.common.api;
 import java.math.BigDecimal;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
-import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
 public interface Dish extends ApplicationEntity {
 
@@ -19,12 +18,8 @@ public interface Dish extends ApplicationEntity {
 
   public void setPrice(BigDecimal price);
 
-  public Long getIdImage();
+  public Long getImageId();
 
-  public void setIdImage(Long idImage);
-
-  public Image getImage();
-
-  public void setImage(Image image);
+  public void setImageId(Long idImage);
 
 }

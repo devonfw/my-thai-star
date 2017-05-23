@@ -13,7 +13,6 @@ import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
-import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
@@ -57,14 +56,6 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     if (price != null) {
       query.where(Alias.$(dish.getPrice()).eq(price));
     }
-    Long idImage = criteria.getIdImage();
-    if (idImage != null) {
-      query.where(Alias.$(dish.getIdImage()).eq(idImage));
-    }
-    Image image = criteria.getImage();
-    if (image != null) {
-      query.where(Alias.$(dish.getImage()).eq(image));
-    }
     return findPaginated(criteria, query, alias);
   }
 
@@ -92,9 +83,9 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
           }
         } else if ("idImage".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getIdImage()).asc());
+            query.orderBy(Alias.$(dish.getImageId()).asc());
           } else {
-            query.orderBy(Alias.$(dish.getIdImage()).desc());
+            query.orderBy(Alias.$(dish.getImageId()).desc());
           }
         }
       }

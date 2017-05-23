@@ -24,6 +24,7 @@ import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.imagemanagement.logic.api.to.ImageEto;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -118,6 +119,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     DishEntity entity = getDishDao().findOne(id);
     DishCto cto = new DishCto();
     cto.setCategories(getBeanMapper().mapList(entity.getCategories(), CategoryEto.class));
+    cto.setImage(getBeanMapper().map(entity.getImage(), ImageEto.class));
     cto.setDish(getBeanMapper().map(entity, DishEto.class));
     cto.setExtras(getBeanMapper().mapList(entity.getExtras(), IngredientEto.class));
     return cto;

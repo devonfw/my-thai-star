@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -19,6 +21,32 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
   @Inject
   private Ordermanagement ordermanagement;
+
+  @Override
+  public OrderDishExtraIngredientEto getOrderDishExtraIngredient(long id) {
+
+    return this.ordermanagement.findOrderDishExtraIngredient(id);
+  }
+
+  @Override
+  public OrderDishExtraIngredientEto saveOrderDishExtraIngredient(
+      OrderDishExtraIngredientEto orderdishextraingredient) {
+
+    return this.ordermanagement.saveOrderDishExtraIngredient(orderdishextraingredient);
+  }
+
+  @Override
+  public void deleteOrderDishExtraIngredient(long id) {
+
+    this.ordermanagement.deleteOrderDishExtraIngredient(id);
+  }
+
+  @Override
+  public PaginatedListTo<OrderDishExtraIngredientEto> findOrderDishExtraIngredientsByPost(
+      OrderDishExtraIngredientSearchCriteriaTo searchCriteriaTo) {
+
+    return this.ordermanagement.findOrderDishExtraIngredientEtos(searchCriteriaTo);
+  }
 
   @Override
   public OrderEto getOrder(long id) {

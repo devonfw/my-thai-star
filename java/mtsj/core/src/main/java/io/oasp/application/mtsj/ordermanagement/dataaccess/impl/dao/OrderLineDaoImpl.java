@@ -53,13 +53,12 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
     if (idDish != null) {
       query.where(Alias.$(orderline.getIdDish()).eq(idDish));
     }
-    // int amount = criteria.getAmount();
-    // query.where(Alias.$(orderline.getAmount()).eq(amount));
-    // String comment = criteria.getComment();
-    // if (comment != null) {
-    // query.where(Alias.$(orderline.getComment()).eq(comment));
-    // }
-    addOrderBy(query, alias, orderline, criteria.getSort());
+    int amount = criteria.getAmount();
+    query.where(Alias.$(orderline.getAmount()).eq(amount));
+    String comment = criteria.getComment();
+    if (comment != null) {
+      query.where(Alias.$(orderline.getComment()).eq(comment));
+    }
     return findPaginated(criteria, query, alias);
   }
 
@@ -70,9 +69,9 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
       for (OrderByTo orderEntry : sort) {
         if ("order".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(orderline.getOrderId()).asc());
+            query.orderBy(Alias.$(orderline.getOrder().getId()).asc());
           } else {
-            query.orderBy(Alias.$(orderline.getOrderId()).desc());
+            query.orderBy(Alias.$(orderline.getOrder().getId()).desc());
           }
         } else if ("idDish".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

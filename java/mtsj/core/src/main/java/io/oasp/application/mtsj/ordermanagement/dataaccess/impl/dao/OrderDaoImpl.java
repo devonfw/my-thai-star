@@ -47,11 +47,10 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     if (idBooking != null) {
       query.where(Alias.$(order.getIdBooking()).eq(idBooking));
     }
-    Long idInvitationGuest = criteria.getIdInvitationGuest();
-    if (idInvitationGuest != null) {
-      query.where(Alias.$(order.getIdInvitedGuest()).eq(idInvitationGuest));
+    Long idInvitedGuest = criteria.getIdInvitedGuest();
+    if (idInvitedGuest != null) {
+      query.where(Alias.$(order.getIdInvitedGuest()).eq(idInvitedGuest));
     }
-    addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
 
@@ -59,13 +58,13 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {
-        if ("idReservation".equals(orderEntry.getName())) {
+        if ("idBooking".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(order.getIdBooking()).asc());
           } else {
             query.orderBy(Alias.$(order.getIdBooking()).desc());
           }
-        } else if ("idInvitationGuest".equals(orderEntry.getName())) {
+        } else if ("idInvitedGuest".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(order.getIdInvitedGuest()).asc());
           } else {

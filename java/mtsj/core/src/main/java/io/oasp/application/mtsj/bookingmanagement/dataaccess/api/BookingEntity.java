@@ -43,7 +43,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   private static final long serialVersionUID = 1L;
 
   public BookingEntity() {
-
     super();
     this.canceled = false;
   }

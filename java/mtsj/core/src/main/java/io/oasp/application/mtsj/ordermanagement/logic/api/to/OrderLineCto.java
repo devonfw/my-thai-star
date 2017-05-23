@@ -1,5 +1,8 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
+import java.util.List;
+
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 
 /**
@@ -12,6 +15,8 @@ public class OrderLineCto extends AbstractCto {
   private OrderLineEto orderLine;
 
   private OrderEto order;
+
+  private List<IngredientEto> extras;
 
   public OrderLineEto getOrderLine() {
 
@@ -31,6 +36,16 @@ public class OrderLineCto extends AbstractCto {
   public void setOrder(OrderEto order) {
 
     this.order = order;
+  }
+
+  public List<IngredientEto> getExtras() {
+
+    return extras;
+  }
+
+  public void setExtras(List<IngredientEto> extras) {
+
+    this.extras = extras;
   }
 
 }
