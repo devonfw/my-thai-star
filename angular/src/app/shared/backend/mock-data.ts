@@ -1,97 +1,87 @@
-import { ReservationView } from '../models/interfaces';
-import { Dish } from './dishes/dish';
-import { LoginInfo } from './login/loginInfo';
+import { ExtraView, ReservationView } from '../viewModels/interfaces';
+import { Dish, LoginInfo } from './backendModels/interfaces';
+
+export const extras: ExtraView[] = [{
+                id: 0,
+                name: 'Tofu',
+                price: 1,
+        }, {
+                id: 1,
+                name: 'Chiken',
+                price: 2,
+        }, {
+                id: 2,
+                name: 'Pork',
+                price: 2,
+        }];
 
 export const dishes: Dish[] = [{
                 isfav: false,
                 image: '../../../assets/images/basil-fried.jpg',
                 likes: 21,
                 extras: [
-                        { name: 'Tofu', price: 1, selected: false },
-                        { name: 'Chiken', price: 1, selected: false },
-                        { name: 'Pork', price: 2, selected: false }],
+                        { id: 0, name: 'Tofu', price: 1, selected: false },
+                        { id: 1, name: 'Chiken', price: 1, selected: false },
+                        { id: 2, name: 'Pork', price: 2, selected: false }],
                 description:
                 'Lorem ipsum dolor sit amet. Proin fermentum lobortis neque. ' +
                 'Pellentesque habitant morbi tristique.',
                 name: 'Red Curry',
                 price: 5.90,
-                categories: {
-                        main: true,
-                        starter: false,
-                        dessert: false,
-                        noodle: true,
-                        rice: false,
-                        curry: true,
-                        vegan: true,
-                        vegetarian: true,
-                },
+                categories: [
+                        {id: '0'},
+                        {id: '3'},
+                        {id: '5'},
+                        {id: '6'},
+                        {id: '7'}],
         }, {
                 isfav: false,
                 image: '../../../assets/images/garlic-paradise.jpg',
                 likes: 10,
                 extras: [
-                        { name: 'Tofu', price: 1, selected: false },
-                        { name: 'Chiken', price: 1, selected: false },
-                        { name: 'Pork', price: 2, selected: false }],
+                        { id: 0, name: 'Tofu', price: 1, selected: false },
+                        { id: 1, name: 'Chiken', price: 1, selected: false },
+                        { id: 2, name: 'Pork', price: 2, selected: false }],
                 description:
                         'Consectetur adipiscing elit. Nulla id viverra turpis, sed eleifend dui. ' +
                         'Proin fermentum lobortis neque. Pellentesque habitant morbi tristique.',
                 name: 'Purple Curry',
                 price: 9.00,
-                categories: {
-                        main: false,
-                        starter: true,
-                        dessert: false,
-                        noodle: false,
-                        rice: true,
-                        curry: true,
-                        vegan: false,
-                        vegetarian: false,
-                },
+                categories: [
+                        {id: '1'},
+                        {id: '6'}],
         }, {
                 isfav: false,
                 image: '../../../assets/images/green-curry.jpg',
                 likes: 61,
                 extras: [
-                        { name: 'Tofu', price: 1, selected: false },
-                        { name: 'Chiken', price: 1, selected: false },
-                        { name: 'Pork', price: 2, selected: false }],
+                        { id: 0, name: 'Tofu', price: 1, selected: false },
+                        { id: 1, name: 'Chiken', price: 1, selected: false },
+                        { id: 2, name: 'Pork', price: 2, selected: false }],
                 description:
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
                         'Nulla id viverra turpis, sed eleifend dui. Proin fermentum lobortis neque.',
                 name: 'Green Curry',
                 price: 7.60,
-                categories: {
-                        main: false,
-                        starter: false,
-                        dessert: true,
-                        noodle: false,
-                        rice: true,
-                        curry: false,
-                        vegan: true,
-                        vegetarian: true,
-                },
+                categories: [
+                        {id: '2'},
+                        {id: '4'},
+                        {id: '6'}],
         }, {
                 isfav: false,
                 image: '../../../assets/images/dish.png',
                 likes: 48,
                 extras: [
-                        { name: 'Tofu', price: 1, selected: false },
-                        { name: 'Chiken', price: 1, selected: false },
-                        { name: 'Pork', price: 2, selected: false }],
+                        { id: 0, name: 'Tofu', price: 1, selected: false },
+                        { id: 1, name: 'Chiken', price: 1, selected: false },
+                        { id: 2, name: 'Pork', price: 2, selected: false }],
                 description: 'Lorem ipsum dolor. Pellentesque habitant morbi tristique.',
                 name: 'Yellow Curry',
                 price: 8.50,
-                categories: {
-                        main: true,
-                        starter: false,
-                        dessert: false,
-                        noodle: true,
-                        rice: true,
-                        curry: true,
-                        vegan: true,
-                        vegetarian: true,
-                },
+                categories: [
+                        {id: '1'},
+                        {id: '4'},
+                        {id: '7'}],
         }];
 
 export const users: LoginInfo[] = [{
@@ -114,7 +104,7 @@ export const bookedTables: ReservationView[] = [{
         orders: [{
                   name: 'Pad Kee Mao',
                   price: 5.90,
-                  extras: [{name: 'Chicken', price: 2, selected: true}],
+                  extras: [{id: 1, name: 'Chicken', price: 2, selected: true}],
                   amount: 1,
                   comment: 'Hello mom!',
                 }, {
@@ -137,15 +127,15 @@ export const bookedTables: ReservationView[] = [{
         orders: [{
                   name: 'Red Curry',
                   price: 5.90,
-                  extras: [{name: 'Pork', price: 1, selected: true},
-                            {name: 'Tofu', price: 1, selected: true},
-                            {name: 'Chicken', price: 2, selected: true}],
+                  extras: [{id: 2, name: 'Pork', price: 1, selected: true},
+                           {id: 0, name: 'Tofu', price: 1, selected: true},
+                           {id: 1, name: 'Chicken', price: 2, selected: true}],
                   amount: 1,
                   comment: 'I hope this curry worths the price',
                 }, {
                   name: 'Red Curry',
                   price: 5.90,
-                  extras: [{name: 'Pork', price: 1, selected: true}],
+                  extras: [{id: 2, name: 'Pork', price: 1, selected: true}],
                   amount: 1,
                   comment: 'hot sauce',
                 }],
@@ -161,8 +151,8 @@ export const bookedTables: ReservationView[] = [{
         orders: [{
                   name: 'Red Curry',
                   price: 5.90,
-                  extras: [{name: 'Pork', price: 1, selected: true},
-                            {name: 'Tofu', price: 1, selected: true}],
+                  extras: [{id: 2, name: 'Pork', price: 1, selected: true},
+                           {id: 0, name: 'Tofu', price: 1, selected: true}],
                   amount: 1,
                   comment: 'it would be nice if the pork can be well-cooked',
                 }],
@@ -177,7 +167,7 @@ export const bookedTables: ReservationView[] = [{
         orders: [{
                   name: 'Green Curry',
                   price: 7.90,
-                  extras: [{name: 'Tofu', price: 1, selected: true}],
+                  extras: [{id: 0, name: 'Tofu', price: 1, selected: true}],
                   amount: 1,
                   comment: '',
                 }, {
@@ -195,13 +185,13 @@ export const bookedTables: ReservationView[] = [{
                 }, {
                   name: 'Yellow Curry',
                   price: 8.20,
-                  extras: [{name: 'Chicken', price: 1, selected: true}],
+                  extras: [{id: 1, name: 'Chicken', price: 1, selected: true}],
                   amount: 1,
                   comment: '',
                 }, {
                   name: 'Blue Curry',
                   price: 9.00,
-                  extras: [{name: 'Pork', price: 2, selected: true}],
+                  extras: [{id: 2, name: 'Pork', price: 2, selected: true}],
                   amount: 2,
                   comment: '',
                 }, {

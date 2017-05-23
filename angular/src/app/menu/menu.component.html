@@ -6,15 +6,15 @@
         <div layout="row" style="align-items:center" class="pad-top" flex>
           <button md-icon-button><md-icon>search</md-icon></button>
           <md-input-container color="accent" class="searchBy">
-            <input mdInput placeholder="Search our dishes" ngModel name="searchTerm">
+            <input mdInput placeholder="Search our dishes" ngModel name="searchBy">
           </md-input-container>
         </div>
         <!-- Remark: Avoid using inline styles such as "width: 100%" -->
-        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%"> 
+        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%">
           <!-- Remark: HTMl should not be repeated. Use CSS and media queries-->
-          <md-checkbox ngModel name="main">Main dishes</md-checkbox>
-          <md-checkbox ngModel name="starter">Starter</md-checkbox>
-          <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
+          <md-checkbox ngModel name="1">Main dishes</md-checkbox>
+          <md-checkbox ngModel name="2">Starter</md-checkbox>
+          <md-checkbox ngModel name="3">Dessert</md-checkbox>
         </div>
         <div layout="row" class="pull-bottom pad-sm sortingBy">
           <md-select style="width: 100%" ngModel name="sortName" #sorting placeholder="Sort By">
@@ -37,32 +37,32 @@
           
           <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
             <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
-              <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
-              <md-checkbox ngModel name="rice">Rice</md-checkbox>
-              <md-checkbox ngModel name="curry">Curry</md-checkbox>
+              <md-checkbox ngModel name="3">Noodle</md-checkbox>
+              <md-checkbox ngModel name="4">Rice</md-checkbox>
+              <md-checkbox ngModel name="5">Curry</md-checkbox>
             </div>    
             <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
-              <md-checkbox ngModel name="vegan">Vegan</md-checkbox>
-              <md-checkbox ngModel name="vegetarian">Vegetarian</md-checkbox>
+              <md-checkbox ngModel name="6">Vegan</md-checkbox>
+              <md-checkbox ngModel name="7">Vegetarian</md-checkbox>
             </div>   
             <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
-              <md-checkbox ngModel name="favourite">Favourites</md-checkbox>
+              <md-checkbox ngModel name="8">Favourites</md-checkbox>
             </div>
           </div>
 
           <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
-            <md-checkbox ngModel name="main">Main dishes</md-checkbox>
-            <md-checkbox ngModel name="starter">Starter</md-checkbox>
-            <md-checkbox ngModel name="dessert">Dessert</md-checkbox>
+            <md-checkbox ngModel name="0">Main dishes</md-checkbox>
+            <md-checkbox ngModel name="1">Starter</md-checkbox>
+            <md-checkbox ngModel name="2">Dessert</md-checkbox>
             <span style="border-right: 1px solid lightgray"></span>
-            <md-checkbox ngModel name="noodle">Noodle</md-checkbox>
-            <md-checkbox ngModel name="rice">Rice</md-checkbox>
-            <md-checkbox ngModel name="curry">Curry</md-checkbox>
+            <md-checkbox ngModel name="3">Noodle</md-checkbox>
+            <md-checkbox ngModel name="4">Rice</md-checkbox>
+            <md-checkbox ngModel name="5">Curry</md-checkbox>
             <span style="border-right: 1px solid lightgray"></span>        
-            <md-checkbox ngModel name="vegan">Vegan</md-checkbox>
-            <md-checkbox ngModel name="vegetarian">Vegetarian</md-checkbox>
+            <md-checkbox ngModel name="6">Vegan</md-checkbox>
+            <md-checkbox ngModel name="7">Vegetarian</md-checkbox>
             <span style="border-right: 1px solid lightgray"></span>        
-            <md-checkbox ngModel name="favourite">Favourites</md-checkbox>
+            <md-checkbox ngModel name="8">Favourites</md-checkbox>
           </div>
 
           <div layout-gt-xs="row" class="push-top-sm" flex>
@@ -71,7 +71,7 @@
               <md-slider
                 #price
                 ngModel
-                name="price"
+                name="maxPrice"
                 max="50"
                 min="1"
                 step="1"
@@ -84,7 +84,7 @@
               <md-slider
                 #likes
                 ngModel
-                name="likes"
+                name="minLikes"
                 max=500
                 min=0
                 step=5

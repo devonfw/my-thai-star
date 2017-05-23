@@ -6,7 +6,7 @@ import { BackendConfig, BackendType } from '../backend.module';
 import { LoginInMemoryService } from './login-in-memory.service';
 import { LoginRestService } from './login-rest.service';
 import { ILoginDataService } from './login-data-service-interface';
-import { LoginInfo } from './loginInfo';
+import { LoginInfo } from '../backendModels/interfaces';
 
 @Injectable()
 export class LoginDataService implements ILoginDataService {

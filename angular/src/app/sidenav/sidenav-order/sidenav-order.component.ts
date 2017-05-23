@@ -4,7 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
-import { ExtraView, OrderView } from '../../shared/models/interfaces';
+import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { filter } from 'lodash';
 
 @Component({
@@ -15,8 +15,8 @@ import { filter } from 'lodash';
 export class SidenavOrderComponent implements OnInit {
 
   @Input('order') order: OrderView;
-  @Output('removeOrder') removeEmitter: EventEmitter<OrderView> = new EventEmitter();
-  extras: string[] = [];
+  @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
+  extras: string;
 
   constructor(private sidenav: SidenavService,
               public dialog: MdDialog,
@@ -25,8 +25,10 @@ export class SidenavOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected);
-  }
+    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected)
+                  .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+                  .slice(0, -1);
+ }
 
   removeComment(): void {
     this.order.comment = undefined;

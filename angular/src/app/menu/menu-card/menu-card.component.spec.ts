@@ -4,6 +4,9 @@ import { SidenavService } from '../../sidenav/shared/sidenav.service';
 
 import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
+import { DishesInMemoryService } from '../../shared/backend/dishes/dishes-in-memory.service';
+import { MenuService } from '../shared/menu.service';
 import { MenuCardComponent } from './menu-card.component';
 import { CovalentModule } from '../../shared/covalent.module';
 
@@ -15,8 +18,10 @@ describe('MenuCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MenuCardComponent ],
       providers: [
+        MenuService,
         SidenavService,
-        { provide: BookingDataService, useClass: BookingInMemoryService}],
+        { provide: BookingDataService, useClass: BookingInMemoryService},
+        { provide: DishesDataService, useClass: DishesInMemoryService}],
       imports: [
         CovalentModule,
       ],

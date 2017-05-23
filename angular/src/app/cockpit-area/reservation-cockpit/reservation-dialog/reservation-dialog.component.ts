@@ -1,8 +1,7 @@
-import { FriendsInvite } from '../../../shared/backend/booking/bookingInfo';
-import { ReservationView } from '../../../shared/models/interfaces';
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { ReservationCockpitService } from '../shared/reservation-cockpit.service';
+import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
 import {MD_DIALOG_DATA} from '@angular/material';
 
 @Component({

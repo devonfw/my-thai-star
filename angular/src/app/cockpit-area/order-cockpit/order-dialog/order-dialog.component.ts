@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { ExtraView, OrderView, ReservationView } from '../../../shared/models/interfaces';
+import { ExtraView, OrderView, ReservationView } from '../../../shared/viewModels/interfaces';
 import { OrderCockpitService } from '../shared/order-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';

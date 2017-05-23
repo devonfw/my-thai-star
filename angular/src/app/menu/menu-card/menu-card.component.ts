@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
-import { DishView, ExtraView, OrderView } from '../../shared/models/interfaces';
+import { MenuService } from '../shared/menu.service';
 
 @Component({
   selector: 'public-menu-card',
@@ -11,17 +12,12 @@ export class MenuCardComponent {
 
   @Input('menu') menuInfo: DishView;
 
-  constructor(private sidenav: SidenavService) {
-  }
+  constructor(private menuService: MenuService,
+              private sidenav: SidenavService) { }
 
   addOrderMenu(): void {
-    this.sidenav.addOrder({
-      name: this.menuInfo.name,
-      price: this.menuInfo.price,
-      extras: this.menuInfo.extras,
-      amount: 1,
-      comment: '',
-    });
+    this.sidenav.addOrder(this.menuService.menuToOrder(this.menuInfo));
+    this.menuService.clearSelectedExtras(this.menuInfo);
     this.sidenav.openSideNav();
   }
 

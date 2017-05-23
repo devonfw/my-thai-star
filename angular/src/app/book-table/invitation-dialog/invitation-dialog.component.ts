@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
-import { ReservationView } from '../../shared/models/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import {MD_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
 

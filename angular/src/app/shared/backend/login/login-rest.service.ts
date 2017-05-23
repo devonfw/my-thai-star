@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { LoginInfo } from './loginInfo';
+import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
 import { config } from '../../../config';
 

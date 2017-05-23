@@ -4,7 +4,7 @@ import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { OrderView } from '../../shared/models/interfaces';
+import { OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CovalentModule } from '../../shared/covalent.module';
 

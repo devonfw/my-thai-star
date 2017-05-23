@@ -1,5 +1,5 @@
 import { ReservationCockpitService } from './shared/reservation-cockpit.service';
-import { ReservationView } from '../../shared/models/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TdDataTableService,

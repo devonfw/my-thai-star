@@ -1,10 +1,9 @@
-import { OrderList } from './orderList';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo } from './bookingInfo';
 import { bookedTables } from '../mock-data';
 import { maxBy, find, filter } from 'lodash';
+import { BookingInfo, OrderList } from '../backendModels/interfaces';
 import * as moment from 'moment';
 
 @Injectable()

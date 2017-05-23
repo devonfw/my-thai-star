@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
-import { ExtraView, OrderView } from '../shared/models/interfaces';
+import { ExtraView, OrderView } from '../shared/viewModels/interfaces';
 import { toNumber } from 'lodash';
 
 @Component({
@@ -33,15 +33,12 @@ export class SidenavComponent implements OnInit {
     this.closeSidenav();
   }
 
-  reloadOrders(): void {
-    this.orders = this.sidenav.getOrderData();
-  }
-
   calculateTotal(): number {
     return this.calculator.getTotalPrice(this.orders);
   }
 
   sendOrders(bookingId: number): void {
     this.sidenav.sendOrders(toNumber(bookingId));
+    this.orders = this.sidenav.getOrderData();
   }
 }

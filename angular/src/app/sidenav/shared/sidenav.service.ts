@@ -1,9 +1,9 @@
-import { OrderList } from '../../shared/backend/booking/orderList';
 import { Observable } from 'rxjs/Observable';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { Injectable } from '@angular/core';
-import { OrderView } from '../../shared/models/interfaces';
 import { MdSnackBar } from '@angular/material';
+import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { OrderView } from '../../shared/viewModels/interfaces';
+import { OrderList } from '../../shared/backend/backendModels/interfaces';
 import { find, isEqual, remove, cloneDeep } from 'lodash';
 
 const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) => o.name === orderToFind.name && isEqual(o.extras, orderToFind.extras);
@@ -13,10 +13,10 @@ export class SidenavService {
 
   opened: boolean = false;
 
-  orders: OrderView[] = [
-  ];
+  orders: OrderView[] = [];
 
-  constructor(private snackBar: MdSnackBar, private bookingDataService: BookingDataService) {}
+  constructor(private snackBar: MdSnackBar,
+              private bookingDataService: BookingDataService) {}
 
   public openSideNav(): void {
     this.opened = true;

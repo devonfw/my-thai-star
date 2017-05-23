@@ -14,19 +14,17 @@ export class UserAreaService {
     changePassword(data: any): void {
         data.username = this.authService.user;
         this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
-                             .subscribe( (res: number) => {
-                                    if (res) {
-                                        this.snackBar.open('Password change successful', 'OK', {
-                                            duration: 4000,
-                                            extraClasses: ['bgc-green-500'],
-                                        });
-                                    } else {
-                                        this.snackBar.open('Password change error, old password do not match', 'OK', {
-                                            duration: 4000,
-                                            extraClasses: ['bgc-red-600'],
-                                        });
-                                    }
-                                });
+            .subscribe( () => {
+                    this.snackBar.open('Password change successful', 'OK', {
+                        duration: 4000,
+                        extraClasses: ['bgc-green-500'],
+                    });
+                }, (error: any) => {
+                    this.snackBar.open('Password change error, old password do not match', 'OK', {
+                        duration: 4000,
+                        extraClasses: ['bgc-red-600'],
+                    });
+                });
     }
 
 }

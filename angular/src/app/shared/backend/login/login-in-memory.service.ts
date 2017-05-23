@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { LoginInfo } from './loginInfo';
+import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
 import { users } from '../mock-data';
 import { omit, find } from 'lodash';

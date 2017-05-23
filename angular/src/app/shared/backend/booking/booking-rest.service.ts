@@ -1,9 +1,8 @@
-import { OrderList } from './orderList';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo } from './bookingInfo';
+import { BookingInfo, OrderList } from '../backendModels/interfaces';
 import { config } from '../../../config';
 
 @Injectable()

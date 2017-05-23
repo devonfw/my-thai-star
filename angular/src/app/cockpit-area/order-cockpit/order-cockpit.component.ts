@@ -9,7 +9,7 @@ import { TdDataTableService,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { OrderDialogComponent } from 'app/cockpit-area/order-cockpit/order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
-import { ReservationView } from '../../shared/models/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -19,7 +19,6 @@ import { ReservationView } from '../../shared/models/interfaces';
 export class OrderCockpitComponent implements OnInit {
 
   data: ReservationView[];
-
   columns: ITdDataTableColumn[] = [
     { name: 'dateTime', label: 'Reservation date'},
     { name: 'emailOwner', label: 'Email' },

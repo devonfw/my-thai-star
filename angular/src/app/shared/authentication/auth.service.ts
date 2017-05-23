@@ -1,8 +1,7 @@
-import { ifTrue } from 'codelyzer/util/function';
-import { Injectable }     from '@angular/core';
-import { LoginDataService } from '../backend/login/login-data-service';
-import { LoginInfo } from '../backend/login/loginInfo';
+import { Injectable } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
+import { LoginDataService } from '../backend/login/login-data-service';
+import { LoginInfo } from '../backend/backendModels/interfaces';
 import { isEmpty } from 'lodash';
 
 @Injectable()
@@ -29,12 +28,13 @@ export class AuthService {
     }
 
     register(email: string, password: string): void {
-        this.loginDataService.register(email, password).subscribe((loginInfo: LoginInfo) => {
+        this.loginDataService.register(email, password)
+            .subscribe(() => {
                 this.snackBar.open('Register successful', 'OK', {
                     duration: 4000,
                     extraClasses: ['bgc-green-500'],
                 });
-            }, (err: any) => {
+            }, (error: any) => {
                 this.snackBar.open('Register failed, username already in use', 'OK', {
                     duration: 4000,
                     extraClasses: ['bgc-red-600'],

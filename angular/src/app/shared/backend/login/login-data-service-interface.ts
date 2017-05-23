@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { LoginInfo } from './loginInfo';
+import { LoginInfo } from '../backendModels/interfaces';
 
 export interface ILoginDataService {
 

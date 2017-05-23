@@ -1,13 +1,11 @@
-import {DishesGraphQlService} from './dishes-graph-ql.service';
+import { OnInit, Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Dish } from './dish';
-import { Filter } from './filter';
 
 import { BackendConfig, BackendType } from '../backend.module';
+import { DishesGraphQlService } from './dishes-graph-ql.service';
 import { DishesInMemoryService } from './dishes-in-memory.service';
 import { DishesRestService } from './dishes-rest.service';
-import { OnInit, Injector, Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Dish, Filter } from '../backendModels/interfaces';
 import { IDishesDataService } from './dishes-data-service-interface';
 
 @Injectable()

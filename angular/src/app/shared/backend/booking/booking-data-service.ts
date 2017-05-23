@@ -1,13 +1,11 @@
-import { OrderList } from './orderList';
 import { Observable } from 'rxjs/Observable';
+import { OnInit, Injector, Injectable } from '@angular/core';
 
 import { BackendConfig, BackendType } from '../backend.module';
 import { BookingInMemoryService } from './booking-in-memory.service';
 import { BookingRestService } from './booking-rest.service';
-import { OnInit, Injector, Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo } from './bookingInfo';
+import { BookingInfo, OrderList } from '../backendModels/interfaces';
 
 @Injectable()
 export class BookingDataService implements IBookingDataService {
