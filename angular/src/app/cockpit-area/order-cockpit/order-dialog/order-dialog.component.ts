@@ -46,35 +46,23 @@ export class OrderDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderCockpitService.getOrder(this.bookingId).subscribe( (reservation: ReservationView) => {
-      this.datat.push(reservation);
-      // Remark: Maybe total price calculation can be also moved to a service, so price calculator dependency will
-      // be present only in that service
-      this.totalPrice = this.priceCalculator.getTotalPrice(reservation.orders);
-      this.datao = cloneDeep(reservation.orders);
 
-      // Remark: this logic should be moved to a service - e.g. OrderCockpitService should do it for now
+    // Remark: Maybe total price calculation can be also moved to a service, so price calculator dependency will
+    // be present only in that service
+    // Remark: this logic should be moved to a service - e.g. OrderCockpitService should do it for now
+    this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
+      this.datat.push(order);
+      this.datao = JSON.parse(JSON.stringify(order.orders));
+      this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
-
-      // Remark: Maybe like that ?
-      // o.extras = chain(o.extras)
-      //   .filter((opt: ExtraView) => opt.selected)
-      //   .join(', ').value();
-
-      this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
-        this.datat.push(order);
-        this.datao = JSON.parse(JSON.stringify(order.orders));
-        this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
-        map(this.datao, (o: OrderView) => {
-          o.price = this.priceCalculator.getPrice(o);
-          o.extras = filter(o.extras, (extra: ExtraView) => extra.selected)
-                    .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
-                    .slice(0, -1);
-          });
+        o.extras = filter(o.extras, (extra: ExtraView) => extra.selected)
+                  .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+                  .slice(0, -1);
+        });
     });
     this.filter();
-  }
+}
 
   page(pagingEvent: IPageChangeEvent): void {
     this.fromRow = pagingEvent.fromRow;

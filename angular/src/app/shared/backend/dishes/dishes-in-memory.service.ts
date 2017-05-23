@@ -14,7 +14,6 @@ export class DishesInMemoryService implements IDishesDataService {
   }
 
   filter( filters: Filter): Observable <Dish[]> {
-    // The category filters code probably could be improved
     return Observable.of(orderBy(dishes, [filters.sortBy.name], [filters.sortBy.dir])
                           .filter((dish: Dish) => {
                             if (filters.searchBy) {

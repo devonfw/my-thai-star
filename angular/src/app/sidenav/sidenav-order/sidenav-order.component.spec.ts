@@ -30,9 +30,9 @@ describe('SidenavOrderComponent', () => {
     component = fixture.componentInstance;
     component.order = {
             extras: [
-                    { name: 'Tofu', price: 1, selected: false },
-                    { name: 'Chiken', price: 1, selected: false },
-                    { name: 'Pork', price: 2, selected: false }],
+                    { id: 0, name: 'Tofu', price: 1, selected: false },
+                    { id: 1, name: 'Chiken', price: 1, selected: false },
+                    { id: 2, name: 'Pork', price: 2, selected: false }],
             name: 'Red Curry',
             price: 5.90,
             amount: 0,
