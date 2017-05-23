@@ -1,10 +1,10 @@
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
-import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
-import { ExtraView, OrderView } from '../../shared/models/interfaces';
+import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { filter } from 'lodash';
 
 @Component({
@@ -16,18 +16,19 @@ export class SidenavOrderComponent implements OnInit {
 
   @Input('order') order: OrderView;
   @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
-  extras: string[] = [];
+  extras: string;
 
   constructor(private sidenav: SidenavService,
-              public snackBar: MdSnackBar,
               public dialog: MdDialog,
               private _dialogService: TdDialogService,
               private calculator: PriceCalculatorService,
   ) {}
 
   ngOnInit(): void {
-    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected);
-  }
+    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected)
+                  .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+                  .slice(0, -1);
+ }
 
   removeComment(): void {
     this.order.comment = undefined;
@@ -47,13 +48,14 @@ export class SidenavOrderComponent implements OnInit {
   decreaseOrder(): void {
     this.sidenav.decreaseOrder(this.order);
     if (this.order.amount < 1) {
-      this.removeEmitter.emit();
+      this.removeEmitter.emit(this.order);
     }
   }
 
   removeOrder(): void {
-    this.sidenav.removeOrder(this.order);
-    this.removeEmitter.emit();
+    this.sidenav.removeOrder(this.order); // Remark - why handling here is not consistient with the one above?
+                                          // Do we need both, removal via service and emmiting an event?
+    this.removeEmitter.emit(this.order);
   }
 
   calculateOrderPrice(): number {

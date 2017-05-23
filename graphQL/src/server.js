@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const morgan = require('morgan');
 
 const { initPassport } = require('./passport');
 const mailTransporter = require('./mail/transport');
@@ -15,31 +16,22 @@ const { storage } = require('./restaurant/in-memory');
 exports.run = (envConfig) => {
   const config = Object.assign({}, require('./config'), envConfig); // eslint-disable-line global-require
 
-  // TODO: configure connector, planned variants - in memory, based on mongodb (or postgresql), on top of API
+  // TODO: pick connector - based on config, planned variants - in memory, based on mongodb (or postgresql), on top of REST API
   const connector = storage;
+
+
   // ----------  EXPRESS ----------
-
-
   const passport = initPassport(connector);
   const authenticationMiddleware = config.prodMode ? passport.authenticate('local') : (req, res, next) => next();
   const app = express();
 
+  app.use(morgan('common'));
   app.use(bodyParser.json());
   app.use(session(config.session));
 
   app.use(require('connect-flash')()); // eslint-disable-line global-require
   app.use(passport.initialize());
   app.use(passport.session());
-
-
-  const options = { connector, mailer };
-
-  const models = Object.keys(modelClasses)
-    .reduce((modelsAcc, modelName) => {
-      modelsAcc[modelName] = new modelClasses[modelName](options); // eslint-disable-line no-param-reassign
-      return modelsAcc;
-    }, {});
-
 
   app.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user) => {
@@ -57,6 +49,35 @@ exports.run = (envConfig) => {
     req.logout();
     res.json({ message: 'Logged out sucecssfully' });
   });
+
+
+  const options = { connector, mailer };
+
+  const models = Object.keys(modelClasses)
+    .reduce((modelsAcc, modelName) => {
+      modelsAcc[modelName] = new modelClasses[modelName](options); // eslint-disable-line no-param-reassign
+      return modelsAcc;
+    }, {});
+
+  app.use(config.endpoints.graphql, authenticationMiddleware, graphqlExpress((req) => {
+    // Get the query, the same way express-graphql does it
+    const query = req.query.query || req.body.query;
+    if (query && query.length > 2000) {
+      // Probably someone trying to send an overly expensive query - noughty users!
+      throw new Error('Query too large');
+    }
+
+    // Query validation mechanism needs to be extended in future, 
+    // for some inspirations check e.g.: https://developer.github.com/v4/guides/resource-limitations/
+
+    return {
+      schema: executableSchema,
+      context: Object.assign({}, models, {
+        currentUser: req.user,
+      }),
+    };
+  }));
+
 
 
   // TODO: response filled with HTML only for demo purposes. Should be removed later on.
@@ -109,26 +130,12 @@ exports.run = (envConfig) => {
   });
 
 
-  app.use(config.endpoints.graphql, authenticationMiddleware, graphqlExpress((req) => {
-    // Get the query, the same way express-graphql does it
-    const query = req.query.query || req.body.query;
-    if (query && query.length > 2000) {
-      // Probably someone trying to send an overly expensive query - noughty users!
-      throw new Error('Query too large');
-    }
-
-    return {
-      schema: executableSchema,
-      context: Object.assign({}, models, {
-        currentUser: req.user,
-      }),
-    };
-  }));
-
+  // -------------- DEV MODE ONLY --------------
 
   if (!config.prodMode) {
     app.use(config.endpoints.graphiql, passport.authenticate('basic'), graphiqlExpress({ endpointURL: config.endpoints.graphql }));
 
+    // Endpoint exposed for dev purposes only to check that mailer is working properly
     app.post('/mailSenderCheck', (req, res) => {
       const email = req.body.email;
 

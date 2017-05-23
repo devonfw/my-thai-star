@@ -1,5 +1,5 @@
 import { ReservationCockpitService } from './shared/reservation-cockpit.service';
-import { ReservationView } from '../../shared/models/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TdDataTableService,
@@ -21,8 +21,7 @@ export class ReservationCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation time'},
+    { name: 'dateTime', label: 'Reservation date'},
     { name: 'emailOwner', label: 'Email' },
     { name: 'bookingId', label: 'Reference number'},
   ];
@@ -33,7 +32,7 @@ export class ReservationCockpitComponent implements OnInit {
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 8;
-  sortBy: string = 'date';
+  sortBy: string = 'dateTime';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   constructor(private reservationCockpitService: ReservationCockpitService,
@@ -80,7 +79,7 @@ export class ReservationCockpitComponent implements OnInit {
 
   selected(selection: ITdDataTableSelectAllEvent): void {
     let dialogRef: MdDialogRef<ReservationDialogComponent> = this.dialog.open(ReservationDialogComponent, {
-      width: '80%',
+      width: '80%', // Remark: Why not css?
       data: selection,
     });
   }

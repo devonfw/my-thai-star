@@ -1,0 +1,17 @@
+extends main.pug
+
+block content
+  div.mui--text-headline Hi, #{email}
+  br
+  div.mui--text-subhead Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, iste, amet consequatur a   veniam.
+  br
+  div.mui--text-body2
+    b Order menu: 
+    ul 
+      each item in order
+        li!= item 
+  div.mui--text-body2
+    b Total: 
+    | #{total} €
+  div.mui--text-center
+    a(href=urlCancel, class="mui-btn mui-btn--danger") Cancel the order

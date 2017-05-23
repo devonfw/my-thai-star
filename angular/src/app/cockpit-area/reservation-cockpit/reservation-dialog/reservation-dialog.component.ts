@@ -1,8 +1,7 @@
-import { FriendsInvite } from '../../../shared/backend/booking/bookingInfo';
-import { ReservationView } from '../../../shared/models/interfaces';
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { ReservationCockpitService } from '../shared/reservation-cockpit.service';
+import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
 import {MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
@@ -17,13 +16,11 @@ export class ReservationDialogComponent implements OnInit {
   datat: ReservationView[] = [];
 
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation hour'},
-    { name: 'creationDate', label: 'Creation date'},
-    { name: 'creationHour', label: 'Creation time'},
+    { name: 'dateTime', label: 'Reservation date'},
+    { name: 'creationDateTime', label: 'Creation date'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'bookingId', label: 'Table'},
+    { name: 'tableId', label: 'Table'},
   ];
 
   datao: FriendsInvite[] = [];

@@ -25,6 +25,8 @@ export class HeaderComponent {
               public auth: AuthService) {
   }
 
+  // Remark: There should be just one method - openCloseSideNav. Why is there a mobile and normal side nav?
+  // Why each one is handled in a different way? (via events and via service)
   openCloseSideNav(sidenavOpened: boolean): void {
     sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }

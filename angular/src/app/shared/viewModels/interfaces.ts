@@ -17,9 +17,10 @@ export interface OrderView {
 }
 
 export interface ExtraView {
+    id: number;
     name: string;
     price: number;
-    selected: boolean;
+    selected?: boolean;
 }
 
 export interface OrderList {
@@ -28,15 +29,13 @@ export interface OrderList {
 }
 
 export interface ReservationView {
-    date: string;
-    hour: string;
-    creationDate: string;
-    creationHour: string;
+    dateTime: string;
+    creationDateTime?: string;
     nameOwner: string;
     emailOwner: string;
-    bookingId: number;
-    adults?: number;
-    kids?: number;
+    bookingId?: number;
+    tableId?: number;
+    assitants?: number;
     friends?: FriendsInvite[];
     orders?: OrderView[];
 }
@@ -47,17 +46,15 @@ export interface FriendsInvite {
 }
 
 export interface Filter {
-    favourite: boolean;
-    searchTerm: string;
+    searchBy: string;
     sortBy: {name: string, dir: string};
-    price: number;
-    likes: number;
-    main: boolean;
-    starter: boolean;
-    dessert: boolean;
-    noodle: boolean;
-    rice: boolean;
-    curry: boolean;
-    vegan: boolean;
-    vegetarian: boolean;
+    maxPrice: number;
+    minLikes: number;
+    isFav: boolean;
+    categories: CategoryView[];
+}
+
+export interface CategoryView {
+    name: string;
+    selected: boolean;
 }

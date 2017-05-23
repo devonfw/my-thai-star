@@ -1,0 +1,27 @@
+extends main.pug
+
+block content
+  div.mui--text-headline Hi, #{email}
+  br
+  div.mui--text-subhead Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, iste, amet consequatur a   veniam.
+  br
+  div.mui--text-body2
+    b Host: 
+    | #{name} &lt;#{hostEmail}&gt; 
+  div.mui--text-body2
+    b Booking date: 
+    | #{date} 
+  div.mui--text-body2
+    b  Booking hour: 
+    | #{hour}
+  div.mui--text-body2
+    b Guests list:
+    ul 
+      li #{hostEmail}
+      each item in guest
+        li= item      
+  div.mui--text-center
+    a(href=urlAcept, class="mui-btn mui-btn--primary") Acept the booking
+    .
+      &nbsp;
+    a(href=urlCancel, class="mui-btn mui-btn--danger") Cancel the booking

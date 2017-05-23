@@ -1,6 +1,5 @@
-import { OrderList } from './orderList';
+import { BookingInfo, OrderList } from '../backendModels/interfaces';
 import { Observable } from 'rxjs/Observable';
-import { BookingInfo } from './bookingInfo';
 
 export interface IBookingDataService {
 

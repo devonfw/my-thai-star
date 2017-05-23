@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ExtraView, OrderView } from '../../shared/models/interfaces';
+import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import {reduce, chain} from 'lodash';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ExtraView, OrderView } from '../../shared/models/interfaces';
+import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { PriceCalculatorService } from './price-calculator.service';
 
 describe('PriceCalculatorService', () => {
@@ -32,6 +32,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for single order with single extra ingredient selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraRice: ExtraView = {
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: true,
@@ -55,6 +56,7 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 1,
         extras: [{
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -67,11 +69,13 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for single order with multiple extra ingredients selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraRice: ExtraView = {
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: true,
       };
       const extraTofu: ExtraView = {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: true,
@@ -95,10 +99,12 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 1,
         extras: [{
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: false,
         }, {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: false,
@@ -111,6 +117,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for single order with multiple extra ingredients, one of two available extras selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraTofu: ExtraView = {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: true,
@@ -121,6 +128,7 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 1,
         extras: [{
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -145,6 +153,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for multiple orders with single extra ingredient selected',
       inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraRice: ExtraView = {
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: true,
@@ -163,11 +172,13 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for multiple orders with multiple extra ingredients selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraRice: ExtraView = {
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: true,
       };
       const extraTofu: ExtraView = {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: true,
@@ -191,10 +202,12 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 3,
         extras: [{
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: false,
         }, {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: false,
@@ -207,6 +220,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for multiple order with multiple extra ingredients, one of two available extras selected',
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const extraTofu: ExtraView = {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: true,
@@ -217,6 +231,7 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 3,
         extras: [{
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: false,
@@ -256,11 +271,13 @@ describe('PriceCalculatorService', () => {
         inject([PriceCalculatorService], (service: PriceCalculatorService) => {
 
       const extraRice: ExtraView = {
+          id: 0,
           name: 'Rice',
           price: 2.00,
           selected: true,
       };
       const extraTofu: ExtraView = {
+          id: 1,
           name: 'Tofu',
           price: 3.00,
           selected: true,
@@ -279,6 +296,7 @@ describe('PriceCalculatorService', () => {
         comment: '',
         amount: 1,
         extras: [extraTofu, {
+          id: 2,
           name: 'Curry',
           price: 1.50,
           selected: false,

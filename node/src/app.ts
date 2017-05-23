@@ -7,6 +7,8 @@ import * as mailer from './routes/mailmanagement';
 import * as order from './routes/ordermanagement';
 import * as reservation from './routes/reservationmanagement';
 
+import * as pug from 'pug';
+
 export const app = express();
 app.set('port', process.env.PORT || 8080);
 app.disable('x-powered-by');
@@ -19,6 +21,20 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.get('/', (req, res, next) => {
+  res.send(pug.renderFile('./src/emails/createInvitationHost.pug', {
+    title: 'Booking',
+    name: 'Dario',
+    hostEmail: 'dario@gmail.com',
+    email: 'santos@gmail.com',
+    date: '2017/07/11',
+    hour: '20:00',
+    guest: ['santos@gmail.com', 'jose@gmail.com', 'pablo@gmail.com'],
+    urlAcept: '#',
+    urlCancel: '#',
+  }));
+});
 
 /**
  * API routes

@@ -1,10 +1,10 @@
-import { OrderList } from './orderList';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo } from './bookingInfo';
 import { bookedTables } from '../mock-data';
 import { maxBy, find, filter } from 'lodash';
+import { BookingInfo, OrderList } from '../backendModels/interfaces';
+import * as moment from 'moment';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
@@ -14,6 +14,8 @@ export class BookingInMemoryService implements IBookingDataService {
     }
 
     bookTable(booking: BookingInfo): Observable<number> {
+        booking.creationDateTime = moment().format('LLL');
+        booking.tableId = maxBy(bookedTables, (table: BookingInfo) => { return table.tableId; }).tableId + 1;
         return Observable.of(bookedTables.push(booking));
     }
 

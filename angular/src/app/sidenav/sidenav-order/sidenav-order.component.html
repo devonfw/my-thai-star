@@ -5,11 +5,8 @@
   <div layout="column" class="pull-top-xs" flex>
     <span class="orderName">{{order.name}}</span>
     <div layout="row">
-      <span class="orderIngredients" *ngIf="extras.length < 1"> - </span>
-      <span class="orderIngredients" *ngFor="let extra of extras; let i = index">
-        {{extra.name}}
-        <label *ngIf="i < extras.length -1 && extras.length > 1">, </label>
-      </span>
+      <span class="orderIngredients" *ngIf="extras.length === 0"> - </span>
+      <span class="orderIngredients">{{extras}}</span>
     </div>
     <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.comment">Remove comment</label>
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.comment">Add comment</label>

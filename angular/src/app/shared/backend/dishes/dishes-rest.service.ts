@@ -1,8 +1,7 @@
+import { Dish, Filter } from '../backendModels/interfaces';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Dish } from './dish';
-import { Filter } from './filter';
 import {IDishesDataService} from './dishes-data-service-interface';
 import { config } from '../../../config';
 

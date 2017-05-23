@@ -9,7 +9,8 @@ import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
 import * as moment from 'moment';
 import * as md5 from 'md5';
-import * as nodemailer from 'nodemailer';
+import { Mailer } from './utils/mailer';
+import * as pug from 'pug';
 
 // Dynamo
 /*
@@ -28,6 +29,7 @@ const maxPrice = 50;
 const dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 const bookingExpiration = 1;
 const bookingExpirationH = 'hour';
+const mailer = new Mailer('Gmail', 'mythaistarrestaurant@gmail.com', 'mythaistarrestaurant2501');
 
 export default {
     /*getDihses: async (callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
@@ -70,9 +72,8 @@ callback(null, dishes);
 callback(err);
 }
 },*/
-
     getDishes: async (filter: types.IFilterView,
-                      callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+        callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         // check filter values. Put the correct if neccessary
         checkFilter(filter);
 
@@ -135,17 +136,17 @@ callback(err);
         }
     },
     createBooking: async (reserv: types.IReservationView,
-                          callback: (err: types.IError | null, booToken?: string) => void) => {
+        callback: (err: types.IError | null, booToken?: string) => void) => {
         const date = moment();
-        const bookDate = moment(reserv.date);
+        const bookDate = moment(reserv.date, dateFormat);
 
         try {
             let table;
-            if (reserv.type.name === 'booking'){
+            if (reserv.type.name === 'booking') {
                 table = await getFreeTable(reserv.date, reserv.assistants);
 
                 if (table === 'error') {
-                    callback({code: 400, message: 'No more tables'});
+                    callback({ code: 400, message: 'No more tables' });
                     return;
                 }
             }
@@ -196,7 +197,34 @@ callback(err);
 
             callback(null, booking.bookingToken);
 
-            // TODO: send all mails
+            if (reserv.type.name === 'booking') {
+
+            } else {
+                mailer.sendEmail(reserv.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
+                    title: 'Invitation created',
+                    name: reserv.name,
+                    date: bookDate.format('YYYY-MM-DD'),
+                    hour: bookDate.format('HH:mm:ss'),
+                    guest: reserv.guestList,
+                    urlCancel: '#',
+                }));
+
+                reserv.guestList.forEach((elem: string) => {
+                    const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
+                        title: 'You have been invited',
+                        email: elem,
+                        name: reserv.name,
+                        hostEmail: reserv.email,
+                        date: bookDate.format('YYYY-MM-DD'),
+                        hour: bookDate.format('HH:mm:ss'),
+                        guest: reserv.guestList,
+                        urlAcept: '#',
+                        urlCancel: '#',
+                    });
+
+                    mailer.sendEmail(elem, '[MyThaiStar] Your have a new invitation', email, email);
+                });
+            }
         } catch (err) {
             console.log(err);
             callback(err);
@@ -293,6 +321,22 @@ callback(err);
         }
 
         callback(null);
+
+        const [vat, names] = await calculateVATandOrderName(order);
+        console.log(pug.renderFile('./src/emails/order.pug', {
+            title: 'Order created',
+            email: reg[0].email,
+            total: vat,
+            urlCancel: '#',
+            order:  names,
+        }));
+        mailer.sendEmail(reg[0].email, '[MyThaiStar] Order info', undefined, pug.renderFile('./src/emails/order.pug', {
+            title: 'Order created',
+            email: reg[0].email,
+            total: vat,
+            urlCancel: '#',
+            order:  names,
+        }));
     },
     cancelOrder: async (order: string, callback: (err: types.IError | null) => void) => {
         let reg: any[];
@@ -505,10 +549,10 @@ callback(err);
 
 async function getFreeTable(date: string, assistants: number) {
     let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise(),
-        fn.table('Booking').filter((elem: dbtypes.IBooking) => {
-            const bookDate = moment(elem.bookingDate, dateFormat);
-            return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
-        }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
+    fn.table('Booking').filter((elem: dbtypes.IBooking) => {
+        const bookDate = moment(elem.bookingDate, dateFormat);
+        return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
+    }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
 
     console.log(booking);
 
@@ -516,7 +560,7 @@ async function getFreeTable(date: string, assistants: number) {
         return !booking.includes(elem.id) && elem.seatsNumber >= assistants;
     });
 
-    if (tables.length > 0){
+    if (tables.length > 0) {
         return tables[0].id;
     }
 
@@ -542,13 +586,52 @@ function dishToDishview() {
     };
 }
 
+async function calculateVATandOrderName(order: types.IOrderView): Promise<[number, string[]]> {
+    let sum: number = 0;
+    const names: string[] = [];
+
+    const [dishes, extras] = await Promise.all([
+        fn.table('Dish', order.lines.map((elem: types.IOrderLineView) => {
+            return elem.idDish.toString();
+        })).
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise(),
+        fn.table('Ingredient').
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise(),
+    ]);
+
+    order.lines.forEach((elem: types.IOrderLineView) => {
+        let x = dishes[elem.idDish.toString()].price;
+        let name = '<span style="color: #317d35">' + elem.amount + '</span> ' + dishes[elem.idDish.toString()].name + ' with ';
+        elem.extras.forEach((elem2: number) => {
+            x += extras[elem2.toString()].price;
+            name += extras[elem2.toString()].name + ', ';
+        });
+
+        sum += x * elem.amount;
+        name = name.substring(0, name.length - 2);
+        name += ' (' + x + '€)';
+
+        names.push(name);
+    });
+
+    return [sum, names];
+}
+
 /**
  * Check all params of FilterView and put the correct values if neccesary
  *
  * @param {types.IFilterView} filter
  * @returns
  */
-export function checkFilter(filter: types.IFilterView) {
+function checkFilter(filter: types.IFilterView) {
     filter.maxPrice = filter.maxPrice || 50;
     filter.minLikes = filter.minLikes || 0;
     filter.searchBy = filter.searchBy || '';

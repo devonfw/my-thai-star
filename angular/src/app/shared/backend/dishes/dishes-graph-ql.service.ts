@@ -1,10 +1,9 @@
-import { Filter } from './filter';
+import { Dish, Filter } from '../backendModels/interfaces';
 import { ApolloQueryResult } from 'apollo-client';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Dish } from './dish';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
@@ -33,20 +32,12 @@ const getDishesQuery: any = gql`
 class GqlDish {
     image: string;
     likes: number;
-    ingredients: {name: string, price: number}[];
+    ingredients: {id: number, name: string, price: number}[];
     description: string;
     name: string;
     price: number;
-    categories: { // added by Roberto, please, revise
-      main: boolean,
-      starter: boolean,
-      dessert: boolean,
-      noodle: boolean,
-      rice: boolean,
-      curry: boolean,
-      vegan: boolean,
-      vegetarian: boolean,
-    };
+    categories: [ // added by Roberto, please revise
+      {id: string}];
 }
 
 class DishesQueryRepsonse {
@@ -81,20 +72,11 @@ export class DishesGraphQlService implements IDishesDataService {
         isfav: false,
         image: dish.image,
         likes: dish.likes,
-        extras: dish.ingredients.map((extra: any) => ({name: extra.name, price: extra.price, selected: false})),
+        extras: dish.ingredients.map((extra: any) => ({id: extra.id, name: extra.name, price: extra.price, selected: false})),
         description: dish.description,
         name: dish.name,
         price: dish.price,
-        categories: { // added by Roberto, please, revise
-          main: dish.categories.main,
-          starter: dish.categories.main,
-          dessert: dish.categories.main,
-          noodle: dish.categories.main,
-          rice: dish.categories.main,
-          curry: dish.categories.main,
-          vegan: dish.categories.main,
-          vegetarian: dish.categories.main,
-      },
+        categories: dish.categories, // added by Roberto, please revise
       };
   }
 }

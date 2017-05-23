@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MdSlider } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
-import { DishView, Filter } from '../shared/models/interfaces';
-import { MdSlider } from '@angular/material';
+import { DishView, Filter } from '../shared/viewModels/interfaces';
 
 @Component({
   selector: 'public-menu',
@@ -31,12 +31,10 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters: any): void {
-      filters.sortBy = {};
-      filters.sortBy.name = filters.sortName;
-      filters.sortBy.dir = this.sortDir;
-      this.menuService.postFilters(filters).subscribe((data: any) => {
-        this.menus = data;
-      });
+      this.menuService.postFilters(this.menuService.composeFilters(filters, this.sortDir))
+                      .subscribe((data: any) => {
+                        this.menus = data;
+                      });
     }
 
     clearFilters(form: FormGroup, price: MdSlider, likes: MdSlider): void {

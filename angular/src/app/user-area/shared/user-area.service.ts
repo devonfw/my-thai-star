@@ -1,10 +1,8 @@
 import { Injectable }     from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { LoginInfo } from '../../shared/backend/login/loginInfo';
 import { LoginDataService } from '../../shared/backend/login/login-data-service';
 import { AuthService } from '../../shared/authentication/auth.service';
 import { MdSnackBar } from '@angular/material';
-import * as _ from 'lodash';
 
 @Injectable()
 export class UserAreaService {
@@ -13,9 +11,20 @@ export class UserAreaService {
                 public authService: AuthService,
                 public loginDataService: LoginDataService) { }
 
-    changePassword(data: any): Observable<number> {
+    changePassword(data: any): void {
         data.username = this.authService.user;
-        return this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword);
+        this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
+            .subscribe( () => {
+                    this.snackBar.open('Password change successful', 'OK', {
+                        duration: 4000,
+                        extraClasses: ['bgc-green-500'],
+                    });
+                }, (error: any) => {
+                    this.snackBar.open('Password change error, old password do not match', 'OK', {
+                        duration: 4000,
+                        extraClasses: ['bgc-red-600'],
+                    });
+                });
     }
 
 }

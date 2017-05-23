@@ -9,7 +9,7 @@ import { TdDataTableService,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { OrderDialogComponent } from 'app/cockpit-area/order-cockpit/order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
-import { ReservationView } from '../../shared/models/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -19,10 +19,8 @@ import { ReservationView } from '../../shared/models/interfaces';
 export class OrderCockpitComponent implements OnInit {
 
   data: ReservationView[];
-
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation time'},
+    { name: 'dateTime', label: 'Reservation date'},
     { name: 'emailOwner', label: 'Email' },
     { name: 'bookingId', label: 'Reference number'},
   ];
@@ -33,7 +31,7 @@ export class OrderCockpitComponent implements OnInit {
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 8;
-  sortBy: string = 'date';
+  sortBy: string = 'dateTime';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   constructor(private _dataTableService: TdDataTableService,

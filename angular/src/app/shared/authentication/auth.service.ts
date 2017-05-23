@@ -1,48 +1,45 @@
-import { ifTrue } from 'codelyzer/util/function';
-import { Injectable }     from '@angular/core';
-import { LoginDataService } from '../backend/login/login-data-service';
-import { LoginInfo } from '../backend/login/loginInfo';
+import { Injectable } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
+import { LoginDataService } from '../backend/login/login-data-service';
+import { LoginInfo } from '../backend/backendModels/interfaces';
 import { isEmpty } from 'lodash';
 
 @Injectable()
 export class AuthService {
     isLogged: boolean = false;
     user: string = '';
+    // Remark: Something more generic than a boolean should be implemented here to allow more that 2 roles and privilages granulation
+    // E.g. a method hasPermission should be exposed by this service that takes the role/privilage name as an argument
     hasPermission: boolean = false;
 
     constructor(public snackBar: MdSnackBar, public loginDataService: LoginDataService) { }
 
     login(username: string, password: string): void {
         this.loginDataService.login(username, password)
-            .map((login: LoginInfo) => login as LoginInfo) // TODO: Replace with a converter
-            .subscribe((login: LoginInfo) => {
-                if (!isEmpty(login)) {
+            .subscribe((loginInfo: LoginInfo) => {
                     this.isLogged = true;
-                    this.user = login.username;
-                    if (login.role === 'waiter') {
+                    this.user = loginInfo.username;
+                    if (loginInfo.role === 'waiter') {
                         this.hasPermission = true;
                     }
-                } else {
+                }, (err: any) => {
                     this.isLogged = false;
-                }
-            });
+                });
     }
 
     register(email: string, password: string): void {
-        this.loginDataService.register(email, password).subscribe( (res: number) => {
-            if (res) {
+        this.loginDataService.register(email, password)
+            .subscribe(() => {
                 this.snackBar.open('Register successful', 'OK', {
                     duration: 4000,
                     extraClasses: ['bgc-green-500'],
                 });
-            } else {
+            }, (error: any) => {
                 this.snackBar.open('Register failed, username already in use', 'OK', {
                     duration: 4000,
                     extraClasses: ['bgc-red-600'],
                 });
-            }
-        });
+            });
     }
 
     logout(): void {
