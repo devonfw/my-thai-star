@@ -9,27 +9,36 @@ import { omit, find } from 'lodash';
 export class LoginInMemoryService implements ILoginDataService {
 
   login(username: string, password: string): Observable <LoginInfo> {
-    return Observable.of(omit(find(users, { 'username': username, 'password': password }), 'password'));
+    const user: LoginInfo = this.findUser(username, password);
+    if (!user) {
+       return Observable.throw({errorCode: 2, message: 'User name or password wrong'});
+    }
+    return Observable.of(omit(user, 'password'));
   }
 
-  register(email: string, password: string): Observable <number> {
-    let register: LoginInfo = find(users, (user: LoginInfo) => { return user.username ===  email; });
-    if (register === undefined) {
-      users.push({username: email, password: password, role: 'user'});
-      return Observable.of(1);
-    } else {
-      return Observable.of(0);
+  register(email: string, password: string): Observable <LoginInfo> {
+    const existingUser: LoginInfo = find(users, (user: LoginInfo) => user.username ===  email);
+    if (existingUser) {
+      // Remark: To be agreed wheather registering when user already available is an error
+      return Observable.throw({errorCode: 1, message: 'User already exists'});
     }
+    const newUser: LoginInfo = {username: email, password: password, role: 'user'};
+    users.push(newUser);
+    return Observable.of(omit(newUser, 'password'));
   }
 
-  changePassword(username: string, oldPassword: string, newPassword: string): Observable<number> {
-    let userChange: LoginInfo = find(users, (user: LoginInfo) => { return user.username ===  username && user.password === oldPassword; });
-    if (userChange) {
-      userChange.password = newPassword;
-      return Observable.of(1);
-    } else {
-      return Observable.of(0);
+  // Remark: Reasonable success response type needs to be defined here
+  changePassword(username: string, oldPassword: string, newPassword: string): Observable<any> {
+    const userToChange: LoginInfo = this.findUser(username, oldPassword);
+    if (!userToChange) {
+       return Observable.throw({errorCode: 1, message: 'User already exists'});
     }
+    userToChange.password = newPassword;
+    return Observable.of({message: 'Password changed'});
+  }
+
+  private findUser(username: string, password: string): LoginInfo {
+    return find(users, { username: username, password: password });
   }
 
 }

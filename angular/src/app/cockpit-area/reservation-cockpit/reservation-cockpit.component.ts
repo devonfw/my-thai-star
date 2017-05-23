@@ -79,7 +79,7 @@ export class ReservationCockpitComponent implements OnInit {
 
   selected(selection: ITdDataTableSelectAllEvent): void {
     let dialogRef: MdDialogRef<ReservationDialogComponent> = this.dialog.open(ReservationDialogComponent, {
-      width: '80%',
+      width: '80%', // Remark: Why not css?
       data: selection,
     });
   }

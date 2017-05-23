@@ -14,6 +14,7 @@ export class OrderCockpitService {
                .map((orders: ReservationView[]) => orders as ReservationView[]);
   }
 
+  // Remark: Method returns a reservation view, so why is it called getOrder?
   getOrder(id: number): Observable<ReservationView> {
     return this.bookingDataService.getOrder(id)
                .map((orders: ReservationView) => orders as ReservationView);

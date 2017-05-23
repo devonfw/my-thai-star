@@ -15,6 +15,7 @@
       </div>
       <div style="text-align: right">
         <button md-button md-dialog-close class="text-upper">Cancel</button>
+        <!--Remark: Please use button of type submit and ngSubmit event to bind the action (applies to all created forms)-->
         <button md-button (click)="logInSubmit(loginForm.form.value)" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">Login</button>
       </div>
     </form>

@@ -9,7 +9,9 @@
             <input mdInput placeholder="Search our dishes" ngModel name="searchTerm">
           </md-input-container>
         </div>
-        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%">
+        <!-- Remark: Avoid using inline styles such as "width: 100%" -->
+        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%"> 
+          <!-- Remark: HTMl should not be repeated. Use CSS and media queries-->
           <md-checkbox ngModel name="main">Main dishes</md-checkbox>
           <md-checkbox ngModel name="starter">Starter</md-checkbox>
           <md-checkbox ngModel name="dessert">Dessert</md-checkbox>

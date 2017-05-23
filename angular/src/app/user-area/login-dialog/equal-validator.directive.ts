@@ -10,16 +10,39 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 export class EqualValidatorDirective implements Validator {
 
     @Input('validateEqual') public validateEqual: string;
-    @Input('reverse') public reverse: string;
+    @Input('reverse') public reverse: string; // Remark: Please ducument this parameter or give it a better name.
 
+    // Remark: Was it supposed to be a TS getter or simply isReverse method? Please revise and fix.
     private get isReverse(): boolean {
-        if (!this.reverse) {
-            return false;
-        }
-        return this.reverse === 'true' ? true : false;
+        return !!this.reverse && this.reverse === 'true';
     }
 
     validate(control: AbstractControl): { [key: string]: any } {
+
+        // Remark - maybe like that? Please review.
+        // const correlatedControl: AbstractControl = control.root.get(this.validateEqual);
+
+        // if (!correlatedControl) {
+        //     return undefined;
+        // }
+
+        // if (this.isReverse) {
+        //     if (this.isValueEqual(control, correlatedControl)) {
+        //         delete correlatedControl.errors.validateEqual;
+        //         if (!Object.keys(correlatedControl.errors).length) {
+        //             correlatedControl.setErrors(undefined);
+        //         }
+        //     } else {
+        //         correlatedControl.setErrors({
+        //             validateEqual: false,
+        //         });
+        //     }
+        // }
+
+        // return {
+        //     validateEqual: this.isValueEqual(control, correlatedControl),
+        // };
+
         // self value
         let inputValue: string = control.value;
 
@@ -50,4 +73,8 @@ export class EqualValidatorDirective implements Validator {
 
         return undefined;
     }
+
+    // private isValueEqual(c1: AbstractControl, c2: AbstractControl): boolean {
+    //     return c1.value === c2.value;
+    // }
 }

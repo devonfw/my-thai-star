@@ -31,9 +31,10 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters: any): void {
-      filters.sortBy = {};
-      filters.sortBy.name = filters.sortName;
-      filters.sortBy.dir = this.sortDir;
+      filters.sortBy = {
+        name: filters.sortName,
+        dir: this.sortDir,
+      };
       this.menuService.postFilters(filters).subscribe((data: any) => {
         this.menus = data;
       });

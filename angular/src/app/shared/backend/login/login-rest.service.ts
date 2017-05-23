@@ -23,15 +23,15 @@ export class LoginRestService implements ILoginDataService {
       .map((res: Response) => res.json());
   }
 
-  register(email: string, password: string): Observable<number> {
+  register(email: string, password: string): Observable<LoginInfo> {
     return this.http.post(`${config.restServiceRoot}${this.registerRestPath}`, {email: email, password: password})
       .map((res: Response) => res.json());
   }
 
-  changePassword(username: string, oldPassword: string, newPassword: string): Observable<number> {
-    return this.http.post(`${config.restServiceRoot}${this.changePasswordRestPath}`, {username: username,
-                                                                                      oldPassword: oldPassword,
-                                                                                      newPassword: newPassword})
+  changePassword(username: string, oldPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${config.restServiceRoot}${this.changePasswordRestPath}`,
+        {username: username, oldPassword: oldPassword, newPassword: newPassword},
+      )
       .map((res: Response) => res.json());
   }
 

@@ -15,7 +15,7 @@ import { filter } from 'lodash';
 export class SidenavOrderComponent implements OnInit {
 
   @Input('order') order: OrderView;
-  @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
+  @Output('removeOrder') removeEmitter: EventEmitter<OrderView> = new EventEmitter();
   extras: string[] = [];
 
   constructor(private sidenav: SidenavService,
@@ -46,13 +46,14 @@ export class SidenavOrderComponent implements OnInit {
   decreaseOrder(): void {
     this.sidenav.decreaseOrder(this.order);
     if (this.order.amount < 1) {
-      this.removeEmitter.emit();
+      this.removeEmitter.emit(this.order);
     }
   }
 
   removeOrder(): void {
-    this.sidenav.removeOrder(this.order);
-    this.removeEmitter.emit();
+    this.sidenav.removeOrder(this.order); // Remark - why handling here is not consistient with the one above?
+                                          // Do we need both, removal via service and emmiting an event?
+    this.removeEmitter.emit(this.order);
   }
 
   calculateOrderPrice(): number {

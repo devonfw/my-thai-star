@@ -30,7 +30,7 @@ export class MenuCardComponent {
   }
 
   selectedOption(extra: ExtraView): void {
-    extra.selected ? extra.selected = false : extra.selected = true;
+    extra.selected = !extra.selected;
   }
 
 }
