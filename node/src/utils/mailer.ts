@@ -1,6 +1,7 @@
 import * as nodemailer from 'nodemailer';
+import * as pug from 'pug';
 
-class Mailer {
+export class Mailer {
     private transporter: nodemailer.Transporter;
     public constructor(public service: string, public user: string, public password: string) {
         // create reusable transporter object using the default SMTP transport
@@ -13,10 +14,10 @@ class Mailer {
         });
     }
 
-    public sendEmail(from: string, to: string, subject: string, text?: string, html?: string) {
+    public sendEmail(to: string, subject: string, text?: string, html?: string) {
         // setup email data with unicode symbols
         const mailOptions = {
-            from, // sender address
+            from: this.user, // sender address
             to, // list of receivers
             subject, // Subject line
             text, // plain text body
