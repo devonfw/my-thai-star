@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ReservationView } from '../../shared/models/interfaces';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-
+import { map } from 'lodash';
 @Injectable()
 export class BookTableService {
 

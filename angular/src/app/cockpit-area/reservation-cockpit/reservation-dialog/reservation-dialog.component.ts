@@ -17,13 +17,11 @@ export class ReservationDialogComponent implements OnInit {
   datat: ReservationView[] = [];
 
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation hour'},
-    { name: 'creationDate', label: 'Creation date'},
-    { name: 'creationHour', label: 'Creation time'},
+    { name: 'dateTime', label: 'Reservation date'},
+    { name: 'creationDateTime', label: 'Creation date'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'bookingId', label: 'Table'},
+    { name: 'tableId', label: 'Table'},
   ];
 
   datao: FriendsInvite[] = [];

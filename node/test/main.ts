@@ -1,11 +1,11 @@
 import * as chai from 'chai';
-import bussiness from '../src/logic';
+import ChaiHttp = require('chai-http');
 import { app as server } from '../src/app';
 import { isDishView } from '../src/model/interfaces';
 import * as _ from 'lodash';
 
 // configure chai-http
-chai.use(require('chai-http'));
+chai.use(ChaiHttp);
 
 const expect = chai.expect;
 const should = chai.should();

@@ -21,19 +21,10 @@ export class InvitationDialogComponent implements OnInit {
                  this.data = dialogData;
   }
   ngOnInit(): void {
-    this.data = {
-      date: moment(this.data.date).format('DD/MM/YYYY'),
-      hour: moment(this.data.date).format('LT'),
-      creationDate: moment().format('DD/MM/YYYY'),
-      creationHour: moment().format('LT'),
-      nameOwner: this.data.nameOwner,
-      emailOwner: this.data.emailOwner,
-      bookingId: -1,
-      friends: this.data.friends,
-    };
+    this.data.dateTime = moment(this.data.dateTime).format('LLL');
     this.invitationService.getTableId().subscribe( (bookingId: number) => {
-      this.data.bookingId = bookingId;
-    });
+        this.data.bookingId = bookingId;
+      });
   }
 
   sendInvitation(): void {

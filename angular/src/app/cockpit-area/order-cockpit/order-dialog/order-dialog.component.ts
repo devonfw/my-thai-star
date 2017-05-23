@@ -4,7 +4,7 @@ import { ExtraView, OrderView, ReservationView } from '../../../shared/models/in
 import { OrderCockpitService } from '../shared/order-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
-import {map, reduce, cloneDeep} from 'lodash';
+import {filter, map, reduce, cloneDeep, chain} from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -13,39 +13,36 @@ import {map, reduce, cloneDeep} from 'lodash';
 })
 export class OrderDialogComponent implements OnInit {
 
+  datat: ReservationView[] = [];
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'hour', label: 'Reservation hour'},
-    { name: 'creationDate', label: 'Creation date'},
-    { name: 'creationHour', label: 'Creation time'},
+    { name: 'dateTime', label: 'Reservation date'},
+    { name: 'creationDateTime', label: 'Creation date'},
     { name: 'nameOwner', label: 'Owner' },
     { name: 'emailOwner', label: 'Email' },
-    { name: 'bookingId', label: 'Table'},
+    { name: 'tableId', label: 'Table'},
   ];
 
+  datao: OrderView[] = [];
   columnso: ITdDataTableColumn[] = [
     { name: 'name', label: 'Dish'},
     { name: 'comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
     { name: 'amount', label: 'Quantity' },
-    { name: 'price', label: 'Price'},
+    { name: 'price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
-
-  bookingId: number;
-  datao: OrderView[] = [];
-  datat: ReservationView[] = [];
 
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 5;
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
+  bookingId: number;
 
   constructor(private _dataTableService: TdDataTableService,
               private priceCalculator: PriceCalculatorService,
               private orderCockpitService: OrderCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
-                 this.bookingId = dialogData.row.bookingId;
+                this.bookingId = dialogData.row.bookingId;
   }
 
   ngOnInit(): void {
@@ -65,15 +62,16 @@ export class OrderDialogComponent implements OnInit {
       //   .filter((opt: ExtraView) => opt.selected)
       //   .join(', ').value();
 
-        o.extras = reduce(o.extras, (result: string, opt: ExtraView) => {
-          if (opt.selected) {
-            return result + ' ' + opt.name + ',';
-          } else {
-            return result;
-          }
-        }, '').slice(0, -1);
-
-      });
+      this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
+        this.datat.push(order);
+        this.datao = JSON.parse(JSON.stringify(order.orders));
+        this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
+        map(this.datao, (o: OrderView) => {
+          o.price = this.priceCalculator.getPrice(o);
+          o.extras = filter(o.extras, (extra: ExtraView) => extra.selected)
+                    .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+                    .slice(0, -1);
+          });
     });
     this.filter();
   }
