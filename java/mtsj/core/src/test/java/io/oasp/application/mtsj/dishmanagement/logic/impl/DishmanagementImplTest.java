@@ -67,7 +67,7 @@ public class DishmanagementImplTest extends ModuleTest {
    * Test for findPlate method
    */
   @Test
-  public void findPlate() {
+  public void findDish() {
 
     DishEntity plate = mock(DishEntity.class);
     DishEto eto = new DishEto();

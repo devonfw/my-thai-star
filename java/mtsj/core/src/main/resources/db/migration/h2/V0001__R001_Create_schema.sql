@@ -71,8 +71,8 @@ CREATE TABLE Image (
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
   content VARCHAR(2147483647),
-  imageType INTEGER,
-  extension VARCHAR(5),
+  contentType INTEGER,
+  mimeType VARCHAR(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)
 );
 
@@ -139,7 +139,6 @@ CREATE TABLE Orders (
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
-  canceled BOOLEAN,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
@@ -150,7 +149,7 @@ CREATE TABLE OrderLine (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idDish BIGINT NOT NULL,
-  quantity INTEGER,
+  amount INTEGER,
   comment VARCHAR (255),
   idOrder BIGINT NOT NULL,
   CONSTRAINT PK_OrderLine PRIMARY KEY(id),
@@ -161,7 +160,7 @@ CREATE TABLE OrderLine (
 -- *** OrderDishExtraIngredient ***
 CREATE TABLE OrderDishExtraIngredient (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
+  modificationCounter INTEGER,
   idOrderLine BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
   CONSTRAINT PK_OrderDishExtraIngredient PRIMARY KEY(id),

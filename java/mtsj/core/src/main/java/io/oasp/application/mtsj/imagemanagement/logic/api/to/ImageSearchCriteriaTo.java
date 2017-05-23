@@ -1,6 +1,6 @@
 package io.oasp.application.mtsj.imagemanagement.logic.api.to;
 
-import io.oasp.application.mtsj.general.common.api.datatype.ImageType;
+import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
@@ -16,9 +16,9 @@ public class ImageSearchCriteriaTo extends SearchCriteriaTo {
 
   private String content;
 
-  private ImageType imageType;
+  private ContentType contentType;
 
-  private String extension;
+  private String mimeType;
 
   /**
    * The constructor.
@@ -48,24 +48,24 @@ public class ImageSearchCriteriaTo extends SearchCriteriaTo {
     this.content = content;
   }
 
-  public ImageType getImageType() {
+  public ContentType getContentType() {
 
-    return this.imageType;
+    return this.contentType;
   }
 
-  public void setImageType(ImageType imageType) {
+  public void setContentType(ContentType contentType) {
 
-    this.imageType = imageType;
+    this.contentType = contentType;
   }
 
-  public String getExtension() {
+  public String getMimeType() {
 
-    return this.extension;
+    return this.mimeType;
   }
 
-  public void setExtension(String extension) {
+  public void setExtension(String mimeType) {
 
-    this.extension = extension;
+    this.mimeType = mimeType;
   }
 
 }

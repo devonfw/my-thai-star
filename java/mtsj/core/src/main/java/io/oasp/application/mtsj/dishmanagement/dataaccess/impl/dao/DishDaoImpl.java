@@ -16,6 +16,8 @@ import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -56,6 +58,7 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
       query.where(Alias.$(dish.getPrice()).lt(price));
     }
 
+    addOrderBy(query, alias, dish, criteria.getSort());
     PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
 
     Collection<Category> categories = criteria.getCategories();
@@ -66,8 +69,7 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     return entitiesList;
   }
 
-  private PaginatedListTo<DishEntity> categoryFilter(PaginatedListTo<DishEntity> pl,
-      Collection<Category> categories) {
+  private PaginatedListTo<DishEntity> categoryFilter(PaginatedListTo<DishEntity> pl, Collection<Category> categories) {
 
     List<DishEntity> dishEntities = pl.getResult();
     List<DishEntity> dishEntitiesF = new ArrayList<>();
@@ -79,7 +81,6 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
           if (category.getId() == entityCat.getId()) {
             if (!dishAlreadyAdded(dishEntitiesF, dishEntity)) {
               dishEntitiesF.add(dishEntity);
-              System.out.println("ID: " + dishEntity.getId() + "  NAME: " + dishEntity.getName());
               break;
             }
 
@@ -102,6 +103,33 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
       }
     }
     return result;
+  }
+
+  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity plate, List<OrderByTo> sort) {
+
+    if (sort != null && !sort.isEmpty()) {
+      for (OrderByTo orderEntry : sort) {
+        if ("name".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getName()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getName()).desc());
+          }
+        } else if ("description".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getDescription()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getDescription()).desc());
+          }
+        } else if ("price".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(plate.getPrice()).asc());
+          } else {
+            query.orderBy(Alias.$(plate.getPrice()).desc());
+          }
+        }
+      }
+    }
   }
 
 }
