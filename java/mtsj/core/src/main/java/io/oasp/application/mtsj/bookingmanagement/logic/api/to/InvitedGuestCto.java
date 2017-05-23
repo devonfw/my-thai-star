@@ -15,7 +15,7 @@ public class InvitedGuestCto extends AbstractCto {
 
   public InvitedGuestEto getInvitedGuest() {
 
-    return this.invitedGuest;
+    return invitedGuest;
   }
 
   public void setInvitedGuest(InvitedGuestEto invitedGuest) {
@@ -25,7 +25,7 @@ public class InvitedGuestCto extends AbstractCto {
 
   public BookingEto getBooking() {
 
-    return this.booking;
+    return booking;
   }
 
   public void setBooking(BookingEto booking) {

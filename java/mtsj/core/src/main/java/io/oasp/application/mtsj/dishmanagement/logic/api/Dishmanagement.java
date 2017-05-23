@@ -1,9 +1,12 @@
 package io.oasp.application.mtsj.dishmanagement.logic.api;
 
-import java.util.List;
-
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategorySearchCriteriaTo;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -12,12 +15,44 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 public interface Dishmanagement {
 
   /**
+   * Returns a Category by its id 'id'.
+   *
+   * @param id The id 'id' of the Category.
+   * @return The {@link CategoryEto} with id 'id'
+   */
+  CategoryEto findCategory(Long id);
+
+  /**
+   * Returns a paginated list of Categorys matching the search criteria.
+   *
+   * @param criteria the {@link CategorySearchCriteriaTo}.
+   * @return the {@link List} of matching {@link CategoryEto}s.
+   */
+  PaginatedListTo<CategoryEto> findCategoryEtos(CategorySearchCriteriaTo criteria);
+
+  /**
+   * Deletes a category from the database by its id 'categoryId'.
+   *
+   * @param categoryId Id of the category to delete
+   * @return boolean <code>true</code> if the category can be deleted, <code>false</code> otherwise
+   */
+  boolean deleteCategory(Long categoryId);
+
+  /**
+   * Saves a category and store it in the database.
+   *
+   * @param category the {@link CategoryEto} to create.
+   * @return the new {@link CategoryEto} that has been saved with ID and version.
+   */
+  CategoryEto saveCategory(CategoryEto category);
+
+  /**
    * Returns a Dish by its id 'id'.
    *
    * @param id The id 'id' of the Dish.
    * @return The {@link DishEto} with id 'id'
    */
-  DishEto findDish(Long id);
+  DishCto findDish(Long id);
 
   /**
    * Returns a paginated list of Dishs matching the search criteria.
@@ -42,5 +77,37 @@ public interface Dishmanagement {
    * @return the new {@link DishEto} that has been saved with ID and version.
    */
   DishEto saveDish(DishEto dish);
+
+  /**
+   * Returns a Ingredient by its id 'id'.
+   *
+   * @param id The id 'id' of the Ingredient.
+   * @return The {@link IngredientEto} with id 'id'
+   */
+  IngredientEto findIngredient(Long id);
+
+  /**
+   * Returns a paginated list of Ingredients matching the search criteria.
+   *
+   * @param criteria the {@link IngredientSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link IngredientEto}s.
+   */
+  PaginatedListTo<IngredientEto> findIngredientEtos(IngredientSearchCriteriaTo criteria);
+
+  /**
+   * Deletes a ingredient from the database by its id 'ingredientId'.
+   *
+   * @param ingredientId Id of the ingredient to delete
+   * @return boolean <code>true</code> if the ingredient can be deleted, <code>false</code> otherwise
+   */
+  boolean deleteIngredient(Long ingredientId);
+
+  /**
+   * Saves a ingredient and store it in the database.
+   *
+   * @param ingredient the {@link IngredientEto} to create.
+   * @return the new {@link IngredientEto} that has been saved with ID and version.
+   */
+  IngredientEto saveIngredient(IngredientEto ingredient);
 
 }

@@ -9,21 +9,24 @@ import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEnt
 @javax.persistence.Table(name = "Table")
 public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
-  private static final long serialVersionUID = 1L;
-
   private Integer seatsNumber;
 
-  @Override
-  public int getSeatsNumber() {
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * @return seatsNumber
+   */
+  public Integer getSeatsNumber() {
 
     return this.seatsNumber;
   }
 
-  @Override
-  public void setSeatsNumber(int seatsNumber) {
+  /**
+   * @param seatsNumber new value of {@link #getseatsNumber}.
+   */
+  public void setSeatsNumber(Integer seatsNumber) {
 
     this.seatsNumber = seatsNumber;
-
   }
 
 }

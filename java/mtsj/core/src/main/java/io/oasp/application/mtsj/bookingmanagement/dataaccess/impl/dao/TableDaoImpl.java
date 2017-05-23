@@ -47,8 +47,6 @@ public class TableDaoImpl extends ApplicationDaoImpl<TableEntity> implements Tab
     if (seatsNumber != null) {
       query.where(Alias.$(table.getSeatsNumber()).eq(seatsNumber));
     }
-
-    addOrderBy(query, alias, table, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
 

@@ -61,7 +61,7 @@ public class InvitedGuestSearchCriteriaTo extends SearchCriteriaTo {
     this.email = email;
   }
 
-  public Boolean isAccepted() {
+  public Boolean getAccepted() {
 
     return this.accepted;
   }

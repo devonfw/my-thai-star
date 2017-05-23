@@ -4,8 +4,8 @@ import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
 
 public interface Table extends ApplicationEntity {
 
-  public int getSeatsNumber();
+  public Integer getSeatsNumber();
 
-  public void setSeatsNumber(int seatsNumber);
+  public void setSeatsNumber(Integer seatsNumber);
 
 }

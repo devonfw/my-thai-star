@@ -1,6 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 
-import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
+import java.util.List;
+
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 
 /**
@@ -10,40 +11,40 @@ public class BookingCto extends AbstractCto {
 
   private static final long serialVersionUID = 1L;
 
-  private BookingEto book;
-
-  private BookingType bookType;
+  private BookingEto booking;
 
   private TableEto table;
 
+  private List<InvitedGuestEto> invitedGuests;
+
   public BookingEto getBooking() {
 
-    return this.book;
+    return booking;
   }
 
-  public void setBooking(BookingEto book) {
+  public void setBooking(BookingEto booking) {
 
-    this.book = book;
-  }
-
-  public BookingType getBookingType() {
-
-    return this.bookType;
-  }
-
-  public void setBookingType(BookingType bookType) {
-
-    this.bookType = bookType;
+    this.booking = booking;
   }
 
   public TableEto getTable() {
 
-    return this.table;
+    return table;
   }
 
   public void setTable(TableEto table) {
 
     this.table = table;
+  }
+
+  public List<InvitedGuestEto> getInvitedGuests() {
+
+    return invitedGuests;
+  }
+
+  public void setInvitedGuests(List<InvitedGuestEto> invitedGuests) {
+
+    this.invitedGuests = invitedGuests;
   }
 
 }

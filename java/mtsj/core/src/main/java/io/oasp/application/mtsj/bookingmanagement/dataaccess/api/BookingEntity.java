@@ -1,28 +1,21 @@
 package io.oasp.application.mtsj.bookingmanagement.dataaccess.api;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 @Entity
-@Table(name = "Booking")
+@javax.persistence.Table(name = "Booking")
 public class BookingEntity extends ApplicationPersistenceEntity implements Booking {
 
   private String name;
@@ -31,15 +24,13 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String comment;
 
-  private String email;
-
-  @NotNull
-  @Future
   private Timestamp bookingDate;
 
   private Timestamp expirationDate;
 
   private Timestamp creationDate;
+
+  private String email;
 
   private Boolean canceled;
 
@@ -47,16 +38,14 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private TableEntity table;
 
-  private List<InvitedGuestEntity> invites;
+  private List<InvitedGuestEntity> invitedGuests;
 
   private static final long serialVersionUID = 1L;
 
   public BookingEntity() {
 
     super();
-    this.invites = new LinkedList<>();
     this.canceled = false;
-
   }
 
   /**
@@ -69,7 +58,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param name new value of {@link #getName}.
+   * @param name new value of {@link #getname}.
    */
   @Override
   public void setName(String name) {
@@ -80,7 +69,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   /**
    * @return bookingToken
    */
-  @Column(name = "bookingToken", unique = true)
   @Override
   public String getBookingToken() {
 
@@ -88,7 +76,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param bookingToken new value of {@link #getBookingToken}.
+   * @param bookingToken new value of {@link #getbookingToken}.
    */
   @Override
   public void setBookingToken(String bookingToken) {
@@ -97,7 +85,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @return comment
+   * @return comments
    */
   @Override
   public String getComment() {
@@ -106,12 +94,12 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param comment new value of {@link #getComment}.
+   * @param comments new value of {@link #getcomments}.
    */
   @Override
-  public void setComment(String comment) {
+  public void setComment(String comments) {
 
-    this.comment = comment;
+    this.comment = comments;
   }
 
   /**
@@ -124,7 +112,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param bookingDate new value of {@link #getBookingDate}.
+   * @param bookingDate new value of {@link #getbookingDate}.
    */
   @Override
   public void setBookingDate(Timestamp bookingDate) {
@@ -142,7 +130,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param expirationDate new value of {@link #getExpirationDate}.
+   * @param expirationDate new value of {@link #getexpirationDate}.
    */
   @Override
   public void setExpirationDate(Timestamp expirationDate) {
@@ -160,7 +148,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @param creationDate new value of {@link #getCreationDate}.
+   * @param creationDate new value of {@link #getcreationDate}.
    */
   @Override
   public void setCreationDate(Timestamp creationDate) {
@@ -172,18 +160,84 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return canceled
    */
   @Override
-  public boolean isCanceled() {
+  public Boolean getCanceled() {
 
     return this.canceled;
   }
 
   /**
-   * @param canceled new value of {@link #isCanceled}.
+   * @param canceled new value of {@link #getcanceled}.
    */
   @Override
-  public void setCanceled(boolean canceled) {
+  public void setCanceled(Boolean canceled) {
 
     this.canceled = canceled;
+  }
+
+  /**
+   * @return table
+   */
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "idTable")
+  public TableEntity getTable() {
+
+    return this.table;
+  }
+
+  /**
+   * @param table new value of {@link #gettable}.
+   */
+  public void setTable(TableEntity table) {
+
+    this.table = table;
+  }
+
+  /**
+   * @return invitedGuests
+   */
+  @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
+  public List<InvitedGuestEntity> getInvitedGuests() {
+
+    return this.invitedGuests;
+  }
+
+  /**
+   * @param invitedGuests new value of {@link #getinvitedGuests}.
+   */
+  public void setInvitedGuests(List<InvitedGuestEntity> invitedGuests) {
+
+    this.invitedGuests = invitedGuests;
+  }
+
+  /**
+   * @return type
+   */
+  @Override
+  public BookingType getBookingType() {
+
+    return this.bookingType;
+  }
+
+  /**
+   * @param type new value of {@link #gettype}.
+   */
+  @Override
+  public void setBookingType(BookingType bookingType) {
+
+    this.bookingType = bookingType;
+  }
+
+  @Override
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  @Override
+  public void setEmail(String email) {
+
+    this.email = email;
+
   }
 
   @Override
@@ -206,92 +260,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
       tableEntity.setId(tableId);
       this.table = tableEntity;
     }
-  }
-
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "idTable")
-  public TableEntity getTable() {
-
-    return this.table;
-  }
-
-  public void setTable(TableEntity table) {
-
-    this.table = table;
-  }
-
-  @Override
-  public BookingType getBookingType() {
-
-    return this.bookingType;
-  }
-
-  @Override
-  public void setBookingType(BookingType bookingType) {
-
-    this.bookingType = bookingType;
-  }
-
-  @Override
-  public String getEmail() {
-
-    return this.email;
-  }
-
-  @Override
-  public void setEmail(String email) {
-
-    this.email = email;
-
-  }
-
-  /**
-   * @return invites
-   */
-  @ManyToMany(fetch = FetchType.EAGER)
-  @Column(name = "idBooking")
-  @JoinTable(name = "InvitedGuest")
-  public List<InvitedGuestEntity> getInvited() {
-
-    return this.invites;
-  }
-
-  /**
-   * @param invites new value of {@link #getInvites}.
-   */
-  public void setInvited(List<InvitedGuestEntity> invites) {
-
-    this.invites = invites;
-  }
-
-  @Override
-  public void setInvitedEmails(List<String> emails) {
-
-    if (emails == null) {
-      this.invites = null;
-    } else {
-      List<InvitedGuestEntity> list = new ArrayList<>(emails.size());
-      for (String email : emails) {
-        InvitedGuestEntity invited = new InvitedGuestEntity();
-        invited.setEmail(email);
-        list.add(invited);
-      }
-      this.invites = list;
-    }
-  }
-
-  @Override
-  @Transient
-  public List<String> getInvitedEmails() {
-
-    if (this.invites == null) {
-      return new ArrayList<>();
-    }
-    List<String> result = new ArrayList<>(this.invites.size());
-    for (InvitedGuestEntity invite : this.invites) {
-      result.add(invite.getEmail());
-    }
-    return result;
   }
 
 }

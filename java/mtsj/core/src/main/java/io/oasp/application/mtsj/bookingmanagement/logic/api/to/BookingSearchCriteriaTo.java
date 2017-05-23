@@ -8,6 +8,7 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.application.mtsj.bookingmanagement.common.api.Booking}s.
+ *
  */
 public class BookingSearchCriteriaTo extends SearchCriteriaTo {
 
@@ -25,13 +26,13 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
 
   private Timestamp creationDate;
 
+  private String email;
+
   private Boolean canceled;
 
   private BookingType bookingType;
 
   private Long tableId;
-
-  private String email;
 
   /**
    * The constructor.
@@ -101,7 +102,17 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
     this.creationDate = creationDate;
   }
 
-  public Boolean isCanceled() {
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  public void setEmail(String email) {
+
+    this.email = email;
+  }
+
+  public Boolean getCanceled() {
 
     return this.canceled;
   }
@@ -116,9 +127,9 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
     return this.bookingType;
   }
 
-  public void setBookingType(BookingType bookingTypeId) {
+  public void setBookingType(BookingType bookingType) {
 
-    this.bookingType = this.bookingType;
+    this.bookingType = bookingType;
   }
 
   public Long getTableId() {
@@ -129,16 +140,6 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
   public void setTableId(Long tableId) {
 
     this.tableId = tableId;
-  }
-
-  public String getEmail() {
-
-    return this.email;
-  }
-
-  public void setEmail(String email) {
-
-    this.email = email;
   }
 
 }

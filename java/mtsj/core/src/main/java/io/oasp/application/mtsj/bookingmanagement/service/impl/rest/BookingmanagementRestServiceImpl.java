@@ -1,11 +1,10 @@
 package io.oasp.application.mtsj.bookingmanagement.service.impl.rest;
 
-import java.security.NoSuchAlgorithmException;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
@@ -25,37 +24,13 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   private Bookingmanagement bookingmanagement;
 
   @Override
-  public TableEto getTable(long id) {
-
-    return this.bookingmanagement.findTable(id);
-  }
-
-  @Override
-  public TableEto saveTable(TableEto table) {
-
-    return this.bookingmanagement.saveTable(table);
-  }
-
-  @Override
-  public void deleteTable(long id) {
-
-    this.bookingmanagement.deleteTable(id);
-  }
-
-  @Override
-  public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo) {
-
-    return this.bookingmanagement.findTableEtos(searchCriteriaTo);
-  }
-
-  @Override
-  public BookingEto getBooking(long id) {
+  public BookingCto getBooking(long id) {
 
     return this.bookingmanagement.findBooking(id);
   }
 
   @Override
-  public BookingEto saveBooking(BookingEto booking) throws NoSuchAlgorithmException {
+  public BookingEto saveBooking(BookingEto booking) {
 
     return this.bookingmanagement.saveBooking(booking);
   }
@@ -97,10 +72,27 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
-  public void cancelInvited(String bookingToken) {
+  public TableEto getTable(long id) {
 
-    this.bookingmanagement.cancelInvited(bookingToken);
+    return this.bookingmanagement.findTable(id);
+  }
 
+  @Override
+  public TableEto saveTable(TableEto table) {
+
+    return this.bookingmanagement.saveTable(table);
+  }
+
+  @Override
+  public void deleteTable(long id) {
+
+    this.bookingmanagement.deleteTable(id);
+  }
+
+  @Override
+  public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo) {
+
+    return this.bookingmanagement.findTableEtos(searchCriteriaTo);
   }
 
 }

@@ -1,7 +1,6 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
@@ -26,15 +25,13 @@ public class BookingEto extends AbstractEto implements Booking {
 
   private Timestamp creationDate;
 
-  private boolean canceled;
+  private String email;
+
+  private Boolean canceled;
 
   private BookingType bookingType;
 
   private Long tableId;
-
-  private String email;
-
-  private List<String> invitesId;
 
   @Override
   public String getName() {
@@ -109,13 +106,25 @@ public class BookingEto extends AbstractEto implements Booking {
   }
 
   @Override
-  public boolean isCanceled() {
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  @Override
+  public void setEmail(String email) {
+
+    this.email = email;
+  }
+
+  @Override
+  public Boolean getCanceled() {
 
     return this.canceled;
   }
 
   @Override
-  public void setCanceled(boolean canceled) {
+  public void setCanceled(Boolean canceled) {
 
     this.canceled = canceled;
   }
@@ -145,18 +154,6 @@ public class BookingEto extends AbstractEto implements Booking {
   }
 
   @Override
-  public void setInvitedEmails(List<String> invitesId) {
-
-    this.invitesId = invitesId;
-  }
-
-  @Override
-  public List<String> getInvitedEmails() {
-
-    return this.invitesId;
-  }
-
-  @Override
   public int hashCode() {
 
     final int prime = 31;
@@ -167,11 +164,12 @@ public class BookingEto extends AbstractEto implements Booking {
     result = prime * result + ((this.bookingDate == null) ? 0 : this.bookingDate.hashCode());
     result = prime * result + ((this.expirationDate == null) ? 0 : this.expirationDate.hashCode());
     result = prime * result + ((this.creationDate == null) ? 0 : this.creationDate.hashCode());
-    result = prime * result + ((Boolean) this.canceled).hashCode();
-
+    result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
+    result = prime * result + ((this.canceled == null) ? 0 : this.canceled.hashCode());
     result = prime * result + ((this.bookingType == null) ? 0 : this.bookingType.hashCode());
 
     result = prime * result + ((this.tableId == null) ? 0 : this.tableId.hashCode());
+
     return result;
   }
 
@@ -231,10 +229,20 @@ public class BookingEto extends AbstractEto implements Booking {
     } else if (!this.creationDate.equals(other.creationDate)) {
       return false;
     }
-    if (this.canceled != other.canceled) {
+    if (this.email == null) {
+      if (other.email != null) {
+        return false;
+      }
+    } else if (!this.email.equals(other.email)) {
       return false;
     }
-
+    if (this.canceled == null) {
+      if (other.canceled != null) {
+        return false;
+      }
+    } else if (!this.canceled.equals(other.canceled)) {
+      return false;
+    }
     if (this.bookingType == null) {
       if (other.bookingType != null) {
         return false;
@@ -250,19 +258,7 @@ public class BookingEto extends AbstractEto implements Booking {
     } else if (!this.tableId.equals(other.tableId)) {
       return false;
     }
+
     return true;
   }
-
-  @Override
-  public String getEmail() {
-
-    return this.email;
-  }
-
-  @Override
-  public void setEmail(String email) {
-
-    this.email = email;
-  }
-
 }

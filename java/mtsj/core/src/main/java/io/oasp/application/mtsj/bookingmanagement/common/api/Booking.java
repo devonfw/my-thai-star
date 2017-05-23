@@ -1,7 +1,6 @@
 package io.oasp.application.mtsj.bookingmanagement.common.api;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
@@ -14,7 +13,7 @@ public interface Booking extends ApplicationEntity {
 
   public String getBookingToken();
 
-  public void setBookingToken(String bookToken);
+  public void setBookingToken(String bookingToken);
 
   public String getComment();
 
@@ -32,24 +31,20 @@ public interface Booking extends ApplicationEntity {
 
   public void setCreationDate(Timestamp creationDate);
 
-  public boolean isCanceled();
-
-  public void setCanceled(boolean canceled);
-
-  public BookingType getBookingType();
-
-  public void setBookingType(BookingType bookType);
-
-  public Long getTableId();
-
-  public void setTableId(Long tableId);
-
   public String getEmail();
 
   public void setEmail(String email);
 
-  void setInvitedEmails(List<String> invites);
+  public Boolean getCanceled();
 
-  public List<String> getInvitedEmails();
+  public void setCanceled(Boolean canceled);
+
+  public BookingType getBookingType();
+
+  public void setBookingType(BookingType bookingType);
+
+  public Long getTableId();
+
+  public void setTableId(Long tableId);
 
 }

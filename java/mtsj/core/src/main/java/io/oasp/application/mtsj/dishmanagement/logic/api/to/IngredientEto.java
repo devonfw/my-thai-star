@@ -2,14 +2,13 @@ package io.oasp.application.mtsj.dishmanagement.logic.api.to;
 
 import java.math.BigDecimal;
 
-import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
+import io.oasp.application.mtsj.dishmanagement.common.api.Ingredient;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
-import io.oasp.application.mtsj.imagemanagement.common.api.Image;
 
 /**
- * Entity transport object of Dish
+ * Entity transport object of Ingredient
  */
-public class DishEto extends AbstractEto implements Dish {
+public class IngredientEto extends AbstractEto implements Ingredient {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,10 +17,6 @@ public class DishEto extends AbstractEto implements Dish {
   private String description;
 
   private BigDecimal price;
-
-  private Long idImage;
-
-  private Image image;
 
   @Override
   public String getName() {
@@ -60,30 +55,6 @@ public class DishEto extends AbstractEto implements Dish {
   }
 
   @Override
-  public Long getIdImage() {
-
-    return this.idImage;
-  }
-
-  @Override
-  public void setIdImage(Long idImage) {
-
-    this.idImage = idImage;
-  }
-
-  @Override
-  public Image getImage() {
-
-    return this.image;
-  }
-
-  @Override
-  public void setImage(Image image) {
-
-    this.image = image;
-  }
-
-  @Override
   public int hashCode() {
 
     final int prime = 31;
@@ -91,9 +62,6 @@ public class DishEto extends AbstractEto implements Dish {
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
-    result = prime * result + ((this.idImage == null) ? 0 : this.idImage.hashCode());
-    result = prime * result + ((this.image == null) ? 0 : this.image.hashCode());
-
     return result;
   }
 
@@ -110,7 +78,7 @@ public class DishEto extends AbstractEto implements Dish {
     if (!super.equals(obj)) {
       return false;
     }
-    DishEto other = (DishEto) obj;
+    IngredientEto other = (IngredientEto) obj;
     if (this.name == null) {
       if (other.name != null) {
         return false;
@@ -132,21 +100,6 @@ public class DishEto extends AbstractEto implements Dish {
     } else if (!this.price.equals(other.price)) {
       return false;
     }
-    if (this.idImage == null) {
-      if (other.idImage != null) {
-        return false;
-      }
-    } else if (!this.idImage.equals(other.idImage)) {
-      return false;
-    }
-    if (this.image == null) {
-      if (other.image != null) {
-        return false;
-      }
-    } else if (!this.image.equals(other.image)) {
-      return false;
-    }
-
     return true;
   }
 }

@@ -1,8 +1,6 @@
 package io.oasp.application.mtsj.dishmanagement.dataaccess.impl.dao;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Named;
@@ -11,11 +9,13 @@ import com.mysema.query.alias.Alias;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Category;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.application.mtsj.imagemanagement.common.api.Image;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -43,65 +43,62 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     DishEntity dish = Alias.alias(DishEntity.class);
     EntityPathBase<DishEntity> alias = Alias.$(dish);
-
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    String searchBy = criteria.getSearchBy();
-    if (searchBy != null) {
-      query.where(Alias.$(dish.getName()).contains(searchBy).or(Alias.$(dish.getDescription()).contains(searchBy)));
+    String name = criteria.getName();
+    if (name != null) {
+      query.where(Alias.$(dish.getName()).eq(name));
     }
-
-    BigDecimal price = criteria.getMaxPrice();
+    String description = criteria.getDescription();
+    if (description != null) {
+      query.where(Alias.$(dish.getDescription()).eq(description));
+    }
+    BigDecimal price = criteria.getPrice();
     if (price != null) {
-      query.where(Alias.$(dish.getPrice()).lt(price));
+      query.where(Alias.$(dish.getPrice()).eq(price));
     }
-
-    PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
-
-    Collection<Category> categories = criteria.getCategories();
-    if (!categories.isEmpty()) {
-      entitiesList = categoryFilter(entitiesList, categories);
+    Long idImage = criteria.getIdImage();
+    if (idImage != null) {
+      query.where(Alias.$(dish.getIdImage()).eq(idImage));
     }
-
-    return entitiesList;
+    Image image = criteria.getImage();
+    if (image != null) {
+      query.where(Alias.$(dish.getImage()).eq(image));
+    }
+    return findPaginated(criteria, query, alias);
   }
 
-  private PaginatedListTo<DishEntity> categoryFilter(PaginatedListTo<DishEntity> pl,
-      Collection<Category> categories) {
+  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
 
-    List<DishEntity> dishEntities = pl.getResult();
-    List<DishEntity> dishEntitiesF = new ArrayList<>();
-    for (DishEntity dishEntity : dishEntities) {
-
-      List<Category> entityCats = dishEntity.getCategories();
-      for (Category entityCat : entityCats) {
-        for (Category category : categories) {
-          if (category.getId() == entityCat.getId()) {
-            if (!dishAlreadyAdded(dishEntitiesF, dishEntity)) {
-              dishEntitiesF.add(dishEntity);
-              System.out.println("ID: " + dishEntity.getId() + "  NAME: " + dishEntity.getName());
-              break;
-            }
-
+    if (sort != null && !sort.isEmpty()) {
+      for (OrderByTo orderEntry : sort) {
+        if ("name".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(dish.getName()).asc());
+          } else {
+            query.orderBy(Alias.$(dish.getName()).desc());
+          }
+        } else if ("description".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(dish.getDescription()).asc());
+          } else {
+            query.orderBy(Alias.$(dish.getDescription()).desc());
+          }
+        } else if ("price".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(dish.getPrice()).asc());
+          } else {
+            query.orderBy(Alias.$(dish.getPrice()).desc());
+          }
+        } else if ("idImage".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(dish.getIdImage()).asc());
+          } else {
+            query.orderBy(Alias.$(dish.getIdImage()).desc());
           }
         }
       }
-
     }
-
-    return new PaginatedListTo<>(dishEntitiesF, pl.getPagination());
-  }
-
-  private boolean dishAlreadyAdded(List<DishEntity> dishEntitiesFiltered, DishEntity dishEntity) {
-
-    boolean result = false;
-    for (DishEntity entity : dishEntitiesFiltered) {
-      if (entity.getId() == dishEntity.getId()) {
-        result = true;
-        break;
-      }
-    }
-    return result;
   }
 
 }
