@@ -23,12 +23,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res, next) => {
-  res.send(pug.renderFile('./src/emails/createInvitationGuest.pug', {
-    title: 'hola',
-    name: 'pepito',
-    date: 'fechita',
-    hour: 'horita',
-    guest: ['hola1', 'hola2'],
+  res.send(pug.renderFile('./src/emails/createInvitationHost.pug', {
+    title: 'Booking',
+    name: 'Dario',
+    hostEmail: 'dario@gmail.com',
+    email: 'santos@gmail.com',
+    date: '2017/07/11',
+    hour: '20:00',
+    guest: ['santos@gmail.com', 'jose@gmail.com', 'pablo@gmail.com'],
+    urlAcept: '#',
+    urlCancel: '#',
   }));
 });
 

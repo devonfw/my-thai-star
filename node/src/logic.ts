@@ -206,10 +206,11 @@ callback(err);
                     date: bookDate.format('YYYY-MM-DD'),
                     hour: bookDate.format('HH:mm:ss'),
                     guest: reserv.guestList,
+                    urlCancel: '#',
                 }));
 
                 reserv.guestList.forEach((elem: string) => {
-                    mailer.sendEmail(elem, '[MyThaiStar] Your have a new invitation', undefined, pug.renderFile('./src/emails/createInvitationGuest.pug', {
+                    const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
                         title: 'You have been invited',
                         email: elem,
                         name: reserv.name,
@@ -217,7 +218,11 @@ callback(err);
                         date: bookDate.format('YYYY-MM-DD'),
                         hour: bookDate.format('HH:mm:ss'),
                         guest: reserv.guestList,
-                    }));
+                        urlAcept: '#',
+                        urlCancel: '#',
+                    });
+
+                    mailer.sendEmail(elem, '[MyThaiStar] Your have a new invitation', email, email);
                 });
             }
         } catch (err) {
@@ -316,6 +321,22 @@ callback(err);
         }
 
         callback(null);
+
+        const [vat, names] = await calculateVATandOrderName(order);
+        console.log(pug.renderFile('./src/emails/order.pug', {
+            title: 'Order created',
+            email: reg[0].email,
+            total: vat,
+            urlCancel: '#',
+            order:  names,
+        }));
+        mailer.sendEmail(reg[0].email, '[MyThaiStar] Order info', undefined, pug.renderFile('./src/emails/order.pug', {
+            title: 'Order created',
+            email: reg[0].email,
+            total: vat,
+            urlCancel: '#',
+            order:  names,
+        }));
     },
     cancelOrder: async (order: string, callback: (err: types.IError | null) => void) => {
         let reg: any[];
@@ -565,13 +586,52 @@ function dishToDishview() {
     };
 }
 
+async function calculateVATandOrderName(order: types.IOrderView): Promise<[number, string[]]> {
+    let sum: number = 0;
+    const names: string[] = [];
+
+    const [dishes, extras] = await Promise.all([
+        fn.table('Dish', order.lines.map((elem: types.IOrderLineView) => {
+            return elem.idDish.toString();
+        })).
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise(),
+        fn.table('Ingredient').
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise(),
+    ]);
+
+    order.lines.forEach((elem: types.IOrderLineView) => {
+        let x = dishes[elem.idDish.toString()].price;
+        let name = '<span style="color: #317d35">' + elem.amount + '</span> ' + dishes[elem.idDish.toString()].name + ' with ';
+        elem.extras.forEach((elem2: number) => {
+            x += extras[elem2.toString()].price;
+            name += extras[elem2.toString()].name + ', ';
+        });
+
+        sum += x * elem.amount;
+        name = name.substring(0, name.length - 2);
+        name += ' (' + x + '€)';
+
+        names.push(name);
+    });
+
+    return [sum, names];
+}
+
 /**
  * Check all params of FilterView and put the correct values if neccesary
  *
  * @param {types.IFilterView} filter
  * @returns
  */
-export function checkFilter(filter: types.IFilterView) {
+function checkFilter(filter: types.IFilterView) {
     filter.maxPrice = filter.maxPrice || 50;
     filter.minLikes = filter.minLikes || 0;
     filter.searchBy = filter.searchBy || '';
