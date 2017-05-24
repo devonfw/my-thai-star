@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
-  version: v1
+  version: v2.7
   title: My Thai Star API
-host: 'localhost:8080'
+host: 'localhost:8081'
 schemes:
   - http
 paths:
-  /api/Dish/Search:
+  /mythaistar/services/rest/Dishmanagement/v1/Dish/Search:
     post:
       tags:
         - Dish
@@ -45,12 +45,14 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /api/Mail/Reservation/UpdateInvitation:
+  /mythaistar/services/rest/bookingmanagement/v1/invitedguest:
     get:
       tags:
         - Mail
-      summary: Method to accept or decline an invitation
-      operationId: Mail_Reservation/UpdateInvitation
+      summary: >-
+        Method to accept or decline an invitation updating the 'accepted' field
+        of the InvitedGuest entity.
+      operationId: Mail_Booking/UpdateInvitation
       consumes: []
       produces:
         - application/json
@@ -85,12 +87,12 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /api/Mail/Reservation/CancelInvitation:
+  /mythaistar/services/rest/Bookingmanagement/v1/Booking/CancelInvited:
     get:
       tags:
         - Mail
-      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be canceled if the cancelation request is not send an hour before the reservation"
-      operationId: Mail_Reservation/CancelInvitation
+      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be canceled if the cancelation request is not send an hour before the booking"
+      operationId: Mail_Booking/CancelInvitation
       consumes: []
       produces:
         - application/json
@@ -98,10 +100,10 @@ paths:
         - application/xml
         - text/xml
       parameters:
-        - name: reservationToken
+        - name: bookingToken
           in: query
           description: >-
-            Token generated in the reservation process where guests are invited.
+            Token generated in the booking process where guests are invited.
             Mandatory
           required: true
           type: string
@@ -121,7 +123,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /api/Order/Order:
+  /mythaistar/services/rest/ordermanagement/v1/order:
     post:
       tags:
         - Order
@@ -162,7 +164,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /api/Order/Delete:
+  /mythaistar/services/rest/ordermanagement/v1/order/:
     delete:
       tags:
         - Order
@@ -177,7 +179,7 @@ paths:
         - application/xml
         - text/xml
       parameters:
-        - name: reservationToken
+        - name: id
           in: query
           description: ''
           required: true
@@ -195,15 +197,15 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /api/Reservation/Reservation:
+  /mythaistar/services/rest/bookingmanagement/v1/booking:
     post:
       tags:
-        - Reservation
+        - Booking
       summary: >-
         Method to make a reservation with potentiel guests. The method returns
         the reservation token with the format:
-        {(CRS_|GRS_)}{now.Year}{now.Month:00}{now.Day:00}{_}{MD5({Guest-email}{now.Year}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00})}
-      operationId: Reservation_Reservation
+        {(CB_|GB_)}{now.Year}{now.Month:00}{now.Day:00}{_}{MD5({Host/Guest-email}{now.Year}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00})}
+      operationId: Booking_Booking
       consumes:
         - application/json
         - text/json
@@ -216,12 +218,12 @@ paths:
         - application/xml
         - text/xml
       parameters:
-        - name: reservationView
+        - name: bookingView
           in: body
           description: ''
           required: true
           schema:
-            $ref: '#/definitions/ReservationView'
+            $ref: '#/definitions/BookingView'
       responses:
         '201':
           description: Ok.
@@ -240,7 +242,7 @@ definitions:
     description: ''
     type: object
     properties:
-      catgories:
+      categories:
         description: ''
         type: array
         items:
@@ -270,9 +272,6 @@ definitions:
         type: string
       description:
         type: string
-      group:
-        format: int32
-        type: integer
       selected:
         type: boolean
       showOrder:
@@ -310,10 +309,10 @@ definitions:
         type: string
       content:
         type: string
-      type:
+      contentType:
         description: Binary or Url
         type: string
-      extension:
+      mimeType:
         type: string
   ExtraIngredientView:
     type: object
@@ -338,7 +337,7 @@ definitions:
         type: integer
   OrderView:
     description: >-
-      InvitationToken contains the direct Reservation Token or Invitation token
+      InvitationToken contains the direct Booking Token or Invitation token
       dependig on the type of the reservation
     type: object
     properties:
@@ -347,10 +346,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/OrderLineView'
-      invitationId:
+      bookingToken:
         description: >-
-          contains the direct Reservation Token or Invitation token dependig on
-          the type of the reservation.
+          contains the Booking Token or Invitation token dependig on the type of
+          the reservation.
         type: string
   OrderLineView:
     type: object
@@ -371,13 +370,13 @@ definitions:
         type: integer
       comment:
         type: string
-  ReservationView:
+  BookingView:
     type: object
     properties:
-      date:
+      bookingDate:
         type: string
-      type:
-        $ref: '#/definitions/ReservationType'
+      bookingType:
+        $ref: '#/definitions/BookingType'
       name:
         type: string
       email:
@@ -389,8 +388,9 @@ definitions:
         type: array
         items:
           type: string
-  ReservationType:
+  BookingType:
     type: object
     properties:
-      name:
-        type: string
+      index:
+        format: int32
+        type: integer
