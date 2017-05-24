@@ -16,9 +16,10 @@ export class BookingInMemoryService implements IBookingDataService {
 
     bookTable(booking: BookingInfo): Observable<number> {
         let bookTable: ReservationView;
-        assign(bookTable, booking);
+        bookTable = assign(bookTable, booking);
         bookTable.creationDate = moment().format('LLL');
-        bookTable.bookingId = maxBy(bookedTables, (table: ReservationView) => { return table.tableId; }).tableId + 1;
+        bookTable.bookingId = maxBy(bookedTables, (table: ReservationView) => table.bookingId).bookingId + 1;
+        bookTable.tableId = maxBy(bookedTables, (table: ReservationView) => table.tableId).tableId + 1;
         return Observable.of(bookedTables.push(bookTable));
     }
 

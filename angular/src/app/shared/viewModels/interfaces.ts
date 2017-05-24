@@ -37,6 +37,7 @@ export interface ReservationView {
     email: string;
     bookingId?: number;
     tableId?: number;
+    bookingType: number;
     assistants: number;
     guestList?: FriendsInvite[];
     orders?: OrderView[];

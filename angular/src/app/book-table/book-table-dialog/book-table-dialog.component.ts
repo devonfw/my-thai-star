@@ -32,9 +32,10 @@ export class BookTableDialogComponent implements OnInit {
 
   sendBooking (): void {
     let bookTable: BookingInfo;
-    assign(bookTable, this.data);
+    bookTable = assign(bookTable, this.data);
     bookTable.orders = [];
     bookTable.guestList = [];
+    bookTable.bookingType = 0;
     this.bookingService.postBookingTable(bookTable).subscribe( () => {
       this.snackBar.open('Table succesfully booked', 'OK', {
         duration: 7000,

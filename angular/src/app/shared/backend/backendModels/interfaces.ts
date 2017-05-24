@@ -33,6 +33,7 @@ export class BookingInfo {
     date: string;
     name: string;
     email: string;
+    bookingType: number;
     assistants: number;
     orders: OrderInfo[];
     guestList: string[];

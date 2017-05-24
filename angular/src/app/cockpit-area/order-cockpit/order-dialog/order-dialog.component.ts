@@ -17,6 +17,7 @@ export class OrderDialogComponent implements OnInit {
   columnst: ITdDataTableColumn[] = [
     { name: 'date', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
+    { name: 'assistants', label: 'Assistants'},
     { name: 'name', label: 'Owner' },
     { name: 'email', label: 'Email' },
     { name: 'tableId', label: 'Table'},
@@ -52,10 +53,14 @@ export class OrderDialogComponent implements OnInit {
     // Remark: this logic should be moved to a service - e.g. OrderCockpitService should do it for now
     this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
       this.datat.push(order);
-      this.datao = JSON.parse(JSON.stringify(order.orders));
+      this.datao = cloneDeep(order.orders);
       this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
+        // Remark: Maybe like that ?
+        // o.extras = chain(o.extras)
+        //   .filter((opt: ExtraView) => opt.selected)
+        //   .join(', ').value();
         o.extras = reduce(o.extras, (total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
                   .slice(0, -1);
         });
