@@ -1,49 +1,16 @@
-export class OrderList {
-    bookingId: number;
-    orders: OrderInfo[];
+// FILTERS
+export class Filter {
+    isFav: boolean;
+    searchBy: string;
+    sortBy: { name: string, dir: string };
+    maxPrice: number;
+    minLikes: number;
+    categories: [{ id: string }];
 }
 
-export class BookingInfo {
-    dateTime: string;
-    creationDateTime?: string;
-    nameOwner: string;
-    emailOwner: string;
-    bookingId?: number;
-    tableId?: number;
-    assitants?: number;
-    kids?: number;
-    orders?: OrderInfo[];
-    friends?: FriendsInvite[];
-}
-
-export class FriendsInvite {
-    email: string;
-    acceptance: string;
-}
-
-export class OrderInfo {
-    name: string;
-    price: number;
-    extras: ExtraInfo[];
-    amount: number;
-    comment: string;
-}
-
-export class ExtraInfo {
-    id: number;
-    name: string;
-    price: number;
-    selected?: boolean;
-}
-
-export class OrderInfo2Convert {
-    idPlate: number;
-    extras: [{id: number}];
-    amount: number;
-    comment: string;
-}
-
+// DISHES
 export class Dish {
+    id: number;
     isfav: boolean;
     image: string;
     likes: number;
@@ -54,15 +21,41 @@ export class Dish {
     categories: [{id: string}];
 }
 
-export class Filter {
-    isFav: boolean;
-    searchBy: string;
-    sortBy: { name: string, dir: string };
-    maxPrice: number;
-    minLikes: number;
-    categories: [{ id: string }];
+export class ExtraInfo {
+    id: number;
+    name: string;
+    price: number;
+    selected: boolean;
 }
 
+// BOOKING
+export class BookingInfo {
+    date: string;
+    name: string;
+    email: string;
+    assistants: number;
+    orders: OrderInfo[];
+    guestList: string[];
+}
+
+export class FriendsInvite {
+    email: string;
+    acceptance: string;
+}
+
+export class OrderInfo {
+    idDish: number;
+    extras: number[];
+    amount: number;
+    comment: string;
+}
+
+export class OrderListInfo {
+    bookingId: number;
+    orders: OrderInfo[];
+}
+
+// LOGIN
 export class LoginInfo {
     username: string;
     password: string;

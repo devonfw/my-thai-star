@@ -10,7 +10,7 @@
     </md-input-container>
   </div>
 
-  <div style="text-align: right">
+  <div class="align-right-buttons" flex>  
     <button md-button md-dialog-close class="text-upper">Cancel</button>
     <button md-raised-button (click)="twitterSubmit(twitterForm.form.value)" [disabled]="!twitterForm.form.valid" color="accent" class="text-upper">
       <md-icon svgIcon="twitter"></md-icon>

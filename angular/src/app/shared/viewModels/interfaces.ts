@@ -1,4 +1,5 @@
 export interface DishView {
+    id: number;
     name: string;
     description: string;
     price: number;
@@ -9,6 +10,7 @@ export interface DishView {
 }
 
 export interface OrderView {
+    idDish: number;
     name: string;
     price: number;
     extras: ExtraView[];
@@ -23,20 +25,20 @@ export interface ExtraView {
     selected?: boolean;
 }
 
-export interface OrderList {
+export interface OrderListView {
     bookingId: number;
     orders: OrderView[];
 }
 
 export interface ReservationView {
-    dateTime: string;
-    creationDateTime?: string;
-    nameOwner: string;
-    emailOwner: string;
+    date: string;
+    creationDate?: string;
+    name: string;
+    email: string;
     bookingId?: number;
     tableId?: number;
-    assitants?: number;
-    friends?: FriendsInvite[];
+    assistants: number;
+    guestList?: FriendsInvite[];
     orders?: OrderView[];
 }
 

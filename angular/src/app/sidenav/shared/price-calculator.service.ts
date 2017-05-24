@@ -8,7 +8,6 @@ export class PriceCalculatorService {
 
   getPrice(order: OrderView): number {
     const extrasPrice: number = chain(order.extras)
-     .filter((extra: ExtraView) => extra.selected)
      .reduce((total: number, extra: ExtraView): number => total + extra.price, 0)
      .value();
 

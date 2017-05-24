@@ -33,6 +33,7 @@ describe('MenuCardComponent', () => {
     fixture = TestBed.createComponent(MenuCardComponent);
     component = fixture.componentInstance;
     component.menuInfo = {
+      id: 0,
       name: '',
       description: '',
       price: 0,

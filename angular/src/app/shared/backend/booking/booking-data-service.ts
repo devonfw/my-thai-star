@@ -5,7 +5,8 @@ import { BackendConfig, BackendType } from '../backend.module';
 import { BookingInMemoryService } from './booking-in-memory.service';
 import { BookingRestService } from './booking-rest.service';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo, OrderList } from '../backendModels/interfaces';
+import { ReservationView } from '../../viewModels/interfaces';
+import { BookingInfo, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()
 export class BookingDataService implements IBookingDataService {
@@ -29,23 +30,23 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.bookTable(booking);
     }
 
-    getOrders(): Observable<BookingInfo[]> {
+    getOrders(): Observable<ReservationView[]> {
         return this.usedImplementation.getOrders();
     }
 
-    getOrder(id: number): Observable<BookingInfo> {
+    getOrder(id: number): Observable<ReservationView> {
         return this.usedImplementation.getOrder(id);
     }
 
-    getReservations(): Observable<BookingInfo[]> {
+    getReservations(): Observable<ReservationView[]> {
         return this.usedImplementation.getReservations();
     }
 
-    getReservation(id: number): Observable<BookingInfo> {
+    getReservation(id: number): Observable<ReservationView> {
         return this.usedImplementation.getReservation(id);
     }
 
-    saveOrders(orders: OrderList): Observable<BookingInfo> {
+    saveOrders(orders: OrderListInfo): Observable<ReservationView> {
         return this.usedImplementation.saveOrders(orders);
     }
 

@@ -1,9 +1,11 @@
+import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
 import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { BookTableService } from '../shared/book-table.service';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import {MD_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
+import { assign } from 'lodash';
 
 @Component({
   selector: 'public-book-table-dialog',
@@ -22,16 +24,18 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.dateTime = moment(this.data.dateTime).format('LLL');
+    this.data.date = moment(this.data.date).format('LLL');
     this.bookingService.getTableId().subscribe( (bookingId: number) => {
       this.data.bookingId = bookingId;
     });
   }
 
   sendBooking (): void {
-    this.data.orders = [];
-    this.data.friends = [];
-    this.bookingService.postBookingTable(this.data).subscribe( () => {
+    let bookTable: BookingInfo;
+    assign(bookTable, this.data);
+    bookTable.orders = [];
+    bookTable.guestList = [];
+    this.bookingService.postBookingTable(bookTable).subscribe( () => {
       this.snackBar.open('Table succesfully booked', 'OK', {
         duration: 7000,
       });

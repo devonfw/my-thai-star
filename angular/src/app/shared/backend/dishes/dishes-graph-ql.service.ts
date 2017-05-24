@@ -30,6 +30,7 @@ const getDishesQuery: any = gql`
 // and java server implementation, model was not yet established so for now conversion
 // will be implemented as a part of this service to expose consistient service API
 class GqlDish {
+    id: number; // added by Roberto, please revise
     image: string;
     likes: number;
     ingredients: {id: number, name: string, price: number}[];
@@ -69,6 +70,7 @@ export class DishesGraphQlService implements IDishesDataService {
   // TODO: see the comment above
   private convertToBackendDish(dish: GqlDish): Dish {
    return {
+        id: dish.id, // added by Roberto, please revise
         isfav: false,
         image: dish.image,
         likes: dish.likes,

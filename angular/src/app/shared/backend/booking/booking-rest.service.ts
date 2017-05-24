@@ -2,7 +2,8 @@ import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo, OrderList } from '../backendModels/interfaces';
+import { BookingInfo, OrderListInfo } from '../backendModels/interfaces';
+import { ReservationView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
 
 @Injectable()
@@ -33,27 +34,27 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-     getOrders(): Observable<BookingInfo[]> {
+     getOrders(): Observable<ReservationView[]> {
         return this.http.get(`${config.restServiceRoot}${this.getOrdersRestPath}`)
               .map((res: Response) => res.json());
      }
 
-      getOrder(id: number): Observable<BookingInfo> {
+      getOrder(id: number): Observable<ReservationView> {
         return this.http.get(`${config.restServiceRoot}${this.getOrderRestPath}`)
               .map((res: Response) => res.json());
      }
 
-     getReservations(): Observable<BookingInfo[]> {
+     getReservations(): Observable<ReservationView[]> {
         return this.http.get(`${config.restServiceRoot}${this.getReservationsRestPath}`)
                         .map((res: Response) => res.json());
      }
 
-     getReservation(id: number): Observable<BookingInfo> {
+     getReservation(id: number): Observable<ReservationView> {
         return this.http.get(`${config.restServiceRoot}${this.getReservationRestPath}`)
                         .map((res: Response) => res.json());
      }
 
-    saveOrders(orders: OrderList): Observable<BookingInfo> {
+    saveOrders(orders: OrderListInfo): Observable<ReservationView> {
         return this.http.post(`${config.restServiceRoot}${this.saveOrdersPath}`, {orders: orders})
                         .map((res: Response) => res.json());
     }

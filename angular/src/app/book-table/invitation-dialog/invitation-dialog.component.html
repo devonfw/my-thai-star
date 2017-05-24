@@ -3,37 +3,35 @@
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between">
       <span>Date</span>
-      <span>{{data.dateTime}}</span>
+      <span>{{data.date}}</span>
     </div>
-
-    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
     <div layout="row" class="justify-space-between">
       <span>Name</span>
-      <span>{{data.nameOwner}}</span>
+      <span>{{data.name}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
     <div layout="row" class="justify-space-between">
       <span>Email</span>
-      <span>{{data.emailOwner}}</span>
+      <span>{{data.email}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
     <div layout="row" class="justify-space-between">
       <span>Friends</span>
       <div layout="column" style="text-align:right; width:50%">
-        <span *ngFor="let inv of data.friends">{{inv}}</span>
+        <span *ngFor="let inv of data.guestList">{{inv}}</span>
       </div>
     </div>
-    <!-- Remark: Avoid styling in style attribute - use classes and component specific scss to declare those -->
-    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
     <div layout="row" class="justify-space-between">
       <span>Booking number</span>
       <span>{{data.bookingId}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm" style="border-bottom: 1px solid lightgray"></span>
+    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
   </div>
 </md-dialog-content>
 <md-dialog-actions>
-  <div style="width:100%; text-align:right">
+  <div class="align-right-buttons" flex>
     <button md-button md-dialog-close class="text-upper">Cancel</button>
     <button md-button (click)="sendInvitation()" color="accent" class="text-upper">Send</button>
   </div>

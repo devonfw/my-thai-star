@@ -2,9 +2,9 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { OrderView } from '../../shared/viewModels/interfaces';
-import { OrderList } from '../../shared/backend/backendModels/interfaces';
-import { find, isEqual, remove, cloneDeep } from 'lodash';
+import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
+import { OrderListInfo, OrderInfo } from '../../shared/backend/backendModels/interfaces';
+import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
 
 const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) => o.name === orderToFind.name && isEqual(o.extras, orderToFind.extras);
 
@@ -39,10 +39,12 @@ export class SidenavService {
   }
 
   public addOrder(order: OrderView): void {
-    if (this.findOrder(order)) {
-      this.increaseOrder(order);
+    let addOrder: OrderView = cloneDeep(order);
+    addOrder.extras = filter(addOrder.extras, (extra: ExtraView) => extra.selected);
+    if (this.findOrder(addOrder)) {
+      this.increaseOrder(addOrder);
     } else {
-      this.orders.push(cloneDeep(order));
+      this.orders.push(addOrder);
     }
   }
 
@@ -59,24 +61,42 @@ export class SidenavService {
   }
 
   public sendOrders(id: number): void {
-    let orderList: OrderList = {
+
+    let orderList: OrderListInfo = {
       bookingId: id,
-      orders: cloneDeep(this.orders),
+      orders: this.composeOrders(this.orders),
     };
+
     this.closeSideNav();
     this.bookingDataService.saveOrders(orderList)
-      .subscribe(() => {
-          this.orders = [];
-          this.snackBar.open('Order correctly noted', 'OK', {
-            duration: 4000,
-            extraClasses: ['bgc-green-600'],
-          });
-      },
-      (error: any) => {
-          this.snackBar.open('Booking ID not existing', 'OK', {
-            duration: 8000,
-            extraClasses: ['bgc-red-600'],
-          });
+        .subscribe(() => {
+            this.orders = [];
+            this.snackBar.open('Order correctly noted', 'OK', {
+              duration: 4000,
+              extraClasses: ['bgc-green-600'],
+            });
+        },
+        (error: any) => {
+            this.snackBar.open('Booking ID not existing', 'OK', {
+              duration: 8000,
+              extraClasses: ['bgc-red-600'],
+            });
+        });
+   }
+
+   composeOrders(orders: OrderView[]): OrderInfo[] {
+      let composedOrders: OrderInfo[] = [];
+      orders.forEach( (order: OrderView) => {
+        let extras: number[] = [];
+        order.extras.filter( (extra: ExtraView) => extra.selected )
+                    .forEach( (extra: ExtraView) => extras.push(extra.id));
+        composedOrders.push({
+          idDish: order.idDish,
+          amount: order.amount,
+          extras: extras,
+          comment: order.comment,
+        });
       });
+      return composedOrders;
    }
 }

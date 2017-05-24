@@ -16,10 +16,10 @@ export class ReservationDialogComponent implements OnInit {
   datat: ReservationView[] = [];
 
   columnst: ITdDataTableColumn[] = [
-    { name: 'dateTime', label: 'Reservation date'},
-    { name: 'creationDateTime', label: 'Creation date'},
-    { name: 'nameOwner', label: 'Owner' },
-    { name: 'emailOwner', label: 'Email' },
+    { name: 'date', label: 'Reservation date'},
+    { name: 'creationDate', label: 'Creation date'},
+    { name: 'name', label: 'Owner' },
+    { name: 'email', label: 'Email' },
     { name: 'tableId', label: 'Table'},
   ];
 
@@ -44,7 +44,7 @@ export class ReservationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.reservationCockpitService.getReservation(this.data.bookingId).subscribe( (reservation: ReservationView) => {
       this.datat.push(reservation);
-      this.datao = reservation.friends;
+      this.datao = reservation.guestList;
     });
     this.filter();
   }

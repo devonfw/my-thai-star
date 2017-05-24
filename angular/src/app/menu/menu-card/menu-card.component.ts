@@ -17,8 +17,8 @@ export class MenuCardComponent {
 
   addOrderMenu(): void {
     this.sidenav.addOrder(this.menuService.menuToOrder(this.menuInfo));
-    this.menuService.clearSelectedExtras(this.menuInfo);
     this.sidenav.openSideNav();
+    this.menuService.clearSelectedExtras(this.menuInfo);
   }
 
   changeFavouriteState(): void {

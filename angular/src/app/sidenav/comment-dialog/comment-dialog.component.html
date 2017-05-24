@@ -1,14 +1,12 @@
 <span md-dialog-title class="text-upper">Add a comment</span>
 <md-dialog-content>
-  <div>
-    <span style="font-size: 0.9em">Here you can add a short comment to our cookers about how to prepare your dish</span>
-    <md-input-container color="accent" style="width:100%">
-      <textarea mdInput placeholder="Comment" #comment style="width:100%; resize: none"></textarea>
-    </md-input-container>
-  </div>
+  <span style="font-size: 0.9em">Here you can add a short comment to our cookers about how to prepare your dish</span>
+  <md-input-container color="accent" style="width:100%">
+    <textarea mdInput placeholder="Comment" #comment style="resize: none"></textarea>
+  </md-input-container>
 </md-dialog-content>
 <md-dialog-actions>
-  <div style="width:100%; text-align:right">
+  <div class="align-right-buttons" flex>
     <button md-button md-dialog-close class="text-upper">Cancel</button>
     <button md-button [disabled]="!comment.value.length" (click)="sendComment(comment.value)" color="accent" class="text-upper">Send</button>
   </div>

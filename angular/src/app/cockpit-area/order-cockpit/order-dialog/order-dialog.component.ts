@@ -15,10 +15,10 @@ export class OrderDialogComponent implements OnInit {
 
   datat: ReservationView[] = [];
   columnst: ITdDataTableColumn[] = [
-    { name: 'dateTime', label: 'Reservation date'},
-    { name: 'creationDateTime', label: 'Creation date'},
-    { name: 'nameOwner', label: 'Owner' },
-    { name: 'emailOwner', label: 'Email' },
+    { name: 'date', label: 'Reservation date'},
+    { name: 'creationDate', label: 'Creation date'},
+    { name: 'name', label: 'Owner' },
+    { name: 'email', label: 'Email' },
     { name: 'tableId', label: 'Table'},
   ];
 
@@ -56,8 +56,7 @@ export class OrderDialogComponent implements OnInit {
       this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
-        o.extras = filter(o.extras, (extra: ExtraView) => extra.selected)
-                  .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+        o.extras = reduce(o.extras, (total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
                   .slice(0, -1);
         });
     });

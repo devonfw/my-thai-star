@@ -2,10 +2,10 @@ import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
 import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { filter } from 'lodash';
+import { reduce } from 'lodash';
 
 @Component({
   selector: 'public-sidenav-order',
@@ -15,7 +15,6 @@ import { filter } from 'lodash';
 export class SidenavOrderComponent implements OnInit {
 
   @Input('order') order: OrderView;
-  @Output('removeOrder') removeEmitter: EventEmitter<any> = new EventEmitter();
   extras: string;
 
   constructor(private sidenav: SidenavService,
@@ -25,8 +24,7 @@ export class SidenavOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.extras = filter(this.order.extras, (extra: ExtraView) => extra.selected)
-                  .reduce((total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
+    this.extras = reduce(this.order.extras, (total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
                   .slice(0, -1);
  }
 
@@ -47,15 +45,10 @@ export class SidenavOrderComponent implements OnInit {
 
   decreaseOrder(): void {
     this.sidenav.decreaseOrder(this.order);
-    if (this.order.amount < 1) {
-      this.removeEmitter.emit(this.order);
-    }
   }
 
   removeOrder(): void {
-    this.sidenav.removeOrder(this.order); // Remark - why handling here is not consistient with the one above?
-                                          // Do we need both, removal via service and emmiting an event?
-    this.removeEmitter.emit(this.order);
+    this.sidenav.removeOrder(this.order);
   }
 
   calculateOrderPrice(): number {
