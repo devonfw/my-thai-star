@@ -1,4 +1,26 @@
-//
+export interface IFilterView {
+    categories: ICategoryView[];
+    maxPrice: number;
+    minLikes: number;
+    searchBy: string;
+    showOrder: number;
+    isFab: boolean;
+    sortBy: ISortByView[];
+}
+
+export interface ISortByView {
+    name: string;
+    direction: string;
+}
+
+export interface ICategoryView {
+    id: number;
+    name: string;
+    description: string;
+    selected: boolean;
+    showOrder: number;
+}
+
 export interface IDishView {
     id: number;
     name: string;
@@ -40,7 +62,6 @@ export function isDishView(elem: any): elem is IDishView {
     return true;
 }
 
-//
 export interface IImageView {
     name: string;
     content?: string;
@@ -65,12 +86,11 @@ export function isImageView(elem: any): elem is IImageView {
     return true;
 }
 
-//
 export interface IExtraIngredientView {
     id: number;
     name: string;
-    price: number;
     selected: boolean;
+    price: number;
 }
 
 export function isExtraIngredientView(elem: any): elem is IExtraIngredientView {
@@ -90,26 +110,35 @@ export function isExtraIngredientView(elem: any): elem is IExtraIngredientView {
     return true;
 }
 
-export interface IError {
-    code: number;
-    message: string;
+export interface IFavouriteView {
+    isFav: boolean;
+    likes: number;
 }
 
-//
-export interface IReservationView {
+export function isFavouriteView(elem: any): elem is IFavouriteView {
+    if (elem.isFav === undefined || typeof elem.isFav !== 'boolean') {
+        return false;
+    }
+    if (elem.likes === undefined || typeof elem.likes !== 'number') {
+        return false;
+    }
+    return true;
+}
+
+export interface IBookingView {
     date: string;
-    type: IReservationType;
+    type: IBookingType;
     name: string;
     email: string;
     assistants: number;
     guestList: string[];
 }
 
-export function isReservationView(elem: any): elem is IReservationView {
+export function isBookingView(elem: any): elem is IBookingView {
     if (elem.date === undefined || typeof elem.date !== 'string') {
         return false;
     }
-    if (elem.type === undefined || (!isReservationType(elem.type))) {
+    if (elem.type === undefined || (!isBookingType(elem.type))) {
         return false;
     }
     if (elem.name === undefined || typeof elem.name !== 'string') {
@@ -132,22 +161,22 @@ export function isReservationView(elem: any): elem is IReservationView {
     return true;
 }
 
-//
-export interface IReservationType {
-    name: string;
+export interface IBookingType {
+    index: number;
 }
 
-export function isReservationType(elem: any): elem is IReservationType {
+export function isBookingType(elem: any): elem is IBookingType {
     if (elem.name === undefined || typeof elem.name !== 'string') {
         return false;
     }
     return true;
 }
 
-//
+export enum BookingTypes {booking = 0, invited}
+
 export interface IOrderView {
     lines: IOrderLineView[];
-    invitationId: string;
+    bookingId: string;
 }
 
 export function isOrderView(elem: any): elem is IOrderView {
@@ -165,7 +194,6 @@ export function isOrderView(elem: any): elem is IOrderView {
     return true;
 }
 
-//
 export interface IOrderLineView {
     idDish: number;
     extras: number[];
@@ -194,38 +222,7 @@ export function isOrderLineView(elem: any): elem is IOrderLineView {
     return true;
 }
 
-//
-export interface IFilterView {
-    categories: ICategoryView[];
-    maxPrice: number;
-    minLikes: number;
-    searchBy: string;
-    showOrder: number;
-    isFab: boolean;
-}
-
-//
-export interface ICategoryView {
-    id: number;
-    name: string;
-    description: string;
-    group: number;
-    selected: boolean;
-    showOrder: number;
-}
-
-//
-export interface IFavouriteView {
-    isFav: boolean;
-    likes: number;
-}
-
-export function isFavouriteView(elem: any): elem is IFavouriteView {
-    if (elem.isFav === undefined || typeof elem.isFav !== 'boolean') {
-        return false;
-    }
-    if (elem.likes === undefined || typeof elem.likes !== 'number') {
-        return false;
-    }
-    return true;
+export interface IError {
+    code: number;
+    message: string;
 }

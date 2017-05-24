@@ -73,7 +73,7 @@ callback(err);
 }
 },*/
     getDishes: async (filter: types.IFilterView,
-        callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
+                      callback: (err: types.IError | null, dishes?: types.IDishView[]) => void) => {
         // check filter values. Put the correct if neccessary
         checkFilter(filter);
 
@@ -135,14 +135,14 @@ callback(err);
             callback(error);
         }
     },
-    createBooking: async (reserv: types.IReservationView,
-        callback: (err: types.IError | null, booToken?: string) => void) => {
+    createBooking: async (reserv: types.IBookingView,
+                          callback: (err: types.IError | null, booToken?: string) => void) => {
         const date = moment();
         const bookDate = moment(reserv.date, dateFormat);
 
         try {
             let table;
-            if (reserv.type.name === 'booking') {
+            if (reserv.type.index === types.BookingTypes.booking) {
                 table = await getFreeTable(reserv.date, reserv.assistants);
 
                 if (table === 'error') {
@@ -162,14 +162,14 @@ callback(err);
                 expirationDate: bookDate.subtract(1, 'hour').format(dateFormat), // TODO: modify this, maybe add 1 hour or delete this property
                 creationDate: date.format(dateFormat),
                 canceled: false,
-                bookingType: reserv.type.name,
-                assistants: (reserv.type.name === 'booking') ? reserv.assistants : undefined,
-                table: (reserv.type.name === 'booking') ? table : undefined,
+                bookingType: reserv.type.index,
+                assistants: (reserv.type.index === types.BookingTypes.booking) ? reserv.assistants : undefined,
+                table: (reserv.type.index === types.BookingTypes.booking) ? table : undefined,
             };
 
             const inv: dbtypes.IInvitedGuest[] = [];
 
-            if (reserv.type.name === 'invitation' && reserv.guestList.length > 0) {
+            if (reserv.type.index === types.BookingTypes.invited && reserv.guestList.length > 0) {
                 // remove possible duplicates
                 const emails: Set<string> = new Set(reserv.guestList);
 
@@ -197,7 +197,7 @@ callback(err);
 
             callback(null, booking.bookingToken);
 
-            if (reserv.type.name === 'booking') {
+            if (reserv.type.index === types.BookingTypes.booking) {
 
             } else {
                 mailer.sendEmail(reserv.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
@@ -236,10 +236,10 @@ callback(err);
         let reg: any[];
 
         try {
-            if (order.invitationId.startsWith('CB')) {
-                reg = await fn.table('Booking').where('bookingToken', order.invitationId, '=').promise();
+            if (order.bookingId.startsWith('CB')) {
+                reg = await fn.table('Booking').where('bookingToken', order.bookingId, '=').promise();
             } else {
-                reg = await fn.table('InvitedGuest').where('guestToken', order.invitationId, '=').promise();
+                reg = await fn.table('InvitedGuest').where('guestToken', order.bookingId, '=').promise();
             }
 
             // Possible errors
@@ -249,7 +249,7 @@ callback(err);
                 return;
             }
             // booking canceled
-            if (order.invitationId.startsWith('CB')) {
+            if (order.bookingId.startsWith('CB')) {
                 if (reg[0].canceled !== undefined && reg[0].canceled === true) {
                     callback({ code: 500, message: 'The booking is canceled' });
                     return;
@@ -307,7 +307,7 @@ callback(err);
         }
 
         try {
-            if (order.invitationId.startsWith('CB')) {
+            if (order.bookingId.startsWith('CB')) {
                 await fn.insert('Booking', reg[0]).promise();
             } else {
                 await fn.insert('InvitedGuest', reg[0]).promise();
@@ -414,7 +414,7 @@ callback(err);
                 return;
             }
 
-            if (reg[0].bookingType !== 'invitation') {
+            if (reg[0].bookingType !== types.BookingTypes.invited) {
                 callback({ code: 400, message: 'You can\'t cancel the booking' });
                 return;
             }

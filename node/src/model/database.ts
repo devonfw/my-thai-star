@@ -63,7 +63,7 @@ export interface IBooking {
     expirationDate: string;
     creationDate: string;
     canceled: boolean;
-    bookingType: string;
+    bookingType: number;
     assistants?: number;
     guestList?: string[];
     order?: string;

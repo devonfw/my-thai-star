@@ -6,18 +6,18 @@ import { validEmail } from '../utils/utilFunctions';
 
 export const router = eRouter();
 
-router.post('/v1/Reservation', (req: Request, res: Response) => {
+router.post('/v1/Booking', (req: Request, res: Response) => {
     // check if param is correct
-    if (!types.isReservationView(req.body)) {
+    if (!types.isBookingView(req.body)) {
         res.status(400).json({ message: 'Parser data error' });
     } else if (!moment(req.body.date).isValid() || moment(req.body.date).diff(moment().add(1, 'hour')) < 0) {
         // check if date is future
         res.status(400).json({ message: 'Given date must be future' });
     } else if (!validEmail(req.body.email)) {
         res.status(400).json({ message: 'Invalid email' });
-    } else if (req.body.type.name === 'invitation' && (req.body.guestList === undefined || req.body.guestList.length === 0)) {
+    } else if (req.body.type.index === types.BookingTypes.invited && (req.body.guestList === undefined || req.body.guestList.length === 0)) {
         res.status(400).json({ message: 'You need to invite someone' });
-    } else if (req.body.type.name === 'invitation' &&
+    } else if (req.body.type.index === types.BookingTypes.invited &&
         req.body.guestList.map((elem: any): boolean => {
             return !validEmail(elem);
         }).reduce((elem1: boolean, elem2: boolean) => {
@@ -31,6 +31,34 @@ router.post('/v1/Reservation', (req: Request, res: Response) => {
             } else {
                 // TODO: send emails to all
                 res.status(201).json(resToken);
+            }
+        });
+    }
+});
+
+router.get('/v1/InvitedGuest', (req: Request, res: Response) => {
+    if (req.query.guestToken === undefined || req.query.guestResponse === undefined) {
+        res.status(400).json({ message: 'Invalid petition' });
+    } else {
+        bussiness.updateInvitation(req.query.guestToken, req.query.guestResponse, (err: types.IError) => {
+            if (err) {
+                res.status(err.code).json(err.message);
+            } else {
+                res.status(204).json();
+            }
+        });
+    }
+});
+
+router.get('/v1/Booking/CancelInvited', (req: Request, res: Response) => {
+    if (req.query.reservationToken === undefined) {
+        res.status(400).json({ message: 'No reservation token given' });
+    } else {
+        bussiness.cancelInvitation(req.query.reservationToken, (err: types.IError) => {
+            if (err) {
+                res.status(err.code).json(err.message);
+            } else {
+                res.status(204).json();
             }
         });
     }
