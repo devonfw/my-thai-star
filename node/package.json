@@ -44,7 +44,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "nodemon": "^1.11.0",
-    "typescript": "^2.2.2"
+    "typescript": "2.3.2"
   },
   "optionalDependencies": {
     "@types/node": "^7.0.18"

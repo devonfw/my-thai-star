@@ -32,12 +32,21 @@ or
 
     $ yarn global add nodemon
 
-Finally, we need to clone serverless-data-collector into our project:
-Clone serverless-data-collector into project:
+Finally, we need to link oasp4fn into our project:
+For this, your must clone the project in other folder
 
-    $ mkdir src/data-collector
-    $ cd src/data-collector
+    $ mkdir C:\data-collector
+    $ cd C:\data-collector
     $ git clone https://github.com/devonfw/serverless-data-collector.git .
+
+Then, you must creat a link:
+
+    $ npm link
+
+And finally, you must link oasp4fn in this project
+
+    $ cd C:\my-thai-star\node\
+    $ npm link oasp4fn
 
 ## Database
 

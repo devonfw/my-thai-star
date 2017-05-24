@@ -2,8 +2,8 @@ import { Credentials } from 'aws-sdk';
 import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
 import { AccessControlPolicy } from 'aws-sdk/clients/s3';
 import * as _ from 'lodash';
-import dynamo from './data-collector/src/adapters/fn-dynamo';
-import fn from './data-collector/src/index';
+import dynamo from 'oasp4fn/out/adapters/fn-dynamo';
+import fn from 'oasp4fn';
 import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
@@ -92,7 +92,7 @@ callback(err);
                     table('DishCategory').
                     join('id', 'idCategory').
                     map((elem: any) => elem.idDish).
-                    promise();
+                    promise() as string[];
 
                 dishIdSet = new Set(dishCategories);
 
@@ -101,19 +101,19 @@ callback(err);
             // filter by fav, TODO: check if user is correct
             if (filter.isFab) {
                 // TODO: take id using the authorization token
-                const fav = await fn.table('User', '1').
-                    promise();
+                const fav: dbtypes.IUser[] = await fn.table('User', '1').
+                    promise() as dbtypes.IUser[];
 
-                const s2: Set<string> = new Set(fav.favorites as string[]);
+                const s2: Set<string> = new Set(fav[0].favourites as string[]);
 
                 dishIdSet = (dishIdSet !== undefined) ? util.setIntersection(dishIdSet, s2) : s2;
             }
 
             // get dishes from database
             if (dishIdSet === undefined || dishIdSet.size > 0) {
-                const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise();
+                const ingredients: dbtypes.IIngredient[] = await fn.table('Ingredient').promise() as dbtypes.IIngredient[];
 
-                const dishes: types.IDishView[] = await fn.
+                let dishes: types.IDishView[] = await fn.
                     table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                     map(util.relationArrayOfIds(ingredients, 'extras', 'id')).
                     map(dishToDishview()).
@@ -122,7 +122,12 @@ callback(err);
                         return _.lowerCase(o.name).includes(_.lowerCase(filter.searchBy))
                             || _.lowerCase(o.description).includes(_.lowerCase(filter.searchBy));
                     }).
-                    promise();
+                    // orderBy(filter.sortBy[0].name, _.lowerCase(filter.sortBy[0].direction)).
+                    promise() as types.IDishView[];
+
+                if ( filter.sortBy !== undefined && filter.sortBy.length > 0) {
+                    dishes = _.orderBy(dishes, filter.sortBy.map((elem: types.ISortByView) => elem.name), filter.sortBy.map((elem: types.ISortByView) => _.lowerCase(elem.direction)));
+                }
 
                 // TODO: filter by likes
                 callback(null, dishes);
@@ -132,7 +137,7 @@ callback(err);
 
         } catch (error) {
             console.error(error);
-            callback(error);
+            callback({ code: 500, message: error.message });
         }
     },
     createBooking: async (reserv: types.IBookingView,
@@ -198,7 +203,13 @@ callback(err);
             callback(null, booking.bookingToken);
 
             if (reserv.type.index === types.BookingTypes.booking) {
-
+                mailer.sendEmail(reserv.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createBooking.pug', {
+                    title: 'Booking created',
+                    name: reserv.name,
+                    date: bookDate.format('YYYY-MM-DD'),
+                    hour: bookDate.format('HH:mm:ss'),
+                    assistants: reserv.assistants,
+                }));
             } else {
                 mailer.sendEmail(reserv.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
                     title: 'Invitation created',
@@ -237,9 +248,9 @@ callback(err);
 
         try {
             if (order.bookingId.startsWith('CB')) {
-                reg = await fn.table('Booking').where('bookingToken', order.bookingId, '=').promise();
+                reg = await fn.table('Booking').where('bookingToken', order.bookingId, '=').promise() as any[];
             } else {
-                reg = await fn.table('InvitedGuest').where('guestToken', order.bookingId, '=').promise();
+                reg = await fn.table('InvitedGuest').where('guestToken', order.bookingId, '=').promise() as any[];
             }
 
             // Possible errors
@@ -251,29 +262,29 @@ callback(err);
             // booking canceled
             if (order.bookingId.startsWith('CB')) {
                 if (reg[0].canceled !== undefined && reg[0].canceled === true) {
-                    callback({ code: 500, message: 'The booking is canceled' });
+                    callback({ code: 400, message: 'The booking is canceled' });
                     return;
                 }
                 const bookingDate = moment(reg[0].bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                    callback({ code: 500, message: 'You can not create the order at this time' });
+                    callback({ code: 400, message: 'You can not create the order at this time' });
                     return;
                 }
             } else {
-                const reg2 = await fn.table('Booking', reg[0].idBooking).promise();
+                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
                 if (reg2[0].canceled !== undefined && reg2[0].canceled === true) {
-                    callback({ code: 500, message: 'The booking is canceled' });
+                    callback({ code: 400, message: 'The booking is canceled' });
                     return;
                 }
                 const bookingDate = moment(reg2[0].bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                    callback({ code: 500, message: 'You can not create the at this time' });
+                    callback({ code: 400, message: 'You can not create the at this time' });
                     return;
                 }
             }
             // Order already registered
             if (reg[0].order !== undefined) {
-                callback({ code: 500, message: 'You have a order, cant create a new one' });
+                callback({ code: 400, message: 'You have a order, cant create a new one' });
                 return;
             }
         } catch (err) {
@@ -323,28 +334,21 @@ callback(err);
         callback(null);
 
         const [vat, names] = await calculateVATandOrderName(order);
-        console.log(pug.renderFile('./src/emails/order.pug', {
-            title: 'Order created',
-            email: reg[0].email,
-            total: vat,
-            urlCancel: '#',
-            order:  names,
-        }));
         mailer.sendEmail(reg[0].email, '[MyThaiStar] Order info', undefined, pug.renderFile('./src/emails/order.pug', {
             title: 'Order created',
             email: reg[0].email,
             total: vat,
             urlCancel: '#',
-            order:  names,
+            order: names,
         }));
     },
     cancelOrder: async (order: string, callback: (err: types.IError | null) => void) => {
         let reg: any[];
         try {
             if (order.startsWith('CB')) {
-                reg = await fn.table('Booking').where('bookingToken', order, '=').promise();
+                reg = await fn.table('Booking').where('bookingToken', order, '=').promise() as any[];
             } else {
-                reg = await fn.table('InvitedGuest').where('guestToken', order, '=').promise();
+                reg = await fn.table('InvitedGuest').where('guestToken', order, '=').promise() as any[];
             }
 
             // errors
@@ -355,14 +359,14 @@ callback(err);
             if (order.startsWith('CB')) {
                 const bookingDate = moment(reg[0].bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                    callback({ code: 500, message: 'You can not create the order at this time' });
+                    callback({ code: 400, message: 'You can not create the order at this time' });
                     return;
                 }
             } else {
-                const reg2 = await fn.table('Booking', reg[0].idBooking).promise();
+                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
                 const bookingDate = moment(reg2[0].bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                    callback({ code: 500, message: 'You can not create the order at this time' });
+                    callback({ code: 400, message: 'You can not create the order at this time' });
                     return;
                 }
             }
@@ -402,11 +406,23 @@ callback(err);
         }
 
         callback(null);
+
+        if (order.startsWith('CB')) {
+            mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                title: 'Order canceled',
+                name: reg[0].name,
+            }));
+        } else {
+            mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                title: 'Order canceled',
+                name: reg[0].email,
+            }));
+        }
     },
     cancelInvitation: async (token: string, callback: (err: types.IError | null) => void) => {
         let reg: dbtypes.IBooking[];
         try {
-            reg = await fn.table('Booking').where('bookingToken', token, '=').promise();
+            reg = await fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.IBooking[];
 
             // errors
             if (reg.length === 0) {
@@ -446,10 +462,11 @@ callback(err);
         }
 
         reg[0].canceled = false;
+        let guest;
 
         try {
             if (reg[0].guestList !== undefined && (reg[0].guestList as string[]).length > 0) {
-                await fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise();
+                guest = await fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.IInvitedGuest[];
             }
         } catch (err) {
             console.error(err);
@@ -459,7 +476,7 @@ callback(err);
         }
 
         try {
-            const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise();
+            const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise() as dbtypes.IOrder[];
 
             if (order.length > 0) {
                 await fn.delete('Order', order.map((elem: any) => elem.id)).promise();
@@ -468,7 +485,9 @@ callback(err);
             console.error(err);
             callback(err);
             await fn.insert('Booking', reg[0]).promise();
-            await fn.insert('InvitedGuest', (reg[0].guestList as string[])).promise();
+            if (guest !== undefined) {
+                await fn.insert('InvitedGuest', guest).promise();
+            }
             return;
         }
 
@@ -486,11 +505,24 @@ callback(err);
         // console.log(order);
         // TODO: send emails
 
+        mailer.sendEmail(reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+            title: 'Invitation canceled',
+            name: reg[0].name,
+        }));
+
+        if (guest !== undefined) {
+            guest.forEach((elem: any) => {
+                mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                    title: 'Invitation canceled',
+                    name: elem.email,
+                }));
+            });
+        }
     },
     updateInvitation: async (token: string, response: boolean, callback: (err: types.IError | null) => void) => {
         let reg: dbtypes.IInvitedGuest[];
         try {
-            reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise();
+            reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise() as dbtypes.IInvitedGuest[];
 
             // errors
             if (reg.length === 0) {
@@ -503,7 +535,7 @@ callback(err);
                 return;
             }
 
-            const booking = await fn.table('Booking', reg[0].idBooking).promise();
+            const booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
             if (moment(booking[0].bookingDate, dateFormat).diff(moment().add(10, 'minutes')) < 0) {
                 callback({ code: 500, message: 'You can\'t do this operation at this moment' });
                 return;
@@ -529,10 +561,10 @@ callback(err);
         }
 
         try {
-            const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise();
+            const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise() as dbtypes.IOrder[];
 
             if (orders.length > 0) {
-                await fn.delete('Order', orders.map((elem: any) => elem.id));
+                await fn.delete('Order', orders.map((elem: any) => elem.id)).promise();
             }
         } catch (err) {
             console.error(err);
@@ -548,16 +580,16 @@ callback(err);
 };
 
 async function getFreeTable(date: string, assistants: number) {
-    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise(),
+    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise() as Promise<dbtypes.ITable[]>,
     fn.table('Booking').filter((elem: dbtypes.IBooking) => {
         const bookDate = moment(elem.bookingDate, dateFormat);
         return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
-    }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise()]);
+    }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise() as Promise<string[]>]);
 
     console.log(booking);
 
     tables = tables.filter((elem: dbtypes.ITable) => {
-        return !booking.includes(elem.id) && elem.seatsNumber >= assistants;
+        return !_.includes(booking, elem.id) && elem.seatsNumber >= assistants;
     });
 
     if (tables.length > 0) {
@@ -598,13 +630,13 @@ async function calculateVATandOrderName(order: types.IOrderView): Promise<[numbe
                 acum[elem.id] = elem;
                 return acum;
             }, {}).
-            promise(),
+            promise() as Promise<any>,
         fn.table('Ingredient').
             reduce((acum: any, elem: any) => {
                 acum[elem.id] = elem;
                 return acum;
             }, {}).
-            promise(),
+            promise() as Promise<any>,
     ]);
 
     order.lines.forEach((elem: types.IOrderLineView) => {
@@ -632,7 +664,7 @@ async function calculateVATandOrderName(order: types.IOrderView): Promise<[numbe
  * @returns
  */
 function checkFilter(filter: types.IFilterView) {
-    filter.maxPrice = filter.maxPrice || 50;
+    filter.maxPrice = filter.maxPrice || maxPrice;
     filter.minLikes = filter.minLikes || 0;
     filter.searchBy = filter.searchBy || '';
     filter.isFab = filter.isFab || false;

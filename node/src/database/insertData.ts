@@ -1,9 +1,8 @@
 import { Credentials } from 'aws-sdk';
 import * as uuid from 'uuid';
-// import * as dynamo from "../data-collector/src/adapters/fn-dynamo";
-import dynamo from '../data-collector/src/adapters/fn-dynamo';
-import * as s3 from '../data-collector/src/adapters/fn-s3';
-import fn from '../data-collector/src/index';
+import dynamo from 'oasp4fn/out/adapters/fn-dynamo';
+// import * as s3 from 'oasp4fn/out/adapters/fn-s3';
+import fn from 'oasp4fn';
 import * as types from '../model/database';
 
 // Dynamo
