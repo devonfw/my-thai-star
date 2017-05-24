@@ -59,7 +59,7 @@ export class OrderDialogComponent implements OnInit {
         o.price = this.priceCalculator.getPrice(o);
         // Remark: Maybe like that ?
         // o.extras = chain(o.extras)
-        //   .filter((opt: ExtraView) => opt.selected)
+        //   .map((opt: ExtraView) => opt.name)
         //   .join(', ').value();
         o.extras = reduce(o.extras, (total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
                   .slice(0, -1);
