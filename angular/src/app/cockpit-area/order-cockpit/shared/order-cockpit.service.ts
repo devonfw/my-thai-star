@@ -9,14 +9,13 @@ export class OrderCockpitService {
   constructor(private bookingDataService: BookingDataService) {
   }
 
-  getOrders(): Observable<ReservationView[]> {
-    return this.bookingDataService.getOrders()
+  getBookingOrders(): Observable<ReservationView[]> {
+    return this.bookingDataService.getBookingOrders()
                .map((orders: ReservationView[]) => orders as ReservationView[]);
   }
 
-  // Remark: Method returns a reservation view, so why is it called getOrder?
-  getOrder(id: number): Observable<ReservationView> {
-    return this.bookingDataService.getOrder(id)
+  getBookingOrder(id: number): Observable<ReservationView> {
+    return this.bookingDataService.getBookingOrder(id)
                .map((orders: ReservationView) => orders as ReservationView);
   }
 

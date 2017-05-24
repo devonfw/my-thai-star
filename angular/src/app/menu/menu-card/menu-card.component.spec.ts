@@ -7,6 +7,7 @@ import { BookingDataService } from '../../shared/backend/booking/booking-data-se
 import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
 import { DishesInMemoryService } from '../../shared/backend/dishes/dishes-in-memory.service';
 import { MenuService } from '../shared/menu.service';
+import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { MenuCardComponent } from './menu-card.component';
 import { CovalentModule } from '../../shared/covalent.module';
 
@@ -20,6 +21,7 @@ describe('MenuCardComponent', () => {
       providers: [
         MenuService,
         SidenavService,
+        SnackBarService,
         { provide: BookingDataService, useClass: BookingInMemoryService},
         { provide: DishesDataService, useClass: DishesInMemoryService}],
       imports: [

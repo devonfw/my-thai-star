@@ -1,11 +1,11 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuComponent } from './menu.component';
-
-import { MenuCardComponent } from './menu-card/menu-card.component';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
+import { SnackBarService } from '../shared/snackService/snackService.service';
+import { MenuComponent } from './menu.component';
+import { MenuCardComponent } from './menu-card/menu-card.component';
 import { BackendModule } from './../shared/backend/backend.module';
 import { CovalentModule } from '../shared/covalent.module';
 
@@ -16,7 +16,7 @@ describe('MenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenuComponent, MenuCardComponent ],
-      providers: [SidenavService, MenuService],
+      providers: [SidenavService, MenuService, SnackBarService],
       imports: [
         BrowserAnimationsModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),

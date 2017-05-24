@@ -31,7 +31,7 @@ export class LoginInMemoryService implements ILoginDataService {
   changePassword(username: string, oldPassword: string, newPassword: string): Observable<any> {
     const userToChange: LoginInfo = this.findUser(username, oldPassword);
     if (!userToChange) {
-       return Observable.throw({errorCode: 1, message: 'User already exists'});
+       return Observable.throw({errorCode: 1, message: 'Change password error. Old password do not match'});
     }
     userToChange.password = newPassword;
     return Observable.of({message: 'Password changed'});

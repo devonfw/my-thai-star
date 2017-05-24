@@ -1,8 +1,6 @@
 <td-layout>
   <form #filterForm="ngForm">
     <div style= "background-color: white">
-      
-
       <td-expansion-panel label="FILTER">
         <div layout-gt-xs="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
           <div layout="row" class="justify-space-around" style="align-items:center" flex>
@@ -17,7 +15,7 @@
             </md-input-container>
           </div>
         </div>
-        <div class="property-text-right">
+        <div class="align-right">
           <button md-button (click)="clearFilters()" class="text-upper property-text-bold">Clear filters</button>
           <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
         </div>

@@ -23,11 +23,11 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(bookedTables.push(bookTable));
     }
 
-    getOrders(): Observable<ReservationView[]> {
+    getBookingOrders(): Observable<ReservationView[]> {
         return Observable.of(bookedTables);
     }
 
-    getOrder(id: number): Observable<ReservationView> {
+    getBookingOrder(id: number): Observable<ReservationView> {
         return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
     }
 

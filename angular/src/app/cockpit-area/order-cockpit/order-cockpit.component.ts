@@ -39,7 +39,7 @@ export class OrderCockpitComponent implements OnInit {
               private orderCockpitService: OrderCockpitService) {}
 
   ngOnInit(): void {
-    this.orderCockpitService.getOrders().subscribe((orders: ReservationView[]) => {
+    this.orderCockpitService.getBookingOrders().subscribe((orders: ReservationView[]) => {
       this.data = orders;
       this.filteredData = orders;
       this.filteredTotal = orders.length;

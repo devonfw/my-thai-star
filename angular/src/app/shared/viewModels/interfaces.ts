@@ -1,3 +1,19 @@
+// FILTERS
+export interface Filter {
+    searchBy: string;
+    sortBy: {name: string, dir: string};
+    maxPrice: number;
+    minLikes: number;
+    isFav: boolean;
+    categories: CategoryView[];
+}
+
+export interface CategoryView {
+    name: string;
+    selected: boolean;
+}
+
+// DISHES
 export interface DishView {
     id: number;
     name: string;
@@ -9,15 +25,6 @@ export interface DishView {
     isfav: boolean;
 }
 
-export interface OrderView {
-    idDish: number;
-    name: string;
-    price: number;
-    extras: ExtraView[];
-    amount: number;
-    comment: string;
-}
-
 export interface ExtraView {
     id: number;
     name: string;
@@ -25,11 +32,7 @@ export interface ExtraView {
     selected?: boolean;
 }
 
-export interface OrderListView {
-    bookingId: number;
-    orders: OrderView[];
-}
-
+// BOOKING
 export interface ReservationView {
     date: string;
     creationDate?: string;
@@ -48,16 +51,16 @@ export interface FriendsInvite {
     acceptance: string;
 }
 
-export interface Filter {
-    searchBy: string;
-    sortBy: {name: string, dir: string};
-    maxPrice: number;
-    minLikes: number;
-    isFav: boolean;
-    categories: CategoryView[];
+export interface OrderView {
+    idDish: number;
+    name: string;
+    price: number;
+    extras: ExtraView[];
+    amount: number;
+    comment: string;
 }
 
-export interface CategoryView {
-    name: string;
-    selected: boolean;
+export interface OrderListView {
+    bookingId: number;
+    orders: OrderView[];
 }

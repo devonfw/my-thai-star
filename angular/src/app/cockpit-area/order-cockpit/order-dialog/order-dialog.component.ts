@@ -4,7 +4,7 @@ import { ExtraView, OrderView, ReservationView } from '../../../shared/viewModel
 import { OrderCockpitService } from '../shared/order-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
-import {filter, map, reduce, cloneDeep, chain} from 'lodash';
+import {map, cloneDeep} from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -51,19 +51,14 @@ export class OrderDialogComponent implements OnInit {
     // Remark: Maybe total price calculation can be also moved to a service, so price calculator dependency will
     // be present only in that service
     // Remark: this logic should be moved to a service - e.g. OrderCockpitService should do it for now
-    this.orderCockpitService.getOrder(this.bookingId).subscribe( (order: ReservationView) => {
+    this.orderCockpitService.getBookingOrder(this.bookingId).subscribe( (order: ReservationView) => {
       this.datat.push(order);
       this.datao = cloneDeep(order.orders);
       this.totalPrice = this.priceCalculator.getTotalPrice(order.orders);
       map(this.datao, (o: OrderView) => {
         o.price = this.priceCalculator.getPrice(o);
-        // Remark: Maybe like that ?
-        // o.extras = chain(o.extras)
-        //   .map((opt: ExtraView) => opt.name)
-        //   .join(', ').value();
-        o.extras = reduce(o.extras, (total: string, extra: ExtraView): string => total + ' ' + extra.name + ',', '')
-                  .slice(0, -1);
-        });
+        o.extras = map(o.extras, 'name').join(', ');
+      });
     });
     this.filter();
 }

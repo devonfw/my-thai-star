@@ -1,5 +1,5 @@
 import { ExtraView, ReservationView } from '../viewModels/interfaces';
-import { Dish, LoginInfo } from './backendModels/interfaces';
+import { Dish, LoginInfo, Role } from './backendModels/interfaces';
 
 export const extras: ExtraView[] = [{
                 id: 0,
@@ -100,6 +100,11 @@ export const users: LoginInfo[] = [{
         password: 'pass',
         role: 'waiter',
         }];
+
+export const roles: Role[] = [
+        {name: 'user', permission: 0},
+        {name: 'waiter', permission: 1},
+];
 
 export const bookedTables: ReservationView[] = [{
         date: '19/03/2017 22:00',

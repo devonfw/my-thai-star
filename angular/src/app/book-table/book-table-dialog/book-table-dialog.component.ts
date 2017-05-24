@@ -1,9 +1,9 @@
-import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
-import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
+import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
+import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { ReservationView } from '../../shared/viewModels/interfaces';
-import {MD_DIALOG_DATA} from '@angular/material';
+import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
 import * as moment from 'moment';
 import { assign } from 'lodash';
 
@@ -16,7 +16,7 @@ export class BookTableDialogComponent implements OnInit {
 
   data: ReservationView;
 
-  constructor (public snackBar: MdSnackBar,
+  constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,
                private dialog: MdDialogRef<BookTableDialogComponent>,
                @Inject(MD_DIALOG_DATA) dialogData: any) {
@@ -37,9 +37,7 @@ export class BookTableDialogComponent implements OnInit {
     bookTable.guestList = [];
     bookTable.bookingType = 0;
     this.bookingService.postBookingTable(bookTable).subscribe( () => {
-      this.snackBar.open('Table succesfully booked', 'OK', {
-        duration: 7000,
-      });
+      this.snackBar.openSnack('Table succesfully booked', 4000, 'black');
     });
     this.dialog.close(true);
   }

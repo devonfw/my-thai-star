@@ -1,52 +1,60 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { SnackBarService } from '../snackService/snackService.service';
 import { LoginDataService } from '../backend/login/login-data-service';
-import { LoginInfo } from '../backend/backendModels/interfaces';
-import { isEmpty } from 'lodash';
+import { LoginInfo, Role } from '../backend/backendModels/interfaces';
+import { isEmpty, find } from 'lodash';
+import { roles } from '../backend/mock-data';
 
 @Injectable()
 export class AuthService {
-    isLogged: boolean = false;
+    logged: boolean = false;
     user: string = '';
-    // Remark: Something more generic than a boolean should be implemented here to allow more that 2 roles and privilages granulation
-    // E.g. a method hasPermission should be exposed by this service that takes the role/privilage name as an argument
-    hasPermission: boolean = false;
+    currentRole: string = 'user';
 
-    constructor(public snackBar: MdSnackBar, public loginDataService: LoginDataService) { }
+    constructor(public snackBar: SnackBarService,
+                public router: Router,
+                public loginDataService: LoginDataService) { }
+
+    public isLogged(): boolean {
+        return this.logged;
+    }
+
+    public getPermission(roleName: string): number {
+        return find(roles, {name: roleName}).permission;
+    }
+
+    public isPermited(userRole: string): boolean {
+        return this.getPermission(this.currentRole) === this.getPermission(userRole);
+    }
 
     login(username: string, password: string): void {
         this.loginDataService.login(username, password)
             .subscribe((loginInfo: LoginInfo) => {
-                    this.isLogged = true;
+                    this.logged = true;
                     this.user = loginInfo.username;
-                    if (loginInfo.role === 'waiter') {
-                        this.hasPermission = true;
-                    }
+                    this.currentRole = loginInfo.role;
+                    this.router.navigate(['orders']);
+                    this.snackBar.openSnack('Login successful', 4000, 'green');
                 }, (err: any) => {
-                    this.isLogged = false;
+                    this.logged = false;
+                    this.snackBar.openSnack('Error login, user or password do not match', 4000, 'red');
                 });
     }
 
     register(email: string, password: string): void {
         this.loginDataService.register(email, password)
             .subscribe(() => {
-                this.snackBar.open('Register successful', 'OK', {
-                    duration: 4000,
-                    extraClasses: ['bgc-green-500'],
-                });
+                this.snackBar.openSnack('Register successful', 4000, 'green');
             }, (error: any) => {
-                this.snackBar.open('Register failed, username already in use', 'OK', {
-                    duration: 4000,
-                    extraClasses: ['bgc-red-600'],
-                });
+                this.snackBar.openSnack('Register failed, username already in use', 4000, 'red');
             });
     }
 
     logout(): void {
-        this.isLogged = false;
-        this.hasPermission = false;
-        this.snackBar.open('Log out successful, come back soon!', 'OK', {
-            duration: 4000,
-        });
+        this.logged = false;
+        this.currentRole = 'user';
+        this.user = '';
+        this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
     }
 }

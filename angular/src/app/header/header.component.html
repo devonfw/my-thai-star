@@ -1,10 +1,10 @@
-<div layout="row" layout-align="center center" style="align-items:center" flex>
+<div layout="row" layout-align="center center" style="align-items: center" flex>
   <a md-icon-button class="forMobile" (click)="openCloseSideNavMobile()"><md-icon>dehaze</md-icon></a>
   <a md-icon-button><md-icon>star_border</md-icon></a>
   <span>My Thai Star</span>
   
   <span flex></span>
-  <div *ngIf="!auth.hasPermission" class="forDesktop">
+  <div *ngIf="auth.isPermited('user')" class="forDesktop">
     <nav md-tab-nav-bar>
       <a md-tab-link
         routerLink="/restaurant"
@@ -26,7 +26,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="auth.hasPermission" class="forDesktop">
+  <div *ngIf="auth.isPermited('waiter')" class="forDesktop">
     <nav md-tab-nav-bar>
       <a md-tab-link
         routerLink="/orders"
@@ -42,17 +42,17 @@
       </a>
     </nav>
   </div>
-  <button *ngIf="!auth.isLogged" md-icon-button (click)="openLoginDialog()" mdTooltip="User"><md-icon>person_outline</md-icon></button>
-  <div *ngIf="auth.isLogged" layout="row" style="align-items:center">
+  <button *ngIf="!auth.isLogged()" md-icon-button (click)="openLoginDialog()" mdTooltip="User"><md-icon>person_outline</md-icon></button>
+  <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
     <button md-icon-button [mdMenuTriggerFor]="toolbarMenu1"><md-icon>account_circle</md-icon></button>
     <span class="forDesktop">{{auth.user}}</span>
-    <button class="forDesktop" *ngIf="!auth.isLogged" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
+    <button class="forDesktop" *ngIf="!auth.isLogged()" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
     <md-menu #toolbarMenu1="mdMenu">
-      <button md-menu-item (click)="openResetDialog()" *ngIf="!auth.hasPermission">
+      <button md-menu-item (click)="openResetDialog()" *ngIf="auth.isPermited('user')">
         <md-icon>settings</md-icon>
         <span>Change password</span>
       </button>
-      <button md-menu-item (click)="openTwitterDialog()" *ngIf="!auth.hasPermission">
+      <button md-menu-item (click)="openTwitterDialog()" *ngIf="auth.isPermited('user')">
         <md-icon>send</md-icon>
         <span>Twitter account</span>
       </button>
@@ -63,7 +63,7 @@
       </button>
     </md-menu>
   </div>
-  <td-notification-count *ngIf="!auth.hasPermission" color="accent" [notifications]="sidenav.getNumberOrders()">
+  <td-notification-count *ngIf="auth.isPermited('user')" color="accent" [notifications]="sidenav.getNumberOrders()">
     <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
   </td-notification-count>
 </div>

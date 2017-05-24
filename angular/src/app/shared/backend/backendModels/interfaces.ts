@@ -62,3 +62,8 @@ export class LoginInfo {
     password: string;
     role: string;
 }
+
+export class Role {
+    name: string;
+    permission: number;
+}

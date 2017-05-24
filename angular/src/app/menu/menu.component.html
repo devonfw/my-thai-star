@@ -9,15 +9,14 @@
             <input mdInput placeholder="Search our dishes" ngModel name="searchBy">
           </md-input-container>
         </div>
-        <!-- Remark: Avoid using inline styles such as "width: 100%" -->
-        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" style= "width: 100%">
+        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" flex>
           <!-- Remark: HTMl should not be repeated. Use CSS and media queries-->
           <md-checkbox ngModel name="1">Main dishes</md-checkbox>
           <md-checkbox ngModel name="2">Starter</md-checkbox>
           <md-checkbox ngModel name="3">Dessert</md-checkbox>
         </div>
         <div layout="row" class="pull-bottom pad-sm sortingBy">
-          <md-select style="width: 100%" ngModel name="sortName" #sorting placeholder="Sort By">
+          <md-select flex ngModel name="sortName" #sorting placeholder="Sort By">
             <md-option value="price">
               Price
             </md-option>
@@ -95,7 +94,7 @@
           </div>
         </div>
       </td-expansion-panel>
-      <div class="property-text-right">
+      <div class="align-right">
         <button md-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
         <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>

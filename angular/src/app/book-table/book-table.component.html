@@ -38,7 +38,7 @@
                 <md-checkbox #termsd>Accept terms</md-checkbox>
 
               </div>
-              <div class="align-right-buttons">
+              <div class="align-right">
                 <button md-button (click)="showBookTableDialog(bookForm.form)" [disabled]="!(bookForm.form.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
               </div>
             </form>
@@ -60,8 +60,17 @@
                 <div layout="column" class="push-bottom" flex>
                   <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
                 </div>
+
                 <div layout= "column" flex>
-                  <md2-datepicker ngModel name="date" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
+                  <md2-datepicker 
+                    ngModel
+                    name="date"
+                    openOnFocus="true"
+                    type="datetime"
+                    container="dialog"
+                    required
+                    placeholder="Date and time">
+                  </md2-datepicker>
 
                   <md-input-container color="accent" flex>
                     <input mdInput placeholder="Name" ngModel name="name" required>
@@ -70,12 +79,18 @@
                   <md-input-container color="accent" flex>
                     <input mdInput placeholder="Email" ngModel name="email" required email>
                   </md-input-container>
-
                 </div>
+
                 <h4>Guests</h4>
-                <td-chips class="pad-bottom-sm" [(ngModel)]="invitationModel" name="guestList" placeholder="Enter invitation email"></td-chips>
+                <td-chips
+                  class="pad-bottom-sm"
+                  [(ngModel)]="invitationModel"
+                  name="guestList"
+                  placeholder="Enter invitation email">
+                </td-chips>
+
               </form>
-              <div class="align-right-buttons">
+              <div class="align-right">
                 <button md-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!invitationForm.form.valid" color="accent" class="text-upper">Invite friends</button>
               </div>
             </div>

@@ -1,13 +1,14 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { SidenavComponent } from './sidenav.component';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
+import { SnackBarService } from '../shared/snackService/snackService.service';
 import { BookingDataService } from '../shared/backend/booking/booking-data-service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { SidenavComponent } from './sidenav.component';
 import { CovalentModule } from '../shared/covalent.module';
 
 describe('SidenavComponent', () => {
@@ -17,9 +18,11 @@ describe('SidenavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavComponent, SidenavOrderComponent ],
-      providers: [PriceCalculatorService,
-                  SidenavService,
-                  {provide: BookingDataService, useClass: BookingInMemoryService}],
+      providers: [
+        PriceCalculatorService,
+        SidenavService,
+        SnackBarService,
+        {provide: BookingDataService, useClass: BookingInMemoryService}],
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule,

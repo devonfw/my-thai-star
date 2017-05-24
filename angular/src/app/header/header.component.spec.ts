@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { WindowService } from '../shared/windowService/windowService.service';
-import { AuthService } from '../shared/authentication/auth.service';
-import { LoginDataService } from '../shared/backend/login/login-data-service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BackendModule } from '../shared/backend/backend.module';
 import { CovalentModule } from '../shared/covalent.module';
+import { WindowService } from '../shared/windowService/windowService.service';
+import { AuthService } from '../shared/authentication/auth.service';
+import { LoginDataService } from '../shared/backend/login/login-data-service';
+import { SnackBarService } from '../shared/snackService/snackService.service';
 
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { AppComponent } from '../app.component';
@@ -19,7 +20,7 @@ describe('HeaderComponent', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [WindowService, AuthService],
+      providers: [WindowService, AuthService, SnackBarService],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,

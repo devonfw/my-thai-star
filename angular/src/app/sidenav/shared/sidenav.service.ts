@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../shared/backend/backendModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
@@ -15,7 +15,7 @@ export class SidenavService {
 
   orders: OrderView[] = [];
 
-  constructor(private snackBar: MdSnackBar,
+  constructor(private snackBar: SnackBarService,
               private bookingDataService: BookingDataService) {}
 
   public openSideNav(): void {
@@ -71,16 +71,10 @@ export class SidenavService {
     this.bookingDataService.saveOrders(orderList)
         .subscribe(() => {
             this.orders = [];
-            this.snackBar.open('Order correctly noted', 'OK', {
-              duration: 4000,
-              extraClasses: ['bgc-green-600'],
-            });
+            this.snackBar.openSnack('Order correctly noted', 4000, 'green');
         },
         (error: any) => {
-            this.snackBar.open('Booking ID not existing', 'OK', {
-              duration: 8000,
-              extraClasses: ['bgc-red-600'],
-            });
+            this.snackBar.openSnack('Booking ID not existing', 4000, 'red');
         });
    }
 

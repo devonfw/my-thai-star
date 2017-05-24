@@ -40,6 +40,7 @@ import { AuthService } from './shared/authentication/auth.service';
 import { OrderCockpitService } from './cockpit-area/order-cockpit/shared/order-cockpit.service';
 import { ReservationCockpitService } from './cockpit-area/reservation-cockpit/shared/reservation-cockpit.service';
 import { UserAreaService } from './user-area/shared/user-area.service';
+import { SnackBarService } from './shared/snackService/snackService.service';
 
 // DIRECTIVES
 import { EqualValidatorDirective } from './user-area/login-dialog/equal-validator.directive';
@@ -87,6 +88,7 @@ import { EqualValidatorDirective } from './user-area/login-dialog/equal-validato
     OrderCockpitService,
     ReservationCockpitService,
     UserAreaService,
+    SnackBarService,
   ],
   entryComponents: [
     BookTableDialogComponent,

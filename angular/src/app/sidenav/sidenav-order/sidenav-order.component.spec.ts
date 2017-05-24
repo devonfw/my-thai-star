@@ -4,6 +4,7 @@ import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
+import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CovalentModule } from '../../shared/covalent.module';
@@ -15,9 +16,11 @@ describe('SidenavOrderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavOrderComponent ],
-      providers: [SidenavService,
-                  PriceCalculatorService,
-                  {provide: BookingDataService, useClass: BookingInMemoryService}],
+      providers: [
+        SidenavService,
+        PriceCalculatorService,
+        SnackBarService,
+        {provide: BookingDataService, useClass: BookingInMemoryService}],
       imports: [
         CovalentModule,
       ],
