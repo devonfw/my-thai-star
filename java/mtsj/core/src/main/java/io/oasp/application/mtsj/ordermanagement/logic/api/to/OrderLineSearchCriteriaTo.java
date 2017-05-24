@@ -13,7 +13,7 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
 
   private Long orderId;
 
-  private Long idDish;
+  private Long dishId;
 
   private Integer amount;
 
@@ -37,14 +37,14 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
     this.orderId = orderId;
   }
 
-  public Long getIdDish() {
+  public Long getDishId() {
 
-    return idDish;
+    return dishId;
   }
 
-  public void setIdDish(Long idDish) {
+  public void setDishId(Long dishId) {
 
-    this.idDish = idDish;
+    this.dishId = dishId;
   }
 
   public Integer getAmount() {

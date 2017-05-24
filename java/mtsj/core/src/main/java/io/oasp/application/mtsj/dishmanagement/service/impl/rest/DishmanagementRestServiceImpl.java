@@ -66,9 +66,9 @@ public class DishmanagementRestServiceImpl implements DishmanagementRestService 
   }
 
   @Override
-  public PaginatedListTo<DishEto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo) {
+  public PaginatedListTo<DishCto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo) {
 
-    return this.dishmanagement.findDishEtos(searchCriteriaTo);
+    return this.dishmanagement.findDishCtos(searchCriteriaTo);
   }
 
   @Override

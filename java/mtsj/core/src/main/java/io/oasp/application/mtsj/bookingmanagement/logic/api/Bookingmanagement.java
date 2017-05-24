@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.api;
 
+import java.util.List;
+
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
@@ -44,7 +46,7 @@ public interface Bookingmanagement {
    * @param booking the {@link BookingEto} to create.
    * @return the new {@link BookingEto} that has been saved with ID and version.
    */
-  BookingEto saveBooking(BookingEto booking);
+  BookingEto saveBooking(BookingEto booking, List<String> emails);
 
   /**
    * Returns a InvitedGuest by its id 'id'.

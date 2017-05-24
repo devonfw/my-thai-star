@@ -6,11 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.InvitedGuest;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 
 @Entity
 @Table(name = "InvitedGuest")
@@ -26,11 +28,13 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
 
   private Timestamp modificationDate;
 
+  private OrderEntity order;
+
   private static final long serialVersionUID = 1L;
 
   public InvitedGuestEntity() {
+
     super();
-    this.accepted = false;
   }
 
   /**
@@ -135,6 +139,24 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
       bookingEntity.setId(bookingId);
       this.booking = bookingEntity;
     }
+  }
+
+  /**
+   * @return order
+   */
+  @OneToOne
+  @JoinColumn(name = "idOrder")
+  public OrderEntity getOrder() {
+
+    return this.order;
+  }
+
+  /**
+   * @param order new value of {@link #getorder}.
+   */
+  public void setOrder(OrderEntity order) {
+
+    this.order = order;
   }
 
 }

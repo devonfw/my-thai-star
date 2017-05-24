@@ -103,7 +103,7 @@ public interface DishmanagementRestService {
    */
   @Path("/dish/search")
   @POST
-  public PaginatedListTo<DishEto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<DishCto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo);
 
   /**
    * Delegates to {@link Dishmanagement#findIngredient}.

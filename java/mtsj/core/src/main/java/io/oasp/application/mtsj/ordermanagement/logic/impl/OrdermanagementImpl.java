@@ -9,16 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
-import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderDishExtraIngredientEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDao;
-import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDishExtraIngredientDao;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderLineDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientEto;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientSearchCriteriaTo;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -36,12 +35,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    * Logger instance.
    */
   private static final Logger LOG = LoggerFactory.getLogger(OrdermanagementImpl.class);
-
-  /**
-   * @see #getOrderDishExtraIngredientDao()
-   */
-  @Inject
-  private OrderDishExtraIngredientDao orderDishExtraIngredientDao;
 
   /**
    * @see #getOrderDao()
@@ -64,62 +57,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  public OrderDishExtraIngredientEto findOrderDishExtraIngredient(Long id) {
-
-    LOG.debug("Get OrderDishExtraIngredient with id {} from database.", id);
-    return getBeanMapper().map(getOrderDishExtraIngredientDao().findOne(id), OrderDishExtraIngredientEto.class);
-  }
-
-  @Override
-  public PaginatedListTo<OrderDishExtraIngredientEto> findOrderDishExtraIngredientEtos(
-      OrderDishExtraIngredientSearchCriteriaTo criteria) {
-
-    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedListTo<OrderDishExtraIngredientEntity> orderdishextraingredients =
-        getOrderDishExtraIngredientDao().findOrderDishExtraIngredients(criteria);
-    return mapPaginatedEntityList(orderdishextraingredients, OrderDishExtraIngredientEto.class);
-  }
-
-  @Override
-  public boolean deleteOrderDishExtraIngredient(Long orderDishExtraIngredientId) {
-
-    OrderDishExtraIngredientEntity orderDishExtraIngredient =
-        getOrderDishExtraIngredientDao().find(orderDishExtraIngredientId);
-    getOrderDishExtraIngredientDao().delete(orderDishExtraIngredient);
-    LOG.debug("The orderDishExtraIngredient with id '{}' has been deleted.", orderDishExtraIngredientId);
-    return true;
-  }
-
-  @Override
-  public OrderDishExtraIngredientEto saveOrderDishExtraIngredient(
-      OrderDishExtraIngredientEto orderDishExtraIngredient) {
-
-    Objects.requireNonNull(orderDishExtraIngredient, "orderDishExtraIngredient");
-    OrderDishExtraIngredientEntity orderDishExtraIngredientEntity =
-        getBeanMapper().map(orderDishExtraIngredient, OrderDishExtraIngredientEntity.class);
-
-    // initialize, validate orderDishExtraIngredientEntity here if necessary
-    OrderDishExtraIngredientEntity resultEntity = getOrderDishExtraIngredientDao().save(orderDishExtraIngredientEntity);
-    LOG.debug("OrderDishExtraIngredient with id '{}' has been created.", resultEntity.getId());
-
-    return getBeanMapper().map(resultEntity, OrderDishExtraIngredientEto.class);
-  }
-
-  /**
-   * Returns the field 'orderDishExtraIngredientDao'.
-   *
-   * @return the {@link OrderDishExtraIngredientDao} instance.
-   */
-  public OrderDishExtraIngredientDao getOrderDishExtraIngredientDao() {
-
-    return this.orderDishExtraIngredientDao;
-  }
-
-  @Override
-  public OrderEto findOrder(Long id) {
+  public OrderCto findOrder(Long id) {
 
     LOG.debug("Get Order with id {} from database.", id);
-    return getBeanMapper().map(getOrderDao().findOne(id), OrderEto.class);
+    OrderEntity entity = getOrderDao().findOne(id);
+    OrderCto cto = new OrderCto();
+    cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
+    cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
+    cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineEto.class));
+    cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
+    cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
+    return cto;
   }
 
   @Override

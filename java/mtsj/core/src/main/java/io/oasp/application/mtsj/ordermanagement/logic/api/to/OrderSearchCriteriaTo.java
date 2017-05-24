@@ -5,15 +5,18 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.application.mtsj.ordermanagement.common.api.Order}s.
- *
  */
 public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idBooking;
+  private Long bookingId;
 
-  private Long idInvitedGuest;
+  private Long invitedGuestId;
+
+  private String hostToken;
+
+  private Long hostId;
 
   /**
    * The constructor.
@@ -23,24 +26,44 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
     super();
   }
 
-  public Long getIdBooking() {
+  public Long getBookingId() {
 
-    return idBooking;
+    return bookingId;
   }
 
-  public void setIdBooking(Long idBooking) {
+  public void setBookingId(Long bookingId) {
 
-    this.idBooking = idBooking;
+    this.bookingId = bookingId;
   }
 
-  public Long getIdInvitedGuest() {
+  public Long getInvitedGuestId() {
 
-    return idInvitedGuest;
+    return invitedGuestId;
   }
 
-  public void setIdInvitedGuest(Long idInvitedGuest) {
+  public void setInvitedGuestId(Long invitedGuestId) {
 
-    this.idInvitedGuest = idInvitedGuest;
+    this.invitedGuestId = invitedGuestId;
+  }
+
+  public String getHostToken() {
+
+    return hostToken;
+  }
+
+  public void setHostToken(String hostToken) {
+
+    this.hostToken = hostToken;
+  }
+
+  public Long getHostId() {
+
+    return hostId;
+  }
+
+  public void setHostId(Long hostId) {
+
+    this.hostId = hostId;
   }
 
 }

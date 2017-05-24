@@ -9,9 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
@@ -25,11 +27,11 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private OrderEntity order;
 
-  private Long idDish;
+  private DishEntity dish;
 
   private List<IngredientEntity> extras;
 
-  private int amount;
+  private Integer amount;
 
   private String comment;
 
@@ -51,22 +53,6 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   public void setOrder(OrderEntity order) {
 
     this.order = order;
-  }
-
-  /**
-   * @return idDish
-   */
-  public Long getIdDish() {
-
-    return this.idDish;
-  }
-
-  /**
-   * @param idDish new value of {@link #getIdDish}.
-   */
-  public void setIdDish(Long idDish) {
-
-    this.idDish = idDish;
   }
 
   /**
@@ -92,7 +78,8 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return amount
    */
-  public int getAmount() {
+  @Override
+  public Integer getAmount() {
 
     return this.amount;
   }
@@ -100,7 +87,8 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @param amount new value of {@link #getAmount}.
    */
-  public void setAmount(int amount) {
+  @Override
+  public void setAmount(Integer amount) {
 
     this.amount = amount;
   }
@@ -108,6 +96,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return comment
    */
+  @Override
   public String getComment() {
 
     return this.comment;
@@ -116,6 +105,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @param comment new value of {@link #getComment}.
    */
+  @Override
   public void setComment(String comment) {
 
     this.comment = comment;
@@ -141,6 +131,46 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
       orderEntity.setId(orderId);
       this.order = orderEntity;
     }
+  }
+
+  @Override
+  @Transient
+  public Long getDishId() {
+
+    if (this.dish == null) {
+      return null;
+    }
+    return this.dish.getId();
+  }
+
+  @Override
+  public void setDishId(Long dishId) {
+
+    if (dishId == null) {
+      this.dish = null;
+    } else {
+      DishEntity dishEntity = new DishEntity();
+      dishEntity.setId(dishId);
+      this.dish = dishEntity;
+    }
+  }
+
+  /**
+   * @return dish
+   */
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "idDish")
+  public DishEntity getDish() {
+
+    return this.dish;
+  }
+
+  /**
+   * @param dish new value of {@link #getdish}.
+   */
+  public void setDish(DishEntity dish) {
+
+    this.dish = dish;
   }
 
 }

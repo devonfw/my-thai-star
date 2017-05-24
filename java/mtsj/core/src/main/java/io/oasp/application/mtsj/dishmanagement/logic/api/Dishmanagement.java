@@ -60,7 +60,7 @@ public interface Dishmanagement {
    * @param criteria the {@link DishSearchCriteriaTo}.
    * @return the {@link List} of matching {@link DishEto}s.
    */
-  PaginatedListTo<DishEto> findDishEtos(DishSearchCriteriaTo criteria);
+  PaginatedListTo<DishCto> findDishCtos(DishSearchCriteriaTo criteria);
 
   /**
    * Deletes a dish from the database by its id 'dishId'.

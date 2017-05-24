@@ -148,4 +148,5 @@ public class InvitedGuestEto extends AbstractEto implements InvitedGuest {
     }
     return true;
   }
+
 }

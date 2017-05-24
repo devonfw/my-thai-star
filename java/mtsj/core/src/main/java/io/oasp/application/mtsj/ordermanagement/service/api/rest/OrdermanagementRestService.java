@@ -10,8 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientEto;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderDishExtraIngredientSearchCriteriaTo;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -27,46 +26,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 public interface OrdermanagementRestService {
 
   /**
-   * Delegates to {@link Ordermanagement#findOrderDishExtraIngredient}.
-   *
-   * @param id the ID of the {@link OrderDishExtraIngredientEto}
-   * @return the {@link OrderDishExtraIngredientEto}
-   */
-  @GET
-  @Path("/orderdishextraingredient/{id}/")
-  public OrderDishExtraIngredientEto getOrderDishExtraIngredient(@PathParam("id") long id);
-
-  /**
-   * Delegates to {@link Ordermanagement#saveOrderDishExtraIngredient}.
-   *
-   * @param orderdishextraingredient the {@link OrderDishExtraIngredientEto} to be saved
-   * @return the recently created {@link OrderDishExtraIngredientEto}
-   */
-  @POST
-  @Path("/orderdishextraingredient/")
-  public OrderDishExtraIngredientEto saveOrderDishExtraIngredient(OrderDishExtraIngredientEto orderdishextraingredient);
-
-  /**
-   * Delegates to {@link Ordermanagement#deleteOrderDishExtraIngredient}.
-   *
-   * @param id ID of the {@link OrderDishExtraIngredientEto} to be deleted
-   */
-  @DELETE
-  @Path("/orderdishextraingredient/{id}/")
-  public void deleteOrderDishExtraIngredient(@PathParam("id") long id);
-
-  /**
-   * Delegates to {@link Ordermanagement#findOrderDishExtraIngredientEtos}.
-   *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding orderdishextraingredients.
-   * @return the {@link PaginatedListTo list} of matching {@link OrderDishExtraIngredientEto}s.
-   */
-  @Path("/orderdishextraingredient/search")
-  @POST
-  public PaginatedListTo<OrderDishExtraIngredientEto> findOrderDishExtraIngredientsByPost(
-      OrderDishExtraIngredientSearchCriteriaTo searchCriteriaTo);
-
-  /**
    * Delegates to {@link Ordermanagement#findOrder}.
    *
    * @param id the ID of the {@link OrderEto}
@@ -74,7 +33,7 @@ public interface OrdermanagementRestService {
    */
   @GET
   @Path("/order/{id}/")
-  public OrderEto getOrder(@PathParam("id") long id);
+  public OrderCto getOrder(@PathParam("id") long id);
 
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.

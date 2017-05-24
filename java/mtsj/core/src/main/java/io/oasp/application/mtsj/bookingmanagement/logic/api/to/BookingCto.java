@@ -3,6 +3,7 @@ package io.oasp.application.mtsj.bookingmanagement.logic.api.to;
 import java.util.List;
 
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 
 /**
  * Composite transport object of Booking
@@ -17,9 +18,13 @@ public class BookingCto extends AbstractCto {
 
   private List<InvitedGuestEto> invitedGuests;
 
+  private OrderEto order;
+
+  private List<OrderEto> orders;
+
   public BookingEto getBooking() {
 
-    return booking;
+    return this.booking;
   }
 
   public void setBooking(BookingEto booking) {
@@ -29,7 +34,7 @@ public class BookingCto extends AbstractCto {
 
   public TableEto getTable() {
 
-    return table;
+    return this.table;
   }
 
   public void setTable(TableEto table) {
@@ -39,12 +44,32 @@ public class BookingCto extends AbstractCto {
 
   public List<InvitedGuestEto> getInvitedGuests() {
 
-    return invitedGuests;
+    return this.invitedGuests;
   }
 
   public void setInvitedGuests(List<InvitedGuestEto> invitedGuests) {
 
     this.invitedGuests = invitedGuests;
+  }
+
+  public OrderEto getOrder() {
+
+    return order;
+  }
+
+  public void setOrder(OrderEto order) {
+
+    this.order = order;
+  }
+
+  public List<OrderEto> getOrders() {
+
+    return orders;
+  }
+
+  public void setOrders(List<OrderEto> orders) {
+
+    this.orders = orders;
   }
 
 }

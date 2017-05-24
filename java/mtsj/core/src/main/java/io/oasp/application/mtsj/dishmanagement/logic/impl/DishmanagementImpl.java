@@ -1,5 +1,7 @@
 package io.oasp.application.mtsj.dishmanagement.logic.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -126,11 +128,22 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  public PaginatedListTo<DishEto> findDishEtos(DishSearchCriteriaTo criteria) {
+  public PaginatedListTo<DishCto> findDishCtos(DishSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedListTo<DishEntity> dishs = getDishDao().findDishs(criteria);
-    return mapPaginatedEntityList(dishs, DishEto.class);
+    List<DishCto> ctos = new ArrayList<>();
+    PaginatedListTo<DishEntity> searchResult = getDishDao().findDishs(criteria);
+
+    for (DishEntity dish : searchResult.getResult()) {
+      DishCto cto = new DishCto();
+      cto.setDish(getBeanMapper().map(dish, DishEto.class));
+      cto.setImage(getBeanMapper().map(dish.getImage(), ImageEto.class));
+      cto.setCategories(getBeanMapper().mapList(dish.getCategories(), CategoryEto.class));
+      cto.setExtras(getBeanMapper().mapList(dish.getExtras(), IngredientEto.class));
+      ctos.add(cto);
+    }
+
+    return new PaginatedListTo<>(ctos, searchResult.getPagination());
   }
 
   @Override
@@ -153,6 +166,20 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     LOG.debug("Dish with id '{}' has been created.", resultEntity.getId());
 
     return getBeanMapper().map(resultEntity, DishEto.class);
+  }
+
+  public PaginatedListTo<DishCto> findDishesByCategory(DishSearchCriteriaTo criteria, String categoryName) {
+
+    List<DishCto> ctos = new ArrayList<>();
+    PaginatedListTo<DishCto> searchResult = findDishCtos(criteria);
+    for (DishCto dish : searchResult.getResult()) {
+      for (CategoryEto category : dish.getCategories()) {
+        if (category.getName().equals(categoryName)) {
+          ctos.add(dish);
+        }
+      }
+    }
+    return new PaginatedListTo<>(ctos, searchResult.getPagination());
   }
 
   /**

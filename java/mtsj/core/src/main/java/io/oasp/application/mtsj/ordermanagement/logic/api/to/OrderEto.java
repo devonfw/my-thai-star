@@ -10,32 +10,36 @@ public class OrderEto extends AbstractEto implements Order {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idBooking;
+  private Long bookingId;
 
-  private Long idInvitedGuest;
+  private Long invitedGuestId;
+
+  private String hostToken;
+
+  private Long hostId;
 
   @Override
-  public Long getIdBooking() {
+  public Long getBookingId() {
 
-    return idBooking;
+    return this.bookingId;
   }
 
   @Override
-  public void setIdBooking(Long idBooking) {
+  public void setBookingId(Long bookingId) {
 
-    this.idBooking = idBooking;
+    this.bookingId = bookingId;
   }
 
   @Override
-  public Long getIdInvitedGuest() {
+  public Long getInvitedGuestId() {
 
-    return idInvitedGuest;
+    return this.invitedGuestId;
   }
 
   @Override
-  public void setIdInvitedGuest(Long idInvitedGuest) {
+  public void setInvitedGuestId(Long invitedGuestId) {
 
-    this.idInvitedGuest = idInvitedGuest;
+    this.invitedGuestId = invitedGuestId;
   }
 
   @Override
@@ -43,8 +47,11 @@ public class OrderEto extends AbstractEto implements Order {
 
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((this.idBooking == null) ? 0 : this.idBooking.hashCode());
-    result = prime * result + ((this.idInvitedGuest == null) ? 0 : this.idInvitedGuest.hashCode());
+
+    result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
+
+    result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
+
     return result;
   }
 
@@ -62,20 +69,36 @@ public class OrderEto extends AbstractEto implements Order {
       return false;
     }
     OrderEto other = (OrderEto) obj;
-    if (this.idBooking == null) {
-      if (other.idBooking != null) {
+
+    if (this.bookingId == null) {
+      if (other.bookingId != null) {
         return false;
       }
-    } else if (!this.idBooking.equals(other.idBooking)) {
+    } else if (!this.bookingId.equals(other.bookingId)) {
       return false;
     }
-    if (this.idInvitedGuest == null) {
-      if (other.idInvitedGuest != null) {
+
+    if (this.invitedGuestId == null) {
+      if (other.invitedGuestId != null) {
         return false;
       }
-    } else if (!this.idInvitedGuest.equals(other.idInvitedGuest)) {
+    } else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
       return false;
     }
+
     return true;
   }
+
+  @Override
+  public Long getHostId() {
+
+    return this.hostId;
+  }
+
+  @Override
+  public void setHostId(Long hostId) {
+
+    this.hostId = hostId;
+  }
+
 }

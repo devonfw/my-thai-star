@@ -1,5 +1,12 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.impl;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +32,8 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearc
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -57,6 +66,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   @Inject
   private TableDao tableDao;
 
+  @Inject
+  private Ordermanagement orderManagement;
+
   /**
    * The constructor.
    */
@@ -73,7 +85,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     BookingCto cto = new BookingCto();
     cto.setBooking(getBeanMapper().map(entity, BookingEto.class));
     cto.setTable(getBeanMapper().map(entity.getTable(), TableEto.class));
+    cto.setOrder(getBeanMapper().map(entity.getOrder(), OrderEto.class));
     cto.setInvitedGuests(getBeanMapper().mapList(entity.getInvitedGuests(), InvitedGuestEto.class));
+    cto.setOrders(getBeanMapper().mapList(entity.getOrders(), OrderEto.class));
     return cto;
   }
 
@@ -95,16 +109,61 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public BookingEto saveBooking(BookingEto booking) {
+  public BookingEto saveBooking(BookingEto booking, List<String> emails) {
 
     Objects.requireNonNull(booking, "booking");
-    BookingEntity bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
+    BookingEntity bookingEntity = new BookingEntity();
+    bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
 
-    // initialize, validate bookingEntity here if necessary
+    try {
+      bookingEntity.setBookingToken(buildToken(bookingEntity.getEmail(), "CB_"));
+    } catch (NoSuchAlgorithmException e) {
+      LOG.debug("MD5 Algorithm not available at the enviroment");
+    }
+
+    bookingEntity
+        .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
+
+    List<InvitedGuestEto> invited = new ArrayList<>();
+    for (String email : emails) {
+      InvitedGuestEto invite = new InvitedGuestEto();
+      invite.setEmail(email);
+      try {
+        invite.setGuestToken(buildToken(email, "GB_"));
+      } catch (NoSuchAlgorithmException e) {
+        LOG.debug("MD5 Algorithm not available at the enviroment");
+        // TODO - Create exception
+      }
+      invite.setAccepted(false);
+      invited.add(invite);
+    }
+    bookingEntity.setInvitedGuests(getBeanMapper().mapList(invited, InvitedGuestEntity.class));
+
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
     LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
 
     return getBeanMapper().map(resultEntity, BookingEto.class);
+  }
+
+  private String buildToken(String email, String type) throws NoSuchAlgorithmException {
+
+    Instant now = Instant.now();
+    String date =
+        String.format("%04d", now.get(ChronoField.YEAR)) + String.format("%02d", now.get(ChronoField.MONTH_OF_YEAR))
+            + String.format("%02d", now.get(ChronoField.DAY_OF_MONTH)) + "_";
+
+    String time = String.format("%02d", now.get(ChronoField.HOUR_OF_DAY))
+        + String.format("%02d", now.get(ChronoField.MINUTE_OF_HOUR))
+        + String.format("%02d", now.get(ChronoField.SECOND_OF_MINUTE));
+
+    MessageDigest md = MessageDigest.getInstance("MD5");
+    md.update((email + date + time).getBytes());
+    byte[] digest = md.digest();
+    StringBuilder sb = new StringBuilder();
+    for (byte b : digest) {
+      sb.append(String.format("%02x", b & 0xff));
+    }
+    return type + sb;
   }
 
   /**
@@ -227,14 +286,18 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
     criteria.setGuestToken(guestToken);
     InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
+    InvitedGuestEntity invitedEntity = getInvitedGuestDao().findOne(invited.getId());
     invited.setAccepted(false);
-    // TODO - Delete orders
+    this.orderManagement.deleteOrder(invitedEntity.getOrder().getId());
+    // TODO - Modify deleteOrder service to delete the orderLines first
+    // TODO - Estudy about Cascade
     // TODO - Send confirmation email and info email to the host
     return saveInvitedGuest(invited);
   }
 
   public BookingEto findBookingByEmail(String email) {
 
+    // TODO - Return CTO instead ETO
     Objects.requireNonNull(email, "email");
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
@@ -262,8 +325,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     List<BookingEto> toCancel = findBookingEtos(bookingCriteria).getResult();
     if (!toCancel.isEmpty()) {
       toCancel.get(0).setCanceled(true);
-
     }
+    // TODO - Remove invitedGuests
+    // TODO - Remove Orders
   }
 
   /**

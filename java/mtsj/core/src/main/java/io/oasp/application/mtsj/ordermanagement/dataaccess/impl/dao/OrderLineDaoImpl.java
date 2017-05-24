@@ -49,12 +49,16 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
         query.where(Alias.$(orderline.getOrder().getId()).eq(order));
       }
     }
-    Long idDish = criteria.getIdDish();
-    if (idDish != null) {
-      query.where(Alias.$(orderline.getIdDish()).eq(idDish));
+    Long dish = criteria.getDishId();
+    if (dish != null) {
+      if (orderline.getDish() != null) {
+        query.where(Alias.$(orderline.getDish().getId()).eq(dish));
+      }
     }
-    int amount = criteria.getAmount();
-    query.where(Alias.$(orderline.getAmount()).eq(amount));
+    Integer amount = criteria.getAmount();
+    if (amount != null) {
+      query.where(Alias.$(orderline.getAmount()).eq(amount));
+    }
     String comment = criteria.getComment();
     if (comment != null) {
       query.where(Alias.$(orderline.getComment()).eq(comment));
@@ -67,17 +71,11 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {
-        if ("order".equals(orderEntry.getName())) {
+        if ("dish".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(orderline.getOrder().getId()).asc());
+            query.orderBy(Alias.$(orderline.getDishId()).asc());
           } else {
-            query.orderBy(Alias.$(orderline.getOrder().getId()).desc());
-          }
-        } else if ("idDish".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(orderline.getIdDish()).asc());
-          } else {
-            query.orderBy(Alias.$(orderline.getIdDish()).desc());
+            query.orderBy(Alias.$(orderline.getDishId()).desc());
           }
         } else if ("amount".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

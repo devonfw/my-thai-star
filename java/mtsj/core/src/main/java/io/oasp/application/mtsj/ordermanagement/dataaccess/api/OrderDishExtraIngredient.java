@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
-import io.oasp.application.mtsj.ordermanagement.common.api.OrderDishExtraIngredient;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderDishExtraIngredient} of an
@@ -12,7 +11,7 @@ import io.oasp.application.mtsj.ordermanagement.common.api.OrderDishExtraIngredi
  */
 @Entity
 @Table(name = "OrderDishExtraIngredient")
-public class OrderDishExtraIngredientEntity extends ApplicationPersistenceEntity implements OrderDishExtraIngredient {
+public class OrderDishExtraIngredient extends ApplicationPersistenceEntity {
 
   private static final long serialVersionUID = 1L;
 

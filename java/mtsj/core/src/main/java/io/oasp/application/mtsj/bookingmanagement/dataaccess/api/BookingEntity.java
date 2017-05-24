@@ -8,11 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 
 @Entity
 @javax.persistence.Table(name = "Booking")
@@ -38,11 +40,16 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private TableEntity table;
 
+  private OrderEntity order;
+
   private List<InvitedGuestEntity> invitedGuests;
+
+  private List<OrderEntity> orders;
 
   private static final long serialVersionUID = 1L;
 
   public BookingEntity() {
+
     super();
     this.canceled = false;
   }
@@ -259,6 +266,63 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
       tableEntity.setId(tableId);
       this.table = tableEntity;
     }
+  }
+
+  /**
+   * @return order
+   */
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "idOrder")
+  public OrderEntity getOrder() {
+
+    return this.order;
+  }
+
+  /**
+   * @param order new value of {@link #getorder}.
+   */
+  public void setOrder(OrderEntity order) {
+
+    this.order = order;
+  }
+
+  @Override
+  @Transient
+  public Long getOrderId() {
+
+    if (this.order == null) {
+      return null;
+    }
+    return this.order.getId();
+  }
+
+  @Override
+  public void setOrderId(Long orderId) {
+
+    if (orderId == null) {
+      this.order = null;
+    } else {
+      OrderEntity orderEntity = new OrderEntity();
+      orderEntity.setId(orderId);
+      this.order = orderEntity;
+    }
+  }
+
+  /**
+   * @return orders
+   */
+  @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
+  public List<OrderEntity> getOrders() {
+
+    return this.orders;
+  }
+
+  /**
+   * @param orders new value of {@link #getorders}.
+   */
+  public void setOrders(List<OrderEntity> orders) {
+
+    this.orders = orders;
   }
 
 }
