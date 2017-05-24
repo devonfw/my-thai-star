@@ -261,7 +261,9 @@ definitions:
       isFav:
         type: boolean
       sortBy:
-        type: string
+        type: array
+        items:
+          $ref: '#/definitions/SortByView'
   CategoryView:
     type: object
     properties:
@@ -394,3 +396,11 @@ definitions:
       index:
         format: int32
         type: integer
+  SortByView:
+    type: object
+    properties:
+      name:
+        type: string
+      direction:
+        description: ASC for ascending and DESC for descending
+        type: string
