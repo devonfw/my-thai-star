@@ -1,7 +1,10 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api;
 
+import java.util.List;
+
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
@@ -42,7 +45,7 @@ public interface Ordermanagement {
    * @param order the {@link OrderEto} to create.
    * @return the new {@link OrderEto} that has been saved with ID and version.
    */
-  OrderEto saveOrder(OrderEto order);
+  OrderEto saveOrder(OrderCto order);
 
   /**
    * Returns a OrderLine by its id 'id'.
@@ -58,7 +61,8 @@ public interface Ordermanagement {
    * @param criteria the {@link OrderLineSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderLineEto}s.
    */
-  PaginatedListTo<OrderLineEto> findOrderLineEtos(OrderLineSearchCriteriaTo criteria);
+  // PaginatedListTo<OrderLineEto> findOrderLineEtos(OrderLineSearchCriteriaTo criteria);
+  PaginatedListTo<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria);
 
   /**
    * Deletes a orderLine from the database by its id 'orderLineId'.

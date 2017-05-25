@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
@@ -43,7 +44,11 @@ public interface OrdermanagementRestService {
    */
   @POST
   @Path("/order/")
-  public OrderEto saveOrder(OrderEto order);
+  public OrderEto saveOrder(OrderCto order);
+
+  // @POST
+  // @Path("/order/")
+  // public OrderEto saveOrder(OrderAux order);
 
   /**
    * Delegates to {@link Ordermanagement#deleteOrder}.
@@ -52,7 +57,7 @@ public interface OrdermanagementRestService {
    */
   @DELETE
   @Path("/order/{id}/")
-  public void deleteOrder(@PathParam("id") long id);
+  public boolean deleteOrder(@PathParam("id") long id);
 
   /**
    * Delegates to {@link Ordermanagement#findOrderEtos}.
@@ -101,6 +106,5 @@ public interface OrdermanagementRestService {
    */
   @Path("/orderline/search")
   @POST
-  public PaginatedListTo<OrderLineEto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo);
-
+  public PaginatedListTo<OrderLineCto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo);
 }
