@@ -5,18 +5,18 @@
         <div layout-gt-xs="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
           <div layout="row" class="justify-space-around" style="align-items:center" flex>
             <md-input-container color="accent" class="searchBy">
-              <input mdInput placeholder="Reservation date and time" ngModel name="dateTime">
+              <input mdInput placeholder="Reservation date and time" ngModel name="date">
             </md-input-container>
             <md-input-container color="accent" class="searchBy">
               <input mdInput placeholder="Email" ngModel name="email">
             </md-input-container>
             <md-input-container color="accent" class="searchBy">
-              <input mdInput placeholder="Reference number" ngModel name="referenceNumber">
+              <input mdInput placeholder="Reference number" ngModel name="bookingId">
             </md-input-container>
           </div>
         </div>
         <div class="align-right">
-          <button md-button (click)="clearFilters()" class="text-upper property-text-bold">Clear filters</button>
+          <button md-button (click)="clearFilters(filterForm)" class="text-upper property-text-bold">Clear filters</button>
           <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
         </div>
       </td-expansion-panel>

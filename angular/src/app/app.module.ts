@@ -43,7 +43,7 @@ import { UserAreaService } from './user-area/shared/user-area.service';
 import { SnackBarService } from './shared/snackService/snackService.service';
 
 // DIRECTIVES
-import { EqualValidatorDirective } from './user-area/login-dialog/equal-validator.directive';
+import { EqualValidatorDirective } from './user-area/shared/equal-validator.directive';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts

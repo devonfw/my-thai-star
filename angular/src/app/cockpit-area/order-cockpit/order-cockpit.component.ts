@@ -9,7 +9,7 @@ import { TdDataTableService,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
-import { ReservationView } from '../../shared/viewModels/interfaces';
+import { FilterCockpitView, ReservationView } from '../../shared/viewModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -47,12 +47,21 @@ export class OrderCockpitComponent implements OnInit {
     this.filter();
   }
 
-  applyFilters(filters: FormGroup): void {
-    // apply the filters
+  applyFilters(filters: FilterCockpitView): void {
+    this.orderCockpitService.filterBookingOrders(filters).subscribe((orders: ReservationView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
-  clearFilters(): void {
-    // clear the filters
+  clearFilters(filters: any): void {
+    filters.reset();
+    this.orderCockpitService.getBookingOrders().subscribe((orders: ReservationView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {

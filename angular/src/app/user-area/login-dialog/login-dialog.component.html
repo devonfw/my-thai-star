@@ -1,7 +1,7 @@
 <md-tab-group md-stretch-tabs class="pull">
 
   <md-tab label="LOGIN">
-    <form class="pad" #loginForm="ngForm">
+    <form (ngSubmit)="logInSubmit(loginForm.form.value)" class="pad" #loginForm="ngForm">
       <div layout= "column" flex>
         <md-input-container color="accent" flex>
           <input mdInput placeholder="Username" ngModel name="username" required>
@@ -10,19 +10,16 @@
         <md-input-container color="accent" flex>
           <input mdInput placeholder="Password" ngModel name="password" type="password" required>
         </md-input-container>
-
-        <label (click)="forgotPassword()" class="pad-bottom-sm pad-top-sm forgotPassword">Forgot password</label>
       </div>
       <div style="text-align: right">
         <button md-button md-dialog-close class="text-upper">Cancel</button>
-        <!--Remark: Please use button of type submit and ngSubmit event to bind the action (applies to all created forms)-->
-        <button md-button (click)="logInSubmit(loginForm.form.value)" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">Login</button>
+        <button md-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">Login</button>
       </div>
     </form>
   </md-tab>
 
   <md-tab label="SIGN UP">
-    <form class="pad" #signForm="ngForm">
+    <form (ngSubmit)="signInSubmit(signForm.form.value)" class="pad" #signForm="ngForm">
       <div layout= "column" class="push-bottom-sm" flex>
 
         <md-input-container color="accent" flex>
@@ -43,7 +40,7 @@
 
       <div class="align-right" flex>
         <button md-button md-dialog-close class="text-upper">Cancel</button>
-        <button md-button (click)="signInSubmit(signForm.form.value)" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">Register</button>
+        <button md-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">Register</button>
       </div>
     </form>
   </md-tab>

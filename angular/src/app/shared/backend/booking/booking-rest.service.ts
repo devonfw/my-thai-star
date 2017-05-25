@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo, OrderListInfo } from '../backendModels/interfaces';
+import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 import { ReservationView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
 
@@ -14,8 +14,10 @@ export class BookingRestService implements IBookingDataService {
      private readonly reservetableRestPath: string = '/reservetable';
      private readonly getOrdersRestPath: string = '/getorders';
      private readonly getOrderRestPath: string = '/getorder';
+     private readonly filtersOrdersRestPath: string = '/filterorders';
      private readonly getReservationsRestPath: string = '/getreservations';
      private readonly getReservationRestPath: string = '/getreservation';
+     private readonly filterReservationRestPath: string = '/filterreservation';
      private readonly saveOrdersPath: string = '/saveorders';
 
      private http: Http;
@@ -44,6 +46,11 @@ export class BookingRestService implements IBookingDataService {
               .map((res: Response) => res.json());
      }
 
+      filterBookingOrders(filter: FilterCockpit): Observable<ReservationView[]> {
+        return this.http.get(`${config.restServiceRoot}${this.filtersOrdersRestPath}`)
+                        .map((res: Response) => res.json());
+     }
+
      getReservations(): Observable<ReservationView[]> {
         return this.http.get(`${config.restServiceRoot}${this.getReservationsRestPath}`)
                         .map((res: Response) => res.json());
@@ -51,6 +58,11 @@ export class BookingRestService implements IBookingDataService {
 
      getReservation(id: number): Observable<ReservationView> {
         return this.http.get(`${config.restServiceRoot}${this.getReservationRestPath}`)
+                        .map((res: Response) => res.json());
+     }
+
+     filterReservations(filter: FilterCockpit): Observable<ReservationView[]> {
+        return this.http.get(`${config.restServiceRoot}${this.filterReservationRestPath}`)
                         .map((res: Response) => res.json());
      }
 

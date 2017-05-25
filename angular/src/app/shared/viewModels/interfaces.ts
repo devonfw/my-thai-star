@@ -13,6 +13,12 @@ export interface CategoryView {
     selected: boolean;
 }
 
+export interface FilterCockpitView {
+    date: string;
+    email: string;
+    bookingId: number;
+}
+
 // DISHES
 export interface DishView {
     id: number;

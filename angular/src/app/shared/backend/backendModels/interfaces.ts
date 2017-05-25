@@ -8,6 +8,12 @@ export class Filter {
     categories: [{ id: string }];
 }
 
+export class FilterCockpit {
+    date: string;
+    email: string;
+    bookingId: number;
+}
+
 // DISHES
 export class Dish {
     id: number;

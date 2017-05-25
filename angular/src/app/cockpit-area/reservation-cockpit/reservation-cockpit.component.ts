@@ -1,5 +1,5 @@
 import { ReservationCockpitService } from './shared/reservation-cockpit.service';
-import { ReservationView } from '../../shared/viewModels/interfaces';
+import { FilterCockpitView, ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TdDataTableService,
@@ -48,12 +48,21 @@ export class ReservationCockpitComponent implements OnInit {
     this.filter();
   }
 
-  applyFilters(filters: FormGroup): void {
-    // apply the filters
+  applyFilters(filters: any): void {
+    this.reservationCockpitService.filterReservations(filters).subscribe((orders: ReservationView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
-  clearFilters(): void {
-    // clear the filters
+  clearFilters(filters: any): void {
+    filters.reset();
+    this.reservationCockpitService.getReservations().subscribe((orders: ReservationView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
