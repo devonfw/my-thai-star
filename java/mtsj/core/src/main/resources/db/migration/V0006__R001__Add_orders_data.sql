@@ -1,5 +1,5 @@
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest) VALUES (0, 1, 0, null);
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest) VALUES (1, 1, 1, null);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (0, 1, 0, null, 0);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (1, 1, 0, 0, null);
 
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (0, 1, 0, 2, 'please not too spicy', 0);
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (1, 1, 4, 1, null, 0);

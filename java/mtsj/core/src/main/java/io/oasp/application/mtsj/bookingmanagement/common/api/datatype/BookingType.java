@@ -1,19 +1,21 @@
 package io.oasp.application.mtsj.bookingmanagement.common.api.datatype;
 
+/**
+ * @author rudiazma
+ *
+ */
 public enum BookingType {
-  /** */
-  Booking,
 
-  /**  */
-  Invited;
+  COMMON, INVITED;
 
-  public boolean isInvitedBooking() {
+  public boolean isCommon() {
 
-    return (this == Invited);
+    return (this == COMMON);
   }
 
-  public boolean isCommonBooking() {
+  public boolean isInvited() {
 
-    return (this == Booking);
+    return (this == INVITED);
   }
+
 }

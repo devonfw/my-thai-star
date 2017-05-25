@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -15,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
@@ -23,6 +24,7 @@ import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.BookingDao;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitedGuestDao;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.TableDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
+import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
@@ -30,6 +32,8 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearc
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -45,12 +49,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   private static final Logger LOG = LoggerFactory.getLogger(BookingmanagementImpl.class);
 
   /**
-   * @see #getTableDao()
-   */
-  @Inject
-  private TableDao tableDao;
-
-  /**
    * @see #getBookingDao()
    */
   @Inject
@@ -63,6 +61,15 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   private InvitedGuestDao invitedGuestDao;
 
   /**
+   * @see #getTableDao()
+   */
+  @Inject
+  private TableDao tableDao;
+
+  @Inject
+  private Ordermanagement orderManagement;
+
+  /**
    * The constructor.
    */
   public BookingmanagementImpl() {
@@ -71,58 +78,17 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public TableEto findTable(Long id) {
-
-    LOG.debug("Get Table with id {} from database.", id);
-    return getBeanMapper().map(getTableDao().findOne(id), TableEto.class);
-  }
-
-  @Override
-  public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
-
-    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedListTo<TableEntity> tables = getTableDao().findTables(criteria);
-    return mapPaginatedEntityList(tables, TableEto.class);
-  }
-
-  @Override
-  public boolean deleteTable(Long tableId) {
-
-    TableEntity table = getTableDao().find(tableId);
-    getTableDao().delete(table);
-    LOG.debug("The table with id '{}' has been deleted.", tableId);
-    return true;
-  }
-
-  @Override
-  public TableEto saveTable(TableEto table) {
-
-    System.out.println("entra");
-    Objects.requireNonNull(table, "table");
-    TableEntity tableEntity = getBeanMapper().map(table, TableEntity.class);
-    System.out.println(tableEntity.getSeatsNumber());
-    // initialize, validate tableEntity here if necessary
-    TableEntity resultEntity = getTableDao().save(tableEntity);
-    LOG.debug("Table with id '{}' has been created.", resultEntity.getId());
-
-    return getBeanMapper().map(resultEntity, TableEto.class);
-  }
-
-  /**
-   * Returns the field 'tableDao'.
-   *
-   * @return the {@link TableDao} instance.
-   */
-  public TableDao getTableDao() {
-
-    return this.tableDao;
-  }
-
-  @Override
-  public BookingEto findBooking(Long id) {
+  public BookingCto findBooking(Long id) {
 
     LOG.debug("Get Booking with id {} from database.", id);
-    return getBeanMapper().map(getBookingDao().findOne(id), BookingEto.class);
+    BookingEntity entity = getBookingDao().findOne(id);
+    BookingCto cto = new BookingCto();
+    cto.setBooking(getBeanMapper().map(entity, BookingEto.class));
+    cto.setTable(getBeanMapper().map(entity.getTable(), TableEto.class));
+    cto.setOrder(getBeanMapper().map(entity.getOrder(), OrderEto.class));
+    cto.setInvitedGuests(getBeanMapper().mapList(entity.getInvitedGuests(), InvitedGuestEto.class));
+    cto.setOrders(getBeanMapper().mapList(entity.getOrders(), OrderEto.class));
+    return cto;
   }
 
   @Override
@@ -143,23 +109,35 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public BookingEto saveBooking(BookingEto booking) {
+  public BookingEto saveBooking(BookingEto booking, List<String> emails) {
 
     Objects.requireNonNull(booking, "booking");
-    BookingEntity bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
+    BookingEntity bookingEntity = new BookingEntity();
+    bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
 
     try {
-      bookingEntity.setBookingToken(buildBookingToken(bookingEntity.getEmail(), BookingType.Booking));
+      bookingEntity.setBookingToken(buildToken(bookingEntity.getEmail(), "CB_"));
     } catch (NoSuchAlgorithmException e) {
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
-    Timestamp creationDate = Timestamp.from(Instant.now());
-
-    bookingEntity.setCreationDate(creationDate);
-
     bookingEntity
         .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
+
+    List<InvitedGuestEto> invited = new ArrayList<>();
+    for (String email : emails) {
+      InvitedGuestEto invite = new InvitedGuestEto();
+      invite.setEmail(email);
+      try {
+        invite.setGuestToken(buildToken(email, "GB_"));
+      } catch (NoSuchAlgorithmException e) {
+        LOG.debug("MD5 Algorithm not available at the enviroment");
+        // TODO - Create exception
+      }
+      invite.setAccepted(false);
+      invited.add(invite);
+    }
+    bookingEntity.setInvitedGuests(getBeanMapper().mapList(invited, InvitedGuestEntity.class));
 
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
     LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
@@ -167,14 +145,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return getBeanMapper().map(resultEntity, BookingEto.class);
   }
 
-  /**
-   * Builds a token for guest or booking depending of the type
-   *
-   * @param email the email of host or guest
-   * @param type the type of the token
-   * @throws NoSuchAlgorithmException
-   */
-  private String buildBookingToken(String email, BookingType type) throws NoSuchAlgorithmException {
+  private String buildToken(String email, String type) throws NoSuchAlgorithmException {
 
     Instant now = Instant.now();
     String date =
@@ -192,11 +163,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     for (byte b : digest) {
       sb.append(String.format("%02x", b & 0xff));
     }
-    if (type.isCommonBooking()) {
-      return "CRS_" + sb;
-    } else {
-      return "GRS_" + sb;
-    }
+    return type + sb;
   }
 
   /**
@@ -207,20 +174,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public BookingDao getBookingDao() {
 
     return this.bookingDao;
-  }
-
-  @Override
-  public void cancelInvited(String bookingToken) {
-
-    Objects.requireNonNull(bookingToken, "bookingToken");
-    BookingSearchCriteriaTo criteria = new BookingSearchCriteriaTo();
-    criteria.setBookingToken(bookingToken);
-
-    BookingEntity toCancel = getBookingDao().findBookings(criteria).getResult().get(0);
-    if (toCancel.getBookingType().isInvitedBooking()) {
-      toCancel.setCanceled(true);
-      getBookingDao().save(toCancel);
-    }
   }
 
   @Override
@@ -253,12 +206,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     Objects.requireNonNull(invitedGuest, "invitedGuest");
     InvitedGuestEntity invitedGuestEntity = getBeanMapper().map(invitedGuest, InvitedGuestEntity.class);
 
-    try {
-      invitedGuestEntity.setGuestToken(buildBookingToken(invitedGuestEntity.getEmail(), BookingType.Invited));
-    } catch (NoSuchAlgorithmException e) {
-      LOG.debug("MD5 Algorithm not available at the enviroment");
-    }
-
     // initialize, validate invitedGuestEntity here if necessary
     InvitedGuestEntity resultEntity = getInvitedGuestDao().save(invitedGuestEntity);
     LOG.debug("InvitedGuest with id '{}' has been created.", resultEntity.getId());
@@ -274,6 +221,123 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public InvitedGuestDao getInvitedGuestDao() {
 
     return this.invitedGuestDao;
+  }
+
+  @Override
+  public TableEto findTable(Long id) {
+
+    LOG.debug("Get Table with id {} from database.", id);
+    return getBeanMapper().map(getTableDao().findOne(id), TableEto.class);
+  }
+
+  @Override
+  public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<TableEntity> tables = getTableDao().findTables(criteria);
+    return mapPaginatedEntityList(tables, TableEto.class);
+  }
+
+  @Override
+  public boolean deleteTable(Long tableId) {
+
+    TableEntity table = getTableDao().find(tableId);
+    getTableDao().delete(table);
+    LOG.debug("The table with id '{}' has been deleted.", tableId);
+    return true;
+  }
+
+  @Override
+  public TableEto saveTable(TableEto table) {
+
+    Objects.requireNonNull(table, "table");
+    TableEntity tableEntity = getBeanMapper().map(table, TableEntity.class);
+
+    // initialize, validate tableEntity here if necessary
+    TableEntity resultEntity = getTableDao().save(tableEntity);
+    LOG.debug("Table with id '{}' has been created.", resultEntity.getId());
+
+    return getBeanMapper().map(resultEntity, TableEto.class);
+  }
+
+  public InvitedGuestEto acceptInvite(String guestToken) {
+
+    Objects.requireNonNull(guestToken);
+    InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
+    criteria.setGuestToken(guestToken);
+    InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
+    invited.setAccepted(true);
+    return saveInvitedGuest(invited);
+  }
+
+  public InvitedGuestEto declineInvite(String guestToken) {
+
+    Objects.requireNonNull(guestToken);
+    InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
+    criteria.setGuestToken(guestToken);
+    InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
+    invited.setAccepted(false);
+    return saveInvitedGuest(invited);
+  }
+
+  public InvitedGuestEto revokeAcceptedInvite(String guestToken) {
+
+    Objects.requireNonNull(guestToken);
+    InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
+    criteria.setGuestToken(guestToken);
+    InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
+    InvitedGuestEntity invitedEntity = getInvitedGuestDao().findOne(invited.getId());
+    invited.setAccepted(false);
+    this.orderManagement.deleteOrder(invitedEntity.getOrder().getId());
+    // TODO - Modify deleteOrder service to delete the orderLines first
+    // TODO - Estudy about Cascade
+    // TODO - Send confirmation email and info email to the host
+    return saveInvitedGuest(invited);
+  }
+
+  public BookingEto findBookingByEmail(String email) {
+
+    // TODO - Return CTO instead ETO
+    Objects.requireNonNull(email, "email");
+
+    BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
+    bookingCriteria.setEmail(email);
+    List<BookingEto> bookings = findBookingEtos(bookingCriteria).getResult();
+    if (!bookings.isEmpty()) {
+      return bookings.get(0);
+    } else {
+      InvitedGuestSearchCriteriaTo invitedCriteria = new InvitedGuestSearchCriteriaTo();
+      invitedCriteria.setEmail(email);
+      List<InvitedGuestEto> inviteds = findInvitedGuestEtos(invitedCriteria).getResult();
+      if (!inviteds.isEmpty()) {
+        return getBeanMapper().map(findBooking(inviteds.get(0).getBookingId()), BookingEto.class);
+      }
+    }
+    return null;
+  }
+
+  public void cancelInvite(String bookingToken) {
+
+    Objects.requireNonNull(bookingToken, "bookingToken");
+
+    BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
+    bookingCriteria.setBookingToken(bookingToken);
+    List<BookingEto> toCancel = findBookingEtos(bookingCriteria).getResult();
+    if (!toCancel.isEmpty()) {
+      toCancel.get(0).setCanceled(true);
+    }
+    // TODO - Remove invitedGuests
+    // TODO - Remove Orders
+  }
+
+  /**
+   * Returns the field 'tableDao'.
+   *
+   * @return the {@link TableDao} instance.
+   */
+  public TableDao getTableDao() {
+
+    return this.tableDao;
   }
 
 }

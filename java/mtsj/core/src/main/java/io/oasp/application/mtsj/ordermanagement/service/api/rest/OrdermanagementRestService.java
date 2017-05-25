@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -32,7 +33,7 @@ public interface OrdermanagementRestService {
    */
   @GET
   @Path("/order/{id}/")
-  public OrderEto getOrder(@PathParam("id") long id);
+  public OrderCto getOrder(@PathParam("id") long id);
 
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.

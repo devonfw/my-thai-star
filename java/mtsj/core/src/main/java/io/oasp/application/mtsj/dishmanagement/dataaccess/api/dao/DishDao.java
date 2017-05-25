@@ -17,5 +17,4 @@ public interface DishDao extends ApplicationDao<DishEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link DishEntity} objects.
    */
   PaginatedListTo<DishEntity> findDishs(DishSearchCriteriaTo criteria);
-
 }

@@ -1,5 +1,6 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api;
 
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -17,7 +18,7 @@ public interface Ordermanagement {
    * @param id The id 'id' of the Order.
    * @return The {@link OrderEto} with id 'id'
    */
-  OrderEto findOrder(Long id);
+  OrderCto findOrder(Long id);
 
   /**
    * Returns a paginated list of Orders matching the search criteria.

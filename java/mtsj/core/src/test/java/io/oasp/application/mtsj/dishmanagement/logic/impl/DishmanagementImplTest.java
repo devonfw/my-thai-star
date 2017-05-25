@@ -11,7 +11,10 @@ import org.mockito.junit.MockitoRule;
 
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.module.beanmapping.common.api.BeanMapper;
 import io.oasp.module.test.common.base.ModuleTest;
 
@@ -30,10 +33,10 @@ public class DishmanagementImplTest extends ModuleTest {
   /**
    * The System Under Test (SUT)
    */
-  private DishmanagementImpl plateManagementImpl;
+  private DishmanagementImpl dishManagementImpl;
 
   @Mock
-  private DishDao plateDao;
+  private DishDao dishDao;
 
   @Mock
   private BeanMapper beanMapper;
@@ -45,9 +48,9 @@ public class DishmanagementImplTest extends ModuleTest {
   public void doSetUp() {
 
     super.doSetUp();
-    this.plateManagementImpl = new DishmanagementImpl();
-    this.plateManagementImpl.setDishDao(this.plateDao);
-    this.plateManagementImpl.setBeanMapper(this.beanMapper);
+    this.dishManagementImpl = new DishmanagementImpl();
+    // this.dishManagementImpl.setDishDao(this.dishDao);
+    this.dishManagementImpl.setBeanMapper(this.beanMapper);
   }
 
   /**
@@ -59,8 +62,8 @@ public class DishmanagementImplTest extends ModuleTest {
     super.doTearDown();
 
     this.beanMapper = null;
-    this.plateDao = null;
-    this.plateManagementImpl = null;
+    this.dishDao = null;
+    this.dishManagementImpl = null;
   }
 
   /**
@@ -69,14 +72,17 @@ public class DishmanagementImplTest extends ModuleTest {
   @Test
   public void findDish() {
 
-    DishEntity plate = mock(DishEntity.class);
-    DishEto eto = new DishEto();
-    when(this.plateDao.findOne(1L)).thenReturn(plate);
-    when(this.beanMapper.map(plate, DishEto.class)).thenReturn(eto);
+    DishEntity dish = mock(DishEntity.class);
+    DishCto cto = new DishCto();
+    cto.setDish(this.beanMapper.map(dish, DishEto.class));
+    cto.setCategories(this.beanMapper.mapList(dish.getCategories(), CategoryEto.class));
+    cto.setExtras(this.beanMapper.mapList(dish.getExtras(), IngredientEto.class));
+    when(this.dishDao.findOne(1L)).thenReturn(dish);
+    when(this.beanMapper.map(dish, DishCto.class)).thenReturn(cto);
 
-    DishEto resultEto = this.plateManagementImpl.findDish(1L);
+    DishCto resultCto = this.dishManagementImpl.findDish(1L);
 
-    assertThat(resultEto).isNotNull();
-    assertThat(resultEto).isEqualTo(eto);
+    assertThat(resultCto).isNotNull();
+    assertThat(resultCto).isEqualTo(cto);
   }
 }

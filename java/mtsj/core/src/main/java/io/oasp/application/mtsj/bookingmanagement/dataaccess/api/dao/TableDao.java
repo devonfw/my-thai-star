@@ -17,4 +17,5 @@ public interface TableDao extends ApplicationDao<TableEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link TableEntity} objects.
    */
   PaginatedListTo<TableEntity> findTables(TableSearchCriteriaTo criteria);
+
 }

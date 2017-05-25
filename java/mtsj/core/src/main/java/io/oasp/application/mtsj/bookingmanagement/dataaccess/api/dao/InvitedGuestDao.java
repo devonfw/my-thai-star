@@ -17,4 +17,5 @@ public interface InvitedGuestDao extends ApplicationDao<InvitedGuestEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link InvitedGuestEntity} objects.
    */
   PaginatedListTo<InvitedGuestEntity> findInvitedGuests(InvitedGuestSearchCriteriaTo criteria);
+
 }

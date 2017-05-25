@@ -58,16 +58,14 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     if (email != null) {
       query.where(Alias.$(invitedguest.getEmail()).eq(email));
     }
-    Boolean accepted = criteria.isAccepted();
+    Boolean accepted = criteria.getAccepted();
     if (accepted != null) {
-      query.where(Alias.$(invitedguest.isAccepted()).eq(accepted));
+      query.where(Alias.$(invitedguest.getAccepted()).eq(accepted));
     }
     Timestamp modificationDate = criteria.getModificationDate();
     if (modificationDate != null) {
       query.where(Alias.$(invitedguest.getModificationDate()).eq(modificationDate));
     }
-
-    addOrderBy(query, alias, invitedguest, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
 
@@ -76,13 +74,7 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {
-        if ("booking".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(invitedguest.getBookingId()).asc());
-          } else {
-            query.orderBy(Alias.$(invitedguest.getBookingId()).desc());
-          }
-        } else if ("guestToken".equals(orderEntry.getName())) {
+        if ("guestToken".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(invitedguest.getGuestToken()).asc());
           } else {
@@ -96,9 +88,9 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
           }
         } else if ("accepted".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(invitedguest.isAccepted()).asc());
+            query.orderBy(Alias.$(invitedguest.getAccepted()).asc());
           } else {
-            query.orderBy(Alias.$(invitedguest.isAccepted()).desc());
+            query.orderBy(Alias.$(invitedguest.getAccepted()).desc());
           }
         } else if ("modificationDate".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

@@ -11,7 +11,7 @@ import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEnt
  */
 @Entity
 @Table(name = "OrderDishExtraIngredient")
-public class OrderDishExtraIngredientEntity extends ApplicationPersistenceEntity {
+public class OrderDishExtraIngredient extends ApplicationPersistenceEntity {
 
   private static final long serialVersionUID = 1L;
 

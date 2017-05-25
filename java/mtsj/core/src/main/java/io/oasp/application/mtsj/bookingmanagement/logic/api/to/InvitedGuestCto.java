@@ -32,5 +32,4 @@ public class InvitedGuestCto extends AbstractCto {
 
     this.booking = booking;
   }
-
 }

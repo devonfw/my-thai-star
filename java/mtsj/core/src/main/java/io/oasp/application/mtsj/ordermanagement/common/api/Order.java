@@ -4,12 +4,16 @@ import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
 
 public interface Order extends ApplicationEntity {
 
-  public Long getIdBooking();
+  public Long getBookingId();
 
-  public void setIdBooking(Long idBooking);
+  public void setBookingId(Long bookingId);
 
-  public Long getIdInvitedGuest();
+  public Long getInvitedGuestId();
 
-  public void setIdInvitedGuest(Long idInvitedGuest);
+  public void setInvitedGuestId(Long invitedGuestId);
+
+  public Long getHostId();
+
+  public void setHostId(Long hostId);
 
 }

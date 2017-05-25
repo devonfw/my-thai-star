@@ -13,7 +13,7 @@ public interface Booking extends ApplicationEntity {
 
   public String getBookingToken();
 
-  public void setBookingToken(String bookToken);
+  public void setBookingToken(String bookingToken);
 
   public String getComment();
 
@@ -31,20 +31,24 @@ public interface Booking extends ApplicationEntity {
 
   public void setCreationDate(Timestamp creationDate);
 
-  public boolean isCanceled();
+  public String getEmail();
 
-  public void setCanceled(boolean canceled);
+  public void setEmail(String email);
+
+  public Boolean getCanceled();
+
+  public void setCanceled(Boolean canceled);
 
   public BookingType getBookingType();
 
-  public void setBookingType(BookingType bookType);
+  public void setBookingType(BookingType bookingType);
 
   public Long getTableId();
 
   public void setTableId(Long tableId);
 
-  public String getEmail();
+  public Long getOrderId();
 
-  public void setEmail(String email);
+  public void setOrderId(Long orderId);
 
 }

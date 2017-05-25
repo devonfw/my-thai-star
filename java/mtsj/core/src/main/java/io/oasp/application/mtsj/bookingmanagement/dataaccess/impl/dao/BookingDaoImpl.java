@@ -69,20 +69,24 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
     if (creationDate != null) {
       query.where(Alias.$(booking.getCreationDate()).eq(creationDate));
     }
-    Boolean canceled = criteria.isCanceled();
+    String email = criteria.getEmail();
+    if (email != null) {
+      query.where(Alias.$(booking.getEmail()).eq(email));
+    }
+    Boolean canceled = criteria.getCanceled();
     if (canceled != null) {
-      query.where(Alias.$(booking.isCanceled()).eq(canceled));
+      query.where(Alias.$(booking.getCanceled()).eq(canceled));
     }
     BookingType bookingType = criteria.getBookingType();
-    if (bookingType != null && booking.getBookingType() != null) {
+    if (bookingType != null) {
       query.where(Alias.$(booking.getBookingType()).eq(bookingType));
     }
     Long table = criteria.getTableId();
-    if (table != null && booking.getTable() != null) {
-      query.where(Alias.$(booking.getTable().getId()).eq(table));
+    if (table != null) {
+      if (booking.getTable() != null) {
+        query.where(Alias.$(booking.getTable().getId()).eq(table));
+      }
     }
-
-    addOrderBy(query, alias, booking, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
 
@@ -109,12 +113,6 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
           } else {
             query.orderBy(Alias.$(booking.getComment()).desc());
           }
-        } else if ("email".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getEmail()).asc());
-          } else {
-            query.orderBy(Alias.$(booking.getEmail()).desc());
-          }
         } else if ("bookingDate".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(booking.getBookingDate()).asc());
@@ -133,23 +131,23 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
           } else {
             query.orderBy(Alias.$(booking.getCreationDate()).desc());
           }
+        } else if ("email".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(booking.getEmail()).asc());
+          } else {
+            query.orderBy(Alias.$(booking.getEmail()).desc());
+          }
         } else if ("canceled".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.isCanceled()).asc());
+            query.orderBy(Alias.$(booking.getCanceled()).asc());
           } else {
-            query.orderBy(Alias.$(booking.isCanceled()).desc());
+            query.orderBy(Alias.$(booking.getCanceled()).desc());
           }
         } else if ("bookingType".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(booking.getBookingType()).asc());
           } else {
             query.orderBy(Alias.$(booking.getBookingType()).desc());
-          }
-        } else if ("table".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getTableId()).asc());
-          } else {
-            query.orderBy(Alias.$(booking.getTableId()).desc());
           }
         }
       }

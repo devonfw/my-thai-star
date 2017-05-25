@@ -5,7 +5,6 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.application.mtsj.bookingmanagement.common.api.Table}s.
- *
  */
 public class TableSearchCriteriaTo extends SearchCriteriaTo {
 

@@ -1,10 +1,7 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
-import java.util.List;
-
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.ordermanagement.common.api.Order;
-import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 
 /**
  * Entity transport object of Order
@@ -13,46 +10,36 @@ public class OrderEto extends AbstractEto implements Order {
 
   private static final long serialVersionUID = 1L;
 
-  private Long idBooking;
+  private Long bookingId;
 
-  private Long idInvitedGuest;
+  private Long invitedGuestId;
 
-  private List<OrderLineEntity> lines;
+  private String hostToken;
 
-  private String token;
+  private Long hostId;
 
-  public List<OrderLineEntity> getLines() {
+  @Override
+  public Long getBookingId() {
 
-    return this.lines;
-  }
-
-  public void setLines(List<OrderLineEntity> lines) {
-
-    this.lines = lines;
+    return this.bookingId;
   }
 
   @Override
-  public Long getIdBooking() {
+  public void setBookingId(Long bookingId) {
 
-    return this.idBooking;
+    this.bookingId = bookingId;
   }
 
   @Override
-  public void setIdBooking(Long idBooking) {
+  public Long getInvitedGuestId() {
 
-    this.idBooking = idBooking;
+    return this.invitedGuestId;
   }
 
   @Override
-  public Long getIdInvitedGuest() {
+  public void setInvitedGuestId(Long invitedGuestId) {
 
-    return this.idInvitedGuest;
-  }
-
-  @Override
-  public void setIdInvitedGuest(Long idInvitedGuest) {
-
-    this.idInvitedGuest = idInvitedGuest;
+    this.invitedGuestId = invitedGuestId;
   }
 
   @Override
@@ -60,8 +47,11 @@ public class OrderEto extends AbstractEto implements Order {
 
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((this.idBooking == null) ? 0 : this.idBooking.hashCode());
-    result = prime * result + ((this.idInvitedGuest == null) ? 0 : this.idInvitedGuest.hashCode());
+
+    result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
+
+    result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
+
     return result;
   }
 
@@ -79,36 +69,36 @@ public class OrderEto extends AbstractEto implements Order {
       return false;
     }
     OrderEto other = (OrderEto) obj;
-    if (this.idBooking == null) {
-      if (other.idBooking != null) {
+
+    if (this.bookingId == null) {
+      if (other.bookingId != null) {
         return false;
       }
-    } else if (!this.idBooking.equals(other.idBooking)) {
+    } else if (!this.bookingId.equals(other.bookingId)) {
       return false;
     }
-    if (this.idInvitedGuest == null) {
-      if (other.idInvitedGuest != null) {
+
+    if (this.invitedGuestId == null) {
+      if (other.invitedGuestId != null) {
         return false;
       }
-    } else if (!this.idInvitedGuest.equals(other.idInvitedGuest)) {
+    } else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
       return false;
     }
+
     return true;
   }
 
-  /**
-   * @return token
-   */
-  public String getToken() {
+  @Override
+  public Long getHostId() {
 
-    return this.token;
+    return this.hostId;
   }
 
-  /**
-   * @param token new value of {@link #getToken}.
-   */
-  public void setToken(String token) {
+  @Override
+  public void setHostId(Long hostId) {
 
-    this.token = token;
+    this.hostId = hostId;
   }
+
 }

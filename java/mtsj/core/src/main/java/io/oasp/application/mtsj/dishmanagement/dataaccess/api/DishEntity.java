@@ -6,14 +6,16 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
-import io.oasp.application.mtsj.imagemanagement.common.api.Image;
+import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 
 /**
  * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -31,13 +33,11 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
 
   private BigDecimal price;
 
-  private Long idImage;
+  private ImageEntity image;
 
-  private Image image;
+  private List<IngredientEntity> extras;
 
-  private List<Ingredient> extras;
-
-  private List<Category> categories;
+  private List<CategoryEntity> categories;
 
   /**
    * @return name
@@ -88,26 +88,11 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   }
 
   /**
-   * @return idImage
-   */
-  public Long getIdImage() {
-
-    return this.idImage;
-  }
-
-  /**
-   * @param idImage new value of {@link #getIdImage}.
-   */
-  public void setIdImage(Long idImage) {
-
-    this.idImage = idImage;
-  }
-
-  /**
    * @return image
    */
-  @Transient
-  public Image getImage() {
+  @OneToOne
+  @JoinColumn(name = "idImage")
+  public ImageEntity getImage() {
 
     return this.image;
   }
@@ -115,8 +100,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @param image new value of {@link #getImage}.
    */
-  @Transient
-  public void setImage(Image image) {
+  public void setImage(ImageEntity image) {
 
     this.image = image;
   }
@@ -128,7 +112,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   @Column(name = "idIngredient")
   @JoinTable(name = "DishIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
-  public List<Ingredient> getExtras() {
+  public List<IngredientEntity> getExtras() {
 
     return this.extras;
   }
@@ -136,7 +120,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @param extras new value of {@link #getExtras}.
    */
-  public void setExtras(List<Ingredient> extras) {
+  public void setExtras(List<IngredientEntity> extras) {
 
     this.extras = extras;
   }
@@ -148,7 +132,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   @Column(name = "idCategory")
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))
-  public List<Category> getCategories() {
+  public List<CategoryEntity> getCategories() {
 
     return this.categories;
   }
@@ -156,9 +140,31 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @param categories new value of {@link #getCategories}.
    */
-  public void setCategories(List<Category> categories) {
+  public void setCategories(List<CategoryEntity> categories) {
 
     this.categories = categories;
+  }
+
+  @Override
+  @Transient
+  public Long getImageId() {
+
+    if (this.image == null) {
+      return null;
+    }
+    return this.image.getId();
+  }
+
+  @Override
+  public void setImageId(Long imageId) {
+
+    if (imageId == null) {
+      this.image = null;
+    } else {
+      ImageEntity imageEntity = new ImageEntity();
+      imageEntity.setId(imageId);
+      this.image = imageEntity;
+    }
   }
 
 }

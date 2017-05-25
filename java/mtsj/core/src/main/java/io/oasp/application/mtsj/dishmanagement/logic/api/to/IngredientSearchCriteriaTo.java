@@ -6,10 +6,10 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
- * used to find {@link io.oasp.application.mtsj.dishmanagement.common.api.Dish}s.
+ * used to find {@link io.oasp.application.mtsj.dishmanagement.common.api.Ingredient}s.
  *
  */
-public class DishSearchCriteriaTo extends SearchCriteriaTo {
+public class IngredientSearchCriteriaTo extends SearchCriteriaTo {
 
   private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public class DishSearchCriteriaTo extends SearchCriteriaTo {
   /**
    * The constructor.
    */
-  public DishSearchCriteriaTo() {
+  public IngredientSearchCriteriaTo() {
 
     super();
   }

@@ -17,4 +17,5 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link OrderEntity} objects.
    */
   PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria);
+
 }

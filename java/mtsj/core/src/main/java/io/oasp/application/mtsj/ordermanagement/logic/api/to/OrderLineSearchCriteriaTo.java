@@ -1,8 +1,5 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
-import java.util.List;
-
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
@@ -16,9 +13,7 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
 
   private Long orderId;
 
-  private Long idDish;
-
-  private List<Ingredient> extras;
+  private Long dishId;
 
   private Integer amount;
 
@@ -34,7 +29,7 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
 
   public Long getOrderId() {
 
-    return this.orderId;
+    return orderId;
   }
 
   public void setOrderId(Long orderId) {
@@ -42,29 +37,19 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
     this.orderId = orderId;
   }
 
-  public Long getIdDish() {
+  public Long getDishId() {
 
-    return this.idDish;
+    return dishId;
   }
 
-  public void setIdDish(Long idDish) {
+  public void setDishId(Long dishId) {
 
-    this.idDish = idDish;
-  }
-
-  public List<Ingredient> getExtras() {
-
-    return this.extras;
-  }
-
-  public void setExtras(List<Ingredient> extras) {
-
-    this.extras = extras;
+    this.dishId = dishId;
   }
 
   public Integer getAmount() {
 
-    return this.amount;
+    return amount;
   }
 
   public void setAmount(Integer amount) {
@@ -74,7 +59,7 @@ public class OrderLineSearchCriteriaTo extends SearchCriteriaTo {
 
   public String getComment() {
 
-    return this.comment;
+    return comment;
   }
 
   public void setComment(String comment) {

@@ -1,8 +1,5 @@
 package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
-import java.util.List;
-
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.Ingredient;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
 import io.oasp.application.mtsj.ordermanagement.common.api.OrderLine;
 
@@ -15,18 +12,16 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
 
   private Long orderId;
 
-  private Long idDish;
+  private Long dishId;
 
-  private List<Ingredient> extras;
-
-  private int amount;
+  private Integer amount;
 
   private String comment;
 
   @Override
   public Long getOrderId() {
 
-    return this.orderId;
+    return orderId;
   }
 
   @Override
@@ -36,37 +31,25 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   }
 
   @Override
-  public Long getIdDish() {
+  public Long getDishId() {
 
-    return this.idDish;
+    return dishId;
   }
 
   @Override
-  public void setIdDish(Long idDish) {
+  public void setDishId(Long dishId) {
 
-    this.idDish = idDish;
+    this.dishId = dishId;
   }
 
   @Override
-  public List<Ingredient> getExtras() {
+  public Integer getAmount() {
 
-    return this.extras;
+    return amount;
   }
 
   @Override
-  public void setExtras(List<Ingredient> extras) {
-
-    this.extras = extras;
-  }
-
-  @Override
-  public int getAmount() {
-
-    return this.amount;
-  }
-
-  @Override
-  public void setAmount(int amount) {
+  public void setAmount(Integer amount) {
 
     this.amount = amount;
   }
@@ -74,7 +57,7 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
   @Override
   public String getComment() {
 
-    return this.comment;
+    return comment;
   }
 
   @Override
@@ -90,9 +73,10 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     int result = super.hashCode();
 
     result = prime * result + ((this.orderId == null) ? 0 : this.orderId.hashCode());
-    result = prime * result + ((this.idDish == null) ? 0 : this.idDish.hashCode());
-    result = prime * result + ((this.extras == null) ? 0 : this.extras.hashCode());
-    result = prime * result + ((Integer) this.amount).hashCode();
+
+    result = prime * result + ((this.dishId == null) ? 0 : this.dishId.hashCode());
+
+    result = prime * result + ((this.amount == null) ? 0 : this.amount.hashCode());
     result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
     return result;
   }
@@ -119,21 +103,20 @@ public class OrderLineEto extends AbstractEto implements OrderLine {
     } else if (!this.orderId.equals(other.orderId)) {
       return false;
     }
-    if (this.idDish == null) {
-      if (other.idDish != null) {
+
+    if (this.dishId == null) {
+      if (other.dishId != null) {
         return false;
       }
-    } else if (!this.idDish.equals(other.idDish)) {
+    } else if (!this.dishId.equals(other.dishId)) {
       return false;
     }
-    if (this.extras == null) {
-      if (other.extras != null) {
+
+    if (this.amount == null) {
+      if (other.amount != null) {
         return false;
       }
-    } else if (!this.extras.equals(other.extras)) {
-      return false;
-    }
-    if (this.amount != other.amount) {
+    } else if (!this.amount.equals(other.amount)) {
       return false;
     }
     if (this.comment == null) {

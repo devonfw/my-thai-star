@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import io.oasp.application.mtsj.general.common.api.ApplicationEntity;
 
-public interface Dish extends ApplicationEntity {
+public interface Ingredient extends ApplicationEntity {
 
   public String getName();
 
@@ -17,9 +17,5 @@ public interface Dish extends ApplicationEntity {
   public BigDecimal getPrice();
 
   public void setPrice(BigDecimal price);
-
-  public Long getImageId();
-
-  public void setImageId(Long idImage);
 
 }

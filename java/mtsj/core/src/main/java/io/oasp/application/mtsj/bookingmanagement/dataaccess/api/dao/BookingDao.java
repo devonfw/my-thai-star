@@ -6,12 +6,12 @@ import io.oasp.application.mtsj.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * Data access interface for Book entities
+ * Data access interface for Booking entities
  */
 public interface BookingDao extends ApplicationDao<BookingEntity> {
 
   /**
-   * Finds the {@link BookingEntity books} matching the given {@link BookingSearchCriteriaTo}.
+   * Finds the {@link BookingEntity bookings} matching the given {@link BookingSearchCriteriaTo}.
    *
    * @param criteria is the {@link BookingSearchCriteriaTo}.
    * @return the {@link PaginatedListTo} with the matching {@link BookingEntity} objects.
