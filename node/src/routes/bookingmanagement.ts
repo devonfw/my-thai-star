@@ -3,6 +3,7 @@ import bussiness from '../logic';
 import * as types from '../model/interfaces';
 import * as moment from 'moment';
 import { validEmail } from '../utils/utilFunctions';
+import {lowerCase} from 'lodash';
 
 export const router = eRouter();
 
@@ -18,7 +19,7 @@ router.post('/v1/Booking', (req: Request, res: Response) => {
     } else if (req.body.type.index === types.BookingTypes.invited && (req.body.guestList === undefined || req.body.guestList.length === 0)) {
         res.status(400).json({ message: 'You need to invite someone' });
     } else if (req.body.type.index === types.BookingTypes.invited &&
-        req.body.guestList.map((elem: any): boolean => {
+        (req.body.guestList as string[]).map((elem: any): boolean => {
             return !validEmail(elem);
         }).reduce((elem1: boolean, elem2: boolean) => {
             return elem1 || elem2;
@@ -40,6 +41,7 @@ router.get('/v1/InvitedGuest', (req: Request, res: Response) => {
     if (req.query.guestToken === undefined || req.query.guestResponse === undefined) {
         res.status(400).json({ message: 'Invalid petition' });
     } else {
+        req.query.guestResponse = lowerCase(req.query.guestResponse) === 'true';
         bussiness.updateInvitation(req.query.guestToken, req.query.guestResponse, (err: types.IError) => {
             if (err) {
                 res.status(err.code).json(err.message);

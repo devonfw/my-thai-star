@@ -130,9 +130,11 @@ export interface IBookingView {
     type: IBookingType;
     name: string;
     email: string;
-    assistants: number;
-    guestList: string[];
+    assistants?: number;
+    guestList?: string[];
 }
+
+export enum BookingTypes {booking = 0, invited}
 
 export function isBookingView(elem: any): elem is IBookingView {
     if (elem.date === undefined || typeof elem.date !== 'string') {
@@ -147,15 +149,15 @@ export function isBookingView(elem: any): elem is IBookingView {
     if (elem.email === undefined || typeof elem.email !== 'string') {
         return false;
     }
-    if (elem.assistants === undefined || typeof elem.assistants !== 'number') {
+    if (elem.type.index === BookingTypes.booking && (elem.assistants === undefined || typeof elem.assistants !== 'number')) {
         return false;
     }
-    if (elem.guestList === undefined || !(elem.guestList instanceof Array) ||
+    if (elem.type.index === BookingTypes.invited && (elem.guestList === undefined || !(elem.guestList instanceof Array) ||
         (elem.guestList.length > 0 && elem.guestList.map((e: any) => {
             return typeof e !== 'string';
         }).reduce((elem1: any, elem2: any) => {
             return elem1 || elem2;
-        }))) {
+        })))) {
         return false;
     }
     return true;
@@ -166,13 +168,11 @@ export interface IBookingType {
 }
 
 export function isBookingType(elem: any): elem is IBookingType {
-    if (elem.name === undefined || typeof elem.name !== 'string') {
+    if (elem.index === undefined || typeof elem.index !== 'number') {
         return false;
     }
     return true;
 }
-
-export enum BookingTypes {booking = 0, invited}
 
 export interface IOrderView {
     lines: IOrderLineView[];
@@ -188,7 +188,7 @@ export function isOrderView(elem: any): elem is IOrderView {
         }))) {
         return false;
     }
-    if (elem.invitationId === undefined || typeof elem.invitationId !== 'string') {
+    if (elem.bookingId === undefined || typeof elem.bookingId !== 'string') {
         return false;
     }
     return true;

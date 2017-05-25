@@ -1,3 +1,4 @@
+import { NumberAttributeValue } from 'aws-sdk/clients/dynamodbstreams';
 import { Credentials } from 'aws-sdk';
 import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
 import { AccessControlPolicy } from 'aws-sdk/clients/s3';
@@ -101,10 +102,10 @@ callback(err);
             // filter by fav, TODO: check if user is correct
             if (filter.isFab) {
                 // TODO: take id using the authorization token
-                const fav: dbtypes.IUser[] = await fn.table('User', '1').
-                    promise() as dbtypes.IUser[];
+                const fav: dbtypes.IUser = await fn.table('User', '1').
+                    promise() as dbtypes.IUser;
 
-                const s2: Set<string> = new Set(fav[0].favourites as string[]);
+                const s2: Set<string> = new Set(fav.favourites as string[]);
 
                 dishIdSet = (dishIdSet !== undefined) ? util.setIntersection(dishIdSet, s2) : s2;
             }
@@ -148,7 +149,7 @@ callback(err);
         try {
             let table;
             if (reserv.type.index === types.BookingTypes.booking) {
-                table = await getFreeTable(reserv.date, reserv.assistants);
+                table = await getFreeTable(reserv.date, reserv.assistants as number);
 
                 if (table === 'error') {
                     callback({ code: 400, message: 'No more tables' });
@@ -174,7 +175,7 @@ callback(err);
 
             const inv: dbtypes.IInvitedGuest[] = [];
 
-            if (reserv.type.index === types.BookingTypes.invited && reserv.guestList.length > 0) {
+            if (reserv.type.index === types.BookingTypes.invited && (reserv.guestList as string[]).length > 0) {
                 // remove possible duplicates
                 const emails: Set<string> = new Set(reserv.guestList);
 
@@ -220,7 +221,7 @@ callback(err);
                     urlCancel: '#',
                 }));
 
-                reserv.guestList.forEach((elem: string) => {
+                (reserv.guestList as string[]).forEach((elem: string) => {
                     const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
                         title: 'You have been invited',
                         email: elem,
@@ -248,10 +249,12 @@ callback(err);
 
         try {
             if (order.bookingId.startsWith('CB')) {
-                reg = await fn.table('Booking').where('bookingToken', order.bookingId, '=').promise() as any[];
+                reg = await fn.table('Booking').where('bookingToken', order.bookingId, '=').promise() as dbtypes.IBooking[];
             } else {
-                reg = await fn.table('InvitedGuest').where('guestToken', order.bookingId, '=').promise() as any[];
+                reg = await fn.table('InvitedGuest').where('guestToken', order.bookingId, '=').promise() as dbtypes.IInvitedGuest[];
             }
+
+            console.log(reg);
 
             // Possible errors
             // Not found
@@ -259,6 +262,7 @@ callback(err);
                 callback({ code: 400, message: 'No Invitation token given' });
                 return;
             }
+
             // booking canceled
             if (order.bookingId.startsWith('CB')) {
                 if (reg[0].canceled !== undefined && reg[0].canceled === true) {
@@ -271,12 +275,17 @@ callback(err);
                     return;
                 }
             } else {
-                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
-                if (reg2[0].canceled !== undefined && reg2[0].canceled === true) {
+                if (reg[0].acepted !== true){
+                    callback({code: 400, message: 'You must confirm'});
+                    return;
+                }
+                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking;
+                console.log(reg2);
+                if (reg2.canceled !== undefined && reg2.canceled === true) {
                     callback({ code: 400, message: 'The booking is canceled' });
                     return;
                 }
-                const bookingDate = moment(reg2[0].bookingDate, dateFormat);
+                const bookingDate = moment(reg2.bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
                     callback({ code: 400, message: 'You can not create the at this time' });
                     return;
@@ -356,15 +365,20 @@ callback(err);
                 callback({ code: 400, message: 'Invalid Invitation token given' });
                 return;
             }
+
+            if (reg[0].order === undefined) {
+                callback({code: 400, message: 'You dont have any order to cancel'});
+            }
+
             if (order.startsWith('CB')) {
                 const bookingDate = moment(reg[0].bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                    callback({ code: 400, message: 'You can not create the order at this time' });
+                    callback({ code: 400, message: 'You can not cancel the order at this time' });
                     return;
                 }
             } else {
-                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
-                const bookingDate = moment(reg2[0].bookingDate, dateFormat);
+                const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking;
+                const bookingDate = moment(reg2.bookingDate, dateFormat);
                 if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
                     callback({ code: 400, message: 'You can not create the order at this time' });
                     return;
@@ -437,12 +451,12 @@ callback(err);
 
             const bookingDate = moment(reg[0].bookingDate, dateFormat);
             if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-                callback({ code: 500, message: 'You can\'t cancel the booking at this time' });
+                callback({ code: 400, message: 'You can\'t cancel the booking at this time' });
                 return;
             }
 
             if (reg[0].canceled) {
-                callback({ code: 500, message: 'Already canceled' });
+                callback({ code: 400, message: 'Already canceled' });
                 return;
             }
         } catch (err) {
@@ -535,8 +549,8 @@ callback(err);
                 return;
             }
 
-            const booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking[];
-            if (moment(booking[0].bookingDate, dateFormat).diff(moment().add(10, 'minutes')) < 0) {
+            const booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.IBooking;
+            if (moment(booking.bookingDate, dateFormat).diff(moment().add(10, 'minutes')) < 0) {
                 callback({ code: 500, message: 'You can\'t do this operation at this moment' });
                 return;
             }
@@ -546,8 +560,7 @@ callback(err);
             return;
         }
 
-        const oldAcepted = reg[0].acepted;
-        const oldModificationDate = reg[0].modificationDate;
+        const {acepted: oldAcepted, modificationDate: oldModificationDate } = reg[0];
 
         try {
             reg[0].acepted = response;
@@ -580,13 +593,11 @@ callback(err);
 };
 
 async function getFreeTable(date: string, assistants: number) {
-    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber').promise() as Promise<dbtypes.ITable[]>,
+    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.ITable[]>,
     fn.table('Booking').filter((elem: dbtypes.IBooking) => {
         const bookDate = moment(elem.bookingDate, dateFormat);
         return moment(date, dateFormat).isBetween(bookDate, bookDate.add(bookingExpiration, bookingExpirationH), 'date', '[]');
     }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise() as Promise<string[]>]);
-
-    console.log(booking);
 
     tables = tables.filter((elem: dbtypes.ITable) => {
         return !_.includes(booking, elem.id) && elem.seatsNumber >= assistants;

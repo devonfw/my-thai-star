@@ -35,12 +35,13 @@ export class Mailer {
             html, // html body
         };
 
-        // send mail with defined transport object
-        this.transporter.sendMail(mailOptions, (error: any, info: any) => {
-            if (error) {
-                return console.log(error);
-            }
-            // console.log('Message %s sent: %s', info.messageId, info.response);
-        });
+        console.log('Email ' + subject + ' was sended to: ' + to);
+        // // send mail with defined transport object
+        // this.transporter.sendMail(mailOptions, (error: any, info: any) => {
+        //     if (error) {
+        //         return console.log(error);
+        //     }
+        //     // console.log('Message %s sent: %s', info.messageId, info.response);
+        // });
     }
 }
