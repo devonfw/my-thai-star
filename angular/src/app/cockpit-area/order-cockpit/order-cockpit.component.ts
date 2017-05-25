@@ -7,7 +7,7 @@ import { TdDataTableService,
          IPageChangeEvent,
          ITdDataTableColumn } from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
-import { OrderDialogComponent } from 'app/cockpit-area/order-cockpit/order-dialog/order-dialog.component';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 
