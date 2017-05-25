@@ -42,54 +42,147 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     DishEntity dish = Alias.alias(DishEntity.class);
     EntityPathBase<DishEntity> alias = Alias.$(dish);
+
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    String name = criteria.getName();
-    if (name != null) {
-      query.where(Alias.$(dish.getName()).eq(name));
+    String searchBy = criteria.getSearchBy();
+    if (searchBy != null) {
+      query.where(Alias.$(dish.getName()).contains(searchBy).or(Alias.$(dish.getDescription()).contains(searchBy)));
     }
-    String description = criteria.getDescription();
-    if (description != null) {
-      query.where(Alias.$(dish.getDescription()).eq(description));
-    }
-    BigDecimal price = criteria.getPrice();
+
+    BigDecimal price = criteria.getMaxPrice();
     if (price != null) {
-      query.where(Alias.$(dish.getPrice()).eq(price));
+      query.where(Alias.$(dish.getPrice()).lt(price));
     }
-    return findPaginated(criteria, query, alias);
+
+    addOrderBy(query, alias, dish, criteria.getSort());
+    PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
+
+    // Collection<Category> categories = criteria.getCategories();
+    // if (!categories.isEmpty()) {
+    // entitiesList = categoryFilter(entitiesList, categories);
+    // }
+
+    return entitiesList;
   }
 
-  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
+  // private PaginatedListTo<DishEntity> categoryFilter(PaginatedListTo<DishEntity> pl, Collection<Category> categories)
+  // {
+  //
+  // List<DishEntity> dishEntities = pl.getResult();
+  // List<DishEntity> dishEntitiesF = new ArrayList<>();
+  // for (DishEntity dishEntity : dishEntities) {
+  //
+  // List<Category> entityCats = dishEntity.getCategories();
+  // for (Category entityCat : entityCats) {
+  // for (Category category : categories) {
+  // if (category.getId() == entityCat.getId()) {
+  // if (!dishAlreadyAdded(dishEntitiesF, dishEntity)) {
+  // dishEntitiesF.add(dishEntity);
+  // break;
+  // }
+  //
+  // }
+  // }
+  // }
+  //
+  // }
+  //
+  // return new PaginatedListTo<>(dishEntitiesF, pl.getPagination());
+  // }
+  //
+  // private boolean dishAlreadyAdded(List<DishEntity> dishEntitiesFiltered, DishEntity dishEntity) {
+  //
+  // boolean result = false;
+  // for (DishEntity entity : dishEntitiesFiltered) {
+  // if (entity.getId() == dishEntity.getId()) {
+  // result = true;
+  // break;
+  // }
+  // }
+  // return result;
+  // }
+
+  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity plate, List<OrderByTo> sort) {
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getName()).asc());
+            query.orderBy(Alias.$(plate.getName()).asc());
           } else {
-            query.orderBy(Alias.$(dish.getName()).desc());
+            query.orderBy(Alias.$(plate.getName()).desc());
           }
         } else if ("description".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getDescription()).asc());
+            query.orderBy(Alias.$(plate.getDescription()).asc());
           } else {
-            query.orderBy(Alias.$(dish.getDescription()).desc());
+            query.orderBy(Alias.$(plate.getDescription()).desc());
           }
         } else if ("price".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getPrice()).asc());
+            query.orderBy(Alias.$(plate.getPrice()).asc());
           } else {
-            query.orderBy(Alias.$(dish.getPrice()).desc());
-          }
-        } else if ("idImage".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getImageId()).asc());
-          } else {
-            query.orderBy(Alias.$(dish.getImageId()).desc());
+            query.orderBy(Alias.$(plate.getPrice()).desc());
           }
         }
       }
     }
   }
+
+  // @Override
+  // public PaginatedListTo<DishEntity> findDishs(DishSearchCriteriaTo criteria) {
+  //
+  // DishEntity dish = Alias.alias(DishEntity.class);
+  // EntityPathBase<DishEntity> alias = Alias.$(dish);
+  // JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+  //
+  // String name = criteria.getName();
+  // if (name != null) {
+  // query.where(Alias.$(dish.getName()).eq(name));
+  // }
+  // String description = criteria.getDescription();
+  // if (description != null) {
+  // query.where(Alias.$(dish.getDescription()).eq(description));
+  // }
+  // BigDecimal price = criteria.getPrice();
+  // if (price != null) {
+  // query.where(Alias.$(dish.getPrice()).eq(price));
+  // }
+  // return findPaginated(criteria, query, alias);
+  // }
+  //
+  // private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
+  //
+  // if (sort != null && !sort.isEmpty()) {
+  // for (OrderByTo orderEntry : sort) {
+  // if ("name".equals(orderEntry.getName())) {
+  // if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+  // query.orderBy(Alias.$(dish.getName()).asc());
+  // } else {
+  // query.orderBy(Alias.$(dish.getName()).desc());
+  // }
+  // } else if ("description".equals(orderEntry.getName())) {
+  // if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+  // query.orderBy(Alias.$(dish.getDescription()).asc());
+  // } else {
+  // query.orderBy(Alias.$(dish.getDescription()).desc());
+  // }
+  // } else if ("price".equals(orderEntry.getName())) {
+  // if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+  // query.orderBy(Alias.$(dish.getPrice()).asc());
+  // } else {
+  // query.orderBy(Alias.$(dish.getPrice()).desc());
+  // }
+  // } else if ("idImage".equals(orderEntry.getName())) {
+  // if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+  // query.orderBy(Alias.$(dish.getImageId()).asc());
+  // } else {
+  // query.orderBy(Alias.$(dish.getImageId()).desc());
+  // }
+  // }
+  // }
+  // }
+  // }
 
 }
