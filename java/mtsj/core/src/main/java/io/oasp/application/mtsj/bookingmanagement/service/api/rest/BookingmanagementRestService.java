@@ -107,6 +107,10 @@ public interface BookingmanagementRestService {
   @POST
   public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(InvitedGuestSearchCriteriaTo searchCriteriaTo);
 
+  @Path("/invitedguest/decline/{token}")
+  @POST
+  public InvitedGuestEto declineInvite(@PathParam("token") String guestToken);
+
   /**
    * Delegates to {@link Bookingmanagement#findTable}.
    *

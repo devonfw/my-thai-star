@@ -97,4 +97,10 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
     return this.bookingmanagement.findTableEtos(searchCriteriaTo);
   }
 
+  @Override
+  public InvitedGuestEto declineInvite(String guestToken) {
+
+    return this.bookingmanagement.declineInvite(guestToken);
+  }
+
 }

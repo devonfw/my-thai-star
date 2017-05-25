@@ -112,4 +112,6 @@ public interface Bookingmanagement {
    */
   TableEto saveTable(TableEto table);
 
+  InvitedGuestEto declineInvite(String guestToken);
+
 }

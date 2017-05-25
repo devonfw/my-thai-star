@@ -34,6 +34,7 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriter
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -101,6 +102,16 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   @Override
   public boolean deleteBooking(Long bookingId) {
+
+    OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
+    criteria.setBookingId(bookingId);
+    List<OrderEto> bookingOrders = this.orderManagement.findOrderEtos(criteria).getResult();
+    for (OrderEto orderEto : bookingOrders) {
+      boolean deleteOrderResult = this.orderManagement.deleteOrder(orderEto.getId());
+      if (deleteOrderResult) {
+        LOG.debug("The order with id '{}' has been deleted.", orderEto.getId());
+      }
+    }
 
     BookingEntity booking = getBookingDao().find(bookingId);
     getBookingDao().delete(booking);
@@ -195,6 +206,12 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public boolean deleteInvitedGuest(Long invitedGuestId) {
 
     InvitedGuestEntity invitedGuest = getInvitedGuestDao().find(invitedGuestId);
+    OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
+    criteria.setHostToken(invitedGuest.getGuestToken());
+    List<OrderEto> guestOrdersEto = this.orderManagement.findOrderEtos(criteria).getResult();
+    for (OrderEto orderEto : guestOrdersEto) {
+      this.orderManagement.deleteOrder(orderEto.getId());
+    }
     getInvitedGuestDao().delete(invitedGuest);
     LOG.debug("The invitedGuest with id '{}' has been deleted.", invitedGuestId);
     return true;
@@ -270,17 +287,19 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return saveInvitedGuest(invited);
   }
 
+  // public InvitedGuestEto declineInvite(String guestToken) {
+  //
+  // Objects.requireNonNull(guestToken);
+  // InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
+  // criteria.setGuestToken(guestToken);
+  // InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
+  // invited.setAccepted(false);
+  // return saveInvitedGuest(invited);
+  // }
+
+  // public InvitedGuestEto revokeAcceptedInvite(String guestToken) {
+  @Override
   public InvitedGuestEto declineInvite(String guestToken) {
-
-    Objects.requireNonNull(guestToken);
-    InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
-    criteria.setGuestToken(guestToken);
-    InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
-    invited.setAccepted(false);
-    return saveInvitedGuest(invited);
-  }
-
-  public InvitedGuestEto revokeAcceptedInvite(String guestToken) {
 
     Objects.requireNonNull(guestToken);
     InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
@@ -288,8 +307,13 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
     InvitedGuestEntity invitedEntity = getInvitedGuestDao().findOne(invited.getId());
     invited.setAccepted(false);
-    this.orderManagement.deleteOrder(invitedEntity.getOrder().getId());
-    // TODO - Modify deleteOrder service to delete the orderLines first
+
+    OrderSearchCriteriaTo guestOrderCriteria = new OrderSearchCriteriaTo();
+    guestOrderCriteria.setInvitedGuestId(invitedEntity.getId());
+    List<OrderEto> guestOrdersEto = this.orderManagement.findOrderEtos(guestOrderCriteria).getResult();
+    for (OrderEto orderEto : guestOrdersEto) {
+      this.orderManagement.deleteOrder(orderEto.getId());
+    }
     // TODO - Estudy about Cascade
     // TODO - Send confirmation email and info email to the host
     return saveInvitedGuest(invited);
@@ -322,12 +346,20 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
     bookingCriteria.setBookingToken(bookingToken);
-    List<BookingEto> toCancel = findBookingEtos(bookingCriteria).getResult();
-    if (!toCancel.isEmpty()) {
-      toCancel.get(0).setCanceled(true);
+    List<BookingEto> booking = findBookingEtos(bookingCriteria).getResult();
+    if (!booking.isEmpty()) {
+      // toCancel.get(0).setCanceled(true);
+      InvitedGuestSearchCriteriaTo guestCriteria = new InvitedGuestSearchCriteriaTo();
+      guestCriteria.setBookingId(booking.get(0).getId());
+      List<InvitedGuestEto> guestsEto = findInvitedGuestEtos(guestCriteria).getResult();
+      if (!guestsEto.isEmpty()) {
+        for (InvitedGuestEto guestEto : guestsEto) {
+          deleteInvitedGuest(guestEto.getId());
+        }
+      }
+      // delete booking and related orders
+      deleteBooking(booking.get(0).getId());
     }
-    // TODO - Remove invitedGuests
-    // TODO - Remove Orders
   }
 
   /**
