@@ -118,4 +118,12 @@ public interface Bookingmanagement {
 
   InvitedGuestEto declineInvite(String guestToken);
 
+  /**
+   * Saves a booking and store it in the database.
+   *
+   * @param booking the {@link BookingEto} to create.
+   * @return the new {@link BookingEto} that has been saved with ID and version.
+   */
+  BookingEto saveBooking(BookingEto booking);
+
 }

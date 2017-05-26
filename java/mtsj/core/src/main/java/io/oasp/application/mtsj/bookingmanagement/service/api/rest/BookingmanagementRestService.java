@@ -158,4 +158,14 @@ public interface BookingmanagementRestService {
   @POST
   public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo);
 
+  /**
+   * Delegates to {@link Bookingmanagement#saveBooking}.
+   *
+   * @param booking the {@link BookingEto} to be saved
+   * @return the recently created {@link BookingEto}
+   */
+  @POST
+  @Path("/booking/")
+  public BookingEto saveBooking(BookingEto booking);
+
 }

@@ -481,4 +481,17 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return (now > cancellationLimit) ? false : true;
   }
 
+  @Override
+  public BookingEto saveBooking(BookingEto booking) {
+
+    Objects.requireNonNull(booking, "booking");
+    BookingEntity bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
+
+    // initialize, validate bookingEntity here if necessary
+    getBookingDao().save(bookingEntity);
+    LOG.debug("Booking with id '{}' has been created.", bookingEntity.getId());
+
+    return getBeanMapper().map(bookingEntity, BookingEto.class);
+  }
+
 }

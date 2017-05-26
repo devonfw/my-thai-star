@@ -46,6 +46,8 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private List<OrderEntity> orders;
 
+  private Integer assistants;
+
   private static final long serialVersionUID = 1L;
 
   public BookingEntity() {
@@ -323,6 +325,22 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   public void setOrders(List<OrderEntity> orders) {
 
     this.orders = orders;
+  }
+
+  /**
+   * @return assistants
+   */
+  public Integer getAssistants() {
+
+    return this.assistants;
+  }
+
+  /**
+   * @param assistants new value of {@link #getassistants}.
+   */
+  public void setAssistants(Integer assistants) {
+
+    this.assistants = assistants;
   }
 
 }
