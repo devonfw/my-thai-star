@@ -68,5 +68,5 @@ export interface OrderView {
 
 export interface OrderListView {
     bookingId: number;
-    orders: OrderView[];
+    orderList: OrderView[];
 }

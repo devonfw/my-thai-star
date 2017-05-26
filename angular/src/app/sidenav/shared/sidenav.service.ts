@@ -85,10 +85,12 @@ export class SidenavService {
         order.extras.filter( (extra: ExtraView) => extra.selected )
                     .forEach( (extra: ExtraView) => extras.push(extra.id));
         composedOrders.push({
-          idDish: order.idDish,
-          amount: order.amount,
+          orderLine: {
+            idDish: order.idDish,
+            amount: order.amount,
+            comment: order.comment,
+          },
           extras: extras,
-          comment: order.comment,
         });
       });
       return composedOrders;

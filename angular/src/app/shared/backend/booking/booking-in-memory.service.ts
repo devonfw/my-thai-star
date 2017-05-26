@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { ReservationView, DishView, FriendsInvite, OrderView, ExtraView, OrderListView } from '../../viewModels/interfaces';
 import { BookingInfo, FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
-import { bookedTables, extras, dishes } from '../mock-data';
+import { bookedTables, extras, dishes, orderList } from '../mock-data';
 import * as moment from 'moment';
 import { assign, maxBy, find, filter, toString } from 'lodash';
 
@@ -23,15 +23,15 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(bookedTables.push(bookTable));
     }
 
-    getBookingOrders(): Observable<ReservationView[]> {
-        return Observable.of(bookedTables);
-    }
-
     getBookingOrder(id: number): Observable<ReservationView> {
         return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
     }
 
-    filterBookingOrders(filters: FilterCockpit): Observable<ReservationView[]> {
+    getBookingOrders(filters: FilterCockpit): Observable<OrderListView[]> {
+        return Observable.of(orderList);
+    }
+
+    getReservations(filters: FilterCockpit): Observable<ReservationView[]> {
         return Observable.of(filter(bookedTables, (booking: ReservationView) => {
             if (filters.date) {
                 return booking.date.toLowerCase().includes(filters.date.toLowerCase());
@@ -51,32 +51,6 @@ export class BookingInMemoryService implements IBookingDataService {
                 return true;
             }
         }));
-    }
-
-    getReservations(): Observable<ReservationView[]> {
-        return Observable.of(filter(bookedTables, (booking: ReservationView) => booking.guestList.length > 0));
-    }
-
-    filterReservations(filters: FilterCockpit): Observable<ReservationView[]> {
-        return Observable.of(filter(bookedTables, (booking: ReservationView) => {
-            if (filters.date) {
-                return booking.date.toLowerCase().includes(filters.date.toLowerCase());
-            } else {
-                return true;
-            }
-        }).filter((booking: ReservationView) => {
-            if (filters.email) {
-                return booking.email.toLowerCase().includes(filters.email.toLowerCase());
-            } else {
-                return true;
-            }
-        }).filter((booking: ReservationView) => {
-            if (filters.bookingId) {
-                return toString(booking.bookingId).includes(toString(filters.bookingId));
-            } else {
-                return true;
-            }
-        }).filter((booking: ReservationView) => booking.guestList.length > 0));
     }
 
     getReservation(id: number): Observable<ReservationView> {
@@ -103,17 +77,17 @@ export class BookingInMemoryService implements IBookingDataService {
     composeOrderList(orders: OrderInfo[]): OrderView[] {
         let composedOrders: OrderView[] = [];
         orders.forEach((order: OrderInfo) => {
-            let dish: DishView = this.findDishById(order.idDish);
+            let dish: DishView = this.findDishById(order.orderLine.idDish);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
                 extras.push(this.findExtraById(extraId));
             });
             composedOrders.push({
-                idDish: order.idDish,
+                idDish: order.orderLine.idDish,
                 name: dish.name,
                 price: dish.price,
-                comment: order.comment,
-                amount: order.amount,
+                comment: order.orderLine.comment,
+                amount: order.orderLine.amount,
                 extras: extras,
             });
         });
