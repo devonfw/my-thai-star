@@ -46,10 +46,6 @@ public interface OrdermanagementRestService {
   @Path("/order/")
   public OrderEto saveOrder(OrderCto order);
 
-  // @POST
-  // @Path("/order/")
-  // public OrderEto saveOrder(OrderAux order);
-
   /**
    * Delegates to {@link Ordermanagement#deleteOrder}.
    *
@@ -59,6 +55,10 @@ public interface OrdermanagementRestService {
   @Path("/order/{id}/")
   public boolean deleteOrder(@PathParam("id") long id);
 
+  @GET
+  @Path("/order/cancelorder/{id}/")
+  public void cancelOrder(@PathParam("id") long id);
+
   /**
    * Delegates to {@link Ordermanagement#findOrderEtos}.
    *
@@ -67,7 +67,7 @@ public interface OrdermanagementRestService {
    */
   @Path("/order/search")
   @POST
-  public PaginatedListTo<OrderEto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
 
   /**
    * Delegates to {@link Ordermanagement#findOrderLine}.

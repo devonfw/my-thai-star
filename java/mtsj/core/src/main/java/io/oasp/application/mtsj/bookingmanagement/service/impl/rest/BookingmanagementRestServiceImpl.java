@@ -98,9 +98,21 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
+  public InvitedGuestEto acceptInvite(String guestToken) {
+
+    return this.bookingmanagement.acceptInvite(guestToken);
+  }
+
+  @Override
   public InvitedGuestEto declineInvite(String guestToken) {
 
     return this.bookingmanagement.declineInvite(guestToken);
+  }
+
+  @Override
+  public void cancelInvite(String bookingToken) {
+
+    this.bookingmanagement.cancelInvite(bookingToken);
   }
 
 }

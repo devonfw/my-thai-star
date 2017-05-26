@@ -29,7 +29,7 @@ public interface Ordermanagement {
    * @param criteria the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderEto}s.
    */
-  PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria);
+  PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
 
   /**
    * Deletes a order from the database by its id 'orderId'.
