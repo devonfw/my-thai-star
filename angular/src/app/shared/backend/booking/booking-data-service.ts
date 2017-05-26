@@ -6,7 +6,7 @@ import { BookingInMemoryService } from './booking-in-memory.service';
 import { BookingRestService } from './booking-rest.service';
 import { IBookingDataService } from './booking-data-service-interface';
 import { ReservationView } from '../../viewModels/interfaces';
-import { BookingInfo, OrderListInfo } from '../backendModels/interfaces';
+import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()
 export class BookingDataService implements IBookingDataService {
@@ -38,12 +38,20 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.getBookingOrder(id);
     }
 
+    filterBookingOrders(filter: FilterCockpit): Observable<ReservationView[]> {
+        return this.usedImplementation.filterBookingOrders(filter);
+    }
+
     getReservations(): Observable<ReservationView[]> {
         return this.usedImplementation.getReservations();
     }
 
     getReservation(id: number): Observable<ReservationView> {
         return this.usedImplementation.getReservation(id);
+    }
+
+    filterReservations(filter: FilterCockpit): Observable<ReservationView[]> {
+        return this.usedImplementation.filterReservations(filter);
     }
 
     saveOrders(orders: OrderListInfo): Observable<ReservationView> {

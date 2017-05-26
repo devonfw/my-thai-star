@@ -2,10 +2,10 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { ReservationView, DishView, FriendsInvite, OrderView, ExtraView, OrderListView } from '../../viewModels/interfaces';
-import { BookingInfo, OrderListInfo, OrderInfo } from '../backendModels/interfaces';
+import { BookingInfo, FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes } from '../mock-data';
 import * as moment from 'moment';
-import { assign, maxBy, find, filter } from 'lodash';
+import { assign, maxBy, find, filter, toString } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
@@ -31,8 +31,52 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
     }
 
+    filterBookingOrders(filters: FilterCockpit): Observable<ReservationView[]> {
+        return Observable.of(filter(bookedTables, (booking: ReservationView) => {
+            if (filters.date) {
+                return booking.date.toLowerCase().includes(filters.date.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((booking: ReservationView) => {
+            if (filters.email) {
+                return booking.email.toLowerCase().includes(filters.email.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((booking: ReservationView) => {
+            if (filters.bookingId) {
+                return toString(booking.bookingId).includes(toString(filters.bookingId));
+            } else {
+                return true;
+            }
+        }));
+    }
+
     getReservations(): Observable<ReservationView[]> {
         return Observable.of(filter(bookedTables, (booking: ReservationView) => booking.guestList.length > 0));
+    }
+
+    filterReservations(filters: FilterCockpit): Observable<ReservationView[]> {
+        return Observable.of(filter(bookedTables, (booking: ReservationView) => {
+            if (filters.date) {
+                return booking.date.toLowerCase().includes(filters.date.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((booking: ReservationView) => {
+            if (filters.email) {
+                return booking.email.toLowerCase().includes(filters.email.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((booking: ReservationView) => {
+            if (filters.bookingId) {
+                return toString(booking.bookingId).includes(toString(filters.bookingId));
+            } else {
+                return true;
+            }
+        }).filter((booking: ReservationView) => booking.guestList.length > 0));
     }
 
     getReservation(id: number): Observable<ReservationView> {

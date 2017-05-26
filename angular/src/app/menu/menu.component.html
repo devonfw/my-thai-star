@@ -1,8 +1,8 @@
 <td-layout>
-  <form #filterForm="ngForm">
+  <form (ngSubmit)="applyFilters(filterForm.form.value)" #filterForm="ngForm">
     <div style= "background-color: white">
       
-      <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
+      <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center" flex>
         <div layout="row" style="align-items:center" class="pad-top" flex>
           <button md-icon-button><md-icon>search</md-icon></button>
           <md-input-container color="accent" class="searchBy">
@@ -30,23 +30,27 @@
           <button md-icon-button (click)="changeSortDir()" [mdTooltip]="sortDir"><md-icon>{{sortDirIcon}}</md-icon></button>
         </div>
       </div>
+      <md-divider></md-divider>
 
       <td-expansion-panel label="FILTERS">
-        <div layout="column" class ="pad-left-md pad-top pad-right-md" style= "border-bottom: 1px solid lightgrey" flex>
+        <div layout="column" class ="pad-left-md pad-top pad-right-md" flex>
           
           <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
               <md-checkbox ngModel name="3">Noodle</md-checkbox>
               <md-checkbox ngModel name="4">Rice</md-checkbox>
               <md-checkbox ngModel name="5">Curry</md-checkbox>
             </div>    
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <md-divider></md-divider>
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
               <md-checkbox ngModel name="6">Vegan</md-checkbox>
               <md-checkbox ngModel name="7">Vegetarian</md-checkbox>
             </div>   
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" style= "width: 100%; border-bottom: 1px solid lightgrey">
+            <md-divider></md-divider>            
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
               <md-checkbox ngModel name="8">Favourites</md-checkbox>
             </div>
+            <md-divider></md-divider>
           </div>
 
           <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
@@ -96,7 +100,7 @@
       </td-expansion-panel>
       <div class="align-right">
         <button md-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
-        <button md-button (click)="applyFilters(filterForm.form.value)" color="accent" class="text-upper property-text-bold">Apply filters</button>
+        <button md-button type="submit" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
   </form>

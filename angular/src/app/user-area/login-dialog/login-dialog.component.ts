@@ -18,9 +18,4 @@ export class LoginDialogComponent {
   signInSubmit(formValue: FormGroup): void {
     this.dialog.close(formValue);
   }
-
-  forgotPassword(): void {
-    // implement forgot password
-  }
-
 }
