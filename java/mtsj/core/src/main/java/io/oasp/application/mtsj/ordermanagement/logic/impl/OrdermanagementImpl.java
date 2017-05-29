@@ -26,7 +26,6 @@ import io.oasp.application.mtsj.dishmanagement.common.api.Ingredient;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
-import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.mailservice.api.Mail;
@@ -212,7 +211,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     for (OrderLineEntity orderline : orderlines.getResult()) {
       OrderLineCto orderLineCto = new OrderLineCto();
       orderLineCto.setOrderLine(getBeanMapper().map(this.orderLineDao.findOne(orderline.getId()), OrderLineEto.class));
-      orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientCto.class));
+      orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientEto.class));
       orderLinesCto.add(orderLineCto);
     }
     return new PaginatedListTo<>(orderLinesCto, orderlines.getPagination());
