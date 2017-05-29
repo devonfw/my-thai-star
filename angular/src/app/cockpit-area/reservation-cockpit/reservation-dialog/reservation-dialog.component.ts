@@ -41,10 +41,11 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reservationCockpitService.getReservation(this.data.bookingId).subscribe( (reservation: ReservationView) => {
-      this.datat.push(reservation);
-      this.datao = reservation.guestList;
-    });
+    this.datat.push(this.data);
+    this.datao = this.data.guestList;
+    if ( this.data.guestList.length === 0 ) {
+      this.columnst.push({ name: 'assistants', label: 'Assistants'});
+    }
     this.filter();
   }
 

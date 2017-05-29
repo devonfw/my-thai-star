@@ -72,9 +72,9 @@ export interface OrderListView {
 }
 
 export interface OrderBookingView {
-    name: string,
-    bookingDate: string,
-    creationDate: string,
-    email: string,
-    tableId: number,
+    name: string;
+    bookingDate: string;
+    creationDate: string;
+    email: string;
+    tableId: number;
 }

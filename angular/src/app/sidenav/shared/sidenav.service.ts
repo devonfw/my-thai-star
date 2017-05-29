@@ -4,7 +4,7 @@ import { BookingDataService } from '../../shared/backend/booking/booking-data-se
 import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../shared/backend/backendModels/interfaces';
-import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
+import { find, filter, isEqual, remove, cloneDeep, toString } from 'lodash';
 
 const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) => o.name === orderToFind.name && isEqual(o.extras, orderToFind.extras);
 
@@ -63,8 +63,8 @@ export class SidenavService {
   public sendOrders(id: number): void {
 
     let orderList: OrderListInfo = {
-      bookingId: id,
-      orders: this.composeOrders(this.orders),
+      booking: {bookingToken: toString(id)},
+      orderLines: this.composeOrders(this.orders),
     };
 
     this.closeSideNav();

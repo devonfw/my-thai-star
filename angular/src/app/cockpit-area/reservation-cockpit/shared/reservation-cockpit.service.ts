@@ -14,9 +14,4 @@ export class ReservationCockpitService {
                .map((orders: ReservationView[]) => orders as ReservationView[]);
   }
 
-  getReservation(tableId: number): Observable<ReservationView> {
-    return this.bookingDataService.getReservation(tableId)
-               .map((orders: ReservationView) => orders as ReservationView);
-  }
-
 }

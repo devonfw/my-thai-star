@@ -62,8 +62,8 @@ export class OrderLineInfo {
 }
 
 export class OrderListInfo {
-    bookingId: number;
-    orders: OrderInfo[];
+    booking: {bookingToken: string};
+    orderLines: OrderInfo[];
 }
 
 // LOGIN

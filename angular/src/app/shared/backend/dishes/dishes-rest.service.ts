@@ -8,7 +8,7 @@ import { config } from '../../../config';
 @Injectable()
 export class DishesRestService implements IDishesDataService {
 
- private readonly filtersRestPath: string = '/Dish/Search';
+ private readonly filtersRestPath: string = 'Dishmanagement/v1/Dish/Search';
 
  private http: Http;
 

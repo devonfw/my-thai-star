@@ -5,7 +5,7 @@ import { ReservationView, DishView, FriendsInvite, OrderView, ExtraView, OrderLi
 import { BookingInfo, FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes, orderList } from '../mock-data';
 import * as moment from 'moment';
-import { assign, maxBy, find, filter, toString } from 'lodash';
+import { assign, maxBy, find, filter, toString, toNumber } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
@@ -20,15 +20,32 @@ export class BookingInMemoryService implements IBookingDataService {
         bookTable.creationDate = moment().format('LLL');
         bookTable.bookingId = maxBy(bookedTables, (table: ReservationView) => table.bookingId).bookingId + 1;
         bookTable.tableId = maxBy(bookedTables, (table: ReservationView) => table.tableId).tableId + 1;
+        if (!bookTable.guestList) {
+            bookTable.guestList = [];
+        }
         return Observable.of(bookedTables.push(bookTable));
     }
 
-    getBookingOrder(id: number): Observable<ReservationView> {
-        return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
-    }
-
     getBookingOrders(filters: FilterCockpit): Observable<OrderListView[]> {
-        return Observable.of(orderList);
+        return Observable.of(filter(orderList, (order: OrderListView) => {
+            if (filters.date) {
+                return order.booking.bookingDate.toLowerCase().includes(filters.date.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((order: OrderListView) => {
+            if (filters.email) {
+                return order.booking.email.toLowerCase().includes(filters.email.toLowerCase());
+            } else {
+                return true;
+            }
+        }).filter((order: OrderListView) => {
+            if (filters.bookingId) {
+                return toString(order.bookingId).includes(toString(filters.bookingId));
+            } else {
+                return true;
+            }
+        }));
     }
 
     getReservations(filters: FilterCockpit): Observable<ReservationView[]> {
@@ -53,10 +70,6 @@ export class BookingInMemoryService implements IBookingDataService {
         }));
     }
 
-    getReservation(id: number): Observable<ReservationView> {
-        return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
-    }
-
     saveOrders(order: OrderListInfo): Observable<number> {
         return Observable.of(orderList.push(this.composeOrderList(order)));
     }
@@ -69,14 +82,14 @@ export class BookingInMemoryService implements IBookingDataService {
         return find(dishes, (dish: DishView) => dish.id === id);
     }
 
-    findReservationById(id: number): ReservationView {
-        return find(bookedTables, (booking: ReservationView) => booking.bookingId === id);
+    findReservationById(id: {bookingToken: string}): ReservationView {
+        return find(bookedTables, (booking: ReservationView) => booking.bookingId === toNumber(id.bookingToken));
     }
 
     composeOrderList(orders: OrderListInfo): OrderListView {
-        let composedOrders: OrderListView;        
-        let orderList = [];
-        orders.orders.forEach((order: OrderInfo) => {
+        let composedOrders: OrderListView;
+        let orderList: any = [];
+        orders.orderLines.forEach((order: OrderInfo) => {
             let dish: DishView = this.findDishById(order.orderLine.idDish);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
@@ -92,10 +105,10 @@ export class BookingInMemoryService implements IBookingDataService {
             });
         });
 
-        let bookedTable = this.findReservationById(orders.bookingId);
+        let bookedTable: ReservationView = this.findReservationById(orders.booking);
 
         return {
-            bookingId: orders.bookingId,
+            bookingId: toNumber(orders.booking.bookingToken),
             booking: {
                 name: bookedTable.name,
                 bookingDate: bookedTable.date,

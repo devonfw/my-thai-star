@@ -158,10 +158,10 @@ export const bookedTables: ReservationView[] = [{
 export const orderList: OrderListView[] = [{
                 bookingId: 500,
                 booking: {
-                            name: 'user0',
-                            bookingDate: '38820586113508',
-                            creationDate: '1495782513508',
-                            email: 'user0@mail.com',
+                            name: 'Name 1',
+                            bookingDate: '13/03/2017 15:00',
+                            creationDate: '10/03/2017 10:00',
+                            email: 'user1@mail.com',
                             tableId: 0,
                           },
                 orderList: [{
@@ -182,10 +182,10 @@ export const orderList: OrderListView[] = [{
         }, {
                 bookingId: 501,
                 booking: {
-                            name: 'user0',
-                            bookingDate: '38820586113508',
-                            creationDate: '1495782513508',
-                            email: 'user0@mail.com',
+                            name: 'Name 2',
+                            bookingDate: '27/05/2017 22:00',
+                            creationDate: '12/05/2017 23:00',
+                            email: 'user2@mail.com',
                             tableId: 1,
                           },
                 orderList: [{
@@ -208,9 +208,9 @@ export const orderList: OrderListView[] = [{
         }, {
                 bookingId: 502,
                 booking: {
-                            name: 'user0',
-                            bookingDate: '38820586113508',
-                            creationDate: '1495782513508',
+                            name: 'user 3',
+                            bookingDate: '29/05/2017 21:00',
+                            creationDate: '29/05/2017 10:00',
                             email: 'user0@mail.com',
                             tableId: 2,
                           },
@@ -226,10 +226,10 @@ export const orderList: OrderListView[] = [{
         }, {
                 bookingId: 503,
                 booking: {
-                            name: 'user0',
-                            bookingDate: '38820586113508',
-                            creationDate: '1495782513508',
-                            email: 'user0@mail.com',
+                            name: 'user 4',
+                            bookingDate: '27/05/2017 20:30',
+                            creationDate: '20/05/2017 17:00',
+                            email: 'user4@mail.com',
                             tableId: 3,
                           },
                 orderList: [{

@@ -34,14 +34,6 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.getBookingOrders(filter);
     }
 
-    getBookingOrder(id: number): Observable<ReservationView> {
-        return this.usedImplementation.getBookingOrder(id);
-    }
-
-    getReservation(id: number): Observable<ReservationView> {
-        return this.usedImplementation.getReservation(id);
-    }
-
     getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
         return this.usedImplementation.getReservations(filter);
     }

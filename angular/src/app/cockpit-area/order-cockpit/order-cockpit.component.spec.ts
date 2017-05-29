@@ -5,6 +5,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrderCockpitComponent } from './order-cockpit.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
 import { BackendModule } from '../../shared/backend/backend.module';
+import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -13,7 +14,7 @@ describe('OrderCockpitComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrderCockpitComponent ],
-      providers: [ OrderCockpitService ],
+      providers: [ OrderCockpitService, PriceCalculatorService ],
       imports: [
         CovalentModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),

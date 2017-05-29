@@ -50,20 +50,20 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   applyFilters(filters: any): void {
-    this.reservationCockpitService.getReservations(filters).subscribe((orders: ReservationView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
+    this.reservationCockpitService.getReservations(filters).subscribe((reservations: ReservationView[]) => {
+      this.data = reservations;
+      this.filteredData = reservations;
+      this.filteredTotal = reservations.length;
     });
   }
 
   clearFilters(filters: any): void {
     filters.reset();
     this.reservationCockpitService.getReservations({date: undefined, email: undefined, bookingId: undefined})
-        .subscribe((orders: ReservationView[]) => {
-          this.data = orders;
-          this.filteredData = orders;
-          this.filteredTotal = orders.length;
+        .subscribe((reservations: ReservationView[]) => {
+          this.data = reservations;
+          this.filteredData = reservations;
+          this.filteredTotal = reservations.length;
         });
   }
 

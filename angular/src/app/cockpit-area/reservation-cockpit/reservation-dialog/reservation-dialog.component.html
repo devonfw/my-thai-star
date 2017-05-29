@@ -6,16 +6,17 @@
   [columns]="columnst">
 </td-data-table>
 <td-data-table
+  *ngIf="filteredData.length > 0"
   #dataOrders
   [data]="filteredData"
   [columns]="columnso">
   <ng-template tdDataTableTemplate="acceptance" let-value="value" let-row="row" let-column="column">
     <md-icon color="accent" *ngIf="value === 'yes'">check</md-icon>
     <md-icon color="warn" *ngIf="value === 'no'">clear</md-icon>
-    <md-icon *ngIf="value === ''">remove</md-icon>
+    <md-icon *ngIf="value === '' || !value">remove</md-icon>
   </ng-template>
 </td-data-table>
-<td-paging-bar #pagingBar [firstLast]="false" [pageSizes]="[5, 10, 15]" [total]="datao.length" (change)="page($event)">
+<td-paging-bar *ngIf="filteredData.length > 0" #pagingBar [firstLast]="false" [pageSizes]="[5, 10, 15]" [total]="datao.length" (change)="page($event)">
   <span td-paging-bar-label hide-xs>Rows per page:</span>
   {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
 </td-paging-bar>
