@@ -2,8 +2,8 @@ package io.oasp.application.mtsj.ordermanagement.logic.api.to;
 
 import java.util.List;
 
-import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientCto;
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 
 /**
@@ -19,7 +19,7 @@ public class OrderLineCto extends AbstractCto {
 
   private DishEto dish;
 
-  private List<IngredientEntity> extras;
+  private List<IngredientCto> extras;
 
   public OrderLineEto getOrderLine() {
 
@@ -51,12 +51,12 @@ public class OrderLineCto extends AbstractCto {
     this.dish = dish;
   }
 
-  public List<IngredientEntity> getExtras() {
+  public List<IngredientCto> getExtras() {
 
     return this.extras;
   }
 
-  public void setExtras(List<IngredientEntity> extras) {
+  public void setExtras(List<IngredientCto> extras) {
 
     this.extras = extras;
   }

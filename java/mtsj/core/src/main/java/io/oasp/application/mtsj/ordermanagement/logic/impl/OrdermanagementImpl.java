@@ -23,8 +23,10 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCrit
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.dishmanagement.common.api.Ingredient;
+import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
+import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.mailservice.api.Mail;
@@ -158,7 +160,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderLineEntity> orderLineEntities = new ArrayList<>();
     for (OrderLineCto lineCto : linesCto) {
       OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
-      orderLineEntity.setExtras(lineCto.getExtras());
+      orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
       orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
       orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
@@ -210,7 +212,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     for (OrderLineEntity orderline : orderlines.getResult()) {
       OrderLineCto orderLineCto = new OrderLineCto();
       orderLineCto.setOrderLine(getBeanMapper().map(this.orderLineDao.findOne(orderline.getId()), OrderLineEto.class));
-      orderLineCto.setExtras(orderline.getExtras());
+      orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientCto.class));
       orderLinesCto.add(orderLineCto);
     }
     return new PaginatedListTo<>(orderLinesCto, orderlines.getPagination());

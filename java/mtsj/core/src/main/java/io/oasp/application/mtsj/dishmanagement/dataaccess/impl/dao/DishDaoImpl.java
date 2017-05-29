@@ -61,27 +61,27 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     return entitiesList;
   }
 
-  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity plate, List<OrderByTo> sort) {
+  private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(plate.getName()).asc());
+            query.orderBy(Alias.$(dish.getName()).asc());
           } else {
-            query.orderBy(Alias.$(plate.getName()).desc());
+            query.orderBy(Alias.$(dish.getName()).desc());
           }
         } else if ("description".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(plate.getDescription()).asc());
+            query.orderBy(Alias.$(dish.getDescription()).asc());
           } else {
-            query.orderBy(Alias.$(plate.getDescription()).desc());
+            query.orderBy(Alias.$(dish.getDescription()).desc());
           }
         } else if ("price".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(plate.getPrice()).asc());
+            query.orderBy(Alias.$(dish.getPrice()).asc());
           } else {
-            query.orderBy(Alias.$(plate.getPrice()).desc());
+            query.orderBy(Alias.$(dish.getPrice()).desc());
           }
         }
       }

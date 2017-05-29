@@ -71,13 +71,11 @@ public class OrdermanagementTest extends ComponentTest {
     // order line 1
     OrderLineCto ol1 = new OrderLineCto();
     ol1.setDish(dishEto);
-    ol1.setExtras(extras);
     ol1.setOrderLine(olEto1);
 
     // order line 2
     OrderLineCto ol2 = new OrderLineCto();
     ol2.setDish(dishEto);
-    ol2.setExtras(new ArrayList<IngredientEntity>());
     ol1.setOrderLine(olEto2);
 
     // order
