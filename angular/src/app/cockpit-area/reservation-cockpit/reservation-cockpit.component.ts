@@ -40,16 +40,17 @@ export class ReservationCockpitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit(): void {
-    this.reservationCockpitService.getReservations().subscribe((reservations: ReservationView[]) => {
-      this.data = reservations;
-      this.filteredData = reservations;
-      this.filteredTotal = reservations.length;
-    });
+    this.reservationCockpitService.getReservations({date: undefined, email: undefined, bookingId: undefined})
+        .subscribe((reservations: ReservationView[]) => {
+          this.data = reservations;
+          this.filteredData = reservations;
+          this.filteredTotal = reservations.length;
+        });
     this.filter();
   }
 
   applyFilters(filters: any): void {
-    this.reservationCockpitService.filterReservations(filters).subscribe((orders: ReservationView[]) => {
+    this.reservationCockpitService.getReservations(filters).subscribe((orders: ReservationView[]) => {
       this.data = orders;
       this.filteredData = orders;
       this.filteredTotal = orders.length;
@@ -58,11 +59,12 @@ export class ReservationCockpitComponent implements OnInit {
 
   clearFilters(filters: any): void {
     filters.reset();
-    this.reservationCockpitService.getReservations().subscribe((orders: ReservationView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
-    });
+    this.reservationCockpitService.getReservations({date: undefined, email: undefined, bookingId: undefined})
+        .subscribe((orders: ReservationView[]) => {
+          this.data = orders;
+          this.filteredData = orders;
+          this.filteredTotal = orders.length;
+        });
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {

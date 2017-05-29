@@ -9,10 +9,6 @@ import { orderBy, matches, includes, find } from 'lodash';
 @Injectable()
 export class DishesInMemoryService implements IDishesDataService {
 
-  get(): Observable <Dish[]> {
-   return Observable.of(dishes);
-  }
-
   filter( filters: Filter): Observable <Dish[]> {
     return Observable.of(orderBy(dishes, [filters.sortBy.name], [filters.sortBy.dir])
                           .filter((dish: Dish) => {
@@ -22,9 +18,17 @@ export class DishesInMemoryService implements IDishesDataService {
                               return true;
                             }
                           }).filter((dish: Dish) => {
-                            return dish.price > filters.maxPrice;
+                            if (filters.maxPrice) {
+                              return dish.price > filters.maxPrice;
+                            } else {
+                              return true;
+                            }
                           }).filter((dish: Dish) => {
-                            return dish.likes > filters.minLikes;
+                            if (filters.minLikes) {
+                              return dish.likes > filters.minLikes;
+                            } else {
+                              return true;
+                            }
                           }).filter( (dish: Dish) => {
                             if (filters.categories) {
                               return filters.categories.every( (category: {id: string}) => {

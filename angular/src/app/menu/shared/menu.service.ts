@@ -22,37 +22,44 @@ export class MenuService {
   }
 
   composeFilters(filter: any, sortDir: string): any {
+    let filtersComposed: Filter;
     let categories: any = [];
-    map(filter, (value: boolean, field: string) => {
-      if (value === true) {
-        categories.push({id: field});
-      }
-    });
+    if (filter) {
+      map(filter, (value: boolean, field: string) => {
+        if (value === true) {
+          categories.push({id: field});
+        }
+      });
 
-    let filtersComposed: Filter = {
-      categories: categories,
-      searchBy: filter.searchBy,
-      sortBy: {
-        name: filter.sortName,
-        dir: sortDir,
-      },
-      maxPrice: filter.maxPrice,
-      minLikes: filter.minLikes,
-      isFav: filter.isFav,
-    };
-    return filtersComposed;
+      filtersComposed = {
+        categories: categories,
+        searchBy: filter.searchBy,
+        sortBy: {
+          name: filter.sortName,
+          dir: sortDir,
+        },
+        maxPrice: filter.maxPrice,
+        minLikes: filter.minLikes,
+        isFav: filter.isFav,
+      };
+    } else {
+      filtersComposed = {
+        searchBy: undefined,
+        sortBy: {name: '', dir: ''},
+        maxPrice: undefined,
+        minLikes: undefined,
+        isFav: undefined,
+        categories: categories,
+      };
+    }
+    return  filtersComposed;
   }
 
   clearSelectedExtras(menuInfo: DishView): void {
     map(menuInfo.extras, (extra: ExtraView) => { extra.selected = false; });
   }
 
-  getDishes(): Observable<DishView[]> {
-    return this.dishesDataService.get()
-            .map((dishes: Dish[]) => dishes as DishView[]); // TODO: Replace with a converter
-  }
-
-  postFilters(filters: any): Observable<any> {
+  getDishes(filters: any): Observable<DishView[]> {
     return this.dishesDataService.filter(filters)
             .map((dishes: Dish[]) => dishes as DishView[]); // TODO: Replace with a converter
   }

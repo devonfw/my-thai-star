@@ -9,13 +9,8 @@ export class ReservationCockpitService {
   constructor(private bookingDataService: BookingDataService) {
   }
 
-  getReservations(): Observable<ReservationView[]> {
-    return this.bookingDataService.getReservations()
-               .map((orders: ReservationView[]) => orders as ReservationView[]);
-  }
-
-  filterReservations(filters: FilterCockpitView): Observable<ReservationView[]> {
-    return this.bookingDataService.filterReservations(filters)
+  getReservations(filters: FilterCockpitView): Observable<ReservationView[]> {
+    return this.bookingDataService.getReservations(filters)
                .map((orders: ReservationView[]) => orders as ReservationView[]);
   }
 

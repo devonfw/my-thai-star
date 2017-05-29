@@ -1,4 +1,4 @@
-import { ExtraView, ReservationView } from '../viewModels/interfaces';
+import { ExtraView, OrderListView, ReservationView } from '../viewModels/interfaces';
 import { Dish, LoginInfo, Role } from './backendModels/interfaces';
 
 export const extras: ExtraView[] = [{
@@ -115,21 +115,6 @@ export const bookedTables: ReservationView[] = [{
         assistants: 3,
         bookingId: 500,
         tableId: 0,
-        orders: [{
-                  idDish: 0,
-                  name: 'Pad Kee Mao',
-                  price: 5.90,
-                  extras: [{id: 1, name: 'Chicken', price: 2, selected: true}],
-                  amount: 1,
-                  comment: 'Hello mom!',
-                }, {
-                  idDish: 1,
-                  name: 'Red Curry',
-                  price: 5.90,
-                  extras: [],
-                  amount: 1,
-                  comment: 'I want it really red',
-                }],
         guestList: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
                         {email: 'emailFriend2@email.com', acceptance: 'yes'},
                         {email: 'emailFriend3@email.com', acceptance: ''}],
@@ -142,23 +127,6 @@ export const bookedTables: ReservationView[] = [{
         assistants: 2,
         bookingId: 501,
         tableId: 1,
-        orders: [{
-                  idDish: 1,
-                  name: 'Red Curry',
-                  price: 5.90,
-                  extras: [{id: 2, name: 'Pork', price: 1, selected: true},
-                           {id: 0, name: 'Tofu', price: 1, selected: true},
-                           {id: 1, name: 'Chicken', price: 2, selected: true}],
-                  amount: 1,
-                  comment: 'I hope this curry worths the price',
-                }, {
-                  idDish: 1,
-                  name: 'Red Curry',
-                  price: 5.90,
-                  extras: [{id: 2, name: 'Pork', price: 1, selected: true}],
-                  amount: 1,
-                  comment: 'hot sauce',
-                }],
         guestList: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
                   {email: 'emailFriend2@email.com', acceptance: 'no'}],
         }, {
@@ -170,15 +138,6 @@ export const bookedTables: ReservationView[] = [{
         assistants: 4,
         bookingId: 502,
         tableId: 2,
-        orders: [{
-                  idDish: 1,
-                  name: 'Red Curry',
-                  price: 5.90,
-                  extras: [{id: 2, name: 'Pork', price: 1, selected: true},
-                           {id: 0, name: 'Tofu', price: 1, selected: true}],
-                  amount: 1,
-                  comment: 'it would be nice if the pork can be well-cooked',
-                }],
         guestList: [],
         }, {
         date: '16/03/2017 20:45',
@@ -189,21 +148,63 @@ export const bookedTables: ReservationView[] = [{
         assistants: 1,
         bookingId: 503,
         tableId: 3,
-        orders: [{
-                  idDish: 2,
-                  name: 'Green Curry',
-                  price: 7.90,
-                  extras: [{id: 0, name: 'Tofu', price: 1, selected: true}],
+        guestList: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
+                        {email: 'emailFriend2@email.com', acceptance: 'no'},
+                        {email: 'emailFriend3@email.com', acceptance: 'yes'},
+                        {email: 'emailFriend4@email.com', acceptance: ''},
+                        {email: 'emailFriend5@email.com', acceptance: 'yes'}],
+        }];
+
+export const orderList: OrderListView[] = [{
+                bookingId: 500,
+                orderList: [{
+                        idDish: 0,
+                        name: 'Pad Kee Mao',
+                        price: 5.90,
+                        extras: [{id: 1, name: 'Chicken', price: 2, selected: true}],
+                        amount: 1,
+                        comment: 'Hello mom!',
+                        }, {
+                        idDish: 1,
+                        name: 'Red Curry',
+                        price: 5.90,
+                        extras: [],
+                        amount: 1,
+                        comment: 'I want it really red',
+                        }],
+        }, {
+                bookingId: 501,
+                orderList: [{
+                        idDish: 1,
+                        name: 'Red Curry',
+                        price: 5.90,
+                        extras: [{id: 2, name: 'Pork', price: 1, selected: true},
+                                {id: 0, name: 'Tofu', price: 1, selected: true},
+                                {id: 1, name: 'Chicken', price: 2, selected: true}],
+                        amount: 1,
+                        comment: 'I hope this curry worths the price',
+                        }, {
+                        idDish: 1,
+                        name: 'Red Curry',
+                        price: 5.90,
+                        extras: [{id: 2, name: 'Pork', price: 1, selected: true}],
+                        amount: 1,
+                        comment: 'hot sauce',
+                }],
+        }, {
+                bookingId: 502,
+                orderList: [{
+                  idDish: 1,
+                  name: 'Red Curry',
+                  price: 5.90,
+                  extras: [{id: 2, name: 'Pork', price: 1, selected: true},
+                           {id: 0, name: 'Tofu', price: 1, selected: true}],
                   amount: 1,
-                  comment: '',
-                }, {
-                  idDish: 4,
-                  name: 'Purple Curry',
-                  price: 6.70,
-                  extras: [],
-                  amount: 2,
-                  comment: 'one without tomatoe',
-                }, {
+                  comment: 'it would be nice if the pork can be well-cooked',
+                }],
+        }, {
+                bookingId: 503,
+                orderList: [{
                   idDish: 3,
                   name: 'Brown Curry',
                   price: 5.40,
@@ -218,23 +219,19 @@ export const bookedTables: ReservationView[] = [{
                   amount: 1,
                   comment: '',
                 }, {
-                  idDish: 6,
-                  name: 'Blue Curry',
-                  price: 9.00,
-                  extras: [{id: 2, name: 'Pork', price: 2, selected: true}],
-                  amount: 2,
-                  comment: '',
-                }, {
-                  idDish: 7,
-                  name: 'Black Curry',
-                  price: 3.50,
+                  idDish: 4,
+                  name: 'Purple Curry',
+                  price: 6.70,
                   extras: [],
-                  amount: 4,
-                  comment: 'extra sauce',
+                  amount: 2,
+                  comment: 'one without tomatoe',
+                }, {
+                  idDish: 2,
+                  name: 'Green Curry',
+                  price: 7.90,
+                  extras: [{id: 0, name: 'Tofu', price: 1, selected: true}],
+                  amount: 1,
+                  comment: '',
                 }],
-        guestList: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend2@email.com', acceptance: 'no'},
-                        {email: 'emailFriend3@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend4@email.com', acceptance: ''},
-                        {email: 'emailFriend5@email.com', acceptance: 'yes'}],
-        }];
+        },
+        ];

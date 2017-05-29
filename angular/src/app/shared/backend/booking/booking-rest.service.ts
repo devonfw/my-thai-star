@@ -3,7 +3,7 @@ import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
-import { ReservationView } from '../../viewModels/interfaces';
+import { ReservationView, OrderListView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
 
 @Injectable()
@@ -36,23 +36,13 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-     getBookingOrders(): Observable<ReservationView[]> {
-        return this.http.get(`${config.restServiceRoot}${this.getOrdersRestPath}`)
-              .map((res: Response) => res.json());
-     }
-
       getBookingOrder(id: number): Observable<ReservationView> {
         return this.http.get(`${config.restServiceRoot}${this.getOrderRestPath}`)
               .map((res: Response) => res.json());
      }
 
-      filterBookingOrders(filter: FilterCockpit): Observable<ReservationView[]> {
+      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
         return this.http.get(`${config.restServiceRoot}${this.filtersOrdersRestPath}`)
-                        .map((res: Response) => res.json());
-     }
-
-     getReservations(): Observable<ReservationView[]> {
-        return this.http.get(`${config.restServiceRoot}${this.getReservationsRestPath}`)
                         .map((res: Response) => res.json());
      }
 
@@ -61,7 +51,7 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-     filterReservations(filter: FilterCockpit): Observable<ReservationView[]> {
+     getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
         return this.http.get(`${config.restServiceRoot}${this.filterReservationRestPath}`)
                         .map((res: Response) => res.json());
      }

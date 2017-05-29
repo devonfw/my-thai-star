@@ -1,31 +1,21 @@
 {
-  "compileOnSave": false,
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
+    "outDir": "../out-tsc/spec",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "../dist/out-tsc",
-    "sourceMap": true,
-    "target": "es6",
-    "typeRoots": [
-      "../node_modules/@types"
-    ],
+    "target": "es5",
+    "baseUrl": "",
     "types": [
-      "jasmine", "hammerjs", "node"
-    ],
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "allowUnreachableCode": false,
-    "pretty": true
+      "jasmine",
+      "hammerjs",
+      "node"
+    ]
   },
   "files": [
     "test.ts"
   ],
   "include": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.d.ts"
   ]
 }

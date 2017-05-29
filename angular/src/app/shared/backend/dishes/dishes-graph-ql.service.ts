@@ -54,12 +54,6 @@ export class DishesGraphQlService implements IDishesDataService {
     this.apollo = injector.get(Apollo);
   }
 
-  get(): Observable <Dish[]> {
-    return this.apollo.watchQuery<DishesQueryRepsonse>({ query: getDishesQuery })
-      .map((result: ApolloQueryResult<DishesQueryRepsonse>) => result.data.dishes)
-      .map((dishes: GqlDish[]) => dishes.map(this.convertToBackendDish));
-  }
-
   // added by Roberto, please, revise
   filter(filters: Filter): Observable <Dish[]> {
     return this.apollo.watchQuery<DishesQueryRepsonse>({ query: getDishesQuery })

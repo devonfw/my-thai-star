@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 export interface IDishesDataService {
 
-    get(): Observable<DishView[]>;
     filter(filters: Filter): Observable<DishView[]>;
 
 }
