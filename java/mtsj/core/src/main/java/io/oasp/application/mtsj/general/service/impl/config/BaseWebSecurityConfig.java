@@ -33,7 +33,7 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${security.cors.enabled}")
-  boolean corsEnabled = false;
+  boolean corsEnabled = true;
 
   @Inject
   private UserDetailsService userDetailsService;
@@ -63,7 +63,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   public void configure(HttpSecurity http) throws Exception {
 
     String[] unsecuredResources =
-        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
+        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout", "/services/rest/**" };
 
     http
         //
