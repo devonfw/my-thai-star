@@ -34,7 +34,7 @@ export function relationArrayOfIds(table2: any, propArray: string, propT2: strin
     };
 }
 
-export function getNanoTime(){
+export function getNanoTime() {
     const hrTime = process.hrtime();
     return hrTime[0] * 1000000000 + hrTime[1];
 }
@@ -78,4 +78,28 @@ export function objectToArray(object: any) {
     }
 
     return res;
+}
+
+export function getPagination(pageSize: number, page: number, list: any[]): types.IPaginatedList {
+    if (page > Math.ceil(list.length / pageSize)) {
+        return {
+            pagination: {
+                size: pageSize,
+                page,
+                total: list.length,
+            },
+            result: [],
+        };
+    }
+
+    const [ini, end] = [(page - 1) * pageSize, Math.min(list.length, page * pageSize)];
+
+    return {
+        pagination: {
+            size: pageSize,
+            page,
+            total: list.length,
+        },
+        result: _.slice(list, ini, end),
+    };
 }

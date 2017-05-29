@@ -40,7 +40,6 @@ app.use(bodyParser.json());
  * API routes
  */
 app.use('/mythaistar/services/rest/Dishmanagement', dishes.router);
-// app.use('/mythaistar/services/rest/Mailmanagement', mailer.router);
 app.use('/mythaistar/services/rest/Ordermanagement', order.router);
 app.use('/mythaistar/services/rest/Bookingmanagement', booking.router);
 

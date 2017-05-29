@@ -1,0 +1,43 @@
+node {
+    stage 'Checking out oasp4j from Git'
+        // specify here the URL to your repo
+        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star'
+    
+    stage 'Add distributionManagement to sample'
+        // point the distributionManagement to THIS Nexus
+        // could be done locally or by default
+        sh """
+        cd java/mtsj
+        echo '<distributionManagement>
+            <repository>
+              <id>devon.releases</id>
+              <name>devon Releases</name>
+              <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/releases/</url>
+            </repository>
+            <snapshotRepository>
+              <id>devon.snapshots</id>
+              <name>devon Snapshots</name>
+              <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/</url>
+            </snapshotRepository>
+          </distributionManagement>
+        </project>' > append
+        
+        sed -i 's|</project>||g' pom.xml
+        cat append >> pom.xml
+        tail -n 50 pom.xml
+        """
+    
+        
+    stage 'Build and save artifact in Nexus'
+        // let's deploy this oasp4j-template in THIS Nexus
+        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+            sh """
+                cd java/mtsj
+                mvn -s $MAVEN_SETTINGS clean deploy
+            """
+        }
+        
+    stage 'Deploy in web server'
+        //
+    
+}

@@ -294,6 +294,18 @@ const tables: types.ITable[] = [
         id: '1',
         seatsNumber: 3,
     },
+    {
+        id: '2',
+        seatsNumber: 5,
+    },
+    {
+        id: '3',
+        seatsNumber: 5,
+    },
+    {
+        id: '4',
+        seatsNumber: 8,
+    },
 ];
 
 fn.insert('Dish', Dishes).then((res: string) => {
