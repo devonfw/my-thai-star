@@ -7,9 +7,9 @@ import { TdDataTableService,
          IPageChangeEvent,
          ITdDataTableColumn } from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
-import { OrderDialogComponent } from 'app/cockpit-area/order-cockpit/order-dialog/order-dialog.component';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
-import { ReservationView } from '../../shared/viewModels/interfaces';
+import { FilterCockpitView, ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -18,14 +18,14 @@ import { ReservationView } from '../../shared/viewModels/interfaces';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  data: ReservationView[];
+  data: OrderListView[];
   columns: ITdDataTableColumn[] = [
     { name: 'date', label: 'Reservation date'},
     { name: 'email', label: 'Email' },
     { name: 'bookingId', label: 'Reference number'},
   ];
 
-  filteredData: ReservationView[];
+  filteredData: OrderListView[];
   filteredTotal: number;
 
   fromRow: number = 1;
@@ -39,7 +39,7 @@ export class OrderCockpitComponent implements OnInit {
               private orderCockpitService: OrderCockpitService) {}
 
   ngOnInit(): void {
-    this.orderCockpitService.getBookingOrders().subscribe((orders: ReservationView[]) => {
+    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
       this.data = orders;
       this.filteredData = orders;
       this.filteredTotal = orders.length;
@@ -47,12 +47,21 @@ export class OrderCockpitComponent implements OnInit {
     this.filter();
   }
 
-  applyFilters(filters: FormGroup): void {
-    // apply the filters
+  applyFilters(filters: FilterCockpitView): void {
+    this.orderCockpitService.getBookingOrders(filters).subscribe((orders: OrderListView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
-  clearFilters(): void {
-    // clear the filters
+  clearFilters(filters: any): void {
+    filters.reset();
+    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
+    });
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {

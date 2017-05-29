@@ -16,7 +16,7 @@ import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dial
 })
 export class HeaderComponent {
 
-  @Output('openCloseSidenavMobile') mobileSidenavEmitter: EventEmitter<any> = new EventEmitter();
+  @Output('openCloseSidenavMobile') sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public window: WindowService,
               public router: Router,
@@ -31,13 +31,13 @@ export class HeaderComponent {
     sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }
 
-  openCloseSideNavMobile(): void {
-    this.mobileSidenavEmitter.emit();
+  openCloseNavigationSideNav(): void {
+    this.sidenavNavigationEmitter.emit();
   }
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
-    this.mobileSidenavEmitter.emit();
+    this.sidenavNavigationEmitter.emit();
   }
 
   openLoginDialog(): void {

@@ -8,6 +8,12 @@ export class Filter {
     categories: [{ id: string }];
 }
 
+export class FilterCockpit {
+    date: string;
+    email: string;
+    bookingId: number;
+}
+
 // DISHES
 export class Dish {
     id: number;
@@ -34,9 +40,9 @@ export class BookingInfo {
     name: string;
     email: string;
     bookingType: number;
-    assistants: number;
-    orders: OrderInfo[];
-    guestList: string[];
+    orders?: OrderInfo[];
+    assistants?: number;
+    guestList?: [{email: string}];
 }
 
 export class FriendsInvite {
@@ -45,8 +51,12 @@ export class FriendsInvite {
 }
 
 export class OrderInfo {
-    idDish: number;
+    orderLine: OrderLineInfo;
     extras: number[];
+}
+
+export class OrderLineInfo {
+    idDish: number;
     amount: number;
     comment: string;
 }

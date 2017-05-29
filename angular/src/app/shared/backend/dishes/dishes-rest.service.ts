@@ -8,18 +8,12 @@ import { config } from '../../../config';
 @Injectable()
 export class DishesRestService implements IDishesDataService {
 
- private readonly dishesRestPath: string = '/dishes';
- private readonly filtersRestPath: string = '/filter';
+ private readonly filtersRestPath: string = '/Dish/Search';
 
  private http: Http;
 
  constructor(private injector: Injector) {
    this.http = this.injector.get(Http);
- }
-
- get(): Observable<Dish[]> {
-   return this.http.get(`${config.restServiceRoot}${this.dishesRestPath}`)
-                   .map((res: Response) => res.json());
  }
 
  filter(filters: Filter): Observable<Dish[]> {

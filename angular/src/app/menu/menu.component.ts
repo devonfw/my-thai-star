@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.menuService.getDishes().subscribe((dishes: DishView[]) => {
+      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
         this.menus = dishes;
       });
     }
@@ -31,7 +31,7 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters: any): void {
-      this.menuService.postFilters(this.menuService.composeFilters(filters, this.sortDir))
+      this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir))
                       .subscribe((data: any) => {
                         this.menus = data;
                       });
@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit {
       likes.value = 0;
       price.value = 0;
       form.reset();
-      this.menuService.getDishes().subscribe((dishes: DishView[]) => {
+      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
         this.menus = dishes;
       });
     }

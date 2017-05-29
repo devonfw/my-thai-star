@@ -24,10 +24,6 @@ export class DishesDataService implements IDishesDataService {
         }
     }
 
-    get(): Observable<Dish[]> {
-        return this.usedImplementation.get();
-    }
-
     filter(filters: Filter): Observable<Dish[]> {
         return this.usedImplementation.filter(filters);
     }

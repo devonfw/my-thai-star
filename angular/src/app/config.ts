@@ -1,3 +1,3 @@
 export const config: any = {
-    restServiceRoot:  '/v1',
+    restServiceRoot:  '/mythaistar/services/rest/Dishmanagement/v1/',
 };
