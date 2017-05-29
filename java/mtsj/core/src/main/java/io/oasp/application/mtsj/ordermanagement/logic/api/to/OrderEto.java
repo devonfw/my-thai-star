@@ -14,7 +14,23 @@ public class OrderEto extends AbstractEto implements Order {
 
   private Long invitedGuestId;
 
-  private String hostToken;
+  private String bookingToken;
+
+  /**
+   * @return bookingToken
+   */
+  public String getBookingToken() {
+
+    return this.bookingToken;
+  }
+
+  /**
+   * @param bookingToken new value of {@link #getbookingToken}.
+   */
+  public void setBookingToken(String bookingToken) {
+
+    this.bookingToken = bookingToken;
+  }
 
   private Long hostId;
 

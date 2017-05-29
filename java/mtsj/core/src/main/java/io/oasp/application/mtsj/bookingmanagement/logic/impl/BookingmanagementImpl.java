@@ -15,8 +15,10 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.oasp.application.mtsj.bookingmanagement.common.api.exception.CancelInviteNotAllowedException;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
@@ -32,8 +34,11 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearc
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
+import io.oasp.application.mtsj.mailservice.api.Mail;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -47,6 +52,15 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
    * Logger instance.
    */
   private static final Logger LOG = LoggerFactory.getLogger(BookingmanagementImpl.class);
+
+  @Value("${server.port}")
+  private int port;
+
+  @Value("${server.context-path}")
+  private String serverContextPath;
+
+  @Value("${mythaistar.hourslimitcancellation}")
+  private int hoursLimit;
 
   /**
    * @see #getBookingDao()
@@ -68,6 +82,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   @Inject
   private Ordermanagement orderManagement;
+
+  @Inject
+  private Mail mailService;
 
   /**
    * The constructor.
@@ -101,6 +118,16 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   @Override
   public boolean deleteBooking(Long bookingId) {
+
+    OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
+    criteria.setBookingId(bookingId);
+    List<OrderCto> bookingOrders = this.orderManagement.findOrderCtos(criteria).getResult();
+    for (OrderCto orderCto : bookingOrders) {
+      boolean deleteOrderResult = this.orderManagement.deleteOrder(orderCto.getOrder().getId());
+      if (deleteOrderResult) {
+        LOG.debug("The order with id '{}' has been deleted.", orderCto.getOrder().getId());
+      }
+    }
 
     BookingEntity booking = getBookingDao().find(bookingId);
     getBookingDao().delete(booking);
@@ -141,6 +168,8 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
     LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
+
+    sendConfirmationEmails(resultEntity);
 
     return getBeanMapper().map(resultEntity, BookingEto.class);
   }
@@ -195,6 +224,12 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public boolean deleteInvitedGuest(Long invitedGuestId) {
 
     InvitedGuestEntity invitedGuest = getInvitedGuestDao().find(invitedGuestId);
+    OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
+    criteria.setHostToken(invitedGuest.getGuestToken());
+    List<OrderCto> guestOrdersCto = this.orderManagement.findOrderCtos(criteria).getResult();
+    for (OrderCto orderCto : guestOrdersCto) {
+      this.orderManagement.deleteOrder(orderCto.getOrder().getId());
+    }
     getInvitedGuestDao().delete(invitedGuest);
     LOG.debug("The invitedGuest with id '{}' has been deleted.", invitedGuestId);
     return true;
@@ -270,17 +305,8 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return saveInvitedGuest(invited);
   }
 
+  @Override
   public InvitedGuestEto declineInvite(String guestToken) {
-
-    Objects.requireNonNull(guestToken);
-    InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
-    criteria.setGuestToken(guestToken);
-    InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
-    invited.setAccepted(false);
-    return saveInvitedGuest(invited);
-  }
-
-  public InvitedGuestEto revokeAcceptedInvite(String guestToken) {
 
     Objects.requireNonNull(guestToken);
     InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
@@ -288,8 +314,13 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
     InvitedGuestEntity invitedEntity = getInvitedGuestDao().findOne(invited.getId());
     invited.setAccepted(false);
-    this.orderManagement.deleteOrder(invitedEntity.getOrder().getId());
-    // TODO - Modify deleteOrder service to delete the orderLines first
+
+    OrderSearchCriteriaTo guestOrderCriteria = new OrderSearchCriteriaTo();
+    guestOrderCriteria.setInvitedGuestId(invitedEntity.getId());
+    List<OrderCto> guestOrdersCto = this.orderManagement.findOrderCtos(guestOrderCriteria).getResult();
+    for (OrderCto orderCto : guestOrdersCto) {
+      this.orderManagement.deleteOrder(orderCto.getOrder().getId());
+    }
     // TODO - Estudy about Cascade
     // TODO - Send confirmation email and info email to the host
     return saveInvitedGuest(invited);
@@ -316,18 +347,119 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return null;
   }
 
+  @Override
   public void cancelInvite(String bookingToken) {
 
     Objects.requireNonNull(bookingToken, "bookingToken");
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
     bookingCriteria.setBookingToken(bookingToken);
-    List<BookingEto> toCancel = findBookingEtos(bookingCriteria).getResult();
-    if (!toCancel.isEmpty()) {
-      toCancel.get(0).setCanceled(true);
+    List<BookingEto> booking = findBookingEtos(bookingCriteria).getResult();
+    if (!booking.isEmpty()) {
+      // toCancel.get(0).setCanceled(true);
+      if (!cancelInviteAllowed(booking.get(0))) {
+        throw new CancelInviteNotAllowedException();
+      }
+      InvitedGuestSearchCriteriaTo guestCriteria = new InvitedGuestSearchCriteriaTo();
+      guestCriteria.setBookingId(booking.get(0).getId());
+      List<InvitedGuestEto> guestsEto = findInvitedGuestEtos(guestCriteria).getResult();
+      if (!guestsEto.isEmpty()) {
+        for (InvitedGuestEto guestEto : guestsEto) {
+          deleteInvitedGuest(guestEto.getId());
+          sendCancellationEmailToGuest(booking.get(0), guestEto);
+        }
+      }
+      // delete booking and related orders
+      deleteBooking(booking.get(0).getId());
+      sendCancellationEmailToHost(booking.get(0));
     }
-    // TODO - Remove invitedGuests
-    // TODO - Remove Orders
+  }
+
+  private void sendConfirmationEmails(BookingEntity booking) {
+
+    if (!booking.getInvitedGuests().isEmpty()) {
+      for (InvitedGuestEntity guest : booking.getInvitedGuests()) {
+        sendInviteEmailToGuest(guest, booking);
+      }
+    }
+
+    sendConfirmationEmailToHost(booking);
+  }
+
+  private void sendInviteEmailToGuest(InvitedGuestEntity guest, BookingEntity booking) {
+
+    try {
+      StringBuilder invitedMailContent = new StringBuilder();
+      invitedMailContent.append("MY THAI STAR").append("\n");
+      invitedMailContent.append("Hi ").append(guest.getEmail()).append("\n");
+      invitedMailContent.append(booking.getEmail()).append(" has invited you to an event on My Thai Star restaurant")
+          .append("\n");
+      invitedMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
+
+      String linkAccept = "http://localhost:" + this.port + "/" + this.serverContextPath
+          + "/services/rest/bookingmanagement/v1/invitedguest/accept/" + guest.getEmail();
+
+      String linkDecline = "http://localhost:" + this.port + "/" + this.serverContextPath
+          + "/services/rest/bookingmanagement/v1/invitedguest/decline/" + guest.getEmail();
+
+      invitedMailContent.append("To accept: ").append(linkAccept).append("\n");
+      invitedMailContent.append("To decline: ").append(linkDecline).append("\n");
+
+      this.mailService.sendMail(guest.getEmail(), "Event invite", invitedMailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+
+  }
+
+  private void sendConfirmationEmailToHost(BookingEntity booking) {
+
+    try {
+      StringBuilder hostMailContent = new StringBuilder();
+      hostMailContent.append("MY THAI STAR").append("\n");
+      hostMailContent.append("Hi ").append(booking.getEmail()).append("\n");
+      hostMailContent.append("Your booking has been confirmed.");
+      hostMailContent.append("Host: ").append(booking.getName()).append("<").append(booking.getEmail()).append(">")
+          .append("\n");
+      hostMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
+      if (!booking.getInvitedGuests().isEmpty()) {
+        hostMailContent.append("Guest list:").append("\n");
+        for (InvitedGuestEntity guest : booking.getInvitedGuests()) {
+          hostMailContent.append("-").append(guest.getEmail()).append("\n");
+        }
+      }
+      this.mailService.sendMail(booking.getEmail(), "Invite confirmation", hostMailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private void sendCancellationEmailToGuest(BookingEto booking, InvitedGuestEto guest) {
+
+    try {
+      StringBuilder mailContent = new StringBuilder();
+      mailContent.append("MY THAI STAR").append("\n");
+      mailContent.append("Hi ").append(guest.getEmail()).append("\n");
+      mailContent.append("The invitation from ").append(booking.getEmail()).append(" for the event on ")
+          .append(booking.getBookingDate()).append(" has been cancelled.").append("\n");
+      this.mailService.sendMail(guest.getEmail(), "Event cancellation", mailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private void sendCancellationEmailToHost(BookingEto booking) {
+
+    try {
+      StringBuilder mailContent = new StringBuilder();
+      mailContent.append("MY THAI STAR").append("\n");
+      mailContent.append("Hi ").append(booking.getEmail()).append("\n");
+      mailContent.append("The invitation for the event on ").append(booking.getBookingDate())
+          .append(" has been cancelled.").append("\n");
+      this.mailService.sendMail(booking.getEmail(), "Event cancellation", mailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
   }
 
   /**
@@ -338,6 +470,28 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public TableDao getTableDao() {
 
     return this.tableDao;
+  }
+
+  private boolean cancelInviteAllowed(BookingEto booking) {
+
+    Long bookingTimeMillis = booking.getBookingDate().getTime();
+    Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
+    Long now = Timestamp.from(Instant.now()).getTime();
+
+    return (now > cancellationLimit) ? false : true;
+  }
+
+  @Override
+  public BookingEto saveBooking(BookingEto booking) {
+
+    Objects.requireNonNull(booking, "booking");
+    BookingEntity bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
+
+    // initialize, validate bookingEntity here if necessary
+    getBookingDao().save(bookingEntity);
+    LOG.debug("Booking with id '{}' has been created.", bookingEntity.getId());
+
+    return getBeanMapper().map(bookingEntity, BookingEto.class);
   }
 
 }

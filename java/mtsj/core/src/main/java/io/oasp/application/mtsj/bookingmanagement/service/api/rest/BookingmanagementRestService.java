@@ -107,6 +107,18 @@ public interface BookingmanagementRestService {
   @POST
   public PaginatedListTo<InvitedGuestEto> findInvitedGuestsByPost(InvitedGuestSearchCriteriaTo searchCriteriaTo);
 
+  @Path("/invitedguest/accept/{token}")
+  @GET
+  public InvitedGuestEto acceptInvite(@PathParam("token") String guestToken);
+
+  @Path("/invitedguest/decline/{token}")
+  @GET
+  public InvitedGuestEto declineInvite(@PathParam("token") String guestToken);
+
+  @Path("/booking/cancel/{token}")
+  @GET
+  public void cancelInvite(@PathParam("token") String bookingToken);
+
   /**
    * Delegates to {@link Bookingmanagement#findTable}.
    *
@@ -145,5 +157,15 @@ public interface BookingmanagementRestService {
   @Path("/table/search")
   @POST
   public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo);
+
+  /**
+   * Delegates to {@link Bookingmanagement#saveBooking}.
+   *
+   * @param booking the {@link BookingEto} to be saved
+   * @return the recently created {@link BookingEto}
+   */
+  @POST
+  @Path("/booking/")
+  public BookingEto saveBooking(BookingEto booking);
 
 }

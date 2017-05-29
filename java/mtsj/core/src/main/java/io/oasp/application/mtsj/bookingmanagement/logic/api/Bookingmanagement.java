@@ -72,6 +72,8 @@ public interface Bookingmanagement {
    */
   boolean deleteInvitedGuest(Long invitedGuestId);
 
+  void cancelInvite(String bookingToken);
+
   /**
    * Saves a invitedGuest and store it in the database.
    *
@@ -111,5 +113,17 @@ public interface Bookingmanagement {
    * @return the new {@link TableEto} that has been saved with ID and version.
    */
   TableEto saveTable(TableEto table);
+
+  InvitedGuestEto acceptInvite(String guestToken);
+
+  InvitedGuestEto declineInvite(String guestToken);
+
+  /**
+   * Saves a booking and store it in the database.
+   *
+   * @param booking the {@link BookingEto} to create.
+   * @return the new {@link BookingEto} that has been saved with ID and version.
+   */
+  BookingEto saveBooking(BookingEto booking);
 
 }

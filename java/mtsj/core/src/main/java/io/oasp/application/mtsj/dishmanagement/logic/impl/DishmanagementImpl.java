@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.oasp.application.mtsj.dishmanagement.common.api.Category;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.CategoryEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
@@ -143,6 +144,10 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       ctos.add(cto);
     }
 
+    if (!criteria.getCategories().isEmpty()) {
+      ctos = categoryFilter(ctos, criteria.getCategories());
+    }
+
     return new PaginatedListTo<>(ctos, searchResult.getPagination());
   }
 
@@ -180,6 +185,41 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       }
     }
     return new PaginatedListTo<>(ctos, searchResult.getPagination());
+  }
+
+  private List<DishCto> categoryFilter(List<DishCto> dishes, List<CategoryEto> categories) {
+
+    List<DishCto> dishFiltered = new ArrayList<>();
+    for (DishCto dish : dishes) {
+
+      List<CategoryEto> entityCats = dish.getCategories();
+      for (Category entityCat : entityCats) {
+        for (Category category : categories) {
+          if (category.getId() == entityCat.getId()) {
+            if (!dishAlreadyAdded(dishFiltered, dish)) {
+              dishFiltered.add(dish);
+              break;
+            }
+
+          }
+        }
+      }
+
+    }
+
+    return dishFiltered;
+  }
+
+  private boolean dishAlreadyAdded(List<DishCto> dishEntitiesFiltered, DishCto dishEntity) {
+
+    boolean result = false;
+    for (DishCto entity : dishEntitiesFiltered) {
+      if (entity.getDish().getId() == dishEntity.getDish().getId()) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 
   /**

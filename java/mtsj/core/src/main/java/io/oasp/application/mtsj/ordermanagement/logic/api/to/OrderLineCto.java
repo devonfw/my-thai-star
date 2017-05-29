@@ -23,7 +23,7 @@ public class OrderLineCto extends AbstractCto {
 
   public OrderLineEto getOrderLine() {
 
-    return orderLine;
+    return this.orderLine;
   }
 
   public void setOrderLine(OrderLineEto orderLine) {
@@ -33,7 +33,7 @@ public class OrderLineCto extends AbstractCto {
 
   public OrderEto getOrder() {
 
-    return order;
+    return this.order;
   }
 
   public void setOrder(OrderEto order) {
@@ -43,7 +43,7 @@ public class OrderLineCto extends AbstractCto {
 
   public DishEto getDish() {
 
-    return dish;
+    return this.dish;
   }
 
   public void setDish(DishEto dish) {
@@ -53,7 +53,7 @@ public class OrderLineCto extends AbstractCto {
 
   public List<IngredientEto> getExtras() {
 
-    return extras;
+    return this.extras;
   }
 
   public void setExtras(List<IngredientEto> extras) {

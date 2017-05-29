@@ -6,6 +6,7 @@ import javax.inject.Named;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
@@ -28,21 +29,28 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public OrderEto saveOrder(OrderEto order) {
+  public OrderEto saveOrder(OrderCto order) {
 
     return this.ordermanagement.saveOrder(order);
   }
 
   @Override
-  public void deleteOrder(long id) {
+  public boolean deleteOrder(long id) {
 
-    this.ordermanagement.deleteOrder(id);
+    return this.ordermanagement.deleteOrder(id);
   }
 
   @Override
-  public PaginatedListTo<OrderEto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
+  public void cancelOrder(long id) {
 
-    return this.ordermanagement.findOrderEtos(searchCriteriaTo);
+    this.ordermanagement.deleteOrder(id);
+
+  }
+
+  @Override
+  public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
+
+    return this.ordermanagement.findOrderCtos(searchCriteriaTo);
   }
 
   @Override
@@ -64,9 +72,9 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public PaginatedListTo<OrderLineEto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo) {
+  public PaginatedListTo<OrderLineCto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo) {
 
-    return this.ordermanagement.findOrderLineEtos(searchCriteriaTo);
+    return this.ordermanagement.findOrderLineCtos(searchCriteriaTo);
   }
 
 }

@@ -42,21 +42,23 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     DishEntity dish = Alias.alias(DishEntity.class);
     EntityPathBase<DishEntity> alias = Alias.$(dish);
+
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
-    String name = criteria.getName();
-    if (name != null) {
-      query.where(Alias.$(dish.getName()).eq(name));
+    String searchBy = criteria.getSearchBy();
+    if (searchBy != null) {
+      query.where(Alias.$(dish.getName()).contains(searchBy).or(Alias.$(dish.getDescription()).contains(searchBy)));
     }
-    String description = criteria.getDescription();
-    if (description != null) {
-      query.where(Alias.$(dish.getDescription()).eq(description));
-    }
-    BigDecimal price = criteria.getPrice();
+
+    BigDecimal price = criteria.getMaxPrice();
     if (price != null) {
-      query.where(Alias.$(dish.getPrice()).eq(price));
+      query.where(Alias.$(dish.getPrice()).lt(price));
     }
-    return findPaginated(criteria, query, alias);
+
+    addOrderBy(query, alias, dish, criteria.getSort());
+    PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
+
+    return entitiesList;
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
@@ -80,12 +82,6 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
             query.orderBy(Alias.$(dish.getPrice()).asc());
           } else {
             query.orderBy(Alias.$(dish.getPrice()).desc());
-          }
-        } else if ("idImage".equals(orderEntry.getName())) {
-          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getImageId()).asc());
-          } else {
-            query.orderBy(Alias.$(dish.getImageId()).desc());
           }
         }
       }
