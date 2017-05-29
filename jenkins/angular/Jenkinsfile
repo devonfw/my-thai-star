@@ -1,0 +1,100 @@
+node {
+    stage 'Checking out my-thai-star from GitHub'
+        node {
+            git branch: 'master', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+        }
+
+    stage 'Loading Custom Tools & JAVA8'
+        node {
+            tool 'Node 6'
+            tool 'Yarn'
+            tool 'Angular CLI'
+            env.JAVA_HOME="${tool 'Java SE8'}"
+            env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+        }
+    
+    stage 'Install Dependencies'
+        node {
+            sh """
+                cd angular
+                npm i
+            """
+        }
+        
+    // stage 'Linting'
+    //     try {
+    //         node {
+    //             sh """
+    //                 cd angular
+    //                 ng lint --format checkstyle
+    //             """ 
+    //         }
+    //     } catch(err) {
+    //         echo "Linting not passed:"
+    //         currentBuild.result = 'FAILURE'
+    //     }
+    
+    //  stage 'SonarQube analysis'
+    //      node 
+    //      {
+    //         def scannerHome = tool 'SonarQube Scanner';
+    //          withSonarQubeEnv('SonarQube') 
+    //          {
+    //              sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=test_my_thai_star -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
+    //          }
+    //      }
+    
+    stage 'Execute Angular tests'
+        node {
+            sh """
+                cd angular
+                ng test --browsers PhantomJS --single-run
+            """
+        }
+    
+    // stage 'Execute Angular tests'
+    //     node {
+    //         sh """
+    //             cd angular
+    //             ng test --browsers PhantomJS --single-run
+    //         """
+    //         try {
+    //             // sh """
+    //             //     cd angular
+    //             //     ng test --browsers PhantomJS --single-run
+    //             // """
+    //         } catch (err) {
+    //             echo "Testing not passed:"
+    //             currentBuild.result = 'FAILURE'
+    //             throw err
+    //         }
+    //     }
+        
+    // stage 'Build Application'
+    //     node {
+    //         sh """
+    //             cd angular
+    //             ng build
+    //         """
+    //     }
+    
+    // stage 'Deployment'
+    //     input 'Should this build be deployed?'
+    //         node {
+    //             sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+    //                 sh """
+    //                     cd angular
+    //                     # Copy resulting "dist" folder from workspace to deployment server
+    //                     scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+                        
+    //                     # Launch application in Docker container
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+                    
+    //                 """
+    //             }
+    //             sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
+    //         }
+}
