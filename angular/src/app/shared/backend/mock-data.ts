@@ -157,6 +157,13 @@ export const bookedTables: ReservationView[] = [{
 
 export const orderList: OrderListView[] = [{
                 bookingId: 500,
+                booking: {
+                            name: 'user0',
+                            bookingDate: '38820586113508',
+                            creationDate: '1495782513508',
+                            email: 'user0@mail.com',
+                            tableId: 0,
+                          },
                 orderList: [{
                         idDish: 0,
                         name: 'Pad Kee Mao',
@@ -174,6 +181,13 @@ export const orderList: OrderListView[] = [{
                         }],
         }, {
                 bookingId: 501,
+                booking: {
+                            name: 'user0',
+                            bookingDate: '38820586113508',
+                            creationDate: '1495782513508',
+                            email: 'user0@mail.com',
+                            tableId: 1,
+                          },
                 orderList: [{
                         idDish: 1,
                         name: 'Red Curry',
@@ -193,6 +207,13 @@ export const orderList: OrderListView[] = [{
                 }],
         }, {
                 bookingId: 502,
+                booking: {
+                            name: 'user0',
+                            bookingDate: '38820586113508',
+                            creationDate: '1495782513508',
+                            email: 'user0@mail.com',
+                            tableId: 2,
+                          },
                 orderList: [{
                   idDish: 1,
                   name: 'Red Curry',
@@ -204,6 +225,13 @@ export const orderList: OrderListView[] = [{
                 }],
         }, {
                 bookingId: 503,
+                booking: {
+                            name: 'user0',
+                            bookingDate: '38820586113508',
+                            creationDate: '1495782513508',
+                            email: 'user0@mail.com',
+                            tableId: 3,
+                          },
                 orderList: [{
                   idDish: 3,
                   name: 'Brown Curry',

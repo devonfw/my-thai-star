@@ -49,7 +49,6 @@ export interface ReservationView {
     bookingType: number;
     assistants: number;
     guestList?: FriendsInvite[];
-    orders?: OrderView[];
 }
 
 export interface FriendsInvite {
@@ -69,4 +68,13 @@ export interface OrderView {
 export interface OrderListView {
     bookingId: number;
     orderList: OrderView[];
+    booking: OrderBookingView;
+}
+
+export interface OrderBookingView {
+    name: string,
+    bookingDate: string,
+    creationDate: string,
+    email: string,
+    tableId: number,
 }

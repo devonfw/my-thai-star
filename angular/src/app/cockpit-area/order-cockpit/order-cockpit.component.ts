@@ -20,8 +20,8 @@ export class OrderCockpitComponent implements OnInit {
 
   data: OrderListView[];
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'email', label: 'Email' },
+    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.email', label: 'Email' },
     { name: 'bookingId', label: 'Reference number'},
   ];
 
@@ -31,7 +31,7 @@ export class OrderCockpitComponent implements OnInit {
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 8;
-  sortBy: string = 'date';
+  sortBy: string = 'booking.bookingDate';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   constructor(private _dataTableService: TdDataTableService,

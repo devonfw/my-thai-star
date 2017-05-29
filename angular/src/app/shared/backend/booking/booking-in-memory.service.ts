@@ -57,13 +57,8 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(find(bookedTables, (booking: ReservationView) => booking.bookingId === id));
     }
 
-    saveOrders(orderList: OrderListInfo): Observable<ReservationView> {
-        const tableBooked: ReservationView = find(bookedTables, (booking: ReservationView) => booking.bookingId === orderList.bookingId);
-        if (!tableBooked) {
-            return Observable.throw(undefined);
-        }
-        tableBooked.orders = tableBooked.orders.concat(this.composeOrderList(orderList.orders));
-        return Observable.of(tableBooked);
+    saveOrders(order: OrderListInfo): Observable<number> {
+        return Observable.of(orderList.push(this.composeOrderList(order)));
     }
 
     findExtraById(id: number): ExtraView {
@@ -74,24 +69,42 @@ export class BookingInMemoryService implements IBookingDataService {
         return find(dishes, (dish: DishView) => dish.id === id);
     }
 
-    composeOrderList(orders: OrderInfo[]): OrderView[] {
-        let composedOrders: OrderView[] = [];
-        orders.forEach((order: OrderInfo) => {
+    findReservationById(id: number): ReservationView {
+        return find(bookedTables, (booking: ReservationView) => booking.bookingId === id);
+    }
+
+    composeOrderList(orders: OrderListInfo): OrderListView {
+        let composedOrders: OrderListView;        
+        let orderList = [];
+        orders.orders.forEach((order: OrderInfo) => {
             let dish: DishView = this.findDishById(order.orderLine.idDish);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
                 extras.push(this.findExtraById(extraId));
             });
-            composedOrders.push({
-                idDish: order.orderLine.idDish,
-                name: dish.name,
-                price: dish.price,
-                comment: order.orderLine.comment,
-                amount: order.orderLine.amount,
-                extras: extras,
+            orderList.push({
+                    idDish: order.orderLine.idDish,
+                    name: dish.name,
+                    price: dish.price,
+                    comment: order.orderLine.comment,
+                    amount: order.orderLine.amount,
+                    extras: extras,
             });
         });
-        return composedOrders;
+
+        let bookedTable = this.findReservationById(orders.bookingId);
+
+        return {
+            bookingId: orders.bookingId,
+            booking: {
+                name: bookedTable.name,
+                bookingDate: bookedTable.date,
+                creationDate: bookedTable.creationDate,
+                email: bookedTable.email,
+                tableId: bookedTable.tableId,
+            },
+            orderList: orderList,
+        };
     }
 
 }
