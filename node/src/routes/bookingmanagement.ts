@@ -1,5 +1,5 @@
 import { Request, Response, Router as eRouter } from 'express';
-import bussiness from '../logic';
+import * as bussiness from '../logic';
 import * as types from '../model/interfaces';
 import * as moment from 'moment';
 import { validEmail } from '../utils/utilFunctions';
@@ -7,7 +7,7 @@ import {lowerCase} from 'lodash';
 
 export const router = eRouter();
 
-router.post('/v1/Booking', (req: Request, res: Response) => {
+router.post('/v1/booking', (req: Request, res: Response) => {
     // check if param is correct
     if (!types.isBookingView(req.body)) {
         res.status(400).json({ message: 'Parser data error' });
@@ -37,7 +37,7 @@ router.post('/v1/Booking', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/InvitedGuest', (req: Request, res: Response) => {
+router.get('/v1/invitedguest', (req: Request, res: Response) => {
     if (req.query.guestToken === undefined || req.query.guestResponse === undefined) {
         res.status(400).json({ message: 'Invalid petition' });
     } else {
@@ -52,15 +52,43 @@ router.get('/v1/InvitedGuest', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/Booking/CancelInvited', (req: Request, res: Response) => {
+router.get('/v1/booking/cancelinvited', (req: Request, res: Response) => {
     if (req.query.reservationToken === undefined) {
-        res.status(400).json({ message: 'No reservation token given' });
+        res.status(400).json({ message: 'No booking token given' });
     } else {
         bussiness.cancelInvitation(req.query.reservationToken, (err: types.IError) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
                 res.status(204).json();
+            }
+        });
+    }
+});
+
+// router.post('/v1/booking/search', (req: Request, res: Response) => {
+//     if (req.query.reservationToken === undefined) {
+//         res.status(400).json({ message: 'No booking token given' });
+//     } else {
+//         bussiness.searchBooking(req.query.reservationToken, (err: types.IError) => {
+//             if (err) {
+//                 res.status(err.code).json(err.message);
+//             } else {
+//                 res.status(204).json();
+//             }
+//         });
+//     }
+// });
+
+router.post('/v1/booking/:id', (req: Request, res: Response) => {
+    if (req.params.id === undefined) {
+        res.status(400).json({ message: 'No booking token given' });
+    } else {
+        bussiness.getBookingById(req.params.id, (err: types.IError, booking?: types.IBookingView) => {
+            if (err) {
+                res.status(err.code).json(err.message);
+            } else {
+                res.status(200).json(booking);
             }
         });
     }

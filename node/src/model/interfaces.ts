@@ -1,4 +1,5 @@
 export interface IFilterView {
+    pagination: {size: number; page: number; total: number};
     categories: ICategoryView[];
     maxPrice: number;
     minLikes: number;
@@ -11,6 +12,16 @@ export interface IFilterView {
 export interface ISortByView {
     name: string;
     direction: string;
+}
+
+export interface IPaginatedList {
+    pagination: {
+        size: number;
+        page: number;
+        total: number;
+    };
+
+    result: IDishView[] | any[];
 }
 
 export interface ICategoryView {

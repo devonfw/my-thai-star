@@ -1,5 +1,5 @@
 import { Request, Response, Router as eRouter } from 'express';
-import bussiness from '../logic';
+import * as bussiness from '../logic';
 import * as types from '../model/interfaces';
 
 export const router = eRouter();
