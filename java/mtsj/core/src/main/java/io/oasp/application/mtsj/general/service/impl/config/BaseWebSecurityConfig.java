@@ -63,7 +63,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     String[] unsecuredResources =
         new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout", "/services/rest/**" };
-
     http
         //
         .userDetailsService(this.userDetailsService)

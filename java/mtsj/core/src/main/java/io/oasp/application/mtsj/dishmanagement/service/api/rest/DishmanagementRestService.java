@@ -9,6 +9,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategorySearchCriteriaTo;
@@ -103,6 +105,7 @@ public interface DishmanagementRestService {
    */
   @Path("/dish/search")
   @POST
+  @CrossOrigin
   public PaginatedListTo<DishCto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo);
 
   /**
