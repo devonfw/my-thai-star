@@ -6,6 +6,7 @@ import { CovalentChipsModule,
          CovalentDataTableModule,
          CovalentPagingModule,
          CovalentDialogsModule,
+         CovalentLoadingModule,
          CovalentNotificationsModule,
          CovalentCommonModule } from '@covalent/core';
 import { MaterialModule } from '@angular/material';
@@ -15,6 +16,7 @@ import { MaterialModule } from '@angular/material';
     CommonModule,
     CovalentChipsModule,
     CovalentLayoutModule,
+    CovalentLoadingModule,
     CovalentExpansionPanelModule,
     CovalentDataTableModule,
     CovalentPagingModule,

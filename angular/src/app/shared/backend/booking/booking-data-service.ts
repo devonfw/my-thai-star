@@ -38,4 +38,19 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.saveOrders(orders);
     }
 
+    acceptInvite(token: string): Observable<number> {
+         return this.usedImplementation.acceptInvite(token);
+     }
+
+    cancelInvite(token: string): Observable<number> {
+         return this.usedImplementation.cancelInvite(token);
+     }
+
+    cancelReserve(token: string): Observable<number> {
+         return this.usedImplementation.cancelReserve(token);
+     }
+
+    cancelOrder(token: string): Observable<number> {
+         return this.usedImplementation.cancelOrder(token);
+     }
 }

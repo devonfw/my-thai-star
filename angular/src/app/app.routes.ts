@@ -14,8 +14,10 @@ const routes: Routes = [
   { path: 'bookTable', component: BookTableComponent},
   { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuard]},
   { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuard]},
-  { path: 'invite/accept/:token', component: EmailConfirmationsComponent},
-  { path: 'invite/refuse/:token', component: EmailConfirmationsComponent},
+  { path: 'booking/acceptInvite/:token', component: EmailConfirmationsComponent},
+  { path: 'booking/rejectInvite/:token', component: EmailConfirmationsComponent},
+  { path: 'booking/cancel/:token', component: EmailConfirmationsComponent},
+  { path: 'booking/cancelOrder/:token', component: EmailConfirmationsComponent},
   { path: '**', redirectTo: '/restaurant', pathMatch: 'full' }];
 
 export const appRoutes: ModuleWithProviders = RouterModule.forRoot(routes);

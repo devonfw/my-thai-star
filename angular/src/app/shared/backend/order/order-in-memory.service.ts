@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { IBookingDataService } from './booking-data-service-interface';
+import { IOrderDataService } from './order-data-service-interface';
 import { ReservationView, DishView, FriendsInvite, OrderView, ExtraView, OrderListView } from '../../viewModels/interfaces';
 import { BookingInfo, FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes, orderList } from '../mock-data';
@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { assign, maxBy, find, filter, toString, toNumber } from 'lodash';
 
 @Injectable()
-export class BookingInMemoryService implements IBookingDataService {
+export class OrderInMemoryService implements IOrderDataService {
 
     bookTable(booking: BookingInfo): Observable<number> {
         let bookTable: ReservationView;

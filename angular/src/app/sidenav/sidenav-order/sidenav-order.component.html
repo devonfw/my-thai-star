@@ -3,7 +3,7 @@
   <button md-icon-button (click)="removeOrder()" class="push-bottom-xs"><md-icon style="color: lightgray">clear</md-icon></button>
   
   <div layout="column" class="pull-top-xs" flex>
-    <span class="orderName">{{order.name}}</span>
+    <span class="orderName">{{order.dish.name}}</span>
     <div layout="row">
       <span class="orderIngredients" *ngIf="extras.length === 0"> - </span>
       <span class="orderIngredients">{{extras}}</span>

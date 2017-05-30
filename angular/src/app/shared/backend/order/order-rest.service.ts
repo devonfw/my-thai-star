@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { IBookingDataService } from './booking-data-service-interface';
+import { IOrderDataService } from './order-data-service-interface';
 import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 import { ReservationView, OrderListView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
 
 @Injectable()
-export class BookingRestService implements IBookingDataService {
+export class OrderRestService implements IOrderDataService {
 
      private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
      private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
@@ -47,19 +47,19 @@ export class BookingRestService implements IBookingDataService {
      }
 
     acceptInvite(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.acceptReserveRestPath}` + token)
+        return this.http.get('${config.restServiceRoot}${this.acceptReserveRestPath} ' + token)
                         .map((res: Response) => res.json());
 
      }
 
     cancelInvite(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.rejectReserveRestPath}` + token)
+        return this.http.get('${config.restServiceRoot}${this.rejectReserveRestPath}' + token)
                         .map((res: Response) => res.json());
 
      }
 
     cancelReserve(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.cancelReserveRestPath}` + token)
+        return this.http.get('${config.restServiceRoot}${this.cancelReserveRestPath}' + token)
                         .map((res: Response) => res.json());
 
      }
