@@ -46,7 +46,7 @@ public interface Bookingmanagement {
    * @param booking the {@link BookingEto} to create.
    * @return the new {@link BookingEto} that has been saved with ID and version.
    */
-  BookingEto saveBooking(BookingEto booking, List<String> emails);
+  BookingEto saveBooking(BookingCto booking);
 
   /**
    * Returns a InvitedGuest by its id 'id'.
@@ -117,13 +117,5 @@ public interface Bookingmanagement {
   InvitedGuestEto acceptInvite(String guestToken);
 
   InvitedGuestEto declineInvite(String guestToken);
-
-  /**
-   * Saves a booking and store it in the database.
-   *
-   * @param booking the {@link BookingEto} to create.
-   * @return the new {@link BookingEto} that has been saved with ID and version.
-   */
-  BookingEto saveBooking(BookingEto booking);
 
 }

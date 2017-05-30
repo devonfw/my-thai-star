@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoField;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,12 +135,24 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public BookingEto saveBooking(BookingEto booking, List<String> emails) {
+  public BookingEto saveBooking(BookingCto booking) {
 
     Objects.requireNonNull(booking, "booking");
     BookingEntity bookingEntity = new BookingEntity();
     bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
+    bookingEntity.setCanceled(false);
+    List<InvitedGuestEntity> invited = getBeanMapper().mapList(booking.getInvitedGuests(), InvitedGuestEntity.class);
 
+    for (InvitedGuestEntity invite : invited) {
+      try {
+        invite.setGuestToken(buildToken(invite.getEmail(), "GB_"));
+      } catch (NoSuchAlgorithmException e) {
+        LOG.debug("MD5 Algorithm not available at the enviroment");
+      }
+      invite.setAccepted(false);
+    }
+
+    bookingEntity.setInvitedGuests(invited);
     try {
       bookingEntity.setBookingToken(buildToken(bookingEntity.getEmail(), "CB_"));
     } catch (NoSuchAlgorithmException e) {
@@ -151,19 +162,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     bookingEntity
         .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
 
-    List<InvitedGuestEto> invited = new ArrayList<>();
-    for (String email : emails) {
-      InvitedGuestEto invite = new InvitedGuestEto();
-      invite.setEmail(email);
-      try {
-        invite.setGuestToken(buildToken(email, "GB_"));
-      } catch (NoSuchAlgorithmException e) {
-        LOG.debug("MD5 Algorithm not available at the enviroment");
-        // TODO - Create exception
-      }
-      invite.setAccepted(false);
-      invited.add(invite);
-    }
     bookingEntity.setInvitedGuests(getBeanMapper().mapList(invited, InvitedGuestEntity.class));
 
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
@@ -479,19 +477,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     Long now = Timestamp.from(Instant.now()).getTime();
 
     return (now > cancellationLimit) ? false : true;
-  }
-
-  @Override
-  public BookingEto saveBooking(BookingEto booking) {
-
-    Objects.requireNonNull(booking, "booking");
-    BookingEntity bookingEntity = getBeanMapper().map(booking, BookingEntity.class);
-
-    // initialize, validate bookingEntity here if necessary
-    getBookingDao().save(bookingEntity);
-    LOG.debug("Booking with id '{}' has been created.", bookingEntity.getId());
-
-    return getBeanMapper().map(bookingEntity, BookingEto.class);
   }
 
 }

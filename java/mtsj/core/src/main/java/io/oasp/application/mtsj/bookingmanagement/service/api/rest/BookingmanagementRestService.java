@@ -1,7 +1,5 @@
 package io.oasp.application.mtsj.bookingmanagement.service.api.rest;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -47,7 +45,7 @@ public interface BookingmanagementRestService {
    */
   @POST
   @Path("/booking/")
-  public BookingEto saveBooking(BookingEto booking, List<String> emails);
+  public BookingEto saveBooking(BookingCto booking);
 
   /**
    * Delegates to {@link Bookingmanagement#deleteBooking}.
@@ -157,15 +155,4 @@ public interface BookingmanagementRestService {
   @Path("/table/search")
   @POST
   public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo);
-
-  /**
-   * Delegates to {@link Bookingmanagement#saveBooking}.
-   *
-   * @param booking the {@link BookingEto} to be saved
-   * @return the recently created {@link BookingEto}
-   */
-  @POST
-  @Path("/booking/")
-  public BookingEto saveBooking(BookingEto booking);
-
 }
