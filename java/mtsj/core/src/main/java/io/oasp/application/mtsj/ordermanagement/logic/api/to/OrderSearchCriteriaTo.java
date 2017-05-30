@@ -28,7 +28,7 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   public Long getBookingId() {
 
-    return bookingId;
+    return this.bookingId;
   }
 
   public void setBookingId(Long bookingId) {
@@ -38,7 +38,7 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   public Long getInvitedGuestId() {
 
-    return invitedGuestId;
+    return this.invitedGuestId;
   }
 
   public void setInvitedGuestId(Long invitedGuestId) {
@@ -48,7 +48,7 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   public String getHostToken() {
 
-    return hostToken;
+    return this.hostToken;
   }
 
   public void setHostToken(String hostToken) {
@@ -58,7 +58,7 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   public Long getHostId() {
 
-    return hostId;
+    return this.hostId;
   }
 
   public void setHostId(Long hostId) {

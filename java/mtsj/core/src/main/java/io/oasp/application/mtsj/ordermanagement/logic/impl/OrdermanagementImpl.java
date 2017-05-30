@@ -125,6 +125,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
       cto.setOrder(getBeanMapper().map(order, OrderEto.class));
       cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
+      cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
       List<OrderLineCto> orderLinesCto = new ArrayList<>();
       for (OrderLineEntity orderLine : order.getOrderLines()) {
         OrderLineCto orderLineCto = new OrderLineCto();
@@ -138,6 +139,28 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     return new PaginatedListTo<>(ctos, orders.getPagination());
+  }
+
+  public PaginatedListTo<OrderCto> findOrdersByEmail(String email, OrderSearchCriteriaTo criteria) {
+
+    PaginatedListTo<OrderCto> ordersCto = findOrderCtos(criteria);
+    List<OrderCto> ctos = new ArrayList<>();
+    for (OrderCto cto : ordersCto.getResult()) {
+      if (cto.getInvitedGuest() != null) {
+        if (cto.getInvitedGuest().getEmail().equals(email)) {
+          ctos.add(cto);
+        }
+      } else if (cto.getBooking() != null) {
+        if (cto.getBooking().getEmail().equals(email)) {
+          ctos.add(cto);
+        }
+      } else if (cto.getHost() != null) {
+        if (cto.getHost().getEmail().equals(email)) {
+          ctos.add(cto);
+        }
+      }
+    }
+    return new PaginatedListTo<>(ctos, ordersCto.getPagination());
   }
 
   @Override
