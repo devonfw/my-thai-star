@@ -23,9 +23,9 @@ export class OrderDialogComponent implements OnInit {
   datao: any[] = [];
   columnso: ITdDataTableColumn[] = [
     { name: 'dish.name', label: 'Dish'},
-    { name: 'dish.comment', label: 'Comments'},
+    { name: 'orderLine.comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
-    { name: 'dish.amount', label: 'Quantity' },
+    { name: 'orderLine.amount', label: 'Quantity' },
     { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 

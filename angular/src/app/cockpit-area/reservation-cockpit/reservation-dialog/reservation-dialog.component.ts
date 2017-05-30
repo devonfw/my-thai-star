@@ -16,7 +16,7 @@ export class ReservationDialogComponent implements OnInit {
   datat: ReservationView[] = [];
 
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
+    { name: 'bookingDate', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
     { name: 'name', label: 'Owner' },
     { name: 'email', label: 'Email' },
@@ -43,7 +43,7 @@ export class ReservationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.datat.push(this.data);
     this.datao = this.data.guestList;
-    if ( this.data.guestList.length === 0 ) {
+    if ( this.data.invitedGuests.length === 0 ) {
       this.columnst.push({ name: 'assistants', label: 'Assistants'});
     }
     this.filter();

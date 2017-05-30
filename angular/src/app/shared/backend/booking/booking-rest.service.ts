@@ -11,7 +11,7 @@ export class BookingRestService implements IBookingDataService {
 
      private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
      private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
-     private readonly getReservationsRestPath: string = 'ordermanagement/v1/getreservations';
+     private readonly getReservationsRestPath: string = 'bookingmanagement/v1/booking/search';
      private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
      private http: Http;
@@ -25,19 +25,19 @@ export class BookingRestService implements IBookingDataService {
                         .map((res: Response) => res.json());
      }
 
-      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
+     getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
         return this.http.post(`${config.restServiceRoot}${this.getOrdersRestPath}`, filter)
-                        .map((res: Response) => res.json());
+                        .map((res: Response) => res.json().result);
      }
 
      getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
-        return this.http.get(`${config.restServiceRoot}${this.getReservationsRestPath}`)
-                        .map((res: Response) => res.json());
+        return this.http.post(`${config.restServiceRoot}${this.getReservationsRestPath}`, filter)
+                        .map((res: Response) => res.json().result);
      }
 
-    saveOrders(orders: OrderListInfo): Observable<number> {
+     saveOrders(orders: OrderListInfo): Observable<number> {
         return this.http.post(`${config.restServiceRoot}${this.saveOrdersPath}`, {orders: orders})
                         .map((res: Response) => res.json());
-    }
+     }
 
 }

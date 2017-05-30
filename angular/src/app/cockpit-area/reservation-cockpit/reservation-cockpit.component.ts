@@ -21,9 +21,9 @@ export class ReservationCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
+    { name: 'bookingDate', label: 'Reservation date'},
     { name: 'email', label: 'Email' },
-    { name: 'bookingId', label: 'Reference number'},
+    { name: 'bookingToken', label: 'Reference number'},
   ];
 
   filteredData: ReservationView[];
@@ -32,7 +32,7 @@ export class ReservationCockpitComponent implements OnInit {
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 8;
-  sortBy: string = 'date';
+  sortBy: string = 'bookingDate';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   constructor(private reservationCockpitService: ReservationCockpitService,
@@ -45,8 +45,8 @@ export class ReservationCockpitComponent implements OnInit {
           this.data = reservations;
           this.filteredData = reservations;
           this.filteredTotal = reservations.length;
+          this.filter();
         });
-    this.filter();
   }
 
   applyFilters(filters: any): void {

@@ -18,14 +18,14 @@ import { FilterCockpitView, ReservationView, OrderListView } from '../../shared/
 })
 export class OrderCockpitComponent implements OnInit {
 
-  data: any[];
+  data: OrderListView[];
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
     { name: 'order.id', label: 'Reference number'},
   ];
 
-  filteredData: any[];
+  filteredData: OrderListView[];
   filteredTotal: number;
 
   fromRow: number = 1;
@@ -39,28 +39,28 @@ export class OrderCockpitComponent implements OnInit {
               private orderCockpitService: OrderCockpitService) {}
 
   ngOnInit(): void {
-    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: any) => {
-      this.data = orders.result;
-      this.filteredData = orders.result;
-      this.filteredTotal = orders.result.length;
+    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
       this.filter();
     });
   }
 
   applyFilters(filters: FilterCockpitView): void {
-    this.orderCockpitService.getBookingOrders(filters).subscribe((orders: any) => {
-      this.data = orders.result;
-      this.filteredData = orders.result;
-      this.filteredTotal = orders.result.length;
+    this.orderCockpitService.getBookingOrders(filters).subscribe((orders: OrderListView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
     });
   }
 
   clearFilters(filters: any): void {
     filters.reset();
-    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: any) => {
-      this.data = orders.result;
-      this.filteredData = orders.result;
-      this.filteredTotal = orders.result.length;
+    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
+      this.data = orders;
+      this.filteredData = orders;
+      this.filteredTotal = orders.length;
     });
   }
 

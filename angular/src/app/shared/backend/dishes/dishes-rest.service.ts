@@ -19,7 +19,7 @@ export class DishesRestService implements IDishesDataService {
 
  filter(filters: Filter): Observable<DishView[]> {
     return this.http.post(`${config.restServiceRoot}${this.filtersRestPath}`, filters)
-                    .map((res: Response) => res.json());
+                    .map((res: Response) => res.json().result);
  }
 
 }
