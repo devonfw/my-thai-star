@@ -5,8 +5,9 @@ import { BackendConfig, BackendType } from '../backend.module';
 import { DishesGraphQlService } from './dishes-graph-ql.service';
 import { DishesInMemoryService } from './dishes-in-memory.service';
 import { DishesRestService } from './dishes-rest.service';
-import { Dish, Filter } from '../backendModels/interfaces';
+import { Filter } from '../backendModels/interfaces';
 import { IDishesDataService } from './dishes-data-service-interface';
+import { DishView } from '../../viewModels/interfaces';
 
 @Injectable()
 export class DishesDataService implements IDishesDataService {
@@ -24,7 +25,7 @@ export class DishesDataService implements IDishesDataService {
         }
     }
 
-    filter(filters: Filter): Observable<Dish[]> {
+    filter(filters: Filter): Observable<DishView[]> {
         return this.usedImplementation.filter(filters);
     }
 

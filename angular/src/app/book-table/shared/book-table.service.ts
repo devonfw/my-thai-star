@@ -11,10 +11,6 @@ export class BookTableService {
   constructor(private bookingDataService: BookingDataService) {
   }
 
-  getTableId(): Observable<number> {
-    return this.bookingDataService.getBookingId();
-  }
-
   postBookingTable(bookInfo: BookingInfo): Observable<any> {
     return this.bookingDataService.bookTable(bookInfo);
   }
@@ -25,15 +21,14 @@ export class BookTableService {
 
   composeInvitation(invitationData: ReservationView): BookingInfo {
     let guests: any = [];
-    invitationData.guestList.forEach((guest: FriendsInvite) => {guests.push({email: guest}); });
+    invitationData.invitedGuests.forEach((guest: FriendsInvite) => {guests.push({email: guest}); });
 
     return {
-      date: invitationData.date,
+      bookingDate: invitationData.bookingDate,
       name: invitationData.name,
       email: invitationData.email,
       bookingType: 1,
-      guestList: guests,
-      orders: [],
+      invitedGuests: guests,
     };
   }
 

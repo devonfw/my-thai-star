@@ -9,9 +9,8 @@ import { config } from '../../../config';
 @Injectable()
 export class BookingRestService implements IBookingDataService {
 
-     private readonly reservationIdRestPath: string = 'ordermanagement/v1/reservationid';
-     private readonly booktableRestPath: string = 'ordermanagement/v1/booking';
-     private readonly getOrdersRestPath: string = 'ordermanagement/v1/getorders';
+     private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
+     private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
      private readonly getReservationsRestPath: string = 'ordermanagement/v1/getreservations';
      private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
@@ -21,18 +20,13 @@ export class BookingRestService implements IBookingDataService {
        this.http = this.injector.get(Http);
      }
 
-     getBookingId(): Observable<number> {
-       return this.http.get(`${config.restServiceRoot}${this.reservationIdRestPath}`)
-                       .map((res: Response) => res.json());
-     }
-
      bookTable(booking: BookingInfo): Observable<number> {
-        return this.http.post(`${config.restServiceRoot}${this.booktableRestPath}`, {bookingtable: booking})
+        return this.http.post(`${config.restServiceRoot}${this.booktableRestPath}`, booking)
                         .map((res: Response) => res.json());
      }
 
       getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
-        return this.http.get(`${config.restServiceRoot}${this.getOrdersRestPath}`)
+        return this.http.post(`${config.restServiceRoot}${this.getOrdersRestPath}`, filter)
                         .map((res: Response) => res.json());
      }
 

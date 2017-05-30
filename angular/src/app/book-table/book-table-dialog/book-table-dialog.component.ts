@@ -15,6 +15,7 @@ import { assign } from 'lodash';
 export class BookTableDialogComponent implements OnInit {
 
   data: ReservationView;
+  date: string;
 
   constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,
@@ -24,17 +25,13 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.date = moment(this.data.date).format('LLL');
-    this.bookingService.getTableId().subscribe( (bookingId: number) => {
-      this.data.bookingId = bookingId;
-    });
+    this.date = moment(this.data.bookingDate).format('LLL');
   }
 
   sendBooking (): void {
     let bookTable: BookingInfo;
     bookTable = assign(bookTable, this.data);
     bookTable.bookingType = 0;
-    bookTable.orders = [];
     this.bookingService.postBookingTable(bookTable).subscribe( () => {
       this.snackBar.openSnack('Table succesfully booked', 4000, 'black');
     });

@@ -11,7 +11,7 @@ export class PriceCalculatorService {
      .reduce((total: number, extra: ExtraView): number => total + extra.price, 0)
      .value();
 
-    return (order.price + extrasPrice) * order.amount;
+    return (order.dish.price + extrasPrice) * 1;//order.amount;
   }
 
   getTotalPrice(orders: OrderView[]): number {

@@ -1,7 +1,7 @@
 // FILTERS
 export interface Filter {
     searchBy: string;
-    sortBy: {name: string, dir: string};
+    sort: {name: string, direction: string}[];
     maxPrice: number;
     minLikes: number;
     isFav: boolean;
@@ -21,14 +21,19 @@ export interface FilterCockpitView {
 
 // DISHES
 export interface DishView {
+    dish: PlateView;
+    image: {content: string};
+    extras: ExtraView[];
+    likes: number;
+    isfav: boolean;
+    categories?: {id: string}[];
+}
+
+export interface PlateView {
     id: number;
     name: string;
     description: string;
     price: number;
-    image: string;
-    extras: ExtraView[];
-    likes: number;
-    isfav: boolean;
 }
 
 export interface ExtraView {
@@ -40,7 +45,7 @@ export interface ExtraView {
 
 // BOOKING
 export interface ReservationView {
-    date: string;
+    bookingDate: string;
     creationDate?: string;
     name: string;
     email: string;
@@ -48,7 +53,7 @@ export interface ReservationView {
     tableId?: number;
     bookingType: number;
     assistants: number;
-    guestList?: FriendsInvite[];
+    invitedGuests?: FriendsInvite[];
 }
 
 export interface FriendsInvite {
@@ -57,12 +62,16 @@ export interface FriendsInvite {
 }
 
 export interface OrderView {
-    idDish: number;
-    name: string;
-    price: number;
+    dish: {
+        idDish: number;
+        name: string;
+        price: number;
+    };
+    orderLine: {
+        amount: number;
+        comment: string;
+    };
     extras: ExtraView[];
-    amount: number;
-    comment: string;
 }
 
 export interface OrderListView {

@@ -3,7 +3,7 @@
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between">
       <span>Date</span>
-      <span>{{data.date}}</span>
+      <span>{{date}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
     <div layout="row" class="justify-space-between">
@@ -19,13 +19,8 @@
     <div layout="row" class="justify-space-between">
       <span>Friends</span>
       <div layout="column" style="text-align:right; width:50%">
-        <span *ngFor="let inv of data.guestList">{{inv}}</span>
+        <span *ngFor="let inv of data.invitedGuests">{{inv}}</span>
       </div>
-    </div>
-    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
-    <div layout="row" class="justify-space-between">
-      <span>Booking number</span>
-      <span>{{data.bookingId}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
   </div>

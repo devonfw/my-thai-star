@@ -13,27 +13,27 @@ import { DishView, Filter } from '../shared/viewModels/interfaces';
 export class MenuComponent implements OnInit {
 
     menus: DishView[] = [];
-    sortDir: string = 'desc';
+    sortDir: string = 'DESC';
     sortDirIcon: string = 'vertical_align_bottom';
 
     constructor (private menuService: MenuService) {
     }
 
     ngOnInit(): void {
-      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
-        this.menus = dishes;
+      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: any) => {
+        this.menus = dishes.result;
       });
     }
 
     changeSortDir(): void {
-      this.sortDir = (this.sortDir === 'desc') ? 'asc' : 'desc';
+      this.sortDir = (this.sortDir === 'ASC') ? 'DESC' : 'ASC';
       this.sortDirIcon = (this.sortDirIcon === 'vertical_align_bottom') ? 'vertical_align_top' : 'vertical_align_bottom';
     }
 
     applyFilters(filters: any): void {
       this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir))
                       .subscribe((data: any) => {
-                        this.menus = data;
+                        this.menus = data.result;
                       });
     }
 
@@ -41,8 +41,8 @@ export class MenuComponent implements OnInit {
       likes.value = 0;
       price.value = 0;
       form.reset();
-      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
-        this.menus = dishes;
+      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: any) => {
+        this.menus = dishes.result;
       });
     }
 }

@@ -8,17 +8,17 @@
       <span class="orderIngredients" *ngIf="extras.length === 0"> - </span>
       <span class="orderIngredients">{{extras}}</span>
     </div>
-    <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.comment">Remove comment</label>
-    <label (click)="addComment()" class="addOrderComment" *ngIf="!order.comment">Add comment</label>
+    <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.orderLine.comment">Remove comment</label>
+    <label (click)="addComment()" class="addOrderComment" *ngIf="!order.orderLine.comment">Add comment</label>
   </div>
 
-  <button md-icon-button mdTooltip="Comment" (click)="openCommentDialog()" [class.hideButton]="!order.comment" class="push-bottom-xs" mdTooltipPosition="above">
+  <button md-icon-button mdTooltip="Comment" (click)="openCommentDialog()" [class.hideButton]="!order.orderLine.comment" class="push-bottom-xs" mdTooltipPosition="above">
     <md-icon color="accent">speaker_notes</md-icon>
   </button>
 
   <div layout="row" class="push-bottom-xs" flex>
-    <button md-icon-button [disabled]="order.amount == 1" color="accent" (click)="decreaseOrder()"><md-icon>remove</md-icon></button>  
-    <span class="push-top-sm">{{order.amount}}</span>               
+    <button md-icon-button [disabled]="order.orderLine.amount == 1" color="accent" (click)="decreaseOrder()"><md-icon>remove</md-icon></button>  
+    <span class="push-top-sm">{{order.orderLine.amount}}</span>               
     <button md-icon-button (click)="increaseOrder()" color="accent"><md-icon>add</md-icon></button>                  
   </div>
 

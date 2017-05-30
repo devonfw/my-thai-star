@@ -21,7 +21,7 @@
               </div>
               <div layout= "column" flex>
 
-                <md2-datepicker ngModel name="date" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
+                <md2-datepicker ngModel name="bookingDate" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
 
                 <md-input-container color="accent" flex>
                   <input mdInput placeholder="Name" ngModel name="name" required>
@@ -64,7 +64,7 @@
                 <div layout= "column" flex>
                   <md2-datepicker 
                     ngModel
-                    name="date"
+                    name="bookingDate"
                     openOnFocus="true"
                     type="datetime"
                     container="dialog"
@@ -85,7 +85,7 @@
                 <td-chips
                   class="pad-bottom-sm"
                   [(ngModel)]="invitationModel"
-                  name="guestList"
+                  name="invitedGuests"
                   placeholder="Enter invitation email">
                 </td-chips>
 

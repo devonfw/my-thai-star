@@ -19,14 +19,14 @@ export class OrderCockpitService {
   orderComposer(orderList: OrderView[]): OrderView[] {
       let orders: OrderView[] = cloneDeep(orderList);
       map(orders, (o: OrderView) => {
-        o.price = this.priceCalculator.getPrice(o);
+        o.dish.price = this.priceCalculator.getPrice(o);
         o.extras = map(o.extras, 'name').join(', ');
       });
       return orders;
   }
 
-  getTotalPrice(orderList: OrderView[]): number {
-     return this.priceCalculator.getTotalPrice(orderList);
+  getTotalPrice(orderLines: OrderView[]): number {
+     return this.priceCalculator.getTotalPrice(orderLines);
 
   }
 

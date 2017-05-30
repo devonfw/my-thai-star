@@ -17,11 +17,6 @@
   color: sandybrown;
 }
 
-.menu-image {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 .twitter-title {
   font-size: 1.1em !important;
   color: white !important;
@@ -32,4 +27,15 @@
   font-size: 0.8em !important;
   color: white !important;
   white-space: normal !important;
+}
+
+.menu-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 900px){
+  .card-height {
+    height: 50vh;
+  }
 }

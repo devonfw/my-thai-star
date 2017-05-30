@@ -4,7 +4,6 @@ import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/inte
 
 export interface IBookingDataService {
 
-    getBookingId(): Observable<number>;
     getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]>;
     getReservations(filter: FilterCockpit): Observable<ReservationView[]>;
     bookTable(booking: BookingInfo): Observable<number>;

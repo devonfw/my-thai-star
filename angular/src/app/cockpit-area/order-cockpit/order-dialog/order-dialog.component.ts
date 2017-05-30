@@ -11,7 +11,7 @@ import {MD_DIALOG_DATA} from '@angular/material';
 })
 export class OrderDialogComponent implements OnInit {
 
-  datat: OrderBookingView[] = [];
+  datat: any[] = [];
   columnst: ITdDataTableColumn[] = [
     { name: 'bookingDate', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
@@ -20,13 +20,13 @@ export class OrderDialogComponent implements OnInit {
     { name: 'tableId', label: 'Table'},
   ];
 
-  datao: OrderView[] = [];
+  datao: any[] = [];
   columnso: ITdDataTableColumn[] = [
-    { name: 'name', label: 'Dish'},
-    { name: 'comment', label: 'Comments'},
+    { name: 'dish.name', label: 'Dish'},
+    { name: 'dish.comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
-    { name: 'amount', label: 'Quantity' },
-    { name: 'price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
+    { name: 'dish.amount', label: 'Quantity' },
+    { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 
   fromRow: number = 1;
@@ -34,7 +34,7 @@ export class OrderDialogComponent implements OnInit {
   pageSize: number = 5;
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
-  data: OrderListView;
+  data: any;
 
   constructor(private _dataTableService: TdDataTableService,
               private orderCockpitService: OrderCockpitService,
@@ -43,8 +43,8 @@ export class OrderDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.totalPrice = this.orderCockpitService.getTotalPrice(this.data.orderList);
-    this.datao = this.orderCockpitService.orderComposer(this.data.orderList);
+    this.totalPrice = this.orderCockpitService.getTotalPrice(this.data.orderLines);
+    this.datao = this.orderCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
     this.filter();
 }

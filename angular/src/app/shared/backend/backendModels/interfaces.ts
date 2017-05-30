@@ -2,7 +2,7 @@
 export class Filter {
     isFav: boolean;
     searchBy: string;
-    sortBy: { name: string, dir: string };
+    sort: { name: string, direction: string }[];
     maxPrice: number;
     minLikes: number;
     categories: [{ id: string }];
@@ -15,18 +15,6 @@ export class FilterCockpit {
 }
 
 // DISHES
-export class Dish {
-    id: number;
-    isfav: boolean;
-    image: string;
-    likes: number;
-    extras: {id: number, name: string, price: number, selected: boolean}[];
-    description: string;
-    name: string;
-    price: number;
-    categories: [{id: string}];
-}
-
 export class ExtraInfo {
     id: number;
     name: string;
@@ -36,13 +24,12 @@ export class ExtraInfo {
 
 // BOOKING
 export class BookingInfo {
-    date: string;
+    bookingDate: string;
     name: string;
     email: string;
     bookingType: number;
-    orders?: OrderInfo[];
     assistants?: number;
-    guestList?: [{email: string}];
+    invitedGuests?: [{email: string}];
 }
 
 export class FriendsInvite {

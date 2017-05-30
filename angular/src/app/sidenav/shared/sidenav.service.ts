@@ -6,7 +6,8 @@ import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../shared/backend/backendModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep, toString } from 'lodash';
 
-const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) => o.name === orderToFind.name && isEqual(o.extras, orderToFind.extras);
+const isOrderEqual: Function =
+   (orderToFind: OrderView) => (o: OrderView) => o.dish.name === orderToFind.dish.name && isEqual(o.extras, orderToFind.extras);
 
 @Injectable()
 export class SidenavService {
@@ -49,11 +50,11 @@ export class SidenavService {
   }
 
   public increaseOrder(order: OrderView): number {
-    return this.findOrder(order).amount += 1;
+    return this.findOrder(order).orderLine.amount += 1;
   }
 
   public decreaseOrder(order: OrderView): number {
-    return this.findOrder(order).amount -= 1;
+    return this.findOrder(order).orderLine.amount -= 1;
   }
 
   public removeOrder(order: OrderView): OrderView {
@@ -86,9 +87,9 @@ export class SidenavService {
                     .forEach( (extra: ExtraView) => extras.push(extra.id));
         composedOrders.push({
           orderLine: {
-            idDish: order.idDish,
-            amount: order.amount,
-            comment: order.comment,
+            idDish: order.dish.idDish,
+            amount: order.orderLine.amount,
+            comment: order.orderLine.comment,
           },
           extras: extras,
         });

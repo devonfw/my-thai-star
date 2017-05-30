@@ -10,18 +10,14 @@ import { assign, maxBy, find, filter, toString, toNumber } from 'lodash';
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
 
-    getBookingId(): Observable<number> {
-        return Observable.of(maxBy(bookedTables, (table: ReservationView) => table.bookingId).bookingId + 1);
-    }
-
     bookTable(booking: BookingInfo): Observable<number> {
         let bookTable: ReservationView;
         bookTable = assign(bookTable, booking);
         bookTable.creationDate = moment().format('LLL');
         bookTable.bookingId = maxBy(bookedTables, (table: ReservationView) => table.bookingId).bookingId + 1;
         bookTable.tableId = maxBy(bookedTables, (table: ReservationView) => table.tableId).tableId + 1;
-        if (!bookTable.guestList) {
-            bookTable.guestList = [];
+        if (!bookTable.invitedGuests) {
+            bookTable.invitedGuests = [];
         }
         return Observable.of(bookedTables.push(bookTable));
     }
@@ -51,7 +47,7 @@ export class BookingInMemoryService implements IBookingDataService {
     getReservations(filters: FilterCockpit): Observable<ReservationView[]> {
         return Observable.of(filter(bookedTables, (booking: ReservationView) => {
             if (filters.date) {
-                return booking.date.toLowerCase().includes(filters.date.toLowerCase());
+                return booking.bookingDate.toLowerCase().includes(filters.date.toLowerCase());
             } else {
                 return true;
             }
@@ -79,7 +75,7 @@ export class BookingInMemoryService implements IBookingDataService {
     }
 
     findDishById(id: number): DishView {
-        return find(dishes, (dish: DishView) => dish.id === id);
+        return find(dishes, (plate: DishView) => plate.dish.id === id);
     }
 
     findReservationById(id: {bookingToken: string}): ReservationView {
@@ -90,15 +86,15 @@ export class BookingInMemoryService implements IBookingDataService {
         let composedOrders: OrderListView;
         let orderList: any = [];
         orders.orderLines.forEach((order: OrderInfo) => {
-            let dish: DishView = this.findDishById(order.orderLine.idDish);
+            let plate: DishView = this.findDishById(order.orderLine.idDish);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
                 extras.push(this.findExtraById(extraId));
             });
             orderList.push({
                     idDish: order.orderLine.idDish,
-                    name: dish.name,
-                    price: dish.price,
+                    name: plate.dish.name,
+                    price: plate.dish.price,
                     comment: order.orderLine.comment,
                     amount: order.orderLine.amount,
                     extras: extras,
@@ -111,7 +107,7 @@ export class BookingInMemoryService implements IBookingDataService {
             bookingId: toNumber(orders.booking.bookingToken),
             booking: {
                 name: bookedTable.name,
-                bookingDate: bookedTable.date,
+                bookingDate: bookedTable.bookingDate,
                 creationDate: bookedTable.creationDate,
                 email: bookedTable.email,
                 tableId: bookedTable.tableId,

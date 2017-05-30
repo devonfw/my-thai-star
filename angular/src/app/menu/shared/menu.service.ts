@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
-import { Dish, Filter } from '../../shared/backend/backendModels/interfaces';
+import { Filter } from '../../shared/backend/backendModels/interfaces';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, remove } from 'lodash';
 
@@ -10,14 +10,18 @@ export class MenuService {
 
   constructor(private dishesDataService: DishesDataService) {}
 
-  menuToOrder(menu: DishView): OrderView {
+  menuToOrder(menu: any): OrderView {
     return {
-      idDish: menu.id,
-      name: menu.name,
-      price: menu.price,
+      dish: {
+        idDish: menu.dish.id,
+        name: menu.dish.name,
+        price: menu.dish.price,
+      },
+      orderLine: {
+        amount: 1,
+        comment: '',
+      },
       extras: menu.extras,
-      amount: 1,
-      comment: '',
     };
   }
 
@@ -34,10 +38,10 @@ export class MenuService {
       filtersComposed = {
         categories: categories,
         searchBy: filter.searchBy,
-        sortBy: {
+        sort: [{
           name: filter.sortName,
-          dir: sortDir,
-        },
+          direction: sortDir,
+        }],
         maxPrice: filter.maxPrice,
         minLikes: filter.minLikes,
         isFav: filter.isFav,
@@ -45,7 +49,7 @@ export class MenuService {
     } else {
       filtersComposed = {
         searchBy: undefined,
-        sortBy: {name: '', dir: ''},
+        sort: [],
         maxPrice: undefined,
         minLikes: undefined,
         isFav: undefined,
@@ -61,6 +65,6 @@ export class MenuService {
 
   getDishes(filters: any): Observable<DishView[]> {
     return this.dishesDataService.filter(filters)
-            .map((dishes: Dish[]) => dishes as DishView[]); // TODO: Replace with a converter
+            .map((dishes: DishView[]) => dishes as DishView[]); // TODO: Replace with a converter
   }
 }
