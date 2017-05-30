@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.usermanagement.logic.api.to.UserEto;
 
 /**
  * Composite transport object of Booking
@@ -21,6 +22,8 @@ public class BookingCto extends AbstractCto {
   private OrderEto order;
 
   private List<OrderEto> orders;
+
+  private UserEto user;
 
   public BookingEto getBooking() {
 
@@ -70,6 +73,16 @@ public class BookingCto extends AbstractCto {
   public void setOrders(List<OrderEto> orders) {
 
     this.orders = orders;
+  }
+
+  public UserEto getUser() {
+
+    return user;
+  }
+
+  public void setUser(UserEto user) {
+
+    this.user = user;
   }
 
 }

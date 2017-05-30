@@ -37,6 +37,8 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
 
   private Integer assistants;
 
+  private Long userId;
+
   /**
    * The constructor.
    */
@@ -163,6 +165,16 @@ public class BookingSearchCriteriaTo extends SearchCriteriaTo {
   public void setAssistants(Integer assistants) {
 
     this.assistants = assistants;
+  }
+
+  public Long getUserId() {
+
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+
+    this.userId = userId;
   }
 
 }

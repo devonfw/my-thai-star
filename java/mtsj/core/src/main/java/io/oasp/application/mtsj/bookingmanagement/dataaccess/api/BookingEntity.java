@@ -15,6 +15,7 @@ import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
+import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 
 @Entity
 @javax.persistence.Table(name = "Booking")
@@ -41,6 +42,8 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   private TableEntity table;
 
   private OrderEntity order;
+
+  private UserEntity user;
 
   private List<InvitedGuestEntity> invitedGuests;
 
@@ -341,6 +344,46 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   public void setAssistants(Integer assistants) {
 
     this.assistants = assistants;
+  }
+
+  /**
+   * @return user
+   */
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "idUser")
+  public UserEntity getUser() {
+
+    return this.user;
+  }
+
+  /**
+   * @param user new value of {@link #getuser}.
+   */
+  public void setUser(UserEntity user) {
+
+    this.user = user;
+  }
+
+  @Override
+  @Transient
+  public Long getUserId() {
+
+    if (this.user == null) {
+      return null;
+    }
+    return this.user.getId();
+  }
+
+  @Override
+  public void setUserId(Long userId) {
+
+    if (userId == null) {
+      this.user = null;
+    } else {
+      UserEntity userEntity = new UserEntity();
+      userEntity.setId(userId);
+      this.user = userEntity;
+    }
   }
 
 }
