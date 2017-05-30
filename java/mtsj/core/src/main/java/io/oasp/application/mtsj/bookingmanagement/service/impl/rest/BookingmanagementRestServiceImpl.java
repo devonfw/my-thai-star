@@ -1,7 +1,5 @@
 package io.oasp.application.mtsj.bookingmanagement.service.impl.rest;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,9 +30,9 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
-  public BookingEto saveBooking(BookingEto booking, List<String> emails) {
+  public BookingEto saveBooking(BookingCto booking) {
 
-    return this.bookingmanagement.saveBooking(booking, emails);
+    return this.bookingmanagement.saveBooking(booking);
   }
 
   @Override
@@ -113,12 +111,6 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   public void cancelInvite(String bookingToken) {
 
     this.bookingmanagement.cancelInvite(bookingToken);
-  }
-
-  @Override
-  public BookingEto saveBooking(BookingEto booking) {
-
-    return this.bookingmanagement.saveBooking(booking);
   }
 
 }
