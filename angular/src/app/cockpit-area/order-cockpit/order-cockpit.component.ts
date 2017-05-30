@@ -9,7 +9,8 @@ import { TdDataTableService,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
-import { FilterCockpitView, ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
+import { ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
+import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -22,15 +23,23 @@ export class OrderCockpitComponent implements OnInit {
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
-    { name: 'order.id', label: 'Reference number'},
+    { name: 'booking.bookingToken', label: 'Reference number'},
   ];
 
   filteredData: OrderListView[];
   filteredTotal: number;
+  pagination: Pagination = {
+    size: 8,
+    page: 1,
+    total: 1,
+  };
 
-  fromRow: number = 1;
-  currentPage: number = 1;
-  pageSize: number = 8;
+  filters: FilterCockpit = {
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
+  };
+
   sortBy: string = 'booking.bookingDate';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
@@ -39,49 +48,45 @@ export class OrderCockpitComponent implements OnInit {
               private orderCockpitService: OrderCockpitService) {}
 
   ngOnInit(): void {
-    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
-      this.filter();
-    });
+    this.applyFilters();
   }
 
-  applyFilters(filters: FilterCockpitView): void {
-    this.orderCockpitService.getBookingOrders(filters).subscribe((orders: OrderListView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
+  filter(): void {
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    this.orderCockpitService.getBookingOrders(this.pagination, this.filters).subscribe((orders: any) => {
+      this.data = orders.result;
+      this.filteredData = orders.result;
+      this.filteredTotal = orders.pagination.total;
+      this.dataFilter();
     });
   }
 
   clearFilters(filters: any): void {
     filters.reset();
-    this.orderCockpitService.getBookingOrders({date: undefined, email: undefined, bookingId: undefined}).subscribe((orders: OrderListView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
-    });
+    this.applyFilters();
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sortBy = sortEvent.name;
     this.sortOrder = sortEvent.order;
-    this.filter();
+    this.dataFilter();
   }
 
   page(pagingEvent: IPageChangeEvent): void {
-    this.fromRow = pagingEvent.fromRow;
-    this.currentPage = pagingEvent.page;
-    this.pageSize = pagingEvent.pageSize;
-    this.filter();
+    this.pagination = {
+      size: pagingEvent.pageSize,
+      page: pagingEvent.page,
+      total: 1,
+    };
+    this.applyFilters();
   }
 
-  filter(): void {
+  dataFilter(): void {
     let newData: any[] = this.data;
-    this.filteredTotal = newData.length;
     newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
     this.filteredData = newData;
   }
 

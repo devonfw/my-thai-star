@@ -1,24 +1,3 @@
-// FILTERS
-export interface Filter {
-    searchBy: string;
-    sort: {name: string, direction: string}[];
-    maxPrice: number;
-    minLikes: number;
-    isFav: boolean;
-    categories: CategoryView[];
-}
-
-export interface CategoryView {
-    name: string;
-    selected: boolean;
-}
-
-export interface FilterCockpitView {
-    date: string;
-    email: string;
-    bookingId: number;
-}
-
 // DISHES
 export interface DishView {
     dish: PlateView;

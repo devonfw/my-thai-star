@@ -1,5 +1,6 @@
 // FILTERS
 export class Filter {
+    pagination?: Pagination;
     isFav: boolean;
     searchBy: string;
     sort: { name: string, direction: string }[];
@@ -9,9 +10,16 @@ export class Filter {
 }
 
 export class FilterCockpit {
-    date: string;
+    pagination?: Pagination;
+    bookingDate: string;
     email: string;
-    bookingId: number;
+    bookingToken: number;
+}
+
+export class Pagination {
+    size: number;
+    page: number;
+    total: number;
 }
 
 // DISHES

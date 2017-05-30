@@ -27,12 +27,12 @@ export class BookingRestService implements IBookingDataService {
 
      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
         return this.http.post(`${config.restServiceRoot}${this.getOrdersRestPath}`, filter)
-                        .map((res: Response) => res.json().result);
+                        .map((res: Response) => res.json());
      }
 
      getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
         return this.http.post(`${config.restServiceRoot}${this.getReservationsRestPath}`, filter)
-                        .map((res: Response) => res.json().result);
+                        .map((res: Response) => res.json());
      }
 
      saveOrders(orders: OrderListInfo): Observable<number> {

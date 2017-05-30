@@ -24,8 +24,8 @@ export class BookingInMemoryService implements IBookingDataService {
 
     getBookingOrders(filters: FilterCockpit): Observable<OrderListView[]> {
         return Observable.of(filter(orderList, (order: OrderListView) => {
-            if (filters.date) {
-                return order.booking.bookingDate.toLowerCase().includes(filters.date.toLowerCase());
+            if (filters.bookingDate) {
+                return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
             } else {
                 return true;
             }
@@ -36,8 +36,8 @@ export class BookingInMemoryService implements IBookingDataService {
                 return true;
             }
         }).filter((order: OrderListView) => {
-            if (filters.bookingId) {
-                return toString(order.bookingId).includes(toString(filters.bookingId));
+            if (filters.bookingToken) {
+                return toString(order.bookingId).includes(toString(filters.bookingToken));
             } else {
                 return true;
             }
@@ -46,8 +46,8 @@ export class BookingInMemoryService implements IBookingDataService {
 
     getReservations(filters: FilterCockpit): Observable<ReservationView[]> {
         return Observable.of(filter(bookedTables, (booking: ReservationView) => {
-            if (filters.date) {
-                return booking.bookingDate.toLowerCase().includes(filters.date.toLowerCase());
+            if (filters.bookingDate) {
+                return booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
             } else {
                 return true;
             }
@@ -58,8 +58,8 @@ export class BookingInMemoryService implements IBookingDataService {
                 return true;
             }
         }).filter((booking: ReservationView) => {
-            if (filters.bookingId) {
-                return toString(booking.bookingId).includes(toString(filters.bookingId));
+            if (filters.bookingToken) {
+                return toString(booking.bookingId).includes(toString(filters.bookingToken));
             } else {
                 return true;
             }
