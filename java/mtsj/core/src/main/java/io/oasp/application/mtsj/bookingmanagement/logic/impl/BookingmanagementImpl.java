@@ -5,7 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoField;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 
@@ -172,25 +173,26 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return getBeanMapper().map(resultEntity, BookingEto.class);
   }
 
-  private String buildToken(String email, String type) throws NoSuchAlgorithmException {
+  @Override
+  public String buildToken(String email, String type) throws NoSuchAlgorithmException {
 
     Instant now = Instant.now();
-    String date =
-        String.format("%04d", now.get(ChronoField.YEAR)) + String.format("%02d", now.get(ChronoField.MONTH_OF_YEAR))
-            + String.format("%02d", now.get(ChronoField.DAY_OF_MONTH)) + "_";
+    LocalDateTime ldt1 = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
+    String date = String.format("%04d", ldt1.getYear()) + String.format("%02d", ldt1.getMonthValue())
+        + String.format("%02d", ldt1.getDayOfMonth()) + "_";
 
-    String time = String.format("%02d", now.get(ChronoField.HOUR_OF_DAY))
-        + String.format("%02d", now.get(ChronoField.MINUTE_OF_HOUR))
-        + String.format("%02d", now.get(ChronoField.SECOND_OF_MINUTE));
+    String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
+        + String.format("%02d", ldt1.getSecond());
 
     MessageDigest md = MessageDigest.getInstance("MD5");
-    md.update((email + date + time).getBytes());
+    md.update((type + email + date + time).getBytes());
     byte[] digest = md.digest();
     StringBuilder sb = new StringBuilder();
     for (byte b : digest) {
       sb.append(String.format("%02x", b & 0xff));
     }
-    return type + sb;
+    System.out.println(sb.toString());
+    return sb.toString();
   }
 
   /**
