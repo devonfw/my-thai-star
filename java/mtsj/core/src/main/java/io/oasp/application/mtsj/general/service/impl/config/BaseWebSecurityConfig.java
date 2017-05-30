@@ -19,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import io.oasp.application.mtsj.general.common.impl.security.CsrfRequestMatcher;
 import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
 import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
 import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkHttpStatusCode;
@@ -72,8 +71,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
-        .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
-
+        // .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
+        .csrf().disable()
         // configure parameters for simple form login (and logout)
         .formLogin().successHandler(new SimpleUrlAuthenticationSuccessHandler()).defaultSuccessUrl("/")
         .failureUrl("/login.html?error").loginProcessingUrl("/j_spring_security_login").usernameParameter("username")
