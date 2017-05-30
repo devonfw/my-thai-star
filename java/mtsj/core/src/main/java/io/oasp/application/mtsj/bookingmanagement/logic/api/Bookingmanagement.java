@@ -1,5 +1,6 @@
 package io.oasp.application.mtsj.bookingmanagement.logic.api;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
@@ -117,5 +118,7 @@ public interface Bookingmanagement {
   InvitedGuestEto acceptInvite(String guestToken);
 
   InvitedGuestEto declineInvite(String guestToken);
+
+  String buildToken(String email, String type) throws NoSuchAlgorithmException;
 
 }
