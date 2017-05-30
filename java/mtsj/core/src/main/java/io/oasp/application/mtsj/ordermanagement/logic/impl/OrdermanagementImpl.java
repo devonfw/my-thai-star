@@ -124,10 +124,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
       cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
       cto.setOrder(getBeanMapper().map(order, OrderEto.class));
+      cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
       List<OrderLineCto> orderLinesCto = new ArrayList<>();
       for (OrderLineEntity orderLine : order.getOrderLines()) {
         OrderLineCto orderLineCto = new OrderLineCto();
-        orderLineCto.setDish(getBeanMapper().map(orderLine, DishEto.class));
+        orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
+        orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
         orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
         orderLinesCto.add(orderLineCto);
       }
