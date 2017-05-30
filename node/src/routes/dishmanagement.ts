@@ -18,9 +18,7 @@ router.post('/v1/Dish/Search', (req: Request, res: Response) => {
             resolve(table);
         }
 
-    });
-
-    p.then((e: string) => {
+    }).then((e: string) => {
         console.log('Conseguiste la mesa ' + e);
     }).catch((err: string) => {
         console.log(err);

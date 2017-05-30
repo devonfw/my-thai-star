@@ -7,7 +7,7 @@ import {lowerCase} from 'lodash';
 
 export const router = eRouter();
 
-router.post('/v1/booking', (req: Request, res: Response) => {
+router.post('/v1/booking', (req: any, res: Response) => {
     // check if param is correct
     if (!types.isBookingView(req.body)) {
         res.status(400).json({ message: 'Parser data error' });
@@ -26,7 +26,7 @@ router.post('/v1/booking', (req: Request, res: Response) => {
         })) {
         res.status(400).json({ message: 'Invalid invitation email' });
     } else {
-        bussiness.createBooking(req.body, (err: types.IError | null, resToken?: string) => {
+        bussiness.createBooking(req.body, req.tableCron, (err: types.IError | null, resToken?: string) => {
             if (err) {
                 res.status(500).json({ message: err.message });
             } else {

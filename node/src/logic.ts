@@ -1,3 +1,4 @@
+import { TableCron } from './utils/tableManagement';
 import { NumberAttributeValue } from 'aws-sdk/clients/dynamodbstreams';
 import { Credentials } from 'aws-sdk';
 import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
@@ -12,7 +13,6 @@ import * as moment from 'moment';
 import * as md5 from 'md5';
 import { Mailer } from './utils/mailer';
 import * as pug from 'pug';
-import { TableCron } from './utils/tableManagement';
 
 // Dynamo
 /*
@@ -102,7 +102,7 @@ export async function getDishes(filter: types.IFilterView,
     }
 }
 
-export async function createBooking(reserv: types.IBookingView,
+export async function createBooking(reserv: types.IBookingView, cron: TableCron,
                                     callback: (err: types.IError | null, booToken?: string) => void) {
     const date = moment();
     const bookDate = moment(reserv.date, dateFormat);
@@ -158,8 +158,9 @@ export async function createBooking(reserv: types.IBookingView,
         // wait for the insertion and check if there are a exception
         // TODO: tratar los errores
         await fn.insert('Booking', booking).promise();
-        if (inv.length > 0 || false) {
+        if (reserv.type.index === types.BookingTypes.invited && inv.length > 0) {
             await fn.insert('InvitedGuest', inv).promise();
+            cron.startJob(booking.id, booking.bookingDate);
         }
 
         callback(null, booking.bookingToken);
@@ -204,6 +205,19 @@ export async function createBooking(reserv: types.IBookingView,
     }
 }
 
+export async function updateBookingWithTable(id: string, table: string) {
+    try {
+        const book = await fn.table('Booking', id).promise() as dbtypes.IBooking;
+
+        book.table = table;
+
+        await fn.insert('Booking', book).promise();
+        return false;
+    }catch (error) {
+        return true;
+    }
+}
+
 export async function getBookingById(id: string, callback: (err: types.IError | null, booking?: types.IBookingView) => void) {
     let reg: dbtypes.IBooking;
 
@@ -224,6 +238,20 @@ export async function getBookingById(id: string, callback: (err: types.IError | 
     };
 
     callback(null, bookingView);
+}
+
+export function getAllInvitedBookings(): Promise<dbtypes.IBooking[]> {
+    return fn.table('Booking').filter((o: dbtypes.IBooking) => {
+                    return o.bookingType === types.BookingTypes.invited &&
+                        moment(o.bookingDate, dateFormat).isAfter(moment().add(1, 'hour'));
+                }).promise() as Promise<dbtypes.IBooking[]>;
+}
+
+export async function getAssistansForInvitedBooking(id: string){
+    const book = await fn.table('InvitedGuest').where('idBooking', id, '=').
+        filter((elem: dbtypes.IInvitedGuest) => elem.acepted).promise() as dbtypes.IInvitedGuest[];
+
+    return book.length + 1;
 }
 
 export async function createOrder(order: types.IOrderView, callback: (err: types.IError | null) => void) {
@@ -583,11 +611,8 @@ export async function getFreeTable(date: string, assistants: number) {
         const date2 = moment(elem.bookingDate, dateFormat);
         date2.add(1, 'hour');
 
-        console.log(moment(date, dateFormat).toJSON() + ': '  + bookDate.toJSON() + ' ' + date2.toJSON());
-        return moment(date, dateFormat).isBetween(bookDate, date2, 'minutes', '[)');
+        return moment(date, dateFormat).isBetween(bookDate, date2, undefined, '[)');
     }).map((elem: dbtypes.IBooking) => elem.table || '-1').promise() as Promise<string[]>]);
-
-    console.log(booking);
 
     tables = tables.filter((elem: dbtypes.ITable) => {
         return !_.includes(booking, elem.id) && elem.seatsNumber >= assistants;

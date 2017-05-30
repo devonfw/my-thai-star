@@ -36,7 +36,7 @@ export function relationArrayOfIds(table2: any, propArray: string, propT2: strin
 
 export function getNanoTime() {
     const hrTime = process.hrtime();
-    return hrTime[0] * 1000000000 + hrTime[1];
+    return (hrTime[0] * 1e9) + hrTime[1];
 }
 
 export function validEmail(email: string): boolean {
