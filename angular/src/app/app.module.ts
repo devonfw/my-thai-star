@@ -44,6 +44,7 @@ import { SnackBarService } from './shared/snackService/snackService.service';
 
 // DIRECTIVES
 import { EqualValidatorDirective } from './user-area/shared/equal-validator.directive';
+import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 
 // Remark: Imho it would be nice if app module consists mainly from other modules imports. e.g.:
 // https://github.com/devonfw/devonfw-it-survival/blob/final-extras/app/app.module.ts
@@ -66,6 +67,7 @@ import { EqualValidatorDirective } from './user-area/shared/equal-validator.dire
     TwitterDialogComponent,
     OrderDialogComponent,
     ReservationDialogComponent,
+    EmailConfirmationsComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,12 +32,16 @@ export class ExtraInfo {
 
 // BOOKING
 export class BookingInfo {
-    bookingDate: string;
-    name: string;
-    email: string;
-    bookingType: number;
-    assistants?: number;
+    booking: ReservationInfo;
     invitedGuests?: [{email: string}];
+}
+
+export class ReservationInfo {
+        bookingDate: string;
+        name: string;
+        email: string;
+        bookingType: number;
+        assistants?: number;
 }
 
 export class FriendsInvite {

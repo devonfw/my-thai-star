@@ -3,7 +3,7 @@ import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { ReservationView } from '../../shared/viewModels/interfaces';
-import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
+import { BookingInfo, ReservationInfo } from '../../shared/backend/backendModels/interfaces';
 import * as moment from 'moment';
 import { assign } from 'lodash';
 
@@ -29,10 +29,8 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking (): void {
-    let bookTable: BookingInfo;
-    bookTable = assign(bookTable, this.data);
-    bookTable.bookingType = 0;
-    this.bookingService.postBookingTable(bookTable).subscribe( () => {
+
+    this.bookingService.postBookingTable(this.bookingService.composeReservation(this.data)).subscribe( () => {
       this.snackBar.openSnack('Table succesfully booked', 4000, 'black');
     });
     this.dialog.close(true);

@@ -23,6 +23,7 @@ export class BookingRestService implements IBookingDataService {
      bookTable(booking: BookingInfo): Observable<number> {
         return this.http.post(`${config.restServiceRoot}${this.booktableRestPath}`, booking)
                         .map((res: Response) => res.json());
+
      }
 
      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
