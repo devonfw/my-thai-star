@@ -31,6 +31,8 @@ public interface Ordermanagement {
    */
   PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
 
+  PaginatedListTo<OrderCto> findOrdersByEmail(String email, OrderSearchCriteriaTo criteria);
+
   /**
    * Deletes a order from the database by its id 'orderId'.
    *
