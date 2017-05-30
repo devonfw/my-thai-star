@@ -37,6 +37,8 @@ public class BookingEto extends AbstractEto implements Booking {
 
   private Integer assistants;
 
+  private Long userId;
+
   @Override
   public String getName() {
 
@@ -288,6 +290,18 @@ public class BookingEto extends AbstractEto implements Booking {
   public void setAssistants(Integer assistants) {
 
     this.assistants = assistants;
+  }
+
+  @Override
+  public Long getUserId() {
+
+    return userId;
+  }
+
+  @Override
+  public void setUserId(Long userId) {
+
+    this.userId = userId;
   }
 
 }
