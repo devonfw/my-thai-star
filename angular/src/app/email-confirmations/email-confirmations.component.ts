@@ -22,7 +22,7 @@ export class EmailConfirmationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.resolveToken(params['token']))
+    this.route.params.switchMap((params: Params) => this.resolveToken(params.token))
         .subscribe((token: string) => {
            this.route.url
                .subscribe((data: UrlSegment[]) => {
@@ -65,7 +65,7 @@ export class EmailConfirmationsComponent implements OnInit {
                   }
                });
         });
-    // this.router.navigate(['restaurant']);
+    this.router.navigate(['restaurant']);
   }
 
 }
