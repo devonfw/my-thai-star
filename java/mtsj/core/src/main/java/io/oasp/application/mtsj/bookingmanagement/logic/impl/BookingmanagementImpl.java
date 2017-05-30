@@ -53,8 +53,8 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
    */
   private static final Logger LOG = LoggerFactory.getLogger(BookingmanagementImpl.class);
 
-  @Value("${server.port}")
-  private int port;
+  @Value("${client.port}")
+  private int clientPort;
 
   @Value("${server.context-path}")
   private String serverContextPath;
@@ -392,11 +392,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
           .append("\n");
       invitedMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
 
-      String linkAccept = "http://localhost:" + this.port + "/" + this.serverContextPath
-          + "/services/rest/bookingmanagement/v1/invitedguest/accept/" + guest.getEmail();
+      String linkAccept = "http://localhost:" + this.clientPort + "/booking/acceptInvite/" + guest.getGuestToken();
 
-      String linkDecline = "http://localhost:" + this.port + "/" + this.serverContextPath
-          + "/services/rest/bookingmanagement/v1/invitedguest/decline/" + guest.getEmail();
+      String linkDecline = "http://localhost:" + this.clientPort + "/booking/rejectInvite/" + guest.getGuestToken();
 
       invitedMailContent.append("To accept: ").append(linkAccept).append("\n");
       invitedMailContent.append("To decline: ").append(linkDecline).append("\n");
@@ -424,7 +422,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
           hostMailContent.append("-").append(guest.getEmail()).append("\n");
         }
       }
-      this.mailService.sendMail(booking.getEmail(), "Invite confirmation", hostMailContent.toString());
+      String cancellationLink = "http://localhost:" + this.clientPort + "/booking/cancel/" + booking.getBookingToken();
+      hostMailContent.append(cancellationLink).append("\n");
+      this.mailService.sendMail(booking.getEmail(), "Booking confirmation", hostMailContent.toString());
     } catch (Exception e) {
       LOG.error("Email not sent. {}", e.getMessage());
     }

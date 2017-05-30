@@ -81,8 +81,8 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   @Inject
   private Mail mailService;
 
-  @Value("${server.port}")
-  private int port;
+  @Value("${client.port}")
+  private int clientPort;
 
   @Value("${server.context-path}")
   private String serverContextPath;
@@ -346,8 +346,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
       mailContent.append("\n").append("Link to cancel order: ");
-      String link = "http://localhost:" + this.port + "/" + this.serverContextPath
-          + "/services/rest/ordermanagement/v1/order/cancelorder/" + order.getId();
+      String link = "http://localhost:" + this.clientPort + "/booking/cancelOrder/" + order.getId();
       mailContent.append(link);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {
