@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve -pc proxy.conf.json -o",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --browsers Chrome",
+    "test:pl": "ng test --browsers PhantomJS",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
