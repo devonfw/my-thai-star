@@ -35,12 +35,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public PaginatedListTo<OrderCto> findOrdersByEmail(String email, OrderSearchCriteriaTo criteria) {
-
-    return this.ordermanagement.findOrdersByEmail(email, criteria);
-  }
-
-  @Override
   public boolean deleteOrder(long id) {
 
     return this.ordermanagement.deleteOrder(id);

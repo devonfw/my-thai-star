@@ -302,6 +302,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     criteria.setGuestToken(guestToken);
     InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
     invited.setAccepted(true);
+
     return saveInvitedGuest(invited);
   }
 
@@ -321,14 +322,11 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     for (OrderCto orderCto : guestOrdersCto) {
       this.orderManagement.deleteOrder(orderCto.getOrder().getId());
     }
-    // TODO - Estudy about Cascade
-    // TODO - Send confirmation email and info email to the host
     return saveInvitedGuest(invited);
   }
 
   public BookingEto findBookingByEmail(String email) {
 
-    // TODO - Return CTO instead ETO
     Objects.requireNonNull(email, "email");
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
@@ -356,7 +354,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     bookingCriteria.setBookingToken(bookingToken);
     List<BookingEto> booking = findBookingEtos(bookingCriteria).getResult();
     if (!booking.isEmpty()) {
-      // toCancel.get(0).setCanceled(true);
       if (!cancelInviteAllowed(booking.get(0))) {
         throw new CancelInviteNotAllowedException();
       }

@@ -46,11 +46,6 @@ public interface OrdermanagementRestService {
   @Path("/order/")
   public OrderEto saveOrder(OrderCto order);
 
-  @POST
-  @Path("/order/search/{email}")
-  public PaginatedListTo<OrderCto> findOrdersByEmail(@PathParam("email") String email,
-      OrderSearchCriteriaTo searchCriteriaTo);
-
   /**
    * Delegates to {@link Ordermanagement#deleteOrder}.
    *
