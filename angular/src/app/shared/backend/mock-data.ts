@@ -125,9 +125,9 @@ export const bookedTables: ReservationView[] = [{
                         creationDate: '11/03/2017 12:45',
                         bookingToken: 500,
                 },
-                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                                {email: 'emailFriend2@email.com', acceptance: 'yes'},
-                                {email: 'emailFriend3@email.com', acceptance: ''}],
+                invitedGuests: [{email: 'emailFriend1@email.com', accepted: true},
+                                {email: 'emailFriend2@email.com', accepted: true},
+                                {email: 'emailFriend3@email.com', accepted: false}],
         }, {
                 booking: {
                         bookingDate: '13/03/2017 21:45',
@@ -138,8 +138,8 @@ export const bookedTables: ReservationView[] = [{
                         creationDate: '17/03/2017 23:30',
                         bookingToken: 501,
                 },
-                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                          {email: 'emailFriend2@email.com', acceptance: 'no'}],
+                invitedGuests: [{email: 'emailFriend1@email.com', accepted: true},
+                          {email: 'emailFriend2@email.com', accepted: false}],
         }, {
                 booking: {
                         bookingDate: '15/03/2017 21:00',
@@ -161,22 +161,22 @@ export const bookedTables: ReservationView[] = [{
                         creationDate: '17/03/2017 18:45',
                         bookingToken: 503,
                 },
-                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                                {email: 'emailFriend2@email.com', acceptance: 'no'},
-                                {email: 'emailFriend3@email.com', acceptance: 'yes'},
-                                {email: 'emailFriend4@email.com', acceptance: ''},
-                                {email: 'emailFriend5@email.com', acceptance: 'yes'}],
+                invitedGuests: [{email: 'emailFriend1@email.com', accepted: true},
+                                {email: 'emailFriend2@email.com', accepted: true},
+                                {email: 'emailFriend3@email.com', accepted: false},
+                                {email: 'emailFriend4@email.com', accepted: false},
+                                {email: 'emailFriend5@email.com', accepted: true}],
                 }];
 
 export const orderList: OrderListView[] = [{
-                bookingToken: 500,
                 booking: {
-                            name: 'Name 1',
-                            bookingDate: '13/03/2017 15:00',
-                            creationDate: '10/03/2017 10:00',
-                            email: 'user1@mail.com',
-                            tableId: 0,
-                          },
+                        bookingToken: 500,
+                        name: 'Name 1',
+                        bookingDate: '13/03/2017 15:00',
+                        creationDate: '10/03/2017 10:00',
+                        email: 'user1@mail.com',
+                        tableId: 0,
+                },
                 orderLines: [{
                         dish: {
                                 dishId: 0,
@@ -201,14 +201,14 @@ export const orderList: OrderListView[] = [{
                         extras: [],
                         }],
         }, {
-                bookingToken: 501,
                 booking: {
-                            name: 'Name 2',
-                            bookingDate: '27/05/2017 22:00',
-                            creationDate: '12/05/2017 23:00',
-                            email: 'user2@mail.com',
-                            tableId: 1,
-                          },
+                        bookingToken: 501,
+                        name: 'Name 2',
+                        bookingDate: '27/05/2017 22:00',
+                        creationDate: '12/05/2017 23:00',
+                        email: 'user2@mail.com',
+                        tableId: 1,
+                },
                 orderLines: [{
                         dish: {
                                 dishId: 1,
@@ -235,14 +235,14 @@ export const orderList: OrderListView[] = [{
                         extras: [{id: 2, name: 'Pork', price: 1, selected: true}],
                 }],
         }, {
-                bookingToken: 502,
                 booking: {
-                            name: 'user 3',
-                            bookingDate: '29/05/2017 21:00',
-                            creationDate: '29/05/2017 10:00',
-                            email: 'user0@mail.com',
-                            tableId: 2,
-                          },
+                       bookingToken: 502,
+                        name: 'user 3',
+                        bookingDate: '29/05/2017 21:00',
+                        creationDate: '29/05/2017 10:00',
+                        email: 'user0@mail.com',
+                        tableId: 2,
+                },
                 orderLines: [{
                         dish: {
                                 dishId: 1,
@@ -257,8 +257,8 @@ export const orderList: OrderListView[] = [{
                                 {id: 0, name: 'Tofu', price: 1, selected: true}],
                 }],
         }, {
-                bookingToken: 503,
                 booking: {
+                        bookingToken: 503,
                         name: 'user 4',
                         bookingDate: '27/05/2017 20:30',
                         creationDate: '20/05/2017 17:00',

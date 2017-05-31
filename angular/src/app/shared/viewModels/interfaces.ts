@@ -38,7 +38,7 @@ export interface ReservationView {
 
 export interface FriendsInvite {
     email: string;
-    acceptance: string;
+    accepted: boolean;
 }
 
 export interface OrderView {
@@ -55,12 +55,12 @@ export interface OrderView {
 }
 
 export interface OrderListView {
-    bookingToken: number;
     orderLines: OrderView[];
     booking: OrderBookingView;
 }
 
 export interface OrderBookingView {
+    bookingToken: number;
     name: string;
     bookingDate: string;
     creationDate: string;

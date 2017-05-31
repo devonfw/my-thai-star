@@ -11,8 +11,8 @@
   [data]="filteredData"
   [columns]="columnso">
   <ng-template tdDataTableTemplate="accepted" let-value="value" let-row="row" let-column="column">
-    <md-icon color="accent" *ngIf="value; else canceled">check</md-icon>
-    <md-icon color="warn" #canceled>clear</md-icon>
+    <md-icon color="accent" *ngIf="value">check</md-icon>
+    <md-icon color="warn" *ngIf="!value">clear</md-icon>
   </ng-template>
 </td-data-table>
 <td-paging-bar *ngIf="filteredData.length > 0" #pagingBar [firstLast]="false" [pageSizes]="[5, 10, 15]" [total]="datao.length" (change)="page($event)">

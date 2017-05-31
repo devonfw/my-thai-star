@@ -26,9 +26,9 @@ export class BookingInMemoryService implements IBookingDataService {
     getReservations(filters: FilterCockpit): Observable<any> {
         return Observable.of({
             pagination: {
-                size: 500,
-                page: 1,
-                total: 500,
+                size: filters.pagination.size,
+                page: filters.pagination.page,
+                total: bookedTables.length,
             },
             result: filter(bookedTables, (booking: ReservationView) => {
                         if (filters.bookingDate) {

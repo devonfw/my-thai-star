@@ -13,9 +13,9 @@ export class OrderInMemoryService implements IOrderDataService {
     getBookingOrders(filters: FilterCockpit): Observable<any> {
         return Observable.of({
             pagination: {
-                size: 500,
-                page: 1,
-                total: 500,
+                size: filters.pagination.size,
+                page: filters.pagination.page,
+                total: orderList.length,
             },
             result: filter(orderList, (order: OrderListView) => {
                         if (filters.bookingDate) {
@@ -31,7 +31,7 @@ export class OrderInMemoryService implements IOrderDataService {
                         }
                     }).filter((order: OrderListView) => {
                         if (filters.bookingToken) {
-                            return toString(order.bookingToken).includes(toString(filters.bookingToken));
+                            return toString(order.booking.bookingToken).includes(toString(filters.bookingToken));
                         } else {
                             return true;
                         }
@@ -81,8 +81,8 @@ export class OrderInMemoryService implements IOrderDataService {
         let bookedTable: ReservationView = this.findReservationById(orders.booking);
 
         return {
-            bookingToken: toNumber(orders.booking.bookingToken),
             booking: {
+                bookingToken: toNumber(orders.booking.bookingToken),
                 name: bookedTable.booking.name,
                 bookingDate: bookedTable.booking.bookingDate,
                 creationDate: bookedTable.booking.creationDate,
