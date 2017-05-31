@@ -61,6 +61,11 @@ export class SidenavService {
     return remove(this.orders, isOrderEqual(order));
   }
 
+  public removeAllOrders(): OrderView[] {
+    this.orders = [];
+    return this.orders;
+  }
+
   public sendOrders(token: string): void {
 
     let orderList: OrderListInfo = {
@@ -71,7 +76,6 @@ export class SidenavService {
     this.closeSideNav();
     this.orderDataService.saveOrders(orderList)
         .subscribe(() => {
-            this.orders = [];
             this.snackBar.openSnack('Order correctly noted', 4000, 'green');
         },
         (error: any) => {
