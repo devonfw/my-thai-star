@@ -64,7 +64,7 @@ public interface BookingmanagementRestService {
    */
   @Path("/booking/search")
   @POST
-  public PaginatedListTo<BookingEto> findBookingsByPost(BookingSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<BookingCto> findBookingsByPost(BookingSearchCriteriaTo searchCriteriaTo);
 
   /**
    * Delegates to {@link Bookingmanagement#findInvitedGuest}.
