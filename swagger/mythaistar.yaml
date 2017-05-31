@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: v2.7
+  version: v2.8
   title: My Thai Star API
 host: 'localhost:8081'
 schemes:
@@ -321,8 +321,7 @@ paths:
       tags:
         - Booking
       summary: >-
-        Method to make a reservation with potentiel guests. The method returns
-        the reservation token with the format:
+        Method to get reservations
       operationId: Booking_Search
       consumes:
         - application/json
@@ -335,7 +334,13 @@ paths:
         - text/json
         - application/xml
         - text/xml
-      parameters: null
+      parameters:
+        - name: bookingEntity
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/BookingEntity'
       responses:
         '201':
           description: Ok.
@@ -531,7 +536,9 @@ definitions:
       booking:
         $ref: '#/definitions/BookingEntity'
       invitedGuests:
-        $ref: '#/definitions/InvitedGuestEntity'
+        type: array
+        items:
+          $ref: '#/definitions/InvitedGuestEntity'
   BookingView:
     type: object
     properties:
