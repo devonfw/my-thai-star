@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -60,14 +61,24 @@ public interface OrdermanagementRestService {
   public void cancelOrder(@PathParam("id") long id);
 
   /**
-   * Delegates to {@link Ordermanagement#findOrderEtos}.
+   * Delegates to {@link Ordermanagement#findOrderCtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding orders.
-   * @return the {@link PaginatedListTo list} of matching {@link OrderEto}s.
+   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
    */
   @Path("/order/search")
   @POST
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
+
+  /**
+   * Delegates to {@link Ordermanagement#filterOrders}
+   *
+   * @param filterCriteria the filters to be used to return orders
+   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
+   */
+  @POST
+  @Path("/order/filter")
+  public PaginatedListTo<OrderCto> filterOrders(OrderFilterCriteria filterCriteria);
 
   /**
    * Delegates to {@link Ordermanagement#findOrderLine}.

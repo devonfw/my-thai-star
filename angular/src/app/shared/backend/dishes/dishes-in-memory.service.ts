@@ -2,37 +2,42 @@ import { filter } from 'rxjs/operator/filter';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Injector } from '@angular/core';
 import { IDishesDataService } from './dishes-data-service-interface';
-import { Dish, Filter } from '../backendModels/interfaces';
+import { Filter } from '../backendModels/interfaces';
 import { dishes } from '../mock-data';
 import { orderBy, matches, includes, find } from 'lodash';
+import { DishView } from '../../viewModels/interfaces';
 
 @Injectable()
 export class DishesInMemoryService implements IDishesDataService {
 
-  filter( filters: Filter): Observable <Dish[]> {
-    return Observable.of(orderBy(dishes, [filters.sortBy.name], [filters.sortBy.dir])
-                          .filter((dish: Dish) => {
+  filter( filters: Filter): Observable <DishView[]> {
+    if (!filters.sort[0]) {
+      filters.sort.push({ name:  '', direction: ''});
+    }
+
+    return Observable.of(orderBy(dishes, [filters.sort[0].name], [filters.sort[0].direction])
+                          .filter((plate: DishView) => {
                             if (filters.searchBy) {
-                              return dish.name.toLowerCase().includes(filters.searchBy.toLowerCase());
+                              return plate.dish.name.toLowerCase().includes(filters.searchBy.toLowerCase());
                             } else {
                               return true;
                             }
-                          }).filter((dish: Dish) => {
+                          }).filter((plate: DishView) => {
                             if (filters.maxPrice) {
-                              return dish.price > filters.maxPrice;
+                              return plate.dish.price < filters.maxPrice;
                             } else {
                               return true;
                             }
-                          }).filter((dish: Dish) => {
+                          }).filter((plate: DishView) => {
                             if (filters.minLikes) {
-                              return dish.likes > filters.minLikes;
+                              return plate.likes > filters.minLikes;
                             } else {
                               return true;
                             }
-                          }).filter( (dish: Dish) => {
+                          }).filter( (plate: DishView) => {
                             if (filters.categories) {
                               return filters.categories.every( (category: {id: string}) => {
-                                return find(dish.categories, category);
+                                return find(plate.categories, category);
                               });
                             } else {
                               return true;

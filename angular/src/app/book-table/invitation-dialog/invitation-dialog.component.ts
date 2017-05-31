@@ -14,7 +14,8 @@ import { assign, unset } from 'lodash';
 })
 export class InvitationDialogComponent implements OnInit {
 
-  data: ReservationView;
+  data: any;
+  date: string;
 
   constructor(private snackBar: SnackBarService,
               private invitationService: BookTableService,
@@ -23,10 +24,7 @@ export class InvitationDialogComponent implements OnInit {
                  this.data = dialogData;
   }
   ngOnInit(): void {
-    this.data.date = moment(this.data.date).format('LLL');
-    this.invitationService.getTableId().subscribe( (bookingId: number) => {
-        this.data.bookingId = bookingId;
-      });
+    this.date = moment(this.data.bookingDate).format('LLL');
   }
 
   sendInvitation(): void {

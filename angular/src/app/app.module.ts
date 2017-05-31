@@ -30,6 +30,7 @@ import { PasswordDialogComponent } from './user-area/password-dialog/password-di
 import { TwitterDialogComponent } from './user-area/twitter-dialog/twitter-dialog.component';
 import { OrderDialogComponent } from './cockpit-area/order-cockpit/order-dialog/order-dialog.component';
 import { ReservationDialogComponent } from './cockpit-area/reservation-cockpit/reservation-dialog/reservation-dialog.component';
+import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 
 // SERVICES
 import { BookTableService } from './book-table/shared/book-table.service';
@@ -41,6 +42,7 @@ import { OrderCockpitService } from './cockpit-area/order-cockpit/shared/order-c
 import { ReservationCockpitService } from './cockpit-area/reservation-cockpit/shared/reservation-cockpit.service';
 import { UserAreaService } from './user-area/shared/user-area.service';
 import { SnackBarService } from './shared/snackService/snackService.service';
+import { EmailConfirmationsService } from './email-confirmations/shared/email-confirmations.service';
 
 // DIRECTIVES
 import { EqualValidatorDirective } from './user-area/shared/equal-validator.directive';
@@ -66,6 +68,7 @@ import { EqualValidatorDirective } from './user-area/shared/equal-validator.dire
     TwitterDialogComponent,
     OrderDialogComponent,
     ReservationDialogComponent,
+    EmailConfirmationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +92,7 @@ import { EqualValidatorDirective } from './user-area/shared/equal-validator.dire
     ReservationCockpitService,
     UserAreaService,
     SnackBarService,
+    EmailConfirmationsService,
   ],
   entryComponents: [
     BookTableDialogComponent,

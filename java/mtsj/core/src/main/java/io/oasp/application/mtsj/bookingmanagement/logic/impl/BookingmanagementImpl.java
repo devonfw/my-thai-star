@@ -174,6 +174,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
+    bookingEntity.setCreationDate(Timestamp.from(Instant.now()));
     bookingEntity
         .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
 

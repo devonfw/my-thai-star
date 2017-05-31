@@ -1,34 +1,18 @@
-// FILTERS
-export interface Filter {
-    searchBy: string;
-    sortBy: {name: string, dir: string};
-    maxPrice: number;
-    minLikes: number;
-    isFav: boolean;
-    categories: CategoryView[];
-}
-
-export interface CategoryView {
-    name: string;
-    selected: boolean;
-}
-
-export interface FilterCockpitView {
-    date: string;
-    email: string;
-    bookingId: number;
-}
-
 // DISHES
 export interface DishView {
+    dish: PlateView;
+    image: {content: string};
+    extras: ExtraView[];
+    likes: number;
+    isfav: boolean;
+    categories?: {id: string}[];
+}
+
+export interface PlateView {
     id: number;
     name: string;
     description: string;
     price: number;
-    image: string;
-    extras: ExtraView[];
-    likes: number;
-    isfav: boolean;
 }
 
 export interface ExtraView {
@@ -40,33 +24,46 @@ export interface ExtraView {
 
 // BOOKING
 export interface ReservationView {
-    date: string;
-    creationDate?: string;
-    name: string;
-    email: string;
-    bookingId?: number;
-    tableId?: number;
-    bookingType: number;
-    assistants: number;
-    guestList?: FriendsInvite[];
-    orders?: OrderView[];
+    booking: {
+        bookingDate: string;
+        name: string;
+        email: string;
+        assistants: number;
+        tableId?: number;
+        bookingToken: number;
+        creationDate: string;
+    };
+    invitedGuests?: FriendsInvite[];
 }
 
 export interface FriendsInvite {
     email: string;
-    acceptance: string;
+    accepted: boolean;
 }
 
 export interface OrderView {
-    idDish: number;
-    name: string;
-    price: number;
+    dish: {
+        dishId: number;
+        name: string;
+        price: number;
+    };
+    orderLine: {
+        amount: number;
+        comment: string;
+    };
     extras: ExtraView[];
-    amount: number;
-    comment: string;
 }
 
 export interface OrderListView {
-    bookingId: number;
-    orderList: OrderView[];
+    orderLines: OrderView[];
+    booking: OrderBookingView;
+}
+
+export interface OrderBookingView {
+    bookingToken: number;
+    name: string;
+    bookingDate: string;
+    creationDate: string;
+    email: string;
+    tableId: number;
 }

@@ -9,7 +9,7 @@ import {
 import { MockBackend } from '@angular/http/testing';
 import { LoginRestService } from './login-rest.service';
 
-describe('DishesRestService', () => {
+describe('LoginRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
