@@ -11,6 +11,10 @@ import { DishView } from '../../viewModels/interfaces';
 export class DishesInMemoryService implements IDishesDataService {
 
   filter( filters: Filter): Observable <DishView[]> {
+    if (!filters.sort[0]) {
+      filters.sort.push({ name:  '', direction: ''});
+    }
+
     return Observable.of(orderBy(dishes, [filters.sort[0].name], [filters.sort[0].direction])
                           .filter((plate: DishView) => {
                             if (filters.searchBy) {
@@ -20,7 +24,7 @@ export class DishesInMemoryService implements IDishesDataService {
                             }
                           }).filter((plate: DishView) => {
                             if (filters.maxPrice) {
-                              return plate.dish.price > filters.maxPrice;
+                              return plate.dish.price < filters.maxPrice;
                             } else {
                               return true;
                             }

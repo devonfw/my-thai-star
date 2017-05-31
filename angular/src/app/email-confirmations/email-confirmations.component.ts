@@ -28,7 +28,7 @@ export class EmailConfirmationsComponent implements OnInit {
                           this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
                         },
                         (error: any) => {
-                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'green');
+                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
                         });
                         break;
                     case 'rejectInvite':
@@ -61,7 +61,7 @@ export class EmailConfirmationsComponent implements OnInit {
                   }
                });
         });
-    // this.router.navigate(['restaurant']);
+    this.router.navigate(['restaurant']);
   }
 
 }

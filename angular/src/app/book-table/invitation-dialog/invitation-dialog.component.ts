@@ -14,7 +14,7 @@ import { assign, unset } from 'lodash';
 })
 export class InvitationDialogComponent implements OnInit {
 
-  data: ReservationView;
+  data: any;
   date: string;
 
   constructor(private snackBar: SnackBarService,

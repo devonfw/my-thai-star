@@ -116,56 +116,60 @@ export const roles: Role[] = [
 ];
 
 export const bookedTables: ReservationView[] = [{
-        bookingDate: '19/03/2017 22:00',
-        creationDate: '11/03/2017 12:45',
-        name: 'Brok',
-        email: 'email1@email.com',
-        bookingType: 1,
-        assistants: 3,
-        bookingId: 500,
-        tableId: 0,
-        invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend2@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend3@email.com', acceptance: ''}],
+                booking: {
+                        assistants: 3,
+                        bookingDate: '19/03/2017 22:00',
+                        name: 'Brok',
+                        email: 'email1@email.com',
+                },
+                tableId: 0,
+                creationDate: '11/03/2017 12:45',
+                bookingToken: 500,
+                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
+                                {email: 'emailFriend2@email.com', acceptance: 'yes'},
+                                {email: 'emailFriend3@email.com', acceptance: ''}],
         }, {
-        bookingDate: '13/03/2017 21:45',
-        creationDate: '17/03/2017 23:30',
-        name: 'Jesse',
-        email: 'email2@email.com',
-        bookingType: 1,
-        assistants: 2,
-        bookingId: 501,
-        tableId: 1,
-        invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                  {email: 'emailFriend2@email.com', acceptance: 'no'}],
+                booking: {
+                        bookingDate: '13/03/2017 21:45',
+                        name: 'Jesse',
+                        email: 'email2@email.com',
+                        assistants: 2,
+                },
+                tableId: 1,
+                creationDate: '17/03/2017 23:30',
+                bookingToken: 501,
+                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
+                          {email: 'emailFriend2@email.com', acceptance: 'no'}],
         }, {
-        bookingDate: '15/03/2017 21:00',
-        creationDate: '17/03/2017 17:12',
-        name: 'James',
-        email: 'email3@email.com',
-        bookingType: 0,
-        assistants: 4,
-        bookingId: 502,
-        tableId: 2,
-        invitedGuests: [],
+                booking: {
+                        bookingDate: '15/03/2017 21:00',
+                        name: 'James',
+                        email: 'email3@email.com',
+                        assistants: 4,
+                },
+                tableId: 2,
+                creationDate: '17/03/2017 17:12',
+                bookingToken: 502,
+                invitedGuests: [],
         }, {
-        bookingDate: '16/03/2017 20:45',
-        creationDate: '17/03/2017 18:45',
-        name: 'Mara',
-        email: 'email4@email.com',
-        bookingType: 0,
-        assistants: 1,
-        bookingId: 503,
-        tableId: 3,
-        invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend2@email.com', acceptance: 'no'},
-                        {email: 'emailFriend3@email.com', acceptance: 'yes'},
-                        {email: 'emailFriend4@email.com', acceptance: ''},
-                        {email: 'emailFriend5@email.com', acceptance: 'yes'}],
-        }];
+                booking: {
+                        bookingDate: '16/03/2017 20:45',
+                        name: 'Mara',
+                        email: 'email4@email.com',
+                        assistants: 1,
+                },
+                tableId: 3,
+                creationDate: '17/03/2017 18:45',
+                bookingToken: 503,
+                invitedGuests: [{email: 'emailFriend1@email.com', acceptance: 'yes'},
+                                {email: 'emailFriend2@email.com', acceptance: 'no'},
+                                {email: 'emailFriend3@email.com', acceptance: 'yes'},
+                                {email: 'emailFriend4@email.com', acceptance: ''},
+                                {email: 'emailFriend5@email.com', acceptance: 'yes'}],
+                }];
 
 export const orderList: OrderListView[] = [{
-                bookingId: 500,
+                bookingToken: 500,
                 booking: {
                             name: 'Name 1',
                             bookingDate: '13/03/2017 15:00',
@@ -173,7 +177,7 @@ export const orderList: OrderListView[] = [{
                             email: 'user1@mail.com',
                             tableId: 0,
                           },
-                orderList: [{
+                orderLines: [{
                         dish: {
                                 dishId: 0,
                                 name: 'Pad Kee Mao',
@@ -197,7 +201,7 @@ export const orderList: OrderListView[] = [{
                         extras: [],
                         }],
         }, {
-                bookingId: 501,
+                bookingToken: 501,
                 booking: {
                             name: 'Name 2',
                             bookingDate: '27/05/2017 22:00',
@@ -205,7 +209,7 @@ export const orderList: OrderListView[] = [{
                             email: 'user2@mail.com',
                             tableId: 1,
                           },
-                orderList: [{
+                orderLines: [{
                         dish: {
                                 dishId: 1,
                                 name: 'Red Curry',
@@ -231,7 +235,7 @@ export const orderList: OrderListView[] = [{
                         extras: [{id: 2, name: 'Pork', price: 1, selected: true}],
                 }],
         }, {
-                bookingId: 502,
+                bookingToken: 502,
                 booking: {
                             name: 'user 3',
                             bookingDate: '29/05/2017 21:00',
@@ -239,7 +243,7 @@ export const orderList: OrderListView[] = [{
                             email: 'user0@mail.com',
                             tableId: 2,
                           },
-                orderList: [{
+                orderLines: [{
                         dish: {
                                 dishId: 1,
                                 name: 'Red Curry',
@@ -253,7 +257,7 @@ export const orderList: OrderListView[] = [{
                                 {id: 0, name: 'Tofu', price: 1, selected: true}],
                 }],
         }, {
-                bookingId: 503,
+                bookingToken: 503,
                 booking: {
                         name: 'user 4',
                         bookingDate: '27/05/2017 20:30',
@@ -261,7 +265,7 @@ export const orderList: OrderListView[] = [{
                         email: 'user4@mail.com',
                         tableId: 3,
                 },
-                orderList: [{
+                orderLines: [{
                         dish: {
                                 dishId: 3,
                                 name: 'Brown Curry',

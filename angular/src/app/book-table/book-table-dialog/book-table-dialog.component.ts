@@ -14,7 +14,7 @@ import { assign } from 'lodash';
 })
 export class BookTableDialogComponent implements OnInit {
 
-  data: ReservationView;
+  data: any;
   date: string;
 
   constructor (public snackBar: SnackBarService,
@@ -29,7 +29,6 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking (): void {
-
     this.bookingService.postBookingTable(this.bookingService.composeReservation(this.data)).subscribe( () => {
       this.snackBar.openSnack('Table succesfully booked', 4000, 'black');
     });

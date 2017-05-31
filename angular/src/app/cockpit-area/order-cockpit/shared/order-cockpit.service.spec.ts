@@ -3,6 +3,8 @@ import { HttpModule} from '@angular/http';
 import { OrderCockpitService } from './order-cockpit.service';
 import { BookingInMemoryService } from '../../../shared/backend/booking/booking-in-memory.service';
 import { BookingDataService } from '../../../shared/backend/booking/booking-data-service';
+import { OrderDataService } from '../../../shared/backend/order/order-data-service';
+import { OrderInMemoryService } from '../../../shared/backend/order/order-in-memory.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 
 describe('OrderCockpitService', () => {
@@ -12,7 +14,8 @@ describe('OrderCockpitService', () => {
       providers: [
         OrderCockpitService,
         PriceCalculatorService,
-        {provide: BookingDataService, useClass: BookingInMemoryService}],
+        {provide: BookingDataService, useClass: BookingInMemoryService},
+        {provide: OrderDataService, useClass: OrderInMemoryService}],
     });
   });
 

@@ -10,9 +10,9 @@ import { config } from '../../../config';
 export class BookingRestService implements IBookingDataService {
 
      private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
-     private readonly acceptReserveRestPath: string = 'bookingmanagement/invitedguest/accept/';
-     private readonly rejectReserveRestPath: string = 'bookingmanagement/invitedguest/decline/';
-     private readonly cancelReserveRestPath: string = 'bookingmanagement/booking/cancel/';
+     private readonly acceptReserveRestPath: string = 'bookingmanagement/v1/invitedguest/accept/';
+     private readonly rejectReserveRestPath: string = 'bookingmanagement/v1/invitedguest/decline/';
+     private readonly cancelReserveRestPath: string = 'bookingmanagement/v1/booking/cancel/';
      private readonly getReservationsRestPath: string = 'bookingmanagement/v1/booking/search';
 
      private http: Http;

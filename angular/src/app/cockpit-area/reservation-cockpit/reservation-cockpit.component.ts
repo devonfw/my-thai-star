@@ -22,8 +22,8 @@ export class ReservationCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'bookingDate', label: 'Reservation date'},
-    { name: 'email', label: 'Email' },
+    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.email', label: 'Email' },
     { name: 'bookingToken', label: 'Reference number'},
   ];
 
@@ -60,6 +60,7 @@ export class ReservationCockpitComponent implements OnInit {
 
   applyFilters(): void {
     this.reservationCockpitService.getReservations(this.pagination, this.filters).subscribe((reservations: any) => {
+      console.log(reservations.result)
       this.data = reservations.result;
       this.filteredData = reservations.result;
       this.filteredTotal = reservations.pagination.total;

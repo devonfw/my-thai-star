@@ -32,9 +32,9 @@ export class BookTableService {
 
     return {
       booking: {
-        bookingDate: invitationData.bookingDate,
-        name: invitationData.name,
-        email: invitationData.email,
+        bookingDate: invitationData.booking.bookingDate,
+        name: invitationData.booking.name,
+        email: invitationData.booking.email,
         bookingType: 1,
       },
       invitedGuests: guests,

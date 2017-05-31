@@ -24,14 +24,15 @@ export interface ExtraView {
 
 // BOOKING
 export interface ReservationView {
-    bookingDate: string;
-    creationDate?: string;
-    name: string;
-    email: string;
-    bookingId?: number;
+    booking: {
+        bookingDate: string;
+        name: string;
+        email: string;
+        assistants: number;
+    };
     tableId?: number;
-    bookingType: number;
-    assistants: number;
+    bookingToken?: number;
+    creationDate?: string;
     invitedGuests?: FriendsInvite[];
 }
 
@@ -54,8 +55,8 @@ export interface OrderView {
 }
 
 export interface OrderListView {
-    bookingId: number;
-    orderList: OrderView[];
+    bookingToken: number;
+    orderLines: OrderView[];
     booking: OrderBookingView;
 }
 

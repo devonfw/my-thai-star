@@ -5,6 +5,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrderCockpitComponent } from './order-cockpit.component';
 import { OrderCockpitService } from './shared/order-cockpit.service';
 import { BackendModule } from '../../shared/backend/backend.module';
+import { Pagination } from '../../shared/backend/backendModels/interfaces';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 
 describe('OrderCockpitComponent', () => {

@@ -6,6 +6,8 @@ import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
 import { DishesInMemoryService } from '../../shared/backend/dishes/dishes-in-memory.service';
+import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
+import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { MenuService } from '../shared/menu.service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { MenuCardComponent } from './menu-card.component';
@@ -23,6 +25,7 @@ describe('MenuCardComponent', () => {
         SidenavService,
         SnackBarService,
         { provide: BookingDataService, useClass: BookingInMemoryService},
+        { provide: OrderDataService, useClass: OrderInMemoryService},
         { provide: DishesDataService, useClass: DishesInMemoryService}],
       imports: [
         CovalentModule,
@@ -35,11 +38,13 @@ describe('MenuCardComponent', () => {
     fixture = TestBed.createComponent(MenuCardComponent);
     component = fixture.componentInstance;
     component.menuInfo = {
-      id: 0,
-      name: '',
-      description: '',
-      price: 0,
-      image: 'string',
+      dish: {
+        id: 0,
+        name: '',
+        description: '',
+        price: 0,
+      },
+      image: {content: 'string'},
       extras: [],
       likes: 0,
       isfav: true,

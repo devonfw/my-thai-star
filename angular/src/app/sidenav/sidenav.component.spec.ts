@@ -4,9 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
-import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
 import { SnackBarService } from '../shared/snackService/snackService.service';
 import { BookingDataService } from '../shared/backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
+import { OrderInMemoryService } from '../shared/backend/order/order-in-memory.service';
+import { OrderDataService } from '../shared/backend/order/order-data-service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { SidenavComponent } from './sidenav.component';
 import { CovalentModule } from '../shared/covalent.module';
@@ -22,6 +24,7 @@ describe('SidenavComponent', () => {
         PriceCalculatorService,
         SidenavService,
         SnackBarService,
+        {provide: OrderDataService, useClass: OrderInMemoryService},
         {provide: BookingDataService, useClass: BookingInMemoryService}],
       imports: [
         BrowserAnimationsModule,
