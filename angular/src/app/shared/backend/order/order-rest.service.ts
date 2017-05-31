@@ -10,6 +10,7 @@ import { config } from '../../../config';
 export class OrderRestService implements IOrderDataService {
 
      private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
+     private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/filter';
      private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
      private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
@@ -20,7 +21,8 @@ export class OrderRestService implements IOrderDataService {
      }
 
      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
-        return this.http.post(`${config.restServiceRoot}${this.getOrdersRestPath}`, filter)
+        let path: string = (filter.email || filter.bookingToken) ? this.filterOrdersRestPath : this.getOrdersRestPath;
+        return this.http.post(`${config.restServiceRoot}${path}`, filter)
                         .map((res: Response) => res.json());
      }
 

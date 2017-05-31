@@ -30,7 +30,9 @@ export class BookTableDialogComponent implements OnInit {
 
   sendBooking (): void {
     this.bookingService.postBookingTable(this.bookingService.composeReservation(this.data)).subscribe( () => {
-      this.snackBar.openSnack('Table succesfully booked', 4000, 'black');
+      this.snackBar.openSnack('Table succesfully booked', 4000, 'green');
+    }, (error) => {
+      this.snackBar.openSnack('Error booking, please try again later', 4000, 'red');
     });
     this.dialog.close(true);
   }
