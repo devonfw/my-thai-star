@@ -39,6 +39,6 @@ export class SidenavComponent implements OnInit {
 
   sendOrders(bookingId: string): void {
     this.sidenav.sendOrders(bookingId);
-    this.orders = this.sidenav.getOrderData();
+    this.orders = this.sidenav.removeAllOrders();
   }
 }
