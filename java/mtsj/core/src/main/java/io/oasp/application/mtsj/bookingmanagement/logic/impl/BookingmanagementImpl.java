@@ -316,7 +316,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     criteria.setGuestToken(guestToken);
     InvitedGuestEto invited = findInvitedGuestEtos(criteria).getResult().get(0);
     invited.setAccepted(true);
-
+    BookingCto booking = findBooking(invited.getBookingId());
+    sendConfirmationAcceptedInviteToGuest(booking, invited);
+    sendConfirmationActionToHost(booking, invited, "accepted");
     return saveInvitedGuest(invited);
   }
 
@@ -336,6 +338,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     for (OrderCto orderCto : guestOrdersCto) {
       this.orderManagement.deleteOrder(orderCto.getOrder().getId());
     }
+    BookingCto booking = findBooking(invited.getBookingId());
+    sendConfirmationActionToHost(booking, invited, "declined");
+
     return saveInvitedGuest(invited);
   }
 
@@ -427,9 +432,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       StringBuilder hostMailContent = new StringBuilder();
       hostMailContent.append("MY THAI STAR").append("\n");
       hostMailContent.append("Hi ").append(booking.getEmail()).append("\n");
-      hostMailContent.append("Your booking has been confirmed.");
+      hostMailContent.append("Your booking has been confirmed.").append("\n");
       hostMailContent.append("Host: ").append(booking.getName()).append("<").append(booking.getEmail()).append(">")
           .append("\n");
+      hostMailContent.append("Booking CODE: ").append(booking.getBookingToken()).append("\n");
       hostMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
       if (!booking.getInvitedGuests().isEmpty()) {
         hostMailContent.append("Guest list:").append("\n");
@@ -440,6 +446,43 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       String cancellationLink = "http://localhost:" + this.clientPort + "/booking/cancel/" + booking.getBookingToken();
       hostMailContent.append(cancellationLink).append("\n");
       this.mailService.sendMail(booking.getEmail(), "Booking confirmation", hostMailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private void sendConfirmationAcceptedInviteToGuest(BookingCto booking, InvitedGuestEto guest) {
+
+    try {
+      StringBuilder guestMailContent = new StringBuilder();
+      guestMailContent.append("MY THAI STAR").append("\n");
+      guestMailContent.append("Hi ").append(guest.getEmail()).append("\n");
+      guestMailContent.append("You have accepted the invite to an event in our restaurant.").append("\n");
+      guestMailContent.append("Host: ").append(booking.getBooking().getName()).append("<")
+          .append(booking.getBooking().getEmail()).append(">").append("\n");
+      guestMailContent.append("Guest CODE: ").append(guest.getGuestToken()).append("\n");
+      guestMailContent.append("Booking Date: ").append(booking.getBooking().getBookingDate()).append("\n");
+
+      String cancellationLink =
+          "http://localhost:" + this.clientPort + "/booking/rejectInvite/" + guest.getGuestToken();
+
+      guestMailContent.append("To cancel invite: ").append(cancellationLink).append("\n");
+      this.mailService.sendMail(guest.getEmail(), "Invite accepted", guestMailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private void sendConfirmationActionToHost(BookingCto booking, InvitedGuestEto guest, String action) {
+
+    try {
+      StringBuilder guestMailContent = new StringBuilder();
+      guestMailContent.append("MY THAI STAR").append("\n");
+      guestMailContent.append("Hi ").append(booking.getBooking().getEmail()).append("\n");
+      guestMailContent.append(guest.getEmail()).append(" has ").append(action)
+          .append(" your invitation for the event on ").append(booking.getBooking().getBookingDate()).append("\n");
+
+      this.mailService.sendMail(guest.getEmail(), "Invite " + action, guestMailContent.toString());
     } catch (Exception e) {
       LOG.error("Email not sent. {}", e.getMessage());
     }

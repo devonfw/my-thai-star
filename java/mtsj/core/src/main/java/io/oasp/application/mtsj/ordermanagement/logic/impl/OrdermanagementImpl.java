@@ -426,13 +426,13 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       }
 
       // dish cost
-      sb.append(" ").append(". Dish cost: ").append(linePrice.toString());
+      sb.append(" ==>").append(". Dish cost: ").append(linePrice.toString());
       sb.append("\n");
       // increase the finalPrice of the order
       finalPrice = finalPrice.add(linePrice);
     }
 
-    return sb.append("Total Price: ").append(finalPrice.toString()).toString();
+    return sb.append("Total Order cost: ").append(finalPrice.toString()).toString();
   }
 
   private String getBookingOrGuestEmail(String token) {
