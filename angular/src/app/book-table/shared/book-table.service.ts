@@ -26,15 +26,15 @@ export class BookTableService {
     return { booking: bookTable };
   }
 
-  composeInvitation(invitationData: ReservationView): BookingInfo {
+  composeInvitation(invitationData: any): BookingInfo {
     let guests: any = [];
     invitationData.invitedGuests.forEach((guest: FriendsInvite) => {guests.push({email: guest}); });
 
     return {
       booking: {
-        bookingDate: invitationData.booking.bookingDate,
-        name: invitationData.booking.name,
-        email: invitationData.booking.email,
+        bookingDate: invitationData.bookingDate,
+        name: invitationData.name,
+        email: invitationData.email,
         bookingType: 1,
       },
       invitedGuests: guests,
