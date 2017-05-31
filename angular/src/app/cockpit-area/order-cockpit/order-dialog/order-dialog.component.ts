@@ -1,10 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { ExtraView, OrderView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
+import { ExtraView, OrderView, ReservationView, OrderListView, OrderBookingView } from '../../../shared/viewModels/interfaces';
 import { OrderCockpitService } from '../shared/order-cockpit.service';
-import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {MD_DIALOG_DATA} from '@angular/material';
-import {map, cloneDeep} from 'lodash';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -13,23 +11,22 @@ import {map, cloneDeep} from 'lodash';
 })
 export class OrderDialogComponent implements OnInit {
 
-  datat: ReservationView[] = [];
+  datat: any[] = [];
   columnst: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
+    { name: 'bookingDate', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
-    { name: 'assistants', label: 'Assistants'},
     { name: 'name', label: 'Owner' },
     { name: 'email', label: 'Email' },
     { name: 'tableId', label: 'Table'},
   ];
 
-  datao: OrderView[] = [];
+  datao: any[] = [];
   columnso: ITdDataTableColumn[] = [
-    { name: 'name', label: 'Dish'},
-    { name: 'comment', label: 'Comments'},
+    { name: 'dish.name', label: 'Dish'},
+    { name: 'orderLine.comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
-    { name: 'amount', label: 'Quantity' },
-    { name: 'price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
+    { name: 'orderLine.amount', label: 'Quantity' },
+    { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 
   fromRow: number = 1;
@@ -37,29 +34,18 @@ export class OrderDialogComponent implements OnInit {
   pageSize: number = 5;
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
-  data: OrderListView;
+  data: any;
 
   constructor(private _dataTableService: TdDataTableService,
-              private priceCalculator: PriceCalculatorService,
               private orderCockpitService: OrderCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
                 this.data = dialogData.row;
   }
 
   ngOnInit(): void {
-
-    // Remark: Maybe total price calculation can be also moved to a service, so price calculator dependency will
-    // be present only in that service
-    // Remark: this logic should be moved to a service - e.g. OrderCockpitService should do it for now
-    this.orderCockpitService.getBookingOrder(this.data.bookingId).subscribe( (order: ReservationView) => {
-      this.datat.push(order);
-      this.datao = cloneDeep(this.data.orderList);
-      this.totalPrice = this.priceCalculator.getTotalPrice(this.data.orderList);
-      map(this.datao, (o: OrderView) => {
-        o.price = this.priceCalculator.getPrice(o);
-        o.extras = map(o.extras, 'name').join(', ');
-      });
-    });
+    this.totalPrice = this.orderCockpitService.getTotalPrice(this.data.orderLines);
+    this.datao = this.orderCockpitService.orderComposer(this.data.orderLines);
+    this.datat.push(this.data.booking);
     this.filter();
 }
 

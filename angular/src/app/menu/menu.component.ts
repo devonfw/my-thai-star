@@ -3,7 +3,7 @@ import { MdSlider } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
-import { DishView, Filter } from '../shared/viewModels/interfaces';
+import { DishView } from '../shared/viewModels/interfaces';
 
 @Component({
   selector: 'public-menu',
@@ -13,7 +13,7 @@ import { DishView, Filter } from '../shared/viewModels/interfaces';
 export class MenuComponent implements OnInit {
 
     menus: DishView[] = [];
-    sortDir: string = 'desc';
+    sortDir: string = 'DESC';
     sortDirIcon: string = 'vertical_align_bottom';
 
     constructor (private menuService: MenuService) {
@@ -26,13 +26,13 @@ export class MenuComponent implements OnInit {
     }
 
     changeSortDir(): void {
-      this.sortDir = (this.sortDir === 'desc') ? 'asc' : 'desc';
+      this.sortDir = (this.sortDir === 'ASC') ? 'DESC' : 'ASC';
       this.sortDirIcon = (this.sortDirIcon === 'vertical_align_bottom') ? 'vertical_align_top' : 'vertical_align_bottom';
     }
 
     applyFilters(filters: any): void {
       this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir))
-                      .subscribe((data: any) => {
+                      .subscribe((data: DishView[]) => {
                         this.menus = data;
                       });
     }

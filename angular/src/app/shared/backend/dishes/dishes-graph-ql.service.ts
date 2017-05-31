@@ -1,8 +1,9 @@
-import { Dish, Filter } from '../backendModels/interfaces';
+import { Filter } from '../backendModels/interfaces';
 import { ApolloQueryResult } from 'apollo-client';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { DishView } from '../../viewModels/interfaces';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -55,23 +56,25 @@ export class DishesGraphQlService implements IDishesDataService {
   }
 
   // added by Roberto, please, revise
-  filter(filters: Filter): Observable <Dish[]> {
+  filter(filters: Filter): Observable <DishView[]> {
     return this.apollo.watchQuery<DishesQueryRepsonse>({ query: getDishesQuery })
       .map((result: ApolloQueryResult<DishesQueryRepsonse>) => result.data.dishes)
       .map((dishes: GqlDish[]) => dishes.map(this.convertToBackendDish));
   }
 
   // TODO: see the comment above
-  private convertToBackendDish(dish: GqlDish): Dish {
+  private convertToBackendDish(dish: GqlDish): DishView {
    return {
-        id: dish.id, // added by Roberto, please revise
+        dish: {
+          id: dish.id, // added by Roberto, please revise
+          description: dish.description,
+          name: dish.name,
+          price: dish.price,
+        },
         isfav: false,
-        image: dish.image,
+        image: {content: dish.image},
         likes: dish.likes,
         extras: dish.ingredients.map((extra: any) => ({id: extra.id, name: extra.name, price: extra.price, selected: false})),
-        description: dish.description,
-        name: dish.name,
-        price: dish.price,
         categories: dish.categories, // added by Roberto, please revise
       };
   }

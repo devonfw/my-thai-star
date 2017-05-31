@@ -1,32 +1,28 @@
 // FILTERS
 export class Filter {
+    pagination?: Pagination;
     isFav: boolean;
     searchBy: string;
-    sortBy: { name: string, dir: string };
+    sort: { name: string, direction: string }[];
     maxPrice: number;
     minLikes: number;
     categories: [{ id: string }];
 }
 
 export class FilterCockpit {
-    date: string;
+    pagination?: Pagination;
+    bookingDate: string;
     email: string;
-    bookingId: number;
+    bookingToken: number;
+}
+
+export class Pagination {
+    size: number;
+    page: number;
+    total: number;
 }
 
 // DISHES
-export class Dish {
-    id: number;
-    isfav: boolean;
-    image: string;
-    likes: number;
-    extras: {id: number, name: string, price: number, selected: boolean}[];
-    description: string;
-    name: string;
-    price: number;
-    categories: [{id: string}];
-}
-
 export class ExtraInfo {
     id: number;
     name: string;
@@ -36,13 +32,16 @@ export class ExtraInfo {
 
 // BOOKING
 export class BookingInfo {
-    date: string;
-    name: string;
-    email: string;
-    bookingType: number;
-    orders?: OrderInfo[];
-    assistants?: number;
-    guestList?: [{email: string}];
+    booking: ReservationInfo;
+    invitedGuests?: [{email: string}];
+}
+
+export class ReservationInfo {
+        bookingDate: string;
+        name: string;
+        email: string;
+        bookingType: number;
+        assistants?: number;
 }
 
 export class FriendsInvite {
@@ -56,14 +55,14 @@ export class OrderInfo {
 }
 
 export class OrderLineInfo {
-    idDish: number;
+    dishId: number;
     amount: number;
     comment: string;
 }
 
 export class OrderListInfo {
-    bookingId: number;
-    orders: OrderInfo[];
+    booking: {bookingToken: string};
+    orderLines: OrderInfo[];
 }
 
 // LOGIN

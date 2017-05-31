@@ -27,7 +27,7 @@
               Name
             </md-option>
           </md-select>
-          <button md-icon-button (click)="changeSortDir()" [mdTooltip]="sortDir"><md-icon>{{sortDirIcon}}</md-icon></button>
+          <button md-icon-button type="button" (click)="changeSortDir()" [mdTooltip]="sortDir"><md-icon>{{sortDirIcon}}</md-icon></button>
         </div>
       </div>
       <md-divider></md-divider>
@@ -105,8 +105,7 @@
     </div>
   </form>
 
-  <div flex layout="row" class="justify-space-around flex-wrap">
+  <div flex layout="row"  class="justify-space-around flex-wrap">
     <public-menu-card *ngFor="let menu of menus" [menu]="menu"></public-menu-card>
   </div>
-
 </td-layout>

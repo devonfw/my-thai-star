@@ -182,6 +182,12 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
     BookingEntity resultEntity = getBookingDao().save(bookingEntity);
     LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
+    for (InvitedGuestEntity invitedGuest : resultEntity.getInvitedGuests()) {
+      invitedGuest.setBookingId(resultEntity.getId());
+      InvitedGuestEntity resultInvitedGuest = getInvitedGuestDao().save(invitedGuest);
+      LOG.info("OrderLine with id '{}' has been created.", resultInvitedGuest.getId());
+    }
+    LOG.debug("Booking with id '{}' has been created.", resultEntity.getId());
 
     sendConfirmationEmails(resultEntity);
 

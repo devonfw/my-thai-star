@@ -1,5 +1,6 @@
+import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 import { ReservationCockpitService } from './shared/reservation-cockpit.service';
-import { FilterCockpitView, ReservationView } from '../../shared/viewModels/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TdDataTableService,
@@ -21,18 +22,27 @@ export class ReservationCockpitComponent implements OnInit {
   data: ReservationView[];
 
   columns: ITdDataTableColumn[] = [
-    { name: 'date', label: 'Reservation date'},
-    { name: 'email', label: 'Email' },
-    { name: 'bookingId', label: 'Reference number'},
+    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.email', label: 'Email' },
+    { name: 'booking.bookingToken', label: 'Reference number'},
   ];
 
   filteredData: ReservationView[];
   filteredTotal: number;
 
-  fromRow: number = 1;
-  currentPage: number = 1;
-  pageSize: number = 8;
-  sortBy: string = 'date';
+  filters: FilterCockpit = {
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
+  };
+
+  pagination: Pagination = {
+    size: 8,
+    page: 1,
+    total: 1,
+  };
+
+  sortBy: string = 'booking.bookingDate';
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   constructor(private reservationCockpitService: ReservationCockpitService,
@@ -40,51 +50,46 @@ export class ReservationCockpitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit(): void {
-    this.reservationCockpitService.getReservations({date: undefined, email: undefined, bookingId: undefined})
-        .subscribe((reservations: ReservationView[]) => {
-          this.data = reservations;
-          this.filteredData = reservations;
-          this.filteredTotal = reservations.length;
-        });
-    this.filter();
+    this.applyFilters();
   }
 
-  applyFilters(filters: any): void {
-    this.reservationCockpitService.getReservations(filters).subscribe((orders: ReservationView[]) => {
-      this.data = orders;
-      this.filteredData = orders;
-      this.filteredTotal = orders.length;
+  filter(): void {
+    this.pagination.page = 1;
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    this.reservationCockpitService.getReservations(this.pagination, this.filters).subscribe((reservations: any) => {
+      this.data = reservations.result;
+      this.filteredData = reservations.result;
+      this.filteredTotal = reservations.pagination.total;
+      this.dataFilter();
     });
   }
 
   clearFilters(filters: any): void {
     filters.reset();
-    this.reservationCockpitService.getReservations({date: undefined, email: undefined, bookingId: undefined})
-        .subscribe((orders: ReservationView[]) => {
-          this.data = orders;
-          this.filteredData = orders;
-          this.filteredTotal = orders.length;
-        });
+    this.applyFilters();
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sortBy = sortEvent.name;
     this.sortOrder = sortEvent.order;
-    this.filter();
+    this.dataFilter();
   }
 
   page(pagingEvent: IPageChangeEvent): void {
-    this.fromRow = pagingEvent.fromRow;
-    this.currentPage = pagingEvent.page;
-    this.pageSize = pagingEvent.pageSize;
-    this.filter();
+    this.pagination = {
+      size: pagingEvent.pageSize,
+      page: pagingEvent.page,
+      total: 1,
+    };
+    this.applyFilters();
   }
 
-  filter(): void {
+  dataFilter(): void {
     let newData: any[] = this.data;
-    this.filteredTotal = newData.length;
     newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
     this.filteredData = newData;
   }
 

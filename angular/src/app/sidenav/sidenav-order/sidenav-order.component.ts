@@ -28,13 +28,13 @@ export class SidenavOrderComponent implements OnInit {
  }
 
   removeComment(): void {
-    this.order.comment = undefined;
+    this.order.orderLine.comment = undefined;
   }
 
   addComment(): void {
     let dialogRef: MdDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
     dialogRef.afterClosed().subscribe((result: string) => {
-      this.order.comment = result;
+      this.order.orderLine.comment = result;
     });
   }
 
@@ -56,7 +56,7 @@ export class SidenavOrderComponent implements OnInit {
 
   openCommentDialog(): void {
     this._dialogService.openAlert({
-      message: this.order.comment,
+      message: this.order.orderLine.comment,
       title: 'Comment',
       closeButton: 'Close',
     });

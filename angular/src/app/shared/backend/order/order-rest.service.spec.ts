@@ -7,14 +7,14 @@ import {
     ResponseOptions,
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { BookingRestService } from './booking-rest.service';
+import { OrderRestService } from './order-rest.service';
 
-describe('BookingRestService', () => {
+describe('OrderRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [
-        BookingRestService,
+        OrderRestService,
         {
             provide: Http,
             useFactory: (mockBackend: MockBackend, options: BaseRequestOptions) => {
@@ -28,7 +28,7 @@ describe('BookingRestService', () => {
     });
   });
 
-  it('should ...', inject([BookingRestService], (service: BookingRestService) => {
+  it('should ...', inject([OrderRestService], (service: OrderRestService) => {
     expect(service).toBeTruthy();
   }));
 });

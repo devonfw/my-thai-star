@@ -1,28 +1,23 @@
 import { TestBed, inject } from '@angular/core/testing';
-
-import { SidenavService } from './sidenav.service';
+import { HttpModule} from '@angular/http';
 import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { EmailConfirmationsService } from './email-confirmations.service';
 import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
-import { CovalentModule } from '../../shared/covalent.module';
+import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 
-describe('SidenavSharedService', () => {
+describe('EmailConfirmationsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpModule],
       providers: [
-        SidenavService,
-        SnackBarService,
+        EmailConfirmationsService,
         {provide: BookingDataService, useClass: BookingInMemoryService},
         {provide: OrderDataService, useClass: OrderInMemoryService}],
-      imports: [
-        CovalentModule,
-      ],
     });
   });
 
-  it('should ...', inject([SidenavService], (service: SidenavService) => {
+  it('should ...', inject([EmailConfirmationsService], (service: EmailConfirmationsService) => {
     expect(service).toBeTruthy();
   }));
 });

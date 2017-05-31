@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { DishesDataService } from './dishes/dishes-data-service';
 import { LoginDataService } from './login/login-data-service';
 import { BookingDataService } from './booking/booking-data-service';
+import { OrderDataService } from './order/order-data-service';
 import { provideClient } from './graphql-client';
 import { ApolloModule } from 'apollo-angular';
 
@@ -29,6 +30,7 @@ export class BackendConfig {
     DishesDataService,
     LoginDataService,
     BookingDataService,
+    OrderDataService,
   ],
 })
 

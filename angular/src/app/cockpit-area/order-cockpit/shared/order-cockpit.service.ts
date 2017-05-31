@@ -1,22 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { FilterCockpitView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
-import { BookingDataService } from '../../../shared/backend/booking/booking-data-service';
+import { ReservationView, OrderListView, OrderView } from '../../../shared/viewModels/interfaces';
+import { FilterCockpit, Pagination } from '../../../shared/backend/backendModels/interfaces';
+import { OrderDataService } from '../../../shared/backend/order/order-data-service';
+import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
+import {map, cloneDeep} from 'lodash';
 
 @Injectable()
 export class OrderCockpitService {
 
-  constructor(private bookingDataService: BookingDataService) {
-  }
+  constructor(private orderDataService: OrderDataService,
+              private priceCalculator: PriceCalculatorService) { }
 
-  getBookingOrders(filters: FilterCockpitView): Observable<OrderListView[]> {
-    return this.bookingDataService.getBookingOrders(filters)
+  getBookingOrders(pagination: Pagination, filters?: FilterCockpit): Observable<OrderListView[]> {
+    if (!filters) {
+      filters = {
+          bookingDate: undefined,
+          email: undefined,
+          bookingToken: undefined,
+      };
+    }
+    filters.pagination = pagination;
+    return this.orderDataService.getBookingOrders(filters)
                .map((orders: OrderListView[]) => orders as OrderListView[]);
   }
 
-  getBookingOrder(id: number): Observable<ReservationView> {
-    return this.bookingDataService.getBookingOrder(id)
-               .map((orders: ReservationView) => orders as ReservationView);
+  orderComposer(orderList: OrderView[]): OrderView[] {
+      let orders: OrderView[] = cloneDeep(orderList);
+      map(orders, (o: OrderView) => {
+        o.dish.price = this.priceCalculator.getPrice(o);
+        o.extras = map(o.extras, 'name').join(', ');
+      });
+      return orders;
+  }
+
+  getTotalPrice(orderLines: OrderView[]): number {
+     return this.priceCalculator.getTotalPrice(orderLines);
+
   }
 
 }

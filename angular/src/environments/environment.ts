@@ -7,5 +7,5 @@ import { BackendType } from '../app/shared/backend/backend.module';
 
 export const environment: {production: boolean, backendType: BackendType} = {
   production: false,
-  backendType: BackendType.IN_MEMORY,
+  backendType: BackendType.REST,
 };
