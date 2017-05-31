@@ -31,7 +31,7 @@ public interface Bookingmanagement {
    * @param criteria the {@link BookingSearchCriteriaTo}.
    * @return the {@link List} of matching {@link BookingEto}s.
    */
-  PaginatedListTo<BookingEto> findBookingEtos(BookingSearchCriteriaTo criteria);
+  PaginatedListTo<BookingCto> findBookingCtos(BookingSearchCriteriaTo criteria);
 
   /**
    * Deletes a booking from the database by its id 'bookingId'.

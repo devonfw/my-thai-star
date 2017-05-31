@@ -264,15 +264,15 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     // BOOKING VALIDATION
     if (getOrderType(token) == BookingType.COMMON) {
-      BookingEto booking = getBooking(token);
+      BookingCto booking = getBooking(token);
       if (booking == null) {
         throw new NoBookingException();
       }
-      List<OrderCto> currentOrders = getBookingOrders(booking.getId());
+      List<OrderCto> currentOrders = getBookingOrders(booking.getBooking().getId());
       if (!currentOrders.isEmpty()) {
         throw new OrderAlreadyExistException();
       }
-      orderEntity.setBookingId(booking.getId());
+      orderEntity.setBookingId(booking.getBooking().getId());
 
       // GUEST VALIDATION
     } else if (getOrderType(token) == BookingType.INVITED) {
@@ -303,11 +303,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
   }
 
-  private BookingEto getBooking(String token) {
+  private BookingCto getBooking(String token) {
 
     BookingSearchCriteriaTo criteria = new BookingSearchCriteriaTo();
     criteria.setBookingToken(token);
-    PaginatedListTo<BookingEto> booking = this.bookingManagement.findBookingEtos(criteria);
+    PaginatedListTo<BookingCto> booking = this.bookingManagement.findBookingCtos(criteria);
     return booking.getResult().isEmpty() ? null : booking.getResult().get(0);
   }
 
@@ -398,11 +398,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     // Get the Host email
     if (getOrderType(token) == BookingType.COMMON) {
-      BookingEto booking = getBooking(token);
+      BookingCto booking = getBooking(token);
       if (booking == null) {
         throw new NoBookingException();
       }
-      return booking.getEmail();
+      return booking.getBooking().getEmail();
 
       // Get the Guest email
     } else if (getOrderType(token) == BookingType.INVITED) {

@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,6 +40,7 @@ import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.application.mtsj.usermanagement.logic.api.to.UserEto;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -109,11 +111,23 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  public PaginatedListTo<BookingEto> findBookingEtos(BookingSearchCriteriaTo criteria) {
+  public PaginatedListTo<BookingCto> findBookingCtos(BookingSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
     PaginatedListTo<BookingEntity> bookings = getBookingDao().findBookings(criteria);
-    return mapPaginatedEntityList(bookings, BookingEto.class);
+    List<BookingCto> ctos = new ArrayList<>();
+    for (BookingEntity entity : bookings.getResult()) {
+      BookingCto cto = new BookingCto();
+      cto.setBooking(getBeanMapper().map(entity, BookingEto.class));
+      cto.setInvitedGuests(getBeanMapper().mapList(entity.getInvitedGuests(), InvitedGuestEto.class));
+      cto.setOrder(getBeanMapper().map(entity.getOrder(), OrderEto.class));
+      cto.setTable(getBeanMapper().map(entity.getTable(), TableEto.class));
+      cto.setUser(getBeanMapper().map(entity.getUser(), UserEto.class));
+      cto.setOrders(getBeanMapper().mapList(entity.getOrders(), OrderEto.class));
+      ctos.add(cto);
+
+    }
+    return new PaginatedListTo<>(ctos, bookings.getPagination());
   }
 
   @Override
@@ -324,13 +338,13 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     return saveInvitedGuest(invited);
   }
 
-  public BookingEto findBookingByEmail(String email) {
+  public BookingCto findBookingByEmail(String email) {
 
     Objects.requireNonNull(email, "email");
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
     bookingCriteria.setEmail(email);
-    List<BookingEto> bookings = findBookingEtos(bookingCriteria).getResult();
+    List<BookingCto> bookings = findBookingCtos(bookingCriteria).getResult();
     if (!bookings.isEmpty()) {
       return bookings.get(0);
     } else {
@@ -338,7 +352,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       invitedCriteria.setEmail(email);
       List<InvitedGuestEto> inviteds = findInvitedGuestEtos(invitedCriteria).getResult();
       if (!inviteds.isEmpty()) {
-        return getBeanMapper().map(findBooking(inviteds.get(0).getBookingId()), BookingEto.class);
+        return findBooking(inviteds.get(0).getBookingId());
       }
     }
     return null;
@@ -351,23 +365,23 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
     bookingCriteria.setBookingToken(bookingToken);
-    List<BookingEto> booking = findBookingEtos(bookingCriteria).getResult();
+    List<BookingCto> booking = findBookingCtos(bookingCriteria).getResult();
     if (!booking.isEmpty()) {
-      if (!cancelInviteAllowed(booking.get(0))) {
+      if (!cancelInviteAllowed(booking.get(0).getBooking())) {
         throw new CancelInviteNotAllowedException();
       }
       InvitedGuestSearchCriteriaTo guestCriteria = new InvitedGuestSearchCriteriaTo();
-      guestCriteria.setBookingId(booking.get(0).getId());
+      guestCriteria.setBookingId(booking.get(0).getBooking().getId());
       List<InvitedGuestEto> guestsEto = findInvitedGuestEtos(guestCriteria).getResult();
       if (!guestsEto.isEmpty()) {
         for (InvitedGuestEto guestEto : guestsEto) {
           deleteInvitedGuest(guestEto.getId());
-          sendCancellationEmailToGuest(booking.get(0), guestEto);
+          sendCancellationEmailToGuest(booking.get(0).getBooking(), guestEto);
         }
       }
       // delete booking and related orders
-      deleteBooking(booking.get(0).getId());
-      sendCancellationEmailToHost(booking.get(0));
+      deleteBooking(booking.get(0).getBooking().getId());
+      sendCancellationEmailToHost(booking.get(0).getBooking());
     }
   }
 
