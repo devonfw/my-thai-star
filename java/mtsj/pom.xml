@@ -10,7 +10,7 @@
 
   <properties>
     <spring.boot.version>1.3.8.RELEASE</spring.boot.version>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>

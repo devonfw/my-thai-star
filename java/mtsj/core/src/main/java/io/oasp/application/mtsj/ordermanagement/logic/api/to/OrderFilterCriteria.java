@@ -11,6 +11,8 @@ public class OrderFilterCriteria {
 
   private String email;
 
+  private String bookingToken;
+
   /**
    * @return email
    */
@@ -20,11 +22,27 @@ public class OrderFilterCriteria {
   }
 
   /**
-   * @param email new value of {@link #getemail}.
+   * @param email new value of {@link #getEmail}.
    */
   public void setEmail(String email) {
 
     this.email = email;
+  }
+
+  /**
+   * @return bookingToken
+   */
+  public String getBookingToken() {
+
+    return this.bookingToken;
+  }
+
+  /**
+   * @param bookingToken new value of {@link #getBookingToken}.
+   */
+  public void setBookingToken(String bookingToken) {
+
+    this.bookingToken = bookingToken;
   }
 
 }

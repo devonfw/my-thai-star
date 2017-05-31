@@ -42,6 +42,7 @@ import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderLineDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -139,6 +140,36 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     return new PaginatedListTo<>(ctos, orders.getPagination());
+  }
+
+  @Override
+  public PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria filter) {
+
+    OrderSearchCriteriaTo emtpyCriteria = new OrderSearchCriteriaTo();
+    PaginatedListTo<OrderCto> ordersCto = findOrderCtos(emtpyCriteria);
+    List<OrderCto> ctos = new ArrayList<>();
+    if (filter.getEmail() != null) {
+      for (OrderCto cto : ordersCto.getResult()) {
+        if (cto.getInvitedGuest() != null) {
+          if (cto.getInvitedGuest().getEmail().equals(filter.getEmail())) {
+            ctos.add(cto);
+          }
+        } else if (cto.getBooking() != null) {
+          if (cto.getBooking().getEmail().equals(filter.getEmail())) {
+            ctos.add(cto);
+          }
+        } else if (cto.getHost() != null) {
+          if (cto.getHost().getEmail().equals(filter.getEmail())) {
+            ctos.add(cto);
+          }
+        }
+      }
+    }
+    if (filter.getBookingToken() != null) {
+      ctos.removeIf(c -> c.getBooking().getBookingToken() != filter.getBookingToken());
+    }
+
+    return new PaginatedListTo<>(ctos, ordersCto.getPagination());
   }
 
   @Override
