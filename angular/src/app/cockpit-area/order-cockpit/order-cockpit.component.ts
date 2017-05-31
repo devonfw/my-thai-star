@@ -23,7 +23,7 @@ export class OrderCockpitComponent implements OnInit {
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
-    { name: 'bookingToken', label: 'Reference number'},
+    { name: 'booking.bookingToken', label: 'Reference number'},
   ];
 
   filteredData: OrderListView[];

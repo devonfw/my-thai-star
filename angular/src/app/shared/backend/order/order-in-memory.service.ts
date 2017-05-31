@@ -52,7 +52,7 @@ export class OrderInMemoryService implements IOrderDataService {
     }
 
     findReservationById(id: {bookingToken: string}): ReservationView {
-        return find(bookedTables, (booking: ReservationView) => booking.bookingToken === toNumber(id.bookingToken));
+        return find(bookedTables, (booking: ReservationView) => booking.booking.bookingToken === toNumber(id.bookingToken));
     }
 
     composeOrderList(orders: OrderListInfo): OrderListView {
@@ -85,9 +85,9 @@ export class OrderInMemoryService implements IOrderDataService {
             booking: {
                 name: bookedTable.booking.name,
                 bookingDate: bookedTable.booking.bookingDate,
-                creationDate: bookedTable.creationDate,
+                creationDate: bookedTable.booking.creationDate,
                 email: bookedTable.booking.email,
-                tableId: bookedTable.tableId,
+                tableId: bookedTable.booking.tableId,
             },
             orderLines: orderLines,
         };

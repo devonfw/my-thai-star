@@ -29,10 +29,10 @@ export interface ReservationView {
         name: string;
         email: string;
         assistants: number;
+        tableId?: number;
+        bookingToken: number;
+        creationDate: string;
     };
-    tableId?: number;
-    bookingToken?: number;
-    creationDate?: string;
     invitedGuests?: FriendsInvite[];
 }
 

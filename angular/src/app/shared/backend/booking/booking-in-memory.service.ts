@@ -14,9 +14,9 @@ export class BookingInMemoryService implements IBookingDataService {
     bookTable(booking: BookingInfo): Observable<number> {
         let bookTable: ReservationView;
         bookTable = assign(bookTable, booking);
-        bookTable.creationDate = moment().format('LLL');
-        bookTable.bookingToken = maxBy(bookedTables, (table: ReservationView) => table.bookingToken).bookingToken + 1;
-        bookTable.tableId = maxBy(bookedTables, (table: ReservationView) => table.tableId).tableId + 1;
+        bookTable.booking.creationDate = moment().format('LLL');
+        bookTable.booking.bookingToken = maxBy(bookedTables, (table: ReservationView) => table.booking.bookingToken).booking.bookingToken + 1;
+        bookTable.booking.tableId = maxBy(bookedTables, (table: ReservationView) => table.booking.tableId).booking.tableId + 1;
         if (!bookTable.invitedGuests) {
             bookTable.invitedGuests = [];
         }
@@ -44,7 +44,7 @@ export class BookingInMemoryService implements IBookingDataService {
                         }
                     }).filter((booking: ReservationView) => {
                         if (filters.bookingToken) {
-                            return toString(booking.bookingToken).includes(toString(filters.bookingToken));
+                            return toString(booking.booking.bookingToken).includes(toString(filters.bookingToken));
                         } else {
                             return true;
                         }

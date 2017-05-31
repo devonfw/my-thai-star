@@ -17,7 +17,7 @@ export class ReservationDialogComponent implements OnInit {
 
   columnst: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'creationDate', label: 'Creation date'},
+    { name: 'booking.creationDate', label: 'Creation date'},
     { name: 'booking.name', label: 'Owner' },
     { name: 'booking.email', label: 'Email' },
   ];
@@ -26,7 +26,7 @@ export class ReservationDialogComponent implements OnInit {
 
   columnso: ITdDataTableColumn[] = [
     { name: 'email', label: 'Guest email'},
-    { name: 'acceptance', label: 'Acceptances and declines'},
+    { name: 'accepted', label: 'Acceptances and declines'},
   ];
 
   fromRow: number = 1;

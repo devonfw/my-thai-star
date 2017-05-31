@@ -8,9 +8,9 @@ import { roles } from '../backend/mock-data';
 
 @Injectable()
 export class AuthService {
-    logged: boolean = true;
-    user: string = 'CAMBIAR ESTO!!';
-    currentRole: string = 'waiter';
+    logged: boolean = false;
+    user: string = '';
+    currentRole: string = 'user';
 
     constructor(public snackBar: SnackBarService,
                 public router: Router,
