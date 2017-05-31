@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -164,9 +165,18 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
           }
         }
       }
+    } else {
+      ctos = ordersCto.getResult();
     }
+
     if (filter.getBookingToken() != null) {
-      ctos.removeIf(c -> c.getBooking().getBookingToken() != filter.getBookingToken());
+
+      for (Iterator<OrderCto> i = ctos.iterator(); i.hasNext();) {
+        OrderCto cto = i.next();
+        if (!cto.getBooking().getBookingToken().equals(filter.getBookingToken())) {
+          i.remove();
+        }
+      }
     }
 
     return new PaginatedListTo<>(ctos, ordersCto.getPagination());
