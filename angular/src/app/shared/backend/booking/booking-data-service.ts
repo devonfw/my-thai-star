@@ -26,16 +26,8 @@ export class BookingDataService implements IBookingDataService {
         return this.usedImplementation.bookTable(booking);
     }
 
-    getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
-        return this.usedImplementation.getBookingOrders(filter);
-    }
-
     getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
         return this.usedImplementation.getReservations(filter);
-    }
-
-    saveOrders(orders: OrderListInfo): Observable<number> {
-        return this.usedImplementation.saveOrders(orders);
     }
 
     acceptInvite(token: string): Observable<number> {
@@ -48,9 +40,5 @@ export class BookingDataService implements IBookingDataService {
 
     cancelReserve(token: string): Observable<number> {
          return this.usedImplementation.cancelReserve(token);
-     }
-
-    cancelOrder(token: string): Observable<number> {
-         return this.usedImplementation.cancelOrder(token);
      }
 }

@@ -86,13 +86,13 @@ export class OrderInMemoryService implements IOrderDataService {
         let composedOrders: OrderListView;
         let orderList: any = [];
         orders.orderLines.forEach((order: OrderInfo) => {
-            let plate: DishView = this.findDishById(order.orderLine.idDish);
+            let plate: DishView = this.findDishById(order.orderLine.dishId);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
                 extras.push(this.findExtraById(extraId));
             });
             orderList.push({
-                    idDish: order.orderLine.idDish,
+                    dishId: order.orderLine.dishId,
                     name: plate.dish.name,
                     price: plate.dish.price,
                     comment: order.orderLine.comment,

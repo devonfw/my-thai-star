@@ -22,28 +22,6 @@ export class BookingInMemoryService implements IBookingDataService {
         return Observable.of(bookedTables.push(bookTable));
     }
 
-    getBookingOrders(filters: FilterCockpit): Observable<OrderListView[]> {
-        return Observable.of(filter(orderList, (order: OrderListView) => {
-            if (filters.bookingDate) {
-                return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
-            } else {
-                return true;
-            }
-        }).filter((order: OrderListView) => {
-            if (filters.email) {
-                return order.booking.email.toLowerCase().includes(filters.email.toLowerCase());
-            } else {
-                return true;
-            }
-        }).filter((order: OrderListView) => {
-            if (filters.bookingToken) {
-                return toString(order.bookingId).includes(toString(filters.bookingToken));
-            } else {
-                return true;
-            }
-        }));
-    }
-
     getReservations(filters: FilterCockpit): Observable<ReservationView[]> {
         return Observable.of(filter(bookedTables, (booking: ReservationView) => {
             if (filters.bookingDate) {
@@ -66,10 +44,6 @@ export class BookingInMemoryService implements IBookingDataService {
         }));
     }
 
-    saveOrders(order: OrderListInfo): Observable<number> {
-        return Observable.of(orderList.push(this.composeOrderList(order)));
-    }
-
     findExtraById(id: number): ExtraView {
         return find(extras, (extra: ExtraView) => extra.id === id);
     }
@@ -86,13 +60,13 @@ export class BookingInMemoryService implements IBookingDataService {
         let composedOrders: OrderListView;
         let orderList: any = [];
         orders.orderLines.forEach((order: OrderInfo) => {
-            let plate: DishView = this.findDishById(order.orderLine.idDish);
+            let plate: DishView = this.findDishById(order.orderLine.dishId);
             let extras: ExtraView[] = [];
             order.extras.forEach( (extraId: number) => {
                 extras.push(this.findExtraById(extraId));
             });
             orderList.push({
-                    idDish: order.orderLine.idDish,
+                    dishId: order.orderLine.dishId,
                     name: plate.dish.name,
                     price: plate.dish.price,
                     comment: order.orderLine.comment,
@@ -125,10 +99,6 @@ export class BookingInMemoryService implements IBookingDataService {
      }
 
     cancelReserve(token: string): Observable<number> {
-        return Observable.of(1);
-     }
-
-    cancelOrder(token: string): Observable<number> {
         return Observable.of(1);
      }
 

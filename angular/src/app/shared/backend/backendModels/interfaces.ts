@@ -55,7 +55,7 @@ export class OrderInfo {
 }
 
 export class OrderLineInfo {
-    idDish: number;
+    dishId: number;
     amount: number;
     comment: string;
 }

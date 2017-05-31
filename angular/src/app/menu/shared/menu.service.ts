@@ -13,7 +13,7 @@ export class MenuService {
   menuToOrder(menu: any): OrderView {
     return {
       dish: {
-        idDish: menu.dish.id,
+        dishId: menu.dish.id,
         name: menu.dish.name,
         price: menu.dish.price,
       },

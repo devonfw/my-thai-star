@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ReservationView, OrderListView, OrderView } from '../../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../../shared/backend/backendModels/interfaces';
-import { BookingDataService } from '../../../shared/backend/booking/booking-data-service';
+import { OrderDataService } from '../../../shared/backend/order/order-data-service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 import {map, cloneDeep} from 'lodash';
 
 @Injectable()
 export class OrderCockpitService {
 
-  constructor(private bookingDataService: BookingDataService,
+  constructor(private orderDataService: OrderDataService,
               private priceCalculator: PriceCalculatorService) { }
 
   getBookingOrders(pagination: Pagination, filters?: FilterCockpit): Observable<OrderListView[]> {
@@ -21,7 +21,7 @@ export class OrderCockpitService {
       };
     }
     filters.pagination = pagination;
-    return this.bookingDataService.getBookingOrders(filters)
+    return this.orderDataService.getBookingOrders(filters)
                .map((orders: OrderListView[]) => orders as OrderListView[]);
   }
 

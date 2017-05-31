@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../shared/backend/backendModels/interfaces';
@@ -17,7 +17,7 @@ export class SidenavService {
   orders: OrderView[] = [];
 
   constructor(private snackBar: SnackBarService,
-              private bookingDataService: BookingDataService) {}
+              private orderDataService: OrderDataService) {}
 
   public openSideNav(): void {
     this.opened = true;
@@ -61,15 +61,15 @@ export class SidenavService {
     return remove(this.orders, isOrderEqual(order));
   }
 
-  public sendOrders(id: number): void {
+  public sendOrders(token: string): void {
 
     let orderList: OrderListInfo = {
-      booking: {bookingToken: toString(id)},
+      booking: {bookingToken: token},
       orderLines: this.composeOrders(this.orders),
     };
 
     this.closeSideNav();
-    this.bookingDataService.saveOrders(orderList)
+    this.orderDataService.saveOrders(orderList)
         .subscribe(() => {
             this.orders = [];
             this.snackBar.openSnack('Order correctly noted', 4000, 'green');
@@ -82,12 +82,12 @@ export class SidenavService {
    composeOrders(orders: OrderView[]): OrderInfo[] {
       let composedOrders: OrderInfo[] = [];
       orders.forEach( (order: OrderView) => {
-        let extras: number[] = [];
+        let extras: any[] = [];
         order.extras.filter( (extra: ExtraView) => extra.selected )
-                    .forEach( (extra: ExtraView) => extras.push(extra.id));
+                    .forEach( (extra: ExtraView) => extras.push({id: extra.id}));
         composedOrders.push({
           orderLine: {
-            idDish: order.dish.idDish,
+            dishId: order.dish.dishId,
             amount: order.orderLine.amount,
             comment: order.orderLine.comment,
           },

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 
 @Injectable()
 export class EmailConfirmationsService {
 
-  constructor(private bookingDataService: BookingDataService) { }
+  constructor(private orderDataService: OrderDataService,
+              private bookingDataService: BookingDataService) { }
 
   sendAcceptInvitation(token: string): Observable<number> {
     return this.bookingDataService.acceptInvite(token);
@@ -20,6 +22,6 @@ export class EmailConfirmationsService {
   }
 
   sendCancelOrder(token: string): Observable<number> {
-    return this.bookingDataService.cancelOrder(token);
+    return this.orderDataService.cancelOrder(token);
   }
 }

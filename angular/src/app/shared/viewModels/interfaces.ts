@@ -42,7 +42,7 @@ export interface FriendsInvite {
 
 export interface OrderView {
     dish: {
-        idDish: number;
+        dishId: number;
         name: string;
         price: number;
     };
