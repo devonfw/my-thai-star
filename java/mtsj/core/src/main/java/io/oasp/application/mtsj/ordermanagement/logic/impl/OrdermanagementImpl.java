@@ -129,7 +129,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
       cto.setOrder(getBeanMapper().map(order, OrderEto.class));
       cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
-      cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
       List<OrderLineCto> orderLinesCto = new ArrayList<>();
       for (OrderLineEntity orderLine : order.getOrderLines()) {
         OrderLineCto orderLineCto = new OrderLineCto();
@@ -194,10 +193,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
     OrderLineSearchCriteriaTo criteria = new OrderLineSearchCriteriaTo();
     criteria.setOrderId(order.getId());
-    List<OrderLineEntity> orderLines = this.orderLineDao.findOrderLines(criteria).getResult();
+    List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(criteria).getResult();
 
     for (OrderLineEntity orderLine : orderLines) {
-      this.orderLineDao.delete(orderLine.getId());
+      getOrderLineDao().delete(orderLine.getId());
     }
     getOrderDao().delete(order);
     LOG.debug("The order with id '{}' has been deleted.", orderId);

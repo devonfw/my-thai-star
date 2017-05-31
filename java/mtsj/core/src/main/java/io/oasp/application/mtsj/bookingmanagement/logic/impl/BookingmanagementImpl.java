@@ -153,8 +153,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public BookingEto saveBooking(BookingCto booking) {
 
     Objects.requireNonNull(booking, "booking");
-    BookingEntity bookingEntity = new BookingEntity();
-    bookingEntity = getBeanMapper().map(booking.getBooking(), BookingEntity.class);
+    BookingEntity bookingEntity = getBeanMapper().map(booking.getBooking(), BookingEntity.class);
     bookingEntity.setCanceled(false);
     List<InvitedGuestEntity> invited = getBeanMapper().mapList(booking.getInvitedGuests(), InvitedGuestEntity.class);
 
@@ -245,7 +244,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
     InvitedGuestEntity invitedGuest = getInvitedGuestDao().find(invitedGuestId);
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
-    criteria.setHostToken(invitedGuest.getGuestToken());
+    criteria.setHostToken(invitedGuest.getBooking().getBookingToken());
     List<OrderCto> guestOrdersCto = this.orderManagement.findOrderCtos(criteria).getResult();
     for (OrderCto orderCto : guestOrdersCto) {
       this.orderManagement.deleteOrder(orderCto.getOrder().getId());
@@ -378,6 +377,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     BookingSearchCriteriaTo bookingCriteria = new BookingSearchCriteriaTo();
     bookingCriteria.setBookingToken(bookingToken);
     List<BookingCto> booking = findBookingCtos(bookingCriteria).getResult();
+
     if (!booking.isEmpty()) {
       if (!cancelInviteAllowed(booking.get(0).getBooking())) {
         throw new CancelInviteNotAllowedException();
