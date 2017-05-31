@@ -55,6 +55,12 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
         query.where(Alias.$(order.getInvitedGuest().getId()).eq(invitedGuest));
       }
     }
+    String hostToken = criteria.getHostToken();
+    if (hostToken != null) {
+      if (order.getHost() != null) {
+        query.where(Alias.$(order.getBooking().getBookingToken()).eq(hostToken));
+      }
+    }
 
     addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
@@ -75,6 +81,12 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
             query.orderBy(Alias.$(order.getInvitedGuestId()).asc());
           } else {
             query.orderBy(Alias.$(order.getInvitedGuestId()).desc());
+          }
+        } else if ("hostToken".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(order.getBooking().getBookingToken()).asc());
+          } else {
+            query.orderBy(Alias.$(order.getBooking().getBookingToken()).desc());
           }
         }
       }
