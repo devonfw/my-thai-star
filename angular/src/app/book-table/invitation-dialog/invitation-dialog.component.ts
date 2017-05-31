@@ -30,7 +30,7 @@ export class InvitationDialogComponent implements OnInit {
   sendInvitation(): void {
     this.invitationService.postInvitationTable(this.invitationService.composeInvitation(this.data)).subscribe( () => {
       this.snackBar.openSnack('Table succesfully booked', 4000, 'green');
-    }, (error) => {
+    }, (error: any) => {
       this.snackBar.openSnack('Error booking, please try again later', 4000, 'red');
     });
     this.dialog.close(true);
