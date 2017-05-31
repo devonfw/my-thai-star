@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -407,6 +409,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     for (OrderLineEntity orderLine : orderLines) {
       DishCto dishCto = this.dishManagement.findDish(orderLine.getDishId());
       List<IngredientEto> extras = dishCto.getExtras();
+      Set<IngredientEto> set = new HashSet<>();
+      set.addAll(extras);
+      extras.clear();
+      extras.addAll(set);
       // dish name
       BigDecimal linePrice = BigDecimal.ZERO;
       sb.append(dishCto.getDish().getName()).append(", x").append(orderLine.getAmount());
