@@ -20,6 +20,7 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'booking.creationDate', label: 'Creation date'},
     { name: 'booking.name', label: 'Owner' },
     { name: 'booking.email', label: 'Email' },
+    { name: 'booking.tableId', label: 'Table'},
   ];
 
   datao: FriendsInvite[] = [];

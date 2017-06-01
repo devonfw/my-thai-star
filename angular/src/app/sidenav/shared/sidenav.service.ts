@@ -16,8 +16,7 @@ export class SidenavService {
 
   orders: OrderView[] = [];
 
-  constructor(private snackBar: SnackBarService,
-              private orderDataService: OrderDataService) {}
+  constructor(private orderDataService: OrderDataService) {}
 
   public openSideNav(): void {
     this.opened = true;
@@ -66,7 +65,7 @@ export class SidenavService {
     return this.orders;
   }
 
-  public sendOrders(token: string): void {
+  public sendOrders(token: string): Observable<number> {
 
     let orderList: OrderListInfo = {
       booking: {bookingToken: token},
@@ -74,13 +73,7 @@ export class SidenavService {
     };
 
     this.closeSideNav();
-    this.orderDataService.saveOrders(orderList)
-        .subscribe(() => {
-            this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-        },
-        (error: any) => {
-            this.snackBar.openSnack('Booking ID not existing', 4000, 'red');
-        });
+    return this.orderDataService.saveOrders(orderList);
    }
 
    composeOrders(orders: OrderView[]): OrderInfo[] {

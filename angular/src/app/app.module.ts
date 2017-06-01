@@ -11,6 +11,7 @@ import { Md2Module }  from 'md2';
 import { BackendModule } from './shared/backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { CovalentModule } from './shared/covalent.module';
+import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -74,6 +75,8 @@ import { EqualValidatorDirective } from './user-area/shared/equal-validator.dire
     BrowserModule,
     appRoutes,
     FormsModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
     BrowserAnimationsModule,
     HttpModule,
     Md2Module,

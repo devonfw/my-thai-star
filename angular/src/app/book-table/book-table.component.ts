@@ -15,6 +15,7 @@ import { WindowService } from '../shared/windowService/windowService.service';
 export class BookTableComponent {
 
   invitationModel: string[] = [];
+  minDate: Date = new Date();
 
   constructor(public window: WindowService, public dialog: MdDialog) {
   }
@@ -31,6 +32,13 @@ export class BookTableComponent {
       width: this.window.responsiveWidth(),
       data: form.value,
     });
+  }
+
+  validateEmail(): void {
+    let re: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!re.test(this.invitationModel[this.invitationModel.length - 1])) {
+      this.invitationModel.splice(-1, 1);
+    }
   }
 
 }

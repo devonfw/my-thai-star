@@ -21,7 +21,16 @@
               </div>
               <div layout= "column" flex>
 
-                <md2-datepicker ngModel name="bookingDate" openOnFocus="true" type="datetime" container="dialog" required placeholder="Date and time"></md2-datepicker>
+                <md2-datepicker 
+                  ngModel
+                  name="bookingDate"
+                  openOnFocus="true"
+                  type="datetime"
+                  container="dialog"
+                  required
+                  [min]="minDate"
+                  placeholder="Date and time">
+                </md2-datepicker>
 
                 <md-input-container color="accent" flex>
                   <input mdInput placeholder="Name" ngModel name="name" required>
@@ -69,6 +78,7 @@
                     type="datetime"
                     container="dialog"
                     required
+                    [min]="minDate"
                     placeholder="Date and time">
                   </md2-datepicker>
 
@@ -86,12 +96,13 @@
                   class="pad-bottom-sm"
                   [(ngModel)]="invitationModel"
                   name="invitedGuests"
+                  (add)="validateEmail()"
                   placeholder="Enter invitation email">
                 </td-chips>
-
+                <md-checkbox #termsi>Accept terms</md-checkbox>
               </form>
               <div class="align-right">
-                <button md-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!invitationForm.form.valid" color="accent" class="text-upper">Invite friends</button>
+                <button md-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!(invitationForm.form.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
               </div>
             </div>
           </div>

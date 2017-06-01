@@ -5,7 +5,6 @@ import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { CovalentModule } from '../../shared/covalent.module';
 
 describe('SidenavSharedService', () => {
@@ -13,7 +12,6 @@ describe('SidenavSharedService', () => {
     TestBed.configureTestingModule({
       providers: [
         SidenavService,
-        SnackBarService,
         {provide: BookingDataService, useClass: BookingInMemoryService},
         {provide: OrderDataService, useClass: OrderInMemoryService}],
       imports: [

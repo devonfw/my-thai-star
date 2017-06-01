@@ -21,7 +21,14 @@ export class OrderRestService implements IOrderDataService {
      }
 
      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
-        let path: string = (filter.email || filter.bookingToken) ? this.filterOrdersRestPath : this.getOrdersRestPath;
+        let path: string;
+        if (filter.email || filter.bookingToken) {
+          path = this.filterOrdersRestPath;
+        } else {
+          delete filter.email;
+          delete filter.bookingToken;
+          path = this.getOrdersRestPath;
+        }
         return this.http.post(`${config.restServiceRoot}${path}`, filter)
                         .map((res: Response) => res.json());
      }

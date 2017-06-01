@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
+import { SnackBarService } from '../shared/snackService/snackService.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { ExtraView, OrderView } from '../shared/viewModels/interfaces';
 import { toNumber } from 'lodash';
@@ -17,6 +18,7 @@ export class SidenavComponent implements OnInit {
 
   constructor(private router: Router,
     private sidenav: SidenavService,
+    private snackBar: SnackBarService,
     private calculator: PriceCalculatorService,
   ) {}
 
@@ -38,7 +40,13 @@ export class SidenavComponent implements OnInit {
   }
 
   sendOrders(bookingId: string): void {
-    this.sidenav.sendOrders(bookingId);
-    this.orders = this.sidenav.removeAllOrders();
+    this.sidenav.sendOrders(bookingId)
+        .subscribe(() => {
+            this.orders = this.sidenav.removeAllOrders();
+            this.snackBar.openSnack('Order correctly noted', 4000, 'green');
+        },
+        (error: any) => {
+            this.snackBar.openSnack('Booking ID not existing', 4000, 'red');
+        });
   }
 }
