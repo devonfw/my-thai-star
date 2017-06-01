@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: v2.8
+  version: v2.9
   title: My Thai Star API
 host: 'localhost:8081'
 schemes:
@@ -320,8 +320,7 @@ paths:
     post:
       tags:
         - Booking
-      summary: >-
-        Method to get reservations
+      summary: Method to get reservations
       operationId: Booking_Search
       consumes:
         - application/json
@@ -379,7 +378,7 @@ definitions:
         type: integer
       isFav:
         type: boolean
-      sortBy:
+      sort:
         type: array
         items:
           $ref: '#/definitions/SortByView'
@@ -560,11 +559,10 @@ definitions:
         items:
           type: string
   BookingType:
-    type: object
-    properties:
-      index:
-        format: int32
-        type: integer
+    type: string
+    enum:
+      - 0
+      - 1
   SortByView:
     type: object
     properties:
