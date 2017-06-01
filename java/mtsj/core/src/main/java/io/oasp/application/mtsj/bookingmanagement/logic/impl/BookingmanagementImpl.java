@@ -345,7 +345,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     }
     BookingCto booking = findBooking(invited.getBookingId());
     sendConfirmationActionToHost(booking, invited, "declined");
-
+    sendDeclineConfirmationToGuest(booking, invited);
     return saveInvitedGuest(invited);
   }
 
@@ -482,13 +482,29 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   private void sendConfirmationActionToHost(BookingCto booking, InvitedGuestEto guest, String action) {
 
     try {
+      StringBuilder mailContent = new StringBuilder();
+      mailContent.append("MY THAI STAR").append("\n");
+      mailContent.append("Hi ").append(booking.getBooking().getEmail()).append("\n");
+      mailContent.append(guest.getEmail()).append(" has ").append(action).append(" your invitation for the event on ")
+          .append(booking.getBooking().getBookingDate()).append("\n");
+
+      this.mailService.sendMail(booking.getBooking().getEmail(), "Invite " + action, mailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private void sendDeclineConfirmationToGuest(BookingCto booking, InvitedGuestEto guest) {
+
+    try {
       StringBuilder guestMailContent = new StringBuilder();
       guestMailContent.append("MY THAI STAR").append("\n");
-      guestMailContent.append("Hi ").append(booking.getBooking().getEmail()).append("\n");
-      guestMailContent.append(guest.getEmail()).append(" has ").append(action)
-          .append(" your invitation for the event on ").append(booking.getBooking().getBookingDate()).append("\n");
+      guestMailContent.append("Hi ").append(guest.getEmail()).append("\n");
+      guestMailContent.append("You have declined the invitation from ").append(booking.getBooking().getName())
+          .append("<").append(booking.getBooking().getEmail()).append(">").append(" for the event on ")
+          .append(booking.getBooking().getBookingDate()).append("\n");
 
-      this.mailService.sendMail(guest.getEmail(), "Invite " + action, guestMailContent.toString());
+      this.mailService.sendMail(guest.getEmail(), "Invite declined", guestMailContent.toString());
     } catch (Exception e) {
       LOG.error("Email not sent. {}", e.getMessage());
     }
