@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: v2.9
+  version: v2.10
   title: My Thai Star API
 host: 'localhost:8081'
 schemes:
@@ -84,7 +84,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept:
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/{guestToken}':
     get:
       tags:
         - Mail
@@ -100,7 +100,7 @@ paths:
         - text/xml
       parameters:
         - name: guestToken
-          in: query
+          in: path
           description: Token generated in the reservation process where guests are invited.
           required: true
           type: string
@@ -119,7 +119,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline:
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/{guestToken}':
     get:
       tags:
         - Mail
@@ -135,7 +135,7 @@ paths:
         - text/xml
       parameters:
         - name: guestToken
-          in: query
+          in: path
           description: Token generated in the reservation process where guests are invited.
           required: true
           type: string
@@ -154,7 +154,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Bookingmanagement/v1/booking/cancel:
+  '/mythaistar/services/rest/Bookingmanagement/v1/booking/cancel/{bookingToken}':
     get:
       tags:
         - Mail
@@ -168,7 +168,7 @@ paths:
         - text/xml
       parameters:
         - name: bookingToken
-          in: query
+          in: path
           description: >-
             Token generated in the booking process where guests are invited.
             Mandatory
@@ -190,7 +190,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/ordermanagement/v1/order/cancelorder:
+  '/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/{id}':
     get:
       tags:
         - Mail
@@ -206,7 +206,7 @@ paths:
         - text/xml
       parameters:
         - name: id
-          in: query
+          in: path
           description: ''
           required: true
           type: string
