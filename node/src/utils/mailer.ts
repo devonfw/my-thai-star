@@ -1,5 +1,6 @@
 import * as nodemailer from 'nodemailer';
 import * as pug from 'pug';
+import { MailType, mailConfig } from '../config';
 
 export class Mailer {
     private transporter: any;
@@ -35,13 +36,17 @@ export class Mailer {
             html, // html body
         };
 
-        console.log('Email ' + subject + ' was sended to: ' + to);
-        // // send mail with defined transport object
-        // this.transporter.sendMail(mailOptions, (error: any, info: any) => {
-        //     if (error) {
-        //         return console.log(error);
-        //     }
-        //     // console.log('Message %s sent: %s', info.messageId, info.response);
-        // });
+        if ( mailConfig === MailType.mock){
+            console.log('Email ' + subject + ' was sended to: ' + to);
+            // console.log(text || html);
+        } else {
+            // send mail with defined transport object
+            this.transporter.sendMail(mailOptions, (error: any, info: any) => {
+                if (error) {
+                    return console.log(error);
+                }
+                // console.log('Message %s sent: %s', info.messageId, info.response);
+            });
+        }
     }
 }
