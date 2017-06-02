@@ -1,43 +1,109 @@
 node {
-    stage 'Checking out oasp4j from Git'
-        // specify here the URL to your repo
-        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star'
+    environment {
+        PLINST = 'https://devon.s2-eu.capgemini.com'
+        DEPLOY = ''
+    }
+    stage 'Checking out my-thai-star from GitHub' {
+        node {
+            git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+            // git url: 'https://github.com/cbeldacap/plsampleapp/'
+        }
+    }
     
-    stage 'Add distributionManagement to sample'
-        // point the distributionManagement to THIS Nexus
-        // could be done locally or by default
-        sh """
-        cd java/mtsj
-        echo '<distributionManagement>
-            <repository>
-              <id>devon.releases</id>
-              <name>devon Releases</name>
-              <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/releases/</url>
-            </repository>
-            <snapshotRepository>
-              <id>devon.snapshots</id>
-              <name>devon Snapshots</name>
-              <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/</url>
-            </snapshotRepository>
-          </distributionManagement>
-        </project>' > append
-        
-        sed -i 's|</project>||g' pom.xml
-        cat append >> pom.xml
-        tail -n 50 pom.xml
-        """
+    stage 'Load tools' { 
+        node {
+            tool name: 'Maven 3.3.9', type: 'maven'
+            env.JAVA_HOME="${tool 'Java SE8'}"
+            env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+        }
+    }
     
-        
-    stage 'Build and save artifact in Nexus'
-        // let's deploy this oasp4j-template in THIS Nexus
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+    stage 'Add distributionManagement to sample' {
+        node {
             sh """
-                cd java/mtsj
-                mvn -s $MAVEN_SETTINGS clean deploy
+            echo '<distributionManagement>
+                <repository>
+                <id>devon.releases</id>
+                <name>devon Releases</name>
+                <url>$PLINST/nexus/content/repositories/releases/</url>
+                </repository>
+                <snapshotRepository>
+                <id>devon.snapshots</id>
+                <name>devon Snapshots</name>
+                <url>$PLINST/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+            </project>' > append
+            
+            sed -i 's|</project>||g' pom.xml
+            cat append >> pom.xml
+            tail -n 50 pom.xml
             """
         }
+    }
+
+    stage 'Install dependencies' {
+        node {
+            configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+                sh """
+                    cd java/mtsj
+                    mvn -s $MAVEN_SETTINGS -Dmaven.test.skip=true clean install
+                """
+            }
+        }
+    }
+
+    stage 'SonarQube analysis'
+        node 
+        {
+            def scannerHome = tool 'SonarQube Scanner';
+            withSonarQubeEnv('SonarQube') 
+            {
+                sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=test_my_thai_star -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
+            }
+        }
+
+    stage 'Execute Tests' {
+        node {
+            configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+                sh """
+                    cd java/mtsj
+                    mvn -s $MAVEN_SETTINGS test
+                """
+            }
+        }
+    }
+
+    stage 'Build and save artifact in Nexus' {
+        // let's deploy this oasp4j-template in THIS Nexus
+        node {
+            configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+                sh """
+                    cd java/mtsj
+                    mvn -s $MAVEN_SETTINGS -Dmaven.test.skip=true clean deploy
+                """
+            }
+        }
+    }
         
-    stage 'Deploy in web server'
-        //
+    // stage 'Deployment'
+    //     input 'Should this build be deployed?'
+    //         node {
+    //             sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+    //                 sh """
+    //                     cd angular
+    //                     # Copy resulting "dist" folder from workspace to deployment server
+    //                     scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+                        
+    //                     # Launch application in Docker container
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
+    //                     ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+                    
+    //                 """
+    //             }
+    //             sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
+    //         }
     
 }
