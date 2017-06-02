@@ -14,7 +14,7 @@
         </div>
         <div class="align-right">
           <button md-button (click)="clearFilters(filterForm)" class="text-upper property-text-bold">Clear filters</button>
-          <button md-button (click)="filter()" color="accent" class="text-upper property-text-bold">Apply filters</button>
+          <button md-button (click)="applyFilters()" color="accent" class="text-upper property-text-bold">Apply filters</button>
         </div>
       </td-expansion-panel>
     </div>
@@ -25,19 +25,16 @@
     <md-divider></md-divider>
     <td-data-table
       #dataTable
-      [data]="filteredData"
+      [data]="data"
       [columns]="columns"
       [sortable]="true"
-      [sortBy]="sortBy"
       clickable="true"
-      [sortOrder]="sortOrder"
-      (rowClick)="selected($event)"
-      (sortChange)="sort($event)">
+      (rowClick)="selected($event)">
     </td-data-table>
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>No results to display.</h3>
     </div>
-    <td-paging-bar #pagingBar [pageSizes]="[8, 16, 24]" [total]="filteredTotal" (change)="page($event)">
+    <td-paging-bar #pagingBar [pageSizes]="[8, 16, 24]" [total]="dataTotal" (change)="page($event)">
       <span td-paging-bar-label hide-xs>Rows per page:</span>
       {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
     </td-paging-bar>

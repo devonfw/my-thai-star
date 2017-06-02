@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { ExtraView, OrderView, ReservationView, OrderListView, OrderBookingView } from '../../../shared/viewModels/interfaces';
-import { OrderCockpitService } from '../shared/order-cockpit.service';
+import { ExtraView, OrderView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
+import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import {MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
@@ -37,14 +37,14 @@ export class OrderDialogComponent implements OnInit {
   data: any;
 
   constructor(private _dataTableService: TdDataTableService,
-              private orderCockpitService: OrderCockpitService,
+              private waiterCockpitService: WaiterCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
                 this.data = dialogData.row;
   }
 
   ngOnInit(): void {
-    this.totalPrice = this.orderCockpitService.getTotalPrice(this.data.orderLines);
-    this.datao = this.orderCockpitService.orderComposer(this.data.orderLines);
+    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
+    this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
     this.filter();
 }

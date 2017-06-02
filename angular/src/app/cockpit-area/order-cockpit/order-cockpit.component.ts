@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TdDataTableService,
-         TdDataTableSortingOrder,
+import { IPageChangeEvent,
          ITdDataTableSelectAllEvent,
-         ITdDataTableSortChangeEvent,
-         IPageChangeEvent,
          ITdDataTableColumn } from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
+import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { OrderCockpitService } from './shared/order-cockpit.service';
 import { ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 
@@ -20,14 +17,13 @@ import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/in
 export class OrderCockpitComponent implements OnInit {
 
   data: OrderListView[];
+  dataTotal: number;
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
     { name: 'booking.bookingToken', label: 'Reference number'},
   ];
 
-  filteredData: OrderListView[];
-  filteredTotal: number;
   pagination: Pagination = {
     size: 8,
     page: 1,
@@ -40,39 +36,23 @@ export class OrderCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
-  sortBy: string = 'booking.bookingDate';
-  sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
-
-  constructor(private _dataTableService: TdDataTableService,
-              private dialog: MdDialog,
-              private orderCockpitService: OrderCockpitService) {}
+  constructor(private dialog: MdDialog,
+              private waiterCockpitService: WaiterCockpitService) {}
 
   ngOnInit(): void {
     this.applyFilters();
   }
 
-  filter(): void {
-    this.applyFilters();
-  }
-
   applyFilters(): void {
-    this.orderCockpitService.getBookingOrders(this.pagination, this.filters).subscribe((orders: any) => {
+    this.waiterCockpitService.getBookings(this.pagination, this.filters).subscribe((orders: any) => {
       this.data = orders.result;
-      this.filteredData = orders.result;
-      this.filteredTotal = orders.pagination.total;
-      this.dataFilter();
+      this.dataTotal = orders.pagination.total;
     });
   }
 
   clearFilters(filters: any): void {
     filters.reset();
     this.applyFilters();
-  }
-
-  sort(sortEvent: ITdDataTableSortChangeEvent): void {
-    this.sortBy = sortEvent.name;
-    this.sortOrder = sortEvent.order;
-    this.dataFilter();
   }
 
   page(pagingEvent: IPageChangeEvent): void {
@@ -82,12 +62,6 @@ export class OrderCockpitComponent implements OnInit {
       total: 1,
     };
     this.applyFilters();
-  }
-
-  dataFilter(): void {
-    let newData: any[] = this.data;
-    newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-    this.filteredData = newData;
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {

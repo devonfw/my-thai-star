@@ -37,11 +37,11 @@ export class BookingInfo {
 }
 
 export class ReservationInfo {
-        bookingDate: string;
-        name: string;
-        email: string;
-        bookingType: number;
-        assistants?: number;
+    bookingDate: string;
+    name: string;
+    email: string;
+    bookingType: number;
+    assistants?: number;
 }
 
 export class FriendsInvite {

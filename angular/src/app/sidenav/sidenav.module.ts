@@ -1,3 +1,4 @@
+import { WindowService } from '../shared/windowService/windowService.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@angular/material';
@@ -16,6 +17,7 @@ import { CommentDialogComponent } from './comment-dialog/comment-dialog.componen
   providers: [
     SidenavService,
     PriceCalculatorService,
+    WindowService,
   ],
   declarations: [
     SidenavComponent,

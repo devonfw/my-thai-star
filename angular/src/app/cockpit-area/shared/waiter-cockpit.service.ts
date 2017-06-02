@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ReservationView, OrderListView, OrderView } from '../../../shared/viewModels/interfaces';
-import { FilterCockpit, Pagination } from '../../../shared/backend/backendModels/interfaces';
-import { OrderDataService } from '../../../shared/backend/order/order-data-service';
-import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
-import {map, cloneDeep} from 'lodash';
+import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { OrderDataService } from '../../shared/backend/order/order-data-service';
+import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { OrderListView, OrderView } from '../../shared/viewModels/interfaces';
+import { map, cloneDeep} from 'lodash';
 
 @Injectable()
-export class OrderCockpitService {
+export class WaiterCockpitService {
 
   constructor(private orderDataService: OrderDataService,
               private priceCalculator: PriceCalculatorService) { }
 
-  getBookingOrders(pagination: Pagination, filters?: FilterCockpit): Observable<OrderListView[]> {
+  getBookings(pagination: Pagination, filters?: FilterCockpit): Observable<OrderListView[]> {
     if (!filters) {
       filters = {
           bookingDate: undefined,
@@ -36,7 +36,6 @@ export class OrderCockpitService {
 
   getTotalPrice(orderLines: OrderView[]): number {
      return this.priceCalculator.getTotalPrice(orderLines);
-
   }
 
 }
