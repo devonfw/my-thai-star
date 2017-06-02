@@ -6,5 +6,18 @@
     </permissions>
   </group>
 
+  <group id="Waiter" type="role">
+    <permissions>
+      <!-- bookingmanagement -->
+      <permission id="FindBookings"/>
+      <!-- ordermanagement -->
+      <permission id="FindOrders"/>
+    </permissions>
+  </group>
+  
+    <group id="Customer" type="role">
+    <permissions>
+    </permissions>
+  </group>
   
 </access-control-schema>

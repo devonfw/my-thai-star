@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.oasp.application.mtsj.general.common.api.UserProfile;
+import io.oasp.application.mtsj.general.common.impl.MtsUser;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
@@ -66,6 +68,18 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
     PaginatedListTo<UserEntity> users = getUserDao().findUsers(criteria);
     return mapPaginatedEntityList(users, UserEto.class);
+  }
+
+  public UserProfile findUserProfileByLogin(String username) {
+
+    UserSearchCriteriaTo criteria = new UserSearchCriteriaTo();
+    criteria.setUsername(username);
+    PaginatedListTo<UserEto> users = findUserEtos(criteria);
+    if (users.getResult().isEmpty() || users.getResult().size() > 1) {
+      return null;
+    } else {
+      return getBeanMapper().map(users.getResult().get(0), MtsUser.class);
+    }
   }
 
   @Override

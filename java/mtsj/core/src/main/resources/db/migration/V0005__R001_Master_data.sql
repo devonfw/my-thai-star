@@ -1,6 +1,7 @@
-INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (0, 1, 'customer', true);
+INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (0, 1, 'Customer', true);
+INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (1, 1, 'Waiter', true);
 INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (0, 1, 'user0', 'password', 'user0@mail.com', 0);
-
+INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (1, 1, 'waiter', 'waiter', 'waiter@mail.com', 1);
 
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);

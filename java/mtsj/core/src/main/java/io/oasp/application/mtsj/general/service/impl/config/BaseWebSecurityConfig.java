@@ -1,15 +1,19 @@
 package io.oasp.application.mtsj.general.service.impl.config;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import io.oasp.application.mtsj.general.security.JWTAuthenticationFilter;
 import io.oasp.application.mtsj.general.security.JWTLoginFilter;
 import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
+//import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
 
 /**
  * This type serves as a base class for extensions of the {@code WebSecurityConfigurerAdapter} and provides a default
@@ -22,8 +26,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Value("${security.cors.enabled}")
   boolean corsEnabled = true;
 
-  // @Inject
-  // private UserDetailsService userDetailsService;
+  @Inject
+  private UserDetailsService userDetailsService;
 
   // private CorsFilter getCorsFilter() {
   //
@@ -50,7 +54,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   public void configure(HttpSecurity http) throws Exception {
 
     String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
-    "/services/rest/logout", /* "/services/rest/**" */"/services/rest/bookingmanagement/**" };
+    "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
+    "/services/rest/ordermanagement/v1/order" };
     // http
     // //
     // .userDetailsService(this.userDetailsService)
@@ -71,8 +76,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     // .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
     // .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
 
-    http.csrf().disable().authorizeRequests().antMatchers(unsecuredResources).permitAll()
-        .antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
+    http.userDetailsService(this.userDetailsService).csrf().disable().authorizeRequests()
+        .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
+        .authenticated().and()
         // We filter the api/login requests
         .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
             UsernamePasswordAuthenticationFilter.class)
@@ -128,8 +134,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   // @Inject
   public void configure/* Global */(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("chief")
-        .password("chief").roles("Chief");
+    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter");
   }
 
 }
