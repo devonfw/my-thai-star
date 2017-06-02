@@ -424,6 +424,16 @@ export async function getOrders(pagination: types.Paginated, callback: (err: typ
     callback(null, util.getPagination(pagination.size, pagination.page, or));
 }
 
+export async function getOrdersFiltered(search: types.SearchCriteria, callback: (err: types.Error | null, page: types.PaginatedList) => void) {
+
+    const or = await getAllOrders();
+
+    callback(null, util.getPagination(search.pagination.size, search.pagination.page, _.filter(or, (elem: types.OrderView) => {
+        return (search.bookingToken === undefined || search.bookingToken === '' || search.bookingToken === elem.booking.bookingToken) &&
+               (search.email === undefined || search.email === '' || search.email === elem.booking.email || (elem.invitedGuest !== undefined && search.email === elem.invitedGuest.email));
+    })));
+}
+
 export async function getAllOrders(): Promise<types.OrderView[]> {
     try {
         let order: any = fn.table('Order');

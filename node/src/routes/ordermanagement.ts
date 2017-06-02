@@ -20,12 +20,25 @@ router.post('/v1/order', (req: Request, res: Response) => {
     }
 });
 
-// TODO: implementar
 router.post('/v1/order/search', (req: Request, res: Response) => {
-    if (!types.isPaginated(req.body.pagination)){
+    if (!types.isSearchCriteria(req.body)){
        res.status(400).json({message: 'Parse error'});
     } else {
         bussiness.getOrders(req.body.pagination, (err, result) => {
+            if (err) {
+                res.status(err.code).json(err.message);
+            } else {
+                res.json(result);
+            }
+        });
+    }
+});
+
+router.post('/v1/order/filter', (req: Request, res: Response) => {
+    if (!types.isSearchCriteria(req.body)){
+       res.status(400).json({message: 'Parse error'});
+    } else {
+        bussiness.getOrdersFiltered(req.body, (err, result) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {

@@ -76,8 +76,7 @@ export function isPaginated(elem: any): elem is Paginated {
 
 export interface PaginatedList {
     pagination: Paginated;
-    // TODO: fix this types
-    result: DishesView[] | OrderView[];
+    result: DishesView[] | OrderView[] | BookingEntity[];
 }
 
 export interface CategoryView {
@@ -450,6 +449,25 @@ export function isInvitedGuestEntity(elem: any): elem is InvitedGuestEntity {
         return false;
     }
     if (elem.modificationDate !== undefined && typeof elem.modificationDate !== 'string') {
+        return false;
+    }
+    return true;
+}
+
+export interface SearchCriteria {
+    bookingToken?: string;
+    email?: string;
+    pagination: Paginated;
+}
+
+export function isSearchCriteria(elem: any): elem is SearchCriteria {
+    if (elem.bookingToken !== undefined && typeof elem.bookingToken !== 'string'){
+        return false;
+    }
+    if (elem.email !== undefined && typeof elem.email !== 'string'){
+        return false;
+    }
+    if (elem.pagination === undefined || !isPaginated(elem.pagination)){
         return false;
     }
     return true;
