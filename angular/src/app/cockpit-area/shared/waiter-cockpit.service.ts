@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
+import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 import { OrderListView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep} from 'lodash';
@@ -10,19 +11,17 @@ import { map, cloneDeep} from 'lodash';
 export class WaiterCockpitService {
 
   constructor(private orderDataService: OrderDataService,
+              private bookingDataService: BookingDataService,
               private priceCalculator: PriceCalculatorService) { }
 
-  getBookings(pagination: Pagination, filters?: FilterCockpit): Observable<OrderListView[]> {
-    if (!filters) {
-      filters = {
-          bookingDate: undefined,
-          email: undefined,
-          bookingToken: undefined,
-      };
-    }
+  getOrders(pagination: Pagination, filters: FilterCockpit): Observable<OrderListView[]> {
     filters.pagination = pagination;
-    return this.orderDataService.getBookingOrders(filters)
-               .map((orders: OrderListView[]) => orders as OrderListView[]);
+    return this.orderDataService.getBookingOrders(filters);
+  }
+
+  getReservations(pagination: Pagination, filters: FilterCockpit): Observable<OrderListView[]> {
+    filters.pagination = pagination;
+    return this.bookingDataService.getReservations(filters);
   }
 
   orderComposer(orderList: OrderView[]): OrderView[] {

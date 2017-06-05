@@ -1,4 +1,4 @@
-import { OnInit, Injector, Injectable } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { BackendConfig, BackendType } from '../backend.module';

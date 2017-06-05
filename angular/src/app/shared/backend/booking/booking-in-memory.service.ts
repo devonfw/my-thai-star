@@ -1,12 +1,11 @@
-import { any } from 'codelyzer/util/function';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { ReservationView, DishView, FriendsInvite, OrderView, ExtraView, OrderListView } from '../../viewModels/interfaces';
-import { BookingInfo, FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
-import { bookedTables, extras, dishes, orderList } from '../mock-data';
+import { ReservationView } from '../../viewModels/interfaces';
+import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
+import { bookedTables } from '../mock-data';
 import * as moment from 'moment';
-import { assign, maxBy, find, filter, toString, toNumber } from 'lodash';
+import { assign, maxBy, filter, toString } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {

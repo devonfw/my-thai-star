@@ -1,10 +1,10 @@
 import { filter } from 'rxjs/operator/filter';
 import { Observable } from 'rxjs/Observable';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { Filter } from '../backendModels/interfaces';
 import { dishes } from '../mock-data';
-import { orderBy, matches, includes, find } from 'lodash';
+import { orderBy, find } from 'lodash';
 import { DishView } from '../../viewModels/interfaces';
 
 @Injectable()

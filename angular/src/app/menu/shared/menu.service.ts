@@ -3,33 +3,28 @@ import { Injectable } from '@angular/core';
 import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
 import { Filter } from '../../shared/backend/backendModels/interfaces';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { map, remove } from 'lodash';
+import { map, remove, assign } from 'lodash';
 
 @Injectable()
 export class MenuService {
 
   constructor(private dishesDataService: DishesDataService) {}
 
-  menuToOrder(menu: any): OrderView {
-    return {
-      dish: {
-        dishId: menu.dish.id,
-        name: menu.dish.name,
-        price: menu.dish.price,
-      },
-      orderLine: {
+  menuToOrder(menu: DishView): OrderView {
+    let order: OrderView;
+    order = assign(order, menu);
+    order.orderLine = {
         amount: 1,
         comment: '',
-      },
-      extras: menu.extras,
     };
+    return order;
   }
 
-  composeFilters(filter: any, sortDir: string): any {
+  composeFilters(filters: any, sortDir: string): Filter {
     let filtersComposed: Filter;
     let categories: any = [];
-    if (filter) {
-      map(filter, (value: boolean, field: string) => {
+    if (filters) {
+      map(filters, (value: boolean, field: string) => {
         if (value === true) {
           categories.push({id: field});
         }
@@ -37,14 +32,14 @@ export class MenuService {
 
       filtersComposed = {
         categories: categories,
-        searchBy: filter.searchBy,
+        searchBy: filters.searchBy,
         sort: [{
-          name: filter.sortName,
+          name: filters.sortName,
           direction: sortDir,
         }],
-        maxPrice: filter.maxPrice,
-        minLikes: filter.minLikes,
-        isFav: filter.isFav,
+        maxPrice: filters.maxPrice,
+        minLikes: filters.minLikes,
+        isFav: filters.isFav,
       };
     } else {
       filtersComposed = {
@@ -64,7 +59,6 @@ export class MenuService {
   }
 
   getDishes(filters: any): Observable<DishView[]> {
-    return this.dishesDataService.filter(filters)
-            .map((dishes: DishView[]) => dishes as DishView[]); // TODO: Replace with a converter
+    return this.dishesDataService.filter(filters);
   }
 }

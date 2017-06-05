@@ -52,7 +52,7 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getBookings(this.pagination, this.filters).subscribe((reservations: any) => {
+    this.waiterCockpitService.getReservations(this.pagination, this.filters).subscribe((reservations: any) => {
       this.data = reservations.result;
       this.filteredData = reservations.result;
       this.filteredTotal = reservations.pagination.total;

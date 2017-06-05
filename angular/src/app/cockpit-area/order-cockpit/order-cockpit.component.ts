@@ -44,7 +44,7 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getBookings(this.pagination, this.filters).subscribe((orders: any) => {
+    this.waiterCockpitService.getOrders(this.pagination, this.filters).subscribe((orders: any) => {
       this.data = orders.result;
       this.dataTotal = orders.pagination.total;
     });

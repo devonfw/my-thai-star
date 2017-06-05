@@ -15,9 +15,6 @@ describe('WaiterCockpitService', () => {
         PriceCalculatorService,
         {provide: BookingDataService, useClass: BookingInMemoryService},
         {provide: OrderDataService, useClass: OrderInMemoryService}],
-      imports: [
-
-      ],
     });
   });
 

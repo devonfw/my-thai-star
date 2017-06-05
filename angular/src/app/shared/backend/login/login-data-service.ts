@@ -1,10 +1,8 @@
-import { OnInit, Injector, Injectable } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
 
 import { BackendConfig, BackendType } from '../backend.module';
 import { LoginInMemoryService } from './login-in-memory.service';
-import { LoginRestService } from './login-rest.service';
 import { ILoginDataService } from './login-data-service-interface';
 import { LoginInfo } from '../backendModels/interfaces';
 

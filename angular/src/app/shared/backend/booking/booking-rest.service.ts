@@ -2,8 +2,8 @@ import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
-import { ReservationView, OrderListView } from '../../viewModels/interfaces';
+import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
+import { ReservationView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
 
 @Injectable()
