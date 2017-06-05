@@ -5,6 +5,7 @@ import { IOrderDataService } from './order-data-service-interface';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 import { OrderListView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
+import { HttpClient } from '../../authentication/httpClient';
 
 @Injectable()
 export class OrderRestService implements IOrderDataService {
@@ -14,10 +15,10 @@ export class OrderRestService implements IOrderDataService {
      private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
      private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
-     private http: Http;
+     private http: HttpClient;
 
      constructor(private injector: Injector) {
-       this.http = this.injector.get(Http);
+       this.http = this.injector.get(HttpClient);
      }
 
      getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
