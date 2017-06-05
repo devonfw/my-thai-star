@@ -14,7 +14,7 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
     } else if (!moment(req.body.booking.bookingDate).isValid() || moment(req.body.booking.bookingDate).diff(moment().add(1, 'hour')) < 0) {
         // check if date is future
         res.status(400).json({ message: 'Given date must be future' });
-    } else if (!validEmail(req.body.booking.email)) {
+    } else if (!validEmail(req.body.booking.email as string)) {
         res.status(400).json({ message: 'Invalid email' });
     } else if (req.body.booking.bookingType === types.BookingTypes.invited && (req.body.invitedGuests === undefined || req.body.invitedGuests.length === 0)) {
         res.status(400).json({ message: 'You need to invite someone' });
@@ -68,7 +68,7 @@ router.get('/v1/booking/cancel', (req: types.CustomRequest, res: Response) => {
     if (req.query.bookingToken === undefined) {
         res.status(400).json({ message: 'No booking token given' });
     } else {
-        bussiness.cancelBooking(req.query.bookingToken, req.tableCron, (err: types.Error) => {
+        bussiness.cancelBooking(req.query.bookingToken, req.tableCron, (err: types.Error | null) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
@@ -78,16 +78,16 @@ router.get('/v1/booking/cancel', (req: types.CustomRequest, res: Response) => {
     }
 });
 
-// router.post('/v1/booking/search', (req: Request, res: Response) => {
-//     if (req.query.reservationToken === undefined) {
-//         res.status(400).json({ message: 'No booking token given' });
-//     } else {
-//         bussiness.searchBooking(req.query.reservationToken, (err: types.IError) => {
-//             if (err) {
-//                 res.status(err.code).json(err.message);
-//             } else {
-//                 res.status(204).json();
-//             }
-//         });
-//     }
-// });
+router.post('/v1/booking/search', (req: Request, res: Response) => {
+    if (!types.isSearchCriteria(req.body)) {
+        res.status(400).json({ message: 'No booking token given' });
+    } else {
+        bussiness.searchBooking(req.body, (err: types.Error | null, bookingEntity: types.PaginatedList) => {
+            if (err) {
+                res.status(err.code).json(err.message);
+            } else {
+                res.json(bookingEntity);
+            }
+        });
+    }
+});

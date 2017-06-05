@@ -29,6 +29,7 @@
     "morgan": "^1.8.2",
     "nodemailer": "^4.0.1",
     "pug": "^2.0.0-rc.1",
+    "superagent": "^3.5.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@types/morgan": "^1.7.32",
     "@types/nodemailer": "^1.3.32",
     "@types/pug": "^2.0.4",
+    "@types/superagent": "^2.0.37",
     "@types/uuid": "^2.0.29",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",

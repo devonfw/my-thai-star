@@ -1,4 +1,4 @@
-import {Request} from 'express';
+import { Request } from 'express';
 import { TableCron } from '../utils/tableManagement';
 import { User } from './database';
 
@@ -14,26 +14,26 @@ export interface FilterView {
 }
 
 export function isFilterView(elem: any): elem is FilterView {
-    if (elem.categories === undefined || !(elem.categories instanceof Array)){
+    if (elem.categories === undefined || !(elem.categories instanceof Array)) {
         return false;
     }
-    if (elem.maxPrice !== undefined && elem.maxPrice !== null && elem.maxPrice !== '' && typeof elem.maxPrice !== 'number'){
+    if (elem.maxPrice !== undefined && elem.maxPrice !== null && elem.maxPrice !== '' && typeof elem.maxPrice !== 'number') {
         return false;
     }
-    if (elem.minLikes !== undefined && elem.minLikes !== null && elem.minLikes !== '' && typeof elem.minLikes !== 'number'){
+    if (elem.minLikes !== undefined && elem.minLikes !== null && elem.minLikes !== '' && typeof elem.minLikes !== 'number') {
         return false;
     }
-    if (elem.searchBy !== undefined && elem.searchBy !== null && typeof elem.searchBy !== 'string'){
+    if (elem.searchBy !== undefined && elem.searchBy !== null && typeof elem.searchBy !== 'string') {
         return false;
     }
-    if (elem.showOrder !== undefined && elem.showOrder !== null && typeof elem.showOrder !== 'number'){
+    if (elem.showOrder !== undefined && elem.showOrder !== null && typeof elem.showOrder !== 'number') {
         return false;
     }
-    if (elem.isFab !== undefined && elem.isFab !== null && typeof elem.isFab !== 'boolean'){
+    if (elem.isFab !== undefined && elem.isFab !== null && typeof elem.isFab !== 'boolean') {
         return false;
     }
     if (elem.sort !== undefined && !(elem.sort instanceof Array) && elem.sort !== null &&
-         elem.sort.map((e: any) => !isSortByView(e)).reduce((elem1: any, elem2: any) => elem1 || elem2)) {
+        elem.sort.map((e: any) => !isSortByView(e)).reduce((elem1: any, elem2: any) => elem1 || elem2)) {
         return false;
     }
 
@@ -46,10 +46,10 @@ export interface SortByView {
 }
 
 export function isSortByView(elem: any): elem is SortByView {
-    if (elem.name === undefined || (typeof elem.name !== 'string' && elem.name !== null)){
+    if (elem.name === undefined || (typeof elem.name !== 'string' && elem.name !== null)) {
         return false;
     }
-    if (elem.direction === undefined || typeof elem.direction !== 'string'){
+    if (elem.direction === undefined || typeof elem.direction !== 'string') {
         return false;
     }
     return true;
@@ -62,13 +62,13 @@ export interface Paginated {
 }
 
 export function isPaginated(elem: any): elem is Paginated {
-    if (elem.size === undefined || typeof elem.size !== 'number'){
+    if (elem.size === undefined || typeof elem.size !== 'number') {
         return false;
     }
-    if (elem.page === undefined || typeof elem.page !== 'number'){
+    if (elem.page === undefined || typeof elem.page !== 'number') {
         return false;
     }
-    if (elem.total === undefined || typeof elem.total !== 'number'){
+    if (elem.total === undefined || typeof elem.total !== 'number') {
         return false;
     }
     return true;
@@ -102,7 +102,7 @@ export function isDishesView(elem: any): elem is DishesView {
     }
     if (elem.extras === undefined || !(elem.extras instanceof Array) ||
         elem.extras.map((e: any) => !isExtraIngredientView(e)).reduce((elem1: any, elem2: any) =>
-        elem1 || elem2)) {
+            elem1 || elem2)) {
         return false;
     }
 
@@ -206,12 +206,12 @@ export interface BookingPostView {
 }
 
 export function isBookingPostView(elem: any): elem is BookingPostView {
-    if (elem.booking === undefined || !isBookingEntity(elem.booking)){
+    if (elem.booking === undefined || !isBookingEntity(elem.booking)) {
         return false;
     }
     if (elem.invitedGuests !== undefined && (!(elem.invitedGuests instanceof Array) ||
         elem.invitedGuests.map((e: any) => !isInvitedGuestEntity(e)).reduce((elem1: any, elem2: any) =>
-        elem1 || elem2))) {
+            elem1 || elem2))) {
         return false;
     }
     return true;
@@ -227,7 +227,7 @@ export interface BookingView {
     guestList?: string[];
 }
 
-export enum BookingTypes {booking = 0, invited}
+export enum BookingTypes { booking = 0, invited }
 
 // TODO
 // export function isBookingView(elem: any): elem is IBookingView {
@@ -286,7 +286,7 @@ export interface OrderPostView {
 }
 
 export function isOrderPostView(elem: any): elem is OrderPostView {
-    if (elem.booking === undefined || elem.booking.bookingToken === undefined || typeof elem.booking.bookingToken !== 'string'){
+    if (elem.booking === undefined || elem.booking.bookingToken === undefined || typeof elem.booking.bookingToken !== 'string') {
         return false;
     }
 
@@ -335,10 +335,10 @@ export interface OrderFilterView {
 }
 
 export function isOrderFilterView(elem: any): elem is OrderFilterView {
-    if (elem.bookingId !== undefined && typeof elem.bookingId !== 'number'){
+    if (elem.bookingId !== undefined && typeof elem.bookingId !== 'number') {
         return false;
     }
-    if (elem.invitedGuest !== undefined && typeof elem.invitedGuest !== 'number'){
+    if (elem.invitedGuest !== undefined && typeof elem.invitedGuest !== 'number') {
         return false;
     }
     return true;
@@ -346,15 +346,15 @@ export function isOrderFilterView(elem: any): elem is OrderFilterView {
 
 export interface BookingEntity {
     id?: number;
-    name: string;
+    name?: string;
     bookingToken?: string;
     comment?: string;
-    bookingDate: string;
+    bookingDate?: string;
     expirationDate?: string;
     creationDate?: string;
-    email: string;
+    email?: string;
     canceled?: boolean;
-    bookingType: number;
+    bookingType?: number;
     tableId?: number;
     orderId?: number;
     assistants?: number;
@@ -364,13 +364,13 @@ export function isBookingEntity(elem: any): elem is BookingEntity {
     if (elem.id !== undefined && typeof elem.id !== 'number') {
         return false;
     }
-    if (elem.name === undefined || typeof elem.name !== 'string') {
+    if (elem.name !== undefined && typeof elem.name !== 'string') {
         return false;
     }
     if (elem.comment !== undefined && typeof elem.comment !== 'string') {
         return false;
     }
-    if (elem.bookingDate === undefined || typeof elem.bookingDate !== 'string') {
+    if (elem.bookingDate !== undefined && typeof elem.bookingDate !== 'string') {
         return false;
     }
     if (elem.expirationDate !== undefined && typeof elem.expirationDate !== 'string') {
@@ -379,13 +379,13 @@ export function isBookingEntity(elem: any): elem is BookingEntity {
     if (elem.creationDate !== undefined && typeof elem.creationDate !== 'string') {
         return false;
     }
-    if (elem.email === undefined || typeof elem.email !== 'string') {
+    if (elem.email !== undefined && typeof elem.email !== 'string') {
         return false;
     }
     if (elem.canceled !== undefined && typeof elem.canceled !== 'boolean') {
         return false;
     }
-    if (elem.bookingType === undefined || typeof elem.bookingType !== 'number') {
+    if (elem.bookingType !== undefined && typeof elem.bookingType !== 'number') {
         return false;
     }
     if (elem.tableId !== undefined && typeof elem.tableId !== 'number') {
@@ -461,13 +461,13 @@ export interface SearchCriteria {
 }
 
 export function isSearchCriteria(elem: any): elem is SearchCriteria {
-    if (elem.bookingToken !== undefined && typeof elem.bookingToken !== 'string'){
+    if (elem.bookingToken !== undefined && typeof elem.bookingToken !== 'string') {
         return false;
     }
-    if (elem.email !== undefined && typeof elem.email !== 'string'){
+    if (elem.email !== undefined && typeof elem.email !== 'string') {
         return false;
     }
-    if (elem.pagination === undefined || !isPaginated(elem.pagination)){
+    if (elem.pagination === undefined || !isPaginated(elem.pagination)) {
         return false;
     }
     return true;
@@ -481,4 +481,21 @@ export interface Error {
 export interface CustomRequest extends Request {
     tableCron: TableCron;
     user?: User;
+}
+
+export interface EmailContent {
+    emailFrom: string;
+    emailAndTokenTo: { [index: string]: string; };
+    emailType: number;
+    detailMenu: string[];
+    BookingDate: string;
+    Assistants: number;
+    BookingToken: string;
+    Price: number;
+    ButtonActionList: {
+        [index: string]: string;
+    };
+    Host: {
+        [index: string]: string;
+    };
 }

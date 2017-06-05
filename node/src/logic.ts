@@ -35,6 +35,7 @@ export function findUser(userName: string): Promise<dbtypes.User[]> {
     return fn.table('User').where('name', userName, '=').promise();
 }
 
+///////////////////// Dishes /////////////////////////////////////////////////////////////////////////////////////////
 export async function getDishes(filter: types.FilterView,
     callback: (err: types.Error | null, dishes?: types.PaginatedList) => void) {
     // check filter values. Put the correct if neccessary
@@ -104,6 +105,8 @@ export async function getDishes(filter: types.FilterView,
     }
 }
 
+///////////////////// BOOKING /////////////////////////////////////////////////////////////////////////////////////////
+
 export async function createBooking(reserv: types.BookingPostView, cron: TableCron,
     callback: (err: types.Error | null, booToken?: string) => void) {
     const date = moment();
@@ -112,7 +115,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
     try {
         let table;
         if (reserv.booking.bookingType === types.BookingTypes.booking) {
-            table = await getFreeTable(reserv.booking.bookingDate, reserv.booking.assistants as number);
+            table = await getFreeTable(reserv.booking.bookingDate as string, reserv.booking.assistants as number);
 
             if (table === 'error') {
                 callback({ code: 400, message: 'No more tables' });
@@ -124,14 +127,14 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
             id: util.getNanoTime().toString(),
             // TODO: get user from session or check if is a guest
             // userId: '1',
-            name: reserv.booking.name,
-            email: reserv.booking.email,
+            name: reserv.booking.name as string,
+            email: reserv.booking.email as string,
             bookingToken: 'CB_' + moment().format('YYYYMMDD') + '_' + md5(reserv.booking.email + moment().format('YYYYMMDDHHmmss')),
-            bookingDate: reserv.booking.bookingDate,
+            bookingDate: reserv.booking.bookingDate as string,
             expirationDate: bookDate.subtract(1, 'hour').toJSON(),
             creationDate: date.toJSON(),
             canceled: false,
-            bookingType: reserv.booking.bookingType,
+            bookingType: reserv.booking.bookingType as number,
             assistants: (reserv.booking.bookingType === types.BookingTypes.booking) ? reserv.booking.assistants : undefined,
             table: (reserv.booking.bookingType === types.BookingTypes.booking) ? table : undefined,
         };
@@ -168,7 +171,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
         callback(null, booking.bookingToken);
 
         if (reserv.booking.bookingType === types.BookingTypes.booking) {
-            mailer.sendEmail(reserv.booking.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createBooking.pug', {
+            mailer.sendEmail(null, reserv.booking.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createBooking.pug', {
                 title: 'Booking created',
                 name: reserv.booking.name,
                 date: bookDate.format('YYYY-MM-DD'),
@@ -176,7 +179,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 assistants: reserv.booking.assistants,
             }));
         } else {
-            mailer.sendEmail(reserv.booking.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
+            mailer.sendEmail(null, reserv.booking.email, '[MyThaiStar] Booking info', undefined, pug.renderFile('./src/emails/createInvitationHost.pug', {
                 title: 'Invitation created',
                 name: reserv.booking.name,
                 date: bookDate.format('YYYY-MM-DD'),
@@ -198,7 +201,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                     urlCancel: '#',
                 });
 
-                mailer.sendEmail(elem, '[MyThaiStar] Your have a new invitation', email, email);
+                mailer.sendEmail(null, elem, '[MyThaiStar] Your have a new invitation', email, email);
             });
         }
     } catch (err) {
@@ -233,6 +236,203 @@ export async function getAssistansForInvitedBooking(id: string) {
 
     return book.length + 1;
 }
+
+export async function searchBooking(searchCriteria: types.SearchCriteria,
+    callback: (err: types.Error | null, bookingEntity: types.PaginatedList) => void) {
+    let result: any = fn.table('Booking');
+
+    if (searchCriteria.email) {
+        result = result.where('email', searchCriteria.email, '=');
+    }
+    if (searchCriteria.bookingToken) {
+        result = result.where('bookingToken', searchCriteria.bookingToken, '=');
+    }
+
+    const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).promise() as dbtypes.Booking[],
+    fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
+        acum[elem.id] = elem;
+        return acum;
+    }, {}).promise() as any]);
+
+    result = booking.map((elem) => {
+        return {
+            booking: {
+                name: elem.name,
+                bookingToken: elem.bookingToken,
+                email: elem.email,
+                bookingDate: elem.bookingDate,
+                creationDate: elem.creationDate,
+                assistants: elem.assistants,
+                tableId: elem.table,
+            },
+            invitedGuests: (elem.guestList === undefined) ? undefined : elem.guestList.map((elem2) => {
+                return {
+                    email: invitedGuest[elem2].email,
+                    accepted: (invitedGuest[elem2].accepted) ? invitedGuest[elem2].accepted : false,
+                };
+            }),
+        };
+    });
+
+    callback(null, util.getPagination(searchCriteria.pagination.size, searchCriteria.pagination.page, result));
+}
+
+export async function cancelBooking(token: string, tableCron: TableCron, callback: (err: types.Error | null) => void) {
+    let reg: dbtypes.Booking[];
+    try {
+        reg = await fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.Booking[];
+
+        // errors ////////////////////////////////////////////////////////
+        if (reg.length === 0) {
+            callback({ code: 400, message: 'Invalid token given' });
+            return;
+        }
+
+        if (reg[0].bookingType !== types.BookingTypes.invited) {
+            callback({ code: 400, message: 'You can\'t cancel the booking' });
+            return;
+        }
+
+        const bookingDate = moment(reg[0].bookingDate);
+        if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
+            callback({ code: 400, message: 'You can\'t cancel the booking at this time' });
+            return;
+        }
+
+        if (reg[0].canceled) {
+            callback({ code: 400, message: 'Already canceled' });
+            return;
+        }
+        // end errors ////////////////////////////////////////////////////////
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        return;
+    }
+
+    reg[0].canceled = true;
+
+    try {
+        await fn.insert('Booking', reg[0]).promise();
+        tableCron.stopJob(reg[0].id);
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        return;
+    }
+
+    reg[0].canceled = false;
+    let guest;
+
+    try {
+        if (reg[0].guestList !== undefined && (reg[0].guestList as string[]).length > 0) {
+            guest = await fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
+        }
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        await fn.insert('Booking', reg[0]).promise();
+        return;
+    }
+
+    try {
+        const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise() as dbtypes.Order[];
+
+        if (order.length > 0) {
+            await fn.delete('Order', order.map((elem: any) => elem.id)).promise();
+        }
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        await fn.insert('Booking', reg[0]).promise();
+        if (guest !== undefined) {
+            await fn.insert('InvitedGuest', guest).promise();
+        }
+        return;
+    }
+
+    callback(null);
+
+    mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+        title: 'Invitation canceled',
+        name: reg[0].name,
+    }));
+
+    if (guest !== undefined) {
+        guest.forEach((elem: any) => {
+            mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                title: 'Invitation canceled',
+                name: elem.email,
+            }));
+        });
+    }
+}
+
+export async function updateInvitation(token: string, response: boolean, callback: (err: types.Error | null) => void) {
+    let reg: dbtypes.InvitedGuest[];
+    let booking;
+    try {
+        reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise() as dbtypes.InvitedGuest[];
+
+        // errors //////////////////////////////////////////////
+        if (reg.length === 0) {
+            callback({ code: 400, message: 'Invalid token given' });
+            return;
+        }
+
+        if (reg[0].accepted !== undefined && reg[0].accepted === false) {
+            callback({ code: 400, message: 'The invitation is canceled, you can\'t do any modification' });
+            return;
+        }
+
+        booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
+        if (moment(booking.bookingDate).diff(moment().add(10, 'minutes')) < 0) {
+            callback({ code: 500, message: 'You can\'t do this operation at this moment' });
+            return;
+        }
+
+        // end errors //////////////////////////////////////////////
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        return;
+    }
+
+    const { accepted: oldAccepted, modificationDate: oldModificationDate } = reg[0];
+
+    try {
+        reg[0].accepted = response;
+        reg[0].modificationDate = moment().toJSON();
+
+        await fn.insert('InvitedGuest', reg[0]).promise();
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        return;
+    }
+
+    try {
+        const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise() as dbtypes.Order[];
+
+        if (orders.length > 0) {
+            await fn.delete('Order', orders.map((elem: any) => elem.id)).promise();
+        }
+    } catch (err) {
+        console.error(err);
+        callback(err);
+        // TODO: extraer este comportamiento a una función aparte
+        reg[0].accepted = oldAccepted;
+        reg[0].modificationDate = oldModificationDate;
+        fn.insert('InvitedGuest', reg[0]).promise();
+        return;
+    }
+
+    callback(null);
+
+    // TODO: send mails
+}
+
+///////////////////// ORDERS /////////////////////////////////////////////////////////////////////////////////////////
 
 export async function createOrder(order: types.OrderPostView, callback: (err: types.Error | null) => void) {
 
@@ -430,7 +630,7 @@ export async function getOrdersFiltered(search: types.SearchCriteria, callback: 
 
     callback(null, util.getPagination(search.pagination.size, search.pagination.page, _.filter(or, (elem: types.OrderView) => {
         return (search.bookingToken === undefined || search.bookingToken === '' || search.bookingToken === elem.booking.bookingToken) &&
-               (search.email === undefined || search.email === '' || search.email === elem.booking.email || (elem.invitedGuest !== undefined && search.email === elem.invitedGuest.email));
+            (search.email === undefined || search.email === '' || search.email === elem.booking.email || (elem.invitedGuest !== undefined && search.email === elem.invitedGuest.email));
     })));
 }
 
@@ -456,6 +656,7 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
             return acum;
         }, {}).promise()]);
 
+        // TODO: no enviar orders que ya pasaron en el tiempo
         order = orders.map((elem: dbtypes.Order): types.OrderView => {
             const result: any = {
                 order: {
@@ -508,166 +709,13 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
             return result;
         });
 
-        return order;
+        return order.filter((elem: any) => moment(elem.booking.bookingDate).diff(moment()) > 0);
     } catch (err) {
         return [];
     }
 }
 
-export async function cancelBooking(token: string, tableCron: TableCron, callback: (err: types.Error | null) => void) {
-    let reg: dbtypes.Booking[];
-    try {
-        reg = await fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.Booking[];
-
-        // errors ////////////////////////////////////////////////////////
-        if (reg.length === 0) {
-            callback({ code: 400, message: 'Invalid token given' });
-            return;
-        }
-
-        if (reg[0].bookingType !== types.BookingTypes.invited) {
-            callback({ code: 400, message: 'You can\'t cancel the booking' });
-            return;
-        }
-
-        const bookingDate = moment(reg[0].bookingDate);
-        if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
-            callback({ code: 400, message: 'You can\'t cancel the booking at this time' });
-            return;
-        }
-
-        if (reg[0].canceled) {
-            callback({ code: 400, message: 'Already canceled' });
-            return;
-        }
-        // end errors ////////////////////////////////////////////////////////
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        return;
-    }
-
-    reg[0].canceled = true;
-
-    try {
-        await fn.insert('Booking', reg[0]).promise();
-        tableCron.stopJob(reg[0].id);
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        return;
-    }
-
-    reg[0].canceled = false;
-    let guest;
-
-    try {
-        if (reg[0].guestList !== undefined && (reg[0].guestList as string[]).length > 0) {
-            guest = await fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
-        }
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        await fn.insert('Booking', reg[0]).promise();
-        return;
-    }
-
-    try {
-        const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise() as dbtypes.Order[];
-
-        if (order.length > 0) {
-            await fn.delete('Order', order.map((elem: any) => elem.id)).promise();
-        }
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        await fn.insert('Booking', reg[0]).promise();
-        if (guest !== undefined) {
-            await fn.insert('InvitedGuest', guest).promise();
-        }
-        return;
-    }
-
-    callback(null);
-
-    mailer.sendEmail(reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-        title: 'Invitation canceled',
-        name: reg[0].name,
-    }));
-
-    if (guest !== undefined) {
-        guest.forEach((elem: any) => {
-            mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-                title: 'Invitation canceled',
-                name: elem.email,
-            }));
-        });
-    }
-}
-
-export async function updateInvitation(token: string, response: boolean, callback: (err: types.Error | null) => void) {
-    let reg: dbtypes.InvitedGuest[];
-    let booking;
-    try {
-        reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise() as dbtypes.InvitedGuest[];
-
-        // errors //////////////////////////////////////////////
-        if (reg.length === 0) {
-            callback({ code: 400, message: 'Invalid token given' });
-            return;
-        }
-
-        if (reg[0].accepted !== undefined && reg[0].accepted === false) {
-            callback({ code: 400, message: 'The invitation is canceled, you can\'t do any modification' });
-            return;
-        }
-
-        booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
-        if (moment(booking.bookingDate).diff(moment().add(10, 'minutes')) < 0) {
-            callback({ code: 500, message: 'You can\'t do this operation at this moment' });
-            return;
-        }
-
-        // end errors //////////////////////////////////////////////
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        return;
-    }
-
-    const { accepted: oldAccepted, modificationDate: oldModificationDate } = reg[0];
-
-    try {
-        reg[0].accepted = response;
-        reg[0].modificationDate = moment().toJSON();
-
-        await fn.insert('InvitedGuest', reg[0]).promise();
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        return;
-    }
-
-    try {
-        const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise() as dbtypes.Order[];
-
-        if (orders.length > 0) {
-            await fn.delete('Order', orders.map((elem: any) => elem.id)).promise();
-        }
-    } catch (err) {
-        console.error(err);
-        callback(err);
-        // TODO: extraer este comportamiento a una función aparte
-        reg[0].accepted = oldAccepted;
-        reg[0].modificationDate = oldModificationDate;
-        fn.insert('InvitedGuest', reg[0]).promise();
-        return;
-    }
-
-    callback(null);
-
-    // TODO: send mails
-}
+////////////// AUX FUNCTIONS //////////////////////////////////////////////////////////////////
 
 export async function getFreeTable(date: string, assistants: number) {
     let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.Table[]>,
