@@ -1,9 +1,5 @@
 package io.oasp.application.mtsj.general.service.impl.rest;
 
-import io.oasp.application.mtsj.general.common.api.exception.NoActiveUserException;
-import io.oasp.application.mtsj.general.common.api.security.UserData;
-import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
-
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+
+import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
+import io.oasp.application.mtsj.general.security.TokenAuthenticationService;
 
 /**
  * The security REST service provides access to the csrf token, the authenticated user's meta-data. Furthermore, it
@@ -63,22 +62,36 @@ public class SecurityRestServiceImpl {
     return token;
   }
 
+  // /**
+  // * Gets the profile of the user being currently logged in.
+  // *
+  // * @param request provided by the RS-Context
+  // * @return the {@link UserData} taken from the Spring Security context
+  // */
+  // @Produces(MediaType.APPLICATION_JSON)
+  // @GET
+  // @Path("/currentuser/")
+  // @PermitAll
+  // public UserDetailsClientTo getCurrentUser(@Context HttpServletRequest request) {
+  //
+  // if (request.getRemoteUser() == null) {
+  // throw new NoActiveUserException();
+  // }
+  // return UserData.get().toClientTo();
+  // }
+
   /**
-   * Gets the profile of the user being currently logged in.
+   * Returns the user details from the jwt token included in the 'Authorization' header
    *
-   * @param request provided by the RS-Context
-   * @return the {@link UserData} taken from the Spring Security context
+   * @param request
+   * @return
    */
   @Produces(MediaType.APPLICATION_JSON)
   @GET
   @Path("/currentuser/")
-  @PermitAll
-  public UserDetailsClientTo getCurrentUser(@Context HttpServletRequest request) {
+  public UserDetailsClientTo getCurrentUserDetails(@Context HttpServletRequest request) {
 
-    if (request.getRemoteUser() == null) {
-      throw new NoActiveUserException();
-    }
-    return UserData.get().toClientTo();
+    return TokenAuthenticationService.getUserdetailsFromToken(request.getHeader("Authorization"));
   }
 
   /**

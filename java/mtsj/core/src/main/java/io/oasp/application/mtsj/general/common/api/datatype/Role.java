@@ -2,11 +2,9 @@ package io.oasp.application.mtsj.general.common.api.datatype;
 
 import java.security.Principal;
 
-
 public enum Role implements Principal {
 
-  
-  CHIEF("Chief");
+  WAITER("Waiter"), CUSTOMER("Customer");
 
   private final String name;
 

@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.EndpointAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity;
@@ -12,6 +13,7 @@ import io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity;
 @SpringBootApplication(exclude = { EndpointAutoConfiguration.class })
 @EntityScan(basePackages = { "io.oasp.application.mtsj" }, basePackageClasses = { AdvancedRevisionEntity.class })
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
+@ComponentScan(basePackages = { "io.oasp.module.security", "io.oasp.application.mtsj" })
 public class SpringBootApp {
 
   /**

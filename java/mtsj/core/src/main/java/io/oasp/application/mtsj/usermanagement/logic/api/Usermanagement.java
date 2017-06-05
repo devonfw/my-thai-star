@@ -1,6 +1,5 @@
 package io.oasp.application.mtsj.usermanagement.logic.api;
 
-import io.oasp.application.mtsj.general.common.api.UserProfile;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserEto;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserRoleEto;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserRoleSearchCriteriaTo;
@@ -27,8 +26,6 @@ public interface Usermanagement {
    * @return the {@link List} of matching {@link UserEto}s.
    */
   PaginatedListTo<UserEto> findUserEtos(UserSearchCriteriaTo criteria);
-
-  UserProfile findUserProfileByLogin(String username);
 
   /**
    * Deletes a user from the database by its id 'userId'.

@@ -32,7 +32,6 @@ import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
-import io.oasp.application.mtsj.general.common.api.constants.PermissionConstants;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.mailservice.api.Mail;
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
@@ -119,7 +118,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  @RolesAllowed(PermissionConstants.FIND_ORDERS)
+  // @RolesAllowed(PermissionConstants.FIND_ORDERS)
+  // @PreAuthorize("hasRole('Waiter')")
+  // @RolesAllowed("ROLE_Waiter")
+  @RolesAllowed("ROLE_Customer")
   public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
