@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -76,7 +77,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     // .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
     // .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
 
-    http.userDetailsService(this.userDetailsService).csrf().disable().authorizeRequests()
+    http.userDetailsService(this.userDetailsService).csrf().disable().exceptionHandling().and().sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
         // We filter the api/login requests

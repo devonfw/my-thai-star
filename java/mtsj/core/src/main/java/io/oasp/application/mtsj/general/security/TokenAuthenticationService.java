@@ -3,47 +3,34 @@ package io.oasp.application.mtsj.general.security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.oasp.application.mtsj.general.common.api.UserProfile;
-import io.oasp.application.mtsj.general.common.api.security.UserData;
-import io.oasp.application.mtsj.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.application.mtsj.general.common.impl.MtsUser;
-import io.oasp.application.mtsj.general.common.impl.security.BaseUserDetailsService;
-import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
-import io.oasp.application.mtsj.usermanagement.dataaccess.impl.dao.UserDaoImpl;
-import io.oasp.application.mtsj.usermanagement.logic.api.to.UserSearchCriteriaTo;
 import io.oasp.application.mtsj.usermanagement.logic.impl.UsermanagementImpl;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 
-public class TokenAuthenticationService extends AbstractBeanMapperSupport {
+public class TokenAuthenticationService {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(TokenAuthenticationService.class);
@@ -68,11 +55,6 @@ public class TokenAuthenticationService extends AbstractBeanMapperSupport {
 
   static final String CLAIM_SCOPE = "scope";
 
-  @Inject
-  private UserDetailsService userDetailsService;
-
-  private AuthenticationManagerBuilder amBuilder;
-
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
@@ -87,21 +69,23 @@ public class TokenAuthenticationService extends AbstractBeanMapperSupport {
       String user =
           Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
 
-      return user != null ? new UsernamePasswordAuthenticationToken(user, null,
-          (Collection<? extends GrantedAuthority>) Collections.emptyList() /* getAuthorities(token) */) : null;
+      return user != null
+          ? new UsernamePasswordAuthenticationToken(user, null, /* Collections.emptyList() */ getAuthorities(token))
+          : null;
     }
     return null;
   }
 
   @SuppressWarnings("unchecked")
-  static Collection<? extends GrantedAuthority> getAuthorities(String token) {
+  static protected Collection<? extends GrantedAuthority> getAuthorities(String token) {
 
     @SuppressWarnings("unused")
     // String audience =
     // Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getAudience();
     //
-    List<String> roles = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
-        .get(CLAIM_SCOPE, List.class);
+    // List<String> roles = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX,
+    // "")).getBody()
+    // .get(CLAIM_SCOPE, List.class);
 
     // Collection<? extends GrantedAuthority> authorities = Arrays.asList();
 
@@ -109,13 +93,33 @@ public class TokenAuthenticationService extends AbstractBeanMapperSupport {
     // .parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().get(CLAIM_SCOPE, List.class);
     // return (Collection<? extends GrantedAuthority>) Collections.emptyList();
 
-    Collection<GrantedAuthority> authorities = Jwts.parser().setSigningKey(SECRET)
-        .parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().get(CLAIM_SCOPE, Collection.class);
-    BaseUserDetailsService userDetailsService = new BaseUserDetailsService();
+    // Collection<GrantedAuthority> authorities = Jwts.parser().setSigningKey(SECRET)
+    // .parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().get(CLAIM_SCOPE, Collection.class);
+
     String userName =
         Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
-    UserDetails userDetails = loadUserByUsername(userName);
-    return userDetails.getAuthorities();
+
+    List<LinkedHashMap> scopes = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+        .getBody().get(CLAIM_SCOPE, List.class);
+    // List<GrantedAuthority> authorities = new ArrayList<>();
+    List<String> roles = new ArrayList<>();
+    for (LinkedHashMap<?, ?> scope : scopes) {
+      System.out.println(scope.toString());
+
+      roles.add(/* new SimpleGrantedAuthority( */scope.get("authority").toString().replaceAll("ROLE_", "")/* ) */);
+    }
+
+    // Collection<String> roles = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+    // .getBody().get(CLAIM_SCOPE, List.class);
+
+    // UserDetails userDetails = loadUserByUsername(userName);
+    // return userDetails.getAuthorities();
+
+    // Set<GrantedAuthority> SetOfAuthorities = new HashSet<>();
+    // Collection<String> accessControlIds = getAccessControlIds(principal);
+    // Set<AccessControl> accessControlSet = new HashSet<>();
+    // BaseUserDetailsService buds = new BaseUserDetailsService();
+    return getAuthorities(roles);
     // return authorities;
   }
 
@@ -145,51 +149,58 @@ public class TokenAuthenticationService extends AbstractBeanMapperSupport {
 
   // *************************************************************************************************
 
-  static UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  // static UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  //
+  // BaseUserDetailsService baseUserDetailsService = new BaseUserDetailsService();
+  // UserProfile principal = retrievePrincipal(username);
+  // Set<GrantedAuthority> authorities = getAuthorities(principal);
+  // UserDetails user;
+  // try {
+  // // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
+  // user = baseUserDetailsService.getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
+  // UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
+  // userData.setUserProfile(principal);
+  // return userData;
+  // } catch (Exception e) {
+  // e.printStackTrace();
+  // UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
+  // LOG.warn("Failed to get user {}.", username, exception);
+  // throw exception;
+  // }
+  // }
 
-    BaseUserDetailsService baseUserDetailsService = new BaseUserDetailsService();
-    UserProfile principal = retrievePrincipal(username);
-    Set<GrantedAuthority> authorities = getAuthorities(principal);
-    UserDetails user;
-    try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
-      user = baseUserDetailsService.getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
-      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
-      userData.setUserProfile(principal);
-      return userData;
-    } catch (Exception e) {
-      e.printStackTrace();
-      UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
-      LOG.warn("Failed to get user {}.", username, exception);
-      throw exception;
-    }
-  }
+  // static UserProfile retrievePrincipal(String username) {
+  //
+  // UsermanagementImpl usermanagement = new UsermanagementImpl();
+  // try {
+  // return findUserProfileByLogin(username);
+  //
+  // } catch (RuntimeException e) {
+  // e.printStackTrace();
+  // UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
+  // LOG.warn("Failed to get user {}.", username, exception);
+  // throw exception;
+  // }
+  // }
 
-  static UserProfile retrievePrincipal(String username) {
+  static Set<GrantedAuthority> getAuthorities(/* UserProfile principal */List<String> roles)
+      throws AuthenticationException {
 
-    UsermanagementImpl usermanagement = new UsermanagementImpl();
-    try {
-      return findUserProfileByLogin(username);
-
-    } catch (RuntimeException e) {
-      e.printStackTrace();
-      UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
-      LOG.warn("Failed to get user {}.", username, exception);
-      throw exception;
-    }
-  }
-
-  static Set<GrantedAuthority> getAuthorities(UserProfile principal) throws AuthenticationException {
-
-    if (principal == null) {
-      LOG.warn("Principal must not be null.");
-      throw new IllegalArgumentException();
-    }
+    // if (principal == null) {
+    // LOG.warn("Principal must not be null.");
+    // throw new IllegalArgumentException();
+    // }
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
-    Collection<String> accessControlIds = getAccessControlIds(principal);
+    // List<String> listOfRoles = new ArrayList<>();
+    //
+    // for (String role : roles) {
+    // listOfRoles.add(role);
+    // }
+    Collection<String> accessControlIds = roles/* getAccessControlIds(principal) */;
     Set<AccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
+
       boolean success = collectAccessControls(id, accessControlSet);
       if (!success) {
         LOG.warn("Undefined access control {}.", id);
@@ -244,22 +255,21 @@ public class TokenAuthenticationService extends AbstractBeanMapperSupport {
     }
   }
 
-  static UserProfile findUserProfileByLogin(String username) {
-
-    UserDaoImpl dao = new UserDaoImpl();
-    UserSearchCriteriaTo criteria = new UserSearchCriteriaTo();
-    criteria.setUsername(username);
-    PaginatedListTo<UserEntity> users = dao.findUsers(criteria);
-
-    if (users.getResult().isEmpty() || users.getResult().size() > 1) {
-      return null;
-    } else {
-      MtsUser mtsUser = new MtsUser();
-      mtsUser.setEmail(users.getResult().get(0).getEmail());
-      mtsUser.setUsername(users.getResult().get(0).getUsername());
-      mtsUser.setUserRoleId(users.getResult().get(0).getUserRoleId());
-      return mtsUser;
-    }
-  }
-
+  // static UserProfile findUserProfileByLogin(String username) {
+  //
+  // UserDaoImpl dao = new UserDaoImpl();
+  // UserSearchCriteriaTo criteria = new UserSearchCriteriaTo();
+  // criteria.setUsername(username);
+  // PaginatedListTo<UserEntity> users = dao.findUsers(criteria);
+  //
+  // if (users.getResult().isEmpty() || users.getResult().size() > 1) {
+  // return null;
+  // } else {
+  // MtsUser mtsUser = new MtsUser();
+  // mtsUser.setEmail(users.getResult().get(0).getEmail());
+  // mtsUser.setUsername(users.getResult().get(0).getUsername());
+  // mtsUser.setUserRoleId(users.getResult().get(0).getUserRoleId());
+  // return mtsUser;
+  // }
+  // }
 }

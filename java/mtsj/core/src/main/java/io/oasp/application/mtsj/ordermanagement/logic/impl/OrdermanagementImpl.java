@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -31,6 +32,7 @@ import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishCto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
+import io.oasp.application.mtsj.general.common.api.constants.PermissionConstants;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.mailservice.api.Mail;
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
@@ -117,6 +119,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDERS)
   public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
