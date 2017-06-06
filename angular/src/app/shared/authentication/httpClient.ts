@@ -35,6 +35,7 @@ export class HttpClient {
                         this.headers.delete('Authorization');
                         this.window.reloadWindow();
                     }
+                    return observer.error(error);
             });
         });
     }
@@ -51,6 +52,7 @@ export class HttpClient {
                         this.headers.delete('Authorization');
                         this.window.reloadWindow();
                     }
+                    return observer.error(error);
                 });
         });
     }

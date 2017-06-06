@@ -69,8 +69,8 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
-    this.sorting = reject(this.sorting, { 'name': sortEvent.name });
-    this.sorting.push({'name': sortEvent.name, 'direction': sortEvent.order});
+    this.sorting = reject(this.sorting, { 'name': sortEvent.name.split('.').pop() });
+    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
     this.applyFilters();
   }
 

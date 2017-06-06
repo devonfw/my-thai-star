@@ -27,7 +27,7 @@ export class Pagination {
 
 export class Sorting {
     name: string;
-    direction: TdDataTableSortingOrder;
+    direction: string;
 }
 
 // DISHES

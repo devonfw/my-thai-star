@@ -5,19 +5,25 @@ import { ReservationView, DishView, ExtraView, OrderListView } from '../../viewM
 import { FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes, orderList } from '../mock-data';
 import * as moment from 'moment';
-import { find, filter, toString, toNumber } from 'lodash';
+import { find, filter, toString, toNumber, orderBy } from 'lodash';
 
 @Injectable()
 export class OrderInMemoryService implements IOrderDataService {
 
     getBookingOrders(filters: FilterCockpit): Observable<any> {
+        if (!filters.sort[0]) {
+            filters.sort = [{ name: '', direction: '' }];
+        } else {
+            filters.sort = [{ name: filters.sort[0].name, direction: filters.sort[0].direction }];
+        }
         return Observable.of({
             pagination: {
                 size: filters.pagination.size,
                 page: filters.pagination.page,
                 total: orderList.length,
             },
-            result: filter(orderList, (order: OrderListView) => {
+            result: orderBy(orderList, [filters.sort[0].name], [filters.sort[0].direction])
+                    .filter((order: OrderListView) => {
                         if (filters.bookingDate) {
                             return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
                         } else {
