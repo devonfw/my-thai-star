@@ -16,6 +16,6 @@ public enum Role implements Principal {
   @Override
   public String getName() {
 
-    return this.name;
+    return "ROLE_" + this.name;
   }
 }
