@@ -7,7 +7,6 @@ import { BookingDataService } from '../../shared/backend/booking/booking-data-se
 describe('BookTableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
       providers: [
         BookTableService,
         {provide: BookingDataService, useClass: BookingInMemoryService}],

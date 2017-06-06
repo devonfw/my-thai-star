@@ -1,19 +1,28 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
-import { users } from '../mock-data';
+import { users, currentUser } from '../mock-data';
 import { omit, find } from 'lodash';
 
 @Injectable()
 export class LoginInMemoryService implements ILoginDataService {
 
-  login(username: string, password: string): Observable <LoginInfo> {
+  login(username: string, password: string): Observable <string> {
     const user: LoginInfo = this.findUser(username, password);
     if (!user) {
        return Observable.throw({errorCode: 2, message: 'User name or password wrong'});
     }
-    return Observable.of(omit(user, 'password'));
+    currentUser[0] = user;
+    return Observable.of('JWTTOKENMOCK');
+  }
+
+  getCurrentUser(): Observable <LoginInfo> {
+    return Observable.of(omit(currentUser[0], 'password'));
+  }
+
+  logout(): Observable<boolean> {
+    return Observable.of(true);
   }
 
   register(email: string, password: string): Observable <LoginInfo> {

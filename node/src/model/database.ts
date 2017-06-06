@@ -1,35 +1,35 @@
-export interface IDish {
+export interface Dish {
     id: string;
     name: string;
     description: string;
     price: number;
-    image: IImage;
+    image: Image;
     extras: string[];
 }
 
-export interface IImage {
+export interface Image {
     name: string;
     content?: string;
-    contentType: number;
+    contentType: string;
     mimeType: string;
 }
 
 export enum ContentTypes {url = 0, binary}
 
-export interface IIngredient {
+export interface Ingredient {
     id: string;
     name: string;
     price: number;
     description: string;
 }
 
-export interface IDishCategory {
+export interface DishCategory {
     id: string;
     idDish: string;
     idCategory: string;
 }
 
-export interface ICategory {
+export interface Category {
     id: string;
     name: string;
     description: string;
@@ -37,22 +37,22 @@ export interface ICategory {
     showOrder: number;
 }
 
-export interface IOrderLine {
+export interface OrderLine {
     idDish: string;
     extras: string[];
     amount: number;
     comment?: string;
 }
 
-export interface IOrder {
+export interface Order {
     id: string;
-    lines: IOrderLine[];
+    lines: OrderLine[];
     // canceled: boolean;
     idBooking: string;
     idInvitedGuest?: string;
 }
 
-export interface IBooking {
+export interface Booking {
     id: string;
     userId?: string;
     name: string;
@@ -70,22 +70,22 @@ export interface IBooking {
     table?: string;
 }
 
-export interface ITable {
+export interface Table {
     id: string;
     seatsNumber: number;
 }
 
-export interface IInvitedGuest {
+export interface InvitedGuest {
     id: string;
     idBooking: string;
     guestToken: string;
     email: string;
-    acepted?: boolean;
+    accepted?: boolean;
     modificationDate: string;
     order?: string;
 }
 
-export interface IUser {
+export interface User {
     id: string;
     userName: string;
     password: string;

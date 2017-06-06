@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs/Observable';
-import { OnInit, Injector, Injectable } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
 
 import { BackendConfig, BackendType } from '../backend.module';
 import { BookingInMemoryService } from './booking-in-memory.service';
 import { BookingRestService } from './booking-rest.service';
 import { IBookingDataService } from './booking-data-service-interface';
-import { ReservationView, OrderListView } from '../../viewModels/interfaces';
-import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
+import { ReservationView } from '../../viewModels/interfaces';
+import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 
 @Injectable()
 export class BookingDataService implements IBookingDataService {

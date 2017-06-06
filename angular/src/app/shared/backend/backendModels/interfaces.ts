@@ -1,4 +1,6 @@
+import { TdDataTableSortingOrder } from '@covalent/core';
 // FILTERS
+
 export class Filter {
     pagination?: Pagination;
     isFav: boolean;
@@ -11,6 +13,7 @@ export class Filter {
 
 export class FilterCockpit {
     pagination?: Pagination;
+    sort?: Sorting[];
     bookingDate: string;
     email: string;
     bookingToken: number;
@@ -20,6 +23,11 @@ export class Pagination {
     size: number;
     page: number;
     total: number;
+}
+
+export class Sorting {
+    name: string;
+    direction: string;
 }
 
 // DISHES
@@ -37,11 +45,11 @@ export class BookingInfo {
 }
 
 export class ReservationInfo {
-        bookingDate: string;
-        name: string;
-        email: string;
-        bookingType: number;
-        assistants?: number;
+    bookingDate: string;
+    name: string;
+    email: string;
+    bookingType: number;
+    assistants?: number;
 }
 
 export class FriendsInvite {
@@ -70,6 +78,7 @@ export class LoginInfo {
     username: string;
     password: string;
     role: string;
+    token?: string;
 }
 
 export class Role {

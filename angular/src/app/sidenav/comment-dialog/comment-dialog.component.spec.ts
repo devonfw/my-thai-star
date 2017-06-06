@@ -1,30 +1,33 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdDialog } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { SidenavModule } from '../sidenav.module';
+import { CovalentModule } from '../../shared/covalent.module';
 
 import { CommentDialogComponent } from './comment-dialog.component';
-import { CovalentModule } from '../../shared/covalent.module';
 
 describe('CommentDialogComponent', () => {
   let component: CommentDialogComponent;
-  let fixture: ComponentFixture<CommentDialogComponent>;
+  let dialog: MdDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentDialogComponent ],
       imports: [
+        BrowserAnimationsModule,
         CovalentModule,
+        SidenavModule,
       ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommentDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    dialog = TestBed.get(MdDialog);
+    component = dialog.open(CommentDialogComponent).componentInstance;
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

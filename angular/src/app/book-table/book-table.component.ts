@@ -5,6 +5,8 @@ import { TdDialogService } from '@covalent/core/dialogs/services/dialog.service'
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../shared/windowService/windowService.service';
+import { BookTableService } from './shared/book-table.service';
+import { last } from 'lodash';
 
 @Component({
   selector: 'public-book-table',
@@ -17,7 +19,9 @@ export class BookTableComponent {
   invitationModel: string[] = [];
   minDate: Date = new Date();
 
-  constructor(public window: WindowService, public dialog: MdDialog) {
+  constructor(public window: WindowService,
+              public dialog: MdDialog,
+              public bookingService: BookTableService) {
   }
 
   showBookTableDialog(form: FormGroup): void {
@@ -35,10 +39,8 @@ export class BookTableComponent {
   }
 
   validateEmail(): void {
-    let re: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(this.invitationModel[this.invitationModel.length - 1])) {
-      this.invitationModel.splice(-1, 1);
+    if (!this.bookingService.isEmailValid(last(this.invitationModel))) {
+      this.invitationModel.pop();
     }
   }
-
 }

@@ -23,12 +23,13 @@ export class InvitationDialogComponent implements OnInit {
               @Inject(MD_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData;
   }
+
   ngOnInit(): void {
     this.date = moment(this.data.bookingDate).format('LLL');
   }
 
   sendInvitation(): void {
-    this.invitationService.postInvitationTable(this.invitationService.composeInvitation(this.data)).subscribe( () => {
+    this.invitationService.postBooking(this.invitationService.composeBooking(this.data, 1)).subscribe( () => {
       this.snackBar.openSnack('Table succesfully booked', 4000, 'green');
     }, (error: any) => {
       this.snackBar.openSnack('Error booking, please try again later', 4000, 'red');

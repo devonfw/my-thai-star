@@ -80,7 +80,7 @@ export function objectToArray(object: any) {
     return res;
 }
 
-export function getPagination(pageSize: number, page: number, list: any[]): types.IPaginatedList {
+export function getPagination(pageSize: number, page: number, list: any[]): types.PaginatedList {
     if (page > Math.ceil(list.length / pageSize)) {
         return {
             pagination: {

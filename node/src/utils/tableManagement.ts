@@ -3,10 +3,11 @@ import * as dbtypes from '../model/database';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import * as bussiness from '../logic';
+import { JobDictionary, IdDateDictionary } from '../model/dictionaries';
 
 export class TableCron {
-    private jobs: any = {}; // dict, key: date -> value: array of id
-    private ids: any = {}; // dict, key: id -> value: date
+    private jobs: JobDictionary = {}; // dict, key: date -> value: [cron, array of id]
+    private ids: IdDateDictionary = {}; // dict, key: id -> value: date
 
     public constructor() {
         this.loadAllJobs();
@@ -22,10 +23,11 @@ export class TableCron {
     }
 
     public startJob(id: string, date: string) {
-        // console.log('Loading ' + id + ' for: ' + date);
+        console.log('Loading ' + id + ' for: ' + date);
         if (this.jobs[date] === undefined) {
-            this.ids[id] = [date];
-            this.jobs[date] = [new CronJob(moment(date, 'YYYY-MM-DD HH:mm:ss.SSS').subtract(1, 'hour').toDate(), () => {
+            this.ids[id] = date;
+            const h: moment.DurationInputArg2 = 'hour';
+            this.jobs[date] = [new CronJob(moment(date).subtract(1, h).toDate(), () => {
                 const p = new Promise<void>(async (resolve, reject) => {
                     const list = this.jobs[date][1];
                     for (const tok of list) {
@@ -36,6 +38,8 @@ export class TableCron {
                             const r = await bussiness.updateBookingWithTable(tok, table);
                             if (r) {
                                 console.error('Error in operation updateBookingWithTable(' + tok + ', ' + table + ')');
+                            } else {
+                                console.log('Table assigned for: ' + id);
                             }
                         } else {
                             console.error('There are no more free tables');
@@ -46,7 +50,7 @@ export class TableCron {
             }, () => { }, true), [id]];
         } else {
             this.jobs[date][1].push(id);
-            this.ids[id] = [date];
+            this.ids[id] = date;
         }
     }
 

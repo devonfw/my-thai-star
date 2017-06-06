@@ -4,22 +4,35 @@ import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
 import { config } from '../../../config';
+import { HttpClient } from '../..//authentication/httpClient';
 
 @Injectable()
 export class LoginRestService implements ILoginDataService {
 
   private readonly loginRestPath: string = '/login';
+  private readonly currentUserRestPath: string = '/getUser';
+  private readonly logoutRestPath: string = '/logout';
   private readonly registerRestPath: string = '/register';
   private readonly changePasswordRestPath: string = '/changepassword';
 
-  private http: Http;
+  private http: HttpClient;
 
   constructor(private injector: Injector) {
-    this.http = this.injector.get(Http);
+    this.http = this.injector.get(HttpClient);
   }
 
-  login(username: string, password: string): Observable<LoginInfo> {
+  login(username: string, password: string): Observable<string> {
     return this.http.post(`${config.restServiceRoot}${this.loginRestPath}`, {username: username, password: password})
+      .map((res: Response) => res.json());
+  }
+
+  getCurrentUser(): Observable<LoginInfo> {
+    return this.http.get(`${config.restServiceRoot}${this.loginRestPath}`)
+      .map((res: Response) => res.json());
+  }
+
+  logout(): Observable<boolean> {
+    return this.http.get(`${config.restServiceRoot}${this.logoutRestPath}`)
       .map((res: Response) => res.json());
   }
 

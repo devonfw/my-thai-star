@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { ExtraView, OrderView, ReservationView, OrderListView, OrderBookingView } from '../../../shared/viewModels/interfaces';
-import { OrderCockpitService } from '../shared/order-cockpit.service';
+import { ExtraView, OrderView, BookingView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
+import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import {MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
@@ -11,7 +11,9 @@ import {MD_DIALOG_DATA} from '@angular/material';
 })
 export class OrderDialogComponent implements OnInit {
 
-  datat: any[] = [];
+  data: any;
+
+  datat: BookingView[] = [];
   columnst: ITdDataTableColumn[] = [
     { name: 'bookingDate', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
@@ -20,7 +22,7 @@ export class OrderDialogComponent implements OnInit {
     { name: 'tableId', label: 'Table'},
   ];
 
-  datao: any[] = [];
+  datao: OrderView[] = [];
   columnso: ITdDataTableColumn[] = [
     { name: 'dish.name', label: 'Dish'},
     { name: 'orderLine.comment', label: 'Comments'},
@@ -34,17 +36,16 @@ export class OrderDialogComponent implements OnInit {
   pageSize: number = 5;
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
-  data: any;
 
   constructor(private _dataTableService: TdDataTableService,
-              private orderCockpitService: OrderCockpitService,
+              private waiterCockpitService: WaiterCockpitService,
               @Inject(MD_DIALOG_DATA) dialogData: any) {
                 this.data = dialogData.row;
   }
 
   ngOnInit(): void {
-    this.totalPrice = this.orderCockpitService.getTotalPrice(this.data.orderLines);
-    this.datao = this.orderCockpitService.orderComposer(this.data.orderLines);
+    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
+    this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
     this.filter();
 }

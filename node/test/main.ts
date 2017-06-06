@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import ChaiHttp = require('chai-http');
 import { app as server } from '../src/app';
-import { isDishView } from '../src/model/interfaces';
+import { isDishesView } from '../src/model/interfaces';
 import * as _ from 'lodash';
 
 // configure chai-http
@@ -14,7 +14,8 @@ describe('Get dishes', () => {
     describe('POST /mythaistar/services/rest/Dishmanagement/v1/Dish/Search empty body', () => {
         it('should respond with all dishes', (done) => {
             chai.request(server)
-                .post('/mythaistar/services/rest/Dishmanagement/v1/Dish/Search')
+                .post('/mythaistar/services/rest/Dishmanagement/v1/dish/search')
+                .send({categories: [], sortBy: []})
                 .end((err, res) => {
                     // there should be no errors
                     should.not.exist(err);
@@ -23,12 +24,12 @@ describe('Get dishes', () => {
                     // the response should be JSON
                     expect(res).to.be.json;
 
-                    expect(res.body instanceof Array).to.be.true;
-                    res.body.forEach((elem: any) => {
-                        expect(isDishView(elem)).to.be.true;
+                    expect(res.body.result instanceof Array).to.be.true;
+                    res.body.result.forEach((elem: any) => {
+                        expect(isDishesView(elem)).to.be.true;
                     });
 
-                    res.body.length.should.be.equal(10);
+                    res.body.result.length.should.be.equal(10);
                     done();
                 });
         });
@@ -39,7 +40,7 @@ describe('Get dishes', () => {
             chai.request(server)
                 .post('/mythaistar/services/rest/Dishmanagement/v1/Dish/Search')
                 .send({ // FilterView
-                    categories: null,
+                    categories: [],
                     maxPrice: 10,
                     minLikes: null,
                     searchBy: 'curry',
@@ -53,15 +54,15 @@ describe('Get dishes', () => {
                     // the response should be JSON
                     expect(res).to.be.json;
 
-                    expect(res.body instanceof Array).to.be.true;
-                    res.body.forEach((elem: any) => {
-                        expect(isDishView(elem)).to.be.true;
+                    expect(res.body.result instanceof Array).to.be.true;
+                    res.body.result.forEach((elem: any) => {
+                        expect(isDishesView(elem)).to.be.true;
 
-                        expect(_.lowerCase(elem.name).includes('curry') ||
-                               _.lowerCase(elem.description).includes('curry')).to.be.true;
+                        expect(_.lowerCase(elem.dish.name).includes('curry') ||
+                               _.lowerCase(elem.dish.description).includes('curry')).to.be.true;
                     });
 
-                    res.body.length.should.be.equal(4);
+                    res.body.result.length.should.be.equal(4);
                     done();
                 });
         });

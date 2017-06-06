@@ -100,14 +100,16 @@ export const dishes: DishView[] = [{
                         {id: '7'}],
         }];
 
+export let currentUser: LoginInfo[] = [];
+
 export const users: LoginInfo[] = [{
-        username: 'user',
-        password: 'pass',
-        role: 'user',
+                username: 'user',
+                password: 'pass',
+                role: 'user',
         }, {
-        username: 'waiter',
-        password: 'pass',
-        role: 'waiter',
+                username: 'waiter',
+                password: 'pass',
+                role: 'waiter',
         }];
 
 export const roles: Role[] = [

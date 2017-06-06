@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: v2.8
+  version: v2.11
   title: My Thai Star API
 host: 'localhost:8081'
 schemes:
@@ -31,7 +31,7 @@ paths:
             empty values will return the full set of dishes.
           required: true
           schema:
-            $ref: '#/definitions/FilterView'
+            $ref: '#/definitions/DishFilterView'
       responses:
         '200':
           description: Ok. The search process has beencompleted with no error.
@@ -49,8 +49,47 @@ paths:
     post:
       tags:
         - Order
-      summary: Gets the  list of available orders regarding the filter options
+      summary: Gets the  list of available orders regarding the search criteria options
       operationId: Order_Search
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: OrderSearchCriteriaView
+          in: body
+          description: >-
+            Contains the criteria values to perform the search. Case of null or
+            empty values will return the full set of orders.
+          required: true
+          schema:
+            $ref: '#/definitions/OrderSearchCriteriaView'
+      responses:
+        '200':
+          description: Ok. The search process has beencompleted with no error.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderView'
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Ordermanagement/v1/order/filter:
+    post:
+      tags:
+        - Order
+      summary: Gets the  list of available orders regarding the filter options
+      operationId: Order_Filter
       consumes:
         - application/json
         - text/json
@@ -66,7 +105,7 @@ paths:
         - name: OrderFilterView
           in: body
           description: >-
-            Contains the criteria values to perform the search. Case of null or
+            Contains the filter values to perform the search. Case of null or
             empty values will return the full set of orders.
           required: true
           schema:
@@ -84,7 +123,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept:
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/{guestToken}':
     get:
       tags:
         - Mail
@@ -100,7 +139,7 @@ paths:
         - text/xml
       parameters:
         - name: guestToken
-          in: query
+          in: path
           description: Token generated in the reservation process where guests are invited.
           required: true
           type: string
@@ -119,7 +158,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline:
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/{guestToken}':
     get:
       tags:
         - Mail
@@ -135,7 +174,7 @@ paths:
         - text/xml
       parameters:
         - name: guestToken
-          in: query
+          in: path
           description: Token generated in the reservation process where guests are invited.
           required: true
           type: string
@@ -154,7 +193,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/Bookingmanagement/v1/booking/cancel:
+  '/mythaistar/services/rest/Bookingmanagement/v1/booking/cancel/{bookingToken}':
     get:
       tags:
         - Mail
@@ -168,7 +207,7 @@ paths:
         - text/xml
       parameters:
         - name: bookingToken
-          in: query
+          in: path
           description: >-
             Token generated in the booking process where guests are invited.
             Mandatory
@@ -190,7 +229,7 @@ paths:
           description: Forbidden. Authorization error.
         '500':
           description: Internal Server Error. The search process ended with error.
-  /mythaistar/services/rest/ordermanagement/v1/order/cancelorder:
+  '/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/{id}':
     get:
       tags:
         - Mail
@@ -206,7 +245,7 @@ paths:
         - text/xml
       parameters:
         - name: id
-          in: query
+          in: path
           description: ''
           required: true
           type: string
@@ -320,8 +359,7 @@ paths:
     post:
       tags:
         - Booking
-      summary: >-
-        Method to get reservations
+      summary: Method to get reservations
       operationId: Booking_Search
       consumes:
         - application/json
@@ -357,7 +395,7 @@ paths:
         '500':
           description: Internal Server Error. The search process ended with error.
 definitions:
-  FilterView:
+  DishFilterView:
     description: ''
     type: object
     properties:
@@ -379,7 +417,7 @@ definitions:
         type: integer
       isFav:
         type: boolean
-      sortBy:
+      sort:
         type: array
         items:
           $ref: '#/definitions/SortByView'
@@ -521,7 +559,7 @@ definitions:
       orderId:
         format: int64
         type: integer
-  OrderFilterView:
+  OrderSearchCriteriaView:
     type: object
     properties:
       bookingId:
@@ -530,6 +568,13 @@ definitions:
       invitedGuestId:
         format: int64
         type: integer
+  OrderFilterView:
+    type: object
+    properties:
+      email:
+        type: string
+      bookingToken:
+        type: string
   BookingPostView:
     type: object
     properties:
@@ -560,11 +605,10 @@ definitions:
         items:
           type: string
   BookingType:
-    type: object
-    properties:
-      index:
-        format: int32
-        type: integer
+    type: string
+    enum:
+      - 0
+      - 1
   SortByView:
     type: object
     properties:

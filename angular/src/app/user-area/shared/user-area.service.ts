@@ -12,7 +12,7 @@ export class UserAreaService {
                 public loginDataService: LoginDataService) { }
 
     changePassword(data: any): void {
-        data.username = this.authService.user;
+        data.username = this.authService.getUser();
         this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
             .subscribe( (res: any) => {
                     this.snackBar.openSnack(res.message, 4000, 'green');

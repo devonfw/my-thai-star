@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs/Observable';
-import { OnInit, Injector, Injectable } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
 
 import { BackendConfig, BackendType } from '../backend.module';
 import { OrderInMemoryService } from './order-in-memory.service';
 import { OrderRestService } from './order-rest.service';
 import { IOrderDataService } from './order-data-service-interface';
-import { ReservationView, OrderListView } from '../../viewModels/interfaces';
-import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
+import { OrderListView } from '../../viewModels/interfaces';
+import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()
 export class OrderDataService implements IOrderDataService {

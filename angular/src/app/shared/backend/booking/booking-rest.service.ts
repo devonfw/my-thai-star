@@ -2,9 +2,10 @@ import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { BookingInfo, FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
-import { ReservationView, OrderListView } from '../../viewModels/interfaces';
+import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
+import { ReservationView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
+import { HttpClient } from '../../authentication/httpClient';
 
 @Injectable()
 export class BookingRestService implements IBookingDataService {
@@ -15,10 +16,10 @@ export class BookingRestService implements IBookingDataService {
      private readonly cancelReserveRestPath: string = 'bookingmanagement/v1/booking/cancel/';
      private readonly getReservationsRestPath: string = 'bookingmanagement/v1/booking/search';
 
-     private http: Http;
+     private http: HttpClient;
 
      constructor(private injector: Injector) {
-       this.http = this.injector.get(Http);
+       this.http = this.injector.get(HttpClient);
      }
 
      bookTable(booking: BookingInfo): Observable<number> {
