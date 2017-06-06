@@ -76,7 +76,7 @@ public class TokenAuthenticationService {
   static Collection<? extends GrantedAuthority> getAuthorities(String token) {
 
     List<String> roles = getRolesFromToken(token);
-    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    List<GrantedAuthority> authorities = new ArrayList<>();
     for (String role : roles) {
       authorities.add(new SimpleGrantedAuthority(role));
     }
