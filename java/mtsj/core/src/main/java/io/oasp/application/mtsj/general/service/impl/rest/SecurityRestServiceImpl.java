@@ -62,24 +62,6 @@ public class SecurityRestServiceImpl {
     return token;
   }
 
-  // /**
-  // * Gets the profile of the user being currently logged in.
-  // *
-  // * @param request provided by the RS-Context
-  // * @return the {@link UserData} taken from the Spring Security context
-  // */
-  // @Produces(MediaType.APPLICATION_JSON)
-  // @GET
-  // @Path("/currentuser/")
-  // @PermitAll
-  // public UserDetailsClientTo getCurrentUser(@Context HttpServletRequest request) {
-  //
-  // if (request.getRemoteUser() == null) {
-  // throw new NoActiveUserException();
-  // }
-  // return UserData.get().toClientTo();
-  // }
-
   /**
    * Returns the user details from the jwt token included in the 'Authorization' header
    *

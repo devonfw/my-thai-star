@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,6 +35,7 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
+import io.oasp.application.mtsj.general.common.api.constants.Roles;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
 import io.oasp.application.mtsj.mailservice.api.Mail;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
@@ -108,6 +110,13 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     cto.setInvitedGuests(getBeanMapper().mapList(entity.getInvitedGuests(), InvitedGuestEto.class));
     cto.setOrders(getBeanMapper().mapList(entity.getOrders(), OrderEto.class));
     return cto;
+  }
+
+  @Override
+  @RolesAllowed(Roles.WAITER)
+  public PaginatedListTo<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
+
+    return findBookingCtos(criteria);
   }
 
   @Override

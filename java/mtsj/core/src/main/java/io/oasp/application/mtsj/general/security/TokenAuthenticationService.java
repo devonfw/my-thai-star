@@ -4,32 +4,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.oasp.application.mtsj.general.common.api.datatype.Role;
 import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 
+@Named
 public class TokenAuthenticationService {
 
   /** Logger instance. */
@@ -38,6 +33,8 @@ public class TokenAuthenticationService {
   static final String ISSUER = "MyThaiStarApp";
 
   static final long EXPIRATIONTIME = 864_000_000; // 10 days
+
+  static final Integer EXPIRATION_HOURS = 1;
 
   static final String SECRET = "ThisIsASecret";
 
@@ -55,14 +52,6 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_SCOPE = "scope";
 
-  @Inject
-  private static UserDetailsService userDetailsService;
-
-  // @Inject
-  private static AccessControlProvider accessControlProvider;
-
-  private static ApplicationContext applicationContext;
-
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
@@ -73,19 +62,17 @@ public class TokenAuthenticationService {
 
     String token = request.getHeader(HEADER_STRING);
     if (token != null) {
-      // parse the token.
+
+      // The JWT parser will throw an exception if the token is not well formed or the token has expired
       String user =
           Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
-
-      // UsernamePasswordAuthenticationToken upat =
-      // new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token));
-      // return user != null ? upat : null;
       return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token)) : null;
+
     }
+
     return null;
   }
 
-  @SuppressWarnings("unchecked")
   static Collection<? extends GrantedAuthority> getAuthorities(String token) {
 
     List<String> roles = getRolesFromToken(token);
@@ -109,25 +96,29 @@ public class TokenAuthenticationService {
     claims.put(CLAIM_ISSUER, ISSUER);
     claims.put(CLAIM_SUBJECT, auth.getName());
     claims.put(CLAIM_SCOPE, auth.getAuthorities());
-    claims.put(CLAIM_CREATED, new Date());
-    claims.put(CLAIM_EXPIRATION, generateExpirationDate());
+    claims.put(CLAIM_CREATED, generateCreationDate()/* new Date().getTime() / 1000 */);
+    claims.put(CLAIM_EXPIRATION, generateExpirationDate()/* .getTime() / 1000 */);
 
     return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, SECRET).compact();
   }
 
-  static Date generateExpirationDate() {
+  static Long generateCreationDate() {
 
-    return new Date(System.currentTimeMillis() + EXPIRATIONTIME);
+    return new Date().getTime();
   }
 
-  static Set<GrantedAuthority> getAuthorities(List<String> roles) throws AuthenticationException {
+  static Long generateExpirationDate() {
 
-    // determine granted authorities for spring-security...
-    Set<GrantedAuthority> authorities = new HashSet<>();
-
-    return authorities;
+    int expirationTerm = (60 * 60 * 1000) * EXPIRATION_HOURS;
+    return new Date(new Date().getTime() + expirationTerm).getTime();
   }
 
+  /**
+   * Extracts and returns the {@link UserDetailsClientTo} from the JWT token
+   *
+   * @param token the JWT token
+   * @return the {@link UserDetailsClientTo} object
+   */
   public static UserDetailsClientTo getUserdetailsFromToken(String token) {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
@@ -161,7 +152,7 @@ public class TokenAuthenticationService {
 
     List<String> roles = new ArrayList<>();
     for (LinkedHashMap<?, ?> scope : scopes) {
-      roles.add(scope.get("authority").toString()/* .replace("ROLE_", "") */);
+      roles.add(scope.get("authority").toString());
     }
 
     return roles;

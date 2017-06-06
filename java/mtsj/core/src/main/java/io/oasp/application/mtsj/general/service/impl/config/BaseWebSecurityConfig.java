@@ -56,7 +56,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
     "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
-    "/services/rest/ordermanagement/v1/order" };
+    "/services/rest/ordermanagement/v1/order", "/services/rest/bookingmanagement/v1/booking",
+    "/services/rest/bookingmanagement/v1/booking/cancel/**",
+    "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
+    "/services/rest/bookingmanagement/v1/invitedguest/decline/**" };
+
     // http
     // //
     // .userDetailsService(this.userDetailsService)
@@ -133,8 +137,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Override
   @SuppressWarnings("javadoc")
-  // @Inject
-  public void configure/* Global */(AuthenticationManagerBuilder auth) throws Exception {
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
     auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0")
         .password("password").roles("Customer");
