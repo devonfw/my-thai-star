@@ -10,6 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import io.oasp.application.mtsj.general.security.JWTAuthenticationFilter;
 import io.oasp.application.mtsj.general.security.JWTLoginFilter;
@@ -30,23 +34,23 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Inject
   private UserDetailsService userDetailsService;
 
-  // private CorsFilter getCorsFilter() {
-  //
-  // UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-  // CorsConfiguration config = new CorsConfiguration();
-  // config.setAllowCredentials(true);
-  // config.addAllowedOrigin("*");
-  // config.addAllowedHeader("*");
-  // config.addAllowedMethod("OPTIONS");
-  // config.addAllowedMethod("HEAD");
-  // config.addAllowedMethod("GET");
-  // config.addAllowedMethod("PUT");
-  // config.addAllowedMethod("POST");
-  // config.addAllowedMethod("DELETE");
-  // config.addAllowedMethod("PATCH");
-  // source.registerCorsConfiguration("/**", config);
-  // return new CorsFilter(source);
-  // }
+  private CorsFilter getCorsFilter() {
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("OPTIONS");
+    config.addAllowedMethod("HEAD");
+    config.addAllowedMethod("GET");
+    config.addAllowedMethod("PUT");
+    config.addAllowedMethod("POST");
+    config.addAllowedMethod("DELETE");
+    config.addAllowedMethod("PATCH");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
 
   /**
    * Configure spring security to enable a simple webform-login + a simple rest login.
@@ -91,9 +95,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         // And filter other requests to check the presence of JWT in header
         .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    // if (this.corsEnabled) {
-    // http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
-    // }
+    if (this.corsEnabled) {
+      http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
+    }
   }
 
   /**
