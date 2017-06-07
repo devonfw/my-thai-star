@@ -1,0 +1,60 @@
+import { CustomRequest } from '../model/interfaces';
+import { Response, NextFunction } from 'express';
+import * as jwt from 'jsonwebtoken';
+import { findUser } from '../logic';
+
+export class Authentication {
+    public constructor(private superSecret: string) {
+
+    }
+
+    // TODO: declarar esta funcion por algun lado y solo usarla cuando se requiera autenticacion
+    // route middleware to verify a token
+    public registerAuthentication(req: CustomRequest, res: Response, next: NextFunction) {
+        // check header or url parameters or post parameters for token
+        const token = req.headers.Authentication;
+
+        // decode token
+        if (token) {
+            // verifies secret and checks exp
+            jwt.verify(token, this.superSecret, (err: any, decoded: any) => {
+                req.user = err ? undefined : decoded;
+                next();
+            });
+        } else {
+            req.user = undefined;
+            next();
+        }
+    }
+
+    public auth(req: CustomRequest, res: Response) {
+        // find the user
+        findUser(req.body.name).catch((err: any) => {
+            res.status(err.code || 500).json({message: err.message || 'error'});
+         }).then((user) => {
+            if (!user || user.length === 0) {
+                res.status(403).json({message: 'Authentication failed. User not found.' });
+            } else if (user) {
+
+                // check if password matches
+                if (user[0].password !== req.body.password) {
+                    res.status(403).json({message: 'Authentication failed. Wrong password.' });
+                } else {
+                    // if user is found and password is right
+                    // create a token
+                    const token = jwt.sign(user[0], this.superSecret, {
+                        expiresIn: '24h', // expires in 24 hours
+                    });
+
+                    // return the information including token as JSON
+                    res.json({
+                        token,
+                    });
+                }
+
+            }
+
+        });
+    }
+
+}
