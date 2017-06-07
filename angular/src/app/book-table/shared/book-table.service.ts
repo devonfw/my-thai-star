@@ -27,6 +27,8 @@ export class BookTableService {
 
     if (type) {
       composedBooking.invitedGuests = map(invitationData.invitedGuests, (guest: FriendsInvite) => { return {email : guest}; } );
+    } else {
+      composedBooking.booking.assistants = invitationData.assistants;
     }
 
     return composedBooking;

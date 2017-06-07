@@ -1,13 +1,16 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ITdDataTableSelectAllEvent,
          IPageChangeEvent,
-         ITdDataTableColumn } from '@covalent/core';
+         ITdDataTableColumn,
+         ITdDataTableSortChangeEvent,
+         TdDataTableSortingOrder} from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
+import { reject } from 'lodash';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -39,6 +42,8 @@ export class ReservationCockpitComponent implements OnInit {
     total: 1,
   };
 
+  sorting: Sorting[] = [];
+
   constructor(private waiterCockpitService: WaiterCockpitService,
               private dialog: MdDialog) {}
 
@@ -52,7 +57,7 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getReservations(this.pagination, this.filters).subscribe((reservations: any) => {
+    this.waiterCockpitService.getReservations(this.pagination, this.sorting, this.filters).subscribe((reservations: any) => {
       this.data = reservations.result;
       this.filteredData = reservations.result;
       this.filteredTotal = reservations.pagination.total;
@@ -70,6 +75,12 @@ export class ReservationCockpitComponent implements OnInit {
       page: pagingEvent.page,
       total: 1,
     };
+    this.applyFilters();
+  }
+
+  sort(sortEvent: ITdDataTableSortChangeEvent): void {
+    this.sorting = reject(this.sorting, { 'name': sortEvent.name.split('.').pop() });
+    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
     this.applyFilters();
   }
 

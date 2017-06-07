@@ -23,6 +23,7 @@ export class InvitationDialogComponent implements OnInit {
               @Inject(MD_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData;
   }
+
   ngOnInit(): void {
     this.date = moment(this.data.bookingDate).format('LLL');
   }

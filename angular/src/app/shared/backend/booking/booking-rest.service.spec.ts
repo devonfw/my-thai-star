@@ -8,22 +8,28 @@ import {
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { BookingRestService } from './booking-rest.service';
+import { HttpClient } from '../../authentication/httpClient';
+import { AuthService } from '../../authentication/auth.service';
+import { SnackBarService } from '../../snackService/snackService.service';
+import { MaterialModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { LoginDataService } from '../login/login-data-service';
+import { LoginInMemoryService } from '../login/login-in-memory.service';
+import { WindowService } from '../../windowService/windowService.service';
 
 describe('BookingRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpModule, MaterialModule, RouterTestingModule],
       providers: [
         BookingRestService,
-        {
-            provide: Http,
-            useFactory: (mockBackend: MockBackend, options: BaseRequestOptions) => {
-                return new Http(mockBackend, options);
-            },
-            deps: [MockBackend, BaseRequestOptions],
-        },
+        HttpClient,
+        AuthService,
+        SnackBarService,
         MockBackend,
         BaseRequestOptions,
+        WindowService,
+        {provide: LoginDataService, useClass: LoginInMemoryService},
       ],
     });
   });

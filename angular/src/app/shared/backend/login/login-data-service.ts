@@ -22,8 +22,16 @@ export class LoginDataService implements ILoginDataService {
         // }
     }
 
-    login(username: string, password: string): Observable<LoginInfo> {
+    login(username: string, password: string): Observable<string> {
         return this.usedImplementation.login(username, password);
+    }
+
+    getCurrentUser(): Observable<LoginInfo> {
+        return this.usedImplementation.getCurrentUser();
+    }
+
+    logout(): Observable<boolean> {
+        return this.usedImplementation.logout();
     }
 
     register(email: string, password: string): Observable<LoginInfo> {

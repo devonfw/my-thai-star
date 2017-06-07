@@ -1,5 +1,5 @@
 <td-layout>
-  <form #filterForm="ngForm">
+  <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
     <div style= "background-color: white">
       <td-expansion-panel label="FILTER">
         <div layout-gt-xs="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
@@ -13,8 +13,8 @@
           </div>
         </div>
         <div class="align-right">
-          <button md-button (click)="clearFilters(filterForm)" class="text-upper property-text-bold">Clear filters</button>
-          <button md-button (click)="applyFilters()" color="accent" class="text-upper property-text-bold">Apply filters</button>
+          <button md-button type="button" (click)="clearFilters(filterForm)" class="text-upper property-text-bold">Clear filters</button>
+          <button md-button type="submit" color="accent" class="text-upper property-text-bold">Apply filters</button>
         </div>
       </td-expansion-panel>
     </div>
@@ -29,7 +29,8 @@
       [columns]="columns"
       [sortable]="true"
       clickable="true"
-      (rowClick)="selected($event)">
+      (rowClick)="selected($event)"
+      (sortChange)="sort($event)">
     </td-data-table>
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>No results to display.</h3>

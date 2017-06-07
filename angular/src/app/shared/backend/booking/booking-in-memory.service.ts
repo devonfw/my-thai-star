@@ -5,7 +5,7 @@ import { ReservationView } from '../../viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 import { bookedTables } from '../mock-data';
 import * as moment from 'moment';
-import { assign, maxBy, filter, toString } from 'lodash';
+import { assign, maxBy, filter, toString, orderBy } from 'lodash';
 
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
@@ -23,13 +23,19 @@ export class BookingInMemoryService implements IBookingDataService {
     }
 
     getReservations(filters: FilterCockpit): Observable<any> {
+        if (!filters.sort[0]) {
+            filters.sort = [{ name: '', direction: '' }];
+        } else {
+            filters.sort = [{ name: filters.sort[0].name, direction: filters.sort[0].direction }];
+        }
         return Observable.of({
             pagination: {
                 size: filters.pagination.size,
                 page: filters.pagination.page,
                 total: bookedTables.length,
             },
-            result: filter(bookedTables, (booking: ReservationView) => {
+            result: orderBy(bookedTables, [filters.sort[0].name], [filters.sort[0].direction])
+                    .filter((booking: ReservationView) => {
                         if (filters.bookingDate) {
                             return booking.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
                         } else {

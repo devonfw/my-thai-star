@@ -14,7 +14,6 @@ export class DishesInMemoryService implements IDishesDataService {
     if (!filters.sort[0]) {
       filters.sort.push({ name:  '', direction: ''});
     }
-
     return Observable.of(orderBy(dishes, [filters.sort[0].name], [filters.sort[0].direction])
                           .filter((plate: DishView) => {
                             if (filters.searchBy) {

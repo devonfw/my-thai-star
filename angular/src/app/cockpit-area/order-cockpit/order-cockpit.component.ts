@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IPageChangeEvent,
          ITdDataTableSelectAllEvent,
-         ITdDataTableColumn } from '@covalent/core';
+         ITdDataTableColumn,
+         ITdDataTableSortChangeEvent} from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { reject } from 'lodash';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -36,6 +38,8 @@ export class OrderCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
+  sorting: any[] = [];
+
   constructor(private dialog: MdDialog,
               private waiterCockpitService: WaiterCockpitService) {}
 
@@ -44,7 +48,7 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getOrders(this.pagination, this.filters).subscribe((orders: any) => {
+    this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters).subscribe((orders: any) => {
       this.data = orders.result;
       this.dataTotal = orders.pagination.total;
     });
@@ -61,6 +65,12 @@ export class OrderCockpitComponent implements OnInit {
       page: pagingEvent.page,
       total: 1,
     };
+    this.applyFilters();
+  }
+
+  sort(sortEvent: ITdDataTableSortChangeEvent): void {
+    this.sorting = reject(this.sorting, { 'name': sortEvent.name.split('.').pop() });
+    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
     this.applyFilters();
   }
 

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
 import { OrderListView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep} from 'lodash';
 
@@ -14,13 +14,15 @@ export class WaiterCockpitService {
               private bookingDataService: BookingDataService,
               private priceCalculator: PriceCalculatorService) { }
 
-  getOrders(pagination: Pagination, filters: FilterCockpit): Observable<OrderListView[]> {
+  getOrders(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<OrderListView[]> {
     filters.pagination = pagination;
+    filters.sort = sorting;
     return this.orderDataService.getBookingOrders(filters);
   }
 
-  getReservations(pagination: Pagination, filters: FilterCockpit): Observable<OrderListView[]> {
+  getReservations(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<OrderListView[]> {
     filters.pagination = pagination;
+    filters.sort = sorting;
     return this.bookingDataService.getReservations(filters);
   }
 
