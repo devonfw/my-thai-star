@@ -10,7 +10,7 @@ import { HttpClient } from '../..//authentication/httpClient';
 export class LoginRestService implements ILoginDataService {
 
   private readonly loginRestPath: string = 'login';
-  private readonly currentUserRestPath: string = 'getUser';
+  private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly logoutRestPath: string = 'logout';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
