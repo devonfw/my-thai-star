@@ -166,7 +166,7 @@ export interface BookingPostView {
 export function isBookingPostView(elem: any): elem is BookingPostView {
     const type: TypeDefinition = {
         booking: ['required', isBookingEntity],
-        invitedGuests: ['required', 'array'],
+        invitedGuests: ['optional', 'array'],
     };
 
     return checkType(type, elem);

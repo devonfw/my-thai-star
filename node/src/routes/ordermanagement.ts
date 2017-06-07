@@ -16,11 +16,11 @@ router.post('/v1/order', (req: Request, res: Response) => {
             throw { code: 400, message: 'Parser error' };
         }
 
-        bussiness.createOrder(req.body, (err: types.Error) => {
+        bussiness.createOrder(req.body, (err: types.Error, orderReference?: any) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
-                res.status(204).json();
+                res.status(201).json(orderReference);
             }
         });
     } catch (err) {

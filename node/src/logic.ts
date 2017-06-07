@@ -12,7 +12,7 @@ import * as util from './utils/utilFunctions';
 import * as moment from 'moment';
 import * as md5 from 'md5';
 import { Mailer } from './utils/mailer';
-import * as config from './config';
+import * as serverConfig from './config';
 
 // Dynamo
 /*
@@ -31,12 +31,16 @@ const maxPrice = 50;
 // export const dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 
 export function findUser(userName: string): Promise<dbtypes.User[]> {
-    return fn.table('User').where('name', userName, '=').first().promise();
+    return fn.table('User').map((elem: dbtypes.User) => {
+        const newElem = elem;
+        newElem.userName = elem.userName.toLowerCase();
+        return newElem;
+    }).where('userName', userName.toLowerCase(), '=').first().promise();
 }
 
 ///////////////////// Dishes /////////////////////////////////////////////////////////////////////////////////////////
 export async function getDishes(filter: types.FilterView,
-    callback: (err: types.Error | null, dishes?: types.PaginatedList) => void) {
+                                callback: (err: types.Error | null, dishes?: types.PaginatedList) => void) {
     try {
         // filter by category
         const catId: string[] | undefined = (filter.categories === null || filter.categories === undefined || filter.categories.length === 0) ?
@@ -104,7 +108,7 @@ export async function getDishes(filter: types.FilterView,
 ///////////////////// BOOKING /////////////////////////////////////////////////////////////////////////////////////////
 
 export async function createBooking(reserv: types.BookingPostView, cron: TableCron,
-    callback: (error: types.Error | null, booToken?: string) => void) {
+                                    callback: (error: types.Error | null, booToken?: string) => void) {
     const date = moment();
     const bookDate = moment(reserv.booking.bookingDate);
 
@@ -169,7 +173,6 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
             cron.startJob(booking.id, booking.bookingDate);
         }
 
-
         // console.log('holatete');
         // console.log(booking.bookingToken);
         callback(null, booking.bookingToken);
@@ -198,7 +201,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 host: {},
             };
 
-            (configHost.buttonActionList as { [index: string]: string })[config.frontendURL + '/booking/cancel/' + booking.bookingToken] = 'Cancel';
+            (configHost.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancel/' + booking.bookingToken] = 'Cancel';
             (configHost.host as { [index: string]: string })[booking.email] = booking.name;
             (configHost.emailAndTokenTo as { [index: string]: string })[booking.bookingToken] = booking.email;
             inv.forEach((elem) => {
@@ -206,6 +209,8 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
             });
 
             Mailer.sendEmail(configHost);
+
+            // TODO: send the guest emails
             // (booking.guestList as string[]).forEach((elem: string) => {
             //     const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
             //         title: 'You have been invited',
@@ -256,7 +261,7 @@ export async function getAssistansForInvitedBooking(id: string) {
 }
 
 export async function searchBooking(searchCriteria: types.SearchCriteria,
-    callback: (err: types.Error | null, bookingEntity: types.PaginatedList) => void) {
+                                    callback: (err: types.Error | null, bookingEntity: types.PaginatedList) => void) {
     let result: any = fn.table('Booking');
 
     if (searchCriteria.email) {
@@ -371,6 +376,7 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
 
     callback(null);
 
+    // TODO: send email
     // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
     //     title: 'Invitation canceled',
     //     name: reg[0].name,
@@ -452,12 +458,10 @@ export async function updateInvitation(token: string, response: boolean, callbac
 
 ///////////////////// ORDERS /////////////////////////////////////////////////////////////////////////////////////////
 
-export async function createOrder(order: types.OrderPostView, callback: (err: types.Error | null) => void) {
+export async function createOrder(order: types.OrderPostView, callback: (err: types.Error | null, orderReference?: any) => void) {
 
     // check if exsist the token
     let reg: any[];
-
-    console.log(order);
 
     try {
         if (order.booking.bookingToken.startsWith('CB')) {
@@ -469,27 +473,33 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
         // Possible errors
         // Not found
         if (reg.length === 0) {
-            throw { code: 400, message: 'No Invitation token given' };
+            throw { code: 400, message: 'Invalid booking token given' };
         }
 
-        // booking canceled
         if (order.booking.bookingToken.startsWith('CB')) {
+            // booking canceled
             if (reg[0].canceled !== undefined && reg[0].canceled === true) {
                 throw { code: 400, message: 'The booking is canceled' };
             }
+
+            // less than 1 hour to the booking date
             const bookingDate = moment(reg[0].bookingDate);
             if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
                 throw { code: 400, message: 'You can not create the order at this time' };
             }
         } else {
-            if (reg[0].acepted !== true) {
+            // invitation not acepted
+            if (reg[0].accepted !== true) {
                 throw { code: 400, message: 'You must confirm' };
             }
+
             const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
-            console.log(reg2);
+            // booking canceled
             if (reg2.canceled !== undefined && reg2.canceled === true) {
                 throw { code: 400, message: 'The booking is canceled' };
             }
+
+            // less than 1 hour to the booking date
             const bookingDate = moment(reg2.bookingDate);
             if (bookingDate.diff(moment().add(1, 'hour')) < 0) {
                 throw { code: 400, message: 'You can not create the at this time' };
@@ -501,7 +511,7 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
             throw { code: 400, message: 'You have a order, cant create a new one' };
         }
 
-
+        // The object which will be save into database
         const ord: dbtypes.Order = {
             id: util.getNanoTime().toString(),
             lines: (order.orderLines.length > 0) ? order.orderLines.map((elem: types.OrderLinesView): dbtypes.OrderLine => {
@@ -534,22 +544,33 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
         } catch (err) {
             console.error(err);
 
+            callback(err);
             // undo the previous insert
-            fn.delete('Order', ord.id).promise();
-
-            throw { code: 500, message: 'Database error' };
+            undoChanges('delete', ord.id);
+            return;
         }
 
-        callback(null);
+        callback(null, {
+            id: ord.id,
+            bookingId: ord.idBooking,
+            invitedGuestId: ord.idInvitedGuest,
+            bookingToken: order.booking.bookingToken,
+        });
 
-        // const [vat, names] = await calculateVATandOrderName(order);
-        // mailer.sendEmail(reg[0].email, '[MyThaiStar] Order info', undefined, pug.renderFile('./src/emails/order.pug', {
-        //     title: 'Order created',
-        //     email: reg[0].email,
-        //     total: vat,
-        //     urlCancel: '#',
-        //     order: names,
-        // }));
+        const [vat, names] = await calculateVATandOrderName(order.orderLines);
+
+        const config: types.EmailContent = {
+            emailFrom: 'MyThaiStar',
+            emailType: 3,
+            emailAndTokenTo: {},
+            buttonActionList: {},
+            detailMenu: names,
+            price: vat,
+        };
+
+        (config.emailAndTokenTo as { [index: string]: string })[order.booking.bookingToken] = reg[0].email;
+        (config.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancelorder/' + ord.id] = 'Cancel';
+        Mailer.sendEmail(config);
     } catch (err) {
         console.error(err);
         callback(err);
@@ -619,6 +640,7 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
 
     callback(null);
 
+    // TODO: send email
     // if (order.startsWith('CB')) {
     //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
     //         title: 'Order canceled',
@@ -776,44 +798,44 @@ function dishToDishesview() {
     };
 }
 
-// async function calculateVATandOrderName(order: types.IOrderView): Promise<[number, string[]]> {
-//     let sum: number = 0;
-//     const names: string[] = [];
+async function calculateVATandOrderName(orderLines: types.OrderLinesView[]): Promise<[number, string[]]> {
+    let sum: number = 0;
+    const names: string[] = [];
 
-//     const [dishes, extras] = await Promise.all([
-//         fn.table('Dish', order.lines.map((elem: types.IOrderLineView) => {
-//             return elem.idDish.toString();
-//         })).
-//             reduce((acum: any, elem: any) => {
-//                 acum[elem.id] = elem;
-//                 return acum;
-//             }, {}).
-//             promise() as Promise<any>,
-//         fn.table('Ingredient').
-//             reduce((acum: any, elem: any) => {
-//                 acum[elem.id] = elem;
-//                 return acum;
-//             }, {}).
-//             promise() as Promise<any>,
-//     ]);
+    const [dishes, extras] = await Promise.all([
+        fn.table('Dish', orderLines.map((elem: types.OrderLinesView) => {
+            return elem.orderLine.dishId.toString();
+        })).
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise() as Promise<any>,
+        fn.table('Ingredient').
+            reduce((acum: any, elem: any) => {
+                acum[elem.id] = elem;
+                return acum;
+            }, {}).
+            promise() as Promise<any>,
+    ]);
 
-//     order.lines.forEach((elem: types.IOrderLineView) => {
-//         let x = dishes[elem.idDish.toString()].price;
-//         let name = '<span style="color: #317d35">' + elem.amount + '</span> ' + dishes[elem.idDish.toString()].name + ' with ';
-//         elem.extras.forEach((elem2: number) => {
-//             x += extras[elem2.toString()].price;
-//             name += extras[elem2.toString()].name + ', ';
-//         });
+    orderLines.forEach((elem: types.OrderLinesView) => {
+        let x = dishes[elem.orderLine.dishId.toString()].price;
+        let name = elem.orderLine.amount + 'x ' + dishes[elem.orderLine.dishId.toString()].name + ' with ';
+        elem.extras.forEach((elem2: types.ExtraIngredientView) => {
+            x += extras[elem2.id.toString()].price;
+            name += extras[elem2.id.toString()].name + ', ';
+        });
 
-//         sum += x * elem.amount;
-//         name = name.substring(0, name.length - 2);
-//         name += ' (' + x + '€)';
+        sum += x * elem.orderLine.amount;
+        name = name.substring(0, name.length - 2);
+        name += ' (' + x + '€)';
 
-//         names.push(name);
-//     });
+        names.push(name);
+    });
 
-//     return [sum, names];
-// }
+    return [sum, names];
+}
 
 /**
  * Check all params of FilterView and put the correct values if neccesary
@@ -829,4 +851,17 @@ export function checkFilter(filter: any) {
     filter.sort = (filter.sort === undefined || filter.sort === null || filter.sort.length === 0 || filter.sort[0].name === null) ? [] : filter.sort;
     filter.showOrder = (filter.showOrder === undefined || filter.showOrder === null) ? 0 : filter.showOrder;
     // filter.pagination = filter.pagination || {size: 10, page: 1, total: 1 };
+}
+
+export async function undoChanges(operation: 'insert' | 'delete', table: string, object?: any) {
+    try {
+        if (operation === 'insert') {
+            fn.insert(table, object).promise();
+        } else if (operation === 'delete') {
+            fn.delete(table, object).promise();
+        }
+    } catch (error) {
+        console.error('SEVERAL ERROR: DATABASE MAY HAVE INCONSISTENT DATA!');
+        console.error(error);
+    }
 }

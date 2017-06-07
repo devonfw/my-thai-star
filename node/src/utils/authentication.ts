@@ -10,12 +10,14 @@ export class Authentication {
 
     // TODO: declarar esta funcion por algun lado y solo usarla cuando se requiera autenticacion
     // route middleware to verify a token
-    public registerAuthentication(req: CustomRequest, res: Response, next: NextFunction) {
+    public registerAuthentication = (req: CustomRequest, res: Response, next: NextFunction) => {
         // check header or url parameters or post parameters for token
-        const token = req.headers.Authentication;
+        let token = req.headers.Authentication;
 
         // decode token
         if (token) {
+            token = token.split(' ')[1];
+
             // verifies secret and checks exp
             jwt.verify(token, this.superSecret, (err: any, decoded: any) => {
                 req.user = err ? undefined : decoded;
@@ -27,11 +29,12 @@ export class Authentication {
         }
     }
 
-    public auth(req: CustomRequest, res: Response) {
+    public auth = (req: CustomRequest, res: Response) => {
         // find the user
-        findUser(req.body.name).catch((err: any) => {
+        findUser(req.body.username).catch((err: any) => {
             res.status(err.code || 500).json({message: err.message || 'error'});
          }).then((user) => {
+            console.log(user);
             if (!user || user.length === 0) {
                 res.status(403).json({message: 'Authentication failed. User not found.' });
             } else if (user) {

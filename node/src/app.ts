@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 app.use('/mythaistar/services/rest/dishmanagement', dishes.router);
 app.use('/mythaistar/services/rest/ordermanagement', order.router);
 app.use('/mythaistar/services/rest/bookingmanagement', booking.router);
-app.post('/authentication', auth.auth);
+app.post('/mythaistar/login', auth.auth);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
