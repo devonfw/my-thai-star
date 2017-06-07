@@ -269,7 +269,7 @@ export const User: types.User[] = [
         ],
         id: '1',
         password: 'holaketal',
-        role: '2',
+        role: 'WAITER',
         userName: 'Dario',
     },
 ];

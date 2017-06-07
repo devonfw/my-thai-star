@@ -24,6 +24,7 @@ app.disable('x-powered-by');
 app.use(cors({
   origin: config.frontendURL,
   credentials: true,
+  exposedHeaders: 'Authorization',
 }));
 app.use(morgan('dev'));
 app.use((req, res, next) => {
@@ -51,6 +52,7 @@ app.use('/mythaistar/services/rest/dishmanagement', dishes.router);
 app.use('/mythaistar/services/rest/ordermanagement', order.router);
 app.use('/mythaistar/services/rest/bookingmanagement', booking.router);
 app.post('/mythaistar/login', auth.auth);
+app.get('/mythaistar/services/rest/security/v1/currentuser/', auth.getCurrentUser);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

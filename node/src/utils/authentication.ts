@@ -12,11 +12,13 @@ export class Authentication {
     // route middleware to verify a token
     public registerAuthentication = (req: CustomRequest, res: Response, next: NextFunction) => {
         // check header or url parameters or post parameters for token
-        let token = req.headers.Authentication;
+        let token = req.headers.authorization;
 
         // decode token
         if (token) {
             token = token.split(' ')[1];
+
+            console.log(token);
 
             // verifies secret and checks exp
             jwt.verify(token, this.superSecret, (err: any, decoded: any) => {
@@ -50,14 +52,20 @@ export class Authentication {
                     });
 
                     // return the information including token as JSON
-                    res.json({
-                        token,
-                    });
+                    res.header('Authorization', 'Bearer ' + token).json();
                 }
 
             }
 
         });
+    }
+
+    public getCurrentUser = (req: CustomRequest, res: Response) => {
+        if (req.user !== undefined){
+            res.json({name: req.user.userName, role: req.user.role});
+        } else {
+            res.status(403).json();
+        }
     }
 
 }
