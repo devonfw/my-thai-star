@@ -181,7 +181,7 @@ export const orderList: OrderListView[] = [{
                 },
                 orderLines: [{
                         dish: {
-                                dishId: 0,
+                                id: 0,
                                 name: 'Pad Kee Mao',
                                 price: 5.90,
                         },
@@ -192,7 +192,7 @@ export const orderList: OrderListView[] = [{
                         extras: [{id: 1, name: 'Chicken', price: 2, selected: true}],
                 }, {
                         dish: {
-                                dishId: 1,
+                                id: 1,
                                 name: 'Red Curry',
                                 price: 5.90,
                         },
@@ -213,7 +213,7 @@ export const orderList: OrderListView[] = [{
                 },
                 orderLines: [{
                         dish: {
-                                dishId: 1,
+                                id: 1,
                                 name: 'Red Curry',
                                 price: 5.90,
                         },
@@ -226,7 +226,7 @@ export const orderList: OrderListView[] = [{
                                 {id: 1, name: 'Chicken', price: 2, selected: true}],
                 }, {
                         dish: {
-                                dishId: 1,
+                                id: 1,
                                 name: 'Red Curry',
                                 price: 5.90,
                         },
@@ -247,7 +247,7 @@ export const orderList: OrderListView[] = [{
                 },
                 orderLines: [{
                         dish: {
-                                dishId: 1,
+                                id: 1,
                                 name: 'Red Curry',
                                 price: 5.90,
                         },
@@ -269,7 +269,7 @@ export const orderList: OrderListView[] = [{
                 },
                 orderLines: [{
                         dish: {
-                                dishId: 3,
+                                id: 3,
                                 name: 'Brown Curry',
                                 price: 5.40,
                         },
@@ -280,9 +280,9 @@ export const orderList: OrderListView[] = [{
                         extras: [],
                 }, {
                         dish: {
-                          dishId: 5,
-                          name: 'Yellow Curry',
-                          price: 8.20,
+                                id: 5,
+                                name: 'Yellow Curry',
+                                price: 8.20,
                         },
                         orderLine: {
                                 amount: 1,
@@ -291,7 +291,7 @@ export const orderList: OrderListView[] = [{
                         extras: [{id: 1, name: 'Chicken', price: 1, selected: true}],
                 }, {
                         dish: {
-                                dishId: 4,
+                                id: 4,
                                 name: 'Purple Curry',
                                 price: 6.70,
                         },
@@ -302,7 +302,7 @@ export const orderList: OrderListView[] = [{
                         extras: [],
                 }, {
                         dish: {
-                                dishId: 2,
+                                id: 2,
                                 name: 'Green Curry',
                                 price: 7.90,
                         },

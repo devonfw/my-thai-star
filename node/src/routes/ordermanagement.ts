@@ -5,11 +5,17 @@ import * as types from '../model/interfaces';
 export const router = eRouter();
 
 router.post('/v1/order', (req: Request, res: Response) => {
-    if (req.body.booking === undefined || req.body.booking.bookingToken === undefined) {
-        res.status(400).json({ message: 'No Invitation token given' });
-    } else if (!types.isOrderPostView(req.body)) {
-        res.status(400).json({ message: 'Parser error' });
-    } else {
+    try {
+        // The booking token must be defined
+        if (req.body.booking === undefined || req.body.booking.bookingToken === undefined) {
+            throw { code: 400, message: 'No booking token given' };
+        }
+
+        // body content must be an OrderPostView
+        if (!types.isOrderPostView(req.body)) {
+            throw { code: 400, message: 'Parser error' };
+        }
+
         bussiness.createOrder(req.body, (err: types.Error) => {
             if (err) {
                 res.status(err.code).json(err.message);
@@ -17,13 +23,18 @@ router.post('/v1/order', (req: Request, res: Response) => {
                 res.status(204).json();
             }
         });
+    } catch (err) {
+        res.status(err.code || 500).json({ message: err.message });
     }
 });
 
 router.post('/v1/order/search', (req: Request, res: Response) => {
-    if (!types.isSearchCriteria(req.body)){
-       res.status(400).json({message: 'Parse error'});
-    } else {
+    try {
+        // body content must be SearchCriteria
+        if (!types.isSearchCriteria(req.body)) {
+            throw { code: 400, message: 'Parse error' };
+        }
+
         bussiness.getOrders(req.body.pagination, (err, result) => {
             if (err) {
                 res.status(err.code).json(err.message);
@@ -31,13 +42,18 @@ router.post('/v1/order/search', (req: Request, res: Response) => {
                 res.json(result);
             }
         });
+    } catch (err) {
+        res.status(err.code || 500).json({ message: err.message });
     }
 });
 
 router.post('/v1/order/filter', (req: Request, res: Response) => {
-    if (!types.isSearchCriteria(req.body)){
-       res.status(400).json({message: 'Parse error'});
-    } else {
+    try {
+        // body content must be SearchCriteria
+        if (!types.isSearchCriteria(req.body)) {
+            throw { code: 400, message: 'Parse error' };
+        }
+
         bussiness.getOrdersFiltered(req.body, (err, result) => {
             if (err) {
                 res.status(err.code).json(err.message);
@@ -45,13 +61,18 @@ router.post('/v1/order/filter', (req: Request, res: Response) => {
                 res.json(result);
             }
         });
+    } catch (err) {
+        res.status(err.code || 500).json({ message: err.message });
     }
 });
 
 router.get('/v1/order/cancelorder/:id', (req: Request, res: Response) => {
-    if (req.params.id === undefined) {
-        res.status(400).json({ message: 'No id given' });
-    } else {
+    try {
+        // para id must be defined
+        if (req.params.id === undefined || typeof req.params.id === 'number') {
+            throw { code: 400, message: 'No id given' };
+        }
+
         bussiness.cancelOrder(req.params.id, (err: types.Error) => {
             if (err) {
                 res.status(err.code).json(err.message);
@@ -59,5 +80,7 @@ router.get('/v1/order/cancelorder/:id', (req: Request, res: Response) => {
                 res.status(204).json();
             }
         });
+    } catch (err) {
+        res.status(err.code || 500).json({ message: err.message });
     }
 });

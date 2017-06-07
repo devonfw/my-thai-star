@@ -14,12 +14,12 @@ export class TableCron {
     }
 
     public loadAllJobs(){
-        bussiness.getAllInvitedBookings()
-        .then((value) => {
-            value.forEach((elem) => {
-                this.startJob(elem.id, elem.bookingDate);
-            });
-        });
+        // bussiness.getAllInvitedBookings()
+        // .then((value) => {
+        //     value.forEach((elem) => {
+        //         this.startJob(elem.id, elem.bookingDate);
+        //     });
+        // });
     }
 
     public startJob(id: string, date: string) {

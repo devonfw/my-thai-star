@@ -26,6 +26,14 @@ public interface Bookingmanagement {
   BookingCto findBooking(Long id);
 
   /**
+   * Returns a paginated list of Bookings matching the search criteria. Needs Authorization.
+   *
+   * @param criteria the {@link BookingSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link BookingEto}s.
+   */
+  PaginatedListTo<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria);
+
+  /**
    * Returns a paginated list of Bookings matching the search criteria.
    *
    * @param criteria the {@link BookingSearchCriteriaTo}.

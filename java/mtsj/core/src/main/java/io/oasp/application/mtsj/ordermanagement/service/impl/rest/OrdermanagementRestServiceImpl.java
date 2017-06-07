@@ -51,7 +51,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   @Override
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
-    return this.ordermanagement.findOrderCtos(searchCriteriaTo);
+    return this.ordermanagement.findOrdersByPost(searchCriteriaTo);
   }
 
   @Override

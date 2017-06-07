@@ -107,6 +107,13 @@
       </dependency>
     -->
 
+    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.7.0</version>
+    </dependency>
+
     <!-- for Object Relational Mapping (JPA/Hibernate) -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -228,6 +235,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+      <version>1.5.2.RELEASE</version>
     </dependency>
     
     <dependency>
