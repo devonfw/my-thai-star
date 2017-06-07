@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,15 +23,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.oasp.application.mtsj.general.common.api.datatype.Role;
 import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
 
-@Named
 public class TokenAuthenticationService {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(TokenAuthenticationService.class);
 
   static final String ISSUER = "MyThaiStarApp";
-
-  static final long EXPIRATIONTIME = 864_000_000; // 10 days
 
   static final Integer EXPIRATION_HOURS = 1;
 
@@ -96,8 +92,8 @@ public class TokenAuthenticationService {
     claims.put(CLAIM_ISSUER, ISSUER);
     claims.put(CLAIM_SUBJECT, auth.getName());
     claims.put(CLAIM_SCOPE, auth.getAuthorities());
-    claims.put(CLAIM_CREATED, generateCreationDate()/* new Date().getTime() / 1000 */);
-    claims.put(CLAIM_EXPIRATION, generateExpirationDate()/* .getTime() / 1000 */);
+    claims.put(CLAIM_CREATED, generateCreationDate());
+    claims.put(CLAIM_EXPIRATION, generateExpirationDate());
 
     return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, SECRET).compact();
   }
