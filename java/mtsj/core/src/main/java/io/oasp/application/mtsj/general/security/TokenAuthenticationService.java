@@ -23,6 +23,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.oasp.application.mtsj.general.common.api.datatype.Role;
 import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
 
+/**
+ * Service class for JWT token managing
+ *
+ */
 public class TokenAuthenticationService {
 
   /** Logger instance. */
@@ -38,6 +42,8 @@ public class TokenAuthenticationService {
 
   static final String HEADER_STRING = "Authorization";
 
+  static final String EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+
   static final String CLAIM_SUBJECT = "sub";
 
   static final String CLAIM_ISSUER = "iss";
@@ -51,6 +57,7 @@ public class TokenAuthenticationService {
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
+    res.addHeader(EXPOSE_HEADERS, HEADER_STRING);
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
@@ -92,9 +99,9 @@ public class TokenAuthenticationService {
     claims.put(CLAIM_ISSUER, ISSUER);
     claims.put(CLAIM_SUBJECT, auth.getName());
     claims.put(CLAIM_SCOPE, auth.getAuthorities());
-    claims.put(CLAIM_CREATED, generateCreationDate());
-    claims.put(CLAIM_EXPIRATION, generateExpirationDate());
-
+    claims.put(CLAIM_CREATED, generateCreationDate() / 1000);
+    claims.put(CLAIM_EXPIRATION, generateExpirationDate() / 1000);
+    LOG.info(claims.toString());
     return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, SECRET).compact();
   }
 
