@@ -16,6 +16,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Login Filter for Json Web Token
+ *
+ */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
   public JWTLoginFilter(String url, AuthenticationManager authManager) {
