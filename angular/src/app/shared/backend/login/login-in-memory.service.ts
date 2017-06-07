@@ -21,10 +21,6 @@ export class LoginInMemoryService implements ILoginDataService {
     return Observable.of(omit(currentUser[0], 'password'));
   }
 
-  logout(): Observable<boolean> {
-    return Observable.of(true);
-  }
-
   register(email: string, password: string): Observable <LoginInfo> {
     const existingUser: LoginInfo = find(users, (user: LoginInfo) => user.username ===  email);
     if (existingUser) {

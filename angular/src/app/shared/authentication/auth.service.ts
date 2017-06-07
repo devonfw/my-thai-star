@@ -10,7 +10,7 @@ import { config } from '../../config';
 export class AuthService {
     private logged: boolean = false;
     private user: string = '';
-    private currentRole: string = 'user';
+    private currentRole: string = 'CUSTOMER';
     private token: string;
 
     constructor(public snackBar: SnackBarService,

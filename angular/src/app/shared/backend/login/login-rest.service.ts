@@ -23,16 +23,10 @@ export class LoginRestService implements ILoginDataService {
 
   login(username: string, password: string): Observable<string> {
     return this.http.post(`${config.restPathRoot}${this.loginRestPath}`, {username: username, password: password})
-      .map((res: Response) => res.json());
   }
 
   getCurrentUser(): Observable<LoginInfo> {
-    return this.http.get(`${config.restServiceRoot}${this.loginRestPath}`)
-      .map((res: Response) => res.json());
-  }
-
-  logout(): Observable<boolean> {
-    return this.http.get(`${config.restServiceRoot}${this.logoutRestPath}`)
+    return this.http.get(`${config.restServiceRoot}${this.currentUserRestPath}`)
       .map((res: Response) => res.json());
   }
 
