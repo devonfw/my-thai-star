@@ -16,12 +16,12 @@ export class UserAreaService {
 
     login(username: string, password: string): void {
         this.loginDataService.login(username, password)
-            .subscribe((token: string) => {
-                this.authService.setToken(token);
+            .subscribe((res: any) => {
+                this.authService.setToken(res.headers.get('Authorization'));
                 this.loginDataService.getCurrentUser()
-                    .subscribe( (loginInfo: LoginInfo) => {
+                    .subscribe( (loginInfo: any) => {
                         this.authService.setLogged(true);
-                        this.authService.setUser(loginInfo.username);
+                        this.authService.setUser(loginInfo.name);
                         this.authService.setRole(loginInfo.role);
                         this.router.navigate(['orders']);
                         this.snackBar.openSnack('Login successful', 4000, 'green');
@@ -42,16 +42,12 @@ export class UserAreaService {
     }
 
     logout(): void {
-        this.loginDataService.logout()
-            .subscribe( () => {
-                this.authService.setLogged(false);
-                this.authService.setUser('');
-                this.authService.setRole('user');
-                this.authService.setToken('');
-                this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
-            }, (error: any) => {
-                this.snackBar.openSnack('Log out failed, tray again later!', 4000, 'black');
-            });
+        this.authService.setLogged(false);
+        this.authService.setUser('');
+        this.authService.setRole('USER');
+        this.authService.setToken('');
+        this.router.navigate(['restarant']);
+        this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
     }
 
     changePassword(data: any): void {

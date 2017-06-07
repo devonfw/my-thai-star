@@ -19,7 +19,7 @@ export class HttpClient {
     setHeaderToken(value: string): void {
         this.headers.delete('Authorization');
         if (value) {
-          this.headers.append('Authorization', 'Bearer ' + value);
+          this.headers.append('Authorization', value);
         }
     }
 

@@ -29,10 +29,6 @@ export class LoginDataService implements ILoginDataService {
         return this.usedImplementation.getCurrentUser();
     }
 
-    logout(): Observable<boolean> {
-        return this.usedImplementation.logout();
-    }
-
     register(email: string, password: string): Observable<LoginInfo> {
         return this.usedImplementation.register(email, password);
     }
