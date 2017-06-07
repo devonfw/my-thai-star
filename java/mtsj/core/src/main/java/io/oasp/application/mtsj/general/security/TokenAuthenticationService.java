@@ -51,7 +51,6 @@ public class TokenAuthenticationService {
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
-    res.addHeader("Access-Control-Expose-Headers", HEADER_STRING);
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
