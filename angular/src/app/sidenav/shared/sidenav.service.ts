@@ -74,7 +74,7 @@ export class SidenavService {
 
     this.closeSideNav();
     return this.orderDataService.saveOrders(orderList);
-   }
+  }
 
    composeOrders(orders: OrderView[]): OrderInfo[] {
       let composedOrders: OrderInfo[] = [];
@@ -84,7 +84,7 @@ export class SidenavService {
                     .forEach( (extra: ExtraView) => extras.push({id: extra.id}));
         composedOrders.push({
           orderLine: {
-            dishId: order.dish.dishId,
+            dishId: order.dish.id,
             amount: order.orderLine.amount,
             comment: order.orderLine.comment,
           },

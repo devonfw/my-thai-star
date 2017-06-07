@@ -20,7 +20,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for single order without extras', inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order without extras',
         },
@@ -44,7 +44,7 @@ describe('PriceCalculatorService', () => {
           };
           const order: OrderView = {
             dish: {
-              dishId: 0,
+              id: 0,
               price: 12.50,
               name: 'Order with extra rice',
             },
@@ -74,7 +74,7 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order with extra rice and tofu',
         },
@@ -91,7 +91,7 @@ describe('PriceCalculatorService', () => {
     it('should calculate price for multiple orders without extras', inject([PriceCalculatorService], (service: PriceCalculatorService) => {
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order without extras',
         },
@@ -115,7 +115,7 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order with extra rice',
         },
@@ -145,7 +145,7 @@ describe('PriceCalculatorService', () => {
       };
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order with extra rice and tofu',
         },
@@ -166,7 +166,7 @@ describe('PriceCalculatorService', () => {
 
       const orderWithoutExtras: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order without extras',
         },
@@ -178,7 +178,7 @@ describe('PriceCalculatorService', () => {
       };
       const expensiveOrderWithoutExtras: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 15.50,
           name: 'Expensive order without extras',
         },
@@ -213,7 +213,7 @@ describe('PriceCalculatorService', () => {
 
       const order: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 12.50,
           name: 'Order',
         },
@@ -225,7 +225,7 @@ describe('PriceCalculatorService', () => {
       };
       const expensiveOrder: OrderView = {
         dish: {
-          dishId: 0,
+          id: 0,
           price: 15.50,
           name: 'Expensive order',
         },
