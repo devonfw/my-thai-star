@@ -1,7 +1,9 @@
 package io.oasp.application.mtsj.general.common.impl.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -106,6 +108,34 @@ public class BaseUserDetailsService implements UserDetailsService {
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
     Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
+    Set<AccessControl> accessControlSet = new HashSet<>();
+    for (String id : accessControlIds) {
+      boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
+      if (!success) {
+        LOG.warn("Undefined access control {}.", id);
+      }
+    }
+    for (AccessControl accessControl : accessControlSet) {
+      authorities.add(new AccessControlGrantedAuthority(accessControl));
+    }
+    return authorities;
+  }
+
+  public Set<GrantedAuthority> getAuthoritiesFromList(/* UserProfile principal */List<String> roles)
+      throws AuthenticationException {
+
+    // if (principal == null) {
+    // LOG.warn("Principal must not be null.");
+    // throw new IllegalArgumentException();
+    // }
+    // determine granted authorities for spring-security...
+    Set<GrantedAuthority> authorities = new HashSet<>();
+    List<String> listOfRoles = new ArrayList<>();
+
+    for (String role : roles) {
+      listOfRoles.add(role);
+    }
+    Collection<String> accessControlIds = listOfRoles/* getAccessControlIds(principal) */;
     Set<AccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);

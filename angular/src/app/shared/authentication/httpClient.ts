@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { SnackBarService } from '../snackService/snackService.service';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -10,6 +12,8 @@ export class HttpClient {
     headers: Headers;
 
     constructor(private auth: AuthService,
+                private snackService: SnackBarService,
+                private router: Router,
                 private http: Http,
                 private window: WindowService) {
       this.headers = new Headers();
@@ -19,7 +23,7 @@ export class HttpClient {
     setHeaderToken(value: string): void {
         this.headers.delete('Authorization');
         if (value) {
-          this.headers.append('Authorization', 'Bearer ' + value);
+          this.headers.append('Authorization', value);
         }
     }
 
@@ -31,9 +35,12 @@ export class HttpClient {
                     return observer.next(data);
                 }, (error: any) => {
                     if (error.status === 400 || error.status === 500) {
-                        this.auth.logout();
+                        this.auth.setLogged(false);
+                        this.auth.setRole('CUSTOMER');
+                        this.auth.setUser('');
                         this.headers.delete('Authorization');
-                        this.window.reloadWindow();
+                        this.snackService.openSnack(error.json().message, 4000, 'red');
+                        this.router.navigate(['restaurant']);
                     }
                     return observer.error(error);
             });
@@ -48,9 +55,12 @@ export class HttpClient {
                     return observer.next(result);
                 }, (error: any) => {
                     if (error.status === 400 || error.status === 500) {
-                        this.auth.logout();
+                        this.auth.setLogged(false);
+                        this.auth.setRole('CUSTOMER');
+                        this.auth.setUser('');
                         this.headers.delete('Authorization');
-                        this.window.reloadWindow();
+                        this.snackService.openSnack(error.json().message, 4000, 'red');
+                        this.router.navigate(['restaurant']);
                     }
                     return observer.error(error);
                 });

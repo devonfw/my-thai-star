@@ -44,7 +44,7 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   @Override
   public PaginatedListTo<BookingCto> findBookingsByPost(BookingSearchCriteriaTo searchCriteriaTo) {
 
-    return this.bookingmanagement.findBookingCtos(searchCriteriaTo);
+    return this.bookingmanagement.findBookingsByPost(searchCriteriaTo);
   }
 
   @Override

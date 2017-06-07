@@ -4,7 +4,7 @@
   <span>My Thai Star</span>
   
   <span flex></span>
-  <div *ngIf="auth.isPermited('user')" class="forDesktop">
+  <div *ngIf="auth.isPermited('CUSTOMER')" class="forDesktop">
     <nav md-tab-nav-bar>
       <a md-tab-link
         routerLink="/restaurant"
@@ -26,7 +26,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="auth.isPermited('waiter')" class="forDesktop">
+  <div *ngIf="auth.isPermited('WAITER')" class="forDesktop">
     <nav md-tab-nav-bar>
       <a md-tab-link
         routerLink="/orders"
@@ -48,11 +48,11 @@
     <span class="forDesktop">{{auth.user}}</span>
     <button class="forDesktop" *ngIf="!auth.isLogged()" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
     <md-menu #toolbarMenu1="mdMenu">
-      <button md-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('user')">
+      <button md-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <md-icon>settings</md-icon>
         <span>Change password</span>
       </button>
-      <button md-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('user')">
+      <button md-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <md-icon>send</md-icon>
         <span>Twitter account</span>
       </button>
@@ -63,7 +63,7 @@
       </button>
     </md-menu>
   </div>
-  <td-notification-count *ngIf="auth.isPermited('user')" color="accent" [notifications]="sidenav.getNumberOrders()">
+  <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
     <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
   </td-notification-count>
 </div>

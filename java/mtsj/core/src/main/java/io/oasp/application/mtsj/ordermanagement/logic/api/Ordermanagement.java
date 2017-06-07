@@ -25,10 +25,18 @@ public interface Ordermanagement {
   OrderCto findOrder(Long id);
 
   /**
+   * Returns a paginated list of Orders matching the search criteria. Needs Authorization.
+   *
+   * @param criteria the {@link OrderSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link OrderCto}s.
+   */
+  PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria);
+
+  /**
    * Returns a paginated list of Orders matching the search criteria.
    *
    * @param criteria the {@link OrderSearchCriteriaTo}.
-   * @return the {@link List} of matching {@link OrderEto}s.
+   * @return the {@link List} of matching {@link OrderCto}s.
    */
   PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
 

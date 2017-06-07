@@ -17,7 +17,7 @@
     </md-sidenav>
 
     <md-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-      <md-nav-list menu-items *ngIf="auth.isPermited('user')">
+      <md-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
         <a md-list-item (click)="navigateTo('restaurant')">
           <md-icon>home</md-icon>
           HOME
@@ -31,7 +31,7 @@
           BOOK TABLE
         </a>
       </md-nav-list>
-      <md-nav-list menu-items *ngIf="auth.isPermited('waiter')">
+      <md-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
         <a md-list-item (click)="navigateTo('orders')">
           <md-icon>home</md-icon>
           ORDERS
