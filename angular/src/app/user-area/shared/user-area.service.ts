@@ -44,7 +44,7 @@ export class UserAreaService {
     logout(): void {
         this.authService.setLogged(false);
         this.authService.setUser('');
-        this.authService.setRole('USER');
+        this.authService.setRole('CUSTOMER');
         this.authService.setToken('');
         this.router.navigate(['restarant']);
         this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
