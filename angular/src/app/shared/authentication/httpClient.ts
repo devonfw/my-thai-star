@@ -31,7 +31,7 @@ export class HttpClient {
                     return observer.next(data);
                 }, (error: any) => {
                     if (error.status === 400 || error.status === 500) {
-                        this.auth.logout();
+                        this.auth.setLogged(false);
                         this.headers.delete('Authorization');
                         this.window.reloadWindow();
                     }
@@ -48,7 +48,7 @@ export class HttpClient {
                     return observer.next(result);
                 }, (error: any) => {
                     if (error.status === 400 || error.status === 500) {
-                        this.auth.logout();
+                        this.auth.setLogged(false);
                         this.headers.delete('Authorization');
                         this.window.reloadWindow();
                     }

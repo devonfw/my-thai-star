@@ -1,0 +1,110 @@
+node {
+    stage('Check out MyThaiStar') {
+        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star'
+    }
+   
+    stage('Load tools') {
+        tool 'Node 6'
+        tool 'Angular CLI'
+        tool name: 'Maven 3.3.9', type: 'maven'
+        env.JAVA_HOME="${tool 'Java SE8'}"
+        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+   
+    stage('Install Dependencies') {
+        parallel (
+            "CLIENT" : {
+                sh """
+                    cd angular
+                    find . -name "node_modules" -exec rm -rf '{}' +
+                    npm i
+                """
+            },
+            "SERVER" : {
+                configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+                    sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean install -Dmaven.test.skip=true"
+                }
+            }
+        )
+    }
+    
+    stage('Client Code Quality') {
+        sh """
+            cd angular
+            ng lint --format checkstyle
+        """
+    }
+    
+    stage('Server Code Quality') {
+        def scannerHome = tool 'SonarQube Scanner';
+        withSonarQubeEnv('SonarQube') 
+        {
+            sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=test_my_thai_star -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
+        }
+    }
+    
+    stage('Client Unit Tests') {
+        sh """
+            cd angular
+            ng test --browsers PhantomJS --single-run
+        """
+    }
+    
+    stage('Server Unit Tests') {
+        // configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+        //     sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
+        // }
+        echo "server unit tests"
+    }
+    
+    stage('Build Artifacts') {
+        parallel (
+            "CLIENT" : {
+                sh """
+                    cd angular
+                    ng build --aot --prod
+                """
+            },
+            "SERVER" : {
+                configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+                    sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean deploy -Dmaven.test.skip=true"
+                }
+            }
+        )
+    }
+    
+    // stage('Deploy Artifacts') {
+    //     input 'Should MyThaiStar Client be deployed?'
+    //         sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+    //             sh """
+    //                 cd angular
+    //                 # Copy resulting "dist" folder from workspace to deployment server
+    //                 scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+                    
+    //                 # Launch application in Docker container
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+                
+    //             """
+    //         }
+    //     input 'Should MyThaiStar Server be deployed?'
+    //         sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+    //             sh """
+    //                 cd java/mtsj
+    //                 # Copy resulting ".war" file from workspace to deployment server
+    //                 scp -o StrictHostKeyChecking=no -r server/target/mtsj-server-0.1-SNAPSHOT.war root@10.40.235.244:/root/mythaistarjava/
+                    
+    //                 # Launch application in Docker container
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistarjava
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistarjava -p 9090:8081 tomcat:8-jre8
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistarjava bash -c \\"rm /usr/local/tomcat/webapps/*\\"
+    //                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistarjava/mtsj-server-0.1-SNAPSHOT.war mythaistar:/usr/local/tomcat/webapps/
+                
+    //             """
+    //         }
+    // }
+    
+    
+}

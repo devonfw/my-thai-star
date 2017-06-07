@@ -9,11 +9,11 @@ import { HttpClient } from '../..//authentication/httpClient';
 @Injectable()
 export class LoginRestService implements ILoginDataService {
 
-  private readonly loginRestPath: string = '/login';
-  private readonly currentUserRestPath: string = '/getUser';
-  private readonly logoutRestPath: string = '/logout';
-  private readonly registerRestPath: string = '/register';
-  private readonly changePasswordRestPath: string = '/changepassword';
+  private readonly loginRestPath: string = 'login';
+  private readonly currentUserRestPath: string = 'security/v1/currentuser/';
+  private readonly logoutRestPath: string = 'logout';
+  private readonly registerRestPath: string = 'register';
+  private readonly changePasswordRestPath: string = 'changepassword';
 
   private http: HttpClient;
 
@@ -22,7 +22,7 @@ export class LoginRestService implements ILoginDataService {
   }
 
   login(username: string, password: string): Observable<string> {
-    return this.http.post(`${config.restServiceRoot}${this.loginRestPath}`, {username: username, password: password})
+    return this.http.post(`${config.restPathRoot}${this.loginRestPath}`, {username: username, password: password})
       .map((res: Response) => res.json());
   }
 
