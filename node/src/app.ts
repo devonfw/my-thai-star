@@ -36,14 +36,17 @@ app.use((req: CustomRequest, res, next) => {
   req.tableCron = cronT;
   next();
 });
-app.use((req: CustomRequest, res, next) => {
-  req.tableCron = cronT;
-  next();
-});
 app.use(auth.registerAuthentication);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+/**
+ * Securized routes
+ */
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));
 
 /**
  * API routes
