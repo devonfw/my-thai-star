@@ -72,7 +72,7 @@ router.get('/v1/invitedguest/accept/:token', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/invitedguest/decline', (req: Request, res: Response) => {
+router.get('/v1/invitedguest/decline/:token', (req: Request, res: Response) => {
     try {
         // the token must be defined
         if (req.params.token === undefined) {
@@ -91,14 +91,14 @@ router.get('/v1/invitedguest/decline', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/booking/cancel', (req: types.CustomRequest, res: Response) => {
+router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response) => {
     try {
         // the token must be defined
-        if (req.query.bookingToken === undefined) {
-            throw { code: 400, message: 'No booking token given' };
+        if (req.params.token === undefined) {
+            throw { code: 400, message: 'Invalid petition' };
         }
 
-        bussiness.cancelBooking(req.query.bookingToken, req.tableCron, (err: types.Error | null) => {
+        bussiness.cancelBooking(req.params.token, req.tableCron, (err: types.Error | null) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {

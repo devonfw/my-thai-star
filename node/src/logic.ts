@@ -261,43 +261,47 @@ export async function getAssistansForInvitedBooking(id: string) {
 }
 
 export async function searchBooking(searchCriteria: types.SearchCriteria,
-                                    callback: (err: types.Error | null, bookingEntity: types.PaginatedList) => void) {
-    let result: any = fn.table('Booking');
+                                    callback: (err: types.Error | null, bookingEntity?: types.PaginatedList) => void) {
+    try {
+        let result: any = fn.table('Booking');
 
-    if (searchCriteria.email) {
-        result = result.where('email', searchCriteria.email, '=');
+        if (searchCriteria.email) {
+            result = result.where('email', searchCriteria.email, '=');
+        }
+        if (searchCriteria.bookingToken) {
+            result = result.where('bookingToken', searchCriteria.bookingToken, '=');
+        }
+
+        const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).promise() as dbtypes.Booking[],
+        fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
+            acum[elem.id] = elem;
+            return acum;
+        }, {}).promise() as any]);
+
+        result = booking.map((elem) => {
+            return {
+                booking: {
+                    name: elem.name,
+                    bookingToken: elem.bookingToken,
+                    email: elem.email,
+                    bookingDate: elem.bookingDate,
+                    creationDate: elem.creationDate,
+                    assistants: elem.assistants,
+                    tableId: elem.table,
+                },
+                invitedGuests: (elem.guestList === undefined) ? undefined : elem.guestList.map((elem2) => {
+                    return {
+                        email: invitedGuest[elem2].email,
+                        accepted: (invitedGuest[elem2].accepted) ? invitedGuest[elem2].accepted : false,
+                    };
+                }),
+            };
+        });
+
+        callback(null, util.getPagination(searchCriteria.pagination.size, searchCriteria.pagination.page, result));
+    } catch (error) {
+        callback(error);
     }
-    if (searchCriteria.bookingToken) {
-        result = result.where('bookingToken', searchCriteria.bookingToken, '=');
-    }
-
-    const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).promise() as dbtypes.Booking[],
-    fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
-        acum[elem.id] = elem;
-        return acum;
-    }, {}).promise() as any]);
-
-    result = booking.map((elem) => {
-        return {
-            booking: {
-                name: elem.name,
-                bookingToken: elem.bookingToken,
-                email: elem.email,
-                bookingDate: elem.bookingDate,
-                creationDate: elem.creationDate,
-                assistants: elem.assistants,
-                tableId: elem.table,
-            },
-            invitedGuests: (elem.guestList === undefined) ? undefined : elem.guestList.map((elem2) => {
-                return {
-                    email: invitedGuest[elem2].email,
-                    accepted: (invitedGuest[elem2].accepted) ? invitedGuest[elem2].accepted : false,
-                };
-            }),
-        };
-    });
-
-    callback(null, util.getPagination(searchCriteria.pagination.size, searchCriteria.pagination.page, result));
 }
 
 export async function cancelBooking(token: string, tableCron: TableCron, callback: (err: types.Error | null) => void) {
@@ -359,11 +363,13 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
     }
 
     try {
-        const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise() as dbtypes.Order[];
+        // const order = await fn.table('Order').where('idBooking', reg[0].id, '=').promise() as dbtypes.Order[];
 
-        if (order.length > 0) {
-            await fn.delete('Order', order.map((elem: any) => elem.id)).promise();
-        }
+        // if (order.length > 0) {
+        //     await fn.delete('Order', order.map((elem: any) => elem.id)).promise();
+        // }
+
+        await fn.table('Order').where('idBooking', reg[0].id, '=').promise();
     } catch (err) {
         console.error(err);
         callback(err);
@@ -436,10 +442,13 @@ export async function updateInvitation(token: string, response: boolean, callbac
     }
 
     try {
-        const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise() as dbtypes.Order[];
+        if (response === false && oldAccepted !== undefined && oldAccepted === true) {
+            // const orders = await fn.table('Order').where('idInvitedGuest', reg[0].id).promise() as dbtypes.Order[];
 
-        if (orders.length > 0) {
-            await fn.delete('Order', orders.map((elem: any) => elem.id)).promise();
+            // if (orders.length > 0) {
+            //     await fn.delete('Order', orders.map((elem: any) => elem.id)).promise();
+            // }
+            await fn.table('Order').where('idInvitedGuest', reg[0].id).project('id').delete().promise();
         }
     } catch (err) {
         console.error(err);
@@ -582,8 +591,6 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
     let order: dbtypes.Order;
     let booking: dbtypes.Booking;
     let invitedGuest: dbtypes.InvitedGuest | undefined;
-
-    console.log(orderId);
 
     try {
         order = await fn.table('Order', orderId).promise() as dbtypes.Order;

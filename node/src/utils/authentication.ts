@@ -18,8 +18,6 @@ export class Authentication {
         if (token) {
             token = token.split(' ')[1];
 
-            console.log(token);
-
             // verifies secret and checks exp
             jwt.verify(token, this.superSecret, (err: any, decoded: any) => {
                 req.user = err ? undefined : decoded;
