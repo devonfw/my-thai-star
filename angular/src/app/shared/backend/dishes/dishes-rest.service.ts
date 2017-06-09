@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import {IDishesDataService} from './dishes-data-service-interface';
 import { config } from '../../../config';
 import { DishView } from '../../viewModels/interfaces';
-import { HttpClient } from '../../authentication/httpClient';
+import { HttpClient } from '../../httpClient/httpClient.service';
 
 @Injectable()
 export class DishesRestService implements IDishesDataService {

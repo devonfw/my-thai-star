@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
 import { config } from '../../../config';
-import { HttpClient } from '../..//authentication/httpClient';
+import { HttpClient } from '../../httpClient/httpClient.service';
 
 @Injectable()
 export class LoginRestService implements ILoginDataService {

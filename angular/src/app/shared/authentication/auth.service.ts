@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { SnackBarService } from '../snackService/snackService.service';
-import { LoginDataService } from '../backend/login/login-data-service';
-import { LoginInfo, Role } from '../backend/backendModels/interfaces';
-import { isEmpty, find } from 'lodash';
+import { find } from 'lodash';
 import { config } from '../../config';
 
 @Injectable()
@@ -12,9 +9,6 @@ export class AuthService {
     private user: string = '';
     private currentRole: string = 'CUSTOMER';
     private token: string;
-
-    constructor(public snackBar: SnackBarService,
-                public router: Router) { }
 
     public isLogged(): boolean {
         return this.logged;

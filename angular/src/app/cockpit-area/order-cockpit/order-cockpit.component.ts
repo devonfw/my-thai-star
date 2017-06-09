@@ -10,6 +10,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 import { reject } from 'lodash';
+import { config } from '../../config';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -25,6 +26,8 @@ export class OrderCockpitComponent implements OnInit {
     { name: 'booking.email', label: 'Email' },
     { name: 'booking.bookingToken', label: 'Reference number'},
   ];
+
+  pageSizes: number[] = config.pageSizes;
 
   pagination: Pagination = {
     size: 8,

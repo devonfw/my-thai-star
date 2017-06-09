@@ -8,7 +8,7 @@ import {
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { LoginRestService } from './login-rest.service';
-import { HttpClient } from '../../authentication/httpClient';
+import { HttpClient } from '../../httpClient/httpClient.service';
 import { AuthService } from '../../authentication/auth.service';
 import { SnackBarService } from '../../snackService/snackService.service';
 import { MaterialModule } from '@angular/material';

@@ -11,6 +11,7 @@ import { ITdDataTableSelectAllEvent,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { reject } from 'lodash';
+import { config } from '../../config';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -29,6 +30,8 @@ export class ReservationCockpitComponent implements OnInit {
 
   filteredData: ReservationView[];
   filteredTotal: number;
+
+  pageSizes: number[] = config.pageSizes;
 
   filters: FilterCockpit = {
     bookingDate: undefined,

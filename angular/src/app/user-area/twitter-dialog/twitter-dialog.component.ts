@@ -17,7 +17,7 @@ export class TwitterDialogComponent {
    }
 
   twitterSubmit(form: FormGroup): void {
-    // something
+    // TODO
   }
 
 }
