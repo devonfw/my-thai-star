@@ -5,11 +5,10 @@ import * as express from 'express';
 import * as morgan from 'morgan';
 
 import * as dishes from './routes/dishmanagement';
-// import * as mailer from './routes/mailmanagement';
 import * as order from './routes/ordermanagement';
 import * as booking from './routes/bookingmanagement';
-import * as config from './config';
 
+import * as config from './config';
 import { TableCron } from './utils/tableManagement';
 import { Authentication } from './utils/authentication';
 import { CustomRequest } from './model/interfaces';
@@ -44,9 +43,10 @@ app.use(bodyParser.json());
 /**
  * Securized routes
  */
-app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
-app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
-app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));
+order.router.use('/v1/order/filter', auth.securizedEndpoint('WAITER'));
+order.router.use('/v1/order/search', auth.securizedEndpoint('WAITER'));
+booking.router.use('/v1/booking/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/security/changepassword', auth.securizedEndpoint('CUSTOMER'));
 
 /**
  * API routes
@@ -55,7 +55,8 @@ app.use('/mythaistar/services/rest/dishmanagement', dishes.router);
 app.use('/mythaistar/services/rest/ordermanagement', order.router);
 app.use('/mythaistar/services/rest/bookingmanagement', booking.router);
 app.post('/mythaistar/login', auth.auth);
-app.get('/mythaistar/services/rest/security/v1/currentuser/', auth.getCurrentUser);
+app.get('/mythaistar/services/rest/security/v1/currentuser', auth.getCurrentUser);
+app.post('/mythaistar/services/rest/security/changepassword', auth.changePassword);
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
