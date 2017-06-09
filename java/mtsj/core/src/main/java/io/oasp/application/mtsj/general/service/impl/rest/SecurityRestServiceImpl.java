@@ -1,10 +1,7 @@
 package io.oasp.application.mtsj.general.service.impl.rest;
 
-import javax.annotation.security.PermitAll;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,8 +11,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import io.oasp.application.mtsj.general.security.TokenAuthenticationService;
@@ -34,39 +29,10 @@ public class SecurityRestServiceImpl {
   private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
 
   /**
-   * Use {@link CsrfTokenRepository} for CSRF protection.
-   */
-  private CsrfTokenRepository csrfTokenRepository;
-
-  /**
-   * Retrieves the CSRF token from the server session.
-   *
-   * @param request {@link HttpServletRequest} to retrieve the current session from
-   * @param response {@link HttpServletResponse} to send additional information
-   * @return the Spring Security {@link CsrfToken}
-   */
-  @Produces(MediaType.APPLICATION_JSON)
-  @GET
-  @Path("/csrftoken/")
-  @PermitAll
-  public CsrfToken getCsrfToken(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-
-    // return (CsrfToken) request.getSession().getAttribute(
-    // HttpSessionCsrfTokenRepository.class.getName().concat(".CSRF_TOKEN"));
-    CsrfToken token = this.csrfTokenRepository.loadToken(request);
-    if (token == null) {
-      LOG.warn("No CsrfToken could be found - instanciating a new Token");
-      token = this.csrfTokenRepository.generateToken(request);
-      this.csrfTokenRepository.saveToken(token, request, response);
-    }
-    return token;
-  }
-
-  /**
    * Returns the user details from the jwt token included in the 'Authorization' header
    *
-   * @param request
-   * @return
+   * @param request {@link HttpServletRequest} to retrieve the token
+   * @return the user details {@link UserDetailsClientTo}
    */
   @Produces(MediaType.APPLICATION_JSON)
   @GET
@@ -76,12 +42,4 @@ public class SecurityRestServiceImpl {
     return TokenAuthenticationService.getUserdetailsFromToken(request.getHeader("Authorization"));
   }
 
-  /**
-   * @param csrfTokenRepository the csrfTokenRepository to set
-   */
-  @Inject
-  public void setCsrfTokenRepository(CsrfTokenRepository csrfTokenRepository) {
-
-    this.csrfTokenRepository = csrfTokenRepository;
-  }
 }

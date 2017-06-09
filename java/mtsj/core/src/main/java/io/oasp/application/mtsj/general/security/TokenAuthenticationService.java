@@ -54,6 +54,12 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_SCOPE = "scope";
 
+  /**
+   * This method returns the token once the Authentication has been successful
+   *
+   * @param res the {@HttpServletResponse}
+   * @param auth the {@Authentication} object with the user credentials
+   */
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
@@ -61,6 +67,12 @@ public class TokenAuthenticationService {
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
+  /**
+   * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
+   * 
+   * @param request the {@link HttpServletRequest}
+   * @return the {@link UsernamePasswordAuthenticationToken}
+   */
   static Authentication getAuthentication(HttpServletRequest request) {
 
     String token = request.getHeader(HEADER_STRING);

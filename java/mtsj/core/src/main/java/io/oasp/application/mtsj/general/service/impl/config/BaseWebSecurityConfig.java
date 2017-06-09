@@ -67,10 +67,10 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
-        // We filter the api/login requests
+        // the api/login requests are filtered with the JWTLoginFilter
         .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
             UsernamePasswordAuthenticationFilter.class)
-        // And filter other requests to check the presence of JWT in header
+        // other requests are filtered to check the presence of JWT in header
         .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     if (this.corsEnabled) {
