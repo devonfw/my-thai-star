@@ -34,8 +34,7 @@
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>No results to display.</h3>
     </div>
-    <!--Remark: potentially configurable things such as page sizes should probably reside in TS file -->
-    <td-paging-bar #pagingBar [pageSizes]="[8, 16, 24]" [total]="filteredTotal" (change)="page($event)">
+    <td-paging-bar #pagingBar [pageSizes]="pageSizes" [total]="filteredTotal" (change)="page($event)">
       <span td-paging-bar-label hide-xs>Rows per page:</span>
       {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
     </td-paging-bar>

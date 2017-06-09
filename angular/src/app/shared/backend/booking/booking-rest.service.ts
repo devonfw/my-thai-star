@@ -5,7 +5,7 @@ import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 import { ReservationView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
-import { HttpClient } from '../../authentication/httpClient';
+import { HttpClient } from '../../httpClient/httpClient.service';
 
 @Injectable()
 export class BookingRestService implements IBookingDataService {

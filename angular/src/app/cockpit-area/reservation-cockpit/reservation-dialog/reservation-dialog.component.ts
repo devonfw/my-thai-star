@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-import {MD_DIALOG_DATA} from '@angular/material';
+import { MD_DIALOG_DATA } from '@angular/material';
+import { config } from '../../../config';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -27,6 +28,8 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'email', label: 'Guest email'},
     { name: 'accepted', label: 'Acceptances and declines'},
   ];
+
+  pageSizes: number[] = config.pageSizes;
 
   fromRow: number = 1;
   currentPage: number = 1;

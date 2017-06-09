@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { ExtraView, OrderView, BookingView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-import {MD_DIALOG_DATA} from '@angular/material';
+import { MD_DIALOG_DATA } from '@angular/material';
+import { config } from '../../../config';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -30,6 +31,8 @@ export class OrderDialogComponent implements OnInit {
     { name: 'orderLine.amount', label: 'Quantity' },
     { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
+
+  pageSizes: number[] = config.pageSizes;
 
   fromRow: number = 1;
   currentPage: number = 1;

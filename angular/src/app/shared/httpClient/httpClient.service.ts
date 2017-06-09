@@ -3,7 +3,7 @@ import { SnackBarService } from '../snackService/snackService.service';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from './auth.service';
+import { AuthService } from '../authentication/auth.service';
 import { WindowService } from '../windowService/windowService.service';
 
 @Injectable()

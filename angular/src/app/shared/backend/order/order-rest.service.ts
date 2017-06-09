@@ -5,7 +5,7 @@ import { IOrderDataService } from './order-data-service-interface';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 import { OrderListView } from '../../viewModels/interfaces';
 import { config } from '../../../config';
-import { HttpClient } from '../../authentication/httpClient';
+import { HttpClient } from '../../httpClient/httpClient.service';
 
 @Injectable()
 export class OrderRestService implements IOrderDataService {

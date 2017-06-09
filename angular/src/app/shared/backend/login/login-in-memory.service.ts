@@ -24,7 +24,6 @@ export class LoginInMemoryService implements ILoginDataService {
   register(email: string, password: string): Observable <LoginInfo> {
     const existingUser: LoginInfo = find(users, (user: LoginInfo) => user.username ===  email);
     if (existingUser) {
-      // Remark: To be agreed wheather registering when user already available is an error
       return Observable.throw({errorCode: 1, message: 'User already exists'});
     }
     const newUser: LoginInfo = {username: email, password: password, role: 'user'};
@@ -32,7 +31,6 @@ export class LoginInMemoryService implements ILoginDataService {
     return Observable.of(omit(newUser, 'password'));
   }
 
-  // Remark: Reasonable success response type needs to be defined here
   changePassword(username: string, oldPassword: string, newPassword: string): Observable<any> {
     const userToChange: LoginInfo = this.findUser(username, oldPassword);
     if (!userToChange) {

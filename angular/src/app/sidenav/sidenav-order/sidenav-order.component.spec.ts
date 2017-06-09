@@ -36,7 +36,7 @@ describe('SidenavOrderComponent', () => {
     component = fixture.componentInstance;
     component.order = {
       dish: {
-        dishId: 0,
+        id: 0,
         name: 'Red Curry',
         price: 5.90,
       },
