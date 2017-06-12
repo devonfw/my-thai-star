@@ -17,9 +17,6 @@ export interface FilterView {
 export function isFilterView(elem: any): elem is FilterView {
     const type: TypeDefinition = {
         categories: ['required', 'array'],
-        maxPrice: ['optional', 'number'],
-        minLikes: ['optional', 'number'],
-        searchBy: ['optional', 'string'],
         showOrder: ['optional', 'number'],
         isFab: ['optional', 'boolean'],
         sort: ['optional', 'array'],

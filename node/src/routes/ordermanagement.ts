@@ -1,5 +1,5 @@
 import { Request, Response, Router as eRouter } from 'express';
-import * as bussiness from '../logic';
+import * as business from '../logic';
 import * as types from '../model/interfaces';
 
 export const router = eRouter();
@@ -16,7 +16,7 @@ router.post('/v1/order', (req: Request, res: Response) => {
             throw { code: 400, message: 'Parser error' };
         }
 
-        bussiness.createOrder(req.body, (err: types.Error, orderReference?: any) => {
+        business.createOrder(req.body, (err: types.Error, orderReference?: any) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
@@ -35,7 +35,7 @@ router.post('/v1/order/search', (req: Request, res: Response) => {
             throw { code: 400, message: 'Parse error' };
         }
 
-        bussiness.getOrders(req.body.pagination, (err, result) => {
+        business.getOrders(req.body.pagination, (err, result) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
@@ -54,7 +54,7 @@ router.post('/v1/order/filter', (req: Request, res: Response) => {
             throw { code: 400, message: 'Parse error' };
         }
 
-        bussiness.getOrdersFiltered(req.body, (err, result) => {
+        business.getOrdersFiltered(req.body, (err, result) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
@@ -73,7 +73,7 @@ router.get('/v1/order/cancelorder/:id', (req: Request, res: Response) => {
             throw { code: 400, message: 'No id given' };
         }
 
-        bussiness.cancelOrder(req.params.id, (err: types.Error) => {
+        business.cancelOrder(req.params.id, (err: types.Error) => {
             if (err) {
                 res.status(err.code).json(err.message);
             } else {
