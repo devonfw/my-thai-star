@@ -1,5 +1,5 @@
 node {
-    stage('Checking out my-thai-star from GitHub') {
+    stage('Checking out MyThaiStar') {
         git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
     }
 
@@ -44,13 +44,13 @@ node {
                 sh """
                     cd angular
                     # Copy resulting "dist" folder from workspace to deployment server
-                    scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+                    scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/angular/
                     
                     # Launch application in Docker container
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-angular
+                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-angular -p 8090:80 nginx
+                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mts-angular bash -c \\"rm /usr/share/nginx/html/*\\"
+                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/angular/dist/. mts-angular:/usr/share/nginx/html/
                 
                 """
             }
