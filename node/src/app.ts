@@ -1,4 +1,3 @@
-import { ListDeadLetterSourceQueuesRequest } from 'aws-sdk/clients/sqs';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -19,26 +18,36 @@ const auth = new Authentication(process.env.SECRET || config.secret);
 
 app.set('port', process.env.PORT || config.PORT || 8080);
 app.disable('x-powered-by');
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+/**
+ * Cors config
+ */
 app.use(cors({
   origin: config.frontendURL,
   credentials: true,
   exposedHeaders: 'Authorization',
 }));
-app.use(morgan('dev'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding');
   next();
 });
 
+/**
+ * Add table cron and user to request
+ */
 app.use((req: CustomRequest, res, next) => {
   req.tableCron = cronT;
   next();
 });
 app.use(auth.registerAuthentication);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+/**
+ * Route for images
+ */
+app.use('/images', express.static('public/images'));
 
 /**
  * Securized routes

@@ -25,6 +25,7 @@ describe('Get dishes', () => {
                     expect(res).to.be.json;
 
                     expect(res.body.result instanceof Array).to.be.true;
+                    console.log(res.body.result[0]);
                     res.body.result.forEach((elem: any) => {
                         expect(isDishesView(elem)).to.be.true;
                     });

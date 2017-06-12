@@ -1,7 +1,7 @@
 import { CronJob } from 'cron';
 
 export interface JobDictionary {
-    [index: string]: [CronJob, string[]];
+    [index: string]: string[];
 }
 
 export interface IdDateDictionary {

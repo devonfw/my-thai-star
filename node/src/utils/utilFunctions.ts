@@ -108,7 +108,6 @@ export interface TypeDefinition {
     [propName: string]: ['required' | 'optional', string | ((elem: any) => boolean)];
 }
 
-// TODO: do something else with arrays
 export function checkType(a: TypeDefinition, a2: any) {
     for (const aux in a) {
         if (a.hasOwnProperty(aux)) {

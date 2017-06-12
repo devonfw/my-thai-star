@@ -8,7 +8,6 @@ export class Authentication {
 
     }
 
-    // TODO: declarar esta funcion por algun lado y solo usarla cuando se requiera autenticacion
     // route middleware to verify a token
     public registerAuthentication = (req: CustomRequest, res: Response, next: NextFunction) => {
         // check header or url parameters or post parameters for token
@@ -29,6 +28,11 @@ export class Authentication {
         }
     }
 
+    /**
+     * Login
+     *
+     * @memberof Authentication
+     */
     public auth = (req: CustomRequest, res: Response) => {
         // find the user
         findUser(req.body.username).catch((err: any) => {

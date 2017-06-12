@@ -28,14 +28,19 @@ if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
 }
 
 const maxPrice = 50;
-// export const dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 
-export function findUser(userName: string): Promise<dbtypes.User[]> {
+export async function findUser(userName: string): Promise<dbtypes.User[]> {
+    const roles = await fn.table('UserRole').reduce((acum: any, elem: any) => {
+            acum[elem.id] = elem;
+            return acum;
+        }, {}).promise() as {[index: string]: dbtypes.UserRole};
+
     return fn.table('User').map((elem: dbtypes.User) => {
         const newElem = elem;
         newElem.userName = elem.userName.toLowerCase();
+        newElem.role = roles[elem.role].name.toUpperCase();
         return newElem;
-    }).where('userName', userName.toLowerCase(), '=').first().promise();
+    }).where('userName', userName.toLowerCase(), '=').first().promise() as Promise<dbtypes.User[]>;
 }
 
 ///////////////////// Dishes /////////////////////////////////////////////////////////////////////////////////////////
@@ -113,10 +118,9 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
     let table;
     try {
         if (reserv.booking.bookingType === types.BookingTypes.booking) {
-            table = await getFreeTable(reserv.booking.bookingDate as string, reserv.booking.assistants as number);
+            table = await getFreeTable(reserv.booking.bookingDate as string, reserv.booking.assistants as number + 1);
 
             if (table === 'error') {
-                console.log('error tete');
                 throw { code: 400, message: 'No more tables' };
             }
         }
@@ -167,7 +171,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 throw { code: 500, message: error.message };
             }
 
-            cron.startJob(booking.id, booking.bookingDate);
+            cron.registerInvitation(booking.id, booking.bookingDate);
         }
 
         callback(null, booking.bookingToken);
@@ -327,12 +331,8 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
         }
         // end errors ////////////////////////////////////////////////////////
 
-        try {
-            await fn.delete('Booking', reg[0].id).promise();
-            tableCron.stopJob(reg[0].id);
-        } catch (err) {
-            throw err;
-        }
+        await fn.delete('Booking', reg[0].id).promise();
+        tableCron.unregisterInvitation(reg[0].id);
 
         let guest;
 
@@ -542,7 +542,7 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
             (config.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancelOrder/' + ord.id] = 'Cancel';
             Mailer.sendEmail(config);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return;
         }
     } catch (err) {
@@ -813,10 +813,6 @@ export function checkFilter(filter: any) {
 }
 
 export async function undoChanges(operation: 'insert' | 'delete', table: string, object?: any) {
-    console.log(operation);
-    console.log(table);
-    console.log(object);
-
     try {
         if (operation === 'insert') {
             await fn.insert(table, object).promise();
