@@ -35,20 +35,18 @@ node {
     }
 
     stage('Deployment') {
-        input('Should this build be deployed?') {
-            sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
-                sh """
-                    cd java/mtsj
-                    # Copy resulting ".war" file from workspace to deployment server
-                    scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java/
-                    
-                    # Launch application in Docker container
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run --rm -itd --name=mts-java -p 9090:8080 tomcat:latest
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
-                """
-            }
-            sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
+        sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+            sh """
+                cd java/mtsj
+                # Copy resulting ".war" file from workspace to deployment server
+                scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java/
+                
+                # Launch application in Docker container
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run --rm -itd --name=mts-java -p 9090:8080 tomcat:latest
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+            """
         }
+        sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
     }
 }
