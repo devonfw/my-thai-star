@@ -171,7 +171,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 throw { code: 500, message: error.message };
             }
 
-            cron.startJob(booking.id, booking.bookingDate);
+            cron.registerInvitation(booking.id, booking.bookingDate);
         }
 
         callback(null, booking.bookingToken);
@@ -332,7 +332,7 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
         // end errors ////////////////////////////////////////////////////////
 
         await fn.delete('Booking', reg[0].id).promise();
-        tableCron.stopJob(reg[0].id);
+        tableCron.unregisterInvitation(reg[0].id);
 
         let guest;
 

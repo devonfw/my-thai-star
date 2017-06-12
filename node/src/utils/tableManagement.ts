@@ -6,30 +6,29 @@ import * as business from '../logic';
 import { JobDictionary, IdDateDictionary } from '../model/dictionaries';
 
 export class TableCron {
-    private jobs: JobDictionary = {}; // dict, key: date -> value: [cron, array of id]
+    private jobs: JobDictionary = {}; // dict, key: date -> value: array of id
     private ids: IdDateDictionary = {}; // dict, key: id -> value: date
 
     public constructor() {
         this.loadAllJobs();
+        this.startJob();
     }
 
-    public loadAllJobs(){
+    public loadAllJobs = () => {
         business.getAllInvitedBookings()
-        .then((value) => {
-            value.forEach((elem) => {
-                this.startJob(elem.id, elem.bookingDate);
+            .then((value) => {
+                value.forEach((elem) => {
+                    this.registerInvitation(elem.id, elem.bookingDate);
+                });
             });
-        });
     }
 
-    public startJob(id: string, date: string) {
-        console.log('Loading ' + id + ' for: ' + date);
-        if (this.jobs[date] === undefined) {
-            this.ids[id] = date;
-            const h: moment.DurationInputArg2 = 'hour';
-            this.jobs[date] = [new CronJob(moment(date).subtract(1, h).toDate(), () => {
-                const p = new Promise<void>(async (resolve, reject) => {
-                    const list = this.jobs[date][1];
+    public startJob = () => {
+        new CronJob('00 * * * * *', () => {
+            const p = new Promise<void>(async (resolve, reject) => {
+                const date = moment().set('second', 0).set('millisecond', 0).add(1, 'hour').toJSON();
+                const list = this.jobs[date];
+                if (list !== undefined) {
                     for (const tok of list) {
                         const assist = await business.getAssistansForInvitedBooking(tok);
                         const table = await business.getFreeTable(date, assist);
@@ -39,26 +38,36 @@ export class TableCron {
                             if (r) {
                                 console.error('Error in operation updateBookingWithTable(' + tok + ', ' + table + ')');
                             } else {
-                                console.log('Table assigned for: ' + id);
+                                console.log('Table assigned for: ' + tok);
                             }
                         } else {
                             console.error('There are no more free tables');
                         }
                     }
                     resolve();
-                }).then();
-            }, () => { }, true), [id]];
-        } else {
-            this.jobs[date][1].push(id);
-            this.ids[id] = date;
-        }
+                } else{
+                    resolve();
+                }
+            }).then(() => {
+
+            });
+        }, () => { }, true);
     }
 
-    public stopJob(id: string) {
-        const [job, idList]: [CronJob, string[]] = this.jobs[this.ids[id]];
+    public registerInvitation = (id: string, date: string)  => {
+        if (this.jobs[date] === undefined) {
+            this.jobs[date] = [id];
+        } else {
+            this.jobs[date].push(id);
+        }
+
+        this.ids[id] = date;
+    }
+
+    public unregisterInvitation(id: string) {
+        const idList: string[] = this.jobs[this.ids[id]];
 
         if (idList.length === 1) {
-            job.stop();
             delete this.jobs[this.ids[id]];
         } else {
             const idx = idList.indexOf(id);
@@ -69,7 +78,7 @@ export class TableCron {
     }
 
     public updateJob(id: string, newDate: string) {
-        this.stopJob(id);
-        this.startJob(id, newDate);
+        this.unregisterInvitation(id);
+        this.registerInvitation(id, newDate);
     }
 }
