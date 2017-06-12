@@ -48,7 +48,7 @@ export class Authentication {
                     });
 
                     // return the information including token as JSON
-                    res.header('Authorization', 'Bearer ' + token).json();
+                    res.header('Authorization', 'Bearer ' + token).status(204).json();
                 }
             }
         });
@@ -60,6 +60,13 @@ export class Authentication {
         } else {
             res.status(403).json();
         }
+    }
+
+    public changePassword = (req: CustomRequest, res: Response) => {
+        // TODO: implement this method
+        req.body.newPassword;
+        req.body.oldPassword;
+        req.body.username;
     }
 
     public securizedEndpoint = (role: string) => {

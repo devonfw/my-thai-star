@@ -263,14 +263,20 @@ export const DishCategory: types.DishCategory[] = [
 
 export const User: types.User[] = [
     {
-        email: 'dario@capge.com',
-        favourites: [
-            '1', '3',
-        ],
+        email: 'waiter@waiter.com',
+        favourites: [],
         id: '1',
-        password: 'holaketal',
+        password: 'waiter',
         role: 'WAITER',
-        userName: 'Dario',
+        userName: 'waiter',
+    },
+    {
+        email: 'user0@gmail.com',
+        favourites: [],
+        id: '2',
+        password: 'password',
+        role: 'CUSTOMER',
+        userName: 'user0',
     },
 ];
 
