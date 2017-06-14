@@ -5,7 +5,10 @@
 
 import { BackendType } from '../app/shared/backend/backend.module';
 
-export const environment: {production: boolean, backendType: BackendType} = {
+export const environment: {production: boolean, backendType: BackendType, envName: string, restPathRoot: string, restServiceRoot: string} = {
   production: false,
   backendType: BackendType.REST,
+  envName: 'dev',
+  restPathRoot: 'http://localhost:8081/mythaistar/',
+  restServiceRoot: 'http://localhost:8081/mythaistar/services/rest/',
 };
