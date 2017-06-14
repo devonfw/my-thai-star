@@ -12,6 +12,8 @@ java/samples/server/eclipse-target/
 **/src/generated/
 **/tmp/
 
+java/mtsj/logs/
+
 # Package Files #
 *.jar
 *.war
