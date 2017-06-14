@@ -33,7 +33,7 @@ export interface Category {
     id: string;
     name: string;
     description: string;
-    group: number;
+    group?: number;
     showOrder: number;
 }
 
@@ -83,6 +83,12 @@ export interface InvitedGuest {
     accepted?: boolean;
     modificationDate: string;
     order?: string;
+}
+
+export interface UserRole {
+    id: string;
+    name: string;
+    active: boolean;
 }
 
 export interface User {

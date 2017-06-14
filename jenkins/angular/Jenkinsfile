@@ -1,5 +1,5 @@
 node {
-    stage('Checking out my-thai-star from GitHub') {
+    stage('Checking out MyThaiStar') {
         git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
     }
 
@@ -8,7 +8,7 @@ node {
         tool 'Yarn'
         tool 'Angular CLI'
     }
-
+    
     stage('Fresh Dependency Installation') {
         sh """
             cd angular
@@ -16,44 +16,43 @@ node {
             npm i
         """
     }
-
+    
     stage('Code Linting') {
         sh """
             cd angular
             ng lint --format checkstyle
         """
     }
-
+    
     stage('Execute Angular tests') {
         sh """
             cd angular
             ng test --browsers PhantomJS --single-run
         """
     }
-
+    
     stage('Build Application') {
         sh """
             cd angular
             ng build --aot --prod
         """
     }
-
+    
     stage('Deployment') {
-        input 'Should this build be deployed?'
-            sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
-                sh """
-                    cd angular
-                    # Copy resulting "dist" folder from workspace to deployment server
-                    scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
-                    
-                    # Launch application in Docker container
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+        sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+            sh """
+                cd angular
+                # Copy resulting "dist" folder from workspace to deployment server
+                scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/angular/
                 
-                """
-            }
-            sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
+                # Launch application in Docker container
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-angular
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-angular -p 8090:80 nginx
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mts-angular bash -c \\"rm /usr/share/nginx/html/*\\"
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/angular/dist/. mts-angular:/usr/share/nginx/html/
+            
+            """
+        }
+        sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
     }
 }

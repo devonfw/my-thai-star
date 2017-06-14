@@ -1,56 +1,52 @@
 node {
-    stage('Checking out oasp4j from Git') {
+    stage('Checking out MyThaiStar') {
         git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
     }
-
     stage('Load tools') {
         tool name: 'Maven 3.3.9', type: 'maven'
-        env.JAVA_HOME="${tool 'Java SE8'}"
+        env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
         env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
     }
-
+    
     stage('Install dependencies') {
         configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
             sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean install -Dmaven.test.skip=true"
         }
     }
-
+    
     stage('Execute tests') {
         configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
             sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
         }
     }
-
+    
     stage('SonarQube analysis') {
         def scannerHome = tool 'SonarQube Scanner';
         withSonarQubeEnv('SonarQube') 
         {
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=test_my_thai_star -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
+            sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=my_thai_star_java -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
         }
     }
-
-    stage('Build and deploy to Nexus') {
+    
+    stage('Build and store in Nexus') {
         configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
             sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean deploy -Dmaven.test.skip=true"
         }
     }
 
     stage('Deployment') {
-        input 'Should this build be deployed?'
-            sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
-                sh """
-                    cd java/mtsj
-                    # Copy resulting ".war" file from workspace to deployment server
-                    scp -o StrictHostKeyChecking=no -r server/target/mtsj-server-0.1-SNAPSHOT.war root@10.40.235.244:/root/mythaistar/
-                    
-                    # Launch application in Docker container
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistarjava
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistarjava -p 9090:8081 tomcat:8-jre8
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistarjava bash -c \\"rm /usr/local/tomcat/webapps/*\\"
-                    ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/mtsj-server-0.1-SNAPSHOT.war mythaistarjava:/usr/local/tomcat/webapps/
+        sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+            sh """
+                cd java/mtsj
+                # Copy resulting ".war" file from workspace to deployment server
+                scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java/
                 
-                """
-            }
-            sh 'echo \\"Application available at http://de-mucdevondepl01:9090\\"'
+                # Launch application in Docker container
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run --rm -itd --name=mts-java -p 9090:8080 tomcat:latest
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+            """
+        }
+        sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
     }
 }

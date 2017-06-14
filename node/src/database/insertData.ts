@@ -42,6 +42,13 @@ fn.insert('DishCategory', mock.DishCategory).then((res: string) => {
     console.error(err);
 });
 
+fn.insert('UserRole', mock.UserRole).then((res: string) => {
+    console.log('\nAll User roles inserted');
+    console.log(res);
+}, (err: Error) => {
+    console.error(err);
+});
+
 fn.insert('User', mock.User).then((res: string) => {
     console.log('\nAll Users inserted');
     console.log(res);

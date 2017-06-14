@@ -1,5 +1,5 @@
 import { Request, Response, Router as eRouter } from 'express';
-import * as bussiness from '../logic';
+import * as business from '../logic';
 import * as types from '../model/interfaces';
 import * as moment from 'moment';
 import { validEmail } from '../utils/utilFunctions';
@@ -40,14 +40,14 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
         }
 
         // if no errors, create booking
-        bussiness.createBooking(req.body, req.tableCron, (error: types.Error | null, resToken?: string): void => {
+        business.createBooking(req.body, req.tableCron, (error: types.Error | null, resToken?: string): void => {
             if (error) {
                 res.status(error.code || 500).json({ message: error.message });
             } else {
                 console.log(resToken);
                 res.status(201).json(resToken);
             }
-        });
+        }, req.user);
     } catch (err) {
         res.status(err.code || 500).json({ message: err.message });
     }
@@ -60,7 +60,7 @@ router.get('/v1/invitedguest/accept/:token', (req: Request, res: Response) => {
             throw { code: 400, message: 'Invalid petition' };
         }
 
-        bussiness.updateInvitation(req.params.token, true, (err: types.Error) => {
+        business.updateInvitation(req.params.token, true, (err: types.Error) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {
@@ -79,7 +79,7 @@ router.get('/v1/invitedguest/decline/:token', (req: Request, res: Response) => {
             throw { code: 400, message: 'Invalid petition' };
         }
 
-        bussiness.updateInvitation(req.params.token, false, (err: types.Error) => {
+        business.updateInvitation(req.params.token, false, (err: types.Error) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {
@@ -98,7 +98,7 @@ router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response
             throw { code: 400, message: 'Invalid petition' };
         }
 
-        bussiness.cancelBooking(req.params.token, req.tableCron, (err: types.Error | null) => {
+        business.cancelBooking(req.params.token, req.tableCron, (err: types.Error | null) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {
@@ -117,7 +117,7 @@ router.post('/v1/booking/search', (req: Request, res: Response) => {
             throw {code: 400, message: 'No booking token given' };
         }
 
-        bussiness.searchBooking(req.body, (err: types.Error | null, bookingEntity: types.PaginatedList) => {
+        business.searchBooking(req.body, (err: types.Error | null, bookingEntity: types.PaginatedList) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {

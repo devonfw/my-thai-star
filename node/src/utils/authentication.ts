@@ -8,7 +8,6 @@ export class Authentication {
 
     }
 
-    // TODO: declarar esta funcion por algun lado y solo usarla cuando se requiera autenticacion
     // route middleware to verify a token
     public registerAuthentication = (req: CustomRequest, res: Response, next: NextFunction) => {
         // check header or url parameters or post parameters for token
@@ -29,6 +28,11 @@ export class Authentication {
         }
     }
 
+    /**
+     * Login
+     *
+     * @memberof Authentication
+     */
     public auth = (req: CustomRequest, res: Response) => {
         // find the user
         findUser(req.body.username).catch((err: any) => {
@@ -48,7 +52,7 @@ export class Authentication {
                     });
 
                     // return the information including token as JSON
-                    res.header('Authorization', 'Bearer ' + token).json();
+                    res.header('Authorization', 'Bearer ' + token).status(204).json();
                 }
             }
         });
@@ -60,6 +64,13 @@ export class Authentication {
         } else {
             res.status(403).json();
         }
+    }
+
+    public changePassword = (req: CustomRequest, res: Response) => {
+        // TODO: implement this method
+        req.body.newPassword;
+        req.body.oldPassword;
+        req.body.username;
     }
 
     public securizedEndpoint = (role: string) => {
