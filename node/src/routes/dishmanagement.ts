@@ -4,7 +4,7 @@ import * as types from '../model/interfaces';
 
 export const router = eRouter();
 
-router.post('/v1/Dish/Search', (req: Request, res: Response) => {
+router.post('/v1/dish/search', (req: Request, res: Response) => {
     try {
         // Check if body contains a valid filter
         if (!types.isFilterView(req.body)) {

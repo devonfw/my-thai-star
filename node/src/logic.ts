@@ -31,9 +31,9 @@ const maxPrice = 50;
 
 export async function findUser(userName: string): Promise<dbtypes.User[]> {
     const roles = await fn.table('UserRole').reduce((acum: any, elem: any) => {
-            acum[elem.id] = elem;
-            return acum;
-        }, {}).promise() as {[index: string]: dbtypes.UserRole};
+        acum[elem.id] = elem;
+        return acum;
+    }, {}).promise() as { [index: string]: dbtypes.UserRole };
 
     return fn.table('User').map((elem: dbtypes.User) => {
         const newElem = elem;
@@ -171,7 +171,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 throw { code: 500, message: error.message };
             }
 
-            cron.registerInvitation(booking.id, booking.bookingDate);
+            // cron.registerInvitation(booking.id, booking.bookingDate);
         }
 
         callback(null, booking.bookingToken);
@@ -243,16 +243,21 @@ export async function updateBookingWithTable(id: string, table: string) {
         book.table = table;
 
         await fn.insert('Booking', book).promise();
+        // return true if error
         return false;
     } catch (error) {
         return true;
     }
 }
 
-export function getAllInvitedBookings(): Promise<dbtypes.Booking[]> {
+export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]> {
     return fn.table('Booking').filter((o: dbtypes.Booking) => {
-        return o.bookingType === types.BookingTypes.invited &&
-            moment(o.bookingDate).isAfter(moment().add(1, 'hour'));
+        let res = (o.canceled === undefined || o.canceled === false) && o.bookingType === types.BookingTypes.invited;
+
+        if (date === undefined) res = res && moment(o.bookingDate).isAfter(moment().add(1, 'hour'));
+        else res = res && date === o.bookingDate;
+
+        return res;
     }).promise() as Promise<dbtypes.Booking[]>;
 }
 
@@ -275,7 +280,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
             result = result.where('bookingToken', searchCriteria.bookingToken, '=');
         }
 
-        const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).promise() as dbtypes.Booking[],
+        const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).orderBy('bookingDate', 'asc').promise() as dbtypes.Booking[],
         fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
@@ -332,7 +337,7 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
         // end errors ////////////////////////////////////////////////////////
 
         await fn.delete('Booking', reg[0].id).promise();
-        tableCron.unregisterInvitation(reg[0].id);
+        // tableCron.unregisterInvitation(reg[0].id);
 
         let guest;
 
@@ -713,8 +718,9 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
 
 ////////////// AUX FUNCTIONS //////////////////////////////////////////////////////////////////
 
-export async function getFreeTable(date: string, assistants: number) {
-    let [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.Table[]>,
+export async function getFreeTable(date: string, assistants: number, previousTable?: string) {
+    let pTable: dbtypes.Table | undefined;
+    const [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.Table[]>,
     fn.table('Booking').filter((elem: dbtypes.Booking) => {
         const bookDate = moment(elem.bookingDate);
         const date2 = moment(elem.bookingDate);
@@ -723,12 +729,17 @@ export async function getFreeTable(date: string, assistants: number) {
         return !elem.canceled && moment(date).isBetween(bookDate, date2, undefined, '[)');
     }).map((elem: dbtypes.Booking) => elem.table || '-1').promise() as Promise<string[]>]);
 
-    tables = tables.filter((elem: dbtypes.Table) => {
+    if (previousTable !== undefined){
+        pTable = _.find(tables, (t) => t.id === previousTable)!;
+    }
+
+    const table = tables.filter((elem: dbtypes.Table) => {
         return !_.includes(booking, elem.id) && elem.seatsNumber >= assistants;
     });
 
-    if (tables.length > 0) {
-        return tables[0].id;
+    if (table.length > 0) {
+        if (pTable !== undefined && pTable.seatsNumber <= table[0].seatsNumber) return previousTable!;
+        return table[0].id;
     }
 
     return 'error';
