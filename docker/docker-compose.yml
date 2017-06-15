@@ -1,10 +1,10 @@
 version: '2'
 services:
-  client:
-    build: "./angular"
+  client_compose:
+    build: "angular"
     ports:
-      - "8090:80"
-  server:
-    build: "./java"
+      - "8091:80"
+  server_compose:
+    build: "java"
     ports:
-      - "9090:8080"
+      - "9091:8080"
