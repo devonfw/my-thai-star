@@ -10,7 +10,7 @@ export class TableCron {
     }
 
     public startJob = () => {
-        new CronJob('05 * * * * *', () => {
+        new CronJob('00 * * * * *', () => {
             const p = new Promise<void>(async (resolve, reject) => {
                 const date = moment().set('second', 0).set('millisecond', 0).add(1, 'hour').toJSON();
                 const list = await business.getAllInvitedBookings(date);

@@ -4,8 +4,8 @@ import { Credentials } from 'aws-sdk';
 import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
 import { AccessControlPolicy } from 'aws-sdk/clients/s3';
 import * as _ from 'lodash';
-import dynamo from 'oasp4fn/dist/adapters/fn-dynamo';
-import fn from 'oasp4fn';
+import dynamo from '@oasp/oasp4fn/dist/adapters/fn-dynamo';
+import fn from '@oasp/oasp4fn';
 import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
@@ -427,6 +427,19 @@ export async function updateInvitation(token: string, response: boolean, callbac
             throw err;
         }
 
+        try {
+            if (response === false && oldAccepted !== undefined && oldAccepted === true && moment(booking.bookingDate).diff(moment().add(1, 'hour')) < 0) {
+                const assist = await getAssistansForInvitedBooking(booking.id);
+                const newTable = await getFreeTable(booking.bookingDate, assist, booking.table);
+
+                if (newTable !== booking.table) {
+                    await updateBookingWithTable(booking.id, newTable);
+                }
+            }
+        } catch (err) {
+            console.error(err);
+        }
+
         callback(null);
 
         // TODO: send mails
@@ -729,7 +742,7 @@ export async function getFreeTable(date: string, assistants: number, previousTab
         return !elem.canceled && moment(date).isBetween(bookDate, date2, undefined, '[)');
     }).map((elem: dbtypes.Booking) => elem.table || '-1').promise() as Promise<string[]>]);
 
-    if (previousTable !== undefined){
+    if (previousTable !== undefined) {
         pTable = _.find(tables, (t) => t.id === previousTable)!;
     }
 

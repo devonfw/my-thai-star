@@ -4,13 +4,11 @@
 
 The first command required for the installation is:
 
-~~$ npm install~~
+    $ npm install
 
 or 
 
     $ yarn
-
-Use yarn instead npm in order to get the correct package version. With some new version of typescript and aws-sdk it will not work. It will be solved asap.
 
 Although, for the environment to work properly, some packages have to be installed globally, so you have to execute these commands next:
 
@@ -31,22 +29,6 @@ or
     $ yarn global add typescript
 
     $ yarn global add nodemon
-
-Finally, we need to link oasp4fn into our project:
-For this, your must clone the project in other folder
-
-    $ mkdir C:\data-collector
-    $ cd C:\data-collector
-    $ git clone https://github.com/devonfw/serverless-data-collector.git .
-
-Then, you must creat a link:
-
-    $ npm link
-
-And finally, you must link oasp4fn in this project
-
-    $ cd C:\my-thai-star\node\
-    $ npm link oasp4fn
 
 ## Database
 
@@ -120,4 +102,4 @@ Build and monitors the server, with the nodemon command instead of node:
 
 or
 
-    $ yarn run serve
+    $ yarn serve
