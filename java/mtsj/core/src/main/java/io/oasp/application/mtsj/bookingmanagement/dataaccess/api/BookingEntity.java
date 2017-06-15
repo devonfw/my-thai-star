@@ -10,9 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
+import io.oasp.application.mtsj.general.common.api.validation.EmailExtended;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
@@ -21,18 +26,23 @@ import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 @javax.persistence.Table(name = "Booking")
 public class BookingEntity extends ApplicationPersistenceEntity implements Booking {
 
+  @NotNull
   private String name;
 
   private String bookingToken;
 
   private String comment;
 
+  @NotNull
+  @Future
   private Timestamp bookingDate;
 
   private Timestamp expirationDate;
 
   private Timestamp creationDate;
 
+  @NotNull
+  @EmailExtended
   private String email;
 
   private Boolean canceled;
@@ -49,6 +59,8 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private List<OrderEntity> orders;
 
+  @Min(value = 1, message = "Assistants must be greater than 0")
+  @Digits(integer = 2, fraction = 0)
   private Integer assistants;
 
   private static final long serialVersionUID = 1L;
