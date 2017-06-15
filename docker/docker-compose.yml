@@ -1,0 +1,10 @@
+version: '2'
+services:
+  client:
+    build: "./angular"
+    ports:
+      - "8090:80"
+  server:
+    build: "./java"
+    ports:
+      - "9090:8080"
