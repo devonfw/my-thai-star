@@ -11,7 +11,6 @@ import { AuthService } from './shared/authentication/auth.service';
 export class AppComponent {
 
   mobileSidenavOpened: boolean = false;
-
   constructor(public router: Router,
               public sidenav: SidenavService,
               public auth: AuthService) {

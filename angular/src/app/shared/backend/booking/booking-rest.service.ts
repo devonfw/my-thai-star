@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -23,30 +24,30 @@ export class BookingRestService implements IBookingDataService {
      }
 
      bookTable(booking: BookingInfo): Observable<number> {
-        return this.http.post(`${config.restServiceRoot}${this.booktableRestPath}`, booking)
+        return this.http.post(`${environment.restServiceRoot}${this.booktableRestPath}`, booking)
                         .map((res: Response) => res.json());
 
      }
 
      getReservations(filter: FilterCockpit): Observable<ReservationView[]> {
-        return this.http.post(`${config.restServiceRoot}${this.getReservationsRestPath}`, filter)
+        return this.http.post(`${environment.restServiceRoot}${this.getReservationsRestPath}`, filter)
                         .map((res: Response) => res.json());
      }
 
     acceptInvite(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.acceptReserveRestPath}` + token)
+        return this.http.get(`${environment.restServiceRoot}${this.acceptReserveRestPath}` + token)
                         .map((res: Response) => res.json());
 
      }
 
     cancelInvite(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.rejectReserveRestPath}` + token)
+        return this.http.get(`${environment.restServiceRoot}${this.rejectReserveRestPath}` + token)
                         .map((res: Response) => res.json());
 
      }
 
     cancelReserve(token: string): Observable<number> {
-        return this.http.get(`${config.restServiceRoot}${this.cancelReserveRestPath}` + token)
+        return this.http.get(`${environment.restServiceRoot}${this.cancelReserveRestPath}` + token)
                         .map((res: Response) => res.json());
 
      }
