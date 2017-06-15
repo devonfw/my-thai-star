@@ -34,7 +34,7 @@ node {
     stage('Build Application') {
         sh """
             cd angular
-            ng build --aot --prod
+            ng build --aot --environment=prod
         """
     }
     
