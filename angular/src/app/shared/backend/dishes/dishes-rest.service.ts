@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Filter } from '../backendModels/interfaces';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http, Headers } from '@angular/http';
@@ -19,7 +20,7 @@ export class DishesRestService implements IDishesDataService {
  }
 
  filter(filters: Filter): Observable<DishView[]> {
-    return this.http.post(`${config.restServiceRoot}${this.filtersRestPath}`, filters)
+    return this.http.post(`${environment.restServiceRoot}${this.filtersRestPath}`, filters)
                     .map((res: Response) => res.json().result);
  }
 

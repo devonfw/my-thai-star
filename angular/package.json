@@ -4,11 +4,19 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -pc proxy.conf.json -o",
-    "build": "ng build",
     "test": "ng test --browsers Chrome",
-    "test:pl": "ng test --browsers PhantomJS",
+    "test:ci": "ng test --browsers PhantomJS",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "serve": "ng serve --open --environment=dev",
+    "serve:aot": "ng serve --open --environment=dev --aot",
+    "serve:prod": "ng serve --open --environment=prod",
+    "serve:prod:aot": "ng serve --open --environment=prod --aot",
+    "serve:prodcompose": "ng serve --open --environment=prodcompose",
+    "serve:prodcompose:aot": "ng serve --open --environment=prodcompose --aot",
+    "build": "ng build --environment=dev --aot",
+    "build:prod": "ng build --environment=prod --aot",
+    "build:prodcompose": "ng build --environment=prodcompose --aot"
   },
   "private": true,
   "dependencies": {

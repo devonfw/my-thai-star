@@ -1,5 +1,5 @@
 import { config } from './config';
-import { environment as env } from '../environments/environment';
+import { environment } from '../environments/environment';
 
 import { NgModule, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +35,8 @@ import { appRoutes } from './app.routes';
     UserAreaModule,
     EmailConfirmationModule,
     CovalentModule,
-    BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
+    // BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
+    BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
   ],
   providers: [],
   bootstrap: [ AppComponent ],
