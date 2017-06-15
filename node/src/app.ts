@@ -18,7 +18,7 @@ const auth = new Authentication(process.env.SECRET || config.secret);
 
 app.set('port', process.env.PORT || config.PORT || 8080);
 app.disable('x-powered-by');
-app.use(morgan('dev'));
+if (process.env.MODE === undefined || process.env.MODE.trim() !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
