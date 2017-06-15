@@ -17,6 +17,7 @@
   },
   "private": true,
   "dependencies": {
+    "@oasp/oasp4fn": "^0.6.1",
     "aws-sdk": "^2.20.0",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
@@ -27,8 +28,7 @@
     "md5": "^2.2.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
-    "superagent": "^3.5.2",
-    "uuid": "^3.0.1"
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.3",
@@ -41,12 +41,11 @@
     "@types/lodash": "^4.14.63",
     "@types/md5": "^2.1.32",
     "@types/mocha": "^2.2.41",
-    "@types/moment": "^2.13.0",
     "@types/morgan": "^1.7.32",
     "@types/superagent": "^2.0.37",
-    "@types/uuid": "^2.0.29",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "typescript": "^2.3.2"
   },
