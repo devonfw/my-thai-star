@@ -1,5 +1,4 @@
 import * as types from '../model/database';
-import { img } from './image';
 import { serverURL } from '../config';
 
 export const Ingredient: types.Ingredient[] = [
@@ -56,7 +55,7 @@ export const Dish: types.Dish[] = [
             mimeType: 'image/jpg',
         },
         // likes: 30,
-        name: 'Thai green chicken curry',
+        name: 'Thai Green Chicken Curry',
         price: 14.7500000000,
     }, {
         description: 'This easy no-cook peanut sauce has a terrific authentic '

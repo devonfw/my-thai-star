@@ -43,7 +43,7 @@ export async function findUser(userName: string): Promise<dbtypes.User[]> {
     }).where('userName', userName.toLowerCase(), '=').first().promise() as Promise<dbtypes.User[]>;
 }
 
-///////////////////// Dishes /////////////////////////////////////////////////////////////////////////////////////////
+//! /////////////////// Dishes /////////////////////////////////////////////////////////////////////////////////////////
 export async function getDishes(filter: types.FilterView,
                                 callback: (err: types.Error | null, dishes?: types.PaginatedList) => void) {
     try {
@@ -68,14 +68,14 @@ export async function getDishes(filter: types.FilterView,
         }
 
         // filter by fav, TODO: check if user is correct
-        if (filter.isFab) {
-            const fav: dbtypes.User = await fn.table('User', '1').
-                promise() as dbtypes.User;
+        // if (filter.isFab) {
+        //     const fav: dbtypes.User = await fn.table('User', '1').
+        //         promise() as dbtypes.User;
 
-            const s2: Set<string> = new Set(fav.favourites as string[]);
+        //     const s2: Set<string> = new Set(fav.favourites as string[]);
 
-            dishIdSet = (dishIdSet !== undefined) ? util.setIntersection(dishIdSet, s2) : s2;
-        }
+        //     dishIdSet = (dishIdSet !== undefined) ? util.setIntersection(dishIdSet, s2) : s2;
+        // }
 
         // get dishes from database
         if (dishIdSet === undefined || dishIdSet.size > 0) {
@@ -108,7 +108,7 @@ export async function getDishes(filter: types.FilterView,
     }
 }
 
-///////////////////// BOOKING /////////////////////////////////////////////////////////////////////////////////////////
+//! /////////////////// BOOKING /////////////////////////////////////////////////////////////////////////////////////////
 
 export async function createBooking(reserv: types.BookingPostView, cron: TableCron,
                                     callback: (error: types.Error | null, booToken?: string) => void, user?: dbtypes.User) {
@@ -136,7 +136,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
             creationDate: date.toJSON(),
             canceled: false,
             bookingType: reserv.booking.bookingType as number,
-            assistants: (reserv.booking.bookingType === types.BookingTypes.booking) ? reserv.booking.assistants : undefined,
+            assistants: (reserv.booking.bookingType === types.BookingTypes.booking) ? Math.floor(reserv.booking.assistants!) : undefined,
             table: (reserv.booking.bookingType === types.BookingTypes.booking) ? table : undefined,
         };
 
@@ -170,8 +170,6 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
                 undoChanges('delete', 'Booking', booking.id);
                 throw { code: 500, message: error.message };
             }
-
-            // cron.registerInvitation(booking.id, booking.bookingDate);
         }
 
         callback(null, booking.bookingToken);
@@ -210,7 +208,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
 
                 Mailer.sendEmail(configHost);
 
-                // TODO: send the guest emails
+                //TODO: send the guest emails
                 // (booking.guestList as string[]).forEach((elem: string) => {
                 //     const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
                 //         title: 'You have been invited',
@@ -367,7 +365,7 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
 
         callback(null);
 
-        // TODO: send email
+        //TODO: send email
         // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
         //     title: 'Invitation canceled',
         //     name: reg[0].name,
@@ -442,7 +440,7 @@ export async function updateInvitation(token: string, response: boolean, callbac
 
         callback(null);
 
-        // TODO: send mails
+        //TODO: send mails
 
     } catch (err) {
         console.error(err);
@@ -451,7 +449,7 @@ export async function updateInvitation(token: string, response: boolean, callbac
     }
 }
 
-///////////////////// ORDERS /////////////////////////////////////////////////////////////////////////////////////////
+//! /////////////////// ORDERS /////////////////////////////////////////////////////////////////////////////////////////
 
 export async function createOrder(order: types.OrderPostView, callback: (err: types.Error | null, orderReference?: any) => void) {
 
@@ -612,7 +610,7 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
 
         callback(null);
 
-        // TODO: send email
+        //TODO: send email
         // if (order.startsWith('CB')) {
         //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
         //         title: 'Order canceled',
@@ -670,7 +668,6 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
             return acum;
         }, {}).promise()]);
 
-        // TODO: no enviar orders que ya pasaron en el tiempo
         order = orders.map((elem: dbtypes.Order): types.OrderView => {
             const result: any = {
                 order: {
@@ -729,7 +726,7 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
     }
 }
 
-////////////// AUX FUNCTIONS //////////////////////////////////////////////////////////////////
+//! //////////// AUX FUNCTIONS //////////////////////////////////////////////////////////////////
 
 export async function getFreeTable(date: string, assistants: number, previousTable?: string) {
     let pTable: dbtypes.Table | undefined;
@@ -837,16 +834,28 @@ export function checkFilter(filter: any) {
 }
 
 export async function undoChanges(operation: 'insert' | 'delete', table: string, object?: any) {
-    try {
-        if (operation === 'insert') {
-            await fn.insert(table, object).promise();
-        } else if (operation === 'delete') {
-            if (object !== undefined) {
-                await fn.delete(table, object).promise();
+    let error = true;
+
+    // retry 5 times
+    for (let i = 0; error && i < 5; i++) {
+        try {
+            if (operation === 'insert') {
+                if (object !== undefined) {
+                    await fn.insert(table, object).promise();
+                }
+            } else if (operation === 'delete') {
+                if (object !== undefined) {
+                    await fn.delete(table, object).promise();
+                }
             }
+
+            error = false;
+        } catch (error) {
+            console.error(error);
         }
-    } catch (error) {
+    }
+
+    if (error) {
         console.error('SEVERAL ERROR: DATABASE MAY HAVE INCONSISTENT DATA!');
-        console.error(error);
     }
 }

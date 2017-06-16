@@ -24,6 +24,10 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
             throw { code: 400, message: 'Invalid email' };
         }
 
+        if (req.body.booking.bookingType === types.BookingTypes.booking && req.body.booking.assistants! < 1) {
+            throw { code: 400, message: 'Assistants must be a number greater than 1' };
+        }
+
         // if bookingType = 1 property invitedGuest must be defined
         if (req.body.booking.bookingType === types.BookingTypes.invited && (req.body.invitedGuests === undefined || req.body.invitedGuests.length === 0)) {
             throw { message: 'You need to invite someone' };

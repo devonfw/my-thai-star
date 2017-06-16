@@ -1,6 +1,6 @@
 import { Credentials } from 'aws-sdk';
-import dynamo from 'oasp4fn/dist/adapters/fn-dynamo';
-import fn from 'oasp4fn';
+import dynamo from '@oasp/oasp4fn/dist/adapters/fn-dynamo';
+import fn from '@oasp/oasp4fn';
 import * as mock from './mockDatabase';
 
 // Dynamo
