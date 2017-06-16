@@ -31,17 +31,17 @@ export class OrderRestService implements IOrderDataService {
           delete filter.bookingToken;
           path = this.getOrdersRestPath;
         }
-        return this.http.post(`${environment.restServiceRoot}${path}`, filter)
+        return this.http.post(`${config.restServiceRoot}${path}`, filter)
                         .map((res: Response) => res.json());
      }
 
      saveOrders(orders: OrderListInfo): Observable<number> {
-        return this.http.post(`${environment.restServiceRoot}${this.saveOrdersPath}`, orders)
+        return this.http.post(`${config.restServiceRoot}${this.saveOrdersPath}`, orders)
                         .map((res: Response) => res.json());
      }
 
     cancelOrder(token: string): Observable<number> {
-        return this.http.get(`${environment.restServiceRoot}${this.cancelOrderRestPath}` + token)
+        return this.http.get(`${config.restServiceRoot}${this.cancelOrderRestPath}` + token)
                         .map((res: Response) => res.json());
 
     }
