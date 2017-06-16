@@ -51,10 +51,10 @@ node {
     }
     
     stage('Server Unit Tests') {
-        // configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-        //     sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
-        // }
-        echo "server unit tests"
+        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
+            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
+        }
+        // echo "server unit tests"
     }
     
     stage('Build Artifacts') {
