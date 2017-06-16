@@ -1,3 +1,3 @@
---reporter spec
+--reporter nyan
 --watch-extensions js,jsx
 out/test/**/*.js

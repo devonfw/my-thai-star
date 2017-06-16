@@ -14,7 +14,7 @@ import * as md5 from 'md5';
 import { Mailer } from './utils/mailer';
 import * as serverConfig from './config';
 
-// Dynamo
+//? Dynamo
 /*
 const creds = new Credentials('akid', 'secret', 'session');
 fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
@@ -67,7 +67,8 @@ export async function getDishes(filter: types.FilterView,
 
         }
 
-        // filter by fav, TODO: check if user is correct
+        //? filter by fav
+        //TODO: check if user is correct
         // if (filter.isFab) {
         //     const fav: dbtypes.User = await fn.table('User', '1').
         //         promise() as dbtypes.User;
@@ -110,7 +111,7 @@ export async function getDishes(filter: types.FilterView,
 
 //! /////////////////// BOOKING /////////////////////////////////////////////////////////////////////////////////////////
 
-export async function createBooking(reserv: types.BookingPostView, cron: TableCron,
+export async function createBooking(reserv: types.BookingPostView,
                                     callback: (error: types.Error | null, booToken?: string) => void, user?: dbtypes.User) {
     const date = moment();
     const bookDate = moment(reserv.booking.bookingDate);
@@ -234,6 +235,7 @@ export async function createBooking(reserv: types.BookingPostView, cron: TableCr
     }
 }
 
+//TODO: make a test for this
 export async function updateBookingWithTable(id: string, table: string) {
     try {
         const book = await fn.table('Booking', id).promise() as dbtypes.Booking;
@@ -259,6 +261,7 @@ export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]>
     }).promise() as Promise<dbtypes.Booking[]>;
 }
 
+//TODO: make a test for this
 export async function getAssistansForInvitedBooking(id: string) {
     const book = await fn.table('InvitedGuest').where('idBooking', id, '=').
         filter((elem: dbtypes.InvitedGuest) => elem.accepted).promise() as dbtypes.InvitedGuest[];

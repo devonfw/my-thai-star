@@ -15,12 +15,10 @@ export class Mailer {
             .end((err, res) => {
                 if (err || res.body === false){
                     console.error(err || 'false');
-                }else{
-                    console.log('email enviado satisfactoriamente');
                 }
             });
         } else if (mailConfig === MailType.mock.valueOf() || mailConfig === MailType.both.valueOf()) {
-            console.log(config);
+            if (process.env.MODE.trim() !== 'test') console.log(config);
         }
     }
 }
