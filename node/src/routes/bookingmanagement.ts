@@ -44,7 +44,7 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
         }
 
         // if no errors, create booking
-        business.createBooking(req.body, req.tableCron, (error: types.Error | null, resToken?: string): void => {
+        business.createBooking(req.body, (error: types.Error | null, resToken?: string): void => {
             if (error) {
                 res.status(error.code || 500).json({ message: error.message });
             } else {
