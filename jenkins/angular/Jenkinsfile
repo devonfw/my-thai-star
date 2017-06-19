@@ -4,8 +4,7 @@ node {
     }
 
     stage('Loading Custom Tools') {
-        tool 'Node 6'
-        tool 'Yarn'
+        tool 'Node 7'
         tool 'Angular CLI'
     }
     

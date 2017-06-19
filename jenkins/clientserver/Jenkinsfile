@@ -82,12 +82,17 @@ node {
                 scp -o StrictHostKeyChecking=no -r java/Dockerfile root@10.40.235.244:/root/mythaistar/java
                 scp -o StrictHostKeyChecking=no -r java/mtsj/server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java
                 
-                # Copy docker-compose file to main MTS DP directory
+                # Copy docker-compose file to main DP MTS directory
                 scp -o StrictHostKeyChecking=no -r docker/docker-compose.yml root@10.40.235.244:/root/mythaistar/
                 
                 # Stop containers
-                #ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose up --build -d
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker stop mythaistar_client_compose_1
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker stop mythaistar_server_compose_1
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose rm -f
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose pull
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose up --build -d
             """
         }
+        sh 'echo \\"Application available at http://de-mucdevondepl01:8091\\"'
     }
 }
