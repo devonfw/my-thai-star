@@ -1,4 +1,3 @@
-import { TableCron } from './utils/tableManagement';
 import { NumberAttributeValue } from 'aws-sdk/clients/dynamodbstreams';
 import { Credentials } from 'aws-sdk';
 import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
@@ -168,63 +167,90 @@ export async function createBooking(reserv: types.BookingPostView,
             try {
                 await fn.insert('InvitedGuest', inv).promise();
             } catch (error) {
+                console.error(error);
+                callback({ code: 500, message: error.message });
                 undoChanges('delete', 'Booking', booking.id);
-                throw { code: 500, message: error.message };
+                return;
             }
         }
 
         callback(null, booking.bookingToken);
 
         try {
-            if (reserv.booking.bookingType === types.BookingTypes.booking) {
-                const config: types.EmailContent = {
-                    emailFrom: 'MyThaiStar',
-                    emailType: 0,
-                    bookingDate: reserv.booking.bookingDate,
-                    assistants: reserv.booking.assistants,
-                    emailAndTokenTo: {},
-                    bookingToken: booking.bookingToken,
-                };
+            if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                if (reserv.booking.bookingType === types.BookingTypes.booking) {
+                    const config: types.EmailContent = {
+                        emailFrom: 'MyThaiStar',
+                        emailType: 0,
+                        bookingDate: reserv.booking.bookingDate,
+                        assistants: reserv.booking.assistants,
+                        emailAndTokenTo: {},
+                        bookingToken: booking.bookingToken,
+                    };
 
-                (config.emailAndTokenTo as { [index: string]: string })[booking.bookingToken] = booking.email;
+                    (config.emailAndTokenTo as { [index: string]: string })[booking.bookingToken] = booking.email;
 
-                Mailer.sendEmail(config);
-            } else {
-                const configHost: types.EmailContent = {
-                    emailFrom: 'MyThaiStar',
-                    emailType: 2,
-                    bookingDate: reserv.booking.bookingDate,
-                    emailAndTokenTo: {},
-                    buttonActionList: {},
-                    bookingToken: booking.bookingToken,
-                    host: {},
-                };
+                    Mailer.sendEmail(config);
+                } else {
+                    const configHost: types.EmailContent = {
+                        emailFrom: 'MyThaiStar',
+                        emailType: 2,
+                        bookingDate: reserv.booking.bookingDate,
+                        emailAndTokenTo: {},
+                        buttonActionList: {},
+                        bookingToken: booking.bookingToken,
+                        host: {},
+                    };
 
-                (configHost.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancel/' + booking.bookingToken] = 'Cancel';
-                (configHost.host as { [index: string]: string })[booking.email] = booking.name;
-                (configHost.emailAndTokenTo as { [index: string]: string })[booking.bookingToken] = booking.email;
-                inv.forEach((elem) => {
-                    (configHost.emailAndTokenTo as { [index: string]: string })[elem.guestToken] = elem.email;
-                });
+                    (configHost.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancel/' + booking.bookingToken] = 'Cancel';
+                    (configHost.host as { [index: string]: string })[booking.email] = booking.name;
+                    (configHost.emailAndTokenTo as { [index: string]: string })[booking.bookingToken] = booking.email;
+                    inv.forEach((elem) => {
+                        (configHost.emailAndTokenTo as { [index: string]: string })[elem.guestToken] = elem.email;
+                    });
 
-                Mailer.sendEmail(configHost);
+                    Mailer.sendEmail(configHost);
 
-                //TODO: send the guest emails
-                // (booking.guestList as string[]).forEach((elem: string) => {
-                //     const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
-                //         title: 'You have been invited',
-                //         email: elem,
-                //         name: reserv.booking.name,
-                //         hostEmail: reserv.booking.email,
-                //         date: bookDate.format('YYYY-MM-DD'),
-                //         hour: bookDate.format('HH:mm:ss'),
-                //         guest: booking.guestList,
-                //         urlAcept: '#',
-                //         urlCancel: '#',
-                //     });
+                    //TODO: send the guest emails
+                    // (booking.guestList as string[]).forEach((elem: string) => {
+                    //     const email = pug.renderFile('./src/emails/createInvitationGuest.pug', {
+                    //         title: 'You have been invited',
+                    //         email: elem,
+                    //         name: reserv.booking.name,
+                    //         hostEmail: reserv.booking.email,
+                    //         date: bookDate.format('YYYY-MM-DD'),
+                    //         hour: bookDate.format('HH:mm:ss'),
+                    //         guest: booking.guestList,
+                    //         urlAcept: '#',
+                    //         urlCancel: '#',
+                    //     });
 
-                //     mailer.sendEmail(null, elem, '[MyThaiStar] Your have a new invitation', email, email);
-                // });
+                    //     mailer.sendEmail(null, elem, '[MyThaiStar] Your have a new invitation', email, email);
+                    // });
+                }
+            } else if (serverConfig.mailConfig === serverConfig.MailType.mock || serverConfig.mailConfig === serverConfig.MailType.both) {
+                if (reserv.booking.bookingType === types.BookingTypes.booking) {
+                    console.log(
+                        `New booking created:
+  Email: ${reserv.booking.email}
+  Date: ${reserv.booking.bookingDate}
+  Assistants: ${reserv.booking.assistants}
+  Token: ${booking.bookingToken}`);
+                } else {
+                    console.log(
+                        `New booking created:
+  Host email: ${reserv.booking.email}
+  Date: ${reserv.booking.bookingDate}
+  Token: ${booking.bookingToken}
+  Cancel button: ${serverConfig.frontendURL + '/booking/cancel/' + booking.bookingToken}
+  Guest List: ${reserv.invitedGuests!.map((elem) => elem.email)}
+  Guest Buttons:
+    Accept:
+ ` +
+                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/booking/acceptInvite/' + elem.guestToken + '\n') +
+                        '    Cancel: \n ' +
+                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/booking/rejectInvite/' + elem.guestToken + '\n'));
+                }
             }
         } catch (error) {
             console.error(error);
@@ -235,7 +261,6 @@ export async function createBooking(reserv: types.BookingPostView,
     }
 }
 
-//TODO: make a test for this
 export async function updateBookingWithTable(id: string, table: string) {
     try {
         const book = await fn.table('Booking', id).promise() as dbtypes.Booking;
@@ -261,7 +286,6 @@ export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]>
     }).promise() as Promise<dbtypes.Booking[]>;
 }
 
-//TODO: make a test for this
 export async function getAssistansForInvitedBooking(id: string) {
     const book = await fn.table('InvitedGuest').where('idBooking', id, '=').
         filter((elem: dbtypes.InvitedGuest) => elem.accepted).promise() as dbtypes.InvitedGuest[];
@@ -290,6 +314,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
         result = booking.map((elem) => {
             return {
                 booking: {
+                    id: Number(elem.id),
                     name: elem.name,
                     bookingToken: elem.bookingToken,
                     email: elem.email,
@@ -301,6 +326,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
                 invitedGuests: (elem.guestList === undefined) ? undefined : elem.guestList.map((elem2) => {
                     return {
                         email: invitedGuest[elem2].email,
+                        guestToken: invitedGuest[elem2].guestToken,
                         accepted: (invitedGuest[elem2].accepted) ? invitedGuest[elem2].accepted : false,
                     };
                 }),
@@ -313,7 +339,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
     }
 }
 
-export async function cancelBooking(token: string, tableCron: TableCron, callback: (err: types.Error | null) => void) {
+export async function cancelBooking(token: string, callback: (err: types.Error | null) => void) {
     let reg: dbtypes.Booking[];
     try {
         reg = await fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.Booking[];
@@ -368,20 +394,28 @@ export async function cancelBooking(token: string, tableCron: TableCron, callbac
 
         callback(null);
 
-        //TODO: send email
-        // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-        //     title: 'Invitation canceled',
-        //     name: reg[0].name,
-        // }));
+        try {
+            if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                //TODO: send email
+                // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //     title: 'Invitation canceled',
+                //     name: reg[0].name,
+                // }));
 
-        // if (guest !== undefined) {
-        //     guest.forEach((elem: any) => {
-        //         mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-        //             title: 'Invitation canceled',
-        //             name: elem.email,
-        //         }));
-        //     });
-        // }
+                // if (guest !== undefined) {
+                //     guest.forEach((elem: any) => {
+                //         mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //             title: 'Invitation canceled',
+                //             name: elem.email,
+                //         }));
+                //     });
+                // }
+            } else if (serverConfig.mailConfig === serverConfig.MailType.mock || serverConfig.mailConfig === serverConfig.MailType.both) {
+                console.log(`Booking canceled: ${token}`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
     } catch (err) {
         console.error(err);
         callback(err);
@@ -404,6 +438,10 @@ export async function updateInvitation(token: string, response: boolean, callbac
             throw { code: 400, message: 'The invitation is canceled, you can\'t do any modification' };
         }
 
+        if (reg[0].accepted !== undefined && reg[0].accepted === true && response === true) {
+            throw { code: 400, message: 'Already accepted' };
+        }
+
         booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
         if (moment(booking.bookingDate).diff(moment().add(10, 'minutes')) < 0) {
             throw { code: 500, message: 'You can\'t do this operation at this moment' };
@@ -422,10 +460,12 @@ export async function updateInvitation(token: string, response: boolean, callbac
                 await fn.table('Order').where('idInvitedGuest', reg[0].id).project('id').delete().promise();
             }
         } catch (err) {
+            console.error(err);
             reg[0].accepted = oldAccepted;
             reg[0].modificationDate = oldModificationDate;
+            callback(err);
             undoChanges('insert', 'InvitedGuest', reg[0]);
-            throw err;
+            return;
         }
 
         try {
@@ -443,8 +483,15 @@ export async function updateInvitation(token: string, response: boolean, callbac
 
         callback(null);
 
-        //TODO: send mails
-
+        try {
+            if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                //TODO: send mails
+            } else if (serverConfig.mailConfig === serverConfig.MailType.mock || serverConfig.mailConfig === serverConfig.MailType.both) {
+                console.log(`InvitedGuest ${token} status updated to: ${response}`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
     } catch (err) {
         console.error(err);
         callback(err);
@@ -534,8 +581,10 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
             }
         } catch (err) {
             // undo the previous insert
+            console.error(err);
+            callback(err);
             undoChanges('delete', ord.id);
-            throw err;
+            return;
         }
 
         callback(null, {
@@ -548,18 +597,26 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
         try {
             const [vat, names] = await calculateVATandOrderName(order.orderLines);
 
-            const config: types.EmailContent = {
-                emailFrom: 'MyThaiStar',
-                emailType: 3,
-                emailAndTokenTo: {},
-                buttonActionList: {},
-                detailMenu: names,
-                price: vat,
-            };
+            if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                const config: types.EmailContent = {
+                    emailFrom: 'MyThaiStar',
+                    emailType: 3,
+                    emailAndTokenTo: {},
+                    buttonActionList: {},
+                    detailMenu: names,
+                    price: vat,
+                };
 
-            (config.emailAndTokenTo as { [index: string]: string })[order.booking.bookingToken] = reg[0].email;
-            (config.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancelOrder/' + ord.id] = 'Cancel';
-            Mailer.sendEmail(config);
+                (config.emailAndTokenTo as { [index: string]: string })[order.booking.bookingToken] = reg[0].email;
+                (config.buttonActionList as { [index: string]: string })[serverConfig.frontendURL + '/booking/cancelOrder/' + ord.id] = 'Cancel';
+                Mailer.sendEmail(config);
+            } else if (serverConfig.mailConfig === serverConfig.MailType.mock || serverConfig.mailConfig === serverConfig.MailType.both) {
+                console.log(`Order created:
+  Owner: ${reg[0].email}
+  Detail menu: ${names}
+  Price: ${vat}
+  Cancel button: ${serverConfig.frontendURL + '/booking/cancelOrder/' + ord.id}`);
+            }
         } catch (error) {
             console.error(error);
             return;
@@ -607,24 +664,34 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
                 await fn.insert('InvitedGuest', invitedGuest).promise();
             }
         } catch (err) {
+            console.error(err);
+            callback(err);
             undoChanges('insert', 'Order', order);
-            throw err;
+            return;
         }
 
         callback(null);
 
-        //TODO: send email
-        // if (order.startsWith('CB')) {
-        //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-        //         title: 'Order canceled',
-        //         name: reg[0].name,
-        //     }));
-        // } else {
-        //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-        //         title: 'Order canceled',
-        //         name: reg[0].email,
-        //     }));
-        // }
+        try {
+            if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                //TODO: send email
+                // if (order.startsWith('CB')) {
+                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //         title: 'Order canceled',
+                //         name: reg[0].name,
+                //     }));
+                // } else {
+                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //         title: 'Order canceled',
+                //         name: reg[0].email,
+                //     }));
+                // }
+            } else if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
+                console.log(`Order ${orderId} successfully canceled`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
     } catch (err) {
         console.error(err);
         callback(err);

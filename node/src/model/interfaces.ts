@@ -58,7 +58,7 @@ export function isPaginated(elem: any): elem is Paginated {
 
 export interface PaginatedList {
     pagination: Paginated;
-    result: DishesView[] | OrderView[] | BookingEntity[];
+    result: DishesView[] | OrderView[] | BookingEntity[] | BookingPostView[];
 }
 
 export interface CategoryView {
@@ -327,7 +327,6 @@ export interface Error {
 }
 
 export interface CustomRequest extends Request {
-    tableCron: TableCron;
     user?: User;
 }
 

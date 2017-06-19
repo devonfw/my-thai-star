@@ -102,7 +102,7 @@ router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response
             throw { code: 400, message: 'Invalid petition' };
         }
 
-        business.cancelBooking(req.params.token, req.tableCron, (err: types.Error | null) => {
+        business.cancelBooking(req.params.token, (err: types.Error | null) => {
             if (err) {
                 res.status(err.code || 500).json(err.message);
             } else {

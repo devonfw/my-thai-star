@@ -8,17 +8,13 @@ export class Mailer {
     }
 
     public static sendEmail(config: EmailContent) {
-        if (mailConfig === MailType.api.valueOf() || mailConfig === MailType.both.valueOf()) {
-            request.post(emailAPIaddr + '/api/Email')
+        request.post(emailAPIaddr + '/api/Email')
             .set('Accept', 'application/json')
             .send(config)
             .end((err, res) => {
-                if (err || res.body === false){
+                if (err || res.body === false) {
                     console.error(err || 'false');
                 }
             });
-        } else if (mailConfig === MailType.mock.valueOf() || mailConfig === MailType.both.valueOf()) {
-            if (process.env.MODE.trim() !== 'test') console.log(config);
-        }
     }
 }
