@@ -16,7 +16,7 @@ export const app = express();
 const cronT = new TableCron();
 const auth = new Authentication(process.env.SECRET || config.secret);
 
-app.set('port', process.env.PORT || config.PORT || 8080);
+app.set('port', process.env.PORT || config.PORT || 8081);
 app.disable('x-powered-by');
 if (process.env.MODE === undefined || process.env.MODE.trim() !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,10 +38,6 @@ app.use((req, res, next) => {
 /**
  * Add table cron and user to request
  */
-app.use((req: CustomRequest, res, next) => {
-  req.tableCron = cronT;
-  next();
-});
 app.use(auth.registerAuthentication);
 
 /**
