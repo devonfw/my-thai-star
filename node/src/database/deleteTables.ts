@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk';
+import { databaseURL } from '../config';
 /*
 const creds = new AWS.Credentials('akid', 'secret', 'session');
 const conf = {
@@ -15,14 +16,14 @@ if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new AWS.Credentials('akid', 'secret', 'session');
     conf = {
         credentials: creds,
-        endpoint: 'http://localhost:8000/',
+        endpoint: databaseURL,
         region: 'us-west-2',
     };
 } else {
     creds = new AWS.Credentials('akid2', 'secret2', 'session2');
     conf = {
         credentials: creds,
-        endpoint: 'http://localhost:8000/',
+        endpoint: databaseURL,
         region: 'us-west-2',
     };
 }

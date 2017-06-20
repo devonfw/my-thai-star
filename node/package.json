@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./out/src/app",
-    "eb": "npm install && npm run build && node ./out/src/app",
+    "eb": "yarn && yarn build && node ./out/src/app",
     "serve": "start tsc -w && start nodemon ./out/src/app localhost 8080",
     "build": "tsc",
     "debug": "npm run build && node --inspect out/src/app.js",

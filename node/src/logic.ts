@@ -20,10 +20,10 @@ oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2',
 let creds;
 if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
-    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: serverConfig.databaseURL, region: 'us-west-2', credentials: creds });
 } else {
     creds = new Credentials('akid2', 'secret2', 'session2');
-    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: serverConfig.databaseURL, region: 'us-west-2', credentials: creds });
 }
 
 const maxPrice = 50;
@@ -323,7 +323,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
                     assistants: elem.assistants,
                     tableId: elem.table,
                 },
-                invitedGuests: (elem.guestList === undefined) ? undefined : elem.guestList.map((elem2) => {
+                invitedGuests: (elem.guestList === undefined) ? [] : elem.guestList.map((elem2) => {
                     return {
                         email: invitedGuest[elem2].email,
                         guestToken: invitedGuest[elem2].guestToken,

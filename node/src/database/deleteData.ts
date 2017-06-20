@@ -1,7 +1,9 @@
 import { Credentials, DynamoDB } from 'aws-sdk';
 import dynamo from '@oasp/oasp4fn/dist/adapters/fn-dynamo';
-import fn from '@oasp/oasp4fn';
+import oasp4fn from '@oasp/oasp4fn';
 import * as mock from './mockDatabase';
+import * as _ from 'lodash';
+import { databaseURL } from '../config';
 
 // Dynamo
 
@@ -10,12 +12,12 @@ let dynamodb: DynamoDB;
 let creds;
 if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
-    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
-    dynamodb = new DynamoDB({ endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: databaseURL, region: 'us-west-2', credentials: creds });
+    dynamodb = new DynamoDB({ endpoint: databaseURL, region: 'us-west-2', credentials: creds });
 } else {
     creds = new Credentials('akid2', 'secret2', 'session2');
-    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
-    dynamodb = new DynamoDB({ endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: databaseURL, region: 'us-west-2', credentials: creds });
+    dynamodb = new DynamoDB({ endpoint: databaseURL, region: 'us-west-2', credentials: creds });
 }
 
 dynamodb.listTables().eachPage((err, data) => {
@@ -24,8 +26,27 @@ dynamodb.listTables().eachPage((err, data) => {
         return false;
     } else if (data && data.TableNames) {
         data.TableNames.forEach((name) => {
-            fn.table(name).project('id').delete().promise().then((res) => {
-                console.log('Data from table ' + name + ' has been deleted');
+            oasp4fn.table(name).project('id').promise().then(async (res: string[]) => {
+                let cp = [...res];
+                while (cp.length > 0){
+                    if (cp.length <= 25) {
+                        const n = [...cp];
+                        cp = [];
+                        oasp4fn.delete(name, n).promise().then((res2) => {
+                            console.log('Data from table ' + name + ' has been deleted');
+                        }, (err2) => {
+                            console.error(err2);
+                        });
+                    } else {
+                        const n = _.slice(cp, 0, 25);
+                        cp = _.slice(cp, 25, cp.length);
+                        await oasp4fn.delete(name, n).promise().then((res2) => {
+                            console.log('Data from table ' + name + ' has been deleted');
+                        }, (err2) => {
+                            console.error(err2);
+                        });
+                    }
+                }
             }, (err2) => {
                 console.error(err2);
             });

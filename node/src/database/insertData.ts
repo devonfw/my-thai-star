@@ -2,15 +2,16 @@ import { Credentials } from 'aws-sdk';
 import dynamo from '@oasp/oasp4fn/dist/adapters/fn-dynamo';
 import oasp4fn from '@oasp/oasp4fn';
 import * as mock from './mockDatabase';
+import { databaseURL } from '../config';
 
 // Dynamo
 let creds;
 if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
-    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: databaseURL, region: 'us-west-2', credentials: creds });
 } else {
     creds = new Credentials('akid2', 'secret2', 'session2');
-    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: databaseURL, region: 'us-west-2', credentials: creds });
 }
 // oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
 
