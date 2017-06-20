@@ -14,6 +14,8 @@
     "serve:prod:aot": "ng serve --open --environment=prod --aot",
     "serve:prodcompose": "ng serve --open --environment=prodcompose",
     "serve:prodcompose:aot": "ng serve --open --environment=prodcompose --aot",
+    "serve:node": "ng serve --open --environment=node",
+    "serve:node:aot": "ng serve --open --environment=node --aot",
     "build": "ng build --environment=dev --aot",
     "build:prod": "ng build --environment=prod --aot",
     "build:prodcompose": "ng build --environment=prodcompose --aot"
