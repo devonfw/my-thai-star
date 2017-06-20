@@ -8,15 +8,16 @@
     "serve": "start tsc -w && start nodemon ./out/src/app localhost 8080",
     "build": "tsc",
     "debug": "npm run build && node --inspect out/src/app.js",
-    "test": "cmd /C \"set MODE=test && set PORT=9080 && npm run database:data > nul && mocha --opts mocha.opts\"",
-    "test2": "cmd /C \"set MODE=test && set PORT=9080 && mocha --opts mocha.opts\"",
+    "test": "npm run database:test:data > nul && mocha --opts mocha.opts",
+    "test2": "mocha --opts mocha.opts",
     "database-create": "node ./out/src/database/createTables",
     "database-delete": "node ./out/src/database/deleteTables",
     "database-seed": "node ./out/src/database/insertData",
     "database-delete:data": "node ./out/src/database/deleteData",
     "database": "npm run database-delete && npm run database-create && npm run database-seed",
-    "database:test": "cmd /C \"set MODE=test && set PORT=9080 && npm run database-delete && npm run database-create && npm run database-seed\"",
-    "database:data": "npm run database-delete:data && npm run database-seed"
+    "database:test": "npm run database-delete test && npm run database-create test && npm run database-seed test",
+    "database:data": "npm run database-delete:data && npm run database-seed",
+    "database:test:data": "npm run database-delete:data test && npm run database-seed test"
   },
   "private": true,
   "dependencies": {

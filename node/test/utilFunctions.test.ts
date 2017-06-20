@@ -1,3 +1,6 @@
+process.env.MODE = 'test';
+process.env.PORT = 9980;
+
 import * as chai from 'chai';
 import * as _ from 'lodash';
 import * as util from '../src/utils/utilFunctions';
@@ -146,5 +149,10 @@ describe('Testing all util functions', () => {
             expect(util.checkType(t, o2)).to.be.true;
             expect(util.checkType(t, o3)).to.be.false;
         });
+    });
+
+    after(() => {
+        process.env.MODE = undefined;
+        process.env.PORT = undefined;
     });
 });

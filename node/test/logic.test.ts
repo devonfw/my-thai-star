@@ -1,3 +1,6 @@
+process.env.MODE = 'test';
+process.env.PORT = 9980;
+
 import * as chai from 'chai';
 import * as _ from 'lodash';
 import * as business from '../src/logic';
@@ -152,7 +155,7 @@ describe('Testing the application logic', () => {
         });
 
         it('should return only some bookings when a date is given', (done) => {
-             business.getAllInvitedBookings('2030-06-16T10:30:00.000Z').then((bookings) => {
+            business.getAllInvitedBookings('2030-06-16T10:30:00.000Z').then((bookings) => {
                 expect(bookings).to.be.instanceof(Array);
 
                 expect(bookings.length).to.be.equals(1);
@@ -174,7 +177,7 @@ describe('Testing the application logic', () => {
 
     describe('updateBookingWithTable', () => {
         it('should add the table to the booking', (done) => {
-            business.updateBookingWithTable(fbookingId, '0').catch((err) => {should.not.exist(err); }).then((elem) => {
+            business.updateBookingWithTable(fbookingId, '0').catch((err) => { should.not.exist(err); }).then((elem) => {
                 expect(elem).to.be.false;
 
                 done();
@@ -255,7 +258,7 @@ describe('Testing the application logic', () => {
         });
 
         it('should return a error when the invitation is already accepted', (done) => {
-             business.updateInvitation(fguestToken, true, (err) => {
+            business.updateInvitation(fguestToken, true, (err) => {
                 should.exist(err);
 
                 done();
@@ -263,7 +266,7 @@ describe('Testing the application logic', () => {
         });
 
         it('should cancel the InvitedGuest if the response is false', (done) => {
-             business.updateInvitation(fguestToken, false, (err) => {
+            business.updateInvitation(fguestToken, false, (err) => {
                 should.not.exist(err);
 
                 done();
@@ -271,7 +274,7 @@ describe('Testing the application logic', () => {
         });
 
         it('should return an error if the InvitedGuest is already canceled', (done) => {
-             business.updateInvitation(fguestToken, false, (err) => {
+            business.updateInvitation(fguestToken, false, (err) => {
                 should.exist(err);
 
                 done();
@@ -322,5 +325,8 @@ describe('Testing the application logic', () => {
     after(() => {
         // delete console.log;
         // delete console.error;
+
+        process.env.MODE = undefined;
+        process.env.PORT = undefined;
     });
 });

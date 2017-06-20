@@ -1,3 +1,6 @@
+process.env.MODE = 'test';
+process.env.PORT = 9980;
+
 import * as chai from 'chai';
 import ChaiHttp = require('chai-http');
 import { app as server } from '../src/app';
@@ -67,5 +70,10 @@ describe('Get dishes', () => {
                     done();
                 });
         });
+    });
+
+    after(() => {
+        process.env.MODE = undefined;
+        process.env.PORT = undefined;
     });
 });

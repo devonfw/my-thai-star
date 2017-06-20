@@ -16,7 +16,7 @@ export const app = express();
 const cronT = new TableCron();
 const auth = new Authentication(process.env.SECRET || config.secret);
 
-app.set('port', process.env.PORT || config.PORT || 8081);
+app.set('port', (process.env.PORT) ? Number(process.env.PORT.trim()) : undefined || config.PORT || 8081);
 app.disable('x-powered-by');
 if (process.env.MODE === undefined || process.env.MODE.trim() !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
