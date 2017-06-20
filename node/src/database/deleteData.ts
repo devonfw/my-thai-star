@@ -26,8 +26,8 @@ dynamodb.listTables().eachPage((err, data) => {
         data.TableNames.forEach((name) => {
             fn.table(name).project('id').delete().promise().then((res) => {
                 console.log('Data from table ' + name + ' has been deleted');
-            }, (err) => {
-                console.error(err);
+            }, (err2) => {
+                console.error(err2);
             });
         });
     }

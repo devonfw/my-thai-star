@@ -8,4 +8,4 @@ export const debug: boolean = true;
 export const PORT: number = 8081;
 export const emailAPIaddr: string = 'http://localhost:7080';
 export const frontendURL: string = 'http://localhost:4200';
-export const serverURL: string = 'http://localhost:8081';
+export const serverURL: string = 'http://localhost:' + PORT;

@@ -26,13 +26,13 @@ app.use(bodyParser.json());
  * Cors config
  */
 app.use(cors({
-  origin: config.frontendURL,
-  credentials: true,
-  exposedHeaders: 'Authorization',
+    origin: config.frontendURL,
+    credentials: true,
+    exposedHeaders: 'Authorization',
 }));
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding');
-  next();
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding');
+    next();
 });
 
 /**
@@ -65,9 +65,9 @@ app.post('/mythaistar/services/rest/security/changepassword', auth.changePasswor
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(404).json({ message: 'Not Found' });
+    res.status(404).json({ message: 'Not Found' });
 });
 
 app.listen(app.get('port'), () => {
-  console.log('MyThaiStar server listening on port ' + app.get('port'));
+    console.log('MyThaiStar server listening on port ' + app.get('port'));
 });
