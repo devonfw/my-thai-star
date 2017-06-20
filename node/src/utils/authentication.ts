@@ -35,9 +35,7 @@ export class Authentication {
      */
     public auth = (req: CustomRequest, res: Response) => {
         // find the user
-        findUser(req.body.username).catch((err: any) => {
-            res.status(err.code || 500).json({ message: err.message || 'error' });
-        }).then((user) => {
+        findUser(req.body.username).then((user) => {
             if (!user || user.length === 0) {
                 res.status(403).json({ message: 'Authentication failed. User not found.' });
             } else if (user) {
@@ -55,6 +53,8 @@ export class Authentication {
                     res.header('Authorization', 'Bearer ' + token).status(204).json();
                 }
             }
+        }).catch((err: any) => {
+            res.status(err.code || 500).json({ message: err.message || 'error' });
         });
     }
 

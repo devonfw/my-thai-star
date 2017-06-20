@@ -142,11 +142,9 @@ describe('Testing the application logic', () => {
     describe('getAllInvitedBookings', () => {
         it('should return all bookings if no date is given', (done) => {
             business.getAllInvitedBookings().then((bookings) => {
-                console.log(bookings);
                 expect(bookings).to.be.instanceof(Array);
 
                 expect(bookings.length).to.be.equals(1);
-                console.log(fbookingToken);
                 expect(bookings[0].bookingToken).to.be.equals(fbookingToken);
 
                 done();

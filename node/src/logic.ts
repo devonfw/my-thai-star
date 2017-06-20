@@ -4,7 +4,7 @@ import { ActionConfigurationPropertyList } from 'aws-sdk/clients/codepipeline';
 import { AccessControlPolicy } from 'aws-sdk/clients/s3';
 import * as _ from 'lodash';
 import dynamo from '@oasp/oasp4fn/dist/adapters/fn-dynamo';
-import fn from '@oasp/oasp4fn';
+import oasp4fn from '@oasp/oasp4fn';
 import * as dbtypes from './model/database';
 import * as types from './model/interfaces';
 import * as util from './utils/utilFunctions';
@@ -16,25 +16,25 @@ import * as serverConfig from './config';
 //? Dynamo
 /*
 const creds = new Credentials('akid', 'secret', 'session');
-fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
+oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
 let creds;
 if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
-    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
 } else {
     creds = new Credentials('akid2', 'secret2', 'session2');
-    fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
+    oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });
 }
 
 const maxPrice = 50;
 
 export async function findUser(userName: string): Promise<dbtypes.User[]> {
-    const roles = await fn.table('UserRole').reduce((acum: any, elem: any) => {
+    const roles = await oasp4fn.table('UserRole').reduce((acum: any, elem: any) => {
         acum[elem.id] = elem;
         return acum;
     }, {}).promise() as { [index: string]: dbtypes.UserRole };
 
-    return fn.table('User').map((elem: dbtypes.User) => {
+    return oasp4fn.table('User').map((elem: dbtypes.User) => {
         const newElem = elem;
         newElem.userName = elem.userName.toLowerCase();
         newElem.role = roles[elem.role].name.toUpperCase();
@@ -56,7 +56,7 @@ export async function getDishes(filter: types.FilterView,
 
         // get the dish ids if we are filtering by category
         if (catId) {
-            dishCategories = await fn.table('Category', catId).
+            dishCategories = await oasp4fn.table('Category', catId).
                 table('DishCategory').
                 join('id', 'idCategory').
                 map((elem: any) => elem.idDish).
@@ -69,7 +69,7 @@ export async function getDishes(filter: types.FilterView,
         //? filter by fav
         //TODO: check if user is correct
         // if (filter.isFab) {
-        //     const fav: dbtypes.User = await fn.table('User', '1').
+        //     const fav: dbtypes.User = await oasp4fn.table('User', '1').
         //         promise() as dbtypes.User;
 
         //     const s2: Set<string> = new Set(fav.favourites as string[]);
@@ -79,9 +79,9 @@ export async function getDishes(filter: types.FilterView,
 
         // get dishes from database
         if (dishIdSet === undefined || dishIdSet.size > 0) {
-            const ingredients: dbtypes.Ingredient[] = await fn.table('Ingredient').promise() as dbtypes.Ingredient[];
+            const ingredients: dbtypes.Ingredient[] = await oasp4fn.table('Ingredient').promise() as dbtypes.Ingredient[];
 
-            let dishes: types.DishesView[] = await fn.
+            let dishes: types.DishesView[] = await oasp4fn.
                 table('Dish', (dishIdSet !== undefined) ? [...dishIdSet] : undefined).
                 where('price', filter.maxPrice, '<=').
                 filter((o: any) => {
@@ -161,11 +161,11 @@ export async function createBooking(reserv: types.BookingPostView,
             booking.guestList = inv.map((elem: any): string => elem.id);
         }
 
-        await fn.insert('Booking', booking).promise();
+        await oasp4fn.insert('Booking', booking).promise();
 
         if (reserv.booking.bookingType === types.BookingTypes.invited && inv.length > 0) {
             try {
-                await fn.insert('InvitedGuest', inv).promise();
+                await oasp4fn.insert('InvitedGuest', inv).promise();
             } catch (error) {
                 console.error(error);
                 callback({ code: 500, message: error.message });
@@ -263,11 +263,11 @@ export async function createBooking(reserv: types.BookingPostView,
 
 export async function updateBookingWithTable(id: string, table: string) {
     try {
-        const book = await fn.table('Booking', id).promise() as dbtypes.Booking;
+        const book = await oasp4fn.table('Booking', id).promise() as dbtypes.Booking;
 
         book.table = table;
 
-        await fn.insert('Booking', book).promise();
+        await oasp4fn.insert('Booking', book).promise();
         // return true if error
         return false;
     } catch (error) {
@@ -276,7 +276,7 @@ export async function updateBookingWithTable(id: string, table: string) {
 }
 
 export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]> {
-    return fn.table('Booking').filter((o: dbtypes.Booking) => {
+    return oasp4fn.table('Booking').filter((o: dbtypes.Booking) => {
         let res = (o.canceled === undefined || o.canceled === false) && o.bookingType === types.BookingTypes.invited;
 
         if (date === undefined) res = res && moment(o.bookingDate).isAfter(moment().add(1, 'hour'));
@@ -287,7 +287,7 @@ export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]>
 }
 
 export async function getAssistansForInvitedBooking(id: string) {
-    const book = await fn.table('InvitedGuest').where('idBooking', id, '=').
+    const book = await oasp4fn.table('InvitedGuest').where('idBooking', id, '=').
         filter((elem: dbtypes.InvitedGuest) => elem.accepted).promise() as dbtypes.InvitedGuest[];
 
     return book.length + 1;
@@ -296,7 +296,7 @@ export async function getAssistansForInvitedBooking(id: string) {
 export async function searchBooking(searchCriteria: types.SearchCriteria,
                                     callback: (err: types.Error | null, bookingEntity?: types.PaginatedList) => void) {
     try {
-        let result: any = fn.table('Booking');
+        let result: any = oasp4fn.table('Booking');
 
         if (searchCriteria.email) {
             result = result.where('email', searchCriteria.email, '=');
@@ -306,7 +306,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
         }
 
         const [booking, invitedGuest]: [dbtypes.Booking[], { [index: string]: dbtypes.InvitedGuest }] = await Promise.all([result.filter((elem: dbtypes.Booking) => moment(elem.bookingDate).diff(moment()) > 0).orderBy('bookingDate', 'asc').promise() as dbtypes.Booking[],
-        fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
+        oasp4fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
         }, {}).promise() as any]);
@@ -342,7 +342,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
 export async function cancelBooking(token: string, callback: (err: types.Error | null) => void) {
     let reg: dbtypes.Booking[];
     try {
-        reg = await fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.Booking[];
+        reg = await oasp4fn.table('Booking').where('bookingToken', token, '=').promise() as dbtypes.Booking[];
 
         // errors ////////////////////////////////////////////////////////
         if (reg.length === 0) {
@@ -363,15 +363,15 @@ export async function cancelBooking(token: string, callback: (err: types.Error |
         }
         // end errors ////////////////////////////////////////////////////////
 
-        await fn.delete('Booking', reg[0].id).promise();
+        await oasp4fn.delete('Booking', reg[0].id).promise();
         // tableCron.unregisterInvitation(reg[0].id);
 
         let guest;
 
         try {
             if (reg[0].guestList !== undefined && (reg[0].guestList as string[]).length > 0) {
-                guest = await fn.table('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
-                await fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
+                guest = await oasp4fn.table('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
+                await oasp4fn.delete('InvitedGuest', (reg[0].guestList as string[])).promise() as dbtypes.InvitedGuest[];
             }
         } catch (err) {
             console.error(err);
@@ -381,7 +381,7 @@ export async function cancelBooking(token: string, callback: (err: types.Error |
         }
 
         try {
-            await fn.table('Order').where('idBooking', reg[0].id, '=').promise();
+            await oasp4fn.table('Order').where('idBooking', reg[0].id, '=').promise();
         } catch (err) {
             console.error(err);
             callback(err);
@@ -427,7 +427,7 @@ export async function updateInvitation(token: string, response: boolean, callbac
     let reg: dbtypes.InvitedGuest[];
     let booking;
     try {
-        reg = await fn.table('InvitedGuest').where('guestToken', token, '=').promise() as dbtypes.InvitedGuest[];
+        reg = await oasp4fn.table('InvitedGuest').where('guestToken', token, '=').promise() as dbtypes.InvitedGuest[];
 
         // errors //////////////////////////////////////////////
         if (reg.length === 0) {
@@ -442,7 +442,7 @@ export async function updateInvitation(token: string, response: boolean, callbac
             throw { code: 400, message: 'Already accepted' };
         }
 
-        booking = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
+        booking = await oasp4fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
         if (moment(booking.bookingDate).diff(moment().add(10, 'minutes')) < 0) {
             throw { code: 500, message: 'You can\'t do this operation at this moment' };
         }
@@ -453,11 +453,11 @@ export async function updateInvitation(token: string, response: boolean, callbac
         reg[0].accepted = response;
         reg[0].modificationDate = moment().toJSON();
 
-        await fn.insert('InvitedGuest', reg[0]).promise();
+        await oasp4fn.insert('InvitedGuest', reg[0]).promise();
 
         try {
             if (response === false && oldAccepted !== undefined && oldAccepted === true) {
-                await fn.table('Order').where('idInvitedGuest', reg[0].id).project('id').delete().promise();
+                await oasp4fn.table('Order').where('idInvitedGuest', reg[0].id).project('id').delete().promise();
             }
         } catch (err) {
             console.error(err);
@@ -508,9 +508,9 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
 
     try {
         if (order.booking.bookingToken.startsWith('CB')) {
-            reg = await fn.table('Booking').where('bookingToken', order.booking.bookingToken, '=').promise() as dbtypes.Booking[];
+            reg = await oasp4fn.table('Booking').where('bookingToken', order.booking.bookingToken, '=').promise() as dbtypes.Booking[];
         } else {
-            reg = await fn.table('InvitedGuest').where('guestToken', order.booking.bookingToken, '=').promise() as dbtypes.InvitedGuest[];
+            reg = await oasp4fn.table('InvitedGuest').where('guestToken', order.booking.bookingToken, '=').promise() as dbtypes.InvitedGuest[];
         }
 
         // Possible errors
@@ -536,7 +536,7 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
                 throw { code: 400, message: 'You must confirm' };
             }
 
-            const reg2 = await fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
+            const reg2 = await oasp4fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
             // booking canceled
             if (reg2.canceled !== undefined && reg2.canceled === true) {
                 throw { code: 400, message: 'The booking is canceled' };
@@ -571,13 +571,13 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
 
         reg[0].order = ord.id;
 
-        await fn.insert('Order', ord).promise();
+        await oasp4fn.insert('Order', ord).promise();
 
         try {
             if (order.booking.bookingToken.startsWith('CB')) {
-                await fn.insert('Booking', reg[0]).promise();
+                await oasp4fn.insert('Booking', reg[0]).promise();
             } else {
-                await fn.insert('InvitedGuest', reg[0]).promise();
+                await oasp4fn.insert('InvitedGuest', reg[0]).promise();
             }
         } catch (err) {
             // undo the previous insert
@@ -634,7 +634,7 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
     let invitedGuest: dbtypes.InvitedGuest | undefined;
 
     try {
-        order = await fn.table('Order', orderId).promise() as dbtypes.Order;
+        order = await oasp4fn.table('Order', orderId).promise() as dbtypes.Order;
 
         // errors
         if (!order) {
@@ -642,10 +642,10 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
         }
 
         if (order.idInvitedGuest === undefined) {
-            booking = await fn.table('Booking', order.idBooking).promise() as dbtypes.Booking;
+            booking = await oasp4fn.table('Booking', order.idBooking).promise() as dbtypes.Booking;
             invitedGuest = undefined;
         } else {
-            [booking, invitedGuest] = await Promise.all([fn.table('Booking', order.idBooking).promise() as Promise<dbtypes.Booking>, fn.table('InvitedGuest', order.idInvitedGuest).promise() as Promise<dbtypes.InvitedGuest>]);
+            [booking, invitedGuest] = await Promise.all([oasp4fn.table('Booking', order.idBooking).promise() as Promise<dbtypes.Booking>, oasp4fn.table('InvitedGuest', order.idInvitedGuest).promise() as Promise<dbtypes.InvitedGuest>]);
         }
 
         const bookingDate = moment(booking.bookingDate);
@@ -653,15 +653,15 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
             throw { code: 400, message: 'You can not cancel the order at this time' };
         }
 
-        await fn.delete('Order', order.id).promise();
+        await oasp4fn.delete('Order', order.id).promise();
 
         try {
             if (invitedGuest === undefined) {
                 booking.order = undefined;
-                await fn.insert('Booking', booking).promise();
+                await oasp4fn.insert('Booking', booking).promise();
             } else {
                 invitedGuest.order = undefined;
-                await fn.insert('InvitedGuest', invitedGuest).promise();
+                await oasp4fn.insert('InvitedGuest', invitedGuest).promise();
             }
         } catch (err) {
             console.error(err);
@@ -718,22 +718,22 @@ export async function getOrdersFiltered(search: types.SearchCriteria, callback: 
 
 export async function getAllOrders(): Promise<types.OrderView[]> {
     try {
-        let order: any = fn.table('Order');
+        let order: any = oasp4fn.table('Order');
 
         const [orders, booking, invitedGuest, dishes, extras]: [any, any, any, any, any] = await Promise.all([order.promise(),
-        fn.table('Booking').reduce((acum: any, elem: any) => {
+        oasp4fn.table('Booking').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
         }, {}).promise(),
-        fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
+        oasp4fn.table('InvitedGuest').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
         }, {}).promise(),
-        fn.table('Dish').reduce((acum: any, elem: any) => {
+        oasp4fn.table('Dish').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
         }, {}).promise(),
-        fn.table('Ingredient').reduce((acum: any, elem: any) => {
+        oasp4fn.table('Ingredient').reduce((acum: any, elem: any) => {
             acum[elem.id] = elem;
             return acum;
         }, {}).promise()]);
@@ -800,8 +800,8 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
 
 export async function getFreeTable(date: string, assistants: number, previousTable?: string) {
     let pTable: dbtypes.Table | undefined;
-    const [tables, booking] = await Promise.all([fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.Table[]>,
-    fn.table('Booking').filter((elem: dbtypes.Booking) => {
+    const [tables, booking] = await Promise.all([oasp4fn.table('Table').orderBy('seatsNumber', 'asc').promise() as Promise<dbtypes.Table[]>,
+    oasp4fn.table('Booking').filter((elem: dbtypes.Booking) => {
         const bookDate = moment(elem.bookingDate);
         const date2 = moment(elem.bookingDate);
         date2.add(1, 'hour');
@@ -853,7 +853,7 @@ async function calculateVATandOrderName(orderLines: types.OrderLinesView[]): Pro
     const names: string[] = [];
 
     const [dishes, extras] = await Promise.all([
-        fn.table('Dish', orderLines.map((elem: types.OrderLinesView) => {
+        oasp4fn.table('Dish', orderLines.map((elem: types.OrderLinesView) => {
             return elem.orderLine.dishId.toString();
         })).
             reduce((acum: any, elem: any) => {
@@ -861,7 +861,7 @@ async function calculateVATandOrderName(orderLines: types.OrderLinesView[]): Pro
                 return acum;
             }, {}).
             promise() as Promise<any>,
-        fn.table('Ingredient').
+        oasp4fn.table('Ingredient').
             reduce((acum: any, elem: any) => {
                 acum[elem.id] = elem;
                 return acum;
@@ -911,11 +911,11 @@ export async function undoChanges(operation: 'insert' | 'delete', table: string,
         try {
             if (operation === 'insert') {
                 if (object !== undefined) {
-                    await fn.insert(table, object).promise();
+                    await oasp4fn.insert(table, object).promise();
                 }
             } else if (operation === 'delete') {
                 if (object !== undefined) {
-                    await fn.delete(table, object).promise();
+                    await oasp4fn.delete(table, object).promise();
                 }
             }
 
