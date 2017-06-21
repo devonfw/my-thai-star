@@ -308,13 +308,12 @@ export function isInvitedGuestEntity(elem: any): elem is InvitedGuestEntity {
 export interface SearchCriteria {
     bookingToken?: string;
     email?: string;
+    sort?: SortByView[];
     pagination: Paginated;
 }
 
 export function isSearchCriteria(elem: any): elem is SearchCriteria {
     const type: TypeDefinition = {
-        bookingToken: ['optional', 'string'],
-        email: ['optional', 'string'],
         pagination: ['required', isPaginated],
     };
 

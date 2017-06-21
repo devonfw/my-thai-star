@@ -48,7 +48,6 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
             if (error) {
                 res.status(error.code || 500).json({ message: error.message });
             } else {
-                console.log(resToken);
                 res.status(201).json(resToken);
             }
         }, req.user);

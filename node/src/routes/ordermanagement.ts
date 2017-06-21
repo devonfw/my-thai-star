@@ -41,7 +41,7 @@ router.post('/v1/order/search', (req: Request, res: Response) => {
             } else {
                 res.json(result);
             }
-        });
+        }, req.body.sort);
     } catch (err) {
         res.status(err.code || 500).json({ message: err.message });
     }

@@ -333,6 +333,10 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
             };
         });
 
+        if ( searchCriteria.sort){
+            result = _.orderBy(result, searchCriteria.sort.map((elem) => `booking.${elem.name}`), searchCriteria.sort.map((elem) => elem.direction.toLowerCase()));
+        }
+
         callback(null, util.getPagination(searchCriteria.pagination.size, searchCriteria.pagination.page, result));
     } catch (error) {
         callback(error);
@@ -507,6 +511,7 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
     let reg: any[];
 
     try {
+
         if (order.booking.bookingToken.startsWith('CB')) {
             reg = await oasp4fn.table('Booking').where('bookingToken', order.booking.bookingToken, '=').promise() as dbtypes.Booking[];
         } else {
@@ -699,16 +704,16 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
     }
 }
 
-export async function getOrders(pagination: types.Paginated, callback: (err: types.Error | null, page: types.PaginatedList) => void) {
+export async function getOrders(pagination: types.Paginated, callback: (err: types.Error | null, page: types.PaginatedList) => void, sort?: types.SortByView[]) {
 
-    const or = await getAllOrders();
+    const or = await getAllOrders(sort);
 
     callback(null, util.getPagination(pagination.size, pagination.page, or));
 }
 
 export async function getOrdersFiltered(search: types.SearchCriteria, callback: (err: types.Error | null, page: types.PaginatedList) => void) {
 
-    const or = await getAllOrders();
+    const or = await getAllOrders(search.sort);
 
     callback(null, util.getPagination(search.pagination.size, search.pagination.page, _.filter(or, (elem: types.OrderView) => {
         return (search.bookingToken === undefined || search.bookingToken === '' || search.bookingToken === elem.booking.bookingToken) &&
@@ -716,7 +721,7 @@ export async function getOrdersFiltered(search: types.SearchCriteria, callback: 
     })));
 }
 
-export async function getAllOrders(): Promise<types.OrderView[]> {
+export async function getAllOrders(sort?: types.SortByView[]): Promise<types.OrderView[]> {
     try {
         let order: any = oasp4fn.table('Order');
 
@@ -789,6 +794,10 @@ export async function getAllOrders(): Promise<types.OrderView[]> {
 
             return result;
         });
+
+        if (sort){
+            order = _.orderBy(order, sort.map((elem) => `booking.${elem.name}`), sort.map((elem) => elem.direction.toLowerCase()));
+        }
 
         return order.filter((elem: any) => moment(elem.booking.bookingDate).diff(moment()) > 0);
     } catch (err) {
@@ -928,4 +937,13 @@ export async function undoChanges(operation: 'insert' | 'delete', table: string,
     if (error) {
         console.error('SEVERAL ERROR: DATABASE MAY HAVE INCONSISTENT DATA!');
     }
+}
+
+export async function cleanDatabase() {
+    await Promise.all(
+        [
+            oasp4fn.table('Booking').project('id').delete().promise(),
+            oasp4fn.table('InvitedGuest').project('id').delete().promise(),
+            oasp4fn.table('Order').project('id').delete().promise(),
+        ]);
 }

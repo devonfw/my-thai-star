@@ -12,6 +12,7 @@ const should = chai.should();
 
 describe('Testing the application logic', () => {
     before(() => {
+        business.cleanDatabase();
         //silence the console
         // console.log = () => {};
         // console.error = () => {};
@@ -428,11 +429,10 @@ describe('Testing the application logic', () => {
         });
     });
 
-
     after(() => {
         // delete console.log;
         // delete console.error;
-
+        business.cleanDatabase();
         process.env.MODE = undefined;
         process.env.PORT = undefined;
     });
