@@ -22,7 +22,6 @@ if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');
     oasp4fn.setDB(dynamo, { endpoint: serverConfig.databaseURL, region: 'us-west-2', credentials: creds });
 } else {
-    console.log('TESTEANDO TETE');
     creds = new Credentials('akid2', 'secret2', 'session2');
     oasp4fn.setDB(dynamo, { endpoint: serverConfig.databaseURL, region: 'us-west-2', credentials: creds });
 }

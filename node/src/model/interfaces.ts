@@ -125,9 +125,9 @@ export function isImageView(elem: any): elem is ImageView {
 
 export interface ExtraIngredientView {
     id: number;
-    name: string;
-    description: string;
-    price: number;
+    name?: string;
+    description?: string;
+    price?: number;
 }
 
 export function isExtraIngredientView(elem: any): elem is ExtraIngredientView {
@@ -203,7 +203,7 @@ export function isOrderPostView(elem: any): elem is OrderPostView {
 
 export interface OrderLinesView {
     orderLine: OrderLineView;
-    dish: DishView;
+    dish?: DishView;
     extras: ExtraIngredientView[];
 }
 
@@ -212,7 +212,7 @@ export interface OrderLineView {
     dishId: number;
     amount: number;
     comment?: string;
-    orderId: number;
+    orderId?: number;
 }
 
 export interface OrderFilterView {

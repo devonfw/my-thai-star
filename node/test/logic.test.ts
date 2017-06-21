@@ -105,10 +105,6 @@ describe('Testing the application logic', () => {
                 ],
             };
 
-            business.createBooking(b1, (err, bookingToken) => {
-                nbookingToken = bookingToken!;
-            });
-
             business.createBooking(b2, (err, bookingToken) => {
                 should.not.exist(err);
 
@@ -117,7 +113,15 @@ describe('Testing the application logic', () => {
 
                 fbookingToken = bookingToken!;
 
-                done();
+                business.createBooking(b1, (err2, bookingToken2) => {
+                    expect(bookingToken2).to.not.be.undefined;
+                    nbookingToken = bookingToken2!;
+
+                    expect(nbookingToken).to.not.be.undefined;
+                    expect(nbookingToken).to.be.equals(bookingToken2);
+                    done();
+                });
+
             });
         });
 
@@ -321,6 +325,109 @@ describe('Testing the application logic', () => {
             });
         });
     });
+
+    let orderId: string;
+    describe('createOrder', () => {
+
+        let order: types.OrderPostView;
+
+        before(() => {
+            order = {
+                booking: {
+                    bookingToken: nbookingToken,
+                },
+                orderLines: [
+                    {
+                        orderLine: {
+                            dishId: 1,
+                            amount: 4,
+                            comment: 'This is a comment',
+                        },
+                        extras: [
+                            {
+                                id: 1,
+                            },
+                        ],
+                    },
+                ],
+            };
+        });
+
+        it('should create an order', (done) => {
+            business.createOrder(order, (err, orderReference) => {
+                should.not.exist(err);
+
+                expect(orderReference).to.be.haveOwnPropertyDescriptor('id');
+                expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingId');
+                expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingToken');
+
+                orderId = orderReference.id.toString();
+
+                expect(orderReference.bookingToken).to.be.equal(nbookingToken);
+                done();
+            });
+        });
+
+        it('should return an error if a order is already registered', (done) => {
+            business.createOrder(order, (err, orderReference) => {
+                should.exist(err);
+
+                done();
+            });
+        });
+
+        it('should return a error if the bookingToken is invalid', (done) => {
+            order.booking.bookingToken = fbookingToken;
+
+            business.createOrder(order, (err, orderReference) => {
+                should.exist(err);
+
+                done();
+            });
+        });
+    });
+
+    describe('getAllOrders', () => {
+        it('should return all orders for the future bookings', (done) => {
+            business.getAllOrders().then((res: types.OrderView[]) => {
+                expect(res).to.not.be.undefined;
+
+                expect(res.length).to.be.equals(1);
+                done();
+            });
+        });
+    });
+
+    describe('getOrders', () => {
+        it('should return all orders for the future bookings', (done) => {
+            business.getOrders({size: 20, page: 1, total: 1}, (err, list) => {
+                should.not.exist(err);
+
+                expect(list.result).to.not.be.undefined;
+                expect(list.result.length).to.be.equals(1);
+                done();
+            });
+        });
+    });
+
+    describe('cancelOrder', () => {
+        it('should cancel an order', (done) => {
+            business.cancelOrder(orderId!, (err) => {
+                should.not.exist(err);
+
+                done();
+            });
+        });
+
+        it('should return an error if the order is already canceled', (done) => {
+            business.cancelOrder(orderId!, (err) => {
+                should.exist(err);
+
+                done();
+            });
+        });
+    });
+
 
     after(() => {
         // delete console.log;
