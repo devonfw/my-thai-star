@@ -48,9 +48,9 @@ app.use('/images', express.static('public/images'));
 /**
  * Securized routes
  */
-order.router.use('/v1/order/filter', auth.securizedEndpoint('WAITER'));
-order.router.use('/v1/order/search', auth.securizedEndpoint('WAITER'));
-booking.router.use('/v1/booking/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));
 app.use('/mythaistar/services/rest/security/changepassword', auth.securizedEndpoint('CUSTOMER'));
 
 /**

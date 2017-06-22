@@ -113,7 +113,7 @@ router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response
     }
 });
 
-router.post('/v1/booking/search', (req: Request, res: Response) => {
+router.post('/v1/booking/search', (req: types.CustomRequest, res: Response) => {
     try {
         // body content must be SearchCriteria
         if (!types.isSearchCriteria(req.body)) {
