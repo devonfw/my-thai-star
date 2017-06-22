@@ -3,9 +3,8 @@ export const secret = 'sdNEt9236pKXjvkxKz8ve3qj3qtgzLEGPYHNwKdALdxDjyqZ2JK2kkqNh
 export enum MailType {api = 0, mock, both, none}
 export const mailConfig: number = MailType.mock;
 
-export const debug: boolean = true;
-
 export const PORT: number = 9080;
+export const TESTPORT: number = 9980;
 export const emailAPIaddr: string = 'http://localhost:7080';
 export const frontendURL: string = 'http://localhost:4200';
 export const serverURL: string = 'http://localhost:' + PORT;

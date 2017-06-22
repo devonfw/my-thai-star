@@ -1,5 +1,6 @@
+import * as config from '../src/config';
 process.env.MODE = 'test';
-process.env.PORT = 9980;
+process.env.PORT = config.TESTPORT;
 
 import * as chai from 'chai';
 import ChaiHttp = require('chai-http');

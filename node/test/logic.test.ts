@@ -1,11 +1,11 @@
+import * as config from '../src/config';
 process.env.MODE = 'test';
-process.env.PORT = 9980;
+process.env.PORT = config.TESTPORT;
 
 import * as chai from 'chai';
 import * as _ from 'lodash';
 import * as business from '../src/logic';
 import * as types from '../src/model/interfaces';
-import * as config from '../src/config';
 
 const expect = chai.expect;
 const should = chai.should();

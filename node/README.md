@@ -56,7 +56,26 @@ To delete+create+insert data:
 
     $ npm run database
 
+To delete+insert data:
+
+    $ npm run database:data
+
 ## Execution
+
+### Config
+
+Before build and execute the server, you must modify server configs. To do this you must edit the file src/config.ts.
+
+* secret: configure the secret word for jwt tokens.
+* mailConfig:  configure how the emails will be sent.
+    * api: usign the Jose's email program
+    * mock: printing the email at console
+    * both: api + mock
+    * none: do nothing
+* emailAPIaddr: route to email server
+* frontendURL: route to frontend server
+* serverURL: route to this server
+* databaseURL: route to database server
 
 ### Build
 
@@ -78,7 +97,15 @@ or
 
     $ yarn start
 
-### Testing
+## Testing
+
+Before execute any test, you must create a new database for this purpose:
+
+    $ npm run database:test
+
+or
+
+    $ yarn database:test
 
 In order to run all unit test, run the command:
 
@@ -88,13 +115,11 @@ or
 
     $ yarn test
 
-It uses a new dynamodb connection and migrate & seed all tables. Then it starts a server at port 9080 and then it run all unit test.
-
-### Debugging
+## Debugging
 
 Not implemented yet.
 
-### Nodemon
+## Nodemon
 
 Build and monitors the server, with the nodemon command instead of node:
 
