@@ -1,4 +1,4 @@
-import { BackendType } from './../../../../environments/environment';
+import { BackendType } from './../../../../app/config';
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable } from '@angular/core';
 import { BackendConfig } from '../backend.module';

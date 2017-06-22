@@ -7,6 +7,8 @@ import { CovalentModule } from '../shared/covalent.module';
 import { Md2Module } from 'md2';
 
 import { BookTableService } from './shared/book-table.service';
+import { AssistantsValidatorDirective } from './shared/assistant-validator.directive';
+import { EmailValidatorDirective } from './shared/email-validator.directive';
 import { WindowService } from '../shared/windowService/windowService.service';
 import { SnackBarService } from '../shared/snackService/snackService.service';
 
@@ -26,6 +28,8 @@ import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog
     SnackBarService,
   ],
   declarations: [
+    EmailValidatorDirective,
+    AssistantsValidatorDirective,
     InvitationDialogComponent,
     BookTableDialogComponent,
     BookTableComponent,

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable } from '@angular/core';
-import { BackendType } from './../../../../environments/environment';
+import { BackendType } from './../../../../app/config';
 import { BackendConfig } from '../backend.module';
 import { OrderInMemoryService } from './order-in-memory.service';
 import { OrderRestService } from './order-rest.service';

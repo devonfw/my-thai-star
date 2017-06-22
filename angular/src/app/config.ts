@@ -1,5 +1,3 @@
-import { environment } from './../environments/environment';
-
 export const config: any = {
     pageSizes: [8, 16, 24],
     roles: [
@@ -7,3 +5,9 @@ export const config: any = {
         {name: 'WAITER', permission: 1},
     ],
 };
+
+export enum BackendType {
+  IN_MEMORY,
+  REST,
+  GRAPHQL,
+}
