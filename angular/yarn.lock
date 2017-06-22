@@ -99,10 +99,6 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/flex-layout@2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-2.0.0-rc.1.tgz#96fa7f85b2c4bacf2784913a2d607e2ed23dc7f1"
-
 "@angular/forms@^4.0.0":
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-4.2.4.tgz#ae09755332ea463f561df01aac2bd369e5d35dc9"
@@ -115,9 +111,11 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@2.0.0-beta.5":
-  version "2.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-beta.5.tgz#712141ebfa77e3ace3ec8e32b5953b355e773965"
+"@angular/material@2.0.0-beta.6":
+  version "2.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-beta.6.tgz#83bfdf00f540a8c7db900a1e7b8ed2cff49df821"
+  dependencies:
+    tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@^4.0.0":
   version "4.2.4"
@@ -151,33 +149,33 @@
   dependencies:
     tsickle "^0.21.0"
 
-"@covalent/core@1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@covalent/core/-/core-1.0.0-beta.4.tgz#1a7fea660d095663c9cea0b47ad58725130504c2"
+"@covalent/core@1.0.0-beta.5-1":
+  version "1.0.0-beta.5-1"
+  resolved "https://registry.yarnpkg.com/@covalent/core/-/core-1.0.0-beta.5-1.tgz#503d816bcb36bf164a388870ad74ccd240b12846"
 
 "@covalent/data@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@covalent/data/-/data-0.7.1.tgz#c5105d299784b8adc6fbb2688697714eedd387a8"
 
-"@covalent/dynamic-forms@1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@covalent/dynamic-forms/-/dynamic-forms-1.0.0-beta.4.tgz#5c7336b706835d6946569eaf0b9c196e205ed238"
+"@covalent/dynamic-forms@1.0.0-beta.5-1":
+  version "1.0.0-beta.5-1"
+  resolved "https://registry.yarnpkg.com/@covalent/dynamic-forms/-/dynamic-forms-1.0.0-beta.5-1.tgz#3617f32cc734eff6fec99ae363ebd6e159831365"
   dependencies:
-    "@covalent/core" "1.0.0-beta.4"
+    "@covalent/core" "1.0.0-beta.5-1"
 
-"@covalent/highlight@1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@covalent/highlight/-/highlight-1.0.0-beta.4.tgz#c2fe33fce697863d3a7d4a9972f6b2bcb46a1375"
+"@covalent/highlight@1.0.0-beta.5-1":
+  version "1.0.0-beta.5-1"
+  resolved "https://registry.yarnpkg.com/@covalent/highlight/-/highlight-1.0.0-beta.5-1.tgz#c4af6d82b6e3aef21806c0fffd09477553b1b552"
   dependencies:
     highlight.js "9.11.0"
 
-"@covalent/http@1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@covalent/http/-/http-1.0.0-beta.4.tgz#8b10267f08b9286a685c8c45a70ecdf5ced6fd7f"
+"@covalent/http@1.0.0-beta.5-1":
+  version "1.0.0-beta.5-1"
+  resolved "https://registry.yarnpkg.com/@covalent/http/-/http-1.0.0-beta.5-1.tgz#f3d51a0a33cd1e0ddc9b4db23c724e0c5e9e967c"
 
-"@covalent/markdown@1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@covalent/markdown/-/markdown-1.0.0-beta.4.tgz#8faedc0a9e2256a5a15cf255252a595b3e953a8e"
+"@covalent/markdown@1.0.0-beta.5-1":
+  version "1.0.0-beta.5-1"
+  resolved "https://registry.yarnpkg.com/@covalent/markdown/-/markdown-1.0.0-beta.5-1.tgz#67c316d94593c4963961fadc6fd1aeb66f0e25af"
   dependencies:
     showdown "1.6.4"
 
