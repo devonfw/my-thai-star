@@ -16,9 +16,9 @@ export const app = express();
 const cronT = new TableCron();
 const auth = new Authentication(process.env.SECRET || config.secret);
 
-app.set('port', process.env.PORT || config.PORT || 8080);
+app.set('port', (process.env.PORT) ? Number(process.env.PORT.trim()) : undefined || config.PORT || 8081);
 app.disable('x-powered-by');
-app.use(morgan('dev'));
+if (process.env.MODE === undefined || process.env.MODE.trim() !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -26,22 +26,18 @@ app.use(bodyParser.json());
  * Cors config
  */
 app.use(cors({
-  origin: config.frontendURL,
-  credentials: true,
-  exposedHeaders: 'Authorization',
+    origin: config.frontendURL,
+    credentials: true,
+    exposedHeaders: 'Authorization',
 }));
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding');
-  next();
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding');
+    next();
 });
 
 /**
  * Add table cron and user to request
  */
-app.use((req: CustomRequest, res, next) => {
-  req.tableCron = cronT;
-  next();
-});
 app.use(auth.registerAuthentication);
 
 /**
@@ -52,9 +48,9 @@ app.use('/images', express.static('public/images'));
 /**
  * Securized routes
  */
-order.router.use('/v1/order/filter', auth.securizedEndpoint('WAITER'));
-order.router.use('/v1/order/search', auth.securizedEndpoint('WAITER'));
-booking.router.use('/v1/booking/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));
 app.use('/mythaistar/services/rest/security/changepassword', auth.securizedEndpoint('CUSTOMER'));
 
 /**
@@ -69,9 +65,9 @@ app.post('/mythaistar/services/rest/security/changepassword', auth.changePasswor
 
 // error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(404).json({ message: 'Not Found' });
+    res.status(404).json({ message: 'Not Found' });
 });
 
 app.listen(app.get('port'), () => {
-  console.log('MyThaiStar server listening on port ' + app.get('port'));
+    console.log('MyThaiStar server listening on port ' + app.get('port'));
 });

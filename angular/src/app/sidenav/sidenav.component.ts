@@ -46,7 +46,7 @@ export class SidenavComponent implements OnInit {
             this.snackBar.openSnack('Order correctly noted', 4000, 'green');
         },
         (error: any) => {
-            this.snackBar.openSnack('Booking ID not existing', 4000, 'red');
+            this.snackBar.openSnack('Error sending order, please, try again later', 4000, 'red');
         });
   }
 }

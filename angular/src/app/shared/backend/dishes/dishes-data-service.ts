@@ -1,7 +1,7 @@
 import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { BackendConfig, BackendType } from '../backend.module';
+import { BackendType } from './../../../../app/config';
+import { BackendConfig } from '../backend.module';
 import { DishesGraphQlService } from './dishes-graph-ql.service';
 import { DishesInMemoryService } from './dishes-in-memory.service';
 import { DishesRestService } from './dishes-rest.service';

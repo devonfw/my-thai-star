@@ -1,0 +1,20 @@
+import { Directive, forwardRef } from '@angular/core';
+import { NG_VALIDATORS } from '@angular/forms';
+import { Validator, AbstractControl } from '@angular/forms';
+
+@Directive({
+    selector: '[validateAssistants][formControlName], [validateAssistants][formControl],[validateAssistants][ngModel]',
+    providers: [
+        { provide: NG_VALIDATORS, useExisting: forwardRef(() => AssistantsValidatorDirective), multi: true },
+    ],
+})
+export class AssistantsValidatorDirective implements Validator {
+
+    validate(c: AbstractControl): { [key: string]: any } {
+
+        return c.value > 0 ? undefined : {
+            validateAssistants: {
+                valid: false,
+            },
+        };
+    }}

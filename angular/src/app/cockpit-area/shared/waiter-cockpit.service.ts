@@ -4,7 +4,7 @@ import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.se
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
-import { OrderListView, OrderView } from '../../shared/viewModels/interfaces';
+import { OrderListView, OrderView, ReservationView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep} from 'lodash';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class WaiterCockpitService {
     return this.orderDataService.getBookingOrders(filters);
   }
 
-  getReservations(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<OrderListView[]> {
+  getReservations(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<ReservationView[]> {
     filters.pagination = pagination;
     filters.sort = sorting;
     return this.bookingDataService.getReservations(filters);

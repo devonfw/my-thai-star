@@ -30,6 +30,31 @@ or
 
     $ yarn global add nodemon
 
+## Config
+
+Before build and execute the server, you must modify server configs. To do this you must edit the file src/config.ts.
+
+* secret: configure the secret word for jwt tokens.
+* mailConfig:  configure how the emails will be sent.
+    * api: usign the Jose's email program
+    * mock: printing the email at console
+    * both: api + mock
+    * none: do nothing
+* emailAPIaddr: route to email server
+* frontendURL: route to frontend server
+* serverURL: route to this server
+* databaseURL: route to database server
+
+## Build
+
+To compile all typescript sources you should run:
+
+    $ npm run build
+
+or 
+
+    $ yarn build
+
 ## Database
 
 First of all, download DynamoDB in order to work with it in local: [http://docs.aws.amazon.com/...](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
@@ -40,37 +65,15 @@ First of all, download DynamoDB in order to work with it in local: [http://docs.
 
 ### Create tables:
 
-Delete all tables:
-
-    $ npm run database-delete
-
-Create all tables:
-
-    $ npm run database-create
-
-Insert all data:
-
-    $ npm run database-seeds
-
 To delete+create+insert data:
 
     $ npm run database
 
 ## Execution
 
-### Build
-
-To compile all typescript sources you should run:
-
-    $ npm run build
-
-or 
-
-    $ yarn build
-
 ### Start
 
-To switch on the server and send some http petitions on your localhost (http://localhost:8080), run the command:
+To switch on the server run the command:
 
     $ npm run start
 
@@ -78,7 +81,15 @@ or
 
     $ yarn start
 
-### Testing
+## Testing
+
+Before execute any test, you must create a new database for this purpose:
+
+    $ npm run database:test
+
+or
+
+    $ yarn database:test
 
 In order to run all unit test, run the command:
 
@@ -88,13 +99,11 @@ or
 
     $ yarn test
 
-It uses a new dynamodb connection and migrate & seed all tables. Then it starts a server at port 9080 and then it run all unit test.
-
-### Debugging
+## Debugging
 
 Not implemented yet.
 
-### Nodemon
+## Nodemon
 
 Build and monitors the server, with the nodemon command instead of node:
 

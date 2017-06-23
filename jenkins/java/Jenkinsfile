@@ -35,6 +35,7 @@ node {
     }
 
     stage('Deployment') {
+        input 'Should the oasp4j artifact be deployed?'
         sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
             sh """
                 cd java/mtsj
