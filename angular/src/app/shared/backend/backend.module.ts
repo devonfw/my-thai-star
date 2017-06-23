@@ -1,3 +1,4 @@
+import { BackendType } from './../../../app/config';
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -9,15 +10,15 @@ import { provideClient } from './graphql-client';
 import { ApolloModule } from 'apollo-angular';
 import { HttpClient } from '../httpClient/httpClient.service';
 
-export enum BackendType {
-  IN_MEMORY,
-  REST,
-  GRAPHQL,
-}
+// export enum BackendType {
+//   IN_MEMORY,
+//   REST,
+//   GRAPHQL,
+// }
 
 export class BackendConfig {
-  restServiceRoot: string;
   environmentType: BackendType;
+  restServiceRoot: string;
 }
 
 @NgModule({

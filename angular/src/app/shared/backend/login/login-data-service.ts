@@ -1,7 +1,7 @@
 import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { BackendConfig, BackendType } from '../backend.module';
+import { BackendType } from './../../../../app/config';
+import { BackendConfig } from '../backend.module';
 import { LoginRestService } from './login-rest.service';
 import { LoginInMemoryService } from './login-in-memory.service';
 import { ILoginDataService } from './login-data-service-interface';

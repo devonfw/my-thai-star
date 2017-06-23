@@ -58,7 +58,7 @@ export function isPaginated(elem: any): elem is Paginated {
 
 export interface PaginatedList {
     pagination: Paginated;
-    result: DishesView[] | OrderView[] | BookingEntity[];
+    result: DishesView[] | OrderView[] | BookingEntity[] | BookingPostView[];
 }
 
 export interface CategoryView {
@@ -125,9 +125,9 @@ export function isImageView(elem: any): elem is ImageView {
 
 export interface ExtraIngredientView {
     id: number;
-    name: string;
-    description: string;
-    price: number;
+    name?: string;
+    description?: string;
+    price?: number;
 }
 
 export function isExtraIngredientView(elem: any): elem is ExtraIngredientView {
@@ -203,7 +203,7 @@ export function isOrderPostView(elem: any): elem is OrderPostView {
 
 export interface OrderLinesView {
     orderLine: OrderLineView;
-    dish: DishView;
+    dish?: DishView;
     extras: ExtraIngredientView[];
 }
 
@@ -212,7 +212,7 @@ export interface OrderLineView {
     dishId: number;
     amount: number;
     comment?: string;
-    orderId: number;
+    orderId?: number;
 }
 
 export interface OrderFilterView {
@@ -308,13 +308,12 @@ export function isInvitedGuestEntity(elem: any): elem is InvitedGuestEntity {
 export interface SearchCriteria {
     bookingToken?: string;
     email?: string;
+    sort?: SortByView[];
     pagination: Paginated;
 }
 
 export function isSearchCriteria(elem: any): elem is SearchCriteria {
     const type: TypeDefinition = {
-        bookingToken: ['optional', 'string'],
-        email: ['optional', 'string'],
         pagination: ['required', isPaginated],
     };
 
@@ -327,7 +326,6 @@ export interface Error {
 }
 
 export interface CustomRequest extends Request {
-    tableCron: TableCron;
     user?: User;
 }
 
