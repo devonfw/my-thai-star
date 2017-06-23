@@ -1,6 +1,7 @@
 import { Directive, forwardRef } from '@angular/core';
 import { NG_VALIDATORS } from '@angular/forms';
 import { Validator, AbstractControl } from '@angular/forms';
+import { isInteger } from 'lodash';
 
 @Directive({
     selector: '[validateAssistants][formControlName], [validateAssistants][formControl],[validateAssistants][ngModel]',
@@ -12,7 +13,7 @@ export class AssistantsValidatorDirective implements Validator {
 
     validate(c: AbstractControl): { [key: string]: any } {
 
-        return c.value > 0 ? undefined : {
+        return isInteger(c.value) && c.value > 0 ? undefined : {
             validateAssistants: {
                 valid: false,
             },
