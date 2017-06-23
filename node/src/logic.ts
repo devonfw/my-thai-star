@@ -56,12 +56,20 @@ export async function getDishes(filter: types.FilterView,
 
         // get the dish ids if we are filtering by category
         if (catId) {
-            dishCategories = await oasp4fn.table('Category', catId).
-                table('DishCategory').
-                join('id', 'idCategory').
-                map((elem: any) => elem.idDish).
-                promise() as string[];
+            const dishCatObject = await oasp4fn.table('DishCategory').
+                filter((elem: dbtypes.DishCategory) => _.includes(catId, elem.idCategory)).
+                reduce((acum: any, elem: any) => {
+                    if (acum.hasOwnProperty(elem.idDish)) {
+                        acum[elem.idDish].categories.push(elem.idCategory);
+                    } else {
+                        acum[elem.idDish] = { id: elem.idDish, categories: [elem.idCategory] };
+                    }
+                    return acum;
+                }, {}).
+                promise() as { [propName: string]: {}[] };
 
+            dishCategories = _.filter(_.values(dishCatObject), _.matchesProperty('categories', catId)).map((elem) => elem.id);
+            console.log(dishCategories);
             dishIdSet = new Set(dishCategories);
 
         }
@@ -333,7 +341,7 @@ export async function searchBooking(searchCriteria: types.SearchCriteria,
             };
         });
 
-        if ( searchCriteria.sort){
+        if (searchCriteria.sort) {
             result = _.orderBy(result, searchCriteria.sort.map((elem) => `booking.${elem.name}`), searchCriteria.sort.map((elem) => elem.direction.toLowerCase()));
         }
 
@@ -795,7 +803,7 @@ export async function getAllOrders(sort?: types.SortByView[]): Promise<types.Ord
             return result;
         });
 
-        if (sort){
+        if (sort) {
             order = _.orderBy(order, sort.map((elem) => `booking.${elem.name}`), sort.map((elem) => elem.direction.toLowerCase()));
         }
 
