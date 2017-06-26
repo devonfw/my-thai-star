@@ -43,7 +43,7 @@ The application is completely deployed as it is specified in the Wiki of this re
 
 2. [Angular client for Java server using Docker Compose](http://de-mucdevondepl01:8091)
 
-3. [Java server for Angular client](http://de-mucdevondepl01:9090)
+3. [Java server for Angular client](http://de-mucdevondepl01:9090/mythaistar/)
 
-4. [Java server for Angular client using Docker Compose](http://de-mucdevondepl01:9091)
+4. [Java server for Angular client using Docker Compose](http://de-mucdevondepl01:9091/mythaistar/)
 
