@@ -75,6 +75,8 @@ describe('Testing all util functions', () => {
     describe('validEmail function', () => {
         it('should check if a email is well formed or not', () => {
             expect(util.validEmail('user@gmail.com')).to.be.true;
+            expect(util.validEmail('user@gmail')).to.be.false;
+            expect(util.validEmail('user@gmail.online')).to.be.true;
             expect(util.validEmail('hello.com')).to.be.false;
         });
     });

@@ -3,7 +3,7 @@ import * as business from '../logic';
 import * as types from '../model/interfaces';
 import * as moment from 'moment';
 import { validEmail } from '../utils/utilFunctions';
-import { lowerCase } from 'lodash';
+import { lowerCase, isInteger } from 'lodash';
 
 export const router = eRouter();
 
@@ -24,7 +24,7 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
             throw { code: 400, message: 'Invalid email' };
         }
 
-        if (req.body.booking.bookingType === types.BookingTypes.booking && req.body.booking.assistants! < 1) {
+        if (req.body.booking.bookingType === types.BookingTypes.booking && req.body.booking.assistants! < 1 && !isInteger(req.body.booking.assistants)) {
             throw { code: 400, message: 'Assistants must be a number greater than 1' };
         }
 
