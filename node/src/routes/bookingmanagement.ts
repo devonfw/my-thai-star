@@ -7,7 +7,7 @@ import { lowerCase, isInteger } from 'lodash';
 
 export const router = eRouter();
 
-router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
+router.post('/booking', (req: types.CustomRequest, res: Response) => {
     try {
         // Check errors at petiton
         if (!types.isBookingPostView(req.body)) {
@@ -56,7 +56,7 @@ router.post('/v1/booking', (req: types.CustomRequest, res: Response) => {
     }
 });
 
-router.get('/v1/invitedguest/accept/:token', (req: Request, res: Response) => {
+router.get('/invitedguest/accept/:token', (req: Request, res: Response) => {
     try {
         // the token must be defined
         if (req.params.token === undefined) {
@@ -75,7 +75,7 @@ router.get('/v1/invitedguest/accept/:token', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/invitedguest/decline/:token', (req: Request, res: Response) => {
+router.get('/invitedguest/decline/:token', (req: Request, res: Response) => {
     try {
         // the token must be defined
         if (req.params.token === undefined) {
@@ -94,7 +94,7 @@ router.get('/v1/invitedguest/decline/:token', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response) => {
+router.get('/booking/cancel/:token', (req: types.CustomRequest, res: Response) => {
     try {
         // the token must be defined
         if (req.params.token === undefined) {
@@ -113,7 +113,7 @@ router.get('/v1/booking/cancel/:token', (req: types.CustomRequest, res: Response
     }
 });
 
-router.post('/v1/booking/search', (req: types.CustomRequest, res: Response) => {
+router.post('/booking/search', (req: types.CustomRequest, res: Response) => {
     try {
         // body content must be SearchCriteria
         if (!types.isSearchCriteria(req.body)) {
