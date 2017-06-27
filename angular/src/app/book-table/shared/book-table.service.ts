@@ -16,6 +16,7 @@ export class BookTableService {
   }
 
   composeBooking(invitationData: any, type: number): BookingInfo {
+    console.log(invitationData)
     let composedBooking: BookingInfo = {
       booking: {
         bookingDate: invitationData.bookingDate,

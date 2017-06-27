@@ -12,6 +12,7 @@ import { MdDialogRef, MdDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { reject } from 'lodash';
 import { config } from '../../config';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -20,16 +21,13 @@ import { config } from '../../config';
 })
 export class ReservationCockpitComponent implements OnInit {
 
-  data: ReservationView[];
+  reservations: Observable<ReservationView[]>;
 
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
     { name: 'booking.bookingToken', label: 'Reference number'},
   ];
-
-  filteredData: ReservationView[];
-  filteredTotal: number;
 
   pageSizes: number[] = config.pageSizes;
 
@@ -60,11 +58,7 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getReservations(this.pagination, this.sorting, this.filters).subscribe((reservations: any) => {
-      this.data = reservations.result;
-      this.filteredData = reservations.result;
-      this.filteredTotal = reservations.pagination.total;
-    });
+    this.reservations = this.waiterCockpitService.getReservations(this.pagination, this.sorting, this.filters);
   }
 
   clearFilters(filters: any): void {

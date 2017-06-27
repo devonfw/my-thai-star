@@ -40,11 +40,12 @@
                   <input mdInput placeholder="Email" ngModel name="email" required validateEmail>
                 </md-input-container>
 
-                <md-input-container color="accent" flex>
+                <md-input-container class="push-bottom-sm" color="accent" flex>
                   <input mdInput placeholder="Assistants" ngModel name="assistants" type="number" required validateAssistants>
+                  <md-error>Required. You can not reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.</md-error>
                 </md-input-container>
 
-                <md-checkbox #termsd>Accept terms</md-checkbox>
+                <md-checkbox class="push-top" #termsd>Accept terms</md-checkbox>
 
               </div>
               <div class="align-right">

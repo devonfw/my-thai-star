@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IPageChangeEvent,
          ITdDataTableSelectAllEvent,
          ITdDataTableColumn,
@@ -7,10 +6,11 @@ import { IPageChangeEvent,
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { ReservationView, OrderListView } from '../../shared/viewModels/interfaces';
+import { OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
 import { reject } from 'lodash';
 import { config } from '../../config';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -19,8 +19,8 @@ import { config } from '../../config';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  data: OrderListView[];
-  dataTotal: number;
+  orders: Observable<OrderListView[]>;
+
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
@@ -51,10 +51,7 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters).subscribe((orders: any) => {
-      this.data = orders.result;
-      this.dataTotal = orders.pagination.total;
-    });
+    this.orders = this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters);
   }
 
   clearFilters(filters: any): void {

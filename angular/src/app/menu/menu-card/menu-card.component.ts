@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { MenuService } from '../shared/menu.service';
+import { AuthService } from '../../shared/authentication/auth.service';
 
 @Component({
   selector: 'public-menu-card',
@@ -13,6 +14,7 @@ export class MenuCardComponent {
   @Input('menu') menuInfo: DishView;
 
   constructor(private menuService: MenuService,
+              public auth: AuthService,
               private sidenav: SidenavService) { }
 
   addOrderMenu(): void {

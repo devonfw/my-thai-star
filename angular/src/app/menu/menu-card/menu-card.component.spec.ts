@@ -1,7 +1,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SidenavService } from '../../sidenav/shared/sidenav.service';
+import { CovalentModule } from '../../shared/covalent.module';
 
+import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
 import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
 import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
@@ -10,8 +11,9 @@ import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory
 import { OrderDataService } from '../../shared/backend/order/order-data-service';
 import { MenuService } from '../shared/menu.service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { AuthService } from '../../shared/authentication/auth.service';
+
 import { MenuCardComponent } from './menu-card.component';
-import { CovalentModule } from '../../shared/covalent.module';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;
@@ -23,6 +25,7 @@ describe('MenuCardComponent', () => {
       providers: [
         MenuService,
         SidenavService,
+        AuthService,
         SnackBarService,
         { provide: BookingDataService, useClass: BookingInMemoryService},
         { provide: OrderDataService, useClass: OrderInMemoryService},

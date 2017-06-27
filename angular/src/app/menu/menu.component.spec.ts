@@ -4,6 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
 import { SnackBarService } from '../shared/snackService/snackService.service';
+import { AuthService } from '../shared/authentication/auth.service';
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { BackendModule } from './../shared/backend/backend.module';
@@ -16,7 +17,7 @@ describe('MenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenuComponent, MenuCardComponent ],
-      providers: [SidenavService, MenuService, SnackBarService],
+      providers: [SidenavService, MenuService, SnackBarService, AuthService],
       imports: [
         BrowserAnimationsModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),

@@ -103,14 +103,17 @@
       </div>
     </div>
   </form>
-  
-  <md-progress-bar
-      color="accent"
-      mode="indeterminate"
-      *ngIf="!menuLoaded">
-  </md-progress-bar>
 
-  <div flex layout="row"  class="justify-space-around flex-wrap">
-    <public-menu-card *ngFor="let menu of menus" [menu]="menu"></public-menu-card>
+  <div flex layout="row" *ngIf="menus | async as allMenus; else loading" class="justify-space-around flex-wrap">
+    <public-menu-card *ngFor="let menu of allMenus" [menu]="menu"></public-menu-card>
   </div>
+  
+  <ng-template #loading>
+    <md-progress-bar
+      #loading
+      color="accent"
+      mode="indeterminate">
+    </md-progress-bar>
+  </ng-template>
+
 </td-layout>

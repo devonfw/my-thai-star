@@ -4,6 +4,7 @@ import { Md2Module } from 'md2';
 import { CovalentModule } from '../shared/covalent.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
+import { SnackBarService } from '../shared/snackService/snackService.service';
 import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
 import { BookingDataService } from '../shared/backend/booking/booking-data-service';
 import { BookTableService } from './shared/book-table.service';
@@ -20,6 +21,7 @@ describe('BookTableComponent', () => {
       declarations: [ BookTableComponent ],
       providers: [
         SidenavService,
+        SnackBarService,
         WindowService,
         BookTableService,
         {provide: BookingDataService, useClass: BookingInMemoryService},

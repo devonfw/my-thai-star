@@ -38,7 +38,7 @@ export class HttpClient {
                         this.auth.setLogged(false);
                         this.auth.setRole('CUSTOMER');
                         this.auth.setUser('');
-                        this.headers.delete('Authorization');
+                        this.auth.setToken('');
                         this.snackService.openSnack(error.json().message, 4000, 'red');
                         this.router.navigate(['restaurant']);
                     }
@@ -58,7 +58,7 @@ export class HttpClient {
                         this.auth.setLogged(false);
                         this.auth.setRole('CUSTOMER');
                         this.auth.setUser('');
-                        this.headers.delete('Authorization');
+                        this.auth.setToken('');
                         this.snackService.openSnack(error.json().message, 4000, 'red');
                         this.router.navigate(['restaurant']);
                     }
