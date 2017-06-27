@@ -35,7 +35,6 @@ node {
     }
 
     stage('Deployment') {
-        input 'Should the oasp4j artifact be deployed?'
         sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
             sh """
                 cd java/mtsj
@@ -44,7 +43,7 @@ node {
                 
                 # Launch application in Docker container
                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run --rm -itd --name=mts-java -p 9090:8080 tomcat:latest
+                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-java -p 9090:8080 tomcat:latest
                 ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
             """
         }

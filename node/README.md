@@ -61,13 +61,19 @@ First of all, download DynamoDB in order to work with it in local: [http://docs.
 
 ### Running DynamoDB Local:
 
+Move to the folder where you unzip the DynamoDB and run the command:
+
     $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar
 
 ### Create tables:
 
-To delete+create+insert data:
+Go back to the project folder and run the command:
 
     $ npm run database
+
+or
+
+    $ yarn database
 
 ## Execution
 

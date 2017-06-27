@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 /**
- * Add table cron and user to request
+ * Add user to request
  */
 app.use(auth.registerAuthentication);
 
@@ -56,9 +56,13 @@ app.use('/mythaistar/services/rest/security/changepassword', auth.securizedEndpo
 /**
  * API routes
  */
-app.use('/mythaistar/services/rest/dishmanagement', dishes.router);
-app.use('/mythaistar/services/rest/ordermanagement', order.router);
-app.use('/mythaistar/services/rest/bookingmanagement', booking.router);
+app.use('/mythaistar/services/rest/dishmanagement/v1', dishes.router);
+app.use('/mythaistar/services/rest/ordermanagement/v1', order.router);
+app.use('/mythaistar/services/rest/bookingmanagement/v1', booking.router);
+
+/**
+ * Security component
+ */
 app.post('/mythaistar/login', auth.auth);
 app.get('/mythaistar/services/rest/security/v1/currentuser', auth.getCurrentUser);
 app.post('/mythaistar/services/rest/security/changepassword', auth.changePassword);

@@ -13,6 +13,7 @@ import { DishView } from '../shared/viewModels/interfaces';
 export class MenuComponent implements OnInit {
 
     menus: DishView[] = [];
+    menuLoaded: boolean = false;
     sortDir: string = 'DESC';
     sortDirIcon: string = 'vertical_align_bottom';
 
@@ -22,6 +23,7 @@ export class MenuComponent implements OnInit {
     ngOnInit(): void {
       this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
         this.menus = dishes;
+        this.menuLoaded = true;
       });
     }
 

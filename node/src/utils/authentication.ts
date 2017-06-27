@@ -19,7 +19,12 @@ export class Authentication {
 
             // verifies secret and checks exp
             jwt.verify(token, this.superSecret, (err: any, decoded: any) => {
-                req.user = err ? undefined : decoded;
+                if (err){
+                    res.status(500).json({message: err.message});
+                    return;
+                }
+
+                req.user = decoded;
                 next();
             });
         } else {
@@ -46,7 +51,7 @@ export class Authentication {
                     // if user is found and password is right
                     // create a token
                     const token = jwt.sign(user[0], this.superSecret, {
-                        expiresIn: '24h', // expires in 24 hours
+                        expiresIn: '1h', // expires in 24 hours
                     });
 
                     // return the information including token as JSON

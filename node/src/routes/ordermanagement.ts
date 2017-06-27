@@ -4,7 +4,7 @@ import * as types from '../model/interfaces';
 
 export const router = eRouter();
 
-router.post('/v1/order', (req: Request, res: Response) => {
+router.post('/order', (req: Request, res: Response) => {
     try {
         // The booking token must be defined
         if (req.body.booking === undefined || req.body.booking.bookingToken === undefined) {
@@ -28,7 +28,7 @@ router.post('/v1/order', (req: Request, res: Response) => {
     }
 });
 
-router.post('/v1/order/search', (req: Request, res: Response) => {
+router.post('/order/search', (req: Request, res: Response) => {
     try {
         // body content must be SearchCriteria
         if (!types.isSearchCriteria(req.body)) {
@@ -47,7 +47,7 @@ router.post('/v1/order/search', (req: Request, res: Response) => {
     }
 });
 
-router.post('/v1/order/filter', (req: Request, res: Response) => {
+router.post('/order/filter', (req: Request, res: Response) => {
     try {
         // body content must be SearchCriteria
         if (!types.isSearchCriteria(req.body)) {
@@ -66,7 +66,7 @@ router.post('/v1/order/filter', (req: Request, res: Response) => {
     }
 });
 
-router.get('/v1/order/cancelorder/:id', (req: Request, res: Response) => {
+router.get('/order/cancelorder/:id', (req: Request, res: Response) => {
     try {
         // para id must be defined
         if (req.params.id === undefined || typeof req.params.id === 'number') {
