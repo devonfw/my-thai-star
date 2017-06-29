@@ -20,7 +20,7 @@ describe('SidenavSharedService', () => {
     });
   });
 
-  it('should ...', inject([SidenavService], (service: SidenavService) => {
+  it('should create', inject([SidenavService], (service: SidenavService) => {
     expect(service).toBeTruthy();
   }));
 });

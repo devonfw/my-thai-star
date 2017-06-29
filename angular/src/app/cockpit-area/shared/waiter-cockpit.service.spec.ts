@@ -19,7 +19,7 @@ describe('WaiterCockpitService', () => {
     });
   });
 
-  it('should ...', inject([WaiterCockpitService], (service: WaiterCockpitService) => {
+  it('should create', inject([WaiterCockpitService], (service: WaiterCockpitService) => {
     expect(service).toBeTruthy();
   }));
 

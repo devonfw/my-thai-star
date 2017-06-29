@@ -9,7 +9,7 @@ describe('OrderInMemoryService', () => {
     });
   });
 
-  it('should ...', inject([OrderInMemoryService], (service: OrderInMemoryService) => {
+  it('should create', inject([OrderInMemoryService], (service: OrderInMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -23,7 +23,7 @@ describe('UserAreaService', () => {
     });
   });
 
-  it('should ...', inject([UserAreaService], (service: UserAreaService) => {
+  it('should create', inject([UserAreaService], (service: UserAreaService) => {
     expect(service).toBeTruthy();
   }));
 });

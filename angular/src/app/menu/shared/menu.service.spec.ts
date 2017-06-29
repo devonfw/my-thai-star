@@ -17,7 +17,7 @@ describe('MenuService', () => {
     });
   });
 
-  it('should ...', inject([MenuService], (service: MenuService) => {
+  it('should create', inject([MenuService], (service: MenuService) => {
     expect(service).toBeTruthy();
   }));
 });

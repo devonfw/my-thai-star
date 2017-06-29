@@ -35,7 +35,6 @@ import { appRoutes } from './app.routes';
     UserAreaModule,
     EmailConfirmationModule,
     CovalentModule,
-    // BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: env.backendType}),
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
   ],
   providers: [],
