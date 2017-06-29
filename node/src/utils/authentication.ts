@@ -1,5 +1,5 @@
 import { CustomRequest } from '../model/interfaces';
-import { Response, NextFunction } from 'express';
+import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { findUser } from '../logic';
 
@@ -11,7 +11,7 @@ export class Authentication {
     // route middleware to verify a token
     public registerAuthentication = (req: CustomRequest, res: Response, next: NextFunction) => {
         // check header or url parameters or post parameters for token
-        let token = req.headers.authorization;
+        let token = req.headers.authorization as string;
 
         // decode token
         if (token) {

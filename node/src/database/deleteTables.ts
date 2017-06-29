@@ -8,7 +8,7 @@ if (mode) process.env.MODE = mode;
 function deleteTables() {
     let creds;
     let conf;
-    if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    if (!process.env.MODE || process.env.MODE!.trim() !== 'test') {
         creds = new AWS.Credentials('akid', 'secret', 'session');
         conf = {
             credentials: creds,

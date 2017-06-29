@@ -13,7 +13,7 @@ const should = chai.should();
 describe('Testing the application logic', () => {
     before(() => {
         business.cleanDatabase();
-        //silence the console
+        // silence the console
         // console.log = () => {};
         // console.error = () => {};
     });

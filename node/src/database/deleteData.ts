@@ -13,7 +13,7 @@ function deleteData() {
     let dynamodb: DynamoDB;
 
     let creds;
-    if (!process.env.MODE || process.env.MODE.trim() !== 'test') {
+    if (!process.env.MODE || process.env.MODE!.trim() !== 'test') {
         creds = new Credentials('akid', 'secret', 'session');
         oasp4fn.setDB(dynamo, { endpoint: databaseURL, region: 'us-west-2', credentials: creds });
         dynamodb = new DynamoDB({ endpoint: databaseURL, region: 'us-west-2', credentials: creds });
