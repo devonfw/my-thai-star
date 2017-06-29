@@ -19,7 +19,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  orders: Observable<OrderListView[]>;
+  orders: OrderListView[];
+  totalOrders: number;
 
   columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
@@ -51,7 +52,11 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.orders = this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters);
+    this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters)
+        .subscribe( (data: any) => {
+          this.orders = data.result;
+          this.totalOrders = data.pagination.total;
+        });
   }
 
   clearFilters(filters: any): void {

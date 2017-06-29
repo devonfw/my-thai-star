@@ -19,12 +19,17 @@
       </td-expansion-panel>
     </div>
   </form>
-  <md-card *ngIf="reservations | async as reservationData else loading">
+  <md-progress-bar
+    *ngIf="!reservations"
+    color="accent"
+    mode="indeterminate">
+  </md-progress-bar>
+  <md-card>
     <md-card-title>RESERVATIONS</md-card-title>
     <md-divider></md-divider>
     <td-data-table
       #dataTable
-      [data]="reservationData.result"
+      [data]="reservations"
       [columns]="columns"
       [sortable]="true"
       clickable="true"
@@ -34,18 +39,9 @@
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>No results to display.</h3>
     </div>
-    <td-paging-bar #pagingBar [pageSizes]="pageSizes" [total]="reservationData.pagination.total" (change)="page($event)">
+    <td-paging-bar #pagingBar [pageSizes]="pageSizes" [total]="totalReservations" (change)="page($event)">
       <span td-paging-bar-label hide-xs>Rows per page:</span>
       {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
     </td-paging-bar>
   </md-card>
-
-  <ng-template #loading>
-    <md-progress-bar
-      #loading
-      color="accent"
-      mode="indeterminate">
-    </md-progress-bar>
-  </ng-template>
-
 </td-layout>
