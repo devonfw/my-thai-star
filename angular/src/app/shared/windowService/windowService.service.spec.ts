@@ -10,7 +10,7 @@ describe('WindowService', () => {
     });
   });
 
-  it('should ...', inject([WindowService], (service: WindowService) => {
+  it('should create', inject([WindowService], (service: WindowService) => {
     expect(service).toBeTruthy();
   }));
 });

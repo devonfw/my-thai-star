@@ -34,7 +34,7 @@ describe('BookingRestService', () => {
     });
   });
 
-  it('should ...', inject([BookingRestService], (service: BookingRestService) => {
+  it('should create', inject([BookingRestService], (service: BookingRestService) => {
     expect(service).toBeTruthy();
   }));
 });

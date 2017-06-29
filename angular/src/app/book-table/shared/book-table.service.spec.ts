@@ -14,7 +14,7 @@ describe('BookTableService', () => {
     });
   });
 
-  it('should ...', inject([BookTableService], (service: BookTableService) => {
+  it('should create', inject([BookTableService], (service: BookTableService) => {
     expect(service).toBeTruthy();
   }));
 

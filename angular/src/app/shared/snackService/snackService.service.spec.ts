@@ -10,7 +10,7 @@ describe('SnackBarService', () => {
     });
   });
 
-  it('should ...', inject([SnackBarService], (service: SnackBarService) => {
+  it('should create', inject([SnackBarService], (service: SnackBarService) => {
     expect(service).toBeTruthy();
   }));
 });

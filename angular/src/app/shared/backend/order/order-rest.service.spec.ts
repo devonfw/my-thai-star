@@ -34,7 +34,7 @@ describe('OrderRestService', () => {
     });
   });
 
-  it('should ...', inject([OrderRestService], (service: OrderRestService) => {
+  it('should create', inject([OrderRestService], (service: OrderRestService) => {
     expect(service).toBeTruthy();
   }));
 });
