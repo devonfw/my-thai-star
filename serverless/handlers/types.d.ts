@@ -21,6 +21,7 @@ export interface HttpEvent {
   body: any;
   query: {[name: string]: string};
   headers: { [key: string]: string; };
+  pathParameters?: {[name: string]: string};
 }
 
 export interface S3Event {  

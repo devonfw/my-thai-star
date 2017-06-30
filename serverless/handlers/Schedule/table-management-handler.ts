@@ -4,7 +4,7 @@ import * as types from '../../src/model/interfaces';
 import * as business from '../../src/logic';
 import * as moment from 'moment';
 
-oasp4fn.config({ rate: 'rate(1 minute)', enabled: true, hola: ['hola 1', 'hola 2'], });
+oasp4fn.config({ rate: 'rate(1 minute)', enabled: true, });
 export async function tableManagement(event: HttpEvent, context: Context, callback: Function) {
     const p = new Promise<void>(async (resolve, reject) => {
         const date = moment().set('second', 0).set('millisecond', 0).add(1, 'hour').toJSON();

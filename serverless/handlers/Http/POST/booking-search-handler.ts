@@ -2,7 +2,7 @@ import oasp4fn from '@oasp/oasp4fn';
 import { HttpEvent, Context } from '../../types';
 import * as business from '../../../src/logic';
 import * as types from '../../../src/model/interfaces';
-import * as auth from '../../utils';
+import * as auth from '../../../src/utils/jwt';
 
 oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
 export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {

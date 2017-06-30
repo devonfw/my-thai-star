@@ -6,10 +6,10 @@ import * as moment from 'moment';
 import { validEmail } from '../../../src/utils/utilFunctions';
 import { lowerCase, isInteger } from 'lodash';
 
-oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking' });
+oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking', integration: 'lambda-proxy' });
 export async function booking(event: HttpEvent, context: Context, callback: Function) {
     try {
-        let booking = <types.BookingPostView>event.body;
+        let booking: types.BookingPostView = (typeof event.body === 'string') ? JSON.parse(event.body) : event.body;
         // Check errors at petiton
         if (!types.isBookingPostView(booking)) {
             throw { code: 400, message: 'Parser data error' };
@@ -47,12 +47,21 @@ export async function booking(event: HttpEvent, context: Context, callback: Func
         // if no errors, create booking
         business.createBooking(booking, (error: types.Error | null, resToken?: string): void => {
             if (error) {
-                callback(new Error(`[${error.code || 500}] ${error.message}`));
+                callback(null, {
+                    statusCode: error.code || 500,
+                    body: error.message
+                });
             } else {
-                callback(null, `"${resToken}"`);
+                callback(null, {
+                    statusCode: 201,
+                    body: JSON.stringify(resToken),
+                });
             }
         }, undefined);
     } catch (err) {
-        callback(new Error(`[${err.code || 500}] ${err.message}`));
+        callback(null, {
+            statusCode: err.code || 500,
+            body: err.message,
+        });
     }
 }

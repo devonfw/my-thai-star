@@ -14,9 +14,6 @@ import { Mailer } from './utils/mailer';
 import * as serverConfig from './config';
 
 //? Dynamo
-/*
-const creds = new Credentials('akid', 'secret', 'session');
-oasp4fn.setDB(dynamo, { endpoint: 'http://localhost:8000/', region: 'us-west-2', credentials: creds });*/
 let creds;
 if (!process.env.MODE || process.env.MODE!.trim() !== 'test') {
     creds = new Credentials('akid', 'secret', 'session');

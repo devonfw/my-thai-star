@@ -5,6 +5,7 @@ import * as types from '../../../src/model/interfaces';
 
 oasp4fn.config({
     path: '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/{token}',
+    integration: 'lambda-proxy',
     request: {
         parameters: {
             paths: {
@@ -14,8 +15,8 @@ oasp4fn.config({
     }
 });
 export async function invitedGuestAccept(event: HttpEvent, context: Context, callback: Function) {
-    let token: string = event.path.token;
     try {
+        let token: string = event.pathParameters!.token;
         // the token must be defined
         if (token === undefined) {
             throw { code: 400, message: 'Invalid petition' };
@@ -23,12 +24,21 @@ export async function invitedGuestAccept(event: HttpEvent, context: Context, cal
 
         business.updateInvitation(token, true, (err: types.Error) => {
             if (err) {
-                callback(new Error(`[${err.code || 500}] ${err.message}`));
+                callback(null, {
+                    statusCode: err.code || 500,
+                    body: err.message
+                });
             } else {
-                callback({message: '[204]'});
+                callback(null, {
+                    statusCode: 204,
+                    body: ''
+                });
             }
         });
     } catch (err) {
-        callback(new Error(`[${err.code || 500}] ${err.message}`));
+        callback(null, {
+            statusCode: err.code || 500,
+            body: err.message
+        });
     }
 }
