@@ -3,7 +3,7 @@ import { HttpEvent, Context } from '../../types';
 import * as business from '../../../src/logic';
 import { OrderPostView, isOrderPostView, Error} from '../../../src/model/interfaces';
 
-oasp4fn.config({path: '/mythaistar/services/rest/ordermanagement/v1/order'});
+oasp4fn.config({path: '/mythaistar/services/rest/ordermanagement/v1/order', integration: 'lambda-proxy'});
 export async function order (event: HttpEvent, context: Context, callback: Function) {
     try {
         let order: OrderPostView = <OrderPostView>event.body;
@@ -19,12 +19,21 @@ export async function order (event: HttpEvent, context: Context, callback: Funct
 
         business.createOrder(order, (err: Error, orderReference?: any) => {
             if (err) {
-                callback(new Error(`[${err.code || 500}] ${err.message }`));
+                callback(err, {
+                    statusCode: err.code || 500,
+                    body: err.message
+                });
             } else {
-                callback(null, orderReference);
+                callback(null, {
+                    statusCode: 201,
+                    body: orderReference
+                });
             }
         });
     } catch (err) {
-        callback(new Error(`[${err.code || 500}] ${err.message}`));
+        callback(err, {
+                    statusCode: err.code || 500,
+                    body: err.message
+                });
     }
 }

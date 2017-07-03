@@ -5,6 +5,7 @@ import * as types from '../../../src/model/interfaces';
 
 oasp4fn.config({
     path: '/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/{id}',
+    integration: 'lambda-proxy',
     request: {
         parameters: {
             paths: {
@@ -14,9 +15,9 @@ oasp4fn.config({
     }
 });
 export async function orderCancel(event: HttpEvent, context: Context, callback: Function) {
-    let id: string = event.path.id;
-
     try {
+        let id: string = event.pathParameters!.id;
+
         // para id must be defined
         if (id === undefined || typeof id === 'number') {
             throw { code: 400, message: 'No id given' };
@@ -24,12 +25,20 @@ export async function orderCancel(event: HttpEvent, context: Context, callback: 
 
         business.cancelOrder(id, (err: types.Error) => {
             if (err) {
-                callback(new Error(`[${err.code || 500}] ${err.message}`));
+                callback(err, {
+                    statusCode: err.code || 500,
+                    body: err.message,
+                });
             } else {
-                callback({ message: '[204]' });
+                callback(null, {
+                    statusCode: 204,
+                });
             }
         });
     } catch (err) {
-        callback(new Error(`[${err.code || 500}] ${err.message}`));
+        callback(err, {
+                    statusCode: err.code || 500,
+                    body: err.message,
+                });
     }
 }

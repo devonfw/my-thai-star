@@ -47,7 +47,7 @@ export async function booking(event: HttpEvent, context: Context, callback: Func
         // if no errors, create booking
         business.createBooking(booking, (error: types.Error | null, resToken?: string): void => {
             if (error) {
-                callback(null, {
+                callback(error, {
                     statusCode: error.code || 500,
                     body: error.message
                 });
@@ -59,7 +59,7 @@ export async function booking(event: HttpEvent, context: Context, callback: Func
             }
         }, undefined);
     } catch (err) {
-        callback(null, {
+        callback(err, {
             statusCode: err.code || 500,
             body: err.message,
         });

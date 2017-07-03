@@ -18,7 +18,7 @@ export async function login(event: HttpEvent, context: Context, callback: Functi
                 });
                 return;
             } else {
-                callback(null, {
+                callback(new Error(`[403] Forbidden`), {
                     statusCode: 403,
                     body: '"Forbidden"',
                 });
@@ -26,7 +26,7 @@ export async function login(event: HttpEvent, context: Context, callback: Functi
             }
 
         } catch (err) {
-            callback(null, {
+            callback(err, {
                 statusCode: err.code || 500,
                 body: { message: err.message },
             });

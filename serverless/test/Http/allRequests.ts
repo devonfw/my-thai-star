@@ -17,6 +17,9 @@ import { orderSearch } from '../../handlers/Http/POST/order-search-handler';
 import { bookingSearch } from '../../handlers/Http/POST/booking-search-handler';
 import { invitedGuestAccept } from '../../handlers/Http/GET/invitedGuest-accept-handler';
 import { invitedGuestDecline } from '../../handlers/Http/GET/invitedGuest-decline-handler';
+import { bookingCancel } from '../../handlers/Http/GET/booking-cancel-handler';
+import { orderCancel } from '../../handlers/Http/GET/order-cancel-handler';
+import { order } from '../../handlers/Http/POST/order-handler';
 
 const expect = chai.expect;
 const should = chai.should();
@@ -241,7 +244,6 @@ describe('API endpoints', function () {
 
                     done();
                 } catch (err2) {
-                    console.log(err2);
                     done(err2);
                 }
             });
@@ -261,7 +263,6 @@ describe('API endpoints', function () {
 
                     done();
                 } catch (err2) {
-                    console.log(err2);
                     done(err2);
                 }
             });
@@ -330,7 +331,6 @@ describe('API endpoints', function () {
     let guestToken: string;
     describe('POST /mythaistar/services/rest/bookingmanagement/v1/booking/search with filter', () => {
         it('should return only the bookings that satisfies the filter', (done) => {
-            console.log(gbookingToken);
             const event = _.assign({}, {
                 method: 'POST',
                 path: {},
@@ -351,8 +351,6 @@ describe('API endpoints', function () {
             bookingSearch(event, context, (err: any, res: any) => {
                 try {
                     should.not.exist(err);
-
-                    console.log(res);
 
                     guestToken = res.result[0].invitedGuests[0].guestToken;
                     done();
@@ -377,6 +375,7 @@ describe('API endpoints', function () {
             };
             invitedGuestAccept(event, context, (err: any, res: any) => {
                 try {
+                    should.exist(err);
                     expect(res.statusCode).to.be.equals(400);
 
                     done();
@@ -402,7 +401,7 @@ describe('API endpoints', function () {
             invitedGuestAccept(event, context, (err: any, res: any) => {
                 try {
                     should.not.exist(err);
-                    // expect(res).to.have.status(204);
+                    expect(res.statusCode).to.be.equals(204);
 
                     done();
                 } catch (err2) {
@@ -412,251 +411,373 @@ describe('API endpoints', function () {
         });
     });
 
-    // describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/:token', () => {
-    //     it('should return an error because this invitation is already accepted', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/' + guestToken)
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+    describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/:token', () => {
+        it('should return an error because this invitation is already accepted', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    token: guestToken,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
 
-    //                 done();
-    //             });
-    //     });
-    // });
+            invitedGuestAccept(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    // describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/:token', () => {
-    //     it('should decline an invitation, even if it was accepted', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/' + guestToken)
-    //             .end((err, res) => {
-    //                 should.not.exist(err);
-    //                 expect(res).to.have.status(204);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/:token', () => {
+        it('should decline an invitation, even if it was accepted', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    token: guestToken,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+            invitedGuestDecline(event, context, (err: any, res: any) => {
+                try {
+                    should.not.exist(err);
+                    expect(res.statusCode).to.be.equals(204);
 
-    // describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/:token', () => {
-    //     it('should return an error because this invitation is already declined', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/' + guestToken)
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('GET /mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/:token', () => {
+        it('should return an error because this invitation is already declined', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    token: guestToken,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+            invitedGuestDecline(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    // describe('GET /mythaistar/services/rest/bookingmanagement/v1/booking/cancel/:token', () => {
-    //     it('should cancel a booking with invited guests', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/bookingmanagement/v1/booking/cancel/' + gbookingToken)
-    //             .end((err, res) => {
-    //                 should.not.exist(err);
-    //                 expect(res).to.have.status(204);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('GET /mythaistar/services/rest/bookingmanagement/v1/booking/cancel/:token', () => {
+        it('should cancel a booking with invited guests', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    token: gbookingToken,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+            bookingCancel(event, context, (err: any, res: any) => {
+                try {
+                    should.not.exist(err);
+                    expect(res.statusCode).to.be.equals(204);
 
-    // describe('GET /mythaistar/services/rest/bookingmanagement/v1/booking/cancel/:token', () => {
-    //     it('should return an error', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/bookingmanagement/v1/booking/cancel/' + gbookingToken)
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('GET /mythaistar/services/rest/bookingmanagement/v1/booking/cancel/:token', () => {
+        it('should return an error', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    token: gbookingToken,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+            bookingCancel(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order without an order', () => {
-    //     it('should register the order into the system and return an orderReference', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order')
-    //             .send({})
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order without an order', () => {
+        it('should register the order into the system and return an orderReference', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                body: {},
+            };
 
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an invalid token', () => {
-    //     it('should return an error', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order')
-    //             .send({
-    //                 booking: {
-    //                     bookingToken: 'INVALID_TOKEN',
-    //                 },
-    //                 orderLines: [
-    //                     {
-    //                         orderLine: {
-    //                             dishId: 1,
-    //                             amount: 4,
-    //                             comment: 'This is a comment',
-    //                         },
-    //                         extras: [
-    //                             {
-    //                                 id: 1,
-    //                             },
-    //                         ],
-    //                     },
-    //                 ],
-    //             })
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+            order(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    //                 done();
-    //             });
-    //     });
-    // });
+                    done();
 
-    // let orderId: string;
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
-    //     it('should register the order into the system and return a orderReference', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order')
-    //             .send({
-    //                 booking: {
-    //                     bookingToken: cbookingToken,
-    //                 },
-    //                 orderLines: [
-    //                     {
-    //                         orderLine: {
-    //                             dishId: 1,
-    //                             amount: 4,
-    //                             comment: 'This is a comment',
-    //                         },
-    //                         extras: [
-    //                             {
-    //                                 id: 1,
-    //                             },
-    //                         ],
-    //                     },
-    //                 ],
-    //             })
-    //             .end((err, res) => {
-    //                 should.not.exist(err);
-    //                 expect(res).to.have.status(201);
-    //                 expect(res).to.be.json;
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 expect(res.body).to.be.haveOwnPropertyDescriptor('id');
-    //                 expect(res.body).to.be.haveOwnPropertyDescriptor('bookingId');
-    //                 expect(res.body).to.be.haveOwnPropertyDescriptor('bookingToken');
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an invalid token', () => {
+        it('should return an error', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                body: {
+                    booking: {
+                        bookingToken: 'INVALID_TOKEN',
+                    },
+                    orderLines: [
+                        {
+                            orderLine: {
+                                dishId: 1,
+                                amount: 4,
+                                comment: 'This is a comment',
+                            },
+                            extras: [
+                                {
+                                    id: 1,
+                                },
+                            ],
+                        },
+                    ],
+                }
+            };
 
-    //                 orderId = res.body.id.toString();
+            order(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    //                 expect(res.body.bookingToken).to.be.equal(cbookingToken);
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    let orderId: string;
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
+        it('should register the order into the system and return a orderReference', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                body: {
+                    booking: {
+                        bookingToken: cbookingToken,
+                    },
+                    orderLines: [
+                        {
+                            orderLine: {
+                                dishId: 1,
+                                amount: 4,
+                                comment: 'This is a comment',
+                            },
+                            extras: [
+                                {
+                                    id: 1,
+                                },
+                            ],
+                        },
+                    ],
+                }
+            };
 
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
-    //     it('should return and error because the user have an order registered', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order')
-    //             .send({
-    //                 booking: {
-    //                     bookingToken: cbookingToken,
-    //                 },
-    //                 orderLines: [
-    //                     {
-    //                         orderLine: {
-    //                             dishId: 1,
-    //                             amount: 4,
-    //                             comment: 'This is a comment',
-    //                         },
-    //                         extras: [
-    //                             {
-    //                                 id: 1,
-    //                             },
-    //                         ],
-    //                     },
-    //                 ],
-    //             })
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
+            order(event, context, (err: any, res: any) => {
+                try {
+                    should.not.exist(err);
+                    expect(res.statusCode).to.be.equals(201);
 
-    //                 done();
-    //             });
-    //     });
-    // });
+                    expect(res.body).to.be.haveOwnPropertyDescriptor('id');
+                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingId');
+                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingToken');
 
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order/search without authorization token', () => {
-    //     it('should return a 403 error', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order/search')
-    //             .send({
-    //                 paginated: { size: 20, page: 1, total: 1 },
-    //             })
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(403);
+                    orderId = res.body.id.toString();
 
-    //                 done();
-    //             });
-    //     });
-    // });
+                    expect(res.body.bookingToken).to.be.equal(cbookingToken);
 
-    // describe('POST /mythaistar/services/rest/ordermanagement/v1/order/search without filter', () => {
-    //     it('should return all orders for the future bookings', (done) => {
-    //         chai.request(server)
-    //             .post('/mythaistar/services/rest/ordermanagement/v1/order/search')
-    //             .set('Authorization', auth)
-    //             .send({
-    //                 pagination: { size: 20, page: 1, total: 1 },
-    //             })
-    //             .end((err, res) => {
-    //                 should.not.exist(err);
-    //                 expect(res).to.have.status(200);
-    //                 expect(res).to.be.json;
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
+        it('should return and error because the user have an order registered', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                body: {
+                    booking: {
+                        bookingToken: cbookingToken,
+                    },
+                    orderLines: [
+                        {
+                            orderLine: {
+                                dishId: 1,
+                                amount: 4,
+                                comment: 'This is a comment',
+                            },
+                            extras: [
+                                {
+                                    id: 1,
+                                },
+                            ],
+                        },
+                    ],
+                }
+            };
 
-    // describe('GET /mythaistar/services/rest/ordermanagement/v1/order/cancelorder/:id', () => {
-    //     it('should cancel an order', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/' + orderId)
-    //             .end((err, res) => {
-    //                 should.not.exist(err);
-    //                 expect(res).to.have.status(204);
+            order(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
 
-    //                 done();
-    //             });
-    //     });
-    // });
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
-    // describe('GET /mythaistar/services/rest/ordermanagement/v1/order/cancelorder/:id', () => {
-    //     it('should return an error because the order is already canceled', (done) => {
-    //         chai.request(server)
-    //             .get('/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/' + orderId)
-    //             .end((err, res) => {
-    //                 should.exist(err);
-    //                 expect(res).to.have.status(400);
-    //                 expect(res).to.be.json;
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order/search without authorization token', () => {
+        it('should return a 403 error', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                body: {
+                    paginated: { size: 20, page: 1, total: 1 },
+                },
+                headers: {},
+            };
 
-    //                 done();
-    //             });
-    //     });
-    // });
+            orderSearch(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+
+                    expect(err.message.startsWith('[403]')).to.be.true;
+
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
+
+    describe('POST /mythaistar/services/rest/ordermanagement/v1/order/search without filter', () => {
+        it('should return all orders for the future bookings', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'POST',
+                path: {},
+                query: {},
+                body: {
+                    pagination: { size: 20, page: 1, total: 1 },
+                },
+                headers: {
+                    'Authorization': auth,
+                }
+            };
+            orderFilter(event, context, (err: any, res: any) => {
+                try {
+                    should.not.exist(err);
+
+                    expect(res.result.length).to.be.equals(1);
+
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
+
+    describe('GET /mythaistar/services/rest/ordermanagement/v1/order/cancelorder/:id', () => {
+        it('should cancel an order', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    id: orderId,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+
+            orderCancel(event, context, (err: any, res: any) => {
+                try {
+                    should.not.exist(err);
+                    expect(res.statusCode).to.be.equals(204);
+
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
+
+    describe('GET /mythaistar/services/rest/ordermanagement/v1/order/cancelorder/:id', () => {
+        it('should return an error because the order is already canceled', (done) => {
+            const event: HttpEvent = <HttpEvent>{
+                method: 'GET',
+                path: {},
+                pathParameters: {
+                    id: orderId,
+                },
+                body: {},
+                query: {},
+                headers: {},
+            };
+
+            orderCancel(event, context, (err: any, res: any) => {
+                try {
+                    should.exist(err);
+                    expect(res.statusCode).to.be.equals(400);
+
+                    done();
+                } catch (err2) {
+                    done(err2);
+                }
+            });
+        });
+    });
 
     after(() => {
         business.cleanDatabase();

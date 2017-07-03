@@ -24,7 +24,7 @@ export async function invitedGuestAccept(event: HttpEvent, context: Context, cal
 
         business.updateInvitation(token, true, (err: types.Error) => {
             if (err) {
-                callback(null, {
+                callback(err, {
                     statusCode: err.code || 500,
                     body: err.message
                 });
@@ -36,7 +36,7 @@ export async function invitedGuestAccept(event: HttpEvent, context: Context, cal
             }
         });
     } catch (err) {
-        callback(null, {
+        callback(err, {
             statusCode: err.code || 500,
             body: err.message
         });
