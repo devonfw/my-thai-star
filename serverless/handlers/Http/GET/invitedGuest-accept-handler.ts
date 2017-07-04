@@ -26,7 +26,7 @@ export async function invitedGuestAccept(event: HttpEvent, context: Context, cal
             if (err) {
                 callback(err, {
                     statusCode: err.code || 500,
-                    body: err.message
+                    body: JSON.stringify(err.message),
                 });
             } else {
                 callback(null, {
@@ -38,7 +38,7 @@ export async function invitedGuestAccept(event: HttpEvent, context: Context, cal
     } catch (err) {
         callback(err, {
             statusCode: err.code || 500,
-            body: err.message
+            body: JSON.stringify(err.message),
         });
     }
 }

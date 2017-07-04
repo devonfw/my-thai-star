@@ -20,7 +20,7 @@ export async function login(event: HttpEvent, context: Context, callback: Functi
             } else {
                 callback(new Error(`[403] Forbidden`), {
                     statusCode: 403,
-                    body: '"Forbidden"',
+                    body: JSON.stringify('Forbidden'),
                 });
                 return;
             }
@@ -28,7 +28,7 @@ export async function login(event: HttpEvent, context: Context, callback: Functi
         } catch (err) {
             callback(err, {
                 statusCode: err.code || 500,
-                body: { message: err.message },
+                body: JSON.stringify({ message: err.message }),
             });
         }
     });

@@ -49,7 +49,7 @@ export async function booking(event: HttpEvent, context: Context, callback: Func
             if (error) {
                 callback(error, {
                     statusCode: error.code || 500,
-                    body: error.message
+                    body: JSON.stringify(error.message),
                 });
             } else {
                 callback(null, {
@@ -61,7 +61,7 @@ export async function booking(event: HttpEvent, context: Context, callback: Func
     } catch (err) {
         callback(err, {
             statusCode: err.code || 500,
-            body: err.message,
+            body: JSON.stringify(err.message),
         });
     }
 }

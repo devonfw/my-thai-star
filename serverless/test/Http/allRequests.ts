@@ -526,7 +526,7 @@ describe('API endpoints', function () {
             };
             bookingCancel(event, context, (err: any, res: any) => {
                 try {
-                    should.exist(err);
+                    // should.exist(err);
                     expect(res.statusCode).to.be.equals(400);
 
                     done();
@@ -538,14 +538,14 @@ describe('API endpoints', function () {
     });
 
     describe('POST /mythaistar/services/rest/ordermanagement/v1/order without an order', () => {
-        it('should register the order into the system and return an orderReference', (done) => {
+        it('should return an error', (done) => {
             const event: HttpEvent = <HttpEvent>{
-                body: {},
+                body: JSON.stringify({}),
             };
 
             order(event, context, (err: any, res: any) => {
                 try {
-                    should.exist(err);
+                    // should.exist(err);
                     expect(res.statusCode).to.be.equals(400);
 
                     done();
@@ -560,7 +560,7 @@ describe('API endpoints', function () {
     describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an invalid token', () => {
         it('should return an error', (done) => {
             const event: HttpEvent = <HttpEvent>{
-                body: {
+                body: JSON.stringify({
                     booking: {
                         bookingToken: 'INVALID_TOKEN',
                     },
@@ -578,12 +578,12 @@ describe('API endpoints', function () {
                             ],
                         },
                     ],
-                }
+                })
             };
 
             order(event, context, (err: any, res: any) => {
                 try {
-                    should.exist(err);
+                    // should.exist(err);
                     expect(res.statusCode).to.be.equals(400);
 
                     done();
@@ -598,7 +598,7 @@ describe('API endpoints', function () {
     describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
         it('should register the order into the system and return a orderReference', (done) => {
             const event: HttpEvent = <HttpEvent>{
-                body: {
+                body: JSON.stringify({
                     booking: {
                         bookingToken: cbookingToken,
                     },
@@ -616,7 +616,7 @@ describe('API endpoints', function () {
                             ],
                         },
                     ],
-                }
+                })
             };
 
             order(event, context, (err: any, res: any) => {
@@ -624,13 +624,14 @@ describe('API endpoints', function () {
                     should.not.exist(err);
                     expect(res.statusCode).to.be.equals(201);
 
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('id');
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingId');
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingToken');
+                    let resParsed = JSON.parse(res.body);
+                    expect(resParsed).to.be.haveOwnPropertyDescriptor('id');
+                    expect(resParsed).to.be.haveOwnPropertyDescriptor('bookingId');
+                    expect(resParsed).to.be.haveOwnPropertyDescriptor('bookingToken');
 
-                    orderId = res.body.id.toString();
+                    orderId = resParsed.id.toString();
 
-                    expect(res.body.bookingToken).to.be.equal(cbookingToken);
+                    expect(resParsed.bookingToken).to.be.equal(cbookingToken);
 
                     done();
                 } catch (err2) {
@@ -643,7 +644,7 @@ describe('API endpoints', function () {
     describe('POST /mythaistar/services/rest/ordermanagement/v1/order with an order', () => {
         it('should return and error because the user have an order registered', (done) => {
             const event: HttpEvent = <HttpEvent>{
-                body: {
+                body: JSON.stringify({
                     booking: {
                         bookingToken: cbookingToken,
                     },
@@ -661,12 +662,12 @@ describe('API endpoints', function () {
                             ],
                         },
                     ],
-                }
+                })
             };
 
             order(event, context, (err: any, res: any) => {
                 try {
-                    should.exist(err);
+                    // should.exist(err);
                     expect(res.statusCode).to.be.equals(400);
 
                     done();

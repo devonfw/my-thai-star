@@ -6,7 +6,8 @@ import { OrderPostView, isOrderPostView, Error} from '../../../src/model/interfa
 oasp4fn.config({path: '/mythaistar/services/rest/ordermanagement/v1/order', integration: 'lambda-proxy'});
 export async function order (event: HttpEvent, context: Context, callback: Function) {
     try {
-        let order: OrderPostView = <OrderPostView>event.body;
+        let order: OrderPostView = <OrderPostView>JSON.parse(event.body);
+
         // The booking token must be defined
         if (order.booking === undefined || order.booking.bookingToken === undefined) {
             throw { code: 400, message: 'No booking token given' };
@@ -19,21 +20,21 @@ export async function order (event: HttpEvent, context: Context, callback: Funct
 
         business.createOrder(order, (err: Error, orderReference?: any) => {
             if (err) {
-                callback(err, {
+                callback(null, {
                     statusCode: err.code || 500,
-                    body: err.message
+                    body: JSON.stringify(err.message),
                 });
             } else {
                 callback(null, {
                     statusCode: 201,
-                    body: orderReference
+                    body: JSON.stringify(orderReference),
                 });
             }
         });
     } catch (err) {
-        callback(err, {
+        callback(null, {
                     statusCode: err.code || 500,
-                    body: err.message
+                    body: JSON.stringify(err.message)
                 });
     }
 }

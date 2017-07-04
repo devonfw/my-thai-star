@@ -24,21 +24,21 @@ export async function bookingCancel(event: HttpEvent, context: Context, callback
 
         business.cancelBooking(token, (err: types.Error | null) => {
             if (err) {
-                callback(err, {
+                callback(null, {
                     statusCode: err.code || 500,
-                    body: err.message
+                    body: JSON.stringify(err.message),
                 });
             } else {
                 callback(null, {
                     statusCode: 204,
-                    body: ''
+                    body: '',
                 });
             }
         });
     } catch (err) {
-        callback(err, {
+        callback(null, {
                     statusCode: err.code || 500,
-                    body: err.message
+                    body: JSON.stringify(err.message),
                 });
     }
 }

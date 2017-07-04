@@ -27,7 +27,7 @@ export async function orderCancel(event: HttpEvent, context: Context, callback: 
             if (err) {
                 callback(err, {
                     statusCode: err.code || 500,
-                    body: err.message,
+                    body: JSON.stringify(err.message),
                 });
             } else {
                 callback(null, {
@@ -38,7 +38,7 @@ export async function orderCancel(event: HttpEvent, context: Context, callback: 
     } catch (err) {
         callback(err, {
                     statusCode: err.code || 500,
-                    body: err.message,
+                    body: JSON.stringify(err.message),
                 });
     }
 }
