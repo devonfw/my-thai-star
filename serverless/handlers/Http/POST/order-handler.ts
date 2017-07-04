@@ -18,6 +18,10 @@ export async function order (event: HttpEvent, context: Context, callback: Funct
             throw { code: 400, message: 'Parser error' };
         }
 
+        if (order.orderLines === undefined || order.orderLines.length === 0) {
+            throw { code: 400, message: 'Empty order' };
+        }
+
         business.createOrder(order, (err: Error, orderReference?: any) => {
             if (err) {
                 callback(null, {
