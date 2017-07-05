@@ -10,12 +10,21 @@
     "build": "tsc && webpack",
     "offline": "sls offline -P 9080 --location .webpack",
     "test": "mocha --opts mocha.opts",
-    "test:auto": "mocha --opts mocha.opts --watch"
+    "test:auto": "mocha --opts mocha.opts --watch",
+    "database-create": "ts-node ./database/createTables",
+    "database-delete": "ts-node ./database/deleteTables",
+    "database-seed": "ts-node ./database/insertData",
+    "database-delete:data": "ts-node ./database/deleteData",
+    "database": "npm run database-delete && npm run database-create && npm run database-seed",
+    "database:test": "npm run database-delete test && npm run database-create test && npm run database-seed test",
+    "database:data": "npm run database-delete:data && npm run database-seed",
+    "database:test:data": "npm run database-delete:data test && npm run database-seed test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@oasp/oasp4fn": "^0.6.2",
+    "@oasp/oasp4fn": "0.6.1",
+    "aws-sdk": "^2.80.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
@@ -23,6 +32,7 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/body-parser": "^1.16.4",
     "@types/chai": "^4.0.1",
     "@types/cors": "^2.8.1",
@@ -44,7 +54,7 @@
     "serverless-webpack": "^1.0.0-rc.4",
     "ts-loader": "^2.2.1",
     "ts-node": "^3.1.0",
-    "webpack": "^3.0.0",
+    "webpack": "1.15.0",
     "webpack-node-externals": "^1.6.0"
   }
 }

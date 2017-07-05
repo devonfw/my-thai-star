@@ -6,14 +6,13 @@ import * as auth from '../../../src/utils/jwt';
 
 oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
 export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {
-    try {
-        const search = <types.SearchCriteria>event.body;
-        const authToken = event.headers.Authorization;
-        // falta lo que viene siendo comprobar el token y eso
+    const authToken = event.headers.Authorization;
+    auth.decode(authToken, (err, decoded) => {
+        try {
+            const search = <types.SearchCriteria>event.body;
 
-        auth.decode(authToken, (err, decoded) => {
             if (err || decoded.role !== 'WAITER') {
-                throw { code: 403, message: 'Forbidden'};
+                throw { code: 403, message: 'Forbidden' };
             }
 
             // body content must be SearchCriteria
@@ -28,8 +27,8 @@ export async function bookingSearch(event: HttpEvent, context: Context, callback
                     callback(null, bookingEntity);
                 }
             });
-        });
-    } catch (err) {
-        callback(new Error(`[${err.code || 500}] ${err.message}`));
-    }
+        } catch (err) {
+            callback(new Error(`[${err.code || 500}] ${err.message}`));
+        }
+    });
 }
