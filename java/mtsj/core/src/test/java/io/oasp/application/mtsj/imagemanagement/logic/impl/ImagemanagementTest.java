@@ -3,8 +3,7 @@ package io.oasp.application.mtsj.imagemanagement.logic.impl;
 import javax.inject.Inject;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import io.oasp.application.mtsj.SpringBootApp;
 import io.oasp.application.mtsj.imagemanagement.logic.api.Imagemanagement;
@@ -15,8 +14,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  * Tests for {@link Imagemanagement} component.
  *
  */
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
-@WebAppConfiguration
+@SpringBootTest(classes = SpringBootApp.class)
 public class ImagemanagementTest extends ComponentTest {
 
   @Inject

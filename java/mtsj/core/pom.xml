@@ -249,9 +249,11 @@
       <version>2.10.4</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-ws</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-ws</artifactId>
+        <version>1.4.7.RELEASE</version>
     </dependency>
+
 
     <dependency>
       <groupId>com.mysema.querydsl</groupId>

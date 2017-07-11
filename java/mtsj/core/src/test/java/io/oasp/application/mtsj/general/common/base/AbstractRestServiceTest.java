@@ -3,8 +3,7 @@ package io.oasp.application.mtsj.general.common.base;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
@@ -22,8 +21,7 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * The local server's port is randomly assigned.
  *
  */
-@SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
-@WebIntegrationTest
+@SpringBootTest(classes = RestaurantTestConfig.class)
 @ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
 public abstract class AbstractRestServiceTest extends SubsystemTest {
 

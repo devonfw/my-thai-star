@@ -6,8 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import io.oasp.application.mtsj.SpringBootApp;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
@@ -28,8 +27,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  * Test for {@link Ordermanagement}
  *
  */
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
-@WebAppConfiguration
+@SpringBootTest(classes = SpringBootApp.class)
 public class OrdermanagementTest extends ComponentTest {
 
   @Inject
