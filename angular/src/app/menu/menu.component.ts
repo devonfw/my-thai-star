@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSlider } from '@angular/material';
 import { FormGroup } from '@angular/forms';
+import { MdSlider } from '@angular/material';
+import { Observable } from 'rxjs/Rx';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
@@ -12,8 +13,7 @@ import { DishView } from '../shared/viewModels/interfaces';
 })
 export class MenuComponent implements OnInit {
 
-    menus: DishView[] = [];
-    menuLoaded: boolean = false;
+    menus: Observable<DishView[]>;
     sortDir: string = 'DESC';
     sortDirIcon: string = 'vertical_align_bottom';
 
@@ -21,10 +21,7 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
-        this.menus = dishes;
-        this.menuLoaded = true;
-      });
+      this.applyFilters(undefined);
     }
 
     changeSortDir(): void {
@@ -33,18 +30,13 @@ export class MenuComponent implements OnInit {
     }
 
     applyFilters(filters: any): void {
-      this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir))
-                      .subscribe((data: DishView[]) => {
-                        this.menus = data;
-                      });
+      this.menus = this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir));
     }
 
     clearFilters(form: FormGroup, price: MdSlider, likes: MdSlider): void {
       likes.value = 0;
       price.value = 0;
       form.reset();
-      this.menuService.getDishes(this.menuService.composeFilters(undefined, this.sortDir)).subscribe((dishes: DishView[]) => {
-        this.menus = dishes;
-      });
+      this.applyFilters(undefined);
     }
 }

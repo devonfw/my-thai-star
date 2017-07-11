@@ -13,8 +13,4 @@ export class WindowService {
     responsiveWidth(): string {
        return (getWindow().innerWidth > 800) ? '40%' : '80%';
     }
-
-    reloadWindow(): void {
-       getWindow().location.reload();
-    }
 }

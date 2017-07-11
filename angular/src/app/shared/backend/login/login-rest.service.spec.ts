@@ -34,7 +34,7 @@ describe('LoginRestService', () => {
     });
   });
 
-  it('should ...', inject([LoginRestService], (service: LoginRestService) => {
+  it('should create', inject([LoginRestService], (service: LoginRestService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -29,7 +29,7 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'accepted', label: 'Acceptances and declines'},
   ];
 
-  pageSizes: number[] = config.pageSizes;
+  pageSizes: number[] = config.pageSizesDialog;
 
   fromRow: number = 1;
   currentPage: number = 1;

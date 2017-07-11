@@ -2,10 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
-import { ReservationView } from '../../shared/viewModels/interfaces';
-import { BookingInfo, ReservationInfo } from '../../shared/backend/backendModels/interfaces';
 import * as moment from 'moment';
-import { assign } from 'lodash';
 
 @Component({
   selector: 'public-book-table-dialog',

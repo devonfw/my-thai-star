@@ -1,6 +1,6 @@
 import * as config from '../src/config';
 process.env.MODE = 'test';
-process.env.PORT = config.TESTPORT;
+process.env.PORT = config.TESTPORT.toString();
 
 import * as chai from 'chai';
 import ChaiHttp = require('chai-http');
@@ -28,15 +28,20 @@ describe('API endpoints', () => {
                     password: 'waiter',
                 })
                 .end((err, res: any) => {
-                    should.not.exist(err);
+                    try {
+                        should.not.exist(err);
 
-                    expect(res).to.have.status(204);
+                        expect(res).to.have.status(204);
 
-                    expect(res).to.have.header('Authorization');
+                        expect(res).to.have.header('Authorization');
 
-                    auth = res.header.authorization;
+                        auth = res.header.authorization;
 
-                    done();
+                        done();
+
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -47,17 +52,21 @@ describe('API endpoints', () => {
                 .get('/mythaistar/services/rest/security/v1/currentuser')
                 .set('Authorization', auth)
                 .end((err, res: any) => {
-                    should.not.exist(err);
+                    try {
+                        should.not.exist(err);
 
-                    expect(res).to.have.status(200);
-                    expect(res.body.role).to.not.be.undefined;
-                    expect(res.body.name).to.not.be.undefined;
-                    expect(res.body.role).to.be.equal('WAITER');
+                        expect(res).to.have.status(200);
+                        expect(res.body.role).to.not.be.undefined;
+                        expect(res.body.name).to.not.be.undefined;
+                        expect(res.body.role).to.be.equal('WAITER');
 
-                    user = res.body.name;
-                    role = res.body.role;
+                        user = res.body.name;
+                        role = res.body.role;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -68,21 +77,25 @@ describe('API endpoints', () => {
                 .post('/mythaistar/services/rest/Dishmanagement/v1/dish/search')
                 .send({ categories: [], sortBy: [] })
                 .end((err, res) => {
-                    // there should be no errors
-                    should.not.exist(err);
-                    // there should be a 200 status code
-                    expect(res).to.have.status(200);
-                    // the response should be JSON
-                    expect(res).to.be.json;
+                    try {
+                        // there should be no errors
+                        should.not.exist(err);
+                        // there should be a 200 status code
+                        expect(res).to.have.status(200);
+                        // the response should be JSON
+                        expect(res).to.be.json;
 
-                    expect(res.body.result instanceof Array).to.be.true;
+                        expect(res.body.result instanceof Array).to.be.true;
 
-                    res.body.result.forEach((elem: any) => {
-                        expect(isDishesView(elem)).to.be.true;
-                    });
+                        res.body.result.forEach((elem: any) => {
+                            expect(isDishesView(elem)).to.be.true;
+                        });
 
-                    res.body.result.length.should.be.equal(6);
-                    done();
+                        res.body.result.length.should.be.equal(6);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -99,20 +112,24 @@ describe('API endpoints', () => {
                     isFab: false,
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(200);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
 
-                    expect(res.body.result instanceof Array).to.be.true;
-                    res.body.result.forEach((elem: any) => {
-                        expect(isDishesView(elem)).to.be.true;
+                        expect(res.body.result instanceof Array).to.be.true;
+                        res.body.result.forEach((elem: any) => {
+                            expect(isDishesView(elem)).to.be.true;
 
-                        expect(_.lowerCase(elem.dish.name).includes('curry') ||
-                            _.lowerCase(elem.dish.description).includes('curry')).to.be.true;
-                    });
+                            expect(_.lowerCase(elem.dish.name).includes('curry') ||
+                                _.lowerCase(elem.dish.description).includes('curry')).to.be.true;
+                        });
 
-                    res.body.result.length.should.be.equal(1);
-                    done();
+                        res.body.result.length.should.be.equal(1);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -133,15 +150,19 @@ describe('API endpoints', () => {
                     },
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(201);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(201);
+                        expect(res).to.be.json;
 
-                    expect(typeof res.body === 'string').to.be.true;
+                        expect(typeof res.body === 'string').to.be.true;
 
-                    cbookingToken = res.body;
+                        cbookingToken = res.body;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -165,14 +186,18 @@ describe('API endpoints', () => {
                     ],
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(201);
-                    expect(res).to.be.json;
-                    expect(typeof res.body === 'string').to.be.true;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(201);
+                        expect(res).to.be.json;
+                        expect(typeof res.body === 'string').to.be.true;
 
-                    gbookingToken = res.body;
+                        gbookingToken = res.body;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -182,11 +207,15 @@ describe('API endpoints', () => {
             chai.request(server)
                 .post('/mythaistar/services/rest/ordermanagement/v1/order/filter')
                 .end((err, res) => {
-                    should.exist(err);
+                    try {
+                        should.exist(err);
 
-                    expect(res).to.have.status(403);
+                        expect(res).to.have.status(403);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -196,11 +225,15 @@ describe('API endpoints', () => {
             chai.request(server)
                 .post('/mythaistar/services/rest/ordermanagement/v1/order/search')
                 .end((err, res) => {
-                    should.exist(err);
+                    try {
+                        should.exist(err);
 
-                    expect(res).to.have.status(403);
+                        expect(res).to.have.status(403);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -210,11 +243,15 @@ describe('API endpoints', () => {
             chai.request(server)
                 .post('/mythaistar/services/rest/bookingmanagement/v1/booking/search')
                 .end((err, res) => {
-                    should.exist(err);
+                    try {
+                        should.exist(err);
 
-                    expect(res).to.have.status(403);
+                        expect(res).to.have.status(403);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -224,11 +261,15 @@ describe('API endpoints', () => {
             chai.request(server)
                 .post('/mythaistar/services/rest/security/changepassword')
                 .end((err, res) => {
-                    should.exist(err);
+                    try {
+                        should.exist(err);
 
-                    expect(res).to.have.status(403);
+                        expect(res).to.have.status(403);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -246,11 +287,15 @@ describe('API endpoints', () => {
                     },
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(200);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -270,12 +315,16 @@ describe('API endpoints', () => {
                     bookingToken: gbookingToken,
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(200);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
 
-                    guestToken = res.body.result[0].invitedGuests[0].guestToken;
-                    done();
+                        guestToken = res.body.result[0].invitedGuests[0].guestToken;
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -285,10 +334,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/INVALID_TOKEN')
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -298,10 +351,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/' + guestToken)
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(204);
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(204);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -311,10 +368,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/' + guestToken)
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -324,10 +385,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/' + guestToken)
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(204);
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(204);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -337,10 +402,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/' + guestToken)
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -350,10 +419,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/booking/cancel/' + gbookingToken)
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(204);
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(204);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -363,10 +436,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/bookingmanagement/v1/booking/cancel/' + gbookingToken)
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -377,10 +454,14 @@ describe('API endpoints', () => {
                 .post('/mythaistar/services/rest/ordermanagement/v1/order')
                 .send({})
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -409,10 +490,14 @@ describe('API endpoints', () => {
                     ],
                 })
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -442,19 +527,23 @@ describe('API endpoints', () => {
                     ],
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(201);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(201);
+                        expect(res).to.be.json;
 
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('id');
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingId');
-                    expect(res.body).to.be.haveOwnPropertyDescriptor('bookingToken');
+                        expect(res.body).to.be.haveOwnPropertyDescriptor('id');
+                        expect(res.body).to.be.haveOwnPropertyDescriptor('bookingId');
+                        expect(res.body).to.be.haveOwnPropertyDescriptor('bookingToken');
 
-                    orderId = res.body.id.toString();
+                        orderId = res.body.id.toString();
 
-                    expect(res.body.bookingToken).to.be.equal(cbookingToken);
+                        expect(res.body.bookingToken).to.be.equal(cbookingToken);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -483,10 +572,14 @@ describe('API endpoints', () => {
                     ],
                 })
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -499,10 +592,14 @@ describe('API endpoints', () => {
                     paginated: { size: 20, page: 1, total: 1 },
                 })
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(403);
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(403);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -516,11 +613,15 @@ describe('API endpoints', () => {
                     pagination: { size: 20, page: 1, total: 1 },
                 })
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(200);
-                    expect(res).to.be.json;
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -530,10 +631,14 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/' + orderId)
                 .end((err, res) => {
-                    should.not.exist(err);
-                    expect(res).to.have.status(204);
+                    try {
+                        should.not.exist(err);
+                        expect(res).to.have.status(204);
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });
@@ -543,11 +648,15 @@ describe('API endpoints', () => {
             chai.request(server)
                 .get('/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/' + orderId)
                 .end((err, res) => {
-                    should.exist(err);
-                    expect(res).to.have.status(400);
-                    expect(res).to.be.json;
+                    try {
+                        should.exist(err);
+                        expect(res).to.have.status(400);
+                        expect(res).to.be.json;
 
-                    done();
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
         });
     });

@@ -9,7 +9,7 @@ describe('LoginInMemoryService', () => {
     });
   });
 
-  it('should ...', inject([LoginInMemoryService], (service: LoginInMemoryService) => {
+  it('should create', inject([LoginInMemoryService], (service: LoginInMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });

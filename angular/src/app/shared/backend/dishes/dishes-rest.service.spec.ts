@@ -34,7 +34,7 @@ describe('DishesRestService', () => {
     });
   });
 
-  it('should ...', inject([DishesRestService], (service: DishesRestService) => {
+  it('should create', inject([DishesRestService], (service: DishesRestService) => {
     expect(service).toBeTruthy();
   }));
 });

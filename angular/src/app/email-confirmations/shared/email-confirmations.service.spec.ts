@@ -17,7 +17,7 @@ describe('EmailConfirmationsService', () => {
     });
   });
 
-  it('should ...', inject([EmailConfirmationsService], (service: EmailConfirmationsService) => {
+  it('should create', inject([EmailConfirmationsService], (service: EmailConfirmationsService) => {
     expect(service).toBeTruthy();
   }));
 });

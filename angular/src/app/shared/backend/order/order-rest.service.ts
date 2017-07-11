@@ -40,10 +40,9 @@ export class OrderRestService implements IOrderDataService {
                         .map((res: Response) => res.json());
      }
 
-    cancelOrder(token: string): Observable<number> {
+      cancelOrder(token: string): Observable<number> {
         return this.http.get(`${environment.restServiceRoot}${this.cancelOrderRestPath}` + token)
                         .map((res: Response) => res.json());
-
-    }
+      }
 
 }

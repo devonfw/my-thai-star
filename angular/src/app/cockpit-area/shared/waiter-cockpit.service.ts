@@ -25,7 +25,6 @@ export class WaiterCockpitService {
     filters.sort = sorting;
     return this.bookingDataService.getReservations(filters);
   }
-
   orderComposer(orderList: OrderView[]): OrderView[] {
       let orders: OrderView[] = cloneDeep(orderList);
       map(orders, (o: OrderView) => {

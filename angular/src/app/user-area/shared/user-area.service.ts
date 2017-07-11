@@ -28,7 +28,7 @@ export class UserAreaService {
                     });
                 }, (err: any) => {
                     this.authService.setLogged(false);
-                    this.snackBar.openSnack('Error login, user or password do not match', 4000, 'red');
+                    this.snackBar.openSnack(err.json().message, 4000, 'red');
                 });
     }
 

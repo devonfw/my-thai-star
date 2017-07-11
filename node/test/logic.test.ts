@@ -1,6 +1,6 @@
 import * as config from '../src/config';
 process.env.MODE = 'test';
-process.env.PORT = config.TESTPORT;
+process.env.PORT = config.TESTPORT.toString();
 
 import * as chai from 'chai';
 import * as _ from 'lodash';
@@ -47,11 +47,15 @@ describe('Testing the application logic', () => {
             };
 
             business.getDishes(filter, (err, dishes) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                expect(dishes).to.not.be.undefined;
-                expect(dishes!.result.length).to.be.equals(6);
-                done();
+                    expect(dishes).to.not.be.undefined;
+                    expect(dishes!.result.length).to.be.equals(6);
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
@@ -64,12 +68,16 @@ describe('Testing the application logic', () => {
             };
 
             business.getDishes(filter, (err, dishes) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                expect(dishes).to.not.be.undefined;
-                expect(dishes!.result.length).to.be.equals(1);
-                expect((dishes!.result[0] as types.DishesView).dish.name.toLowerCase()).to.be.equals('Thai Green Chicken Curry'.toLowerCase());
-                done();
+                    expect(dishes).to.not.be.undefined;
+                    expect(dishes!.result.length).to.be.equals(1);
+                    expect((dishes!.result[0] as types.DishesView).dish.name.toLowerCase()).to.be.equals('Thai Green Chicken Curry'.toLowerCase());
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -115,12 +123,16 @@ describe('Testing the application logic', () => {
                 fbookingToken = bookingToken!;
 
                 business.createBooking(b1, (err2, bookingToken2) => {
-                    expect(bookingToken2).to.not.be.undefined;
-                    nbookingToken = bookingToken2!;
+                    try {
+                        expect(bookingToken2).to.not.be.undefined;
+                        nbookingToken = bookingToken2!;
 
-                    expect(nbookingToken).to.not.be.undefined;
-                    expect(nbookingToken).to.be.equals(bookingToken2);
-                    done();
+                        expect(nbookingToken).to.not.be.undefined;
+                        expect(nbookingToken).to.be.equals(bookingToken2);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
 
             });
@@ -138,11 +150,15 @@ describe('Testing the application logic', () => {
             };
 
             business.createBooking(b, (err, bookingToken) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                expect(err!.message).to.be.equals('No more tables');
+                    expect(err!.message).to.be.equals('No more tables');
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -150,32 +166,44 @@ describe('Testing the application logic', () => {
     describe('getAllInvitedBookings', () => {
         it('should return all bookings if no date is given', (done) => {
             business.getAllInvitedBookings().then((bookings) => {
-                expect(bookings).to.be.instanceof(Array);
+                try {
+                    expect(bookings).to.be.instanceof(Array);
 
-                expect(bookings.length).to.be.equals(1);
-                expect(bookings[0].bookingToken).to.be.equals(fbookingToken);
+                    expect(bookings.length).to.be.equals(1);
+                    expect(bookings[0].bookingToken).to.be.equals(fbookingToken);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return only some bookings when a date is given', (done) => {
             business.getAllInvitedBookings('2030-06-16T10:30:00.000Z').then((bookings) => {
-                expect(bookings).to.be.instanceof(Array);
+                try {
+                    expect(bookings).to.be.instanceof(Array);
 
-                expect(bookings.length).to.be.equals(1);
-                expect(bookings[0].bookingToken).to.be.equals(fbookingToken);
+                    expect(bookings.length).to.be.equals(1);
+                    expect(bookings[0].bookingToken).to.be.equals(fbookingToken);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an empty array when there are no booking at the specified date', (done) => {
             business.getAllInvitedBookings('2029-06-16T10:30:00.000Z').then((bookings) => {
-                expect(bookings).to.be.instanceof(Array);
+                try {
+                    expect(bookings).to.be.instanceof(Array);
 
-                expect(bookings.length).to.be.equals(0);
-                done();
+                    expect(bookings.length).to.be.equals(0);
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -183,9 +211,13 @@ describe('Testing the application logic', () => {
     describe('updateBookingWithTable', () => {
         it('should add the table to the booking', (done) => {
             business.updateBookingWithTable(fbookingId, '0').catch((err) => { should.not.exist(err); }).then((elem) => {
-                expect(elem).to.be.false;
+                try {
+                    expect(elem).to.be.false;
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -201,12 +233,16 @@ describe('Testing the application logic', () => {
             };
 
             business.searchBooking(search, (err, bookings) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                expect(bookings!.result).to.not.be.undefined;
-                expect(bookings!.result.length).to.be.equals(2);
+                    expect(bookings!.result).to.not.be.undefined;
+                    expect(bookings!.result.length).to.be.equals(2);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
@@ -221,14 +257,18 @@ describe('Testing the application logic', () => {
             };
 
             business.searchBooking(search, (err, bookings) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                fguestToken = ((bookings!.result[0] as types.BookingPostView).invitedGuests![0].guestToken)!;
-                fbookingId = (bookings!.result[0] as types.BookingPostView).booking.id!.toString();
-                expect(bookings!.result).to.not.be.undefined;
-                expect(bookings!.result.length).to.be.equals(1);
+                    fguestToken = ((bookings!.result[0] as types.BookingPostView).invitedGuests![0].guestToken)!;
+                    fbookingId = (bookings!.result[0] as types.BookingPostView).booking.id!.toString();
+                    expect(bookings!.result).to.not.be.undefined;
+                    expect(bookings!.result.length).to.be.equals(1);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
@@ -243,12 +283,16 @@ describe('Testing the application logic', () => {
             };
 
             business.searchBooking(search, (err, bookings) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                expect(bookings!.result).to.not.be.undefined;
-                expect(bookings!.result.length).to.be.equals(0);
+                    expect(bookings!.result).to.not.be.undefined;
+                    expect(bookings!.result.length).to.be.equals(0);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -256,33 +300,49 @@ describe('Testing the application logic', () => {
     describe('updateInvitation', () => {
         it('should change the InvitedGuest accepted to true if the response is true', (done) => {
             business.updateInvitation(fguestToken, true, (err) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return a error when the invitation is already accepted', (done) => {
             business.updateInvitation(fguestToken, true, (err) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should cancel the InvitedGuest if the response is false', (done) => {
             business.updateInvitation(fguestToken, false, (err) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an error if the InvitedGuest is already canceled', (done) => {
             business.updateInvitation(fguestToken, false, (err) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -304,25 +364,37 @@ describe('Testing the application logic', () => {
     describe('cancelBooking', () => {
         it('should cancel a booking with guests', (done) => {
             business.cancelBooking(fbookingToken, (err) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an error if a invalid token is given', (done) => {
             business.cancelBooking('INVALID_TOKEN', (err) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an error if the token do not correspond to a booking with guest', (done) => {
             business.cancelBooking(nbookingToken, (err) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -356,24 +428,32 @@ describe('Testing the application logic', () => {
 
         it('should create an order', (done) => {
             business.createOrder(order, (err, orderReference) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                expect(orderReference).to.be.haveOwnPropertyDescriptor('id');
-                expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingId');
-                expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingToken');
+                    expect(orderReference).to.be.haveOwnPropertyDescriptor('id');
+                    expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingId');
+                    expect(orderReference).to.be.haveOwnPropertyDescriptor('bookingToken');
 
-                orderId = orderReference.id.toString();
+                    orderId = orderReference.id.toString();
 
-                expect(orderReference.bookingToken).to.be.equal(nbookingToken);
-                done();
+                    expect(orderReference.bookingToken).to.be.equal(nbookingToken);
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an error if a order is already registered', (done) => {
             business.createOrder(order, (err, orderReference) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
@@ -381,9 +461,13 @@ describe('Testing the application logic', () => {
             order.booking.bookingToken = fbookingToken;
 
             business.createOrder(order, (err, orderReference) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -391,22 +475,30 @@ describe('Testing the application logic', () => {
     describe('getAllOrders', () => {
         it('should return all orders for the future bookings', (done) => {
             business.getAllOrders().then((res: types.OrderView[]) => {
-                expect(res).to.not.be.undefined;
+                try {
+                    expect(res).to.not.be.undefined;
 
-                expect(res.length).to.be.equals(1);
-                done();
+                    expect(res.length).to.be.equals(1);
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
 
     describe('getOrders', () => {
         it('should return all orders for the future bookings', (done) => {
-            business.getOrders({size: 20, page: 1, total: 1}, (err, list) => {
-                should.not.exist(err);
+            business.getOrders({ size: 20, page: 1, total: 1 }, (err, list) => {
+                try {
+                    should.not.exist(err);
 
-                expect(list.result).to.not.be.undefined;
-                expect(list.result.length).to.be.equals(1);
-                done();
+                    expect(list.result).to.not.be.undefined;
+                    expect(list.result.length).to.be.equals(1);
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });
@@ -414,17 +506,25 @@ describe('Testing the application logic', () => {
     describe('cancelOrder', () => {
         it('should cancel an order', (done) => {
             business.cancelOrder(orderId!, (err) => {
-                should.not.exist(err);
+                try {
+                    should.not.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
 
         it('should return an error if the order is already canceled', (done) => {
             business.cancelOrder(orderId!, (err) => {
-                should.exist(err);
+                try {
+                    should.exist(err);
 
-                done();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
             });
         });
     });

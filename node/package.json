@@ -54,6 +54,6 @@
     "typescript": "^2.3.4"
   },
   "optionalDependencies": {
-    "@types/node": "^7.0.31"
+    "@types/node": "^8.0.5"
   }
 }

@@ -32,7 +32,7 @@ export class OrderDialogComponent implements OnInit {
     { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 
-  pageSizes: number[] = config.pageSizes;
+  pageSizes: number[] = config.pageSizesDialog;
 
   fromRow: number = 1;
   currentPage: number = 1;

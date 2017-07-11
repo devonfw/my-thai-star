@@ -9,7 +9,7 @@ describe('BookingInMemoryService', () => {
     });
   });
 
-  it('should ...', inject([BookingInMemoryService], (service: BookingInMemoryService) => {
+  it('should create', inject([BookingInMemoryService], (service: BookingInMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -9,7 +9,7 @@ describe('DishesInMemoryService', () => {
     });
   });
 
-  it('should ...', inject([DishesInMemoryService], (service: DishesInMemoryService) => {
+  it('should create', inject([DishesInMemoryService], (service: DishesInMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });

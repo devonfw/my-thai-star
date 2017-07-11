@@ -16,6 +16,10 @@ router.post('/order', (req: Request, res: Response) => {
             throw { code: 400, message: 'Parser error' };
         }
 
+        if (req.body.orderLines === undefined || req.body.orderLines.length === 0) {
+            throw { code: 400, message: 'Empty order' };
+        }
+
         business.createOrder(req.body, (err: types.Error, orderReference?: any) => {
             if (err) {
                 res.status(err.code).json(err.message);
