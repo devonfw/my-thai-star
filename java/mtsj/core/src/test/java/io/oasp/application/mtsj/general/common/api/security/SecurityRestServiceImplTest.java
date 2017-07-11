@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,7 +26,7 @@ import io.oasp.application.mtsj.general.service.impl.rest.SecurityRestServiceImp
 /**
  * This class tests the login functionality of {@link SecurityRestServiceImpl}.
  */
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
+@SpringBootTest(classes = SpringBootApp.class)
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 public class SecurityRestServiceImplTest extends AbstractRestServiceTest {
 

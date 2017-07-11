@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
@@ -29,6 +32,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private DishEntity dish;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<IngredientEntity> extras;
 
   private Integer amount;
@@ -58,7 +62,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return extras
    */
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany /* (fetch = FetchType.EAGER) */
   @Column(name = "idIngredient")
   @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))

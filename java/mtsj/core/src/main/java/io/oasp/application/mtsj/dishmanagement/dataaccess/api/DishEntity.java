@@ -5,13 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
@@ -35,8 +37,10 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
 
   private ImageEntity image;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<IngredientEntity> extras;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<CategoryEntity> categories;
 
   /**
@@ -108,7 +112,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return extras
    */
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany /* (fetch = FetchType.EAGER) */
   @Column(name = "idIngredient")
   @JoinTable(name = "DishIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
@@ -128,7 +132,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return categories
    */
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany /* (fetch = FetchType.EAGER) */
   @Column(name = "idCategory")
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))

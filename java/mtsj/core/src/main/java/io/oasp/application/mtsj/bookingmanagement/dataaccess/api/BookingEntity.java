@@ -15,6 +15,9 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.common.api.validation.EmailExtended;
@@ -55,6 +58,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private UserEntity user;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<InvitedGuestEntity> invitedGuests;
 
   private List<OrderEntity> orders;
@@ -218,7 +222,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   /**
    * @return invitedGuests
    */
-  @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "booking"/* , fetch = FetchType.EAGER */)
   public List<InvitedGuestEntity> getInvitedGuests() {
 
     return this.invitedGuests;
