@@ -4,7 +4,6 @@
   <property resource="io/oasp/logging/logback/application-logging.properties" />
   <property name="appname" value="mtsj"/>
   <property name="logPath" value="../logs"/>
-  <include resource="io/oasp/logging/logback/appenders-file-all.xml" />
   <include resource="io/oasp/logging/logback/appender-console.xml" />
 
   <root level="DEBUG">
