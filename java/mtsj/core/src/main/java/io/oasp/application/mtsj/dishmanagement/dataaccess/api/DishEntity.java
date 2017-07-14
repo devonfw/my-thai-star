@@ -3,17 +3,15 @@ package io.oasp.application.mtsj.dishmanagement.dataaccess.api;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import io.oasp.application.mtsj.dishmanagement.common.api.Dish;
 import io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
@@ -37,10 +35,10 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
 
   private ImageEntity image;
 
-  @LazyCollection(LazyCollectionOption.FALSE)
+  @Basic(fetch = FetchType.LAZY)
   private List<IngredientEntity> extras;
 
-  @LazyCollection(LazyCollectionOption.FALSE)
+  @Basic(fetch = FetchType.LAZY)
   private List<CategoryEntity> categories;
 
   /**
@@ -112,8 +110,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return extras
    */
-  @ManyToMany /* (fetch = FetchType.EAGER) */
-  @Column(name = "idIngredient")
+  @ManyToMany
   @JoinTable(name = "DishIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
   public List<IngredientEntity> getExtras() {
@@ -132,8 +129,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return categories
    */
-  @ManyToMany /* (fetch = FetchType.EAGER) */
-  @Column(name = "idCategory")
+  @ManyToMany
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))
   public List<CategoryEntity> getCategories() {

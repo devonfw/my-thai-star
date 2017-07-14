@@ -112,7 +112,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
    * @return favourites
    */
   @ManyToMany
-  @Column(name = "idDish")
   @JoinTable(name = "UserFavourite", joinColumns = {
   @javax.persistence.JoinColumn(name = "idUser") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idDish"))
   public List<DishEntity> getFavourites() {
