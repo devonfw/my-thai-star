@@ -44,16 +44,12 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long order = criteria.getOrderId();
-    if (order != null) {
-      if (orderline.getOrder() != null) {
-        query.where(Alias.$(orderline.getOrder().getId()).eq(order));
-      }
+    if (order != null && orderline.getOrder() != null) {
+      query.where(Alias.$(orderline.getOrder().getId()).eq(order));
     }
     Long dish = criteria.getDishId();
-    if (dish != null) {
-      if (orderline.getDish() != null) {
-        query.where(Alias.$(orderline.getDish().getId()).eq(dish));
-      }
+    if (dish != null && orderline.getDish() != null) {
+      query.where(Alias.$(orderline.getDish().getId()).eq(dish));
     }
     Integer amount = criteria.getAmount();
     if (amount != null) {

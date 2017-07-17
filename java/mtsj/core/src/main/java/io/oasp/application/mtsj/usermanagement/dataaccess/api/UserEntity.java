@@ -2,7 +2,6 @@ package io.oasp.application.mtsj.usermanagement.dataaccess.api;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
