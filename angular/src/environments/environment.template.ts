@@ -3,6 +3,6 @@ import { BackendType } from '../app/config';
 export const environment: { production: boolean, backendType: BackendType, restPathRoot: string, restServiceRoot: string } = {
     production: true,
     backendType: BackendType.REST,
-    restPathRoot: '$REST_ENDPOINT/mythaistar/',
-    restServiceRoot: '$REST_ENDPOINT/mythaistar/services/rest/',
+    restPathRoot: 'REST_ENDPOINT/mythaistar/',
+    restServiceRoot: 'REST_ENDPOINT/mythaistar/services/rest/',
 };
