@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { WindowService } from './windowService.service';
 
 describe('WindowService', () => {
