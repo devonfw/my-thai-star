@@ -9,6 +9,14 @@
   <include resource="io/oasp/logging/logback/appender-console.xml" />
 
   <root level="DEBUG">
+<<<<<<< HEAD
+=======
+  <!--
+    <appender-ref ref="ERROR_APPENDER"/>
+    <appender-ref ref="INFO_APPENDER"/>
+    <appender-ref ref="DEBUG_APPENDER"/>
+    -->
+>>>>>>> 5e88fe9296042013900874cd6dfd884ca7be3e15
     <appender-ref ref="CONSOLE_APPENDER"/>
   </root>
 
