@@ -18,7 +18,9 @@
     "serve:node:aot": "ng serve --open --environment=node --aot",
     "build": "ng build --environment=dev --aot",
     "build:prod": "ng build --environment=prod --aot",
-    "build:prodcompose": "ng build --environment=prodcompose --aot"
+    "build:prodcompose": "ng build --environment=prodcompose --aot",
+    "serve:openshift": "ng serve -H 0.0.0.0 --environment=openshift",
+    "build:openshift": "ng build --environment=openshift --aot"
   },
   "private": true,
   "dependencies": {
