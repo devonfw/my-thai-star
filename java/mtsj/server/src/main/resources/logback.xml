@@ -4,13 +4,16 @@
   <property resource="io/oasp/logging/logback/application-logging.properties" />
   <property name="appname" value="mtsj"/>
   <property name="logPath" value="../logs"/>
-  <include resource="io/oasp/logging/logback/appenders-file-all.xml" />
+  <!-- uncomment appenders-file-all for writing logs to file-->
+  <!-- <include resource="io/oasp/logging/logback/appenders-file-all.xml" /> -->
   <include resource="io/oasp/logging/logback/appender-console.xml" />
 
   <root level="DEBUG">
+  <!--
     <appender-ref ref="ERROR_APPENDER"/>
     <appender-ref ref="INFO_APPENDER"/>
     <appender-ref ref="DEBUG_APPENDER"/>
+    -->
     <appender-ref ref="CONSOLE_APPENDER"/>
   </root>
 
