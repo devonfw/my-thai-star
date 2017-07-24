@@ -6,6 +6,8 @@ import io.oasp.application.mtsj.general.common.api.to.AbstractCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserEto;
 
+import javax.validation.Valid;
+
 /**
  * Composite transport object of Booking
  */
@@ -13,6 +15,7 @@ public class BookingCto extends AbstractCto {
 
   private static final long serialVersionUID = 1L;
 
+  @Valid
   private BookingEto booking;
 
   private TableEto table;

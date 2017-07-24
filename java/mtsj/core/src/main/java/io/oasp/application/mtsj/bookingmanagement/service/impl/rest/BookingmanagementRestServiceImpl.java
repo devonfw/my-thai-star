@@ -2,6 +2,7 @@ package io.oasp.application.mtsj.bookingmanagement.service.impl.rest;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.Valid;
 
 import io.oasp.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
@@ -13,11 +14,13 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.bookingmanagement.service.api.rest.BookingmanagementRestService;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * The service implementation for REST calls in order to execute the logic of component {@link Bookingmanagement}.
  */
 @Named("BookingmanagementRestService")
+@Validated
 public class BookingmanagementRestServiceImpl implements BookingmanagementRestService {
 
   @Inject
@@ -30,7 +33,7 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
-  public BookingEto saveBooking(BookingCto booking) {
+  public BookingEto saveBooking(@Valid BookingCto booking) {
 
     return this.bookingmanagement.saveBooking(booking);
   }

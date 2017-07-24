@@ -1,5 +1,6 @@
 package io.oasp.application.mtsj.bookingmanagement.service.api.rest;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -45,7 +46,7 @@ public interface BookingmanagementRestService {
    */
   @POST
   @Path("/booking/")
-  public BookingEto saveBooking(BookingCto booking);
+  public BookingEto saveBooking(@Valid BookingCto booking);
 
   /**
    * Delegates to {@link Bookingmanagement#deleteBooking}.

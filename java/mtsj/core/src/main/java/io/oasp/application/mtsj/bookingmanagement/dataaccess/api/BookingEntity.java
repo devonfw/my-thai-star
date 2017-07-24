@@ -29,23 +29,23 @@ import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 @javax.persistence.Table(name = "Booking")
 public class BookingEntity extends ApplicationPersistenceEntity implements Booking {
 
-  @NotNull
+  //@NotNull
   private String name;
 
   private String bookingToken;
 
   private String comment;
 
-  @NotNull
-  @Future
+  //@NotNull
+  //@Future
   private Timestamp bookingDate;
 
   private Timestamp expirationDate;
 
   private Timestamp creationDate;
 
-  @NotNull
-  @EmailExtended
+  //@NotNull
+  //@EmailExtended
   private String email;
 
   private Boolean canceled;
