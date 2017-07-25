@@ -2,6 +2,7 @@ package io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao;
 
 import io.oasp.application.mtsj.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
@@ -17,5 +18,7 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    * @return the {@link PaginatedListTo} with the matching {@link OrderEntity} objects.
    */
   PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria);
+
+  PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria);
 
 }

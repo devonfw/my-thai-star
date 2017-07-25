@@ -156,50 +156,27 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   @RolesAllowed(Roles.WAITER)
   public PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria filter) {
 
-    OrderSearchCriteriaTo emtpyCriteria = new OrderSearchCriteriaTo();
-    PaginatedListTo<OrderCto> ordersCto = findOrderCtos(emtpyCriteria);
+    PaginatedListTo<OrderEntity> orders = getOrderDao().filterOrders(filter);
     List<OrderCto> ctos = new ArrayList<>();
-    if (filter.getEmail() != null) {
-      if (!filter.getEmail().isEmpty()) {
-        for (OrderCto cto : ordersCto.getResult()) {
-          if (cto.getInvitedGuest() != null) {
-            if (cto.getInvitedGuest().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-              continue;
-            }
-          }
-          if (cto.getBooking() != null) {
-            if (cto.getBooking().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-              continue;
-            }
-          }
-          if (cto.getHost() != null) {
-            if (cto.getHost().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-            }
-          }
-        }
-      } else {
-        ctos = ordersCto.getResult();
+    for (OrderEntity order : orders.getResult()) {
+      OrderCto cto = new OrderCto();
+      cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
+      cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
+      cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
+      cto.setOrder(getBeanMapper().map(order, OrderEto.class));
+      cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
+      List<OrderLineCto> orderLinesCto = new ArrayList<>();
+      for (OrderLineEntity orderLine : order.getOrderLines()) {
+        OrderLineCto orderLineCto = new OrderLineCto();
+        orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
+        orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
+        orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
+        orderLinesCto.add(orderLineCto);
       }
-    } else {
-      ctos = ordersCto.getResult();
+      cto.setOrderLines(orderLinesCto);
+      ctos.add(cto);
     }
-
-    if (filter.getBookingToken() != null) {
-
-      if (!filter.getBookingToken().isEmpty()) {
-        for (Iterator<OrderCto> i = ctos.iterator(); i.hasNext();) {
-          OrderCto cto = i.next();
-          if (!cto.getBooking().getBookingToken().equals(filter.getBookingToken())) {
-            i.remove();
-          }
-        }
-      }
-    }
-
-    return new PaginatedListTo<>(ctos, ordersCto.getPagination());
+    return new PaginatedListTo<>(ctos, orders.getPagination());
   }
 
   @Override
