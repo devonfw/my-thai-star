@@ -31,11 +31,7 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "prodcompose": "environments/environment.prodcompose.ts",
-        "node": "environments/environment.node.ts",
-        "net": "environments/environment.net.ts",
-        "openshift": "environments/environment.openshift.ts"
+        "prod": "environments/environment.prod.ts"
       }
     }
   ],
