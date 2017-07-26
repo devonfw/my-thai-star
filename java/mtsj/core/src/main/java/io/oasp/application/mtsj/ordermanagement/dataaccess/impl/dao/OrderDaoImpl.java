@@ -75,7 +75,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
 
     String email = criteria.getEmail();
     if ( email != null) {
-      query.where(Alias.$(order.getBooking().getEmail()).eq(email).or(Alias.$(order.getInvitedGuest().getEmail()).eq(email)).or(Alias.$(order.getHost().getEmail()).eq(email)));
+      query.where(Alias.$(order.getBooking().getEmail()).eq(email));
     }
 
     String bookingToken = criteria.getBookingToken();
