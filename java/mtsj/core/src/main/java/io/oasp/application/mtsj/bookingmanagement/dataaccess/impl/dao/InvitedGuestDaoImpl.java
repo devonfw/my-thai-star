@@ -45,10 +45,8 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long booking = criteria.getBookingId();
-    if (booking != null) {
-      if (invitedguest.getBooking() != null) {
+    if (booking != null && invitedguest.getBooking() != null) {
         query.where(Alias.$(invitedguest.getBooking().getId()).eq(booking));
-      }
     }
     String guestToken = criteria.getGuestToken();
     if (guestToken != null) {
