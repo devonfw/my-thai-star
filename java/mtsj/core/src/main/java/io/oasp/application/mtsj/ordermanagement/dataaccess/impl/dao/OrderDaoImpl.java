@@ -11,7 +11,6 @@ import com.mysema.query.types.path.EntityPathBase;
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDao;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
@@ -70,25 +69,6 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
-
-//  @Override
-//  public PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria){
-//    OrderEntity order = Alias.alias(OrderEntity.class);
-//    EntityPathBase<OrderEntity> alias = Alias.$(order);
-//    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
-//
-//    String email = criteria.getEmail();
-//    if ( email != null) {
-//      query.where(Alias.$(order.getBooking().getEmail()).eq(email));
-//    }
-//
-//    String bookingToken = criteria.getBookingToken();
-//    if (bookingToken != null){
-//      query.where(Alias.$(order.getBooking().getBookingToken()).eq(bookingToken));
-//    }
-//    addOrderBy(query, alias, order, criteria.getSort());
-//    return findPaginated(criteria, query, alias);
-//  }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<OrderEntity> alias, OrderEntity order, List<OrderByTo> sort) {
 
