@@ -19,6 +19,6 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    */
   PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria);
 
-  PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria);
+//  PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria);
 
 }

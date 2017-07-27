@@ -41,14 +41,6 @@ public interface Ordermanagement {
   PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
 
   /**
-   * Returns a paginated list of Orders matching the filter criteria.
-   *
-   * @param criteria the {@link OrderFilterCriteria}.
-   * @return the {@link List} of matching {@link OrderCto}s.
-   */
-  PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria criteria);
-
-  /**
    * Deletes a order from the database by its id 'orderId'.
    *
    * @param orderId Id of the order to delete

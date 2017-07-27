@@ -55,12 +55,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public PaginatedListTo<OrderCto> filterOrders(OrderFilterCriteria filterCriteria) {
-
-    return this.ordermanagement.filterOrderCtos(filterCriteria);
-  }
-
-  @Override
   public OrderLineEto getOrderLine(long id) {
 
     return this.ordermanagement.findOrderLine(id);

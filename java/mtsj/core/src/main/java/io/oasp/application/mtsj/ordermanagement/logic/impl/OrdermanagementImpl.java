@@ -153,33 +153,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  @RolesAllowed(Roles.WAITER)
-  public PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria filter) {
-
-    PaginatedListTo<OrderEntity> orders = getOrderDao().filterOrders(filter);
-    List<OrderCto> ctos = new ArrayList<>();
-    for (OrderEntity order : orders.getResult()) {
-      OrderCto cto = new OrderCto();
-      cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
-      cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
-      cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
-      cto.setOrder(getBeanMapper().map(order, OrderEto.class));
-      cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
-      List<OrderLineCto> orderLinesCto = new ArrayList<>();
-      for (OrderLineEntity orderLine : order.getOrderLines()) {
-        OrderLineCto orderLineCto = new OrderLineCto();
-        orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
-        orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
-        orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
-        orderLinesCto.add(orderLineCto);
-      }
-      cto.setOrderLines(orderLinesCto);
-      ctos.add(cto);
-    }
-    return new PaginatedListTo<>(ctos, orders.getPagination());
-  }
-
-  @Override
   public boolean deleteOrder(Long orderId) {
 
     OrderEntity order = getOrderDao().find(orderId);

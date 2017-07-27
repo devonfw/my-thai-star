@@ -57,16 +57,6 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
       query.where(Alias.$(order.getBooking().getBookingToken()).eq(hostToken));
     }
 
-    addOrderBy(query, alias, order, criteria.getSort());
-    return findPaginated(criteria, query, alias);
-  }
-
-  @Override
-  public PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria){
-    OrderEntity order = Alias.alias(OrderEntity.class);
-    EntityPathBase<OrderEntity> alias = Alias.$(order);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
-
     String email = criteria.getEmail();
     if ( email != null) {
       query.where(Alias.$(order.getBooking().getEmail()).eq(email));
@@ -76,9 +66,29 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     if (bookingToken != null){
       query.where(Alias.$(order.getBooking().getBookingToken()).eq(bookingToken));
     }
+
     addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }
+
+//  @Override
+//  public PaginatedListTo<OrderEntity> filterOrders(OrderFilterCriteria criteria){
+//    OrderEntity order = Alias.alias(OrderEntity.class);
+//    EntityPathBase<OrderEntity> alias = Alias.$(order);
+//    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+//
+//    String email = criteria.getEmail();
+//    if ( email != null) {
+//      query.where(Alias.$(order.getBooking().getEmail()).eq(email));
+//    }
+//
+//    String bookingToken = criteria.getBookingToken();
+//    if (bookingToken != null){
+//      query.where(Alias.$(order.getBooking().getBookingToken()).eq(bookingToken));
+//    }
+//    addOrderBy(query, alias, order, criteria.getSort());
+//    return findPaginated(criteria, query, alias);
+//  }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<OrderEntity> alias, OrderEntity order, List<OrderByTo> sort) {
 

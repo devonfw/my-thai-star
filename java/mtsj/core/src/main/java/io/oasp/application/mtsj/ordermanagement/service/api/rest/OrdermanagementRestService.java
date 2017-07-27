@@ -70,15 +70,6 @@ public interface OrdermanagementRestService {
   @POST
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
 
-  /**
-   * Delegates to {@link Ordermanagement#filterOrders}
-   *
-   * @param filterCriteria the filters to be used to return orders
-   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
-   */
-  @POST
-  @Path("/order/filter")
-  public PaginatedListTo<OrderCto> filterOrders(OrderFilterCriteria filterCriteria);
 
   /**
    * Delegates to {@link Ordermanagement#findOrderLine}.
