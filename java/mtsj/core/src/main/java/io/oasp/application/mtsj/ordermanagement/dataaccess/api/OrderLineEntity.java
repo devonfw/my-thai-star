@@ -29,7 +29,6 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private DishEntity dish;
 
-  @Basic(fetch = FetchType.LAZY)
   private List<IngredientEntity> extras;
 
   private Integer amount;
@@ -59,7 +58,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return extras
    */
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
   public List<IngredientEntity> getExtras() {
@@ -166,7 +165,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param dish new value of {@link #getdish}.
+   * @param dish new value of {@link #getDish}.
    */
   public void setDish(DishEntity dish) {
 

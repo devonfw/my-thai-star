@@ -57,7 +57,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private UserEntity user;
 
-  @Basic(fetch = FetchType.LAZY)
   private List<InvitedGuestEntity> invitedGuests;
 
   private List<OrderEntity> orders;
@@ -221,7 +220,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   /**
    * @return invitedGuests
    */
-  @OneToMany(mappedBy = "booking"/* , fetch = FetchType.EAGER */)
+  @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
   public List<InvitedGuestEntity> getInvitedGuests() {
 
     return this.invitedGuests;

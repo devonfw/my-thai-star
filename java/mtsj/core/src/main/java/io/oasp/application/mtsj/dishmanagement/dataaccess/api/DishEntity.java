@@ -35,10 +35,8 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
 
   private ImageEntity image;
 
-  @Basic(fetch = FetchType.LAZY)
   private List<IngredientEntity> extras;
 
-  @Basic(fetch = FetchType.LAZY)
   private List<CategoryEntity> categories;
 
   /**
@@ -110,7 +108,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return extras
    */
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "DishIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
   public List<IngredientEntity> getExtras() {
@@ -129,7 +127,7 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   /**
    * @return categories
    */
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))
   public List<CategoryEntity> getCategories() {
