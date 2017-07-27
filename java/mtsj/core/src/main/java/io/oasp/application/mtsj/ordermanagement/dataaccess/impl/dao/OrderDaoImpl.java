@@ -45,22 +45,16 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long booking = criteria.getBookingId();
-    if (booking != null) {
-      if (order.getBooking() != null) {
-        query.where(Alias.$(order.getBooking().getId()).eq(booking));
-      }
+    if (booking != null && order.getBooking() != null) {
+      query.where(Alias.$(order.getBooking().getId()).eq(booking));
     }
     Long invitedGuest = criteria.getInvitedGuestId();
-    if (invitedGuest != null) {
-      if (order.getInvitedGuest() != null) {
-        query.where(Alias.$(order.getInvitedGuest().getId()).eq(invitedGuest));
-      }
+    if (invitedGuest != null && order.getInvitedGuest() != null) {
+      query.where(Alias.$(order.getInvitedGuest().getId()).eq(invitedGuest));
     }
     String hostToken = criteria.getHostToken();
-    if (hostToken != null) {
-      if (order.getHost() != null) {
-        query.where(Alias.$(order.getBooking().getBookingToken()).eq(hostToken));
-      }
+    if (hostToken != null && order.getHost() != null) {
+      query.where(Alias.$(order.getBooking().getBookingToken()).eq(hostToken));
     }
 
     addOrderBy(query, alias, order, criteria.getSort());

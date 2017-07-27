@@ -56,10 +56,8 @@ public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserD
       query.where(Alias.$(user.getEmail()).eq(email));
     }
     Long userRole = criteria.getUserRoleId();
-    if (userRole != null) {
-      if (user.getUserRole() != null) {
-        query.where(Alias.$(user.getUserRole().getId()).eq(userRole));
-      }
+    if (userRole != null && user.getUserRole() != null) {
+      query.where(Alias.$(user.getUserRole().getId()).eq(userRole));
     }
     return findPaginated(criteria, query, alias);
   }
