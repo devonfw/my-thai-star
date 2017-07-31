@@ -2,7 +2,6 @@ package io.oasp.application.mtsj.usermanagement.dataaccess.api;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -112,7 +111,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
    * @return favourites
    */
   @ManyToMany
-  @Column(name = "idDish")
   @JoinTable(name = "UserFavourite", joinColumns = {
   @javax.persistence.JoinColumn(name = "idUser") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idDish"))
   public List<DishEntity> getFavourites() {

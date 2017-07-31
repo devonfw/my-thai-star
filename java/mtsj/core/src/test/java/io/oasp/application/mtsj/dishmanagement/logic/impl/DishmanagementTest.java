@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.application.mtsj.SpringBootApp;
 import io.oasp.application.mtsj.dishmanagement.logic.api.Dishmanagement;
@@ -22,7 +21,6 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-@WebAppConfiguration
 public class DishmanagementTest extends ComponentTest {
 
   @Inject

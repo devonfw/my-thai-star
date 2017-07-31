@@ -2,7 +2,7 @@ package io.oasp.application.mtsj.ordermanagement.dataaccess.api;
 
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,9 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
@@ -32,7 +29,6 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private DishEntity dish;
 
-  @LazyCollection(LazyCollectionOption.FALSE)
   private List<IngredientEntity> extras;
 
   private Integer amount;
@@ -62,8 +58,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   /**
    * @return extras
    */
-  @ManyToMany /* (fetch = FetchType.EAGER) */
-  @Column(name = "idIngredient")
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
   public List<IngredientEntity> getExtras() {
@@ -170,7 +165,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   }
 
   /**
-   * @param dish new value of {@link #getdish}.
+   * @param dish new value of {@link #getDish}.
    */
   public void setDish(DishEntity dish) {
 

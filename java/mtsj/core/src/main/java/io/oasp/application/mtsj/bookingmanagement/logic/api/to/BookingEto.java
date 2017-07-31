@@ -271,7 +271,7 @@ public class BookingEto extends AbstractEto implements Booking {
   @Override
   public Long getOrderId() {
 
-    return orderId;
+    return this.orderId;
   }
 
   @Override
@@ -283,7 +283,7 @@ public class BookingEto extends AbstractEto implements Booking {
   @Override
   public Integer getAssistants() {
 
-    return assistants;
+    return this.assistants;
   }
 
   @Override
@@ -295,7 +295,7 @@ public class BookingEto extends AbstractEto implements Booking {
   @Override
   public Long getUserId() {
 
-    return userId;
+    return this.userId;
   }
 
   @Override

@@ -3,20 +3,19 @@ package io.oasp.application.mtsj.bookingmanagement.dataaccess.api;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
@@ -26,7 +25,7 @@ import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 
 @Entity
-@javax.persistence.Table(name = "Booking")
+@Table(name = "Booking")
 public class BookingEntity extends ApplicationPersistenceEntity implements Booking {
 
   @NotNull
@@ -58,7 +57,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private UserEntity user;
 
-  @LazyCollection(LazyCollectionOption.FALSE)
   private List<InvitedGuestEntity> invitedGuests;
 
   private List<OrderEntity> orders;
@@ -222,7 +220,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   /**
    * @return invitedGuests
    */
-  @OneToMany(mappedBy = "booking"/* , fetch = FetchType.EAGER */)
+  @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
   public List<InvitedGuestEntity> getInvitedGuests() {
 
     return this.invitedGuests;

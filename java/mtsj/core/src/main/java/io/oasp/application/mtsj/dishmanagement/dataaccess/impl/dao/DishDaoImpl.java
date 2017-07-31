@@ -56,9 +56,9 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     }
 
     addOrderBy(query, alias, dish, criteria.getSort());
-    PaginatedListTo<DishEntity> entitiesList = findPaginated(criteria, query, alias);
 
-    return entitiesList;
+    return findPaginated(criteria, query, alias);
+
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<DishEntity> alias, DishEntity dish, List<OrderByTo> sort) {
