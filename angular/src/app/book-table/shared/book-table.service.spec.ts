@@ -18,16 +18,6 @@ describe('BookTableService', () => {
     expect(service).toBeTruthy();
   }));
 
-  describe('Email validation', () => {
-    it('should reject bad formatted email', inject([BookTableService], (service: BookTableService) => {
-      expect(service.isEmailValid('email@email')).toEqual(false);
-    }));
-
-    it('should validate well formatted email', inject([BookTableService], (service: BookTableService) => {
-      expect(service.isEmailValid('email@email.com')).toEqual(true);
-    }));
-  });
-
   describe('Form composer', () => {
     it('should compose correctly booking info type booking', inject([BookTableService], (service: BookTableService) => {
       const bookingData: any = {
