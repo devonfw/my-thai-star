@@ -9,13 +9,18 @@ import { Validator, AbstractControl } from '@angular/forms';
     ],
 })
 export class EmailValidatorDirective implements Validator {
-
     validate(c: AbstractControl): { [key: string]: any } {
-        let regExp: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-        return regExp.test(c.value) ? undefined : {
+        return emailValidator(c.value) ? undefined : {
             validateEmail: {
                 valid: false,
             },
         };
-    }}
+    }
+}
+
+// Function exported to be used in this directive and unit tests
+export function emailValidator(c: AbstractControl): boolean {
+    let regExp: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    return regExp.test(c.value);
+}
