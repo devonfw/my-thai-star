@@ -50,10 +50,4 @@ export class BookTableComponent {
     });
   }
 
-  validateEmail(): void {
-    if (!this.bookingService.isEmailValid(last(this.invitationModel))) {
-      this.invitationModel.pop();
-      this.snackBarService.openSnack('Email format not valid', 1000, 'red');
-    }
-  }
 }

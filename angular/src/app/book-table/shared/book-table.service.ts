@@ -34,9 +34,4 @@ export class BookTableService {
     return composedBooking;
   }
 
-  isEmailValid(email: string): boolean {
-    let re: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(email);
-  }
-
 }
