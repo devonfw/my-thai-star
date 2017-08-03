@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@angular/material';
 
-import { appRoutes } from '../app.routes';
+import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header.component';
 
@@ -12,7 +12,7 @@ import { HeaderComponent } from './header.component';
     CommonModule,
     CovalentModule,
     MaterialModule,
-    appRoutes,
+    AppRoutingModule,
   ],
   providers: [
   ],

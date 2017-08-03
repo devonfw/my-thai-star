@@ -1,5 +1,6 @@
-import { Routes, RouterModule } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
+import { NgModule }              from '@angular/core';
+import { RouterModule, Routes }  from '@angular/router';
+
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { BookTableComponent } from './book-table/book-table.component';
@@ -8,7 +9,7 @@ import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpi
 import { AuthGuard } from './shared/authentication/auth-guard.service';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 
-const routes: Routes = [
+const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent},
   { path: 'menu', component: MenuComponent},
   { path: 'bookTable', component: BookTableComponent},
@@ -20,4 +21,15 @@ const routes: Routes = [
   { path: 'booking/cancelOrder/:token', component: EmailConfirmationsComponent},
   { path: '**', redirectTo: '/restaurant', pathMatch: 'full' }];
 
-export const appRoutes: ModuleWithProviders = RouterModule.forRoot(routes);
+@NgModule({
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true }, // <-- debugging purposes only
+    ),
+  ],
+  exports: [
+    RouterModule,
+  ]
+})
+export class AppRoutingModule {}

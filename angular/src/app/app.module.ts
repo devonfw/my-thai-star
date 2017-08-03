@@ -18,13 +18,13 @@ import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
 
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    appRoutes,
+    AppRoutingModule,
     BrowserAnimationsModule,
     HeaderModule,
     HomeModule,
