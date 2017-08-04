@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FriendsInvite, ReservationView } from '../../shared/viewModels/interfaces';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { BookingInfo, ReservationInfo } from '../../shared/backend/backendModels/interfaces';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { BookingInfo, ReservationInfo } from '../../backend/backendModels/interfaces';
 import { map, assign, forEach } from 'lodash';
 
 @Injectable()

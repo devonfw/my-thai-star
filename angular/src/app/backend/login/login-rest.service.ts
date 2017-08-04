@@ -1,11 +1,11 @@
-import { environment } from './../../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
-import { config } from '../../../config';
-import { HttpClient } from '../../httpClient/httpClient.service';
+import { config } from '../../config';
+import { HttpClient } from '../../shared/httpClient/httpClient.service';
 
 @Injectable()
 export class LoginRestService implements ILoginDataService {

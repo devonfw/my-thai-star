@@ -1,12 +1,12 @@
-import { environment } from './../../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IOrderDataService } from './order-data-service-interface';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
-import { OrderListView } from '../../viewModels/interfaces';
-import { config } from '../../../config';
-import { HttpClient } from '../../httpClient/httpClient.service';
+import { OrderListView } from '../../shared/viewModels/interfaces';
+import { config } from '../../config';
+import { HttpClient } from '../../shared/httpClient/httpClient.service';
 
 @Injectable()
 export class OrderRestService implements IOrderDataService {

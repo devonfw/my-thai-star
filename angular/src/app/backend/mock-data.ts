@@ -1,6 +1,6 @@
-import { ExtraView, OrderListView, ReservationView } from '../viewModels/interfaces';
+import { ExtraView, OrderListView, ReservationView } from '../shared/viewModels/interfaces';
 import { LoginInfo, Role } from './backendModels/interfaces';
-import { DishView } from '../viewModels/interfaces';
+import { DishView } from '../shared/viewModels/interfaces';
 
 export const extras: ExtraView[] = [{
                 id: 0,

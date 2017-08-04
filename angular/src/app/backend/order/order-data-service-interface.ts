@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { OrderListView } from '../../viewModels/interfaces';
+import { OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 export interface IOrderDataService {

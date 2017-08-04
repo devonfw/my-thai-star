@@ -5,12 +5,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { Md2Module } from 'md2';
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
 import { SnackBarService } from '../shared/snackService/snackService.service';
-import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../shared/backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../backend/booking/booking-data-service';
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../shared/windowService/windowService.service';
 
@@ -34,7 +34,7 @@ describe('BookTableComponent', () => {
       imports: [
         BrowserAnimationsModule,
         FormsModule,
-        CovalentModule,
+        CoreModule,
         Md2Module,
       ],
     })

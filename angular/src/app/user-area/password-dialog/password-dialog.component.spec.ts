@@ -3,9 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdDialog } from '@angular/material';
 
 import { UserAreaModule } from '../user-area.module';
-import { CovalentModule } from '../../shared/covalent.module';
+import { CoreModule } from '../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BackendModule } from '../../shared/backend/backend.module';
+import { BackendModule } from '../../backend/backend.module';
 
 import { AuthService } from '../../shared/authentication/auth.service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
@@ -20,7 +20,7 @@ describe('PasswordDialogComponent', () => {
     TestBed.configureTestingModule({
       providers: [ SnackBarService, AuthService ],
       imports: [
-        CovalentModule,
+        CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
         UserAreaModule,

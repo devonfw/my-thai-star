@@ -7,7 +7,7 @@ import { MdDialogRef, MdDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
-import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
 import { reject } from 'lodash';
 import { config } from '../../config';
 import { Observable } from 'rxjs/Observable';

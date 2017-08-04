@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IOrderDataService } from './order-data-service-interface';
-import { ReservationView, DishView, ExtraView, OrderListView } from '../../viewModels/interfaces';
+import { ReservationView, DishView, ExtraView, OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes, orderList } from '../mock-data';
 import * as moment from 'moment';

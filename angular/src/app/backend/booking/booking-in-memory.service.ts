@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
-import { ReservationView } from '../../viewModels/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 import { bookedTables } from '../mock-data';
 import * as moment from 'moment';

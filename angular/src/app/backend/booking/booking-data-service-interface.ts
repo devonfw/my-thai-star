@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { ReservationView } from '../../viewModels/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 
 export interface IBookingDataService {

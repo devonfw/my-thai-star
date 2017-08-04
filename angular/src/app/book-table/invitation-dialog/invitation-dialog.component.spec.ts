@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdDialog } from '@angular/material';
 
-import { BackendModule } from '../../shared/backend/backend.module';
+import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
 import { BookTableService } from '../shared/book-table.service';

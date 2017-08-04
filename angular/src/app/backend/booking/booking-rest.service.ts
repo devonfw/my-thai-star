@@ -1,12 +1,12 @@
-import { environment } from './../../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
-import { ReservationView } from '../../viewModels/interfaces';
-import { config } from '../../../config';
-import { HttpClient } from '../../httpClient/httpClient.service';
+import { ReservationView } from '../../shared/viewModels/interfaces';
+import { config } from '../../config';
+import { HttpClient } from '../../shared/httpClient/httpClient.service';
 
 @Injectable()
 export class BookingRestService implements IBookingDataService {

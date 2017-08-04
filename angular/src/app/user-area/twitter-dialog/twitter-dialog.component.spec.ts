@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdDialog } from '@angular/material';
 
-import { CovalentModule } from '../../shared/covalent.module';
+import { CoreModule } from '../../core/core.module';
 import { UserAreaModule } from '../user-area.module';
 
 import { SnackBarService } from '../../shared/snackService/snackService.service';
@@ -16,7 +16,7 @@ describe('TwitterDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        CovalentModule,
+        CoreModule,
         BrowserAnimationsModule,
         UserAreaModule,
       ],

@@ -1,12 +1,12 @@
-import { environment } from './../../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { Filter } from '../backendModels/interfaces';
 import { Injectable, Injector } from '@angular/core';
 import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import {IDishesDataService} from './dishes-data-service-interface';
-import { config } from '../../../config';
-import { DishView } from '../../viewModels/interfaces';
-import { HttpClient } from '../../httpClient/httpClient.service';
+import { config } from '../../config';
+import { DishView } from '../../shared/viewModels/interfaces';
+import { HttpClient } from '../../shared/httpClient/httpClient.service';
 
 @Injectable()
 export class DishesRestService implements IDishesDataService {

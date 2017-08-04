@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule} from '@angular/http';
-import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
+import { BookingInfo } from '../../backend/backendModels/interfaces';
 import { BookTableService } from './book-table.service';
-import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
 
 describe('BookTableService', () => {
   beforeEach(() => {

@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable } from '@angular/core';
-import { BackendType } from './../../../../app/config';
+import { BackendType } from './../../../app/config';
 import { BackendConfig } from '../backend.module';
 import { OrderInMemoryService } from './order-in-memory.service';
 import { OrderRestService } from './order-rest.service';
 import { IOrderDataService } from './order-data-service-interface';
-import { OrderListView } from '../../viewModels/interfaces';
+import { OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';

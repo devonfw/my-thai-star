@@ -1,10 +1,10 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule} from '@angular/http';
-import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
+import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
 import { EmailConfirmationsService } from './email-confirmations.service';
-import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
-import { OrderDataService } from '../../shared/backend/order/order-data-service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
+import { OrderDataService } from '../../backend/order/order-data-service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
 
 describe('EmailConfirmationsService', () => {
   beforeEach(() => {

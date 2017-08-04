@@ -2,14 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
-import { OrderDataService } from '../../shared/backend/order/order-data-service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
+import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
+import { OrderDataService } from '../../backend/order/order-data-service';
 import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
-import { CovalentModule } from '../../shared/covalent.module';
+import { CoreModule } from '../../core/core.module';
 
 describe('SidenavOrderComponent', () => {
   let component: SidenavOrderComponent;
@@ -25,7 +25,7 @@ describe('SidenavOrderComponent', () => {
         {provide: BookingDataService, useClass: BookingInMemoryService},
         {provide: OrderDataService, useClass: OrderInMemoryService}],
       imports: [
-        CovalentModule,
+        CoreModule,
       ],
     })
     .compileComponents();

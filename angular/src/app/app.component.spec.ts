@@ -2,9 +2,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { BackendModule } from './shared/backend/backend.module';
+import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
-import { CovalentModule } from './shared/covalent.module';
+import { CoreModule } from './core/core.module';
 
 import { SnackBarService } from './shared/snackService/snackService.service';
 import { WindowService } from './shared/windowService/windowService.service';
@@ -26,7 +26,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
-        CovalentModule,
+        CoreModule,
         SidenavModule,
       ],
     });

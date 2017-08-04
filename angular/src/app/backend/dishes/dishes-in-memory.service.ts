@@ -5,7 +5,7 @@ import { IDishesDataService } from './dishes-data-service-interface';
 import { Filter } from '../backendModels/interfaces';
 import { dishes } from '../mock-data';
 import { orderBy, find } from 'lodash';
-import { DishView } from '../../viewModels/interfaces';
+import { DishView } from '../../shared/viewModels/interfaces';
 
 @Injectable()
 export class DishesInMemoryService implements IDishesDataService {

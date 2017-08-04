@@ -1,4 +1,4 @@
-import { BackendType } from './../../../app/config';
+import { BackendType } from './../../app/config';
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -8,7 +8,7 @@ import { BookingDataService } from './booking/booking-data-service';
 import { OrderDataService } from './order/order-data-service';
 import { provideClient } from './graphql-client';
 import { ApolloModule } from 'apollo-angular';
-import { HttpClient } from '../httpClient/httpClient.service';
+import { HttpClient } from '../shared/httpClient/httpClient.service';
 
 // export enum BackendType {
 //   IN_MEMORY,

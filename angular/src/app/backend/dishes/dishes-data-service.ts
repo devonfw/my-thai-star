@@ -1,13 +1,13 @@
 import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BackendType } from './../../../../app/config';
+import { BackendType } from './../../../app/config';
 import { BackendConfig } from '../backend.module';
 import { DishesGraphQlService } from './dishes-graph-ql.service';
 import { DishesInMemoryService } from './dishes-in-memory.service';
 import { DishesRestService } from './dishes-rest.service';
 import { Filter } from '../backendModels/interfaces';
 import { IDishesDataService } from './dishes-data-service-interface';
-import { DishView } from '../../viewModels/interfaces';
+import { DishView } from '../../shared/viewModels/interfaces';
 
 @Injectable()
 export class DishesDataService implements IDishesDataService {

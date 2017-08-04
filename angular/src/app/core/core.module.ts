@@ -29,4 +29,4 @@ import { MaterialModule } from '@angular/material';
   providers: [],
 })
 
-export class CovalentModule { }
+export class CoreModule { }

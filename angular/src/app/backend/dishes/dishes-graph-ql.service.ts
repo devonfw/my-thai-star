@@ -3,7 +3,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { DishView } from '../../viewModels/interfaces';
+import { DishView } from '../../shared/viewModels/interfaces';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

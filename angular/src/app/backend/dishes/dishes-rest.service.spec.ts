@@ -7,22 +7,22 @@ import {
     ResponseOptions,
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { LoginRestService } from './login-rest.service';
-import { HttpClient } from '../../httpClient/httpClient.service';
-import { AuthService } from '../../authentication/auth.service';
-import { SnackBarService } from '../../snackService/snackService.service';
+import { DishesRestService } from './dishes-rest.service';
+import { HttpClient } from '../../shared/httpClient/httpClient.service';
+import { AuthService } from '../../shared/authentication/auth.service';
+import { SnackBarService } from '../../shared/snackService/snackService.service';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginDataService } from '../login/login-data-service';
-import { WindowService } from '../../windowService/windowService.service';
+import { WindowService } from '../../shared/windowService/windowService.service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
 
-describe('LoginRestService', () => {
+describe('DishesRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule, MaterialModule, RouterTestingModule],
       providers: [
-        LoginRestService,
+        DishesRestService,
         HttpClient,
         AuthService,
         SnackBarService,
@@ -34,7 +34,7 @@ describe('LoginRestService', () => {
     });
   });
 
-  it('should create', inject([LoginRestService], (service: LoginRestService) => {
+  it('should create', inject([DishesRestService], (service: DishesRestService) => {
     expect(service).toBeTruthy();
   }));
 });

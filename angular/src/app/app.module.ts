@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { BackendModule } from './shared/backend/backend.module';
-import { CovalentModule } from './shared/covalent.module';
+import { BackendModule } from './backend/backend.module';
+import { CoreModule } from './core/core.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { BookTableModule } from './book-table/book-table.module';
 import { WaiterCockpitModule } from './cockpit-area/cockpit.module';
@@ -34,7 +34,7 @@ import { AppRoutingModule } from './app-routing.module';
     WaiterCockpitModule,
     UserAreaModule,
     EmailConfirmationModule,
-    CovalentModule,
+    CoreModule,
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
   ],
   providers: [],

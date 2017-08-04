@@ -1,11 +1,11 @@
-import { BackendType } from './../../../../app/config';
+import { BackendType } from './../../../app/config';
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable } from '@angular/core';
 import { BackendConfig } from '../backend.module';
 import { BookingInMemoryService } from './booking-in-memory.service';
 import { BookingRestService } from './booking-rest.service';
 import { IBookingDataService } from './booking-data-service-interface';
-import { ReservationView } from '../../viewModels/interfaces';
+import { ReservationView } from '../../shared/viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 
 @Injectable()

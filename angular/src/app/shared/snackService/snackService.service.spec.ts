@@ -1,11 +1,11 @@
-import { CovalentModule } from '../covalent.module';
+import { CoreModule } from '../../core/core.module';
 import { TestBed, inject } from '@angular/core/testing';
 import { SnackBarService } from './snackService.service';
 
 describe('SnackBarService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [CovalentModule],
+        imports: [CoreModule],
         providers: [SnackBarService],
     });
   });

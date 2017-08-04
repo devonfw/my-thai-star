@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '@angular/material';
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 import { Md2Module } from 'md2';
 
 import { BookTableService } from './shared/book-table.service';
@@ -20,7 +20,7 @@ import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog
     CommonModule,
     Md2Module,
     MaterialModule,
-    CovalentModule,
+    CoreModule,
   ],
   providers: [
     BookTableService,

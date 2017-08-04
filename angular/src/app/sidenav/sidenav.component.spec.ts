@@ -5,13 +5,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SnackBarService } from '../shared/snackService/snackService.service';
-import { BookingDataService } from '../shared/backend/booking/booking-data-service';
-import { BookingInMemoryService } from '../shared/backend/booking/booking-in-memory.service';
-import { OrderInMemoryService } from '../shared/backend/order/order-in-memory.service';
-import { OrderDataService } from '../shared/backend/order/order-data-service';
+import { BookingDataService } from '../backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
+import { OrderInMemoryService } from '../backend/order/order-in-memory.service';
+import { OrderDataService } from '../backend/order/order-data-service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { SidenavComponent } from './sidenav.component';
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -29,7 +29,7 @@ describe('SidenavComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule,
-        CovalentModule,
+        CoreModule,
       ],
     })
     .compileComponents();

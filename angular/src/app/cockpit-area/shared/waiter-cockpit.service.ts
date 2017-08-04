@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
-import { OrderDataService } from '../../shared/backend/order/order-data-service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
+import { OrderDataService } from '../../backend/order/order-data-service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { OrderListView, OrderView, ReservationView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep} from 'lodash';
 

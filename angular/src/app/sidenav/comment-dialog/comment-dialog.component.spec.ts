@@ -3,7 +3,7 @@ import { MdDialog } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SidenavModule } from '../sidenav.module';
-import { CovalentModule } from '../../shared/covalent.module';
+import { CoreModule } from '../../core/core.module';
 
 import { CommentDialogComponent } from './comment-dialog.component';
 
@@ -15,7 +15,7 @@ describe('CommentDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        CovalentModule,
+        CoreModule,
         SidenavModule,
       ],
     })
