@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { BookingInfo } from '../../backend/backendModels/interfaces';
 import { BookTableService } from './book-table.service';
 import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';

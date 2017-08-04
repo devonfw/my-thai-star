@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { OrderDataService } from '../../backend/order/order-data-service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 import { OrderView, ExtraView } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../backend/backendModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep, toString } from 'lodash';

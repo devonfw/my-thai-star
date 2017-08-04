@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { MenuService } from '../shared/menu.service';
-import { AuthService } from '../../shared/authentication/auth.service';
+import { AuthService } from '../../core/authentication/auth.service';
 
 @Component({
   selector: 'public-menu-card',

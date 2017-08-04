@@ -3,8 +3,8 @@ import { LoginInfo } from '../../backend/backendModels/interfaces';
 import { Injectable }     from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { LoginDataService } from '../../backend/login/login-data-service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
-import { AuthService } from '../../shared/authentication/auth.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
+import { AuthService } from '../../core/authentication/auth.service';
 
 @Injectable()
 export class UserAreaService {

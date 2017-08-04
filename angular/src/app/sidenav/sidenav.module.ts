@@ -1,4 +1,4 @@
-import { WindowService } from '../shared/windowService/windowService.service';
+import { WindowService } from '../core/windowService/windowService.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@angular/material';

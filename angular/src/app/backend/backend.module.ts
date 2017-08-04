@@ -8,7 +8,7 @@ import { BookingDataService } from './booking/booking-data-service';
 import { OrderDataService } from './order/order-data-service';
 import { provideClient } from './graphql-client';
 import { ApolloModule } from 'apollo-angular';
-import { HttpClient } from '../shared/httpClient/httpClient.service';
+import { HttpClientService } from '../core/httpClient/httpClient.service';
 
 // export enum BackendType {
 //   IN_MEMORY,
@@ -29,7 +29,7 @@ export class BackendConfig {
   ],
   declarations: [],
   providers: [
-    HttpClient,
+    HttpClientService,
     DishesDataService,
     LoginDataService,
     BookingDataService,

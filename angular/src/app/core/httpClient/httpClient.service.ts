@@ -7,7 +7,7 @@ import { AuthService } from '../authentication/auth.service';
 import { WindowService } from '../windowService/windowService.service';
 
 @Injectable()
-export class HttpClient {
+export class HttpClientService {
 
     headers: Headers;
 

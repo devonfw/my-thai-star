@@ -8,13 +8,13 @@ import {
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { LoginRestService } from './login-rest.service';
-import { HttpClient } from '../../shared/httpClient/httpClient.service';
-import { AuthService } from '../../shared/authentication/auth.service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { HttpClientService } from '../../core/httpClient/httpClient.service';
+import { AuthService } from '../../core/authentication/auth.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginDataService } from '../login/login-data-service';
-import { WindowService } from '../../shared/windowService/windowService.service';
+import { WindowService } from '../../core/windowService/windowService.service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
 
 describe('LoginRestService', () => {
@@ -23,7 +23,7 @@ describe('LoginRestService', () => {
       imports: [HttpModule, MaterialModule, RouterTestingModule],
       providers: [
         LoginRestService,
-        HttpClient,
+        HttpClientService,
         AuthService,
         SnackBarService,
         MockBackend,

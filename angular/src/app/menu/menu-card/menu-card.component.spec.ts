@@ -10,8 +10,8 @@ import { DishesInMemoryService } from '../../backend/dishes/dishes-in-memory.ser
 import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
 import { OrderDataService } from '../../backend/order/order-data-service';
 import { MenuService } from '../shared/menu.service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
-import { AuthService } from '../../shared/authentication/auth.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
+import { AuthService } from '../../core/authentication/auth.service';
 
 import { MenuCardComponent } from './menu-card.component';
 

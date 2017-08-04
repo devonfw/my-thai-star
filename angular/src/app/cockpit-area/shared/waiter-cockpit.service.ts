@@ -5,7 +5,7 @@ import { OrderDataService } from '../../backend/order/order-data-service';
 import { BookingDataService } from '../../backend/booking/booking-data-service';
 import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { OrderListView, OrderView, ReservationView } from '../../shared/viewModels/interfaces';
-import { map, cloneDeep} from 'lodash';
+import { map, cloneDeep } from 'lodash';
 
 @Injectable()
 export class WaiterCockpitService {

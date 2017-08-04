@@ -6,15 +6,15 @@ import { MenuComponent } from './menu/menu.component';
 import { BookTableComponent } from './book-table/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
-import { AuthGuard } from './shared/authentication/auth-guard.service';
+import { AuthGuardService } from './core/authentication/auth-guard.service';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent},
   { path: 'menu', component: MenuComponent},
   { path: 'bookTable', component: BookTableComponent},
-  { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuard]},
-  { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuard]},
+  { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuardService]},
+  { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuardService]},
   { path: 'booking/acceptInvite/:token', component: EmailConfirmationsComponent},
   { path: 'booking/rejectInvite/:token', component: EmailConfirmationsComponent},
   { path: 'booking/cancel/:token', component: EmailConfirmationsComponent},
@@ -30,6 +30,6 @@ const appRoutes: Routes = [
   ],
   exports: [
     RouterModule,
-  ]
+  ],
 })
 export class AppRoutingModule {}

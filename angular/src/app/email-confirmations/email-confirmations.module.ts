@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@angular/material';
 
-import { SnackBarService } from '../shared/snackService/snackService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';

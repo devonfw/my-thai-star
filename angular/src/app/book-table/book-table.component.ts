@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { SnackBarService } from '../shared/snackService/snackService.service';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
-import { WindowService } from '../shared/windowService/windowService.service';
-import { BookTableService } from './shared/book-table.service';
+import { WindowService } from '../core/windowService/windowService.service';
 import { last } from 'lodash';
 
 @Component({
@@ -20,9 +18,7 @@ export class BookTableComponent {
   minDate: Date = new Date();
 
   constructor(public window: WindowService,
-              public dialog: MdDialog,
-              public snackBarService: SnackBarService,
-              public bookingService: BookTableService) {
+              public dialog: MdDialog) {
   }
 
   showBookTableDialog(form: FormGroup): void {

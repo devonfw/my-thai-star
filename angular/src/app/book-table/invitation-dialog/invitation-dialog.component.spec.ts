@@ -6,7 +6,7 @@ import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
 import { BookTableService } from '../shared/book-table.service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { InvitationDialogComponent } from './invitation-dialog.component';
 

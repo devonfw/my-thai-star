@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
-import { SnackBarService } from '../shared/snackService/snackService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
 import { BookingDataService } from '../backend/booking/booking-data-service';
 import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
 import { OrderInMemoryService } from '../backend/order/order-in-memory.service';

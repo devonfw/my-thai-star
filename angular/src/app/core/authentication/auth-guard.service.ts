@@ -8,7 +8,7 @@ import { AuthService }      from './auth.service';
 import { SnackBarService } from '../snackService/snackService.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuardService implements CanActivate {
   constructor(public snackBar: SnackBarService,
               private authService: AuthService,
               private router: Router) {}

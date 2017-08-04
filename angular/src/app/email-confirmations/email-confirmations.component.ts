@@ -1,6 +1,6 @@
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 import { Observable } from 'rxjs/Rx';
-import { SnackBarService } from '../shared/snackService/snackService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
 import { UrlSegment } from '@angular/router/router';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

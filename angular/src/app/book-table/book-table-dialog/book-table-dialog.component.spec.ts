@@ -5,7 +5,7 @@ import { CoreModule } from '../../core/core.module';
 import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 import { BookTableService } from '../shared/book-table.service';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { MdDialogModule, MdDialog } from '@angular/material';

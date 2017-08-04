@@ -7,8 +7,8 @@ import { CoreModule } from '../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BackendModule } from '../../backend/backend.module';
 
-import { AuthService } from '../../shared/authentication/auth.service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { AuthService } from '../../core/authentication/auth.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { PasswordDialogComponent } from './password-dialog.component';
 

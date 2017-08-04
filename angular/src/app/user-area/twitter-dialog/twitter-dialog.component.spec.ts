@@ -5,7 +5,7 @@ import { MdDialog } from '@angular/material';
 import { CoreModule } from '../../core/core.module';
 import { UserAreaModule } from '../user-area.module';
 
-import { SnackBarService } from '../../shared/snackService/snackService.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { TwitterDialogComponent } from './twitter-dialog.component';
 

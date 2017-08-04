@@ -5,7 +5,7 @@ import { CoreModule } from '../core/core.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SnackBarService } from '../shared/snackService/snackService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
 import { BackendModule } from '../backend/backend.module';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 import { EmailConfirmationsComponent } from './email-confirmations.component';

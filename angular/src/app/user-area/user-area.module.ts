@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@angular/material';
 import { CoreModule } from '../core/core.module';
 
-import { AuthService } from '../shared/authentication/auth.service';
-import { AuthGuard } from '../shared/authentication/auth-guard.service';
+import { AuthService } from '../core/authentication/auth.service';
+import { AuthGuardService } from '../core/authentication/auth-guard.service';
 import { UserAreaService } from './shared/user-area.service';
 import { EqualValidatorDirective } from './shared/equal-validator.directive';
 
@@ -21,7 +21,7 @@ import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.componen
   ],
   providers: [
     UserAreaService,
-    AuthGuard,
+    AuthGuardService,
     AuthService,
   ],
 

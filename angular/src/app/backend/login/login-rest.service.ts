@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
 import { config } from '../../config';
-import { HttpClient } from '../../shared/httpClient/httpClient.service';
+import { HttpClientService } from '../../core/httpClient/httpClient.service';
 
 @Injectable()
 export class LoginRestService implements ILoginDataService {
@@ -16,10 +16,10 @@ export class LoginRestService implements ILoginDataService {
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
 
-  private http: HttpClient;
+  private http: HttpClientService;
 
   constructor(private injector: Injector) {
-    this.http = this.injector.get(HttpClient);
+    this.http = this.injector.get(HttpClientService);
   }
 
   login(username: string, password: string): Observable<string> {
