@@ -7,7 +7,6 @@ import { CoreModule } from '../core/core.module';
 import { AuthService } from '../core/authentication/auth.service';
 import { AuthGuardService } from '../core/authentication/auth-guard.service';
 import { UserAreaService } from './shared/user-area.service';
-import { EqualValidatorDirective } from './shared/equal-validator.directive';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
@@ -26,13 +25,11 @@ import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.componen
   ],
 
   declarations: [
-    EqualValidatorDirective,
     LoginDialogComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
   ],
   exports: [
-    EqualValidatorDirective,
     LoginDialogComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
