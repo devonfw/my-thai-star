@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '@angular/material';
+import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 
 import { AuthService } from '../core/authentication/auth.service';
@@ -16,6 +17,7 @@ import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.componen
   imports: [
     CommonModule,
     MaterialModule,
+    SharedModule,
     CoreModule,
   ],
   providers: [

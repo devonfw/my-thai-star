@@ -52,7 +52,7 @@ describe('BookTableComponent', () => {
   });
 
   it('Email should validate (easy)', () => {
-    expect(emailValidator(new FormControl('bad@email'))).toEqual(false);
-    expect(emailValidator(new FormControl('good@email.com'))).toEqual(true);
+    expect(emailValidator(new FormControl('bad@email').value)).toEqual(false);
+    expect(emailValidator(new FormControl('good@email.com').value)).toEqual(true);
   });
 });

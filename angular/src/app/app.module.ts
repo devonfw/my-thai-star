@@ -22,10 +22,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HeaderModule,
     HomeModule,
@@ -34,10 +33,11 @@ import { AppRoutingModule } from './app-routing.module';
     SidenavModule,
     WaiterCockpitModule,
     UserAreaModule,
-    EmailConfirmationModule,
     CoreModule,
     SharedModule,
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
+    EmailConfirmationModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ],

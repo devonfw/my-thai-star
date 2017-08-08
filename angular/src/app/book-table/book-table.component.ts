@@ -4,6 +4,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../core/windowService/windowService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
+import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
 
 @Component({
@@ -18,6 +20,7 @@ export class BookTableComponent {
   minDate: Date = new Date();
 
   constructor(public window: WindowService,
+              public snackBarservice: SnackBarService,
               public dialog: MdDialog) {
   }
 
@@ -44,6 +47,13 @@ export class BookTableComponent {
         this.invitationModel = [];
       }
     });
+  }
+
+  validateEmail(): void {
+    if (!emailValidator(last(this.invitationModel))) {
+      this.invitationModel.pop();
+      this.snackBarservice.openSnack('Email format not valid', 1000, 'red');
+    }
   }
 
 }

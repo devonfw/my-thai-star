@@ -12,7 +12,6 @@ import { isInteger } from 'lodash';
 export class AssistantsValidatorDirective implements Validator {
 
     validate(c: AbstractControl): { [key: string]: any } {
-
         return isInteger(c.value) && c.value > 0 && c.value < 9 ? undefined : {
             validateAssistants: {
                 valid: false,

@@ -1,10 +1,11 @@
-import { WindowService } from '../core/windowService/windowService.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@angular/material';
+import { CoreModule } from '../core/core.module';
 
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
+import { WindowService } from '../core/windowService/windowService.service';
+
 import { SidenavComponent } from './sidenav.component';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
@@ -12,7 +13,7 @@ import { CommentDialogComponent } from './comment-dialog/comment-dialog.componen
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
+    CoreModule,
   ],
   providers: [
     SidenavService,

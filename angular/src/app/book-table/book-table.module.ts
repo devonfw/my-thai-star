@@ -2,7 +2,7 @@ import { BookTableComponent } from './book-table.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from '@angular/material';
+import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 import { Md2Module } from 'md2';
 
@@ -17,7 +17,7 @@ import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog
   imports: [
     CommonModule,
     Md2Module,
-    MaterialModule,
+    SharedModule,
     CoreModule,
   ],
   providers: [
