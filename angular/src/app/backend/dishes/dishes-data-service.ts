@@ -12,7 +12,7 @@ import { DishView } from '../../shared/viewModels/interfaces';
 @Injectable()
 export class DishesDataService implements IDishesDataService {
 
-    usedImplementation: IDishesDataService;
+    private usedImplementation: IDishesDataService;
 
     constructor(private injector: Injector) {
         const backendConfig: BackendConfig =   this.injector.get(BackendConfig);

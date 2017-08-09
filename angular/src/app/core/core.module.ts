@@ -48,7 +48,6 @@ import {
   CovalentCommonModule,
 } from '@covalent/core';
 
-
 import { WindowService } from './windowService/windowService.service';
 import { SnackBarService } from './snackService/snackService.service';
 import { HttpClientService } from './httpClient/httpClient.service';

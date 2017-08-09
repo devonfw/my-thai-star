@@ -19,30 +19,30 @@ import { Observable } from 'rxjs/Observable';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  orders: OrderListView[];
-  totalOrders: number;
+  private orders: OrderListView[];
+  private totalOrders: number;
 
-  columns: ITdDataTableColumn[] = [
+  private columns: ITdDataTableColumn[] = [
     { name: 'booking.bookingDate', label: 'Reservation date'},
     { name: 'booking.email', label: 'Email' },
     { name: 'booking.bookingToken', label: 'Reference number'},
   ];
 
-  pageSizes: number[] = config.pageSizes;
+  private pageSizes: number[] = config.pageSizes;
 
-  pagination: Pagination = {
+  private pagination: Pagination = {
     size: 8,
     page: 1,
     total: 1,
   };
 
-  filters: FilterCockpit = {
+  private filters: FilterCockpit = {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
   };
 
-  sorting: any[] = [];
+  private sorting: any[] = [];
 
   constructor(private dialog: MdDialog,
               private waiterCockpitService: WaiterCockpitService) {}

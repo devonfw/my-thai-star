@@ -11,7 +11,7 @@ import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 @Injectable()
 export class BookingDataService implements IBookingDataService {
 
-    usedImplementation: IBookingDataService;
+    private usedImplementation: IBookingDataService;
 
     constructor(private injector: Injector) {
         const backendConfig: BackendConfig = this.injector.get(BackendConfig);

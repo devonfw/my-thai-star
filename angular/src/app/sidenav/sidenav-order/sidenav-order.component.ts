@@ -14,8 +14,8 @@ import { map } from 'lodash';
 })
 export class SidenavOrderComponent implements OnInit {
 
+  private extras: string;
   @Input('order') order: OrderView;
-  extras: string;
 
   constructor(private sidenav: SidenavService,
               public dialog: MdDialog,

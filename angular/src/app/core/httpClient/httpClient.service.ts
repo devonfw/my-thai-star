@@ -9,7 +9,7 @@ import { WindowService } from '../windowService/windowService.service';
 @Injectable()
 export class HttpClientService {
 
-    headers: Headers;
+    private headers: Headers;
 
     constructor(private auth: AuthService,
                 private snackService: SnackBarService,

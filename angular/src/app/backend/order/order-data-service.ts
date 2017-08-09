@@ -11,7 +11,7 @@ import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 @Injectable()
 export class OrderDataService implements IOrderDataService {
 
-    usedImplementation: IOrderDataService;
+    private usedImplementation: IOrderDataService;
 
     constructor(private injector: Injector) {
         const backendConfig: BackendConfig = this.injector.get(BackendConfig);

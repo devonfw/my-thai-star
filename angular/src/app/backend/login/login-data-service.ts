@@ -10,7 +10,7 @@ import { LoginInfo } from '../backendModels/interfaces';
 @Injectable()
 export class LoginDataService implements ILoginDataService {
 
-    usedImplementation: ILoginDataService;
+    private usedImplementation: ILoginDataService;
 
     constructor(public injector: Injector) {
         const backendConfig: BackendConfig =   this.injector.get(BackendConfig);
