@@ -11,8 +11,8 @@ import * as moment from 'moment';
 })
 export class BookTableDialogComponent implements OnInit {
 
-  private data: any;
-  private date: string;
+  data: any;
+  date: string;
 
   constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,

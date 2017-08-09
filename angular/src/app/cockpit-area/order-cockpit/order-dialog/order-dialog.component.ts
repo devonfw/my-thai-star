@@ -12,10 +12,14 @@ import { config } from '../../../config';
 })
 export class OrderDialogComponent implements OnInit {
 
-  private data: any;
+  private fromRow: number = 1;
+  private currentPage: number = 1;
+  private pageSize: number = 5;
 
-  private datat: BookingView[] = [];
-  private columnst: ITdDataTableColumn[] = [
+  data: any;
+
+  datat: BookingView[] = [];
+  columnst: ITdDataTableColumn[] = [
     { name: 'bookingDate', label: 'Reservation date'},
     { name: 'creationDate', label: 'Creation date'},
     { name: 'name', label: 'Owner' },
@@ -23,8 +27,8 @@ export class OrderDialogComponent implements OnInit {
     { name: 'tableId', label: 'Table'},
   ];
 
-  private datao: OrderView[] = [];
-  private columnso: ITdDataTableColumn[] = [
+  datao: OrderView[] = [];
+  columnso: ITdDataTableColumn[] = [
     { name: 'dish.name', label: 'Dish'},
     { name: 'orderLine.comment', label: 'Comments'},
     { name: 'extras', label: 'Extra' },
@@ -32,13 +36,9 @@ export class OrderDialogComponent implements OnInit {
     { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
   ];
 
-  private pageSizes: number[] = config.pageSizesDialog;
-
-  private fromRow: number = 1;
-  private currentPage: number = 1;
-  private pageSize: number = 5;
-  private filteredData: OrderView[] = this.datao;
-  private totalPrice: number;
+  pageSizes: number[] = config.pageSizesDialog;
+  filteredData: OrderView[] = this.datao;
+  totalPrice: number;
 
   constructor(private _dataTableService: TdDataTableService,
               private waiterCockpitService: WaiterCockpitService,

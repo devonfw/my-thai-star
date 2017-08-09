@@ -12,17 +12,6 @@ import { config } from '../../../config';
 })
 export class ReservationDialogComponent implements OnInit {
 
-  private data: any;
-
-  private datat: ReservationView[] = [];
-  private columnst: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.creationDate', label: 'Creation date'},
-    { name: 'booking.name', label: 'Owner' },
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.tableId', label: 'Table'},
-  ];
-
   private datao: FriendsInvite[] = [];
   private columnso: ITdDataTableColumn[] = [
     { name: 'email', label: 'Guest email'},
@@ -34,7 +23,19 @@ export class ReservationDialogComponent implements OnInit {
   private fromRow: number = 1;
   private currentPage: number = 1;
   private pageSize: number = 5;
-  private filteredData: any[] = this.datao;
+
+  data: any;
+
+  datat: ReservationView[] = [];
+  columnst: ITdDataTableColumn[] = [
+    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.creationDate', label: 'Creation date'},
+    { name: 'booking.name', label: 'Owner' },
+    { name: 'booking.email', label: 'Email' },
+    { name: 'booking.tableId', label: 'Table'},
+  ];
+
+  filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
               private waiterCockpitService: WaiterCockpitService,

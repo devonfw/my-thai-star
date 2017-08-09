@@ -11,8 +11,8 @@ import * as moment from 'moment';
 })
 export class InvitationDialogComponent implements OnInit {
 
-  private data: any;
-  private date: string;
+  data: any;
+  date: string;
 
   constructor(private snackBar: SnackBarService,
               private invitationService: BookTableService,

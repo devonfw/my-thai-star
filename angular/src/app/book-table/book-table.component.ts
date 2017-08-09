@@ -16,8 +16,8 @@ import { last } from 'lodash';
 
 export class BookTableComponent {
 
-  private invitationModel: string[] = [];
-  private minDate: Date = new Date();
+  invitationModel: string[] = [];
+  minDate: Date = new Date();
 
   constructor(public window: WindowService,
               public snackBarservice: SnackBarService,

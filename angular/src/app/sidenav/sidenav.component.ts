@@ -14,7 +14,7 @@ import { toNumber } from 'lodash';
 })
 export class SidenavComponent implements OnInit {
 
-  private orders: OrderView[];
+  orders: OrderView[];
 
   constructor(private router: Router,
     private sidenav: SidenavService,

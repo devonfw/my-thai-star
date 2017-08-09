@@ -12,9 +12,9 @@ const isOrderEqual: Function =
 @Injectable()
 export class SidenavService {
 
-  private opened: boolean = false;
-
   private orders: OrderView[] = [];
+
+  opened: boolean = false;
 
   constructor(private orderDataService: OrderDataService) {}
 

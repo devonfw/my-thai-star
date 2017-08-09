@@ -21,23 +21,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ReservationCockpitComponent implements OnInit {
 
-  private reservations: ReservationView;
-  private totalReservations: number;
-
-  private columns: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.bookingToken', label: 'Reference number'},
-  ];
-
-  private pageSizes: number[] = config.pageSizes;
-
-  private filters: FilterCockpit = {
-    bookingDate: undefined,
-    email: undefined,
-    bookingToken: undefined,
-  };
-
   private pagination: Pagination = {
     size: 8,
     page: 1,
@@ -45,6 +28,23 @@ export class ReservationCockpitComponent implements OnInit {
   };
 
   private sorting: Sorting[] = [];
+
+  reservations: ReservationView;
+  totalReservations: number;
+
+  columns: ITdDataTableColumn[] = [
+    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.email', label: 'Email' },
+    { name: 'booking.bookingToken', label: 'Reference number'},
+  ];
+
+  pageSizes: number[] = config.pageSizes;
+
+  filters: FilterCockpit = {
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
+  };
 
   constructor(private waiterCockpitService: WaiterCockpitService,
               private dialog: MdDialog) {}

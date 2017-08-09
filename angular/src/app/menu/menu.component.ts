@@ -13,9 +13,9 @@ import { DishView } from '../shared/viewModels/interfaces';
 })
 export class MenuComponent implements OnInit {
 
-    private menus: Observable<DishView[]>;
-    private sortDir: string = 'DESC';
-    private sortDirIcon: string = 'vertical_align_bottom';
+    menus: Observable<DishView[]>;
+    sortDir: string = 'DESC';
+    sortDirIcon: string = 'vertical_align_bottom';
 
     constructor (private menuService: MenuService) {
     }
