@@ -7,7 +7,7 @@ import { ITdDataTableSelectAllEvent,
          IPageChangeEvent,
          ITdDataTableColumn,
          ITdDataTableSortChangeEvent,
-         TdDataTableSortingOrder} from '@covalent/core';
+         TdDataTableSortingOrder } from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { reject } from 'lodash';
