@@ -9,16 +9,13 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "serve": "ng serve --open --environment=dev",
+    "build": "ng build --environment=dev",
     "serve:aot": "ng serve --open --environment=dev --aot",
+    "build:aot": "ng build --environment=dev --aot",
     "serve:prod": "ng serve --open --environment=prod",
+    "build:prod": "ng build --environment=prod",
     "serve:prod:aot": "ng serve --open --environment=prod --aot",
-    "serve:prodcompose": "ng serve --open --environment=prodcompose",
-    "serve:prodcompose:aot": "ng serve --open --environment=prodcompose --aot",
-    "serve:node": "ng serve --open --environment=node",
-    "serve:node:aot": "ng serve --open --environment=node --aot",
-    "build": "ng build --environment=dev --aot",
-    "build:prod": "ng build --environment=prod --aot",
-    "build:prodcompose": "ng build --environment=prodcompose --aot"
+    "build:prod:aot": "ng build --environment=prod --aot"
   },
   "private": true,
   "dependencies": {

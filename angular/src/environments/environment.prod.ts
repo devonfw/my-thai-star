@@ -1,8 +1,8 @@
 import { BackendType } from '../app/config';
 
-export const environment: {production: boolean, backendType: BackendType, restPathRoot: string, restServiceRoot: string} = {
+export const environment: {production: boolean, backendType: BackendType, restPathRoot: any, restServiceRoot: any} = {
   production: true,
   backendType: BackendType.REST,
-  restPathRoot: 'http://de-mucdevondepl01:9090/mythaistar/',
-  restServiceRoot: 'http://de-mucdevondepl01:9090/mythaistar/services/rest/',
+  restPathRoot: ('${APP_REST_PATH_ROOT}').indexOf('$') < 0 ? '${APP_REST_PATH_ROOT}' : 'http://localhost:8081/mythaistar/',
+  restServiceRoot: ('${APP_REST_SERVICE_ROOT}').indexOf('$') < 0 ? '${APP_REST_SERVICE_ROOT}' : 'http://localhost:8081/mythaistar/services/rest/',
 };

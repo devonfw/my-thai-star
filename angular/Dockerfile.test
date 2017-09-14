@@ -1,0 +1,24 @@
+FROM node:8
+
+RUN apt-get -qq update && apt-get -qq install -y --no-install-recommends apt-utils && apt-get -qq install -y gettext
+
+RUN npm i -g @angular/cli --silent --unsafe-perm
+
+ARG APP_REST_PATH_ROOT="http://localhost:8081/mythaistar/"
+ARG APP_REST_SERVICE_ROOT="http://localhost:8081/mythaistar/services/rest/"
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app
+
+RUN npm install
+
+COPY . /usr/src/app
+
+RUN (envsubst '${APP_REST_SERVICE_ROOT} ${APP_REST_PATH_ROOT}' < /usr/src/app/src/environments/environment.prod.ts) >&1 | tee /usr/src/app/src/environments/environment.prod.ts
+
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0", "--environment=prod"]
