@@ -82,10 +82,8 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
       query.where(Alias.$(booking.getBookingType()).eq(bookingType));
     }
     Long table = criteria.getTableId();
-    if (table != null) {
-      if (booking.getTable() != null) {
-        query.where(Alias.$(booking.getTable().getId()).eq(table));
-      }
+    if (table != null && booking.getTable() != null) {
+      query.where(Alias.$(booking.getTable().getId()).eq(table));
     }
     return findPaginated(criteria, query, alias);
   }

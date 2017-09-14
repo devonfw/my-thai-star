@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPageChangeEvent,
          ITdDataTableSelectAllEvent,
          ITdDataTableColumn,
-         ITdDataTableSortChangeEvent} from '@covalent/core';
+         ITdDataTableSortChangeEvent } from '@covalent/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
