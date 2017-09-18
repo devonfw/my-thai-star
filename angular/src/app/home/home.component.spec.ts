@@ -2,7 +2,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -12,7 +12,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
       imports: [
-        CovalentModule,
+        CoreModule,
         RouterTestingModule,
       ],
     })

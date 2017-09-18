@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
-import { AuthService } from './shared/authentication/auth.service';
+import { AuthService } from './core/authentication/auth.service';
 
 @Component({
   selector: 'public-main',

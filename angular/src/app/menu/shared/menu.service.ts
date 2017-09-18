@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
-import { Filter } from '../../shared/backend/backendModels/interfaces';
+import { DishesDataService } from '../../backend/dishes/dishes-data-service';
+import { Filter } from '../../backend/backendModels/interfaces';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, remove, assign, merge } from 'lodash';
 

@@ -1,17 +1,17 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CovalentModule } from '../../shared/covalent.module';
+import { CoreModule } from '../../core/core.module';
 
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
-import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { DishesDataService } from '../../shared/backend/dishes/dishes-data-service';
-import { DishesInMemoryService } from '../../shared/backend/dishes/dishes-in-memory.service';
-import { OrderInMemoryService } from '../../shared/backend/order/order-in-memory.service';
-import { OrderDataService } from '../../shared/backend/order/order-data-service';
+import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { DishesDataService } from '../../backend/dishes/dishes-data-service';
+import { DishesInMemoryService } from '../../backend/dishes/dishes-in-memory.service';
+import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
+import { OrderDataService } from '../../backend/order/order-data-service';
 import { MenuService } from '../shared/menu.service';
-import { SnackBarService } from '../../shared/snackService/snackService.service';
-import { AuthService } from '../../shared/authentication/auth.service';
+import { SnackBarService } from '../../core/snackService/snackService.service';
+import { AuthService } from '../../core/authentication/auth.service';
 
 import { MenuCardComponent } from './menu-card.component';
 
@@ -31,7 +31,7 @@ describe('MenuCardComponent', () => {
         { provide: OrderDataService, useClass: OrderInMemoryService},
         { provide: DishesDataService, useClass: DishesInMemoryService}],
       imports: [
-        CovalentModule,
+        CoreModule,
       ],
     })
     .compileComponents();

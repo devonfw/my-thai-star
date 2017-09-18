@@ -1,5 +1,5 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { FilterCockpit, Pagination, Sorting } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -21,6 +21,14 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ReservationCockpitComponent implements OnInit {
 
+  private pagination: Pagination = {
+    size: 8,
+    page: 1,
+    total: 1,
+  };
+
+  private sorting: Sorting[] = [];
+
   reservations: ReservationView;
   totalReservations: number;
 
@@ -37,14 +45,6 @@ export class ReservationCockpitComponent implements OnInit {
     email: undefined,
     bookingToken: undefined,
   };
-
-  pagination: Pagination = {
-    size: 8,
-    page: 1,
-    total: 1,
-  };
-
-  sorting: Sorting[] = [];
 
   constructor(private waiterCockpitService: WaiterCockpitService,
               private dialog: MdDialog) {}

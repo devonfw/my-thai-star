@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { SnackBarService } from '../shared/snackService/snackService.service';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
-import { WindowService } from '../shared/windowService/windowService.service';
-import { BookTableService } from './shared/book-table.service';
+import { WindowService } from '../core/windowService/windowService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
+import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
 
 @Component({
@@ -20,9 +20,8 @@ export class BookTableComponent {
   minDate: Date = new Date();
 
   constructor(public window: WindowService,
-              public dialog: MdDialog,
-              public snackBarService: SnackBarService,
-              public bookingService: BookTableService) {
+              public snackBarservice: SnackBarService,
+              public dialog: MdDialog) {
   }
 
   showBookTableDialog(form: FormGroup): void {
@@ -51,9 +50,10 @@ export class BookTableComponent {
   }
 
   validateEmail(): void {
-    if (!this.bookingService.isEmailValid(last(this.invitationModel))) {
+    if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.snackBarService.openSnack('Email format not valid', 1000, 'red');
+      this.snackBarservice.openSnack('Email format not valid', 1000, 'red');
     }
   }
+
 }

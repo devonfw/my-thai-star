@@ -12,6 +12,18 @@ import { config } from '../../../config';
 })
 export class ReservationDialogComponent implements OnInit {
 
+  private datao: FriendsInvite[] = [];
+  private columnso: ITdDataTableColumn[] = [
+    { name: 'email', label: 'Guest email'},
+    { name: 'accepted', label: 'Acceptances and declines'},
+  ];
+
+  private pageSizes: number[] = config.pageSizesDialog;
+
+  private fromRow: number = 1;
+  private currentPage: number = 1;
+  private pageSize: number = 5;
+
   data: any;
 
   datat: ReservationView[] = [];
@@ -23,17 +35,6 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'booking.tableId', label: 'Table'},
   ];
 
-  datao: FriendsInvite[] = [];
-  columnso: ITdDataTableColumn[] = [
-    { name: 'email', label: 'Guest email'},
-    { name: 'accepted', label: 'Acceptances and declines'},
-  ];
-
-  pageSizes: number[] = config.pageSizesDialog;
-
-  fromRow: number = 1;
-  currentPage: number = 1;
-  pageSize: number = 5;
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
