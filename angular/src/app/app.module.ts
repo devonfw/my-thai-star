@@ -16,7 +16,6 @@ import { HeaderModule } from './header/header.module';
 import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
     WaiterCockpitModule,
     UserAreaModule,
     CoreModule,
-    SharedModule,
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
     EmailConfirmationModule,
     AppRoutingModule,
