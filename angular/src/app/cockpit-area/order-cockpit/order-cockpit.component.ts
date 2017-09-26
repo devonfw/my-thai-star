@@ -7,7 +7,7 @@ import { MdDialogRef, MdDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
-import { FilterCockpit, Pagination } from '../../shared/backend/backendModels/interfaces';
+import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
 import { reject } from 'lodash';
 import { config } from '../../config';
 import { Observable } from 'rxjs/Observable';
@@ -18,6 +18,13 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./order-cockpit.component.scss'],
 })
 export class OrderCockpitComponent implements OnInit {
+
+  private pagination: Pagination = {
+    size: 8,
+    page: 1,
+    total: 1,
+  };
+  private sorting: any[] = [];
 
   orders: OrderListView[];
   totalOrders: number;
@@ -30,19 +37,11 @@ export class OrderCockpitComponent implements OnInit {
 
   pageSizes: number[] = config.pageSizes;
 
-  pagination: Pagination = {
-    size: 8,
-    page: 1,
-    total: 1,
-  };
-
   filters: FilterCockpit = {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
   };
-
-  sorting: any[] = [];
 
   constructor(private dialog: MdDialog,
               private waiterCockpitService: WaiterCockpitService) {}

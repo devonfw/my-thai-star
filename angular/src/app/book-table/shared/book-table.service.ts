@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FriendsInvite, ReservationView } from '../../shared/viewModels/interfaces';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
-import { BookingInfo, ReservationInfo } from '../../shared/backend/backendModels/interfaces';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { BookingInfo, ReservationInfo } from '../../backend/backendModels/interfaces';
 import { map, assign, forEach } from 'lodash';
 
 @Injectable()
@@ -32,11 +32,6 @@ export class BookTableService {
     }
 
     return composedBooking;
-  }
-
-  isEmailValid(email: string): boolean {
-    let re: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(email);
   }
 
 }

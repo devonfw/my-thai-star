@@ -1,18 +1,16 @@
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@angular/material';
 
-import { appRoutes } from '../app.routes';
+import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    CovalentModule,
-    MaterialModule,
-    appRoutes,
+    CoreModule,
+    AppRoutingModule,
   ],
   providers: [
   ],

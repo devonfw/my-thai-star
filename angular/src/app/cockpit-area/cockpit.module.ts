@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CovalentModule } from '../shared/covalent.module';
+import { CoreModule } from '../core/core.module';
 
 import { WaiterCockpitService } from './shared/waiter-cockpit.service';
-import { WindowService } from '../shared/windowService/windowService.service';
+import { WindowService } from '../core/windowService/windowService.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
@@ -14,7 +14,7 @@ import { ReservationDialogComponent } from './reservation-cockpit/reservation-di
 @NgModule({
   imports: [
     CommonModule,
-    CovalentModule,
+    CoreModule,
   ],
   providers: [
     WaiterCockpitService,

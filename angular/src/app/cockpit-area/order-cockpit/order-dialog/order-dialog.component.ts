@@ -12,6 +12,10 @@ import { config } from '../../../config';
 })
 export class OrderDialogComponent implements OnInit {
 
+  private fromRow: number = 1;
+  private currentPage: number = 1;
+  private pageSize: number = 5;
+
   data: any;
 
   datat: BookingView[] = [];
@@ -33,10 +37,6 @@ export class OrderDialogComponent implements OnInit {
   ];
 
   pageSizes: number[] = config.pageSizesDialog;
-
-  fromRow: number = 1;
-  currentPage: number = 1;
-  pageSize: number = 5;
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
 

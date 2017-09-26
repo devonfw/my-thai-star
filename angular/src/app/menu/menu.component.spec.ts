@@ -3,12 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
-import { SnackBarService } from '../shared/snackService/snackService.service';
-import { AuthService } from '../shared/authentication/auth.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
+import { AuthService } from '../core/authentication/auth.service';
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
-import { BackendModule } from './../shared/backend/backend.module';
-import { CovalentModule } from '../shared/covalent.module';
+import { BackendModule } from './../backend/backend.module';
+import { CoreModule } from '../core/core.module';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -21,7 +21,7 @@ describe('MenuComponent', () => {
       imports: [
         BrowserAnimationsModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
-        CovalentModule,
+        CoreModule,
       ],
     })
     .compileComponents();

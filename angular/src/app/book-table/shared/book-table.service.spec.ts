@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
-import { BookingInfo } from '../../shared/backend/backendModels/interfaces';
+import { BookingInfo } from '../../backend/backendModels/interfaces';
 import { BookTableService } from './book-table.service';
-import { BookingInMemoryService } from '../../shared/backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../../shared/backend/booking/booking-data-service';
+import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
+import { BookingDataService } from '../../backend/booking/booking-data-service';
 
 describe('BookTableService', () => {
   beforeEach(() => {
@@ -17,16 +17,6 @@ describe('BookTableService', () => {
   it('should create', inject([BookTableService], (service: BookTableService) => {
     expect(service).toBeTruthy();
   }));
-
-  describe('Email validation', () => {
-    it('should reject bad formatted email', inject([BookTableService], (service: BookTableService) => {
-      expect(service.isEmailValid('email@email')).toEqual(false);
-    }));
-
-    it('should validate well formatted email', inject([BookTableService], (service: BookTableService) => {
-      expect(service.isEmailValid('email@email.com')).toEqual(true);
-    }));
-  });
 
   describe('Form composer', () => {
     it('should compose correctly booking info type booking', inject([BookTableService], (service: BookTableService) => {

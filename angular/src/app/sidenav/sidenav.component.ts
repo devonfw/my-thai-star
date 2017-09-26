@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
-import { SnackBarService } from '../shared/snackService/snackService.service';
+import { SnackBarService } from '../core/snackService/snackService.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { ExtraView, OrderView } from '../shared/viewModels/interfaces';
 import { toNumber } from 'lodash';

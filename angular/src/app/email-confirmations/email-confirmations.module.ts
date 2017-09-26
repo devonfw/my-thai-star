@@ -1,21 +1,21 @@
-import { CovalentModule } from '../shared/covalent.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@angular/material';
-
-import { SnackBarService } from '../shared/snackService/snackService.service';
-import { EmailConfirmationsService } from './shared/email-confirmations.service';
+import { CoreModule } from '../core/core.module';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
+
+import { EmailConfirmationsService } from './shared/email-confirmations.service';
+
+import { EmailConfirmationsRoutingModule } from './email-confirmations-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
+    CoreModule,
+    EmailConfirmationsRoutingModule,
   ],
   providers: [
     EmailConfirmationsService,
-    SnackBarService,
   ],
   declarations: [
     EmailConfirmationsComponent,

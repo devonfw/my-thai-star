@@ -3,10 +3,10 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
-import { AuthService } from '../shared/authentication/auth.service';
+import { AuthService } from '../core/authentication/auth.service';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { UserAreaService } from '../user-area/shared/user-area.service';
-import { WindowService } from '../shared/windowService/windowService.service';
+import { WindowService } from '../core/windowService/windowService.service';
 
 import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
