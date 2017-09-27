@@ -56,6 +56,16 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
       query.where(Alias.$(order.getBooking().getBookingToken()).eq(hostToken));
     }
 
+    String email = criteria.getEmail();
+    if ( email != null) {
+      query.where(Alias.$(order.getBooking().getEmail()).eq(email));
+    }
+
+    String bookingToken = criteria.getBookingToken();
+    if (bookingToken != null){
+      query.where(Alias.$(order.getBooking().getBookingToken()).eq(bookingToken));
+    }
+
     addOrderBy(query, alias, order, criteria.getSort());
     return findPaginated(criteria, query, alias);
   }

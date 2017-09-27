@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -47,7 +46,6 @@ import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderLineDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -150,56 +148,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     return new PaginatedListTo<>(ctos, orders.getPagination());
-  }
-
-  @Override
-  @RolesAllowed(Roles.WAITER)
-  public PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria filter) {
-
-    OrderSearchCriteriaTo emtpyCriteria = new OrderSearchCriteriaTo();
-    PaginatedListTo<OrderCto> ordersCto = findOrderCtos(emtpyCriteria);
-    List<OrderCto> ctos = new ArrayList<>();
-    if (filter.getEmail() != null) {
-      if (!filter.getEmail().isEmpty()) {
-        for (OrderCto cto : ordersCto.getResult()) {
-          if (cto.getInvitedGuest() != null) {
-            if (cto.getInvitedGuest().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-              continue;
-            }
-          }
-          if (cto.getBooking() != null) {
-            if (cto.getBooking().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-              continue;
-            }
-          }
-          if (cto.getHost() != null) {
-            if (cto.getHost().getEmail().equals(filter.getEmail())) {
-              ctos.add(cto);
-            }
-          }
-        }
-      } else {
-        ctos = ordersCto.getResult();
-      }
-    } else {
-      ctos = ordersCto.getResult();
-    }
-
-    if (filter.getBookingToken() != null) {
-
-      if (!filter.getBookingToken().isEmpty()) {
-        for (Iterator<OrderCto> i = ctos.iterator(); i.hasNext();) {
-          OrderCto cto = i.next();
-          if (!cto.getBooking().getBookingToken().equals(filter.getBookingToken())) {
-            i.remove();
-          }
-        }
-      }
-    }
-
-    return new PaginatedListTo<>(ctos, ordersCto.getPagination());
   }
 
   @Override
