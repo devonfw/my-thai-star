@@ -57,12 +57,12 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     }
 
     String email = criteria.getEmail();
-    if ( email != null) {
+    if (email != null) {
       query.where(Alias.$(order.getBooking().getEmail()).eq(email));
     }
 
     String bookingToken = criteria.getBookingToken();
-    if (bookingToken != null){
+    if (bookingToken != null) {
       query.where(Alias.$(order.getBooking().getBookingToken()).eq(bookingToken));
     }
 
@@ -91,6 +91,24 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
             query.orderBy(Alias.$(order.getBooking().getBookingToken()).asc());
           } else {
             query.orderBy(Alias.$(order.getBooking().getBookingToken()).desc());
+          }
+        } else if ("bookingToken".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(order.getBooking().getBookingToken()).asc());
+          } else {
+            query.orderBy(Alias.$(order.getBooking().getBookingToken()).desc());
+          }
+        } else if ("email".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(order.getBooking().getEmail()).asc());
+          } else {
+            query.orderBy(Alias.$(order.getBooking().getEmail()).desc());
+          }
+        } else if ("bookingDate".equals(orderEntry.getName())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
+            query.orderBy(Alias.$(order.getBooking().getBookingDate()).asc());
+          } else {
+            query.orderBy(Alias.$(order.getBooking().getBookingDate()).desc());
           }
         }
       }
