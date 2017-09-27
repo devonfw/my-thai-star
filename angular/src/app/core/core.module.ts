@@ -47,6 +47,7 @@ import {
   CovalentNotificationsModule,
   CovalentCommonModule,
 } from '@covalent/core';
+import { MomentModule } from 'angular2-moment';
 
 import { WindowService } from './windowService/windowService.service';
 import { SnackBarService } from './snackService/snackService.service';
@@ -110,6 +111,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MdToolbarModule,
     MdTooltipModule,
     NotFoundComponent,
+    MomentModule,
   ],
   declarations: [ NotFoundComponent ],
   providers: [

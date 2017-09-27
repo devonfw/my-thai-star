@@ -39,6 +39,7 @@
     "@covalent/highlight": "1.0.0-beta.6",
     "@covalent/http": "1.0.0-beta.6",
     "@covalent/markdown": "1.0.0-beta.6",
+    "angular2-moment": "^1.7.0",
     "apollo-angular": "^0.13.0",
     "apollo-client": "^1.1.1",
     "core-js": "^2.4.1",
