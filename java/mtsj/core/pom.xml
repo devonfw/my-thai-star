@@ -14,7 +14,7 @@
   <description>Core of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
   </properties>
 
   <dependencies>
@@ -145,6 +145,7 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
+     <version>3.2.4</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
