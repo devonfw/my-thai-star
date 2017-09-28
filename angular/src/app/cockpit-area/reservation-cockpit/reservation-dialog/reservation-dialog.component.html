@@ -4,6 +4,16 @@
   #dataTable
   [data]="datat"
   [columns]="columnst">
+  <ng-template tdDataTableTemplate="booking.bookingDate" let-value="value" let-row="row" let-column="column">
+    <div layout="row">
+      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
+    </div>
+  </ng-template>
+  <ng-template tdDataTableTemplate="booking.creationDate" let-value="value" let-row="row" let-column="column">
+    <div layout="row">
+      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
+    </div>
+  </ng-template>
 </td-data-table>
 <td-data-table
   *ngIf="filteredData.length > 0"
