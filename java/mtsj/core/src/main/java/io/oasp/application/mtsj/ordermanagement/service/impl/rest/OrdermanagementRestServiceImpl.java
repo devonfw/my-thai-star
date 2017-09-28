@@ -6,7 +6,6 @@ import javax.inject.Named;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -52,12 +51,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
     return this.ordermanagement.findOrdersByPost(searchCriteriaTo);
-  }
-
-  @Override
-  public PaginatedListTo<OrderCto> filterOrders(OrderFilterCriteria filterCriteria) {
-
-    return this.ordermanagement.filterOrderCtos(filterCriteria);
   }
 
   @Override

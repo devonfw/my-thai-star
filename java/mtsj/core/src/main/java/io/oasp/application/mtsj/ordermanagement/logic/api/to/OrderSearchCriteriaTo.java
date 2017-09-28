@@ -18,6 +18,10 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
 
   private Long hostId;
 
+  private String email;
+
+  private String bookingToken;
+
   /**
    * The constructor.
    */
@@ -64,6 +68,38 @@ public class OrderSearchCriteriaTo extends SearchCriteriaTo {
   public void setHostId(Long hostId) {
 
     this.hostId = hostId;
+  }
+
+  /**
+   * @return email
+   */
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  /**
+   * @param email new value of {@link #getEmail}.
+   */
+  public void setEmail(String email) {
+
+    this.email = email;
+  }
+
+  /**
+   * @return bookingToken
+   */
+  public String getBookingToken() {
+
+    return this.bookingToken;
+  }
+
+  /**
+   * @param bookingToken new value of {@link #getBookingToken}.
+   */
+  public void setBookingToken(String bookingToken) {
+
+    this.bookingToken = bookingToken;
   }
 
 }

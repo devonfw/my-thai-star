@@ -4,7 +4,6 @@ import java.util.List;
 
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderFilterCriteria;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
@@ -39,14 +38,6 @@ public interface Ordermanagement {
    * @return the {@link List} of matching {@link OrderCto}s.
    */
   PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
-
-  /**
-   * Returns a paginated list of Orders matching the filter criteria.
-   *
-   * @param criteria the {@link OrderFilterCriteria}.
-   * @return the {@link List} of matching {@link OrderCto}s.
-   */
-  PaginatedListTo<OrderCto> filterOrderCtos(OrderFilterCriteria criteria);
 
   /**
    * Deletes a order from the database by its id 'orderId'.

@@ -14,7 +14,7 @@
   <description>Server for the mtsj application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-      <java.version>1.7</java.version>
+      <java.version>1.8</java.version>
       <server.war.name>mythaistar</server.war.name>
   </properties>
 
