@@ -81,7 +81,7 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
-    this.sorting = reject(this.sorting, { 'name': sortEvent.name.split('.').pop() });
+    this.sorting = [];
     this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
     this.applyFilters();
   }
