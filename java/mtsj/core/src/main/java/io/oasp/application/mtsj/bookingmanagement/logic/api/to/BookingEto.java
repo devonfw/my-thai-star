@@ -5,6 +5,11 @@ import java.sql.Timestamp;
 import io.oasp.application.mtsj.bookingmanagement.common.api.Booking;
 import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import io.oasp.application.mtsj.general.common.api.to.AbstractEto;
+import io.oasp.application.mtsj.general.common.api.validation.EmailExtended;
+import org.hibernate.validator.constraints.Email;
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entity transport object of Booking
@@ -13,18 +18,23 @@ public class BookingEto extends AbstractEto implements Booking {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   private String name;
 
   private String bookingToken;
 
   private String comment;
 
+  @NotNull
+  @Future
   private Timestamp bookingDate;
 
   private Timestamp expirationDate;
 
   private Timestamp creationDate;
 
+  @NotNull
+  @EmailExtended
   private String email;
 
   private Boolean canceled;
