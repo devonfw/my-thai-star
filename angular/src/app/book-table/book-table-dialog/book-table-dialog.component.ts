@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import * as moment from 'moment';
@@ -16,8 +16,8 @@ export class BookTableDialogComponent implements OnInit {
 
   constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,
-               private dialog: MdDialogRef<BookTableDialogComponent>,
-               @Inject(MD_DIALOG_DATA) dialogData: any) {
+               private dialog: MatDialogRef<BookTableDialogComponent>,
+               @Inject(MAT_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData;
   }
 

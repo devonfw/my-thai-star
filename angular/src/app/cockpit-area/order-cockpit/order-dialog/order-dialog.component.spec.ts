@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { CoreModule } from '../../../core/core.module';
 import { BackendModule } from '../../../backend/backend.module';
@@ -13,7 +13,7 @@ import { OrderDialogComponent } from './order-dialog.component';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,7 +29,7 @@ describe('OrderDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(OrderDialogComponent, { data : {dialogData: { row: undefined }}}).componentInstance;
   });
 

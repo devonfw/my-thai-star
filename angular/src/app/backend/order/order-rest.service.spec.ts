@@ -6,21 +6,22 @@ import {
     Response,
     ResponseOptions,
 } from '@angular/http';
+import { CoreModule } from '../../core/core.module';
 import { MockBackend } from '@angular/http/testing';
 import { OrderRestService } from './order-rest.service';
 import { HttpClientService } from '../../core/httpClient/httpClient.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
-import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginDataService } from '../login/login-data-service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
 import { WindowService } from '../../core/windowService/windowService.service';
 
+
 describe('OrderRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule, MaterialModule, RouterTestingModule],
+      imports: [HttpModule, CoreModule, RouterTestingModule],
       providers: [
         OrderRestService,
         HttpClientService,

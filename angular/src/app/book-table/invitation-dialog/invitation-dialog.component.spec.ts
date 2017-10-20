@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
@@ -12,7 +12,7 @@ import { InvitationDialogComponent } from './invitation-dialog.component';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +27,7 @@ describe('InvitationDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(InvitationDialogComponent).componentInstance;
   });
 

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
@@ -24,7 +24,7 @@ export class HeaderComponent {
   constructor(public window: WindowService,
               public router: Router,
               public sidenav: SidenavService,
-              public dialog: MdDialog,
+              public dialog: MatDialog,
               public auth: AuthService,
               public userService: UserAreaService) {
   }
@@ -43,7 +43,7 @@ export class HeaderComponent {
   }
 
   openLoginDialog(): void {
-    let dialogRef: MdDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
+    let dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
       width: this.window.responsiveWidth(),
     });
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -58,13 +58,13 @@ export class HeaderComponent {
   }
 
   openResetDialog(): void {
-    let dialogRef: MdDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
+    let dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
       width: this.window.responsiveWidth(),
     });
   }
 
   openTwitterDialog(): void {
-    let dialogRef: MdDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
+    let dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
       width: this.window.responsiveWidth(),
     });
   }

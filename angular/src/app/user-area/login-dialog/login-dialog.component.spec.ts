@@ -1,7 +1,7 @@
 import { UserAreaModule } from '../user-area.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { CoreModule } from '../../core/core.module';
 
@@ -9,7 +9,7 @@ import { LoginDialogComponent } from './login-dialog.component';
 
 describe('LoginDialogComponent', () => {
   let component: LoginDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('LoginDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(LoginDialogComponent).componentInstance;
   });
 

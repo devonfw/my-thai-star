@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-import { MD_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 
 @Component({
@@ -22,7 +22,7 @@ export class ReservationDialogComponent implements OnInit {
 
   private fromRow: number = 1;
   private currentPage: number = 1;
-  private pageSize: number = 5;
+  private pageSize: number = 4;
 
   data: any;
 
@@ -39,7 +39,7 @@ export class ReservationDialogComponent implements OnInit {
 
   constructor(private _dataTableService: TdDataTableService,
               private waiterCockpitService: WaiterCockpitService,
-              @Inject(MD_DIALOG_DATA) dialogData: any) {
+              @Inject(MAT_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData.row;
   }
 
@@ -62,7 +62,7 @@ export class ReservationDialogComponent implements OnInit {
   filter(): void {
     let newData: any[] = this.datao;
     newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-    this.filteredData = newData;
+    setTimeout(() => this.filteredData = newData);
   }
 
 }

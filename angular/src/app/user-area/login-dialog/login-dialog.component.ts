@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoginDialogComponent {
 
-  constructor(private dialog: MdDialogRef<LoginDialogComponent>) { }
+  constructor(private dialog: MatDialogRef<LoginDialogComponent>) { }
 
   logInSubmit(formValue: FormGroup): void {
     this.dialog.close(formValue);

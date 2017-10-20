@@ -1,24 +1,24 @@
 <div layout="row" layout-align="center center" style="align-items: center" flex>
-  <a md-icon-button class="forMobile" (click)="openCloseNavigationSideNav()"><md-icon>dehaze</md-icon></a>
-  <a md-icon-button><md-icon>star_border</md-icon></a>
+  <a mat-icon-button class="forMobile" (click)="openCloseNavigationSideNav()"><mat-icon>dehaze</mat-icon></a>
+  <a mat-icon-button><mat-icon>star_border</mat-icon></a>
   <span>My Thai Star</span>
   
   <span flex></span>
   <div *ngIf="auth.isPermited('CUSTOMER')" class="forDesktop">
-    <nav md-tab-nav-bar>
-      <a md-tab-link
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
         routerLink="/restaurant"
         routerLinkActive #restaurant="routerLinkActive"
         [class.navBottomBorder]="restaurant.isActive">
         HOME
       </a>
-      <a md-tab-link
+      <a mat-tab-link
         routerLink="/menu"
         routerLinkActive #menu="routerLinkActive"
         [class.navBottomBorder]="menu.isActive">
         MENU
       </a>
-      <a md-tab-link
+      <a mat-tab-link
         routerLink="/bookTable"
         routerLinkActive #bookTable="routerLinkActive"
         [class.navBottomBorder]="bookTable.isActive">
@@ -27,14 +27,14 @@
     </nav>
   </div>
   <div *ngIf="auth.isPermited('WAITER')" class="forDesktop">
-    <nav md-tab-nav-bar>
-      <a md-tab-link
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
         routerLink="/orders"
         routerLinkActive #orders="routerLinkActive"
         [class.navBottomBorder]="orders.isActive">
         ORDERS
       </a>
-      <a md-tab-link
+      <a mat-tab-link
         routerLink="/reservations"
         routerLinkActive #reservations="routerLinkActive"
         [class.navBottomBorder]="reservations.isActive">
@@ -42,28 +42,28 @@
       </a>
     </nav>
   </div>
-  <button *ngIf="!auth.isLogged()" md-icon-button (click)="openLoginDialog()" mdTooltip="User"><md-icon>person_outline</md-icon></button>
+  <button *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" matTooltip="User"><mat-icon>person_outline</mat-icon></button>
   <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
-    <button md-icon-button [mdMenuTriggerFor]="toolbarMenu1"><md-icon>account_circle</md-icon></button>
+    <button mat-icon-button [matMenuTriggerFor]="toolbarMenu1"><mat-icon>account_circle</mat-icon></button>
     <span class="forDesktop">{{auth.user}}</span>
-    <button class="forDesktop" *ngIf="!auth.isLogged()" md-icon-button (click)="logout()" mdTooltip="log out"><md-icon>exit_to_app</md-icon></button>
-    <md-menu #toolbarMenu1="mdMenu">
-      <button md-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
-        <md-icon>settings</md-icon>
+    <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" matTooltip="log out"><mat-icon>exit_to_app</mat-icon></button>
+    <mat-menu #toolbarMenu1="matMenu">
+      <button mat-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
+        <mat-icon>settings</mat-icon>
         <span>Change password</span>
       </button>
-      <button md-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
-        <md-icon>send</md-icon>
+      <button mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
+        <mat-icon>send</mat-icon>
         <span>Twitter account</span>
       </button>
-      <md-divider></md-divider>
-      <button md-menu-item type="button" (click)="logout()">
-        <md-icon>exit_to_app</md-icon>
+      <mat-divider></mat-divider>
+      <button mat-menu-item type="button" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
         <span>Sign out</span>
       </button>
-    </md-menu>
+    </mat-menu>
   </div>
   <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
-    <button md-icon-button (click)="openCloseSideNav(sidenav.opened)" mdTooltip="Orders"><md-icon>shopping_basket</md-icon></button>
+    <button mat-icon-button (click)="openCloseSideNav(sidenav.opened)" matTooltip="Orders"><mat-icon>shopping_basket</mat-icon></button>
   </td-notification-count>
 </div>
