@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { CoreModule } from '../../core/core.module';
 import { UserAreaModule } from '../user-area.module';
@@ -11,7 +11,7 @@ import { TwitterDialogComponent } from './twitter-dialog.component';
 
 describe('TwitterDialogComponent', () => {
   let component: TwitterDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,7 +25,7 @@ describe('TwitterDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(TwitterDialogComponent).componentInstance;
   });
 

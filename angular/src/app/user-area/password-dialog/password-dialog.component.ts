@@ -1,7 +1,7 @@
 import { UserAreaService } from '../shared/user-area.service';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'public-password-dialog',
@@ -10,7 +10,7 @@ import { MdDialogRef } from '@angular/material';
 })
 export class PasswordDialogComponent {
 
-  constructor(private dialog: MdDialogRef<PasswordDialogComponent>,
+  constructor(private dialog: MatDialogRef<PasswordDialogComponent>,
               private userService: UserAreaService) { }
 
   passwordSubmit(form: FormGroup): void {

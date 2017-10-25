@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { UserAreaModule } from '../user-area.module';
 import { CoreModule } from '../../core/core.module';
@@ -14,7 +14,7 @@ import { PasswordDialogComponent } from './password-dialog.component';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +31,7 @@ describe('PasswordDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(PasswordDialogComponent).componentInstance;
   });
 

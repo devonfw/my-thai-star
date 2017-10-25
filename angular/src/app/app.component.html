@@ -9,40 +9,40 @@
     </div>
   </td-layout-footer>
 
-  <md-sidenav-container style= "height:100%">
+  <mat-sidenav-container style= "height:100%">
 
-    <md-sidenav class="sidenavMobile" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
+    <mat-sidenav class="sidenavMobile" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
       <public-sidenav></public-sidenav>
-    </md-sidenav>
+    </mat-sidenav>
 
-    <md-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-      <md-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
-        <a md-list-item (click)="navigateTo('restaurant')">
-          <md-icon>home</md-icon>
+    <mat-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
+      <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
+        <a mat-list-item (click)="navigateTo('restaurant')">
+          <mat-icon>home</mat-icon>
           HOME
         </a>
-        <a md-list-item (click)="navigateTo('menu')">
-          <md-icon>restaurant_menu</md-icon>
+        <a mat-list-item (click)="navigateTo('menu')">
+          <mat-icon>restaurant_menu</mat-icon>
           MENU
         </a>
-        <a md-list-item (click)="navigateTo('bookTable')">
-          <md-icon>bookmark</md-icon>
+        <a mat-list-item (click)="navigateTo('bookTable')">
+          <mat-icon>bookmark</mat-icon>
           BOOK TABLE
         </a>
-      </md-nav-list>
-      <md-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
-        <a md-list-item (click)="navigateTo('orders')">
-          <md-icon>home</md-icon>
+      </mat-nav-list>
+      <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
+        <a mat-list-item (click)="navigateTo('orders')">
+          <mat-icon>home</mat-icon>
           ORDERS
         </a>
-        <a md-list-item (click)="navigateTo('reservations')">
-          <md-icon>restaurant_menu</md-icon>
+        <a mat-list-item (click)="navigateTo('reservations')">
+          <mat-icon>restaurant_menu</mat-icon>
           RESERVATIONS
         </a>
-      </md-nav-list>
-    </md-sidenav>
+      </mat-nav-list>
+    </mat-sidenav>
 
     <router-outlet></router-outlet>
 
-  </md-sidenav-container>
+  </mat-sidenav-container>
 </td-layout-nav>

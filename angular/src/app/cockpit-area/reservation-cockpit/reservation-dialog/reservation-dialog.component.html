@@ -1,5 +1,5 @@
-<h3 md-dialog-title>RESERVATION DETAILS - REFERENCE NUMBER {{data.bookingId}} </h3>
-<md-divider></md-divider>
+<h3 mat-dialog-title>RESERVATION DETAILS - REFERENCE NUMBER {{data.bookingId}} </h3>
+<mat-divider></mat-divider>
 <td-data-table
   #dataTable
   [data]="datat"
@@ -21,14 +21,19 @@
   [data]="filteredData"
   [columns]="columnso">
   <ng-template tdDataTableTemplate="accepted" let-value="value" let-row="row" let-column="column">
-    <md-icon color="accent" *ngIf="value">check</md-icon>
-    <md-icon color="warn" *ngIf="!value">clear</md-icon>
+    <mat-icon color="accent" *ngIf="value">check</mat-icon>
+    <mat-icon color="warn" *ngIf="!value">clear</mat-icon>
   </ng-template>
 </td-data-table>
-<td-paging-bar *ngIf="filteredData.length > 0" #pagingBar [firstLast]="false" [pageSizes]="pageSizes" [total]="datao.length" (change)="page($event)">
-  <span td-paging-bar-label hide-xs>Rows per page:</span>
-  {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+<td-paging-bar *ngIf="filteredData.length > 0" #pagingBar [firstLast]="false" [pageSize]="pageSize" [total]="datao.length" (change)="page($event)">
+  <span hide-xs>Rows per page:</span>
+  <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+    <mat-option *ngFor="let size of pageSizes" [value]="size">
+      {{ size }}
+    </mat-option>
+  </mat-select>
+  <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>of {{pagingBar.total}}</span></span>
 </td-paging-bar>
 <div class="align-right" flex>
-  <button md-button md-dialog-close color="accent" class="text-upper">Close</button>
+  <button mat-button mat-dialog-close color="accent" class="text-upper">Close</button>
 </div>

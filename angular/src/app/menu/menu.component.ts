@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdSlider } from '@angular/material';
+import { MatSlider } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
       this.menus = this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir));
     }
 
-    clearFilters(form: FormGroup, price: MdSlider, likes: MdSlider): void {
+    clearFilters(form: FormGroup, price: MatSlider, likes: MatSlider): void {
       likes.value = 0;
       price.value = 0;
       form.reset();

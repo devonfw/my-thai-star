@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../core/windowService/windowService.service';
@@ -21,11 +21,11 @@ export class BookTableComponent {
 
   constructor(public window: WindowService,
               public snackBarservice: SnackBarService,
-              public dialog: MdDialog) {
+              public dialog: MatDialog) {
   }
 
   showBookTableDialog(form: FormGroup): void {
-    let dialogRef: MdDialogRef<BookTableDialogComponent> = this.dialog.open(BookTableDialogComponent, {
+    let dialogRef: MatDialogRef<BookTableDialogComponent> = this.dialog.open(BookTableDialogComponent, {
       width: this.window.responsiveWidth(),
       data: form.value,
     });
@@ -37,7 +37,7 @@ export class BookTableComponent {
   }
 
   showInviteDialog(form: FormGroup): void {
-    let dialogRef: MdDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
+    let dialogRef: MatDialogRef<InvitationDialogComponent> = this.dialog.open(InvitationDialogComponent, {
       width: this.window.responsiveWidth(),
       data: form.value,
     });

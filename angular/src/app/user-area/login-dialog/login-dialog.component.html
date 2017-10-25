@@ -1,48 +1,48 @@
-<md-tab-group md-stretch-tabs class="pull">
+<mat-tab-group mat-stretch-tabs class="pull">
 
-  <md-tab label="LOGIN">
+  <mat-tab label="LOGIN">
     <form (ngSubmit)="logInSubmit(loginForm.form.value)" class="pad" #loginForm="ngForm">
       <div layout= "column" flex>
-        <md-input-container color="accent" flex>
-          <input mdInput placeholder="Username" ngModel name="username" required>
-        </md-input-container>
+        <mat-form-field color="accent" flex>
+          <input matInput placeholder="Username" ngModel name="username" required>
+        </mat-form-field>
 
-        <md-input-container color="accent" flex>
-          <input mdInput placeholder="Password" ngModel name="password" type="password" required>
-        </md-input-container>
+        <mat-form-field color="accent" flex>
+          <input matInput placeholder="Password" ngModel name="password" type="password" required>
+        </mat-form-field>
       </div>
       <div style="text-align: right">
-        <button md-button md-dialog-close class="text-upper">Cancel</button>
-        <button md-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">Login</button>
+        <button mat-button mat-dialog-close class="text-upper">Cancel</button>
+        <button mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">Login</button>
       </div>
     </form>
-  </md-tab>
+  </mat-tab>
 
-  <md-tab label="SIGN UP">
+  <mat-tab label="SIGN UP">
     <form (ngSubmit)="signInSubmit(signForm.form.value)" class="pad" #signForm="ngForm">
       <div layout= "column" class="push-bottom-sm" flex>
 
-        <md-input-container color="accent" flex>
-          <input mdInput placeholder="Email" ngModel name="email" required validateEmail>
-          <md-error>Please, enter a valid email address</md-error>
-        </md-input-container>
+        <mat-form-field color="accent" flex>
+          <input matInput placeholder="Email" ngModel name="email" required validateEmail>
+          <mat-error>Please, enter a valid email address</mat-error>
+        </mat-form-field>
 
-        <md-input-container color="accent" flex>
-          <input mdInput type="password" name="password" placeholder="Password" ngModel required validateEqual="confirmPassword" reverse="true" #password="ngModel">
-        </md-input-container>
+        <mat-form-field color="accent" flex>
+          <input matInput type="password" name="password" placeholder="Password" ngModel required validateEqual="confirmPassword" reverse="true" #password="ngModel">
+        </mat-form-field>
 
-        <md-input-container color="accent" flex>
-          <input mdInput type="password" name="confirmPassword" placeholder="Confirm Password" ngModel required validateEqual="password" reverse="false" #confirmPassword="ngModel">
-          <md-error>Password mismatch</md-error>
-        </md-input-container>
+        <mat-form-field color="accent" flex>
+          <input matInput type="password" name="confirmPassword" placeholder="Confirm Password" ngModel required validateEqual="password" reverse="false" #confirmPassword="ngModel">
+          <mat-error>Password mismatch</mat-error>
+        </mat-form-field>
       </div>
 
-      <md-checkbox #termsd>Accept terms</md-checkbox>
+      <mat-checkbox #termsd>Accept terms</mat-checkbox>
 
       <div class="align-right" flex>
-        <button md-button md-dialog-close class="text-upper">Cancel</button>
-        <button md-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">Register</button>
+        <button mat-button mat-dialog-close class="text-upper">Cancel</button>
+        <button mat-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">Register</button>
       </div>
     </form>
-  </md-tab>
-</md-tab-group>
+  </mat-tab>
+</mat-tab-group>

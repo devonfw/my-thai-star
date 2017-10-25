@@ -8,11 +8,11 @@ import { BookTableModule } from '../book-table.module';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { BookTableService } from '../shared/book-table.service';
 import { BookTableDialogComponent } from './book-table-dialog.component';
-import { MdDialogModule, MdDialog } from '@angular/material';
+import { MatDialogModule, MatDialog } from '@angular/material';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +27,7 @@ describe('BookTableDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(BookTableDialogComponent).componentInstance;
   });
 
