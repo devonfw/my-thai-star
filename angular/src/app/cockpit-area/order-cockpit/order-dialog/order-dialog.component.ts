@@ -14,10 +14,10 @@ export class OrderDialogComponent implements OnInit {
 
   private fromRow: number = 1;
   private currentPage: number = 1;
-  private pageSize: number = 4;
+
+  pageSize: number = 4;
 
   data: any;
-
   datat: BookingView[] = [];
   columnst: ITdDataTableColumn[] = [
     { name: 'bookingDate', label: 'Reservation date'},

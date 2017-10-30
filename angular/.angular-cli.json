@@ -19,6 +19,7 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "serviceWorker": true,
       "styles": [
         "styles.scss",
         "theme.scss",
@@ -62,8 +63,8 @@
   "defaults": {
     "styleExt": "scss",
     "serve": {
-        "port": 4200,
-        "host": "localhost"
+      "port": 4200,
+      "host": "localhost"
     }
   }
 }
