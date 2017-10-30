@@ -2,7 +2,7 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
-**UPDATE:** Angular CLI has been updated to 1.2.1 version. Please follow the instructions at the end of this README. 
+**UPDATE:** Angular CLI has been updated to 1.4.9 version. Please follow the instructions at the end of this README. 
 
 ## Install or update the project
 
@@ -29,6 +29,12 @@ $ rm -rf node_modules dist
 $ npm install
 ```
 
+To test the application as a **PWA** you will need a small http server:
+
+```bash
+$ npm i -g http-server
+```
+
 ## Yarn
 
 Project tested with the latest [Yarn](https://yarnpkg.com/lang/en/) version. Instead of using `npm` you can do the following:
@@ -50,6 +56,7 @@ There are the following alternatives in order to run My Thai Star Angular client
 ```bash
 $ npm run serve                     # OASP4J server
 $ npm run serve:aot                 # AOT compilation with OASP4J server
+$ npm run serve:pwa                 # Build and run the app as PWA
 $ npm run serve:prod                # Production server
 $ npm run serve:prod:aot            # AOT compilation with production server
 $ npm run serve:prodcompose         # Production server with Docker compose
@@ -62,7 +69,12 @@ If you want to use `yarn`, use it instead of `npm run` in the above commands.
 
 ## Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `:prod` flag for a production build with AOT compilation or `:prodcompose` for a production build for the production server and Docker compose environment.
+Run `npm run build` or `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+
+- Use the `:prod` flag for a production build with AOT compilation or `:prodcompose` for a production build for the production server and Docker compose environment.
+- Use the `:pwa` flag to build the application as a PWA. 
+
+Check the different build alternatives in the `package.json` file alongside the serve scripts. 
 
 ## Running unit tests
 
