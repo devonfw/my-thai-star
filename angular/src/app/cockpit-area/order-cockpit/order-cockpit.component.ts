@@ -19,13 +19,14 @@ import { Observable } from 'rxjs/Observable';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  private pageSize: number = 8;
   private pagination: Pagination = {
     size: 8,
     page: 1,
     total: 1,
   };
   private sorting: any[] = [];
+
+  pageSize: number = 8;
 
   orders: OrderListView[];
   totalOrders: number;

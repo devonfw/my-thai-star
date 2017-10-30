@@ -21,13 +21,13 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ReservationCockpitComponent implements OnInit {
 
-  private pagination: Pagination = {
+  private sorting: Sorting[] = [];
+
+  pagination: Pagination = {
     size: 8,
     page: 1,
     total: 1,
   };
-
-  private sorting: Sorting[] = [];
 
   reservations: ReservationView;
   totalReservations: number;
