@@ -33,7 +33,7 @@ import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import io.oasp.application.mtsj.general.common.api.constants.Roles;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
-import io.oasp.application.mtsj.mailservice.api.Mail;
+import io.oasp.application.mtsj.mailservice.Mail;
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
