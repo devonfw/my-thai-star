@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   { path: 'bookTable', component: BookTableComponent},
   { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuardService]},
   { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuardService]},
-  { path: '**', component: NotFoundComponent }];
+  /* { path: '**', component: NotFoundComponent }]; */
 
 @NgModule({
   imports: [
