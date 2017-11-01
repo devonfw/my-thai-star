@@ -20,7 +20,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 describe('DishesRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule, CoreModule, RouterTestingModule],
+      imports: [HttpModule, CoreModule, RouterTestingModule, HttpClientModule],
       providers: [
         DishesRestService,
         AuthService,

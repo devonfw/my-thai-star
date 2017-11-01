@@ -31,15 +31,15 @@ const getDishesQuery: any = gql`
 // and java server implementation, model was not yet established so for now conversion
 // will be implemented as a part of this service to expose consistient service API
 class GqlDish {
-  id: number; // added by Roberto, please revise
-  image: string;
-  likes: number;
-  ingredients: { id: number, name: string, price: number }[];
-  description: string;
-  name: string;
-  price: number;
-  categories: [ // added by Roberto, please revise
-    { id: string }];
+    id: number; // added by Roberto, please revise
+    image: string;
+    likes: number;
+    ingredients: {id: number, name: string, price: number}[];
+    description: string;
+    name: string;
+    price: number;
+    categories: [ // added by Roberto, please revise
+      {id: string}];
 }
 
 class DishesQueryRepsonse {
@@ -56,7 +56,7 @@ export class DishesGraphQlService implements IDishesDataService {
   }
 
   // added by Roberto, please, revise
-  filter(filters: Filter): Observable<DishView[]> {
+  filter(filters: Filter): Observable <DishView[]> {
     return this.apollo.watchQuery<DishesQueryRepsonse>({ query: getDishesQuery })
       .map((result: ApolloQueryResult<DishesQueryRepsonse>) => result.data.dishes)
       .map((dishes: GqlDish[]) => dishes.map(this.convertToBackendDish));
@@ -64,18 +64,18 @@ export class DishesGraphQlService implements IDishesDataService {
 
   // TODO: see the comment above
   private convertToBackendDish(dish: GqlDish): DishView {
-    return {
-      dish: {
-        id: dish.id, // added by Roberto, please revise
-        description: dish.description,
-        name: dish.name,
-        price: dish.price,
-      },
-      isfav: false,
-      image: { content: dish.image },
-      likes: dish.likes,
-      extras: dish.ingredients.map((extra: any) => ({ id: extra.id, name: extra.name, price: extra.price, selected: false })),
-      categories: dish.categories, // added by Roberto, please revise
-    };
+   return {
+        dish: {
+          id: dish.id, // added by Roberto, please revise
+          description: dish.description,
+          name: dish.name,
+          price: dish.price,
+        },
+        isfav: false,
+        image: {content: dish.image},
+        likes: dish.likes,
+        extras: dish.ingredients.map((extra: any) => ({id: extra.id, name: extra.name, price: extra.price, selected: false})),
+        categories: dish.categories, // added by Roberto, please revise
+      };
   }
 }

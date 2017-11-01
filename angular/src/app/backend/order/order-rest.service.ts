@@ -11,34 +11,34 @@ import { config } from '../../config';
 @Injectable()
 export class OrderRestService implements IOrderDataService {
 
-  private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
-  private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/filter';
-  private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
-  private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
+     private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
+     private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/filter';
+     private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
+     private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
-  constructor(private http: HttpClient) { }
+     constructor(private http: HttpClient) {}
 
-  getBookingOrders(filter: FilterCockpit): Observable<OrderResponse[]> {
-    let path: string;
-    if (filter.email || filter.bookingToken) {
-      path = this.filterOrdersRestPath;
-    } else {
-      delete filter.email;
-      delete filter.bookingToken;
-      path = this.getOrdersRestPath;
-    }
-    return this.http.post(`${environment.restServiceRoot}${path}`, filter)
-      .map((res: OrderResponse[]) => res);
-  }
+     getBookingOrders(filter: FilterCockpit): Observable<OrderResponse[]> {
+        let path: string;
+        if (filter.email || filter.bookingToken) {
+          path = this.filterOrdersRestPath;
+        } else {
+          delete filter.email;
+          delete filter.bookingToken;
+          path = this.getOrdersRestPath;
+        }
+        return this.http.post(`${environment.restServiceRoot}${path}`, filter)
+                        .map((res: OrderResponse[]) => res);
+     }
 
-  saveOrders(orders: OrderListInfo): Observable<SaveOrderResponse> {
-    return this.http.post(`${environment.restServiceRoot}${this.saveOrdersPath}`, orders)
-      .map((res: SaveOrderResponse) => res);
-  }
+     saveOrders(orders: OrderListInfo): Observable<SaveOrderResponse> {
+        return this.http.post(`${environment.restServiceRoot}${this.saveOrdersPath}`, orders)
+                        .map((res: SaveOrderResponse) => res);
+     }
 
-  cancelOrder(token: string): Observable<boolean> {
-    return this.http.get(`${environment.restServiceRoot}${this.cancelOrderRestPath}` + token)
-      .map((res: Response) => true);
-  }
+      cancelOrder(token: string): Observable<boolean> {
+        return this.http.get(`${environment.restServiceRoot}${this.cancelOrderRestPath}` + token)
+                        .map((res: Response) => true);
+      }
 
 }

@@ -23,25 +23,25 @@ export class OrderInMemoryService implements IOrderDataService {
                 total: orderList.length,
             },
             result: orderBy(orderList, [filters.sort[0].name], [filters.sort[0].direction])
-                .filter((order: OrderListView) => {
-                    if (filters.bookingDate) {
-                        return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
-                    } else {
-                        return true;
-                    }
-                }).filter((order: OrderListView) => {
-                    if (filters.email) {
-                        return order.booking.email.toLowerCase().includes(filters.email.toLowerCase());
-                    } else {
-                        return true;
-                    }
-                }).filter((order: OrderListView) => {
-                    if (filters.bookingToken) {
-                        return toString(order.booking.bookingToken).includes(toString(filters.bookingToken));
-                    } else {
-                        return true;
-                    }
-                }),
+                    .filter((order: OrderListView) => {
+                        if (filters.bookingDate) {
+                            return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
+                        } else {
+                            return true;
+                        }
+                    }).filter((order: OrderListView) => {
+                        if (filters.email) {
+                            return order.booking.email.toLowerCase().includes(filters.email.toLowerCase());
+                        } else {
+                            return true;
+                        }
+                    }).filter((order: OrderListView) => {
+                        if (filters.bookingToken) {
+                            return toString(order.booking.bookingToken).includes(toString(filters.bookingToken));
+                        } else {
+                            return true;
+                        }
+                    }),
         });
     }
 
@@ -57,7 +57,7 @@ export class OrderInMemoryService implements IOrderDataService {
         return find(dishes, (plate: DishView) => plate.dish.id === id);
     }
 
-    findReservationById(id: { bookingToken: string }): ReservationView {
+    findReservationById(id: {bookingToken: string}): ReservationView {
         return find(bookedTables, (booking: ReservationView) => booking.booking.bookingToken === toNumber(id.bookingToken));
     }
 
@@ -67,20 +67,20 @@ export class OrderInMemoryService implements IOrderDataService {
         orders.orderLines.forEach((order: OrderInfo) => {
             let plate: DishView = this.findDishById(order.orderLine.dishId);
             let _extras: ExtraView[] = [];
-            order.extras.forEach((extraId: any) => {
+            order.extras.forEach( (extraId: any) => {
                 _extras.push(this.findExtraById(extraId.id));
             });
             orderLines.push({
-                dish: {
-                    dishId: order.orderLine.dishId,
-                    name: plate.dish.name,
-                    price: plate.dish.price,
-                },
-                orderLine: {
-                    comment: order.orderLine.comment,
-                    amount: order.orderLine.amount,
-                },
-                extras: _extras,
+                    dish: {
+                        dishId: order.orderLine.dishId,
+                        name: plate.dish.name,
+                        price: plate.dish.price,
+                    },
+                    orderLine: {
+                        comment: order.orderLine.comment,
+                        amount: order.orderLine.amount,
+                    },
+                    extras: _extras,
             });
         });
 
@@ -101,6 +101,6 @@ export class OrderInMemoryService implements IOrderDataService {
 
     cancelOrder(token: string): Observable<boolean> {
         return Observable.of(true);
-    }
+     }
 
 }
