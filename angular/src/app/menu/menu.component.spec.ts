@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -16,15 +17,16 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent, MenuCardComponent ],
-      providers: [SidenavService, MenuService, SnackBarService, AuthService],
+      declarations: [MenuComponent, MenuCardComponent],
+      providers: [SidenavService, MenuService, SnackBarService, AuthService, HttpClient],
       imports: [
         BrowserAnimationsModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
         CoreModule,
+        HttpClientModule,
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

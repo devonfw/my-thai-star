@@ -1,3 +1,4 @@
+import { InvitationResponse } from '../shared/viewModels/interfaces';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 import { Observable } from 'rxjs/Rx';
 import { SnackBarService } from '../core/snackService/snackService.service';
@@ -13,54 +14,54 @@ import { Component, OnInit } from '@angular/core';
 export class EmailConfirmationsComponent implements OnInit {
 
   constructor(private snackBarService: SnackBarService,
-              private emailService: EmailConfirmationsService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+    private emailService: EmailConfirmationsService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.switchMap((params: Params) => Observable.of(params.token))
-        .subscribe((token: string) => {
-           this.route.url
-               .subscribe((data: UrlSegment[]) => {
-                  switch (data[1].path) {
-                    case 'acceptInvite':
-                        this.emailService.sendAcceptInvitation(token).subscribe((res: number) => {
-                          this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
-                        },
-                        (error: any) => {
-                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
-                        });
-                        break;
-                    case 'rejectInvite':
-                        this.emailService.sendRejectInvitation(token).subscribe((res: number) => {
-                          this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
-                        },
-                        (error: any) => {
-                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
-                        });
-                        break;
-                    case 'cancel':
-                        this.emailService.sendCancelBooking(token).subscribe((res: number) => {
-                          this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
-                        },
-                        (error: any) => {
-                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
-                        });
-                        break;
-                    case 'cancelOrder':
-                        this.emailService.sendCancelOrder(token).subscribe((res: number) => {
-                          this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
-                        },
-                        (error: any) => {
-                          this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
-                        });
-                        break;
-                    default:
-                        this.snackBarService.openSnack('Url not found, please try again', 10000, 'black');
-                        break;
-                  }
-               });
-        });
+      .subscribe((token: string) => {
+        this.route.url
+          .subscribe((data: UrlSegment[]) => {
+            switch (data[1].path) {
+              case 'acceptInvite':
+                this.emailService.sendAcceptInvitation(token).subscribe((res: InvitationResponse) => {
+                  this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
+                },
+                  (error: any) => {
+                    this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                  });
+                break;
+              case 'rejectInvite':
+                this.emailService.sendRejectInvitation(token).subscribe((res: InvitationResponse) => {
+                  this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
+                },
+                  (error: any) => {
+                    this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                  });
+                break;
+              case 'cancel':
+                this.emailService.sendCancelBooking(token).subscribe((res: InvitationResponse) => {
+                  this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
+                },
+                  (error: any) => {
+                    this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                  });
+                break;
+              case 'cancelOrder':
+                this.emailService.sendCancelOrder(token).subscribe((res: boolean) => {
+                  this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
+                },
+                  (error: any) => {
+                    this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                  });
+                break;
+              default:
+                this.snackBarService.openSnack('Url not found, please try again', 10000, 'black');
+                break;
+            }
+          });
+      });
     this.router.navigate(['restaurant']);
   }
 

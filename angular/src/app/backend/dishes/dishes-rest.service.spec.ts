@@ -9,13 +9,13 @@ import {
 import { CoreModule } from '../../core/core.module';
 import { MockBackend } from '@angular/http/testing';
 import { DishesRestService } from './dishes-rest.service';
-import { HttpClientService } from '../../core/httpClient/httpClient.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginDataService } from '../login/login-data-service';
 import { WindowService } from '../../core/windowService/windowService.service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('DishesRestService', () => {
   beforeEach(() => {
@@ -23,12 +23,12 @@ describe('DishesRestService', () => {
       imports: [HttpModule, CoreModule, RouterTestingModule],
       providers: [
         DishesRestService,
-        HttpClientService,
         AuthService,
         SnackBarService,
         MockBackend,
         BaseRequestOptions,
         WindowService,
+        HttpClient,
         {provide: LoginDataService, useClass: LoginInMemoryService},
       ],
     });

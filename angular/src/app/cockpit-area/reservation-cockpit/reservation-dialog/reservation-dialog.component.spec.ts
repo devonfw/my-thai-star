@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
@@ -17,20 +18,21 @@ describe('ReservationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [ WaiterCockpitService, PriceCalculatorService ],
+      providers: [WaiterCockpitService, PriceCalculatorService, HttpClient],
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
         CoreModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        HttpClientModule,
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     dialog = TestBed.get(MatDialog);
-    component = dialog.open(ReservationDialogComponent, { data : {dialogData: { row: undefined }}}).componentInstance;
+    component = dialog.open(ReservationDialogComponent, { data: { dialogData: { row: undefined } } }).componentInstance;
   });
 
   it('should create', () => {

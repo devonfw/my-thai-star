@@ -14,6 +14,8 @@ import { AuthService } from './core/authentication/auth.service';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -28,6 +30,7 @@ describe('AppComponent', () => {
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         CoreModule,
         SidenavModule,
+        HttpClientModule,
       ],
     });
     TestBed.compileComponents();

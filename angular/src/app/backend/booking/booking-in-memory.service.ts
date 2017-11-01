@@ -10,7 +10,7 @@ import { assign, maxBy, filter, toString, orderBy } from 'lodash';
 @Injectable()
 export class BookingInMemoryService implements IBookingDataService {
 
-    bookTable(booking: BookingInfo): Observable<number> {
+    bookTable(booking: BookingInfo): Observable<any> {
         let bookTable: ReservationView;
         bookTable = assign(bookTable, booking);
         bookTable.booking.creationDate = moment().format('LLL');
@@ -35,38 +35,38 @@ export class BookingInMemoryService implements IBookingDataService {
                 total: bookedTables.length,
             },
             result: orderBy(bookedTables, [filters.sort[0].name], [filters.sort[0].direction])
-                    .filter((booking: ReservationView) => {
-                        if (filters.bookingDate) {
-                            return booking.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
-                        } else {
-                            return true;
-                        }
-                    }).filter((booking: ReservationView) => {
-                        if (filters.email) {
-                            return booking.booking.email.toLowerCase().includes(filters.email.toLowerCase());
-                        } else {
-                            return true;
-                        }
-                    }).filter((booking: ReservationView) => {
-                        if (filters.bookingToken) {
-                            return toString(booking.booking.bookingToken).includes(toString(filters.bookingToken));
-                        } else {
-                            return true;
-                        }
-                    }),
+                .filter((booking: ReservationView) => {
+                    if (filters.bookingDate) {
+                        return booking.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
+                    } else {
+                        return true;
+                    }
+                }).filter((booking: ReservationView) => {
+                    if (filters.email) {
+                        return booking.booking.email.toLowerCase().includes(filters.email.toLowerCase());
+                    } else {
+                        return true;
+                    }
+                }).filter((booking: ReservationView) => {
+                    if (filters.bookingToken) {
+                        return toString(booking.booking.bookingToken).includes(toString(filters.bookingToken));
+                    } else {
+                        return true;
+                    }
+                }),
         });
     }
 
-    acceptInvite(token: string): Observable<number> {
+    acceptInvite(token: string): Observable<any> {
         return Observable.of(1);
-     }
+    }
 
-    cancelInvite(token: string): Observable<number> {
+    cancelInvite(token: string): Observable<any> {
         return Observable.of(1);
-     }
+    }
 
-    cancelReserve(token: string): Observable<number> {
+    cancelReserve(token: string): Observable<any> {
         return Observable.of(1);
-     }
+    }
 
 }

@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
@@ -18,16 +19,17 @@ describe('PasswordDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [ SnackBarService, AuthService ],
+      providers: [SnackBarService, AuthService, HttpClient],
       imports: [
         CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
         UserAreaModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        HttpClientModule,
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

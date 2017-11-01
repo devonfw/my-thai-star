@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable } from '@angular/core';
 import { BackendType } from './../../../app/config';
@@ -5,7 +6,7 @@ import { BackendConfig } from '../backend.module';
 import { OrderInMemoryService } from './order-in-memory.service';
 import { OrderRestService } from './order-rest.service';
 import { IOrderDataService } from './order-data-service-interface';
-import { OrderListView } from '../../shared/viewModels/interfaces';
+import { OrderListView, OrderResponse, SaveOrderResponse } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()
@@ -13,24 +14,24 @@ export class OrderDataService implements IOrderDataService {
 
     private usedImplementation: IOrderDataService;
 
-    constructor(private injector: Injector) {
+    constructor(private injector: Injector, private http: HttpClient) {
         const backendConfig: BackendConfig = this.injector.get(BackendConfig);
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new OrderInMemoryService();
         } else { // default
-            this.usedImplementation = new OrderRestService(this.injector);
+            this.usedImplementation = new OrderRestService(http);
         }
     }
 
-    getBookingOrders(filter: FilterCockpit): Observable<OrderListView[]> {
+    getBookingOrders(filter: FilterCockpit): Observable<OrderResponse[]> {
         return this.usedImplementation.getBookingOrders(filter);
     }
 
-    saveOrders(orders: OrderListInfo): Observable<number> {
+    saveOrders(orders: OrderListInfo): Observable<SaveOrderResponse> {
         return this.usedImplementation.saveOrders(orders);
     }
 
-    cancelOrder(token: string): Observable<number> {
+    cancelOrder(token: string): Observable<boolean> {
          return this.usedImplementation.cancelOrder(token);
      }
 }
