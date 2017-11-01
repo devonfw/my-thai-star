@@ -37,14 +37,14 @@ export class BookingDataService implements IBookingDataService {
     }
 
     acceptInvite(token: string): Observable<InvitationResponse> {
-         return this.usedImplementation.acceptInvite(token);
-     }
+        return this.usedImplementation.acceptInvite(token);
+    }
 
     cancelInvite(token: string): Observable<InvitationResponse> {
-         return this.usedImplementation.cancelInvite(token);
-     }
+        return this.usedImplementation.cancelInvite(token);
+    }
 
     cancelReserve(token: string): Observable<InvitationResponse> {
-         return this.usedImplementation.cancelReserve(token);
-     }
+        return this.usedImplementation.cancelReserve(token);
+    }
 }

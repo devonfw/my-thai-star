@@ -11,7 +11,6 @@ import {
     ReservationView,
 } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
-/* import { HttpClientService } from '../../core/httpClient/httpClient.service'; */
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
