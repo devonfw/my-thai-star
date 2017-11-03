@@ -1,10 +1,10 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { CoreModule } from '../core/core.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
+
+import { CoreModule } from '../core/core.module';
 
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { BackendModule } from '../backend/backend.module';
@@ -22,22 +22,15 @@ describe('EmailConfirmationsComponent', () => {
         SnackBarService,
         EmailConfirmationsService,
         HttpClient,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            url: Observable.of([{ path: 'booking' }, { path: 'cancel' }]),
-            params: Observable.of({ id: 123 }),
-          },
-        }],
+      ],
       imports: [
         CoreModule,
         BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
         BrowserAnimationsModule,
         RouterTestingModule,
-        HttpClientModule,
       ],
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
