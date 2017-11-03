@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
@@ -9,11 +10,12 @@ import { BookingDataService } from '../../backend/booking/booking-data-service';
 describe('EmailConfirmationsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpModule, HttpClientModule],
       providers: [
         EmailConfirmationsService,
-        {provide: BookingDataService, useClass: BookingInMemoryService},
-        {provide: OrderDataService, useClass: OrderInMemoryService}],
+        HttpClient,
+        { provide: BookingDataService, useClass: BookingInMemoryService },
+        { provide: OrderDataService, useClass: OrderInMemoryService }],
     });
   });
 

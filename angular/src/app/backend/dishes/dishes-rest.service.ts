@@ -5,23 +5,23 @@ import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IDishesDataService } from './dishes-data-service-interface';
 import { config } from '../../config';
-import { DishView } from '../../shared/viewModels/interfaces';
-import { HttpClientService } from '../../core/httpClient/httpClient.service';
+import { DishResponse, DishView } from '../../shared/viewModels/interfaces';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DishesRestService implements IDishesDataService {
 
- private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
+  private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
- private http: HttpClientService;
+  results: string[];
 
- constructor(private injector: Injector) {
-   this.http = this.injector.get(HttpClientService);
- }
+  constructor(private http: HttpClient) {
+  }
 
- filter(filters: Filter): Observable<DishView[]> {
-    return this.http.post(`${environment.restServiceRoot}${this.filtersRestPath}`, filters)
-                    .map((res: Response) => res.json().result);
- }
+  filter(filters: Filter): Observable<DishView[]> {
+    // Returns DishResponse
+    return this.http.post<DishResponse>(`${environment.restServiceRoot}${this.filtersRestPath}`, filters)
+      .map((res: any) => res.result);
+  }
 
 }

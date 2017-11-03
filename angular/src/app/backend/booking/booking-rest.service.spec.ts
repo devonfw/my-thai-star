@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 import {
   BaseRequestOptions,
@@ -9,7 +10,6 @@ import {
 import { MockBackend } from '@angular/http/testing';
 import { BookingRestService } from './booking-rest.service';
 import { CoreModule } from '../../core/core.module';
-import { HttpClientService } from '../../core/httpClient/httpClient.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -20,15 +20,15 @@ import { WindowService } from '../../core/windowService/windowService.service';
 describe('BookingRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule, CoreModule, RouterTestingModule],
+      imports: [HttpModule, CoreModule, RouterTestingModule, HttpClientModule],
       providers: [
         BookingRestService,
-        HttpClientService,
         AuthService,
         SnackBarService,
         MockBackend,
         BaseRequestOptions,
         WindowService,
+        HttpClient,
         {provide: LoginDataService, useClass: LoginInMemoryService},
       ],
     });

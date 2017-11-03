@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -16,14 +17,15 @@ describe('BookTableDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [SnackBarService, BookTableService],
+      providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
         BookTableModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        HttpClientModule,
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

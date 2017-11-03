@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
@@ -16,10 +17,11 @@ describe('InvitationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [SnackBarService, BookTableService],
+      providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
         BookTableModule,
+        HttpClientModule,
         BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
       ],
     })
