@@ -4,9 +4,6 @@ import { environment } from '../environments/environment';
 import { NgModule, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { InterceptorModule } from './core/httpClient/Interceptor.module';
 import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { BookTableModule } from './book-table/book-table.module';
@@ -36,8 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
     EmailConfirmationModule,
     AppRoutingModule,
-    InterceptorModule,
-    HttpClientModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ],
