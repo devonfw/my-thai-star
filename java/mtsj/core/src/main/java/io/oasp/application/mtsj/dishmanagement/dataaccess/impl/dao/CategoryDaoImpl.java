@@ -45,11 +45,11 @@ public class CategoryDaoImpl extends ApplicationDaoImpl<CategoryEntity> implemen
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(category.getName()).eq(name));
+      query.where(Alias.$(category.getName()).toLowerCase().eq(name.toLowerCase()));
     }
     String description = criteria.getDescription();
     if (description != null) {
-      query.where(Alias.$(category.getDescription()).eq(description));
+      query.where(Alias.$(category.getDescription()).toLowerCase().eq(description.toLowerCase()));
     }
     int showOrder = criteria.getShowOrder();
     query.where(Alias.$(category.getShowOrder()).eq(showOrder));
@@ -63,15 +63,15 @@ public class CategoryDaoImpl extends ApplicationDaoImpl<CategoryEntity> implemen
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(category.getName()).asc());
+            query.orderBy(Alias.$(category.getName()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(category.getName()).desc());
+            query.orderBy(Alias.$(category.getName()).toLowerCase().desc());
           }
         } else if ("description".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(category.getDescription()).asc());
+            query.orderBy(Alias.$(category.getDescription()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(category.getDescription()).desc());
+            query.orderBy(Alias.$(category.getDescription()).toLowerCase().desc());
           }
         } else if ("showOrder".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

@@ -46,15 +46,15 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
 
     Long booking = criteria.getBookingId();
     if (booking != null && invitedguest.getBooking() != null) {
-        query.where(Alias.$(invitedguest.getBooking().getId()).eq(booking));
+      query.where(Alias.$(invitedguest.getBooking().getId()).eq(booking));
     }
     String guestToken = criteria.getGuestToken();
     if (guestToken != null) {
-      query.where(Alias.$(invitedguest.getGuestToken()).eq(guestToken));
+      query.where(Alias.$(invitedguest.getGuestToken()).toLowerCase().eq(guestToken.toLowerCase()));
     }
     String email = criteria.getEmail();
     if (email != null) {
-      query.where(Alias.$(invitedguest.getEmail()).eq(email));
+      query.where(Alias.$(invitedguest.getEmail()).toLowerCase().eq(email.toLowerCase()));
     }
     Boolean accepted = criteria.getAccepted();
     if (accepted != null) {
@@ -74,15 +74,15 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
       for (OrderByTo orderEntry : sort) {
         if ("guestToken".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(invitedguest.getGuestToken()).asc());
+            query.orderBy(Alias.$(invitedguest.getGuestToken()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(invitedguest.getGuestToken()).desc());
+            query.orderBy(Alias.$(invitedguest.getGuestToken()).toLowerCase().desc());
           }
         } else if ("email".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(invitedguest.getEmail()).asc());
+            query.orderBy(Alias.$(invitedguest.getEmail()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(invitedguest.getEmail()).desc());
+            query.orderBy(Alias.$(invitedguest.getEmail()).toLowerCase().desc());
           }
         } else if ("accepted".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

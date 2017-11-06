@@ -47,15 +47,15 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(booking.getName()).eq(name));
+      query.where(Alias.$(booking.getName()).toLowerCase().eq(name.toLowerCase()));
     }
     String bookingToken = criteria.getBookingToken();
     if (bookingToken != null) {
-      query.where(Alias.$(booking.getBookingToken()).eq(bookingToken));
+      query.where(Alias.$(booking.getBookingToken()).toLowerCase().eq(bookingToken.toLowerCase()));
     }
     String comment = criteria.getComment();
     if (comment != null) {
-      query.where(Alias.$(booking.getComment()).eq(comment));
+      query.where(Alias.$(booking.getComment()).toLowerCase().eq(comment.toLowerCase()));
     }
     Timestamp bookingDate = criteria.getBookingDate();
     if (bookingDate != null) {
@@ -71,7 +71,7 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
     }
     String email = criteria.getEmail();
     if (email != null) {
-      query.where(Alias.$(booking.getEmail()).eq(email));
+      query.where(Alias.$(booking.getEmail()).toLowerCase().eq(email.toLowerCase()));
     }
     Boolean canceled = criteria.getCanceled();
     if (canceled != null) {
@@ -97,21 +97,21 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getName()).asc());
+            query.orderBy(Alias.$(booking.getName()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(booking.getName()).desc());
+            query.orderBy(Alias.$(booking.getName()).toLowerCase().desc());
           }
         } else if ("bookingToken".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getBookingToken()).asc());
+            query.orderBy(Alias.$(booking.getBookingToken()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(booking.getBookingToken()).desc());
+            query.orderBy(Alias.$(booking.getBookingToken()).toLowerCase().desc());
           }
         } else if ("comment".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getComment()).asc());
+            query.orderBy(Alias.$(booking.getComment()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(booking.getComment()).desc());
+            query.orderBy(Alias.$(booking.getComment()).toLowerCase().desc());
           }
         } else if ("bookingDate".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
@@ -133,9 +133,9 @@ public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements
           }
         } else if ("email".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(booking.getEmail()).asc());
+            query.orderBy(Alias.$(booking.getEmail()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(booking.getEmail()).desc());
+            query.orderBy(Alias.$(booking.getEmail()).toLowerCase().desc());
           }
         } else if ("canceled".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
