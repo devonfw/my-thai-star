@@ -57,7 +57,7 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
     }
     String comment = criteria.getComment();
     if (comment != null) {
-      query.where(Alias.$(orderline.getComment()).eq(comment));
+      query.where(Alias.$(orderline.getComment()).toLowerCase().eq(comment.toLowerCase()));
     }
     return findPaginated(criteria, query, alias);
   }
@@ -81,9 +81,9 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
           }
         } else if ("comment".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(orderline.getComment()).asc());
+            query.orderBy(Alias.$(orderline.getComment()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(orderline.getComment()).desc());
+            query.orderBy(Alias.$(orderline.getComment()).toLowerCase().desc());
           }
         }
       }

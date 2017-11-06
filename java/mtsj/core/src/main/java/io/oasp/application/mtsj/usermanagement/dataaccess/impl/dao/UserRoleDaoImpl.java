@@ -45,7 +45,7 @@ public class UserRoleDaoImpl extends ApplicationDaoImpl<UserRoleEntity> implemen
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(userrole.getName()).eq(name));
+      query.where(Alias.$(userrole.getName().toLowerCase()).eq(name.toLowerCase()));
     }
     Boolean active = criteria.getActive();
     if (active != null) {
@@ -61,9 +61,9 @@ public class UserRoleDaoImpl extends ApplicationDaoImpl<UserRoleEntity> implemen
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(userrole.getName()).asc());
+            query.orderBy(Alias.$(userrole.getName()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(userrole.getName()).desc());
+            query.orderBy(Alias.$(userrole.getName()).toLowerCase().desc());
           }
         } else if ("active".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
