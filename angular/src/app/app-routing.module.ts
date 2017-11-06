@@ -6,18 +6,21 @@ import { MenuComponent } from './menu/menu.component';
 import { BookTableComponent } from './book-table/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
+import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 
 const appRoutes: Routes = [
+  { path: 'restaurant', component: HomeComponent },
+  { path: 'menu', component: MenuComponent },
+  { path: 'bookTable', component: BookTableComponent },
+  { path: 'booking/:action/:token', component: EmailConfirmationsComponent },
+  { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuardService] },
+  { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
-  { path: 'restaurant', component: HomeComponent},
-  { path: 'menu', component: MenuComponent},
-  { path: 'bookTable', component: BookTableComponent},
-  { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuardService]},
-  { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuardService]},
-  /* { path: '**', component: NotFoundComponent }*/ ]; 
+  { path: '**', component: NotFoundComponent },
+];
 
 @NgModule({
   imports: [

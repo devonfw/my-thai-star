@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -57,7 +60,7 @@ import { MomentModule } from 'angular2-moment';
 
 import { WindowService } from './windowService/windowService.service';
 import { SnackBarService } from './snackService/snackService.service';
-import { HttpClientService } from './httpClient/httpClient.service';
+import { HttpRequestInterceptorService } from './interceptor/httpRequestInterceptor.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -121,15 +124,16 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NotFoundComponent,
     MomentModule,
     Md2Module,
+    HttpClientModule,
   ],
   declarations: [ NotFoundComponent ],
   providers: [
     AuthService,
     AuthGuardService,
-    HttpClientService,
     SnackBarService,
     WindowService,
     { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true },
   ],
 })
 

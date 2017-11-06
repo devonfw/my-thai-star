@@ -36,11 +36,10 @@ module.exports = function (config) {
     },
     files: [
       // Include all Angular dependencies
+      {pattern: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'},
       {pattern: 'node_modules/@angular/**/*', included: false, watched: false},
       {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
-
       {pattern: './src/test.ts', watched: false },
-      {pattern: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'},
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
