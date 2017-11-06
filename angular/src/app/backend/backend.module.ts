@@ -1,4 +1,4 @@
-import { BackendType } from './../../app/config';
+import { BackendType, BackendConfig } from './../../app/config';
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -14,11 +14,6 @@ import { ApolloModule } from 'apollo-angular';
 //   REST,
 //   GRAPHQL,
 // }
-
-export class BackendConfig {
-  environmentType: BackendType;
-  restServiceRoot: string;
-}
 
 @NgModule({
   imports: [
