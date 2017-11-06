@@ -46,11 +46,11 @@ public class IngredientDaoImpl extends ApplicationDaoImpl<IngredientEntity> impl
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(ingredient.getName()).eq(name));
+      query.where(Alias.$(ingredient.getName()).toLowerCase().eq(name.toLowerCase()));
     }
     String description = criteria.getDescription();
     if (description != null) {
-      query.where(Alias.$(ingredient.getDescription()).eq(description));
+      query.where(Alias.$(ingredient.getDescription()).toLowerCase().eq(description.toLowerCase()));
     }
     BigDecimal price = criteria.getPrice();
     if (price != null) {
@@ -66,15 +66,15 @@ public class IngredientDaoImpl extends ApplicationDaoImpl<IngredientEntity> impl
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(ingredient.getName()).asc());
+            query.orderBy(Alias.$(ingredient.getName()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(ingredient.getName()).desc());
+            query.orderBy(Alias.$(ingredient.getName()).toLowerCase().desc());
           }
         } else if ("description".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(ingredient.getDescription()).asc());
+            query.orderBy(Alias.$(ingredient.getDescription()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(ingredient.getDescription()).desc());
+            query.orderBy(Alias.$(ingredient.getDescription()).toLowerCase().desc());
           }
         } else if ("price".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

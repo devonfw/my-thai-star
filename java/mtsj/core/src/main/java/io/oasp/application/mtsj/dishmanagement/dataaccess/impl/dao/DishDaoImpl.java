@@ -47,7 +47,8 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     String searchBy = criteria.getSearchBy();
     if (searchBy != null) {
-      query.where(Alias.$(dish.getName()).contains(searchBy).or(Alias.$(dish.getDescription()).contains(searchBy)));
+      query.where(Alias.$(dish.getName()).toLowerCase().contains(searchBy.toLowerCase())
+          .or(Alias.$(dish.getDescription()).toLowerCase().contains(searchBy.toLowerCase())));
     }
 
     BigDecimal price = criteria.getMaxPrice();
@@ -67,15 +68,15 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
       for (OrderByTo orderEntry : sort) {
         if ("name".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getName()).asc());
+            query.orderBy(Alias.$(dish.getName()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(dish.getName()).desc());
+            query.orderBy(Alias.$(dish.getName()).toLowerCase().desc());
           }
         } else if ("description".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(dish.getDescription()).asc());
+            query.orderBy(Alias.$(dish.getDescription()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(dish.getDescription()).desc());
+            query.orderBy(Alias.$(dish.getDescription()).toLowerCase().desc());
           }
         } else if ("price".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
