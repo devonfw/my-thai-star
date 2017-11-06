@@ -12,7 +12,7 @@ import { config } from '../../config';
 export class OrderRestService implements IOrderDataService {
 
   private readonly getOrdersRestPath: string = 'ordermanagement/v1/order/search';
-  private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/filter';
+  private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/search';
   private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
 
