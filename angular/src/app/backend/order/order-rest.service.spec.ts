@@ -17,7 +17,6 @@ import { LoginDataService } from '../login/login-data-service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
 import { WindowService } from '../../core/windowService/windowService.service';
 
-
 describe('OrderRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
