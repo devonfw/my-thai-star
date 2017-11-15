@@ -1,8 +1,4 @@
 @media (max-width: 600px) {
-  mat-form-field {
-    width: 100% !important;
-  }
-
   .forDesktop {
     display: none;
   }
@@ -12,10 +8,6 @@
 }
 
 @media (min-width: 600px) {
-  mat-form-field {
-    width: 45% !important;
-  }
-
   .forMobile {
     display: none;
   }
