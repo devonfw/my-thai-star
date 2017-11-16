@@ -26,6 +26,10 @@
     padding-top: 0;
 }
 
+/deep/ .mat-input-infix.mat-form-field-infix {
+  width: 100%;
+}
+
 .mat-toolbar {
   z-index: 2;
 }

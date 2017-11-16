@@ -4,7 +4,7 @@
       
       <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center" flex>
         <div layout="row" style="align-items:center" class="pad-top" flex>
-          <mat-form-field color="accent" class="searchBy">
+          <mat-form-field color="accent" class="searchBy" flex>
             <button mat-icon-button matPrefix>
               <mat-icon>search</mat-icon>
             </button>
@@ -13,7 +13,7 @@
         </div>
         <div layout="row" class="pull-bottom pad-sm sortingBy">
           <mat-form-field color="accent" flex>
-            <mat-select flex ngModel name="sortName" #sorting placeholder="Sort By">
+            <mat-select ngModel name="sortName" #sorting placeholder="Sort By" flex>
               <mat-option value="price">
                 Price
               </mat-option>
