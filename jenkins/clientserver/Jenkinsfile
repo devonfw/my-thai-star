@@ -1,36 +1,35 @@
 node {
     stage('Check out MyThaiStar') {
-        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star'
+        deleteDir()
+        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/oasp/my-thai-star'
     }
    
     stage('Load tools') {
-        tool 'Node 7'
-        tool 'Angular CLI'
-        tool 'Yarn'
+        def node = tool name: 'Node 8.9 LTS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        env.PATH = "${node}/bin:${env.PATH}"
+        tool 'Chrome-stable'
         tool name: 'Maven 3.3.9', type: 'maven'
         env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
         env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
     }
     
-    stage('CLIENT Install Dependencies') {
+    stage('CLIENT Install dependencies') {
         sh """
             cd angular
-            #yarn upgrade
-            find . -name "node_modules" -exec rm -rf '{}' +
-            npm i
+            npm install
         """
     }
     
-    stage('SERVER Install Dependencies') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean install -Dmaven.test.skip=true"
+    stage('SERVER Install dependencies') {
+        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "cd java/mtsj && mvn clean install -Dmaven.test.skip=true"
         }
     }
     
     stage('CLIENT Code Quality') {
         sh """
             cd angular
-            ng lint --format checkstyle
+            npm run lint
         """
     }
     
@@ -60,7 +59,7 @@ node {
             "CLIENT" : {
                 sh """
                     cd angular
-                    ng build --aot --environment=prodcompose
+                    ng build --env=prodcompose --build-optimizer
                 """
             },
             "SERVER" : {
@@ -75,24 +74,24 @@ node {
         sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
             sh """
                 # Copy client artifact and Dockerfile to DP angular directory
-                scp -o StrictHostKeyChecking=no -r angular/Dockerfile root@10.40.235.244:/root/mythaistar/angular
-                scp -o StrictHostKeyChecking=no -r angular/dist root@10.40.235.244:/root/mythaistar/angular
+                scp -o StrictHostKeyChecking=no -r angular/Dockerfile root@${SERVER_IP}:/root/mythaistar/angular
+                scp -o StrictHostKeyChecking=no -r angular/dist root@${SERVER_IP}:/root/mythaistar/angular
                 
                 # Copy server artifact and Dockerfile to DP java directory
-                scp -o StrictHostKeyChecking=no -r java/Dockerfile root@10.40.235.244:/root/mythaistar/java
-                scp -o StrictHostKeyChecking=no -r java/mtsj/server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java
+                scp -o StrictHostKeyChecking=no -r java/Dockerfile root@${SERVER_IP}:/root/mythaistar/java
+                scp -o StrictHostKeyChecking=no -r java/mtsj/server/target/mythaistar.war root@${SERVER_IP}:/root/mythaistar/java
                 
                 # Copy docker-compose file to main DP MTS directory
-                scp -o StrictHostKeyChecking=no -r docker/docker-compose.yml root@10.40.235.244:/root/mythaistar/
+                scp -o StrictHostKeyChecking=no -r docker/docker-compose.yml root@${SERVER_IP}:/root/mythaistar/
                 
                 # Stop containers
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker stop mythaistar_client_compose_1
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker stop mythaistar_server_compose_1
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose rm -f
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose pull
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 cd mythaistar && docker-compose up --build -d
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} docker stop mythaistar_client_compose_1
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} docker stop mythaistar_server_compose_1
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} cd mythaistar && docker-compose rm -f
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} cd mythaistar && docker-compose pull
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} cd mythaistar && docker-compose up --build -d
             """
         }
-        sh 'echo \\"Application available at http://de-mucdevondepl01:8091\\"'
+        sh 'echo \\"Application available at http://${SERVER_IP}:8091\\"'
     }
 }
