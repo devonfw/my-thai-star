@@ -201,12 +201,12 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-      <plugin>
+      <!-- <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
         </configuration>
-      </plugin>
+      </plugin> -->
       <!-- CRISTOBAL PULL REQUEST -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
