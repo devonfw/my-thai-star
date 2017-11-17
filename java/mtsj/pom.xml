@@ -85,6 +85,12 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.sonarsource.java</groupId>
+        <artifactId>sonar-jacoco-listeners</artifactId>
+        <version>${sonar.jacoco.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -232,6 +238,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
         <configuration>
           <argLine>-Xmx128m</argLine>
           <append>true</append>
