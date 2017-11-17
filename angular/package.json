@@ -8,9 +8,11 @@
     "test:ci": "ng test --browsers ChromeHeadless --single-run",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "ngsw-config": "node_modules/.bin/ngsw-config dist src/ngsw-config.json",
+    "ngsw-copy": "cp node_modules/@angular/service-worker/ngsw-worker.js dist/",
     "serve": "ng serve --open --environment=dev",
     "serve:aot": "ng serve --open --environment=dev --aot",
-    "serve:pwa": "ng build --environment=dev --prod && cd dist && http-server",
+    "serve:pwa": "npm run build:pwa && http-server dist -p 8080",
     "serve:prod": "ng serve --open --environment=prod",
     "serve:prod:aot": "ng serve --open --environment=prod --aot",
     "serve:prodcompose": "ng serve --open --environment=prodcompose",
@@ -18,9 +20,9 @@
     "serve:node": "ng serve --open --environment=node",
     "serve:node:aot": "ng serve --open --environment=node --aot",
     "build": "ng build --environment=dev --aot",
-    "build:pwa": "ng build --environment=dev --prod",
-    "build:prod": "ng build --environment=prod --aot",
-    "build:prodcompose": "ng build --environment=prodcompose --aot"
+    "build:pwa": "ng build --environment=pwa --prod --build-optimizer && npm run ngsw-config && npm run ngsw-copy",
+    "build:prod": "ng build --environment=prod --prod --build-optimizer",
+    "build:prodcompose": "ng build --environment=prodcompose --prod --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -59,7 +61,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.5.0",
+    "@angular/cli": "1.6.0-beta.0",
     "@angular/compiler-cli": "^5.0.0",
     "@types/hammerjs": "2.0.30",
     "@types/jasmine": "^2.5.47",
