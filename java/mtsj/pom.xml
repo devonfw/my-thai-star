@@ -17,7 +17,7 @@
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
 
-    <!-- CRISTOBAL PULL REQUEST -->
+    <!-- CICD -->
     <sonar.jacoco.version>3.8</sonar.jacoco.version>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
@@ -59,7 +59,7 @@
     <jacoco.version>0.7.9</jacoco.version>
     <war.plugin.version>3.2.0</war.plugin.version>
     <assembly.plugin.version>3.1.0</assembly.plugin.version>
-    <!-- /CRISTOBAL PULL REQUEST -->
+    <!-- /CICD -->
   </properties>
 
   <modules>
@@ -104,13 +104,13 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
-    <!-- CRISTOBAL PULL REQUEST -->
+    <!-- CICD -->
     <dependency>
       <groupId>org.sonarsource.java</groupId>
       <artifactId>sonar-jacoco-listeners</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- /CRISTOBAL PULL REQUEST -->
+    <!-- /CICD -->
   </dependencies>
 
   <build>
@@ -181,7 +181,7 @@
             </lifecycleMappingMetadata>
           </configuration>
         </plugin>
-        <!-- CRISTOBAL PULL REQUEST -->
+        <!-- CICD -->
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
@@ -192,7 +192,7 @@
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>${jacoco.version}</version>
         </plugin>
-        <!-- /CRISTOBAL PULL REQUEST -->
+        <!-- /CICD -->
       </plugins>
     </pluginManagement>
 
@@ -207,13 +207,7 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-      <!-- <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
-        </configuration>
-      </plugin> -->
-      <!-- CRISTOBAL PULL REQUEST -->
+      <!-- CICD -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -246,7 +240,7 @@
           <destFile>${sonar.jacoco.reportPath}</destFile>
           <excludes>
             <exclude>**/generated-sources/**/*,</exclude>
-            <!-- <exclude>**io/oasp/${PROJECT_NAME}/general/**/*</exclude> -->
+            <exclude>**io/oasp/application/mtsj/general/**/*</exclude>
             <exclude>**/*Dao.java</exclude>
             <exclude>**/*Entity.java</exclude>
             <exclude>**/*Cto.java</exclude>
@@ -286,7 +280,7 @@
           </execution>
         </executions>
       </plugin>
-      <!-- CRISTOBAL PULL REQUEST -->
+      <!-- /CICD -->
     </plugins>
   </build>
 
@@ -309,13 +303,12 @@
     <repository>
       <id>devon.releases</id>
       <name>devon Releases</name>
-      <url>https://nexus:8081/nexus/content/repositories/releases/</url>
+      <url>http://nexus:8081/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
       <id>devon.snapshots</id>
       <name>devon Snapshots</name>
-      <url>https://nexus:8081/nexus/content/repositories/snapshots/</url>
+      <url>http://nexus:8081/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-
 </project>
