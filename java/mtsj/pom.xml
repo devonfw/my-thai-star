@@ -55,7 +55,7 @@
         **/*.xml,
         **/*.jsp
     </sonar.coverage.exclusions>
-    <sonar.host.url>https://sonar:9000/sonarqube</sonar.host.url>
+    <sonar.host.url>https://devon.s2-eu.capgemini.com/sonarqube/</sonar.host.url>
     <jacoco.version>0.7.9</jacoco.version>
     <war.plugin.version>3.2.0</war.plugin.version>
     <assembly.plugin.version>3.1.0</assembly.plugin.version>
