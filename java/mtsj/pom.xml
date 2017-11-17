@@ -30,7 +30,7 @@
     <sonar.projectKey>cbeldape-pr-test</sonar.projectKey>
     <sonar.exclusions>
         **/generated-sources/**/*,
-        **io/oasp/application/mtsj-server/general/**/*,
+        **io/oasp/application/mtsj/general/**/*,
         **/*Dao.java,
         **/*Entity.java,
         **/*Cto.java,
@@ -43,7 +43,7 @@
         **/*.jsp
     </sonar.exclusions>
     <sonar.coverage.exclusions>
-        **io/oasp/application/mtsj-server/general/**/*,
+        **io/oasp/application/mtsj/general/**/*,
         **/*Dao.java,
         **/*Entity.java,
         **/*Cto.java,
