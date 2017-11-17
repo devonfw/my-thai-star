@@ -18,9 +18,9 @@
     "serve:node": "ng serve --open --environment=node",
     "serve:node:aot": "ng serve --open --environment=node --aot",
     "build": "ng build --environment=dev --aot",
-    "build:pwa": "ng build --environment=dev --prod",
-    "build:prod": "ng build --environment=prod --aot",
-    "build:prodcompose": "ng build --environment=prodcompose --aot"
+    "build:pwa": "ng build --environment=dev --prod --build-optimizer",
+    "build:prod": "ng build --environment=prod --prod --build-optimizer",
+    "build:prodcompose": "ng build --environment=prodcompose --prod --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -59,7 +59,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.5.0",
+    "@angular/cli": "1.5.2",
     "@angular/compiler-cli": "^5.0.0",
     "@types/hammerjs": "2.0.30",
     "@types/jasmine": "^2.5.47",
@@ -74,7 +74,6 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-firefox-launcher": "^1.0.0",
     "protractor": "~5.1.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
