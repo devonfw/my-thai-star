@@ -10,7 +10,6 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('karma-firefox-launcher'),
       require('@angular/cli/plugins/karma')
     ],
     browserNoActivityTimeout: 60000,
@@ -60,7 +59,7 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome', 'ChromeHeadless', 'PhantomJS'],
+    browsers: ['Chrome', 'ChromeHeadless'],
 /*    autoWatch: true,
     singleRun: false
 */  });
