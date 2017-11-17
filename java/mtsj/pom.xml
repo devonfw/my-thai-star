@@ -27,7 +27,7 @@
     <sonar.junit.reportPaths>target/surefire-reports</sonar.junit.reportPaths>
     <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
     <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-    <sonar.projectKey>cbeldape-pr-test</sonar.projectKey>
+    <sonar.projectKey>${project.artifactId}</sonar.projectKey>
     <sonar.exclusions>
         **/generated-sources/**/*,
         **io/oasp/application/mtsj/general/**/*,
