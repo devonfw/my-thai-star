@@ -38,15 +38,15 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@1.6.0-beta.0":
-  version "1.6.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.0-beta.0.tgz#45bca8f5564f73df149bbf360f10ee9eb8fcfd4b"
+"@angular/cli@1.6.0-beta.2":
+  version "1.6.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.0-beta.2.tgz#259df19c94ba7ab32c98ffc44502e28a06dbae72"
   dependencies:
     "@angular-devkit/build-optimizer" "~0.0.31"
     "@angular-devkit/schematics" "~0.0.34"
     "@ngtools/json-schema" "1.1.0"
-    "@ngtools/webpack" "1.9.0-beta.0"
-    "@schematics/angular" "~0.1.0"
+    "@ngtools/webpack" "1.9.0-beta.2"
+    "@schematics/angular" "~0.1.5"
     autoprefixer "^6.5.3"
     chalk "~2.2.0"
     circular-dependency-plugin "^3.0.0"
@@ -219,9 +219,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-"@ngtools/webpack@1.9.0-beta.0":
-  version "1.9.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.9.0-beta.0.tgz#8606e63bbd147cda2267831559dc85a46e196872"
+"@ngtools/webpack@1.9.0-beta.2":
+  version "1.9.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.9.0-beta.2.tgz#bbed09eece535f5a63451bc8d81e20c659ac5cd0"
   dependencies:
     chalk "~2.2.0"
     enhanced-resolve "^3.1.0"
@@ -231,9 +231,9 @@
     source-map "^0.5.6"
     tree-kill "^1.0.0"
 
-"@schematics/angular@~0.1.0":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.3.tgz#103db1ea619f4c2cc1240886ce338c2daaefbb07"
+"@schematics/angular@~0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.5.tgz#501ef8bd7319e1b57486ee2a48720d2f3da7ee13"
   dependencies:
     "@angular-devkit/core" "0.0.20"
 
