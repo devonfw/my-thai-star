@@ -1,6 +1,5 @@
 import { environment } from './../../../environments/environment';
-import { Injectable, Injector } from '@angular/core';
-import { Response, Http } from '@angular/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { IBookingDataService } from './booking-data-service-interface';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
@@ -8,9 +7,7 @@ import {
     BookingResponse,
     BookingTableResponse,
     InvitationResponse,
-    ReservationView,
 } from '../../shared/viewModels/interfaces';
-import { config } from '../../config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()

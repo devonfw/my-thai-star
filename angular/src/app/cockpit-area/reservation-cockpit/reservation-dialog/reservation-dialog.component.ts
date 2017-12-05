@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
 import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 
@@ -13,13 +12,8 @@ import { config } from '../../../config';
 export class ReservationDialogComponent implements OnInit {
 
   private datao: FriendsInvite[] = [];
-  private columnso: ITdDataTableColumn[] = [
-    { name: 'email', label: 'Guest email'},
-    { name: 'accepted', label: 'Acceptances and declines'},
-  ];
-
-  private pageSizes: number[] = config.pageSizesDialog;
-
+  private columnso: ITdDataTableColumn[];
+  private pageSizes: number[];
   private fromRow: number = 1;
   private currentPage: number = 1;
   private pageSize: number = 4;
@@ -38,9 +32,13 @@ export class ReservationDialogComponent implements OnInit {
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
-              private waiterCockpitService: WaiterCockpitService,
               @Inject(MAT_DIALOG_DATA) dialogData: any) {
-                 this.data = dialogData.row;
+    this.data = dialogData.row;
+    this.pageSizes = config.pageSizesDialog;
+    this.columnso = [
+      { name: 'email', label: 'Guest email' },
+      { name: 'accepted', label: 'Acceptances and declines' },
+    ];
   }
 
   ngOnInit(): void {

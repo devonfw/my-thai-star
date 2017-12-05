@@ -1,8 +1,7 @@
 import { config } from './config';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NgModule, Type } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';

@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operator/filter';
+import 'rxjs/operator/filter';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { IDishesDataService } from './dishes-data-service-interface';

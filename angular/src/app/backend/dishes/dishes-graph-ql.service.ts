@@ -52,7 +52,7 @@ export class DishesGraphQlService implements IDishesDataService {
   private apollo: Apollo;
 
   constructor(private injector: Injector) {
-    this.apollo = injector.get(Apollo);
+    this.apollo = this.injector.get(Apollo);
   }
 
   // added by Roberto, please, revise
