@@ -37,7 +37,7 @@ import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.application.mtsj.general.common.api.constants.Roles;
 import io.oasp.application.mtsj.general.logic.base.AbstractComponentFacade;
-import io.oasp.application.mtsj.mailservice.api.Mail;
+import io.oasp.application.mtsj.mailservice.Mail;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
