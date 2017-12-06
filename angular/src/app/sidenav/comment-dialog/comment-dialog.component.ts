@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class CommentDialogComponent {
 
-  constructor(private dialog: MdDialogRef<CommentDialogComponent>) {}
+  constructor(private dialog: MatDialogRef<CommentDialogComponent>) {}
 
   sendComment(comment: string): void {
     this.dialog.close(comment);

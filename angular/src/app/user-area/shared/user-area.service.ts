@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { LoginInfo } from '../../backend/backendModels/interfaces';
-import { Injectable }     from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { LoginDataService } from '../../backend/login/login-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
@@ -10,26 +10,26 @@ import { AuthService } from '../../core/authentication/auth.service';
 export class UserAreaService {
 
     constructor(public snackBar: SnackBarService,
-                public router: Router,
-                public authService: AuthService,
-                public loginDataService: LoginDataService) { }
+        public router: Router,
+        public authService: AuthService,
+        public loginDataService: LoginDataService) { }
 
     login(username: string, password: string): void {
         this.loginDataService.login(username, password)
             .subscribe((res: any) => {
                 this.authService.setToken(res.headers.get('Authorization'));
                 this.loginDataService.getCurrentUser()
-                    .subscribe( (loginInfo: any) => {
+                    .subscribe((loginInfo: any) => {
                         this.authService.setLogged(true);
                         this.authService.setUser(loginInfo.name);
                         this.authService.setRole(loginInfo.role);
                         this.router.navigate(['orders']);
                         this.snackBar.openSnack('Login successful', 4000, 'green');
                     });
-                }, (err: any) => {
-                    this.authService.setLogged(false);
-                    this.snackBar.openSnack(err.json().message, 4000, 'red');
-                });
+            }, (err: any) => {
+                this.authService.setLogged(false);
+                this.snackBar.openSnack(err.message, 4000, 'red');
+            });
     }
 
     register(email: string, password: string): void {
@@ -53,11 +53,11 @@ export class UserAreaService {
     changePassword(data: any): void {
         data.username = this.authService.getUser();
         this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
-            .subscribe( (res: any) => {
-                    this.snackBar.openSnack(res.message, 4000, 'green');
-                }, (error: any) => {
-                    this.snackBar.openSnack(error.message, 4000, 'red');
-                });
+            .subscribe((res: any) => {
+                this.snackBar.openSnack(res.message, 4000, 'green');
+            }, (error: any) => {
+                this.snackBar.openSnack(error.message, 4000, 'red');
+            });
     }
 
 }

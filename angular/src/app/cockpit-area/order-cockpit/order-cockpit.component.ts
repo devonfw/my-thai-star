@@ -3,7 +3,7 @@ import { IPageChangeEvent,
          ITdDataTableSelectAllEvent,
          ITdDataTableColumn,
          ITdDataTableSortChangeEvent } from '@covalent/core';
-import { MdDialogRef, MdDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
@@ -26,6 +26,8 @@ export class OrderCockpitComponent implements OnInit {
   };
   private sorting: any[] = [];
 
+  pageSize: number = 8;
+
   orders: OrderListView[];
   totalOrders: number;
 
@@ -43,7 +45,7 @@ export class OrderCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
-  constructor(private dialog: MdDialog,
+  constructor(private dialog: MatDialog,
               private waiterCockpitService: WaiterCockpitService) {}
 
   ngOnInit(): void {
@@ -79,7 +81,7 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    let dialogRef: MdDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
+    let dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
     });

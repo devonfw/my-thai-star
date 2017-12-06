@@ -2,16 +2,16 @@
   <div class="property-text-center pad-top-sm pad-right-sm pad-left-sm" flex>
     <h3>You can invite your friends to lunch or book a table</h3>
   </div>
-  <md-card class="push-lg">
-    <md-tab-group md-stretch-tabs>
+  <mat-card class="push-lg">
+    <mat-tab-group mat-stretch-tabs>
 
-      <md-tab label="Book a table">
+      <mat-tab label="Book a table">
         <div layout-gt-xs="row" flex>
 
           <div flex-gt-xs="50" class= "menu-image forDesktop">
           </div>
           
-          <img md-card-image src='../../assets/images/slider-1.jpg' class="forMobile">
+          <img mat-card-image src='../../assets/images/slider-1.jpg' class="forMobile">
 
           <div flex-gt-xs="50">
             <form class="pad" #bookForm="ngForm">
@@ -32,39 +32,39 @@
                   placeholder="Date and time">
                 </md2-datepicker>
 
-                <md-input-container color="accent" flex>
-                  <input mdInput placeholder="Name" ngModel name="name" required>
-                  <md-error>Required. Please insert a name to reserve the table</md-error>
-                </md-input-container>
+                <mat-form-field color="accent" flex>
+                  <input matInput placeholder="Name" ngModel name="name" required>
+                  <mat-error>Required. Please insert a name to reserve the table</mat-error>
+                </mat-form-field>
 
-                <md-input-container color="accent" flex>
-                  <input mdInput placeholder="Email" ngModel name="email" required validateEmail>
-                  <md-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</md-error>
-                </md-input-container>
+                <mat-form-field color="accent" flex>
+                  <input matInput placeholder="Email" ngModel name="email" required validateEmail>
+                  <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
+                </mat-form-field>
 
-                <md-input-container class="push-bottom-sm" color="accent" flex>
-                  <input mdInput placeholder="Assistants" ngModel name="assistants" type="number" required validateAssistants>
-                  <md-error>Required. You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.</md-error>
-                </md-input-container>
+                <mat-form-field class="push-bottom-sm" color="accent" flex>
+                  <input matInput placeholder="Assistants" ngModel name="assistants" type="number" required validateAssistants>
+                  <mat-error>Required. You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.</mat-error>
+                </mat-form-field>
 
-                <md-checkbox class="push-top" #termsd>Accept terms</md-checkbox>
+                <mat-checkbox class="push-top" #termsd>Accept terms</mat-checkbox>
 
               </div>
               <div class="align-right">
-                <button md-button (click)="showBookTableDialog(bookForm.form)" [disabled]="!(bookForm.form.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
+                <button mat-button (click)="showBookTableDialog(bookForm.form)" [disabled]="!(bookForm.form.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
               </div>
             </form>
           </div>
         </div>
-      </md-tab>
+      </mat-tab>
 
-      <md-tab label="Invite friends">
+      <mat-tab label="Invite friends">
         <div layout-gt-xs="row" flex>
 
           <div  flex-gt-xs="50" class= "invite-image forDesktop">
           </div>
 
-          <img md-card-image src='../../assets/images/slider-2.jpg' class="forMobile">
+          <img mat-card-image src='../../assets/images/slider-2.jpg' class="forMobile">
           
           <div  flex-gt-xs="50">
             <div class="pad">
@@ -85,15 +85,15 @@
                     placeholder="Date and time">
                   </md2-datepicker>
 
-                  <md-input-container color="accent" flex>
-                    <input mdInput placeholder="Name" ngModel name="name" required>
-                    <md-error>Required. Please insert a name to reserve the table</md-error>
-                  </md-input-container>
+                  <mat-form-field color="accent" flex>
+                    <input matInput placeholder="Name" ngModel name="name" required>
+                    <mat-error>Required. Please insert a name to reserve the table</mat-error>
+                  </mat-form-field>
 
-                  <md-input-container color="accent" flex>
-                    <input mdInput placeholder="Email" ngModel name="email" required validateEmail>
-                    <md-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</md-error>
-                  </md-input-container>
+                  <mat-form-field color="accent" flex>
+                    <input matInput placeholder="Email" ngModel name="email" required validateEmail>
+                    <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
+                  </mat-form-field>
                 </div>
 
                 <h4>Guests</h4>
@@ -104,15 +104,15 @@
                   (add)="validateEmail()"
                   placeholder="Enter invitation email">
                 </td-chips>
-                <md-checkbox #termsi>Accept terms</md-checkbox>
+                <mat-checkbox #termsi>Accept terms</mat-checkbox>
               </form>
               <div class="align-right">
-                <button md-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!(invitationForm.form.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
+                <button mat-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!(invitationForm.form.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
               </div>
             </div>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
-  </md-card>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </td-layout>

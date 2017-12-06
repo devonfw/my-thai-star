@@ -42,11 +42,11 @@ public class ImageDaoImpl extends ApplicationDaoImpl<ImageEntity> implements Ima
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(image.getName()).eq(name));
+      query.where(Alias.$(image.getName()).toLowerCase().eq(name.toLowerCase()));
     }
     String content = criteria.getContent();
     if (content != null) {
-      query.where(Alias.$(image.getContent()).eq(content));
+      query.where(Alias.$(image.getContent()).toLowerCase().eq(content.toLowerCase()));
     }
     ContentType contentType = criteria.getContentType();
     if (contentType != null) {
@@ -54,7 +54,7 @@ public class ImageDaoImpl extends ApplicationDaoImpl<ImageEntity> implements Ima
     }
     String mimeType = criteria.getMimeType();
     if (mimeType != null) {
-      query.where(Alias.$(image.getMimeType()).eq(mimeType));
+      query.where(Alias.$(image.getMimeType()).toLowerCase().eq(mimeType.toLowerCase()));
     }
     return findPaginated(criteria, query, alias);
   }

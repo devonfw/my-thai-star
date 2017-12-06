@@ -45,15 +45,15 @@ public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserD
 
     String username = criteria.getUsername();
     if (username != null) {
-      query.where(Alias.$(user.getUsername()).eq(username));
+      query.where(Alias.$(user.getUsername()).toLowerCase().eq(username.toLowerCase()));
     }
     String password = criteria.getPassword();
     if (password != null) {
-      query.where(Alias.$(user.getPassword()).eq(password));
+      query.where(Alias.$(user.getPassword()).toLowerCase().eq(password.toLowerCase()));
     }
     String email = criteria.getEmail();
     if (email != null) {
-      query.where(Alias.$(user.getEmail()).eq(email));
+      query.where(Alias.$(user.getEmail()).toLowerCase().eq(email.toLowerCase()));
     }
     Long userRole = criteria.getUserRoleId();
     if (userRole != null && user.getUserRole() != null) {
@@ -68,21 +68,21 @@ public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserD
       for (OrderByTo orderEntry : sort) {
         if ("username".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(user.getUsername()).asc());
+            query.orderBy(Alias.$(user.getUsername()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(user.getUsername()).desc());
+            query.orderBy(Alias.$(user.getUsername()).toLowerCase().desc());
           }
         } else if ("password".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(user.getPassword()).asc());
+            query.orderBy(Alias.$(user.getPassword()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(user.getPassword()).desc());
+            query.orderBy(Alias.$(user.getPassword()).toLowerCase().desc());
           }
         } else if ("email".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(user.getEmail()).asc());
+            query.orderBy(Alias.$(user.getEmail()).toLowerCase().asc());
           } else {
-            query.orderBy(Alias.$(user.getEmail()).desc());
+            query.orderBy(Alias.$(user.getEmail()).toLowerCase().desc());
           }
         } else if ("userRole".equals(orderEntry.getName())) {
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {

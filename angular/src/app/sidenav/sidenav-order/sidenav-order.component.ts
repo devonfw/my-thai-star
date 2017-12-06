@@ -1,6 +1,6 @@
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
@@ -18,7 +18,7 @@ export class SidenavOrderComponent implements OnInit {
   @Input('order') order: OrderView;
 
   constructor(private sidenav: SidenavService,
-              public dialog: MdDialog,
+              public dialog: MatDialog,
               private _dialogService: TdDialogService,
               private calculator: PriceCalculatorService,
   ) {}
@@ -32,7 +32,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   addComment(): void {
-    let dialogRef: MdDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
+    let dialogRef: MatDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
     dialogRef.afterClosed().subscribe((result: string) => {
       this.order.orderLine.comment = result;
     });

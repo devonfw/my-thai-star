@@ -1,19 +1,19 @@
-<h4 md-dialog-title>ASSOCIATE TWITTER ACCOUNT</h4>
+<h4 mat-dialog-title>ASSOCIATE TWITTER ACCOUNT</h4>
 <form  (ngSubmit)="twitterSubmit(twitterForm.form.value)" #twitterForm="ngForm">
   <div layout= "column" class="push-bottom-sm" flex>
-    <md-input-container color="accent" flex>
-      <input mdInput placeholder="Twitter username" ngModel name="username" required>
-    </md-input-container>
+    <mat-form-field color="accent" flex>
+      <input matInput placeholder="Twitter username" ngModel name="username" required>
+    </mat-form-field>
 
-    <md-input-container color="accent" flex>
-      <input mdInput placeholder="Twitter password" ngModel name="password" type="password" required>
-    </md-input-container>
+    <mat-form-field color="accent" flex>
+      <input matInput placeholder="Twitter password" ngModel name="password" type="password" required>
+    </mat-form-field>
   </div>
 
   <div class="align-right" flex>  
-    <button md-button md-dialog-close class="text-upper">Cancel</button>
-    <button md-raised-button type="submit" [disabled]="!twitterForm.form.valid" color="accent" class="text-upper">
-      <md-icon svgIcon="twitter"></md-icon>
+    <button mat-button mat-dialog-close class="text-upper">Cancel</button>
+    <button mat-raised-button type="submit" [disabled]="!twitterForm.form.valid" color="accent" class="text-upper">
+      <mat-icon svgIcon="twitter"></mat-icon>
       <span>Log in twitter</span>
     </button>
   </div>

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SidenavModule } from '../sidenav.module';
@@ -9,7 +9,7 @@ import { CommentDialogComponent } from './comment-dialog.component';
 
 describe('CommentDialogComponent', () => {
   let component: CommentDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('CommentDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     component = dialog.open(CommentDialogComponent).componentInstance;
   });
 

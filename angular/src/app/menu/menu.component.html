@@ -4,73 +4,80 @@
       
       <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center" flex>
         <div layout="row" style="align-items:center" class="pad-top" flex>
-          <button md-icon-button><md-icon>search</md-icon></button>
-          <md-input-container color="accent" class="searchBy">
-            <input mdInput placeholder="Search our dishes" ngModel name="searchBy">
-          </md-input-container>
-        </div>
-        <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" flex>
-          <md-checkbox ngModel name="1">Main dishes</md-checkbox>
-          <md-checkbox ngModel name="2">Starter</md-checkbox>
-          <md-checkbox ngModel name="3">Dessert</md-checkbox>
+          <mat-form-field color="accent" class="searchBy" flex>
+            <button mat-icon-button matPrefix>
+              <mat-icon>search</mat-icon>
+            </button>
+            <input matInput placeholder="Search our dishes" ngModel name="searchBy">
+          </mat-form-field>
         </div>
         <div layout="row" class="pull-bottom pad-sm sortingBy">
-          <md-select flex ngModel name="sortName" #sorting placeholder="Sort By">
-            <md-option value="price">
-              Price
-            </md-option>
-            <md-option value="likes">
-              Likes
-            </md-option>
-            <md-option value="name">
-              Name
-            </md-option>
-          </md-select>
-          <button md-icon-button type="button" (click)="changeSortDir()" [mdTooltip]="sortDir"><md-icon>{{sortDirIcon}}</md-icon></button>
+          <mat-form-field color="accent" flex>
+            <mat-select ngModel name="sortName" #sorting placeholder="Sort By" flex>
+              <mat-option value="price">
+                Price
+              </mat-option>
+              <mat-option value="likes">
+                Likes
+              </mat-option>
+              <mat-option value="name">
+                Name
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-icon-button color="accent" (click)="changeSortDir()" [matTooltip]="sortDir" class="button-sort">
+            <mat-icon>{{sortDirIcon}}</mat-icon>
+          </button>
         </div>
       </div>
-      <md-divider></md-divider>
-
+      <mat-divider></mat-divider>
+      
       <td-expansion-panel label="FILTERS">
         <div layout="column" class ="pad-left-md pad-top pad-right-md" flex>
           
           <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <md-checkbox ngModel name="3">Noodle</md-checkbox>
-              <md-checkbox ngModel name="4">Rice</md-checkbox>
-              <md-checkbox ngModel name="5">Curry</md-checkbox>
-            </div>    
-            <md-divider></md-divider>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <md-checkbox ngModel name="6">Vegan</md-checkbox>
-              <md-checkbox ngModel name="7">Vegetarian</md-checkbox>
-            </div>   
-            <md-divider></md-divider>            
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <md-checkbox ngModel name="8">Favourites</md-checkbox>
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" flex>
+              <mat-checkbox ngModel name="1">Main dishes</mat-checkbox>
+              <mat-checkbox ngModel name="2">Starter</mat-checkbox>
+              <mat-checkbox ngModel name="3">Dessert</mat-checkbox>
             </div>
-            <md-divider></md-divider>
+            <mat-divider></mat-divider>
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
+              <mat-checkbox ngModel name="3">Noodle</mat-checkbox>
+              <mat-checkbox ngModel name="4">Rice</mat-checkbox>
+              <mat-checkbox ngModel name="5">Curry</mat-checkbox>
+            </div>    
+            <mat-divider></mat-divider>
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
+              <mat-checkbox ngModel name="6">Vegan</mat-checkbox>
+              <mat-checkbox ngModel name="7">Vegetarian</mat-checkbox>
+            </div>   
+            <mat-divider></mat-divider>            
+            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
+              <mat-checkbox ngModel name="8">Favourites</mat-checkbox>
+            </div>
+            <mat-divider></mat-divider>
           </div>
 
           <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
-            <md-checkbox ngModel name="0">Main dishes</md-checkbox>
-            <md-checkbox ngModel name="1">Starter</md-checkbox>
-            <md-checkbox ngModel name="2">Dessert</md-checkbox>
+            <mat-checkbox ngModel name="0">Main dishes</mat-checkbox>
+            <mat-checkbox ngModel name="1">Starter</mat-checkbox>
+            <mat-checkbox ngModel name="2">Dessert</mat-checkbox>
             <span style="border-right: 1px solid lightgray"></span>
-            <md-checkbox ngModel name="3">Noodle</md-checkbox>
-            <md-checkbox ngModel name="4">Rice</md-checkbox>
-            <md-checkbox ngModel name="5">Curry</md-checkbox>
+            <mat-checkbox ngModel name="3">Noodle</mat-checkbox>
+            <mat-checkbox ngModel name="4">Rice</mat-checkbox>
+            <mat-checkbox ngModel name="5">Curry</mat-checkbox>
             <span style="border-right: 1px solid lightgray"></span>        
-            <md-checkbox ngModel name="6">Vegan</md-checkbox>
-            <md-checkbox ngModel name="7">Vegetarian</md-checkbox>
+            <mat-checkbox ngModel name="6">Vegan</mat-checkbox>
+            <mat-checkbox ngModel name="7">Vegetarian</mat-checkbox>
             <span style="border-right: 1px solid lightgray"></span>        
-            <md-checkbox ngModel name="8">Favourites</md-checkbox>
+            <mat-checkbox ngModel name="8">Favourites</mat-checkbox>
           </div>
 
           <div layout-gt-xs="row" class="push-top-sm" flex>
             <div flex-gt-xs="50" layout="column" flex>
               <span class ="pull-bottom-md">Price</span>
-              <md-slider
+              <mat-slider
                 #price
                 ngModel
                 name="maxPrice"
@@ -79,11 +86,11 @@
                 step="1"
                 thumb-label="true"
                 tick-interval="10">
-              </md-slider>
+              </mat-slider>
             </div>
             <div flex-gt-xs="50" layout="column" flex>
               <span class ="pull-bottom-md">Likes</span>
-              <md-slider
+              <mat-slider
                 #likes
                 ngModel
                 name="minLikes"
@@ -92,14 +99,14 @@
                 step=5
                 thumb-label="true"
                 tick-interval="25">
-              </md-slider>
+              </mat-slider>
             </div>
           </div>
         </div>
       </td-expansion-panel>
       <div class="align-right">
-        <button md-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
-        <button md-button type="submit" color="accent" class="text-upper property-text-bold">Apply filters</button>
+        <button mat-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
+        <button mat-button type="submit" color="accent" class="text-upper property-text-bold">Apply filters</button>
       </div>
     </div>
   </form>
@@ -109,11 +116,11 @@
   </div>
   
   <ng-template #loading>
-    <md-progress-bar
+    <mat-progress-bar
       #loading
       color="accent"
       mode="indeterminate">
-    </md-progress-bar>
+    </mat-progress-bar>
   </ng-template>
 
 </td-layout>

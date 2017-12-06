@@ -1,10 +1,9 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { CoreModule } from '../core/core.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClient } from '@angular/common/http';
 
+import { CoreModule } from '../core/core.module';
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { BackendModule } from '../backend/backend.module';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
@@ -16,19 +15,15 @@ describe('EmailConfirmationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmailConfirmationsComponent ],
+      declarations: [EmailConfirmationsComponent],
       providers: [
-          SnackBarService,
-          EmailConfirmationsService,
-          { provide: ActivatedRoute,
-                     useValue: {
-                         url: Observable.of([{path: 'booking'}, {path: 'cancel'}]),
-                         params: Observable.of({id: 123}),
-                     },
-          }],
+        SnackBarService,
+        EmailConfirmationsService,
+        HttpClient,
+      ],
       imports: [
         CoreModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
         BrowserAnimationsModule,
         RouterTestingModule,
       ],

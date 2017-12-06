@@ -8,7 +8,7 @@ This project is intended to be an example for the usage of  new technologies in 
 
 * **Angular**
 
-Client-side developed using the latest version of this framework: Angular 4.
+Client-side developed using the latest version of this framework: Angular 5.
 
 
 * **Java**

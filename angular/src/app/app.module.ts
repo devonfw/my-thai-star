@@ -4,8 +4,6 @@ import { environment } from '../environments/environment';
 import { NgModule, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
 import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { BookTableModule } from './book-table/book-table.module';
@@ -24,7 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [ AppComponent ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     HeaderModule,
     HomeModule,
     MenuModule,

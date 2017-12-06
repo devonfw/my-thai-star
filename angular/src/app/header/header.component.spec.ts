@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,16 +20,17 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [WindowService, AuthService, UserAreaService, SnackBarService],
+      providers: [WindowService, AuthService, UserAreaService, SnackBarService, HttpClient],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
+        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
         CoreModule,
         SidenavModule,
+        HttpClientModule,
       ],
     });
     TestBed.compileComponents();

@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injector, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BackendType } from './../../../app/config';
-import { BackendConfig } from '../backend.module';
+import { BackendConfig } from '../../config';
 import { LoginRestService } from './login-rest.service';
 import { LoginInMemoryService } from './login-in-memory.service';
 import { ILoginDataService } from './login-data-service-interface';
@@ -12,12 +13,12 @@ export class LoginDataService implements ILoginDataService {
 
     private usedImplementation: ILoginDataService;
 
-    constructor(public injector: Injector) {
-        const backendConfig: BackendConfig =   this.injector.get(BackendConfig);
+    constructor(public injector: Injector, private http: HttpClient) {
+        const backendConfig: BackendConfig = this.injector.get(BackendConfig);
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new LoginInMemoryService();
         } else { // default
-            this.usedImplementation = new LoginRestService(this.injector);
+            this.usedImplementation = new LoginRestService(http);
         }
     }
 

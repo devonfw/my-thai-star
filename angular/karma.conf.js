@@ -8,10 +8,8 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-phantomjs-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('karma-firefox-launcher'),
       require('@angular/cli/plugins/karma')
     ],
     browserNoActivityTimeout: 60000,
@@ -37,11 +35,10 @@ module.exports = function (config) {
     },
     files: [
       // Include all Angular dependencies
+      {pattern: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'},
       {pattern: 'node_modules/@angular/**/*', included: false, watched: false},
       {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
-
       {pattern: './src/test.ts', watched: false },
-      {pattern: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'},
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
@@ -62,7 +59,7 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome', 'ChromeHeadless', 'PhantomJS'],
+    browsers: ['Chrome', 'ChromeHeadless'],
 /*    autoWatch: true,
     singleRun: false
 */  });

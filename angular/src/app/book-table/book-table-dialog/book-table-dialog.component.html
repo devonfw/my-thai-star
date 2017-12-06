@@ -1,31 +1,31 @@
-<span md-dialog-title class="text-upper">Book table</span>
-<md-dialog-content>
+<span mat-dialog-title class="text-upper">Book table</span>
+<mat-dialog-content>
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between" flex>
       <span>Date</span>
       <span>{{date}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
       <span>Name</span>
       <span>{{data.name}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
       <span>Email</span>
       <span>{{data.email}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
       <span>Assitants</span>
       <span>{{data.assistants}}</span>
     </div>
-    <span class="push-bottom-sm push-top-sm"><md-divider></md-divider></span>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
   </div>
-</md-dialog-content>
-<md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
   <div class="align-right" flex>
-    <button md-button md-dialog-close class="text-upper">Cancel</button>
-    <button md-button (click)="sendBooking()" color="accent" class="text-upper">Send</button>
+    <button mat-button mat-dialog-close class="text-upper">Cancel</button>
+    <button mat-button (click)="sendBooking()" color="accent" class="text-upper">Send</button>
   </div>
-</md-dialog-actions>
+</mat-dialog-actions>
