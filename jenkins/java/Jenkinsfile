@@ -1,6 +1,7 @@
 node {
     stage('Checking out MyThaiStar') {
-        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+        deleteDir()
+        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/oasp/my-thai-star/'
     }
     stage('Load tools') {
         tool name: 'Maven 3.3.9', type: 'maven'
@@ -8,29 +9,27 @@ node {
         env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
     }
     
+    
     stage('Install dependencies') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean install -Dmaven.test.skip=true"
+        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "cd java/mtsj && mvn clean install -Dmaven.test.skip=true"
         }
     }
     
     stage('Execute tests') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
+        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "cd java/mtsj && mvn test"
         }
     }
     
     stage('SonarQube analysis') {
         def scannerHome = tool 'SonarQube Scanner';
-        withSonarQubeEnv('SonarQube') 
-        {
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=my_thai_star_java -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
-        }
+        sh "cd java/mtsj && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=http://sonarqube:9000/sonarqube -Dsonar.login=devon-sonarqube -Dsonar.password=devon-sonarqube -Dsonar.projectKey=testmythaistar -Dsonar.projectName=my_thai_star_java -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
     }
     
     stage('Build and store in Nexus') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean deploy -Dmaven.test.skip=true"
+        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "cd java/mtsj && mvn clean deploy -Dmaven.test.skip=true"
         }
     }
 
@@ -39,14 +38,14 @@ node {
             sh """
                 cd java/mtsj
                 # Copy resulting ".war" file from workspace to deployment server
-                scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java/
+                scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@${SERVER_IP}:/root/mythaistar/java/
                 
                 # Launch application in Docker container
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-java -p 9090:8080 tomcat:latest
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} docker rm -f mts-java
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} docker run -itd --name=mts-java -p 9090:8080 tomcat:latest
+                ssh -o StrictHostKeyChecking=no root@${SERVER_IP} docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
             """
         }
-        sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
+        sh 'echo \\"Server available at http://${SERVER_IP}:9090/mythaistar\\"'
     }
 }
