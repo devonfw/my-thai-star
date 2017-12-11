@@ -1,10 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { OrderDataService } from '../../backend/order/order-data-service';
-import { SnackBarService } from '../../core/snackService/snackService.service';
 import { ExtraView, OrderView, SaveOrderResponse } from '../../shared/viewModels/interfaces';
 import { OrderListInfo, OrderInfo } from '../../backend/backendModels/interfaces';
-import { find, filter, isEqual, remove, cloneDeep, toString } from 'lodash';
+import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
 
 const isOrderEqual: Function =
    (orderToFind: OrderView) => (o: OrderView) => o.dish.name === orderToFind.dish.name && isEqual(o.extras, orderToFind.extras);

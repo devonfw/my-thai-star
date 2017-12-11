@@ -1,4 +1,3 @@
-import { TdDataTableSortingOrder } from '@covalent/core';
 // FILTERS
 
 export class Filter {

@@ -7,7 +7,6 @@ import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.
 import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
 import { OrderDataService } from '../../backend/order/order-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
-import { OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CoreModule } from '../../core/core.module';
 

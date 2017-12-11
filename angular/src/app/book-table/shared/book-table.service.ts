@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { FriendsInvite, ReservationView } from '../../shared/viewModels/interfaces';
+import { FriendsInvite } from '../../shared/viewModels/interfaces';
 import { BookingDataService } from '../../backend/booking/booking-data-service';
-import { BookingInfo, ReservationInfo } from '../../backend/backendModels/interfaces';
-import { map, assign, forEach } from 'lodash';
+import { BookingInfo } from '../../backend/backendModels/interfaces';
+import { map } from 'lodash';
 
 @Injectable()
 export class BookTableService {

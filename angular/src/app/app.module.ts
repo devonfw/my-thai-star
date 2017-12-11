@@ -1,8 +1,7 @@
 import { config } from './config';
 import { environment } from '../environments/environment';
-
-import { NgModule, Type } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
@@ -33,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
     EmailConfirmationModule,
     AppRoutingModule,
+    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
   ],
   providers: [],
   bootstrap: [ AppComponent ],
