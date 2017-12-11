@@ -39,26 +39,15 @@
   dependencies:
     tslib "^1.7.1"
 
-<<<<<<< HEAD
-"@angular/cli@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.5.2.tgz#e3d25302a3dce1e801158160d201fdc1220bae7c"
-=======
 "@angular/cli@1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.0.tgz#eba521f6a8e4c2db628300baddbc4da13ca96998"
->>>>>>> pwa
   dependencies:
     "@angular-devkit/build-optimizer" "~0.0.35"
     "@angular-devkit/schematics" "~0.0.40"
     "@ngtools/json-schema" "1.1.0"
-<<<<<<< HEAD
-    "@ngtools/webpack" "1.8.2"
-    "@schematics/angular" "~0.1.0"
-=======
     "@ngtools/webpack" "1.9.0"
     "@schematics/angular" "~0.1.10"
->>>>>>> pwa
     autoprefixer "^6.5.3"
     chalk "~2.2.0"
     circular-dependency-plugin "^4.2.1"
@@ -231,15 +220,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-<<<<<<< HEAD
-"@ngtools/webpack@1.8.2":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.8.2.tgz#0cd38eb387bb6679d295da5f3aa12dec2be57bd4"
-=======
 "@ngtools/webpack@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.9.0.tgz#ef395c45be2de9beb93a2b9f5f171d28c344eb10"
->>>>>>> pwa
   dependencies:
     chalk "~2.2.0"
     enhanced-resolve "^3.1.0"
