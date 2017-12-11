@@ -19,9 +19,6 @@ export class BookingRestService implements IBookingDataService {
   private readonly cancelReserveRestPath: string = 'bookingmanagement/v1/booking/cancel/';
   private readonly getReservationsRestPath: string = 'bookingmanagement/v1/booking/search';
 
-  // private http: HttpClientService;
-  // private http: HttpClient;
-
   constructor(private http: HttpClient) {}
 
   bookTable(booking: BookingInfo): Observable < BookingTableResponse > {

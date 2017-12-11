@@ -12,14 +12,22 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: 'restaurant', component: HomeComponent },
+  { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },
   { path: 'menu', component: MenuComponent },
   { path: 'bookTable', component: BookTableComponent },
   { path: 'booking/:action/:token', component: EmailConfirmationsComponent },
-  { path: 'orders', component: OrderCockpitComponent, canActivate: [AuthGuardService] },
-  { path: 'reservations', component: ReservationCockpitComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'orders',
+    component: OrderCockpitComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'reservations',
+    component: ReservationCockpitComponent,
+    canActivate: [AuthGuardService]
+  },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

@@ -8,7 +8,6 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginDataService } from '../login/login-data-service';
 import { LoginInMemoryService } from '../login/login-in-memory.service';
-import { WindowService } from '../../core/windowService/windowService.service';
 
 describe('BookingRestService', () => {
   beforeEach(() => {
@@ -23,7 +22,6 @@ describe('BookingRestService', () => {
         AuthService,
         SnackBarService,
         MockBackend,
-        WindowService,
         HttpClient,
         {provide: LoginDataService, useClass: LoginInMemoryService},
       ],

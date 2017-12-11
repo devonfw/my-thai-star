@@ -1,13 +1,20 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClient } from '@angular/common/http';
+import { AppRoutingModule } from '../app-routing.module';
 
 import { CoreModule } from '../core/core.module';
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { BackendModule } from '../backend/backend.module';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
+
 import { EmailConfirmationsComponent } from './email-confirmations.component';
+import { HomeComponent } from '../home/home.component';
+import { MenuComponent } from '../menu/menu.component';
+import { BookTableComponent } from '../book-table/book-table.component';
+import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
+import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
+import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -15,20 +22,27 @@ describe('EmailConfirmationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EmailConfirmationsComponent],
-      providers: [
-        SnackBarService,
-        EmailConfirmationsService,
-        HttpClient,
+      declarations: [
+        EmailConfirmationsComponent,
+        HomeComponent,
+        MenuComponent,
+        BookTableComponent,
+        OrderCockpitComponent,
+        ReservationCockpitComponent,
+        MenuCardComponent,
       ],
+      providers: [SnackBarService, EmailConfirmationsService],
       imports: [
-        CoreModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
-        BrowserAnimationsModule,
+        AppRoutingModule,
         RouterTestingModule,
-      ],
-    })
-    .compileComponents();
+        BrowserAnimationsModule,
+        CoreModule,
+        BackendModule.forRoot({
+          environmentType: 0,
+          restServiceRoot: 'v1',
+        }),
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
