@@ -41,7 +41,7 @@ describe('EmailConfirmationsComponent', () => {
           environmentType: 0,
           restServiceRoot: 'v1',
         }),
-      ]
+      ],
     }).compileComponents();
   }));
 
