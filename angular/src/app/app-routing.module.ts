@@ -19,15 +19,15 @@ const appRoutes: Routes = [
   {
     path: 'orders',
     component: OrderCockpitComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
     path: 'reservations',
     component: ReservationCockpitComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
