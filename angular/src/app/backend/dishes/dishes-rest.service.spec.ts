@@ -1,11 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-import {
-    BaseRequestOptions,
-    HttpModule,
-    Http,
-    Response,
-    ResponseOptions,
-} from '@angular/http';
 import { CoreModule } from '../../core/core.module';
 import { MockBackend } from '@angular/http/testing';
 import { DishesRestService } from './dishes-rest.service';
@@ -20,13 +13,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 describe('DishesRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule, CoreModule, RouterTestingModule, HttpClientModule],
+      imports: [
+        CoreModule,
+        RouterTestingModule,
+        HttpClientModule,
+      ],
       providers: [
         DishesRestService,
         AuthService,
         SnackBarService,
         MockBackend,
-        BaseRequestOptions,
         WindowService,
         HttpClient,
         {provide: LoginDataService, useClass: LoginInMemoryService},

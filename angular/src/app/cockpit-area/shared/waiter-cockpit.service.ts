@@ -4,13 +4,7 @@ import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.se
 import { OrderDataService } from '../../backend/order/order-data-service';
 import { BookingDataService } from '../../backend/booking/booking-data-service';
 import { FilterCockpit, Pagination, Sorting, } from '../../backend/backendModels/interfaces';
-import {
-  BookingResponse,
-  OrderListView,
-  OrderResponse,
-  OrderView,
-  ReservationView,
-} from '../../shared/viewModels/interfaces';
+import { BookingResponse, OrderResponse, OrderView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep } from 'lodash';
 
 @Injectable()
