@@ -25,37 +25,56 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-batch-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-batch</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-batch-starter</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-logging-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-logging</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-logging-starter</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-core-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-beanmapping</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-core-starter</artifactId>
     </dependency>
 
-
-
-
-    <dependency>
+    <!-- Replaced with oasp4j-rest-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-rest</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-rest-starter</artifactId>
     </dependency>
 
-
-
-
-
-    <dependency>
+    <!-- Replaced with oasp4j-web-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-web</artifactId>
-    </dependency>
+      </dependency>
+    -->
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -64,27 +83,38 @@
     </dependency>
 
     <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-web-starter</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-test-starter
+      <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-test-starter</artifactId>
     </dependency>
 
     <!-- for SpringDispatcher Servlet -->
-    <dependency>
+    <!-- Already part of spring-boot-starter-web which is part of oasp4j-web-starter
+      <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-    </dependency>
-
-    <!-- for HttpInvoker -->
-    <dependency>
+      </dependency>
+      <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-    </dependency>
+      </dependency>
+    -->
 
     <!-- JSP -->
     <dependency>
@@ -112,10 +142,16 @@
       <version>0.7.0</version>
     </dependency>
 
-    <!-- for Object Relational Mapping (JPA/Hibernate) -->
-    <dependency>
+
+    <!-- Replaced with oasp4j-jpa-starter
+      <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-jpa-starter</artifactId>
     </dependency>
 
     <!-- Hibernate EntityManager for JPA (implementation) -->
@@ -195,17 +231,24 @@
       <artifactId>spring-messaging</artifactId>
     </dependency>
 
-    <!-- Tests -->
-    <dependency>
+    <!-- Added to oasp4j-batch-starter
+      <dependency>
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-test</artifactId>
       <scope>test</scope>
-    </dependency>
+      </dependency>
+    -->
 
-    <dependency>
+    <!-- Added to starter oasp4j-test-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-test</artifactId>
       <scope>test</scope>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-test-starter</artifactId>
     </dependency>
 
     <dependency>
@@ -227,7 +270,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-
+ 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
@@ -251,18 +294,20 @@
     </dependency>
 
 
-    <dependency>
+    <!-- Will be included as part of oasp4j-jpa-starter
+      <dependency>
       <groupId>com.mysema.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
       <version>3.4.3</version>
       <scope>provided</scope>
-    </dependency>
+      </dependency>
 
-    <dependency>
+      <dependency>
       <groupId>com.mysema.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
       <version>3.7.1</version>
-    </dependency>
+      </dependency>
+    -->
 
     <dependency>
       <groupId>org.skyscreamer</groupId>

@@ -16,25 +16,48 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-
-    <dependency>
+    <!-- Replaced with oasp4j-rest-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-rest</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-rest-starter</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-core-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-basic</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-core-starter</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-jpa-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-jpa-envers</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-jpa-starter</artifactId>
     </dependency>
 
-    <dependency>
+    <!-- Replaced with oasp4j-security-starter
+      <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-security</artifactId>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-security-starter</artifactId>
     </dependency>
 
     <dependency>
