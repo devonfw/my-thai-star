@@ -1,9 +1,9 @@
 # My Thai Star
 
-This repository is an **iCSD Capgemini** initiative that hosts an application reference called **My Thai Star**. This application is about the management of a restaurant. 
+This repository is an **iCSD Capgemini** initiative that hosts an application reference called **My Thai Star**. This application is about the management of a restaurant.
 
 ## Technologies
-
+ 
 This project is intended to be an example for the usage of  new technologies in web development. Here is a list of all technologies involved:
 
 * **Angular**
