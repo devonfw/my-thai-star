@@ -13,13 +13,12 @@ export class LoginDataService implements ILoginDataService {
 
     private usedImplementation: ILoginDataService;
 
-    constructor(public injector: Injector,
-                private http: HttpClient) {
+    constructor(public injector: Injector, private http: HttpClient) {
         const backendConfig: BackendConfig = this.injector.get(BackendConfig);
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new LoginInMemoryService();
         } else { // default
-            this.usedImplementation = new LoginRestService(this.http);
+            this.usedImplementation = new LoginRestService(http);
         }
     }
 

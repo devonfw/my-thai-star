@@ -1,16 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Injectable, Injector } from '@angular/core';
+import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoginInfo } from '../backendModels/interfaces';
 import { ILoginDataService } from './login-data-service-interface';
+import { config } from '../../config';
 
 @Injectable()
 export class LoginRestService implements ILoginDataService {
 
   private readonly loginRestPath: string = 'login';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
+  private readonly logoutRestPath: string = 'logout';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
 

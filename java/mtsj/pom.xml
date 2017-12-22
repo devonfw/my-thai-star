@@ -21,7 +21,6 @@
   <modules>
     <module>core</module>
     <module>server</module>
-    <module>api</module>
   </modules>
 
   <dependencyManagement>

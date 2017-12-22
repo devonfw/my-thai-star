@@ -21,7 +21,7 @@ export class DishesDataService implements IDishesDataService {
         } else if (backendConfig.environmentType === BackendType.GRAPHQL) {
             this.usedImplementation = new DishesGraphQlService(this.injector);
         } else { // default
-            this.usedImplementation = new DishesRestService(this.http);
+            this.usedImplementation = new DishesRestService(http);
         }
     }
 

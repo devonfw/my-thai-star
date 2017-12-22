@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.capgemini.devonfw.module.winauthad.common.api.AuthenticationManagerAD;
+
 import io.oasp.application.mtsj.general.security.JWTAuthenticationFilter;
 import io.oasp.application.mtsj.general.security.JWTLoginFilter;
 
@@ -31,6 +33,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Inject
   private UserDetailsService userDetailsService;
+
+  @Inject
+  private AuthenticationManagerAD authenticationManagerAD;
 
   private CorsFilter getCorsFilter() {
 
@@ -62,7 +67,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     "/services/rest/bookingmanagement/v1/booking/cancel/**",
     "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
     "/services/rest/bookingmanagement/v1/invitedguest/decline/**",
-    "/services/rest/ordermanagement/v1/order/cancelorder/**"};
+    "/services/rest/ordermanagement/v1/order/cancelorder/**" };
 
     http.userDetailsService(this.userDetailsService).csrf().disable().exceptionHandling().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
@@ -83,8 +88,10 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0")
-        .password("password").roles("Customer");
+    auth.authenticationProvider(this.authenticationManagerAD.LdapAuthenticationProvider());
+
+    // auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0")
+    // .password("password").roles("Customer");
   }
 
 }

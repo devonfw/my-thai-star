@@ -8,7 +8,9 @@ import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
+import { reject } from 'lodash';
 import { config } from '../../config';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -79,12 +81,9 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    const dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
+    let dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 }

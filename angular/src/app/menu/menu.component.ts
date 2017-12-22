@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSlider } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
+import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
 

@@ -13,7 +13,8 @@ import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 @SpringBootApplication(exclude = { EndpointAutoConfiguration.class })
 @EntityScan(basePackages = { "io.oasp.application.mtsj" }, basePackageClasses = { AdvancedRevisionEntity.class })
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
-@ComponentScan(basePackages = { "io.oasp.application.mtsj.general", "io.oasp.application.mtsj" })
+@ComponentScan(basePackages = { "com.capgemini.devonfw.module.winauth", "io.oasp.application.mtsj.general",
+"io.oasp.application.mtsj" })
 public class SpringBootApp {
 
   /**

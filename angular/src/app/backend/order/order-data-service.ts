@@ -5,7 +5,7 @@ import { BackendType, BackendConfig } from './../../../app/config';
 import { OrderInMemoryService } from './order-in-memory.service';
 import { OrderRestService } from './order-rest.service';
 import { IOrderDataService } from './order-data-service-interface';
-import { OrderResponse, SaveOrderResponse } from '../../shared/viewModels/interfaces';
+import { OrderListView, OrderResponse, SaveOrderResponse } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class OrderDataService implements IOrderDataService {
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new OrderInMemoryService();
         } else { // default
-            this.usedImplementation = new OrderRestService(this.http);
+            this.usedImplementation = new OrderRestService(http);
         }
     }
 
@@ -31,6 +31,6 @@ export class OrderDataService implements IOrderDataService {
     }
 
     cancelOrder(token: string): Observable<boolean> {
-        return this.usedImplementation.cancelOrder(token);
-    }
+         return this.usedImplementation.cancelOrder(token);
+     }
 }

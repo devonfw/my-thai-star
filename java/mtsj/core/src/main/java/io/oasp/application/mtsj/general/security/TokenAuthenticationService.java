@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +54,6 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_SCOPE = "scope";
 
-  static final String CLAIM_ROLES = "roles";
-
   /**
    * This method returns the token once the Authentication has been successful
    *
@@ -70,7 +69,7 @@ public class TokenAuthenticationService {
 
   /**
    * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
-   * 
+   *
    * @param request the {@link HttpServletRequest}
    * @return the {@link UsernamePasswordAuthenticationToken}
    */
@@ -111,8 +110,7 @@ public class TokenAuthenticationService {
     Map<String, Object> claims = new HashMap<>();
     claims.put(CLAIM_ISSUER, ISSUER);
     claims.put(CLAIM_SUBJECT, auth.getName());
-    claims.put(CLAIM_SCOPE, scopes);
-    claims.put(CLAIM_ROLES, scopes);
+    claims.put(CLAIM_SCOPE, auth.getAuthorities());
     claims.put(CLAIM_CREATED, generateCreationDate() / 1000);
     claims.put(CLAIM_EXPIRATION, generateExpirationDate() / 1000);
     LOG.info(claims.toString());
@@ -164,8 +162,15 @@ public class TokenAuthenticationService {
 
   static List<String> getRolesFromToken(String token) {
 
-    return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
-        .get(CLAIM_SCOPE, List.class);
+    List<LinkedHashMap> scopes = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+        .getBody().get(CLAIM_SCOPE, List.class);
+
+    List<String> roles = new ArrayList<>();
+    for (LinkedHashMap<?, ?> scope : scopes) {
+      roles.add(scope.get("authority").toString());
+    }
+
+    return roles;
   }
 
 }

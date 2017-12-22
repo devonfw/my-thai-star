@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { OrderView, BookingView } from '../../../shared/viewModels/interfaces';
+import { ExtraView, OrderView, BookingView, ReservationView, OrderListView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';

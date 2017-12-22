@@ -1,6 +1,8 @@
-import { FormControl, FormsModule } from '@angular/forms';
+import { DebugElement } from '@angular/core';
+import { AbstractControl, FormControl, FormsModule, NgForm } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 import { Md2Module } from 'md2';
 import { CoreModule } from '../core/core.module';

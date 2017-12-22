@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 import { AuthService } from '../core/authentication/auth.service';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
@@ -42,7 +43,7 @@ export class HeaderComponent {
   }
 
   openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
+    let dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
       width: this.window.responsiveWidth(),
     });
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -57,20 +58,14 @@ export class HeaderComponent {
   }
 
   openResetDialog(): void {
-    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
+    let dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
       width: this.window.responsiveWidth(),
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 
   openTwitterDialog(): void {
-    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
+    let dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
       width: this.window.responsiveWidth(),
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 

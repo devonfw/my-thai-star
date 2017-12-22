@@ -4,7 +4,8 @@ import { IOrderDataService } from './order-data-service-interface';
 import { ReservationView, DishView, ExtraView, OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, OrderInfo, OrderListInfo } from '../backendModels/interfaces';
 import { bookedTables, extras, dishes, orderList } from '../mock-data';
-import * as _ from 'lodash';
+import * as moment from 'moment';
+import { find, filter, toString, toNumber, orderBy } from 'lodash';
 
 @Injectable()
 export class OrderInMemoryService implements IOrderDataService {
@@ -21,24 +22,22 @@ export class OrderInMemoryService implements IOrderDataService {
                 page: filters.pagination.page,
                 total: orderList.length,
             },
-            result: _.orderBy(orderList, [filters.sort[0].name], [filters.sort[0].direction])
+            result: orderBy(orderList, [filters.sort[0].name], [filters.sort[0].direction])
                 .filter((order: OrderListView) => {
                     if (filters.bookingDate) {
                         return order.booking.bookingDate.toLowerCase().includes(filters.bookingDate.toLowerCase());
                     } else {
                         return true;
                     }
-                })
-                .filter((order: OrderListView) => {
+                }).filter((order: OrderListView) => {
                     if (filters.email) {
                         return order.booking.email.toLowerCase().includes(filters.email.toLowerCase());
                     } else {
                         return true;
                     }
-                })
-                .filter((order: OrderListView) => {
+                }).filter((order: OrderListView) => {
                     if (filters.bookingToken) {
-                        return _.toString(order.booking.bookingToken).includes(_.toString(filters.bookingToken));
+                        return toString(order.booking.bookingToken).includes(toString(filters.bookingToken));
                     } else {
                         return true;
                     }
@@ -51,18 +50,19 @@ export class OrderInMemoryService implements IOrderDataService {
     }
 
     findExtraById(id: number): ExtraView {
-        return _.find(extras, (extra: ExtraView) => extra.id === id);
+        return find(extras, (extra: ExtraView) => extra.id === id);
     }
 
     findDishById(id: number): DishView {
-        return _.find(dishes, (plate: DishView) => plate.dish.id === id);
+        return find(dishes, (plate: DishView) => plate.dish.id === id);
     }
 
     findReservationById(id: { bookingToken: string }): ReservationView {
-        return _.find(bookedTables, (booking: ReservationView) => booking.booking.bookingToken === _.toNumber(id.bookingToken));
+        return find(bookedTables, (booking: ReservationView) => booking.booking.bookingToken === toNumber(id.bookingToken));
     }
 
     composeOrderList(orders: OrderListInfo): OrderListView {
+        let composedOrders: OrderListView;
         let orderLines: any = [];
         orders.orderLines.forEach((order: OrderInfo) => {
             let plate: DishView = this.findDishById(order.orderLine.dishId);
@@ -88,7 +88,7 @@ export class OrderInMemoryService implements IOrderDataService {
 
         return {
             booking: {
-                bookingToken: _.toNumber(orders.booking.bookingToken),
+                bookingToken: toNumber(orders.booking.bookingToken),
                 name: bookedTable.booking.name,
                 bookingDate: bookedTable.booking.bookingDate,
                 creationDate: bookedTable.booking.creationDate,

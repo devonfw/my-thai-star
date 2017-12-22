@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { /* MatDialogRef, */ MatIconRegistry } from '@angular/material';
+import { MatDialogRef, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class TwitterDialogComponent {
 
-  constructor(// private dialog: MatDialogRef<TwitterDialogComponent>,
+  constructor(private dialog: MatDialogRef<TwitterDialogComponent>,
               public iconReg: MatIconRegistry,
               public sanitizer: DomSanitizer) {
     iconReg.addSvgIcon('twitter', sanitizer.bypassSecurityTrustResourceUrl('assets/images/Twitter_Logo.svg'));
