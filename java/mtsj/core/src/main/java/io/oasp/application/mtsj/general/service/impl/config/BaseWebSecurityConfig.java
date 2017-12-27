@@ -15,8 +15,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.capgemini.devonfw.module.winauthad.common.api.AuthenticationManagerAD;
+
 import io.oasp.application.mtsj.general.security.JWTAuthenticationFilter;
 import io.oasp.application.mtsj.general.security.JWTLoginFilter;
+import io.oasp.application.mtsj.general.security.oauth.azure.AzureDataService;
 
 /**
  * This type serves as a base class for extensions of the {@code WebSecurityConfigurerAdapter} and provides a default
@@ -29,8 +32,17 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Value("${security.cors.enabled}")
   boolean corsEnabled = true;
 
+  @Value("${devon.winauth.ad.domain}")
+  private String domain;
+
+  @Value("${devon.winauth.ad.signin_po}")
+  private String signinpo;
+
   @Inject
   private UserDetailsService userDetailsService;
+
+  @Inject
+  private AuthenticationManagerAD authenticationManagerAD;
 
   private CorsFilter getCorsFilter() {
 
@@ -56,13 +68,18 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
+    // TODO: delete->
+    AzureDataService.domain = this.domain;
+    AzureDataService.signin_po = this.signinpo;
+    // <- TODO: delete
+
     String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
     "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
     "/services/rest/ordermanagement/v1/order", "/services/rest/bookingmanagement/v1/booking",
     "/services/rest/bookingmanagement/v1/booking/cancel/**",
     "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
     "/services/rest/bookingmanagement/v1/invitedguest/decline/**",
-    "/services/rest/ordermanagement/v1/order/cancelorder/**"};
+    "/services/rest/ordermanagement/v1/order/cancelorder/**" };
 
     http.userDetailsService(this.userDetailsService).csrf().disable().exceptionHandling().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
@@ -83,8 +100,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0")
-        .password("password").roles("Customer");
+    auth.authenticationProvider(this.authenticationManagerAD.LdapAuthenticationProvider());
+
   }
 
 }

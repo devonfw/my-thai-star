@@ -8,15 +8,20 @@ import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
+import { reject } from 'lodash';
 import { config } from '../../config';
-
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../core/authentication/auth.service';
+import { LoginDataService } from 'app/backend/login/login-data-service';
+import { CookieService } from 'app/core/cookieservice/cookie.service';
 @Component({
   selector: 'cockpit-order-cockpit',
   templateUrl: './order-cockpit.component.html',
   styleUrls: ['./order-cockpit.component.scss'],
 })
 export class OrderCockpitComponent implements OnInit {
-
+private auth:AuthService;
+private loginDataService:LoginDataService;
   private pagination: Pagination = {
     size: 8,
     page: 1,
@@ -44,10 +49,12 @@ export class OrderCockpitComponent implements OnInit {
   };
 
   constructor(private dialog: MatDialog,
-              private waiterCockpitService: WaiterCockpitService) {}
-
+              private waiterCockpitService: WaiterCockpitService,
+              private cookieService:CookieService,
+            private authService:AuthService) {}
   ngOnInit(): void {
     this.applyFilters();
+  
   }
 
   applyFilters(): void {
@@ -79,12 +86,9 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    const dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
+    let dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 }

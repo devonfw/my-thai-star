@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { TdDialogService } from '@covalent/core';
-import { OrderView } from '../../shared/viewModels/interfaces';
+import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { map } from 'lodash';
 
 @Component({

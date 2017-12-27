@@ -8,8 +8,6 @@ import { AuthService } from '../core/authentication/auth.service';
 import { AuthGuardService } from '../core/authentication/auth-guard.service';
 import { UserAreaService } from './shared/user-area.service';
 
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
 
 @NgModule({
@@ -25,18 +23,12 @@ import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.componen
   ],
 
   declarations: [
-    LoginDialogComponent,
-    PasswordDialogComponent,
     TwitterDialogComponent,
   ],
   exports: [
-    LoginDialogComponent,
-    PasswordDialogComponent,
     TwitterDialogComponent,
   ],
   entryComponents: [
-    LoginDialogComponent,
-    PasswordDialogComponent,
     TwitterDialogComponent,
   ],
 })

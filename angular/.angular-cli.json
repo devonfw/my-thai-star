@@ -34,7 +34,6 @@
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
         "prodcompose": "environments/environment.prodcompose.ts",
-        "pwa": "environments/environment.pwa.ts",
         "node": "environments/environment.node.ts",
         "net": "environments/environment.net.ts"
       }

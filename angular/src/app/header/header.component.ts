@@ -1,15 +1,18 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 import { AuthService } from '../core/authentication/auth.service';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { UserAreaService } from '../user-area/shared/user-area.service';
 import { WindowService } from '../core/windowService/windowService.service';
-
-import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
+import { LoginDataService } from '../backend/login/login-data-service';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { authenticationConfig} from '../config';
+import { Observable } from 'rxjs/Observable';
+import { CookieService } from 'app/core/cookieservice/cookie.service';
+import { TokenService } from 'app/core/tokenService/token.service';
 
 @Component({
   selector: 'public-header',
@@ -25,9 +28,14 @@ export class HeaderComponent {
               public sidenav: SidenavService,
               public dialog: MatDialog,
               public auth: AuthService,
-              public userService: UserAreaService) {
+              public userService: UserAreaService,
+              public loginDataService: LoginDataService,
+              public cookieService:CookieService,
+              public tokenService:TokenService,
+            ) {      
+              
   }
-
+ 
   openCloseSideNav(sidenavOpened: boolean): void {
     sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }
@@ -41,41 +49,40 @@ export class HeaderComponent {
     this.sidenavNavigationEmitter.emit();
   }
 
-  openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        if (result.email) {
-          this.userService.register(result.email, result.password);
-        } else {
-          this.userService.login(result.username, result.password);
-        }
-      }
-    });
+
+  triggerLogin(): void {      
+    let loginEndpoint="https://login.microsoftonline.com/" +authenticationConfig.domain+"/oauth2/v2.0/authorize?p="+ authenticationConfig.signin_po+"&client_id="+authenticationConfig.signin_id+"&nonce=defaultNonce&redirect_uri="+authenticationConfig.redirect_uri+"&scope=openid&response_type=id_token&prompt=login";                  
+     window.location.href = loginEndpoint;
+
+}
+
+  employeeLogin():void{
+    let loginEndpoint="https://login.microsoftonline.com/"+authenticationConfig.domain+"/oauth2/authorize?client_id="+authenticationConfig.client_id+"&response_type=id_token+token&response_mode=fragment&scope=openid%20https%3A%2F%2Fgraph.microsoft.com&nonce=7362CAEA-9CA5-4B43-9BA3-34D7C303EBA7&state=12345&redirect_uri="+authenticationConfig.redirect_uri+"&resource=https://graph.windows.net/";
+    window.location.href = loginEndpoint;
+      }   
+
+  Signup(): void {
+   let url= "https://login.microsoftonline.com/"+authenticationConfig.domain+"/oauth2/v2.0/authorize?p="+authenticationConfig.signup_po+"&client_id="+authenticationConfig.signin_id+"&nonce=defaultNonce&redirect_uri="+authenticationConfig.redirect_uri+"&scope=openid&response_type=id_token&prompt=login";
+   window.location.href = url;
   }
 
-  openResetDialog(): void {
-    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
-    });
+  editProfile(){
+   let url="https://login.microsoftonline.com/"+ authenticationConfig.domain+"/oauth2/v2.0/authorize?p="+authenticationConfig.editprofile+"&client_id="+authenticationConfig.signin_id+"&nonce=defaultNonce&redirect_uri="+authenticationConfig.redirect_uri+"&scope=openid&response_type=id_token&prompt=login";
+  window.location.href= url;
   }
 
-  openTwitterDialog(): void {
-    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
-    });
+  resetPass(): void {
+  let url= "https://login.microsoftonline.com/"+authenticationConfig.domain+"/oauth2/v2.0/authorize?p="+authenticationConfig.reset_po+"&client_id="+authenticationConfig.signin_id+"&nonce=defaultNonce&redirect_uri="+authenticationConfig.redirect_uri+"&scope=openid&response_type=id_token&prompt=login";
+  window.location.href=url;
+  
   }
+
 
   logout(): void {
-    this.userService.logout();
-    this.router.navigate(['restaurant']);
+      let logoutEndpoint="https://login.microsoftonline.com/"+"common"+"/oauth2/logout?post_logout_redirect_uri="+authenticationConfig.redirect_uri;
+      window.location.href =logoutEndpoint;
+      this.userService.logout();
+      document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      
   }
 }

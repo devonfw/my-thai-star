@@ -13,8 +13,7 @@ export class LoginDataService implements ILoginDataService {
 
     private usedImplementation: ILoginDataService;
 
-    constructor(public injector: Injector,
-                private http: HttpClient) {
+    constructor(public injector: Injector, private http: HttpClient) {
         const backendConfig: BackendConfig = this.injector.get(BackendConfig);
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new LoginInMemoryService();
@@ -29,14 +28,6 @@ export class LoginDataService implements ILoginDataService {
 
     getCurrentUser(): Observable<LoginInfo> {
         return this.usedImplementation.getCurrentUser();
-    }
-
-    register(email: string, password: string): Observable<LoginInfo> {
-        return this.usedImplementation.register(email, password);
-    }
-
-    changePassword(username: string, oldPassword: string, newPassword: string): Observable<any> {
-        return this.usedImplementation.changePassword(username, oldPassword, newPassword);
     }
 
 }

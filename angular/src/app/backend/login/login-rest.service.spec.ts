@@ -1,5 +1,12 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
+import {
+    BaseRequestOptions,
+    HttpModule,
+    Http,
+    Response,
+    ResponseOptions,
+} from '@angular/http';
 import { CoreModule } from '../../core/core.module';
 import { MockBackend } from '@angular/http/testing';
 import { LoginRestService } from './login-rest.service';
@@ -13,16 +20,13 @@ import { LoginInMemoryService } from '../login/login-in-memory.service';
 describe('LoginRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CoreModule,
-        RouterTestingModule,
-        HttpClientModule,
-      ],
+      imports: [HttpModule, CoreModule, RouterTestingModule, HttpClientModule],
       providers: [
         LoginRestService,
         AuthService,
         SnackBarService,
         MockBackend,
+        BaseRequestOptions,
         WindowService,
         HttpClient,
         {provide: LoginDataService, useClass: LoginInMemoryService},

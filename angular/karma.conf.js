@@ -8,7 +8,6 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-firefox-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
@@ -20,23 +19,15 @@ module.exports = function (config) {
         base: 'Chrome',
         flags: ['--no-sandbox']
       },
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
+      ChromeHeadless:  {
+        base:   'Chrome',
+        flags:  [
           '--headless',
           '--disable-gpu',
           // Without a remote debugging port, Google Chrome exits immediately.
           '--remote-debugging-port=9222',
           '--no-sandbox'
-        ]
-      },
-      FirefoxHeadless: {
-        base: 'Firefox',
-        flags: ['-headless', '--start-debugger-server 6000']
-      },
-      FirefoxDeveloperHeadless: {
-        base: 'FirefoxDeveloper',
-        flags: ['-headless', '--start-debugger-server 6000']
+        ],
       }
     },
     client: {
@@ -44,21 +35,10 @@ module.exports = function (config) {
     },
     files: [
       // Include all Angular dependencies
-      {
-        pattern:
-          'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'
-      },
-      {
-        pattern: 'node_modules/@angular/**/*',
-        included: false,
-        watched: false
-      },
-      {
-        pattern: 'node_modules/rxjs/**/*.js',
-        included: false,
-        watched: false
-      },
-      { pattern: './src/test.ts', watched: false }
+      {pattern: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css'},
+      {pattern: 'node_modules/@angular/**/*', included: false, watched: false},
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: './src/test.ts', watched: false },
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
@@ -73,23 +53,14 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters:
-      config.angularCli && config.angularCli.codeCoverage
-        ? ['progress', 'coverage-istanbul']
-        : ['progress', 'kjhtml'],
+    reporters: config.angularCli && config.angularCli.codeCoverage ?
+      ['progress', 'coverage-istanbul'] :
+      ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: [
-      'Chrome',
-      'ChromeHeadless',
-      'Firefox',
-      'FirefoxDeveloper',
-      'FirefoxHeadless',
-      'FirefoxDeveloperHeadless'
-    ]
-    /*    autoWatch: true,
+    browsers: ['Chrome', 'ChromeHeadless'],
+/*    autoWatch: true,
     singleRun: false
-*/
-  });
+*/  });
 };

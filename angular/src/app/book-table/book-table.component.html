@@ -3,7 +3,7 @@
     <h3>You can invite your friends to lunch or book a table</h3>
   </div>
   <mat-card class="push-lg">
-    <mat-tab-group mat-stretch-tabs>
+    <mat-tab-group (selectedTabChange)="prefill()" mat-stretch-tabs>
 
       <mat-tab label="Book a table">
         <div layout-gt-xs="row" flex>
@@ -33,12 +33,12 @@
                 </md2-datepicker>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Name" ngModel name="name" required>
+                  <input matInput [(ngModel)]="name" name="name" placeholder="Name"  required >
                   <mat-error>Required. Please insert a name to reserve the table</mat-error>
                 </mat-form-field>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Email" ngModel name="email" required validateEmail>
+                  <input matInput placeholder="Email" [(ngModel)]="email" name="email" required validateEmail>
                   <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
                 </mat-form-field>
 
@@ -86,12 +86,12 @@
                   </md2-datepicker>
 
                   <mat-form-field color="accent" flex>
-                    <input matInput placeholder="Name" ngModel name="name" required>
+                    <input matInput placeholder="Name" [(ngModel)]="name" name="name" required>
                     <mat-error>Required. Please insert a name to reserve the table</mat-error>
                   </mat-form-field>
 
                   <mat-form-field color="accent" flex>
-                    <input matInput placeholder="Email" ngModel name="email" required validateEmail>
+                    <input matInput placeholder="Email" [(ngModel)]="email" name="email" required validateEmail>
                     <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
                   </mat-form-field>
                 </div>

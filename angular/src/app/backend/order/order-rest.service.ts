@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
+import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IOrderDataService } from './order-data-service-interface';
 import { FilterCockpit, OrderListInfo } from '../backendModels/interfaces';
-import { OrderResponse, SaveOrderResponse } from '../../shared/viewModels/interfaces';
-
+import { OrderListView, OrderResponse, SaveOrderResponse } from '../../shared/viewModels/interfaces';
 @Injectable()
 export class OrderRestService implements IOrderDataService {
 
@@ -13,9 +13,8 @@ export class OrderRestService implements IOrderDataService {
   private readonly filterOrdersRestPath: string = 'ordermanagement/v1/order/search';
   private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
-
+  
   constructor(private http: HttpClient) { }
-
   getBookingOrders(filter: FilterCockpit): Observable<OrderResponse[]> {
     let path: string;
     if (filter.email || filter.bookingToken) {

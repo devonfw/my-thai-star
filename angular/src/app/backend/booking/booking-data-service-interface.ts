@@ -3,6 +3,7 @@ import {
     BookingResponse,
     BookingTableResponse,
     InvitationResponse,
+    ReservationView,
 } from '../../shared/viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 

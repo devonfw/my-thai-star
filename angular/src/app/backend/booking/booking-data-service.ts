@@ -8,6 +8,7 @@ import {
     BookingResponse,
     BookingTableResponse,
     InvitationResponse,
+    ReservationView,
 } from '../../shared/viewModels/interfaces';
 import { BookingInfo, FilterCockpit } from '../backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +23,7 @@ export class BookingDataService implements IBookingDataService {
         if (backendConfig.environmentType === BackendType.IN_MEMORY) {
             this.usedImplementation = new BookingInMemoryService();
         } else { // default
-            this.usedImplementation = new BookingRestService(this.http);
+            this.usedImplementation = new BookingRestService(http);
         }
     }
 

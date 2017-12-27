@@ -41,16 +41,38 @@
         RESERVATIONS
       </a>
     </nav>
-  </div>
-  <button *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" matTooltip="User"><mat-icon>person_outline</mat-icon></button>
+  </div>  
+
+  <div *ngIf="!auth.isLogged()" layout="row" style="align-items:center">
+      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu2"><mat-icon>person_outline</mat-icon></button>
+      <mat-menu #toolbarMenu2="matMenu" yPosition="above">
+        <button mat-menu-item type="button" (click)="triggerLogin()">
+          <span>Login</span>
+        </button>
+        <button mat-menu-item type="button" (click)="Signup()">
+          <span>Sign-Up</span>
+        </button>
+        <button mat-menu-item type="button" (click)="employeeLogin()">
+          <span>Employee Login</span>
+        </button>
+      </mat-menu>
+    </div>
+
+
+
+
   <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
     <button mat-icon-button [matMenuTriggerFor]="toolbarMenu1"><mat-icon>account_circle</mat-icon></button>
     <span class="forDesktop">{{auth.user}}</span>
     <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" matTooltip="log out"><mat-icon>exit_to_app</mat-icon></button>
     <mat-menu #toolbarMenu1="matMenu">
-      <button mat-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
+      <button mat-menu-item type="button" (click)="resetPass()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>settings</mat-icon>
         <span>Change password</span>
+      </button>
+      <button mat-menu-item type="button" (click)="editProfile()" *ngIf="auth.isPermited('CUSTOMER')">
+        <mat-icon>settings</mat-icon>
+        <span>Edit Profile</span>
       </button>
       <button mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>send</mat-icon>

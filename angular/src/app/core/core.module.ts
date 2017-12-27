@@ -64,6 +64,8 @@ import { HttpRequestInterceptorService } from './interceptor/httpRequestIntercep
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { CookieService } from 'app/core/cookieservice/cookie.service';
+import { TokenService } from 'app/core/tokenService/token.service';
 
 @NgModule({
   imports: [
@@ -129,9 +131,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
   declarations: [ NotFoundComponent ],
   providers: [
     AuthService,
+    CookieService,
     AuthGuardService,
     SnackBarService,
     WindowService,
+    TokenService,
     { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true },
   ],

@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { DishView, ExtraView } from '../../shared/viewModels/interfaces';
+import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { MenuService } from '../shared/menu.service';
 import { AuthService } from '../../core/authentication/auth.service';
+import { CookieService } from 'app/core/cookieservice/cookie.service';
 
 @Component({
   selector: 'public-menu-card',
@@ -15,7 +16,8 @@ export class MenuCardComponent {
 
   constructor(private menuService: MenuService,
               public auth: AuthService,
-              private sidenav: SidenavService) { }
+              private sidenav: SidenavService,
+            private cookieService: CookieService) { }
 
   addOrderMenu(): void {
     this.sidenav.addOrder(this.menuService.menuToOrder(this.menuInfo));

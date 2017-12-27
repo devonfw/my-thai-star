@@ -1,11 +1,12 @@
 package io.oasp.application.mtsj.general.security;
 
+import java.io.IOException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +18,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SigningKeyResolverAdapter;
 import io.oasp.application.mtsj.general.common.api.datatype.Role;
 import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
+import io.oasp.application.mtsj.general.security.oauth.azure.AzureDataService;
 
 /**
  * Service class for JWT token managing
@@ -28,32 +33,13 @@ import io.oasp.application.mtsj.general.common.api.to.UserDetailsClientTo;
  */
 public class TokenAuthenticationService {
 
+  /*
+   * NOTE: Currently, this service uses AzureDataService to retrieve the key to verify the signature of the tokens.
+   *
+   */
+
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(TokenAuthenticationService.class);
-
-  static final String ISSUER = "MyThaiStarApp";
-
-  static final Integer EXPIRATION_HOURS = 1;
-
-  static final String SECRET = "ThisIsASecret";
-
-  static final String TOKEN_PREFIX = "Bearer";
-
-  static final String HEADER_STRING = "Authorization";
-
-  static final String EXPOSE_HEADERS = "Access-Control-Expose-Headers";
-
-  static final String CLAIM_SUBJECT = "sub";
-
-  static final String CLAIM_ISSUER = "iss";
-
-  static final String CLAIM_EXPIRATION = "exp";
-
-  static final String CLAIM_CREATED = "iat";
-
-  static final String CLAIM_SCOPE = "scope";
-
-  static final String CLAIM_ROLES = "roles";
 
   /**
    * This method returns the token once the Authentication has been successful
@@ -63,71 +49,26 @@ public class TokenAuthenticationService {
    */
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
-    String token = generateToken(auth);
-    res.addHeader(EXPOSE_HEADERS, HEADER_STRING);
-    res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
   /**
    * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
-   * 
+   *
    * @param request the {@link HttpServletRequest}
    * @return the {@link UsernamePasswordAuthenticationToken}
    */
   static Authentication getAuthentication(HttpServletRequest request) {
 
-    String token = request.getHeader(HEADER_STRING);
+    String token = request.getHeader("Authorization");
     if (token != null) {
 
-      // The JWT parser will throw an exception if the token is not well formed or the token has expired
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
-      return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token)) : null;
+      Jws<Claims> decodedToken = decode(token);
+      String user = getClaim(decodedToken, "name");
+      return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(decodedToken)) : null;
 
     }
 
     return null;
-  }
-
-  static Collection<? extends GrantedAuthority> getAuthorities(String token) {
-
-    List<String> roles = getRolesFromToken(token);
-    List<GrantedAuthority> authorities = new ArrayList<>();
-    for (String role : roles) {
-      authorities.add(new SimpleGrantedAuthority(role));
-    }
-    return authorities;
-
-  }
-
-  static String generateToken(Authentication auth) {
-
-    List<String> scopes = new ArrayList<>();
-    Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-    for (GrantedAuthority authority : authorities) {
-      scopes.add(authority.getAuthority());
-    }
-
-    Map<String, Object> claims = new HashMap<>();
-    claims.put(CLAIM_ISSUER, ISSUER);
-    claims.put(CLAIM_SUBJECT, auth.getName());
-    claims.put(CLAIM_SCOPE, scopes);
-    claims.put(CLAIM_ROLES, scopes);
-    claims.put(CLAIM_CREATED, generateCreationDate() / 1000);
-    claims.put(CLAIM_EXPIRATION, generateExpirationDate() / 1000);
-    LOG.info(claims.toString());
-    return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, SECRET).compact();
-  }
-
-  static Long generateCreationDate() {
-
-    return new Date().getTime();
-  }
-
-  static Long generateExpirationDate() {
-
-    int expirationTerm = (60 * 60 * 1000) * EXPIRATION_HOURS;
-    return new Date(new Date().getTime() + expirationTerm).getTime();
   }
 
   /**
@@ -140,20 +81,25 @@ public class TokenAuthenticationService {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
     try {
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
 
-      List<String> roles = getRolesFromToken(token);
+      Jws<Claims> decodedToken = decode(token);
+      validateToken(decodedToken);
+      // Get user from token
+      String user = getClaim(decodedToken, "name");
       if (user != null) {
         userDetails.setName(user);
       }
-      if (!roles.isEmpty()) {
-        if (roles.get(0).equalsIgnoreCase(Role.WAITER.getName())) {
-          userDetails.setRole(Role.WAITER);
-        } else if (roles.get(0).equalsIgnoreCase(Role.CUSTOMER.getName())) {
-          userDetails.setRole(Role.CUSTOMER);
-        }
+      // Retrieve user groups for this user from somewhere
+      ArrayList<String> roles = getRoles(decodedToken);
+      // Map user groups (external) to user roles (local)
+      if (roles.contains("Waiter")) {
+        userDetails.setRole(Role.WAITER);
+      } else if (roles.contains("Customer")) {
+        userDetails.setRole(Role.CUSTOMER);
       }
+      // -> remove authentication code (currently still exists, but unused)
+      // -> move/adapt user mapping code (currently copied from LDAP; has to be changed/moved for Graph API)
+
     } catch (Exception e) {
       LOG.error(e.getMessage());
       userDetails = null;
@@ -162,10 +108,62 @@ public class TokenAuthenticationService {
     return userDetails;
   }
 
-  static List<String> getRolesFromToken(String token) {
+  private static Jws<Claims> decode(String token) {
 
-    return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
-        .get(CLAIM_SCOPE, List.class);
+    // Implicitly verifies token signature
+    return Jwts.parser().setSigningKeyResolver(new SigningKeyResolverAdapter() {
+      @Override
+      public Key resolveSigningKey(JwsHeader header, Claims claims) {
+
+        // inspect the header, lookup and return the signing key
+        String kid = header.getKeyId();
+        try {
+          return AzureDataService.retrieveKey(kid);
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException | IOException e) {
+          e.printStackTrace();
+          throw new RuntimeException(e);
+        }
+      }
+    }).parseClaimsJws(token);
+
+  }
+
+  private static boolean validateToken(Jws<Claims> decodedToken) {
+
+    boolean valid = decodedToken != null; // token signature was verified in decode(..)
+
+    // TODO: more verification
+
+    if (!valid)
+      throw new RuntimeException("Validation failed!");
+    return valid;
+  }
+
+  static Collection<? extends GrantedAuthority> getAuthorities(Jws<Claims> decodedToken) {
+
+    List<String> roles = getRoles(decodedToken);
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    for (String role : roles) {
+      authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+    return authorities;
+
+  }
+
+  private static String getClaim(Jws<Claims> decodedToken, String att) {
+
+    return decodedToken.getBody().get(att, String.class);
+  }
+
+  private static ArrayList<String> getRoles(Jws<Claims> decodedToken) {
+
+    ArrayList<String> roles = new ArrayList();
+    if (decodedToken.getBody().get("roles", ArrayList.class) != null) {
+      roles = decodedToken.getBody().get("roles", ArrayList.class);
+    } else {
+      roles.add("Customer");
+    }
+    return roles;
   }
 
 }

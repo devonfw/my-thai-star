@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { DishesDataService } from '../../backend/dishes/dishes-data-service';
 import { Filter } from '../../backend/backendModels/interfaces';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { map, assign } from 'lodash';
+import { map, remove, assign, merge } from 'lodash';
 
 @Injectable()
 export class MenuService {

@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { OrderView } from '../shared/viewModels/interfaces';
+import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
+import { ExtraView, OrderView } from '../shared/viewModels/interfaces';
+import { toNumber } from 'lodash';
 
 @Component({
   selector: 'public-sidenav',

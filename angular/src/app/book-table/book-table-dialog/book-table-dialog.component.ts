@@ -12,7 +12,7 @@ import * as moment from 'moment';
 export class BookTableDialogComponent implements OnInit {
 
   data: any;
-  date: string;
+  date: any;
 
   constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,
@@ -20,6 +20,7 @@ export class BookTableDialogComponent implements OnInit {
                @Inject(MAT_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData;
   }
+ 
 
   ngOnInit(): void {
     this.date = moment(this.data.bookingDate).format('LLL');
