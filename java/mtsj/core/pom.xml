@@ -7,7 +7,6 @@
     <artifactId>mtsj</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
-  <groupId>io.oasp.application</groupId>
   <artifactId>mtsj-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
@@ -27,11 +26,6 @@
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-batch</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-logging</artifactId>
     </dependency>
 
@@ -40,17 +34,11 @@
       <artifactId>oasp4j-beanmapping</artifactId>
     </dependency>
 
-
-
-
+    <!-- Use oasp4j-starter-* as soon as available via release -->
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-rest</artifactId>
     </dependency>
-
-
-
-
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
@@ -66,12 +54,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <!-- for SpringDispatcher Servlet -->
@@ -195,19 +177,6 @@
       <artifactId>spring-messaging</artifactId>
     </dependency>
 
-    <!-- Tests -->
-    <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>javax.el</groupId>
       <artifactId>javax.el-api</artifactId>
@@ -244,12 +213,12 @@
       <artifactId>scala-library</artifactId>
       <version>2.10.4</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-ws</artifactId>
       <version>1.4.7.RELEASE</version>
     </dependency>
-
 
     <dependency>
       <groupId>com.mysema.querydsl</groupId>
@@ -264,6 +233,7 @@
       <version>3.7.1</version>
     </dependency>
 
+    <!-- Tests -->
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>

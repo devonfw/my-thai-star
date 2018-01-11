@@ -1,6 +1,9 @@
 graphQL/node_modules/
 graphQL/.vscode/
+target
+eclipse-target
 
+*.log
 *.class
 *.classpath
 *.project
