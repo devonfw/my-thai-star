@@ -1,5 +1,4 @@
--- Rename this file to V9001_1__Delete_data_MYSQL.sql.mysql if the database used is not MariaDB 10.0.27
-
+-- Deleta all data for MariaDB
 SET FOREIGN_KEY_CHECKS=0;
 
 DELETE FROM RESTAURANTTABLE;
@@ -8,5 +7,8 @@ DELETE FROM PRODUCT;
 DELETE FROM OFFER;
 DELETE FROM ORDERPOSITION;
 DELETE FROM BILL;
+
+--Keep Staffmembers to allow authentication
+--DELETE FROM StaffMember;
 
 SET FOREIGN_KEY_CHECKS=1;
