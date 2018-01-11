@@ -1,4 +1,4 @@
---Rename this file to V9001_1__Delete_data_ORCL.sql.orcl if the database used is not Oracle 11g
+-- Deleta all data for Oracle
 
 ALTER TABLE ORDERPOSITION DISABLE CONSTRAINT FK_ORDPOS2ORDER;
 ALTER TABLE OFFER DISABLE CONSTRAINT FK_OFFER2MEAL;
