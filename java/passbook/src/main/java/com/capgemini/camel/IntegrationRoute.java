@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiResponse;
 @Component
 public class IntegrationRoute extends RouteBuilder {
 
-  private static String logger = "log:com.capgemini.camel.IntegrationRoute";
+  private static String logger = "log:com.capgemini.camel.IntegrationRoute?showAll=true&multiline=true";
 
   @Override
   public void configure() throws Exception {
@@ -71,8 +71,7 @@ public class IntegrationRoute extends RouteBuilder {
         .convertBodyTo(String.class).log("Answer from passbook API 1:").to(logger).unmarshal().json(JsonLibrary.Jackson)
         .setProperty("serialNumber").spel("#{request.body['serialNumber']}").transform()
         .simple("{ \"email\":\"${exchangeProperty.email}\" }").log("send to passbook API 2:").to(logger)
-        .toD(
-            "https://api.passslot.com/v1/passes/pass.slot.developer1/${exchangeProperty.serialNumber}/email?bridgeEndpoint=true")
+        .toD("https://api.passslot.com/v1/passes/pass.slot.developer1/${exchangeProperty.serialNumber}/email")
         .convertBodyTo(String.class).log("Answer from passbook API 2:").to(logger);
 
     from("direct:health").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setHeader("Content-type")
