@@ -1,52 +1,63 @@
 node {
-    stage('Checking out MyThaiStar') {
-        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+    stage('Define your Project') {
+        def PROJECT_NAME=""
+        def ARTIFACT_NAME="" // name of the artifact you want to deploy i.e. "mythaistar.war" (only for Java projects)
+        def REPO_URL="" // github/gitlab/gogs/... URL where your project's sourcecode is located
+        def REPO_BRANCH="" // branch of the repo you want to run
+        def CONTAINER_PORT="" // port where the Docker container of your App will be deployed
+        def CONTAINER_NAME="" // "official name" of the Docker container. For example: "mythaistar-angular"
+        def EXTERNAL_SERVER_DIR="" // directory of your External server for deployment where your project's artifact will be copied in
+        def EXTERNAL_SERVER_USERNAME="" // user which with enough rights to execute all steps in the Deployment stage
     }
+
+    stage('Checking out ${PROJECT_NAME}') {
+        deleteDir()
+        git branch: ${REPO_BRANCH}, url: ${REPO_URL}
+    }
+
     stage('Load tools') {
         tool name: 'Maven 3.3.9', type: 'maven'
         env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
         env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
     }
     
+    stage('SonarQube analysis') {
+        withMaven(globalMavenSettingsConfig: ${GLOBAL_MAVEN_SETTINGS}, jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "mvn sonar:sonar -X -Dsonar.login=admin -Dsonar.password=admin"
+        }
+    }
+    
     stage('Install dependencies') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean install -Dmaven.test.skip=true"
+        withMaven(globalMavenSettingsConfig: ${GLOBAL_MAVEN_SETTINGS}, jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "mvn clean install -Dmaven.test.skip=true"
         }
     }
     
     stage('Execute tests') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS test"
-        }
-    }
-    
-    stage('SonarQube analysis') {
-        def scannerHome = tool 'SonarQube Scanner';
-        withSonarQubeEnv('SonarQube') 
-        {
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=testmythaistar -Dsonar.projectName=my_thai_star_java -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.language=java"
+        withMaven(globalMavenSettingsConfig: ${GLOBAL_MAVEN_SETTINGS}, jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "mvn test"
         }
     }
     
     stage('Build and store in Nexus') {
-        configFileProvider([configFile(fileId: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', variable: 'MAVEN_SETTINGS')]) {
-            sh "cd java/mtsj && mvn -s $MAVEN_SETTINGS clean deploy -Dmaven.test.skip=true"
+        withMaven(globalMavenSettingsConfig: ${GLOBAL_MAVEN_SETTINGS}, jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
+            sh "mvn clean deploy -Dmaven.test.skip=true"
         }
     }
 
     stage('Deployment') {
-        sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+        sshagent (credentials: [${SSH_CREDENTIALS}]) {
             sh """
-                cd java/mtsj
                 # Copy resulting ".war" file from workspace to deployment server
-                scp -o StrictHostKeyChecking=no -r server/target/mythaistar.war root@10.40.235.244:/root/mythaistar/java/
+                scp -o StrictHostKeyChecking=no server/target/${ARTIFACT_NAME} ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP}:${EXTERNAL_SERVER_DIR}
                 
                 # Launch application in Docker container
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-java
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-java -p 9090:8080 tomcat:latest
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} docker rm -f ${CONTAINER_NAME}
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} docker run -itd --name=${CONTAINER_NAME} -p ${CONTAINER_PORT}:8080 tomcat:latest
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} docker cp ${EXTERNAL_SERVER_DIR}/${ARTIFACT_NAME} ${CONTAINER_NAME}:/usr/local/tomcat/webapps/
             """
         }
-        sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
+        sh 'echo \\"Application available at http://${CONTAINER_NAME}:${CONTAINER_PORT}\\"'
     }
+
 }
