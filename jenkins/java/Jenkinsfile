@@ -15,7 +15,7 @@ node {
     //      https://github.com/cbeldacap/my-thai-star/blob/develop/java/mtsj/pom.xml#L211-L282
     // stage('SonarQube analysis') {
     //     withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'OpenJDK 1.8', maven: 'Maven 3.3.9') {
-    //         sh "cd java/mtsj && mvn sonar:sonar -X -Dsonar.login=devon-sonarqube -Dsonar.password=devon-sonarqube"
+    //         sh "cd java/mtsj && mvn sonar:sonar -X -Dsonar.login=${SONARQUBE_USERNAME} -Dsonar.password=${SONARQUBE_PASSWORD}"
     //     }
     // }
     
