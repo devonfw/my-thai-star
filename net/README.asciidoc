@@ -25,11 +25,11 @@
 	- Uncheck “Enforce password policy” and set password to : sa
 * Go to status and set Permission to grant and login enabled.
 
-## ## Setting up SQL Server docker instance
+## Setting up SQL Server docker instance
 
 * Start the docker instances with docker-compose.yml
 * From console command go to /database/SQLServer execute:
-      docker exec -i mythaistar_db_1 /bin/bash -c "cat > /tmp/MyThaiStar.bak" < MyThaiStar.bak�
+      docker exec -i mythaistar_db_1 /bin/bash -c "cat > /tmp/MyThaiStar.bak" < MyThaiStar.bak
 * Start SqlServer Management Studio and connect to SQL Server docker instance:
 ** Host: localhost,1401
 ** Pass: C@pgemini2017
