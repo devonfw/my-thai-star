@@ -1,56 +1,56 @@
 node {
-    stage('Checking out MyThaiStar') {
-        git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+    stage('Define your Project') {
+        def PROJECT_NAME=""
+        def REPO_URL="" // github/gitlab/gogs/... URL where your project's sourcecode is located
+        def REPO_BRANCH="" // branch of the repo you want to run
+        def CONTAINER_PORT="" // port where the Docker container of your App will be deployed
+        def CONTAINER_NAME="" // "official name" of the Docker container. For example: "mythaistar-angular"
+        def EXTERNAL_SERVER_DIR="" // directory of your External server for deployment where your project's artifact will be copied in
+        def EXTERNAL_SERVER_USERNAME="" // user which with enough rights to execute all steps in the Deployment stage
+    }
+
+    stage('Checking out ${PROJECT_NAME}') {
+        deleteDir()
+        git branch: ${REPO_BRANCH}, url: ${REPO_URL}
     }
 
     stage('Loading Custom Tools') {
-        tool 'Node 7'
-        tool 'Angular CLI'
+        def node = tool name: 'Node 8.9 LTS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        env.PATH = "${node}/bin:${env.PATH}"
+        sh "npm i -g yarn"
+        tool 'Chrome-stable'
     }
     
-    stage('Fresh Dependency Installation') {
-        sh """
-            cd angular
-            find . -name "node_modules" -exec rm -rf '{}' +
-            npm i
-        """
+    stage('Dependency Installation') {
+        sh "yarn"
     }
     
     stage('Code Linting') {
-        sh """
-            cd angular
-            ng lint --format checkstyle
-        """
+        sh "yarn lint"
     }
     
     stage('Execute Angular tests') {
-        sh """
-            cd angular
-            ng test --browsers PhantomJS --single-run
-        """
+        sh "ng test --browsers ChromeHeadless --single-run"
     }
     
     stage('Build Application') {
-        sh """
-            cd angular
-            ng build --aot --environment=prod
-        """
+        sh "ng build --prod --build-optimizer"
     }
     
     stage('Deployment') {
-        sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+        sshagent (credentials: [${SSH_CREDENTIALS}]) {
             sh """
                 cd angular
                 # Copy resulting "dist" folder from workspace to deployment server
-                scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/angular/
+                scp -o StrictHostKeyChecking=no -r dist ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP}:${EXTERNAL_SERVER_DIR}
                 
                 # Launch application in Docker container
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mts-angular
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mts-angular -p 8090:80 nginx
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mts-angular bash -c \\"rm /usr/share/nginx/html/*\\"
-                ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/angular/dist/. mts-angular:/usr/share/nginx/html/
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} docker rm -f ${CONTAINER_NAME}
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} docker run -itd --name=${CONTAINER_NAME} -p ${CONTAINER_PORT}:80 cbelda/nginx-try-files
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} exec ${CONTAINER_NAME} bash -c \\"rm /usr/share/nginx/html/*\\"
+                ssh -o StrictHostKeyChecking=no ${EXTERNAL_SERVER_USERNAME}@${params.EXTERNAL_SERVER_IP} cp ${EXTERNAL_SERVER_DIR}/dist/. ${CONTAINER_NAME}:/usr/share/nginx/html/
             """
+            echo "Your app is available in http://${params.EXTERNAL_SERVER_IP}:${CONTAINER_PORT}"
         }
-        sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
     }
 }
