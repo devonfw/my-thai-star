@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OASP4Net.Business.Common</name>
+    </assembly>
+    <members>
+        <member name="M:OASP4Net.Business.Common.BookingManagement.Controller.BookingController.BookingBooking(OASP4Net.Business.Common.BookingManagement.Dto.BookingDto)">
+            <summary>
+            Method to make a reservation with potentiel guests. The method returns the reservation token with the format: {(CB_|GB_)}{now.Year}{now.Month:00}{now.Day:00}{_}{MD5({Host/Guest-email}{now.Year}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00})}
+            </summary>
+            <param name="bookingDto"></param>
+            <response code="201">Ok.</response>
+            <response code="400">Bad request. Parser data error.</response>
+            <response code="401">Unathorized. Autentication fail</response>
+            <response code="403">Forbidden. Authorization error.</response>
+            <response code="500">Internal Server Error. The search process ended with error.</response>
+        </member>
+        <member name="M:OASP4Net.Business.Common.BookingManagement.Controller.BookingController.BookingSearch(OASP4Net.Business.Common.BookingManagement.Dto.BookingSearchDto)">
+            <summary>
+            Method to get reservations
+            </summary>
+            <response code="201">Ok.</response>
+            <response code="400">Bad request. Parser data error.</response>
+            <response code="401">Unathorized. Autentication fail</response>
+            <response code="403">Forbidden. Authorization error.</response>
+            <response code="500">Internal Server Error. The search process ended with error.</response>
+        </member>
+        <member name="T:OASP4Net.Business.Common.DishManagement.Controller.DishController">
+            <summary>
+            DishController
+            </summary>
+        </member>
+        <member name="M:OASP4Net.Business.Common.DishManagement.Controller.DishController.Search(OASP4Net.Business.Common.DishManagement.Dto.FilterDtoSearchObject)">
+            <summary>
+            Gets the  list of available dishes regarding the filter options
+            </summary>
+            <param name="filterDto">Contains the criteria values to perform the search. Case of null or empty values will return the full set of dishes.</param>
+            <returns></returns>
+            <response code="200"> Ok. The search process has beencompleted with no error.</response>
+            <response code="401">Unathorized. Autentication fail</response>  
+            <response code="403">Forbidden. Authorization error.</response>    
+            <response code="500">Internal Server Error. The search process ended with error.</response>       
+        </member>
+        <member name="M:OASP4Net.Business.Common.DishManagement.Converter.DishConverter.EntityToApi(OASP4Net.Domain.Entities.Models.Dish)">
+            <summary>
+            Transforms entity object to Dto object
+            </summary>
+            <param name="item">Entity item to be transformed to api Dto</param>
+            <returns>API Dto</returns>
+        </member>
+        <member name="P:OASP4Net.Business.Common.DishManagement.Dto.DishDtoResult.extras">
+            <summary>
+            Association from DishDtoResult [simple] to ExtraDto [many]
+            </summary>
+        </member>
+        <member name="P:OASP4Net.Business.Common.DishManagement.Dto.DishDtoResult.categories">
+            <summary>
+            Association from DishDtoResult [simple] to CategoryDto [many]
+            </summary>
+        </member>
+        <member name="P:OASP4Net.Business.Common.General.Dto.SortByDto.Direction">
+            <summary>
+             ASC for ascending and DESC for descending
+            </summary>
+        </member>
+        <member name="M:OASP4Net.Business.Common.OrderManagement.Controller.OrderController.OrderFilter(OASP4Net.Business.Common.BookingManagement.Dto.BookingSearchDto)">
+            <summary>
+            Gets the  list of available orders regarding the filter options
+            </summary>
+            <param name="orderFilterDto">Contains the filter values to perform the search. Case of null or empty values will return the full set of orders.</param>
+            <response code="200">Ok. The search process has beencompleted with no error.</response>
+            <response code="401">Unathorized. Autentication fail</response>
+            <response code="403">Forbidden. Authorization error.</response>
+            <response code="500">Internal Server Error. The search process ended with error.</response>
+        </member>
+        <member name="M:OASP4Net.Business.Common.OrderManagement.Controller.OrderController.OrderOrder(OASP4Net.Business.Common.OrderManagement.Dto.OrderDto)">
+            <summary>
+            Order the order. Given an order Dto, the server side will prepare the different order lines.
+            </summary>
+            <param name="orderDto">The model of the ordert to be processed on the server side. The InvitationToken field is mandatory.</param>
+            <response code="201">Ok. Created. Returns the created order reference</response>
+            <response code="400">Bad Request. No Invitation token given.</response>
+            <response code="401">Unathorized. Autentication fail</response>
+            <response code="403">Forbidden. Authorization error.</response>
+            <response code="500">Internal Server Error. The search process ended with error.</response>
+        </member>
+        <member name="M:OASP4Net.Business.Common.OrderManagement.Controller.OrderController.OrderSearch(OASP4Net.Business.Common.BookingManagement.Dto.BookingSearchDto)">
+            <summary>
+            Gets the  list of available orders regarding the search criteria options
+            </summary>
+            <param name="orderSearchCriteriaDto">Contains the criteria values to perform the search. Case of null or empty values will return the full set of orders.</param>
+            <response code="200">Ok. The search process has beencompleted with no error.</response>
+            <response code="401">Unathorized. Autentication fail</response>
+            <response code="403">Forbidden. Authorization error.</response>
+            <response code="500">Internal Server Error. The search process ended with error.</response>
+        </member>
+        <member name="P:OASP4Net.Business.Common.OrderManagement.Dto.OrderLineDto.Extras">
+            <summary>
+            Contains a list with the id of the extra ingredients that have been selected by the client
+            </summary>
+        </member>
+        <member name="M:OASP4Net.Business.Common.UserManagement.Controller.LoginController.Login(OASP4Net.Business.Common.UserManagement.Dto.LoginDto)">
+            <summary>
+            Gets the  list of available dishes regarding the filter options
+            </summary>
+            <param name="loginDto"></param>
+            <returns></returns>
+            <response code="200"> Ok. </response>
+            <response code="401">Unathorized. Autentication fail</response>  
+            <response code="403">Forbidden. Authorization error.</response>    
+            <response code="500">Internal Server Error. The search process ended with error.</response>       
+        </member>
+    </members>
+</doc>
