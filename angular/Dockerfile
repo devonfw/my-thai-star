@@ -1,14 +1,8 @@
 # 1. Build
-# FROM teracy/angular-cli:1.5.0 AS build
-# WORKDIR /app
-# COPY . /app
-# RUN npm i && ng build --environment=docker --prod --build-optimizer
-
-FROM node:8.9.4-alpine AS build
+FROM blairguk/node-sass-alpine:8.9.4 AS build
 WORKDIR /app
 COPY . /app
 RUN npm i -g @angular/cli
-# RUN npm i -g yarn
 RUN apk update && apk add yarn
 RUN yarn
 RUN ng build --environment=docker --prod --build-optimizer

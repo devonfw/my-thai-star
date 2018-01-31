@@ -1,18 +1,12 @@
 # 1. Build
-FROM teracy/angular-cli:1.5.0 AS build
+FROM maven:3.5-jdk-8-alpine AS build
 WORKDIR /app
-COPY . /app
-RUN npm i
-RUN ng build --environment=docker --prod --build-optimizer
+COPY mtsj/. /app
+RUN ls -l
+RUN mvn install
 
 # 2. Deploy
-FROM nginx:latest
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    apache2-utils \
-    && rm -rf /var/lib/apt/lists/*
-COPY default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/. /usr/share/nginx/html
-EXPOSE 80 443
-
-CMD ["nginx", "-g", "daemon off;"]
+FROM tomcat:latest
+WORKDIR /app
+COPY --from=build /app/server/target/mythaistar.war /usr/local/tomcat/webapps/
+EXPOSE 8080
