@@ -339,6 +339,28 @@
         <mts.database.version>6.2.2.jre7</mts.database.version>
       </properties>
     </profile>
+    <profile>
+      <id>hana</id>
+      <properties>
+        <mts.database.name>hana</mts.database.name>
+        <mts.database.profile>hana</mts.database.profile>
+        <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
+        <mts.database.artifactId>ngdbc</mts.database.artifactId>
+        <mts.database.version>2.2.16</mts.database.version>
+      </properties>
+      <build>
+        <resources>
+          <!-- Custom entity mapping for HANA -->
+          <resource>
+            <directory>src/main/resources/db/specific/hana</directory>
+            <includes>
+              <include>orm.xml</include>
+            </includes>
+            <targetPath>META-INF</targetPath>
+          </resource>
+        </resources>
+      </build>
+    </profile>
   </profiles>
 
 </project>
