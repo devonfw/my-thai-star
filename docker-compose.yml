@@ -1,21 +1,30 @@
 version: '2'
 
 services:
+  reverse-proxy:
+    build: 'reverse-proxy/'
+    restart: always
+    container_name: 'mts_reverse_proxy'
+    networks:
+      - my-thai-star
+    ports:
+      - '8080:80'
+      - '443:443'
   angular:
     build: 'angular/'
     restart: always
     container_name: 'mts_angular'
     networks:
       - my-thai-star
-    ports:
-      - '8080:80'
-      - '444:443'
+    # ports:
+    #   - '8080:80'
+    #   - '444:443'
   java:
     build: 'java/'
     restart: always
     container_name: 'mts_java'
-    ports:
-      - 9090:8080
+    # ports:
+    #   - 9090:8080
     networks:
       - my-thai-star
 
