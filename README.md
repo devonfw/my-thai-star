@@ -35,15 +35,22 @@ Tool used for Continuous Integration and Continious Delivery. Inside of this Jen
 
 GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system definen for data. 
 
-## Results
+## Deployment
 
-The application is completely deployed as it is specified in the Wiki of this repository. Follow next links to see the results.
+This application can be easily deployed using **Docker** and **docker-compose**.
 
-1. [Angular client for Java server](http://de-mucdevondepl01:8090)
+`$ docker-compose up`
 
-2. [Angular client for Java server using Docker Compose](http://de-mucdevondepl01:8091)
+As both **Angular** and **Java** `Dockerfile`(s) are using **multi-stage build**, apps are being built in their development environments (`node` for Angular and `maven` for Java) and then deployed in `nginx` and `tomcat` respectively.
 
-3. [Java server for Angular client](http://de-mucdevondepl01:9090/mythaistar/)
+3 Docker containers will be created:
 
-4. [Java server for Angular client using Docker Compose](http://de-mucdevondepl01:9091/mythaistar/)
+```
+CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                                        NAMES
+23921e672489        mythaistar_java            "catalina.sh run"        3 minutes ago       Up 3 minutes        8080/tcp                                     mts_java
+1acf2d6b6653        mythaistar_reverse-proxy   "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes        0.0.0.0:443->443/tcp, 0.0.0.0:8080->80/tcp   mts_reverse_proxy
+fdb63e26d299        mythaistar_angular         "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes        80/tcp, 443/tcp                              mts_angular
+```
+
+The usage of the `reverse-proxy` only uses 1 port of the Docker host (where this is deployed), the `8080`. All internal communication of containers is done using docker alias of services.
 
