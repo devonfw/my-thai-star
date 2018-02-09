@@ -9,7 +9,6 @@ services:
       - my-thai-star
     ports:
       - '8080:80'
-      - '443:443'
   angular:
     build: 'angular/'
     restart: always
