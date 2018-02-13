@@ -2,7 +2,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from '../../core/core.module';
-import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
 import { SnackBarService } from '../../core/snackService/snackService.service';
@@ -22,7 +21,6 @@ describe('BookTableDialogComponent', () => {
         BookTableModule,
         HttpClientModule,
         CoreModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();

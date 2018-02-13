@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatSlider } from '@angular/material';
+import { MatSlider, MatInput } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.applyFilters(undefined);
+      this.applyFilters();
     }
 
     changeSortDir(): void {
@@ -28,7 +28,7 @@ export class MenuComponent implements OnInit {
       this.sortDirIcon = (this.sortDirIcon === 'vertical_align_bottom') ? 'vertical_align_top' : 'vertical_align_bottom';
     }
 
-    applyFilters(filters: any): void {
+    applyFilters(filters?: any): void {
       this.menus = this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir));
     }
 
@@ -36,6 +36,10 @@ export class MenuComponent implements OnInit {
       likes.value = 0;
       price.value = 0;
       form.reset();
-      this.applyFilters(undefined);
+      this.applyFilters();
+    }
+
+    clearSearchField(searchBy: MatInput): void {
+      searchBy.value = '';
     }
 }
