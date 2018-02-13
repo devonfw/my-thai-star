@@ -2,13 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
-import { BookingDataService } from '../../backend/booking/booking-data-service';
-import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
-import { OrderInMemoryService } from '../../backend/order/order-in-memory.service';
-import { OrderDataService } from '../../backend/order/order-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CoreModule } from '../../core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SidenavOrderComponent', () => {
   let component: SidenavOrderComponent;
@@ -21,10 +18,10 @@ describe('SidenavOrderComponent', () => {
         SidenavService,
         PriceCalculatorService,
         SnackBarService,
-        {provide: BookingDataService, useClass: BookingInMemoryService},
-        {provide: OrderDataService, useClass: OrderInMemoryService}],
+      ],
       imports: [
         CoreModule,
+        HttpClientModule,
       ],
     })
     .compileComponents();

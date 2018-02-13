@@ -1,5 +1,6 @@
+import { Pagination } from '../backendModels/interfaces';
+
 // DISHES
-import { Pagination } from '../../backend/backendModels/interfaces';
 export interface DishView {
     dish: PlateView;
     image: { content: string };

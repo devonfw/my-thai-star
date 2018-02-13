@@ -1,5 +1,4 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { ITdDataTableSelectAllEvent,
@@ -9,6 +8,7 @@ import { ITdDataTableSelectAllEvent,
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
+import { FilterCockpit, Sorting, Pagination } from 'app/shared/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',

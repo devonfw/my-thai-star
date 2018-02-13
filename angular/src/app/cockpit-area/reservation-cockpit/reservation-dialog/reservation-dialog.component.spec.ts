@@ -3,7 +3,6 @@ import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
-import { BackendModule } from '../../../backend/backend.module';
 import { WaiterCockpitModule } from '../../cockpit.module';
 import { CoreModule } from '../../../core/core.module';
 
@@ -24,7 +23,6 @@ describe('ReservationDialogComponent', () => {
         WaiterCockpitModule,
         CoreModule,
         HttpClientModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();
