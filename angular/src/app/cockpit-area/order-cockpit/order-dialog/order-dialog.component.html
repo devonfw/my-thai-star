@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>ORDER DETAILS - REFERENCE NUMBER {{data.bookingId}} </h3>
+<h3 mat-dialog-title>ORDER DETAILS - REFERENCE NUMBER: {{data.booking.bookingToken}} </h3>
 <mat-divider></mat-divider>
 <td-data-table
   #dataTable
@@ -34,6 +34,6 @@
   </mat-select>
   <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>of {{pagingBar.total}}</span></span>
 </td-paging-bar>
-<div class="align-right" flex>
+<div class="align-right pad-top" flex>
   <button mat-button mat-dialog-close color="accent" class="text-upper">Close</button>
 </div>

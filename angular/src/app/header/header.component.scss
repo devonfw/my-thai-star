@@ -30,3 +30,8 @@ mat-sidenav {
     display: none;
   }
 }
+
+.mat-tab-nav-bar.mat-primary .mat-tab-label:focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+  background-color: #3e2723;
+}

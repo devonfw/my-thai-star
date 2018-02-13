@@ -5,7 +5,7 @@ import { ITdDataTableSelectAllEvent,
          IPageChangeEvent,
          ITdDataTableColumn,
          ITdDataTableSortChangeEvent } from '@covalent/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
 import { FilterCockpit, Sorting, Pagination } from 'app/shared/backendModels/interfaces';
@@ -83,12 +83,9 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    const dialogRef: MatDialogRef<ReservationDialogComponent> = this.dialog.open(ReservationDialogComponent, {
+    this.dialog.open(ReservationDialogComponent, {
       width: '80%',
       data: selection,
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 }
