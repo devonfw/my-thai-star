@@ -7,8 +7,8 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
-import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
 import { config } from '../../config';
+import { Pagination, FilterCockpit } from 'app/shared/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',

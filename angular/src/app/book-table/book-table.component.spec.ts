@@ -7,8 +7,6 @@ import { CoreModule } from '../core/core.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../backend/booking/booking-data-service';
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/windowService/windowService.service';
 
@@ -27,7 +25,6 @@ describe('BookTableComponent', () => {
         SnackBarService,
         WindowService,
         BookTableService,
-        {provide: BookingDataService, useClass: BookingInMemoryService},
       ],
       imports: [
         BrowserAnimationsModule,

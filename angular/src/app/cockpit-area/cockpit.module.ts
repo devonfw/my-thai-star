@@ -10,10 +10,12 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
 import { OrderDialogComponent } from './order-cockpit/order-dialog/order-dialog.component';
 import { ReservationDialogComponent } from './reservation-cockpit/reservation-dialog/reservation-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     CoreModule,
   ],
   providers: [

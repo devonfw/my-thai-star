@@ -111,7 +111,7 @@
     </div>
   </form>
 
-  <div flex layout="row" *ngIf="menus | async as allMenus; else loading" class="justify-space-around flex-wrap">
+  <div flex layout="row" *ngIf="(menus | async)?.result as allMenus; else loading" class="justify-space-around flex-wrap">
     <public-menu-card *ngFor="let menu of allMenus" [menu]="menu"></public-menu-card>
   </div>
   
