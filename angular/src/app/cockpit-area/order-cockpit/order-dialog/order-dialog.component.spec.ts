@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
 import { CoreModule } from '../../../core/core.module';
-import { BackendModule } from '../../../backend/backend.module';
 import { WaiterCockpitModule } from '../../cockpit.module';
 
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
@@ -24,7 +23,6 @@ describe('OrderDialogComponent', () => {
         WaiterCockpitModule,
         CoreModule,
         HttpClientModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();

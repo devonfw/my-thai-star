@@ -2,11 +2,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { UserAreaService } from './user-area.service';
-import { LoginInMemoryService } from '../../backend/login/login-in-memory.service';
-import { LoginDataService } from '../../backend/login/login-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { CoreModule } from '../../core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('UserAreaService', () => {
   beforeEach(() => {
@@ -15,9 +14,10 @@ describe('UserAreaService', () => {
         UserAreaService,
         AuthService,
         SnackBarService,
-        {provide: LoginDataService, useClass: LoginInMemoryService}],
+      ],
       imports: [
         CoreModule,
+        HttpClientModule,
         RouterTestingModule,
       ],
     });

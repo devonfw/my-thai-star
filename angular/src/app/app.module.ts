@@ -1,9 +1,7 @@
-import { config } from './config';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { BookTableModule } from './book-table/book-table.module';
 import { WaiterCockpitModule } from './cockpit-area/cockpit.module';
@@ -29,7 +27,6 @@ import { AppRoutingModule } from './app-routing.module';
     WaiterCockpitModule,
     UserAreaModule,
     CoreModule,
-    BackendModule.forRoot({restServiceRoot: config.restServiceRoot, environmentType: environment.backendType}),
     EmailConfirmationModule,
     AppRoutingModule,
     environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],

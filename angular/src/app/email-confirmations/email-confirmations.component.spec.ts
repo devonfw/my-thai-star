@@ -5,7 +5,6 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { CoreModule } from '../core/core.module';
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { BackendModule } from '../backend/backend.module';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
@@ -37,10 +36,6 @@ describe('EmailConfirmationsComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         CoreModule,
-        BackendModule.forRoot({
-          environmentType: 0,
-          restServiceRoot: 'v1',
-        }),
       ],
     }).compileComponents();
   }));

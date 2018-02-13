@@ -12,12 +12,14 @@ import { SnackBarService } from '../core/snackService/snackService.service';
 
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     Md2Module,
     SharedModule,
+    HttpClientModule,
     CoreModule,
   ],
   providers: [

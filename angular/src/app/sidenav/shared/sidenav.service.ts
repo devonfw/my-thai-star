@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { OrderDataService } from '../../backend/order/order-data-service';
 import { ExtraView, OrderView, SaveOrderResponse } from '../../shared/viewModels/interfaces';
-import { OrderListInfo, OrderInfo } from '../../backend/backendModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
+import { OrderListInfo, OrderInfo } from 'app/shared/backendModels/interfaces';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 const isOrderEqual: Function =
    (orderToFind: OrderView) => (o: OrderView) => o.dish.name === orderToFind.dish.name && isEqual(o.extras, orderToFind.extras);
@@ -11,11 +12,13 @@ const isOrderEqual: Function =
 @Injectable()
 export class SidenavService {
 
+  private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
+
   private orders: OrderView[] = [];
 
   opened: boolean = false;
 
-  constructor(private orderDataService: OrderDataService) {}
+  constructor(private http: HttpClient) {}
 
   public openSideNav(): void {
     this.opened = true;
@@ -72,7 +75,7 @@ export class SidenavService {
     };
 
     this.closeSideNav();
-    return this.orderDataService.saveOrders(orderList);
+    return this.http.post<SaveOrderResponse>(`${environment.restServiceRoot}${this.saveOrdersPath}`, orderList);
   }
 
    composeOrders(orders: OrderView[]): OrderInfo[] {

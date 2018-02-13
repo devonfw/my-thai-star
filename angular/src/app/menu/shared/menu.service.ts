@@ -1,14 +1,17 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { DishesDataService } from '../../backend/dishes/dishes-data-service';
-import { Filter } from '../../backend/backendModels/interfaces';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, assign } from 'lodash';
+import { environment } from './../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Filter } from 'app/shared/backendModels/interfaces';
 
 @Injectable()
 export class MenuService {
 
-  constructor(private dishesDataService: DishesDataService) {}
+  private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
+
+  constructor(private http: HttpClient) {}
 
   menuToOrder(menu: DishView): OrderView {
     let order: OrderView;
@@ -59,6 +62,6 @@ export class MenuService {
   }
 
   getDishes(filters: any): Observable<DishView[]> {
-    return this.dishesDataService.filter(filters);
+    return this.http.post<DishView[]>(`${environment.restServiceRoot}${this.filtersRestPath}`, filters);
   }
 }
