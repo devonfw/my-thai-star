@@ -11,11 +11,13 @@ import { UserAreaService } from './shared/user-area.service';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    HttpClientModule,
     CoreModule,
   ],
   providers: [

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FriendsInvite } from '../../shared/viewModels/interfaces';
-import { BookingDataService } from '../../backend/booking/booking-data-service';
-import { BookingInfo } from '../../backend/backendModels/interfaces';
 import { map } from 'lodash';
+import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class BookTableService {
 
-  constructor(private bookingDataService: BookingDataService) {
+  private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
+
+  constructor(private http: HttpClient) {
   }
 
   postBooking(bookInfo: BookingInfo): Observable<any> {
-    return this.bookingDataService.bookTable(bookInfo);
+    return this.http.post(`${environment.restServiceRoot}${this.booktableRestPath}`, bookInfo);
   }
 
   composeBooking(invitationData: any, type: number): BookingInfo {

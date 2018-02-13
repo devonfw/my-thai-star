@@ -7,11 +7,13 @@ import { EmailConfirmationsComponent } from './email-confirmations.component';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
 import { EmailConfirmationsRoutingModule } from './email-confirmations-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
+    HttpClientModule,
     EmailConfirmationsRoutingModule,
   ],
   providers: [

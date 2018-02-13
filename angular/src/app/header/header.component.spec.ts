@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BackendModule } from '../backend/backend.module';
 import { CoreModule } from '../core/core.module';
 
 import { WindowService } from '../core/windowService/windowService.service';
@@ -25,7 +24,6 @@ describe('HeaderComponent', () => {
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
         CoreModule,
         SidenavModule,
         HttpClientModule,

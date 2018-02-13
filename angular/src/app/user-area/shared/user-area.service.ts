@@ -1,22 +1,30 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { LoginDataService } from '../../backend/login/login-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
+import { LoginInfo } from 'app/shared/backendModels/interfaces';
 
 @Injectable()
 export class UserAreaService {
 
+    private readonly loginRestPath: string = 'login';
+    private readonly currentUserRestPath: string = 'security/v1/currentuser/';
+    private readonly registerRestPath: string = 'register';
+    private readonly changePasswordRestPath: string = 'changepassword';
+
     constructor(public snackBar: SnackBarService,
         public router: Router,
-        public authService: AuthService,
-        public loginDataService: LoginDataService) { }
+        private http: HttpClient,
+        public authService: AuthService) { }
 
     login(username: string, password: string): void {
-        this.loginDataService.login(username, password)
+        this.http.post(`${environment.restPathRoot}${this.loginRestPath}`,
+            { username: username, password: password }, { responseType: 'text', observe: 'response' })
             .subscribe((res: any) => {
                 this.authService.setToken(res.headers.get('Authorization'));
-                this.loginDataService.getCurrentUser()
+                this.http.get(`${environment.restServiceRoot}${this.currentUserRestPath}`)
                     .subscribe((loginInfo: any) => {
                         this.authService.setLogged(true);
                         this.authService.setUser(loginInfo.name);
@@ -31,7 +39,8 @@ export class UserAreaService {
     }
 
     register(email: string, password: string): void {
-        this.loginDataService.register(email, password)
+        this.http.post(`${environment.restServiceRoot}${this.registerRestPath}`, {email: email, password: password})
+            .map((res: LoginInfo) => res)
             .subscribe(() => {
                 this.snackBar.openSnack('Register successful', 4000, 'green');
             }, (error: any) => {
@@ -50,7 +59,8 @@ export class UserAreaService {
 
     changePassword(data: any): void {
         data.username = this.authService.getUser();
-        this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
+        this.http.post(`${environment.restServiceRoot}${this.changePasswordRestPath}`,
+        { username: data.username, oldPassword: data.oldPassword, newPassword: data.newPassword })
             .subscribe((res: any) => {
                 this.snackBar.openSnack(res.message, 4000, 'green');
             }, (error: any) => {
