@@ -1,28 +1,32 @@
 import { InvitationResponse } from '../../shared/viewModels/interfaces';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { OrderDataService } from '../../backend/order/order-data-service';
-import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class EmailConfirmationsService {
 
-  constructor(private orderDataService: OrderDataService,
-    private bookingDataService: BookingDataService) { }
+  private readonly acceptReserveRestPath: string = 'bookingmanagement/v1/invitedguest/accept/';
+  private readonly rejectReserveRestPath: string = 'bookingmanagement/v1/invitedguest/decline/';
+  private readonly cancelReserveRestPath: string = 'bookingmanagement/v1/booking/cancel/';
+  private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
+
+  constructor(private http: HttpClient) { }
 
   sendAcceptInvitation(token: string): Observable<InvitationResponse> {
-    return this.bookingDataService.acceptInvite(token);
+    return this.http.get<InvitationResponse>(`${environment.restServiceRoot}${this.acceptReserveRestPath}` + token);
   }
 
   sendRejectInvitation(token: string): Observable<InvitationResponse> {
-    return this.bookingDataService.cancelInvite(token);
+    return this.http.get<InvitationResponse>(`${environment.restServiceRoot}${this.rejectReserveRestPath}` + token);
   }
 
   sendCancelBooking(token: string): Observable<InvitationResponse> {
-    return this.bookingDataService.cancelReserve(token);
+    return this.http.get<InvitationResponse>(`${environment.restServiceRoot}${this.cancelReserveRestPath}` + token);
   }
 
   sendCancelOrder(token: string): Observable<boolean> {
-    return this.orderDataService.cancelOrder(token);
+    return this.http.get<boolean>(`${environment.restServiceRoot}${this.cancelOrderRestPath}` + token);
   }
 }

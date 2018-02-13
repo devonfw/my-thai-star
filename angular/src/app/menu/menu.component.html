@@ -3,15 +3,18 @@
     <div style= "background-color: white">
       
       <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center" flex>
-        <div layout="row" style="align-items:center" class="pad-top" flex>
+        <div layout="row" style="align-items:center" class="pad-top" flex-gt-sm="25">
           <mat-form-field color="accent" class="searchBy" flex>
-            <button mat-icon-button matPrefix>
+            <button type="button" mat-icon-button matPrefix>
               <mat-icon>search</mat-icon>
             </button>
-            <input matInput placeholder="Search our dishes" ngModel name="searchBy">
+            <input matInput placeholder="Search our dishes" ngModel #searchBy name="searchBy">
+            <button *ngIf="searchBy.value.length > 0" type="button" (click)="clearSearchField(searchBy)" mat-icon-button matSuffix>
+              <mat-icon>close</mat-icon>
+            </button>
           </mat-form-field>
         </div>
-        <div layout="row" class="pull-bottom pad-sm sortingBy">
+        <div layout="row" class="pull-bottom sortingBy">
           <mat-form-field color="accent" flex>
             <mat-select ngModel name="sortName" #sorting placeholder="Sort By" flex>
               <mat-option value="price">
@@ -76,7 +79,7 @@
 
           <div layout-gt-xs="row" class="push-top-sm" flex>
             <div flex-gt-xs="50" layout="column" flex>
-              <span class ="pull-bottom-md">Price</span>
+              <span class ="pull-bottom">Price</span>
               <mat-slider
                 #price
                 ngModel
@@ -89,7 +92,7 @@
               </mat-slider>
             </div>
             <div flex-gt-xs="50" layout="column" flex>
-              <span class ="pull-bottom-md">Likes</span>
+              <span class ="pull-bottom">Likes</span>
               <mat-slider
                 #likes
                 ngModel
@@ -111,7 +114,7 @@
     </div>
   </form>
 
-  <div flex layout="row" *ngIf="menus | async as allMenus; else loading" class="justify-space-around flex-wrap">
+  <div flex layout="row" *ngIf="(menus | async)?.result as allMenus; else loading" class="justify-space-around flex-wrap">
     <public-menu-card *ngFor="let menu of allMenus" [menu]="menu"></public-menu-card>
   </div>
   
