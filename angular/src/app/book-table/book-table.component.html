@@ -14,7 +14,7 @@
           <img mat-card-image src='../../assets/images/slider-1.jpg' class="forMobile">
 
           <div flex-gt-xs="50">
-            <form class="pad" #bookForm="ngForm">
+            <form class="pad" [formGroup]="bookForm">
               <div layout="column" flex>
                 <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
                 <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
@@ -22,36 +22,56 @@
               <div layout= "column" flex>
 
                 <md2-datepicker 
-                  ngModel
-                  name="bookingDate"
+                  formControlName="bookingDate"
                   openOnFocus="true"
                   type="datetime"
                   container="dialog"
-                  required
                   [min]="minDate"
                   placeholder="Date and time">
                 </md2-datepicker>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Name" ngModel name="name" required>
-                  <mat-error>Required. Please insert a name to reserve the table</mat-error>
+                  <input matInput placeholder="Name" formControlName="name">
+                  <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <div *ngIf="name.errors.required">
+                      Required. Please insert a name to reserve the table
+                    </div>
+                  </mat-error>
                 </mat-form-field>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Email" ngModel name="email" required validateEmail>
-                  <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
+                  <input matInput placeholder="Email" formControlName="email">
+                  <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors.required">
+                      Required. Please insert an email to reserve the table
+                    </div>
+                    <div *ngIf="email.errors.pattern">
+                      Insert a valid email address to send reservation data. e.g. email@email.com.
+                    </div>
+                  </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="push-bottom-sm" color="accent" flex>
-                  <input matInput placeholder="Assistants" ngModel name="assistants" type="number" required validateAssistants>
-                  <mat-error>Required. You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.</mat-error>
+                  <input matInput placeholder="Assistants" formControlName="assistants" type="number">
+                  <mat-error *ngIf="assistants.invalid && (assistants.dirty || assistants.touched)">
+                    <div *ngIf="assistants.errors.required">
+                      Required. Please insert the number of assistants.
+                    </div>
+                    <div *ngIf="assistants.errors.max">
+                      You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.
+                    </div>
+                    <div *ngIf="assistants.errors.min">
+                      You cannot reserve an empty or negative number of assistants
+                    </div>
+                  </mat-error>
+
                 </mat-form-field>
 
                 <mat-checkbox class="push-top" #termsd>Accept terms</mat-checkbox>
 
               </div>
               <div class="align-right">
-                <button mat-button (click)="showBookTableDialog(bookForm.form)" [disabled]="!(bookForm.form.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
+                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
               </div>
             </form>
           </div>
@@ -67,49 +87,56 @@
           <img mat-card-image src='../../assets/images/slider-2.jpg' class="forMobile">
           
           <div  flex-gt-xs="50">
-            <div class="pad">
-              <form #invitationForm="ngForm">
-                <div layout="column" class="push-bottom" flex>
-                  <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
-                </div>
-
-                <div layout= "column" flex>
-                  <md2-datepicker 
-                    ngModel
-                    name="bookingDate"
-                    openOnFocus="true"
-                    type="datetime"
-                    container="dialog"
-                    required
-                    [min]="minDate"
-                    placeholder="Date and time">
-                  </md2-datepicker>
-
-                  <mat-form-field color="accent" flex>
-                    <input matInput placeholder="Name" ngModel name="name" required>
-                    <mat-error>Required. Please insert a name to reserve the table</mat-error>
-                  </mat-form-field>
-
-                  <mat-form-field color="accent" flex>
-                    <input matInput placeholder="Email" ngModel name="email" required validateEmail>
-                    <mat-error>Required. Insert a valid email address to send reservation data. e.g. email@email.com.</mat-error>
-                  </mat-form-field>
-                </div>
-
-                <h4>Guests</h4>
-                <td-chips
-                  class="pad-bottom-sm"
-                  [(ngModel)]="invitationModel"
-                  name="invitedGuests"
-                  (add)="validateEmail()"
-                  placeholder="Enter invitation email">
-                </td-chips>
-                <mat-checkbox #termsi>Accept terms</mat-checkbox>
-              </form>
-              <div class="align-right">
-                <button mat-button (click)="showInviteDialog(invitationForm.form)" [disabled]="!(invitationForm.form.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
+            <form class="pad" [formGroup]="invitationForm">
+              <div layout="column" class="push-bottom" flex>
+                <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
               </div>
-            </div>
+
+              <div layout= "column" flex>
+                <md2-datepicker 
+                  formControlName="bookingDate" 
+                  openOnFocus="true" 
+                  type="datetime" 
+                  container="dialog" 
+                  [min]="minDate" 
+                  placeholder="Date and time">
+                </md2-datepicker>
+                
+                <mat-form-field color="accent" flex>
+                  <input matInput placeholder="Name" formControlName="name">
+                  <mat-error *ngIf="invName.invalid && (invName.dirty || invName.touched)">
+                    <div *ngIf="invName.errors.required">
+                      Required. Please insert a name to reserve the table
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field color="accent" flex>
+                  <input matInput placeholder="Email" formControlName="email">
+                  <mat-error *ngIf="invEmail.invalid && (invEmail.dirty || invEmail.touched)">
+                    <div *ngIf="invEmail.errors.required">
+                      Required. Please insert an email to reserve the table
+                    </div>
+                    <div *ngIf="invEmail.errors.pattern">
+                      Insert a valid email address to send reservation data. e.g. email@email.com.
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <h4>Guests</h4>
+              <td-chips
+                class="pad-bottom-sm"
+                formControlName="invitedGuests"
+                name="invitedGuests"
+                (add)="validateEmail()"
+                placeholder="Enter invitation email">
+              </td-chips>
+              <mat-checkbox #termsi>Accept terms</mat-checkbox>
+              <div class="align-right">
+                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
+              </div>
+            </form>
           </div>
         </div>
       </mat-tab>
