@@ -1,4 +1,4 @@
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -28,7 +28,7 @@ describe('BookTableComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        FormsModule,
+        ReactiveFormsModule,
         CoreModule,
         Md2Module,
       ],
