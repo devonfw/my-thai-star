@@ -14,6 +14,7 @@ import { BookTableComponent } from '../book-table/book-table.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -35,6 +36,7 @@ describe('EmailConfirmationsComponent', () => {
         AppRoutingModule,
         RouterTestingModule,
         BrowserAnimationsModule,
+        ReactiveFormsModule,
         CoreModule,
       ],
     }).compileComponents();

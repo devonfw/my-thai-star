@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MatCheckbox } from '@angular/material';
+import { MatDialog, MatCheckbox } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../core/windowService/windowService.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { emailValidator, EmailValidatorDirective } from '../shared/directives/email-validator.directive';
+import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
-import { ReservationInfo, BookingInfo } from 'app/shared/backendModels/interfaces';
-import { AbstractClassPart } from '@angular/compiler/src/output/output_ast';
+import { BookingInfo } from 'app/shared/backendModels/interfaces';
 import { AbstractControl } from '@angular/forms/src/model';
 
 @Component({
