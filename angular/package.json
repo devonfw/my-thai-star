@@ -63,8 +63,8 @@
   },
   "devDependencies": {
     "@angular/cli": "~1.7.0",
-    "@angular/compiler-cli": "^5.2.0",
-    "@angular/language-service": "^5.2.0",
+    "@angular/compiler-cli": "~5.2.0",
+    "@angular/language-service": "~5.2.0",
     "@angular-devkit/schematics": "^0.0.40",
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "^2.8.6",
