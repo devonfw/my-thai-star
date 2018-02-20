@@ -16,7 +16,7 @@ export class EmailConfirmationsComponent implements OnInit {
   constructor(private snackBarService: SnackBarService,
     private emailService: EmailConfirmationsService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap
@@ -27,32 +27,32 @@ export class EmailConfirmationsComponent implements OnInit {
         switch (this.action) {
           case 'acceptInvite':
             this.emailService.sendAcceptInvitation(this.token).subscribe((res: InvitationResponse) => {
-                this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
-              },
+              this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
+            },
               (error: any) => {
                 this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
               });
             break;
           case 'rejectInvite':
             this.emailService.sendRejectInvitation(this.token).subscribe((res: InvitationResponse) => {
-                this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
-              },
+              this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
+            },
               (error: any) => {
                 this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
               });
             break;
           case 'cancel':
             this.emailService.sendCancelBooking(this.token).subscribe((res: InvitationResponse) => {
-                this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
-              },
+              this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
+            },
               (error: any) => {
                 this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
               });
             break;
           case 'cancelOrder':
             this.emailService.sendCancelOrder(this.token).subscribe((res: boolean) => {
-                this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
-              },
+              this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
+            },
               (error: any) => {
                 this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
               });
