@@ -9,6 +9,7 @@ import { AuthService } from '../core/authentication/auth.service';
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { CoreModule } from '../core/core.module';
+import { FormsModule } from '@angular/forms';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -16,12 +17,22 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MenuComponent, MenuCardComponent],
-      providers: [SidenavService, MenuService, SnackBarService, AuthService, HttpClient],
+      declarations: [
+        MenuComponent,
+        MenuCardComponent,
+      ],
+      providers: [
+        SidenavService,
+        MenuService,
+        SnackBarService,
+        AuthService,
+        HttpClient,
+      ],
       imports: [
         BrowserAnimationsModule,
         CoreModule,
         HttpClientModule,
+        FormsModule,
       ],
     })
       .compileComponents();

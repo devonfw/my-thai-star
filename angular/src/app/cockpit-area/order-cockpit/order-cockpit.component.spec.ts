@@ -6,8 +6,10 @@ import { CoreModule } from '../../core/core.module';
 
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
+import { WindowService } from '../../core/windowService/windowService.service';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -15,8 +17,16 @@ describe('OrderCockpitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OrderCockpitComponent],
-      providers: [WaiterCockpitService, PriceCalculatorService, HttpClient],
+      declarations: [
+        OrderCockpitComponent,
+        OrderDialogComponent,
+      ],
+      providers: [
+        WindowService,
+        WaiterCockpitService,
+        PriceCalculatorService,
+        HttpClient,
+      ],
       imports: [
         CoreModule,
         BrowserAnimationsModule,
