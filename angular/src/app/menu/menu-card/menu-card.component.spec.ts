@@ -15,7 +15,7 @@ describe('MenuCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuCardComponent ],
+      declarations: [MenuCardComponent],
       providers: [
         MenuService,
         SidenavService,
@@ -26,7 +26,7 @@ describe('MenuCardComponent', () => {
         CoreModule,
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('MenuCardComponent', () => {
         description: '',
         price: 0,
       },
-      image: {content: 'string'},
+      image: { content: 'string' },
       extras: [],
       likes: 0,
       isfav: true,
