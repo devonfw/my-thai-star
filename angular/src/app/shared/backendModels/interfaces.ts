@@ -40,7 +40,9 @@ export class ExtraInfo {
 // BOOKING
 export class BookingInfo {
     booking: ReservationInfo;
-    invitedGuests?: [{email: string}];
+    invitedGuests?: {
+        [index: number]: { email: string },
+    };
 }
 
 export class ReservationInfo {
@@ -68,7 +70,7 @@ export class OrderLineInfo {
 }
 
 export class OrderListInfo {
-    booking: {bookingToken: string};
+    booking: { bookingToken: string };
     orderLines: OrderInfo[];
 }
 
