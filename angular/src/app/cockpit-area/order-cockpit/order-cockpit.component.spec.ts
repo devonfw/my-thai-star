@@ -22,10 +22,10 @@ describe('OrderCockpitComponent', () => {
         OrderCockpitComponent,
       ],
       providers: [
+        HttpClient,
         WindowService,
         WaiterCockpitService,
         PriceCalculatorService,
-        HttpClient,
         MatDialog,
       ],
       imports: [
