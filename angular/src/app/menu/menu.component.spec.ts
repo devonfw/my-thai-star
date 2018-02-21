@@ -1,5 +1,4 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AsyncPipe } from '@angular/common';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
