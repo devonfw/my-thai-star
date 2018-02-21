@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { WindowService } from '../../core/windowService/windowService.service';
+import { MatDialog } from '@angular/material';
 
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
 
@@ -25,6 +26,7 @@ describe('ReservationCockpitComponent', () => {
         WaiterCockpitService,
         PriceCalculatorService,
         HttpClient,
+        MatDialog,
       ],
       imports: [
         BrowserAnimationsModule,

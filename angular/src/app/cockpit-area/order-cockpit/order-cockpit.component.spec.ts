@@ -8,6 +8,7 @@ import { CoreModule } from '../../core/core.module';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { WindowService } from '../../core/windowService/windowService.service';
+import { MatDialog } from '@angular/material';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
 
@@ -25,6 +26,7 @@ describe('OrderCockpitComponent', () => {
         WaiterCockpitService,
         PriceCalculatorService,
         HttpClient,
+        MatDialog,
       ],
       imports: [
         BrowserAnimationsModule,
