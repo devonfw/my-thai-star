@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from '../../core/core.module';
@@ -15,7 +15,7 @@ describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
   let fixture: ComponentFixture<ReservationCockpitComponent>;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReservationCockpitComponent,
@@ -34,7 +34,7 @@ describe('ReservationCockpitComponent', () => {
       ],
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReservationCockpitComponent);
