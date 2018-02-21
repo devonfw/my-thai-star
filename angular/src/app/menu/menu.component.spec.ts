@@ -10,6 +10,7 @@ import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { AuthService } from '../core/authentication/auth.service';
+import { MatSlider, MatInput } from '@angular/material';
 
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
@@ -30,6 +31,8 @@ describe('MenuComponent', () => {
         MenuService,
         SnackBarService,
         AuthService,
+        MatSlider,
+        MatInput,
       ],
       imports: [
         BrowserAnimationsModule,
