@@ -25,11 +25,11 @@ describe('MenuComponent', () => {
         MenuCardComponent,
       ],
       providers: [
+        HttpClient,
         SidenavService,
         MenuService,
         SnackBarService,
         AuthService,
-        HttpClient,
       ],
       imports: [
         BrowserAnimationsModule,
