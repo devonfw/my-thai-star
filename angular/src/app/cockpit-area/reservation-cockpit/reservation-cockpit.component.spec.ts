@@ -15,7 +15,7 @@ describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
   let fixture: ComponentFixture<ReservationCockpitComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReservationCockpitComponent,
@@ -34,7 +34,7 @@ describe('ReservationCockpitComponent', () => {
       ],
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReservationCockpitComponent);

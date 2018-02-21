@@ -10,7 +10,7 @@ import {
 import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
-import { FilterCockpit, Sorting, Pagination } from 'app/shared/backendModels/interfaces';
+import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
