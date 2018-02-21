@@ -1,15 +1,17 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreModule } from '../core/core.module';
+import { FormsModule } from '@angular/forms';
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { AuthService } from '../core/authentication/auth.service';
+
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
-import { CoreModule } from '../core/core.module';
-import { FormsModule } from '@angular/forms';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
