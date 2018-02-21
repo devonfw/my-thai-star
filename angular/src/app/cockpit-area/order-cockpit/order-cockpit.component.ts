@@ -10,7 +10,7 @@ import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
-import { Pagination, FilterCockpit } from 'app/shared/backendModels/interfaces';
+import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
