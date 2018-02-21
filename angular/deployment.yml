@@ -3,20 +3,20 @@ kind: Deployment
 metadata:
   annotations:
   labels:
-    app: devonfw-demo-frontend
-  name: devonfw-demo-frontend
+    app: devonfw-demo-angular
+  name: devonfw-demo-angular
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: devonfw-demo-frontend
+      app: devonfw-demo-angular
   template:
     metadata:
       labels:
-        app: devonfw-demo-frontend
+        app: devonfw-demo-angular
     spec:
       containers:
-      - name: devonfw-demo-frontend
+      - name: devonfw-demo-angular
         image: INSERT_IMAGE_HERE
         imagePullPolicy: IfNotPresent
         readinessProbe:
