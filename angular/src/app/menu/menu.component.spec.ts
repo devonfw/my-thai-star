@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
@@ -17,7 +17,7 @@ describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         MenuComponent,
@@ -38,7 +38,7 @@ describe('MenuComponent', () => {
       ],
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MenuComponent);
