@@ -1,9 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AsyncPipe } from '@angular/common';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
-
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
@@ -32,9 +34,10 @@ describe('MenuComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        CoreModule,
+        BrowserDynamicTestingModule,
         HttpClientModule,
         FormsModule,
+        CoreModule,
       ],
     })
       .compileComponents();
