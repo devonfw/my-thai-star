@@ -1,6 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MomentModule } from 'angular2-moment';
 
 import { CoreModule } from '../../core/core.module';
 
@@ -9,7 +10,6 @@ import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { WindowService } from '../../core/windowService/windowService.service';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
-import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -19,7 +19,6 @@ describe('OrderCockpitComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         OrderCockpitComponent,
-        OrderDialogComponent,
       ],
       providers: [
         WindowService,
@@ -28,9 +27,10 @@ describe('OrderCockpitComponent', () => {
         HttpClient,
       ],
       imports: [
-        CoreModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        CoreModule,
+        MomentModule,
       ],
     })
       .compileComponents();

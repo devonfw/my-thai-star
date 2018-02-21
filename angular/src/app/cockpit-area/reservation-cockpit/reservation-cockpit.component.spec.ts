@@ -1,15 +1,15 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '../../core/core.module';
+import { MomentModule } from 'angular2-moment';
+
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { CoreModule } from '../../core/core.module';
 
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { WindowService } from '../../core/windowService/windowService.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
-import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 
 describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
@@ -19,7 +19,6 @@ describe('ReservationCockpitComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ReservationCockpitComponent,
-        ReservationDialogComponent,
       ],
       providers: [
         WindowService,
@@ -28,9 +27,10 @@ describe('ReservationCockpitComponent', () => {
         HttpClient,
       ],
       imports: [
-        CoreModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        CoreModule,
+        MomentModule,
       ],
     })
       .compileComponents();
