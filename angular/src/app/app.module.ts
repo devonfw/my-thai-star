@@ -11,9 +11,17 @@ import { HeaderModule } from './header/header.module';
 import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
 import { CoreModule } from './core/core.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClient } from '@angular/common/http';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [ AppComponent ],
@@ -29,6 +37,13 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     EmailConfirmationModule,
     AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient],
+      },
+    }),
     environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
   ],
   providers: [],
