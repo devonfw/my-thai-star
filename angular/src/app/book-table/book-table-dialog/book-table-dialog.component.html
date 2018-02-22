@@ -1,23 +1,23 @@
-<span mat-dialog-title class="text-upper">Book table</span>
+<span mat-dialog-title class="text-upper">{{'bookTable.bookDialog.title' | translate }}</span>
 <mat-dialog-content>
   <div layout="column" class="push-bottom-sm" flex>
     <div layout="row" class="justify-space-between" flex>
-      <span>Date</span>
+      <span>{{'formFields.date' | translate}}</span>
       <span>{{date}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
-      <span>Name</span>
+      <span>{{'formFields.name' | translate}}</span>
       <span>{{data.name}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
-      <span>Email</span>
+      <span>{{'formFields.email' | translate}}</span>
       <span>{{data.email}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
-      <span>Assitants</span>
+      <span>{{'formFields.assistants' | translate}}</span>
       <span>{{data.assistants}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
@@ -25,7 +25,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="align-right" flex>
-    <button mat-button mat-dialog-close class="text-upper">Cancel</button>
-    <button mat-button (click)="sendBooking()" color="accent" class="text-upper">Send</button>
+    <button mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+    <button mat-button (click)="sendBooking()" color="accent" class="text-upper">{{'buttons.send' | translate}}</button>
   </div>
 </mat-dialog-actions>
