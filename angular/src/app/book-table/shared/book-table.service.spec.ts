@@ -56,7 +56,10 @@ describe('BookTableService', () => {
           email: 'email@email.com',
           bookingType: 1,
         },
-        invitedGuests: [{email: 'email@email.com'}, {email: 'email2@email.com'}],
+        invitedGuests: [
+          { email: 'email@email.com' },
+          { email: 'email2@email.com' },
+        ],
       };
 
       expect(service.composeBooking(reservationData, 1)).toEqual(reservationResult);
