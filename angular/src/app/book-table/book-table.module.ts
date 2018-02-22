@@ -14,6 +14,7 @@ import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     Md2Module,
     SharedModule,
     HttpClientModule,
+    TranslateModule,
     CoreModule,
   ],
   providers: [

@@ -1,0 +1,17 @@
+{
+    "buttons": {
+        "cancel": "Cancel",
+        "send": "Send"
+    },
+    "formFields": {
+        "date": "Date",
+        "name": "Name",
+        "email": "Email",
+        "assistants": "Assistants"
+    },
+    "bookTable": {
+        "bookDialog": {
+            "title": "Book Table"
+        }
+    }
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'public-main',
@@ -13,7 +14,9 @@ export class AppComponent {
   mobileSidenavOpened: boolean = false;
   constructor(public router: Router,
               public sidenav: SidenavService,
+              public translate: TranslateService,
               public auth: AuthService) {
+    translate.use('en');
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
