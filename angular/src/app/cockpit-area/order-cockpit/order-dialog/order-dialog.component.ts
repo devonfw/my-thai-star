@@ -20,20 +20,20 @@ export class OrderDialogComponent implements OnInit {
   data: any;
   datat: BookingView[] = [];
   columnst: ITdDataTableColumn[] = [
-    { name: 'bookingDate', label: 'Reservation date'},
-    { name: 'creationDate', label: 'Creation date'},
+    { name: 'bookingDate', label: 'Reservation date' },
+    { name: 'creationDate', label: 'Creation date' },
     { name: 'name', label: 'Owner' },
     { name: 'email', label: 'Email' },
-    { name: 'tableId', label: 'Table'},
+    { name: 'tableId', label: 'Table' },
   ];
 
   datao: OrderView[] = [];
   columnso: ITdDataTableColumn[] = [
-    { name: 'dish.name', label: 'Dish'},
-    { name: 'orderLine.comment', label: 'Comments'},
+    { name: 'dish.name', label: 'Dish' },
+    { name: 'orderLine.comment', label: 'Comments' },
     { name: 'extras', label: 'Extra' },
     { name: 'orderLine.amount', label: 'Quantity' },
-    { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2)},
+    { name: 'dish.price', label: 'Price', numeric: true, format: (v: number) => v.toFixed(2) },
   ];
 
   pageSizes: number[] = config.pageSizesDialog;
@@ -41,9 +41,9 @@ export class OrderDialogComponent implements OnInit {
   totalPrice: number;
 
   constructor(private _dataTableService: TdDataTableService,
-              private waiterCockpitService: WaiterCockpitService,
-              @Inject(MAT_DIALOG_DATA) dialogData: any) {
-                this.data = dialogData.row;
+    private waiterCockpitService: WaiterCockpitService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any) {
+    this.data = dialogData.row;
   }
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class OrderDialogComponent implements OnInit {
     this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
     this.filter();
-}
+  }
 
   page(pagingEvent: IPageChangeEvent): void {
     this.fromRow = pagingEvent.fromRow;

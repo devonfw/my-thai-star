@@ -11,14 +11,14 @@ export class MenuService {
 
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   menuToOrder(menu: DishView): OrderView {
     let order: OrderView;
     order = assign(order, menu);
     order.orderLine = {
-        amount: 1,
-        comment: '',
+      amount: 1,
+      comment: '',
     };
     return order;
   }
@@ -29,7 +29,7 @@ export class MenuService {
     if (filters) {
       map(filters, (value: boolean, field: string) => {
         if (value === true) {
-          categories.push({id: field});
+          categories.push({ id: field });
         }
       });
 
@@ -54,7 +54,7 @@ export class MenuService {
         categories: categories,
       };
     }
-    return  filtersComposed;
+    return filtersComposed;
   }
 
   clearSelectedExtras(menuInfo: DishView): void {

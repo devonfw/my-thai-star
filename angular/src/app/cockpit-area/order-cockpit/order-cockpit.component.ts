@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { IPageChangeEvent,
-         ITdDataTableSelectAllEvent,
-         ITdDataTableColumn,
-         ITdDataTableSortChangeEvent } from '@covalent/core';
+import {
+  IPageChangeEvent,
+  ITdDataTableSelectAllEvent,
+  ITdDataTableColumn,
+  ITdDataTableSortChangeEvent,
+} from '@covalent/core';
 import { MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
-import { Pagination, FilterCockpit } from 'app/shared/backendModels/interfaces';
+import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -30,9 +32,9 @@ export class OrderCockpitComponent implements OnInit {
   totalOrders: number;
 
   columns: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
+    { name: 'booking.bookingDate', label: 'Reservation date' },
     { name: 'booking.email', label: 'Email' },
-    { name: 'booking.bookingToken', label: 'Reference number'},
+    { name: 'booking.bookingToken', label: 'Reference number' },
   ];
 
   pageSizes: number[] = config.pageSizes;
@@ -44,7 +46,7 @@ export class OrderCockpitComponent implements OnInit {
   };
 
   constructor(private dialog: MatDialog,
-              private waiterCockpitService: WaiterCockpitService) {}
+    private waiterCockpitService: WaiterCockpitService) { }
 
   ngOnInit(): void {
     this.applyFilters();
@@ -52,10 +54,10 @@ export class OrderCockpitComponent implements OnInit {
 
   applyFilters(): void {
     this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters)
-        .subscribe( (data: any) => {
-          this.orders = data.result;
-          this.totalOrders = data.pagination.total;
-        });
+      .subscribe((data: any) => {
+        this.orders = data.result;
+        this.totalOrders = data.pagination.total;
+      });
   }
 
   clearFilters(filters: any): void {
@@ -74,7 +76,7 @@ export class OrderCockpitComponent implements OnInit {
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
-    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
+    this.sorting.push({ 'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order });
     this.applyFilters();
   }
 
