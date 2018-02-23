@@ -10,11 +10,13 @@ import { SidenavComponent } from './sidenav.component';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
+    TranslateModule,
     CoreModule,
   ],
   providers: [
