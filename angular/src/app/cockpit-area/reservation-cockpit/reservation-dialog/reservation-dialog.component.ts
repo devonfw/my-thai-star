@@ -12,40 +12,37 @@ import { config } from '../../../config';
 export class ReservationDialogComponent implements OnInit {
 
   private datao: FriendsInvite[] = [];
-  private columnso: ITdDataTableColumn[];
-  private pageSizes: number[];
   private fromRow: number = 1;
   private currentPage: number = 1;
   private pageSize: number = 4;
 
   data: any;
-
+  columnso: ITdDataTableColumn[] = [
+    { name: 'email', label: 'Guest email' },
+    { name: 'accepted', label: 'Acceptances and declines' },
+  ];
+  pageSizes: number[] = config.pageSizesDialog;
   datat: ReservationView[] = [];
   columnst: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.creationDate', label: 'Creation date'},
+    { name: 'booking.bookingDate', label: 'Reservation date' },
+    { name: 'booking.creationDate', label: 'Creation date' },
     { name: 'booking.name', label: 'Owner' },
     { name: 'booking.email', label: 'Email' },
-    { name: 'booking.tableId', label: 'Table'},
+    { name: 'booking.tableId', label: 'Table' },
   ];
 
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
-              @Inject(MAT_DIALOG_DATA) dialogData: any) {
+    @Inject(MAT_DIALOG_DATA) dialogData: any) {
     this.data = dialogData.row;
-    this.pageSizes = config.pageSizesDialog;
-    this.columnso = [
-      { name: 'email', label: 'Guest email' },
-      { name: 'accepted', label: 'Acceptances and declines' },
-    ];
   }
 
   ngOnInit(): void {
     this.datat.push(this.data);
     this.datao = this.data.invitedGuests;
     if (this.data.booking.assistants) {
-      this.columnst.push({ name: 'booking.assistants', label: 'Assistants'});
+      this.columnst.push({ name: 'booking.assistants', label: 'Assistants' });
     }
     this.filter();
   }
