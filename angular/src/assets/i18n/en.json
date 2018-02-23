@@ -2,12 +2,16 @@
     "buttons": {
         "cancel": "Cancel",
         "send": "Send",
+        "login": "Login",
+        "register": "Register",
         "bookTable": "Book Table",
         "inviteFriends": "Invite friends",
         "viewMenu": "View Menu",
         "addToOrder": "Add to order",
         "clearFilters": "Clear Filters",
-        "applyFilters": "Apply Filters"
+        "applyFilters": "Apply Filters",
+        "removeComment": "Remove Comment",
+        "addComment": "Add comment"
     },
     "alerts": {
         "accessError": "Access denied, please log in first",
@@ -18,9 +22,20 @@
             "invitationReject": "Invitation succesfully rejected",
             "bookingCancel": "Booking succesfully canceled",
             "orderCancel": "Order succesfully canceled"
+        },
+        "orderID": "To order a menu it is necessary to obtain a booking id. Neither you enter your already known booking id or you book a table",
+        "passwordError": "Password Mismatch",
+        "authAlerts": {
+            "loginSuccess": "Login successful",
+            "registerSuccess": "Register successful",
+            "registerFail": "Register failed, username already in use",
+            "logoutSuccess": "Log out successful, come back soon!"
         }
     },
     "formFields": {
+        "username": "Username",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
         "date": "Date",
         "name": "Name",
         "email": "Email",
@@ -29,7 +44,9 @@
         "terms": "Accept terms",
         "dateTime": "Date and time",
         "guests": "Guests",
-        "guestsPH": "Enter invitation email"
+        "guestsPH": "Enter invitation email",
+        "comment": "Comment",
+        "total": "Total"
     },
     "bookTable": {
         "title": "You can invite your friends to lunch or book a table",
@@ -89,6 +106,33 @@
             "vegan": "Vegan",
             "vegetarian": "Vegetarian",
             "favourites": "Favourites"
+        }
+    },
+    "sidenav": {
+        "title": "Resume Booking",
+        "header": "Order menu",
+        "bookingId": "Booking ID",
+        "noSelection": "You have not selected any order",
+        "dialog": {
+            "title": "Add a comment",
+            "content": "Here you can add a short comment to our cookers about how to prepare your dish"
+        }
+    },
+    "userArea": {
+        "loginTitle": "LOGIN",
+        "signupTitle": "SIGN UP",
+        "emailError": "Please, enter a valid email address",
+        "passwordDialog": {
+            "title": "Set new Password",
+            "currentPassword": "Current Password",
+            "newPassword": "New Password",
+            "verifyPassword": "Verify Password"
+        },
+        "twitterDialog" : {
+            "title": "Associate twitter account",
+            "twitterUsernamePH": "Twitter username",
+            "twitterPasswordPH": "Twitter password",
+            "loginbutton": "Log in Twitter"
         }
     }
 }
