@@ -13,6 +13,11 @@
         "removeComment": "Remove Comment",
         "addComment": "Add comment"
     },
+    "table": {
+        "rowsPage" : "Rows per page",
+        "of": "of",
+        "noResults": "No results to display"
+    },
     "alerts": {
         "accessError": "Access denied, please log in first",
         "genericError": "An error has ocurred, please try again later",
@@ -46,7 +51,8 @@
         "guests": "Guests",
         "guestsPH": "Enter invitation email",
         "comment": "Comment",
-        "total": "Total"
+        "total": "Total",
+        "referenceNumber": "Reference number"
     },
     "bookTable": {
         "title": "You can invite your friends to lunch or book a table",
@@ -69,11 +75,11 @@
         }
     },
     "main": {
-        "home": "home",
-        "menu": "menu",
-        "book": "book table",
-        "orders": "orders",
-        "reservations": "reservations",
+        "home": "Home",
+        "menu": "Menu",
+        "book": "Book table",
+        "orders": "Orders",
+        "reservations": "Reservations",
         "userActions": {
             "user": "user",
             "logout": "Log out",
@@ -133,6 +139,17 @@
             "twitterUsernamePH": "Twitter username",
             "twitterPasswordPH": "Twitter password",
             "loginbutton": "Log in Twitter"
+        }
+    },
+    "cockpit": {
+        "filter": "Filter",
+        "orders": {
+            "title": "Orders",
+            "dialogTitle": "ORDER DETAILS - REFERENCE NUMBER"
+        },
+        "reservations": {
+            "title": "Reservations",
+            "dialogTitle": "RESERVATION DETAILS - REFERENCE NUMBER"
         }
     }
 }
