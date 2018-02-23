@@ -6,11 +6,13 @@ import {
 }                           from '@angular/router';
 import { AuthService }      from './auth.service';
 import { SnackBarService } from '../snackService/snackService.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor(public snackBar: SnackBarService,
               private authService: AuthService,
+              private translate: TranslateService,
               private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -20,7 +22,10 @@ export class AuthGuardService implements CanActivate {
     }
 
     if (!this.authService.isLogged()) {
-      this.snackBar.openSnack('Access denied, please log in first', 4000, 'red');
+      this.translate.get('alerts.accessError')
+          .subscribe( (text: string) => {
+            this.snackBar.openSnack(text, 4000, 'red');
+          });
     }
 
     if (this.router.url === '/') {
