@@ -1,6 +1,6 @@
 <td-layout>
   <div class="property-text-center pad-top-sm pad-right-sm pad-left-sm" flex>
-    <h3>You can invite your friends to lunch or book a table</h3>
+    <h3>{{'bookTable.title' | translate}}</h3>
   </div>
   <mat-card class="push-lg">
     <mat-tab-group mat-stretch-tabs>
@@ -16,8 +16,8 @@
           <div flex-gt-xs="50">
             <form class="pad" [formGroup]="bookForm">
               <div layout="column" flex>
-                <span class="title-card property-text-bold">BOOK YOUR TABLE</span>
-                <span class ="subtitle-card push-bottom">You can book a table and an order menu</span>
+                <span class="title-card property-text-bold text-upper">{{'bookTable.bookingTitle' | translate}}</span>
+                <span class ="subtitle-card push-bottom">{{'bookTable.bookingSubtitle' | translate}}</span>
               </div>
               <div layout= "column" flex>
 
@@ -27,51 +27,51 @@
                   type="datetime"
                   container="dialog"
                   [min]="minDate"
-                  placeholder="Date and time">
+                  [placeholder]="'formFields.dateTime' | translate">
                 </md2-datepicker>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Name" formControlName="name">
+                  <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
                   <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
                     <div *ngIf="name.errors.required">
-                      Required. Please insert a name to reserve the table
+                      {{'bookTable.formErrors.nameRequired' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Email" formControlName="email">
+                  <input matInput [placeholder]="'formFields.email' | translate" formControlName="email">
                   <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div *ngIf="email.errors.required">
-                      Required. Please insert an email to reserve the table
+                       {{'bookTable.formErrors.emailRequired' | translate}}
                     </div>
                     <div *ngIf="email.errors.pattern">
-                      Insert a valid email address to send reservation data. e.g. email@email.com.
+                       {{'bookTable.formErrors.emailPattern' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="push-bottom-sm" color="accent" flex>
-                  <input matInput placeholder="Assistants" formControlName="assistants" type="number">
+                  <input matInput [placeholder]="'formFields.assistants' | translate" formControlName="assistants" type="number">
                   <mat-error *ngIf="assistants.invalid && (assistants.dirty || assistants.touched)">
                     <div *ngIf="assistants.errors.required">
-                      Required. Please insert the number of assistants.
+                      {{'bookTable.formErrors.assistantsRequired' | translate}}
                     </div>
                     <div *ngIf="assistants.errors.max">
-                      You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.
+                       {{'bookTable.formErrors.assistantsMax' | translate}}
                     </div>
                     <div *ngIf="assistants.errors.min">
-                      You cannot reserve an empty or negative number of assistants
+                       {{'bookTable.formErrors.assistantsMin' | translate}}
                     </div>
                   </mat-error>
 
                 </mat-form-field>
 
-                <mat-checkbox class="push-top" #termsd>Accept terms</mat-checkbox>
+                <mat-checkbox class="push-top" #termsd>{{'formFields.terms' | translate}}</mat-checkbox>
 
               </div>
               <div class="align-right">
-                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent" class="text-upper">Book table</button>
+                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent" class="text-upper">{{'buttons.bookTable' | translate}}</button>
               </div>
             </form>
           </div>
@@ -89,7 +89,7 @@
           <div  flex-gt-xs="50">
             <form class="pad" [formGroup]="invitationForm">
               <div layout="column" class="push-bottom" flex>
-                <span class="title-card property-text-bold">ADD YOUR INFORMATION AND FRIENDS</span>
+                <span class="title-card property-text-bold text-upper">{{'bookTable.reservationTitle' | translate}}</span>
               </div>
 
               <div layout= "column" flex>
@@ -99,42 +99,42 @@
                   type="datetime" 
                   container="dialog" 
                   [min]="minDate" 
-                  placeholder="Date and time">
+                  [placeholder]="'formFields.dateTime' | translate">
                 </md2-datepicker>
                 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Name" formControlName="name">
+                  <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
                   <mat-error *ngIf="invName.invalid && (invName.dirty || invName.touched)">
                     <div *ngIf="invName.errors.required">
-                      Required. Please insert a name to reserve the table
+                       {{'bookTable.formErrors.nameRequired' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
                 
                 <mat-form-field color="accent" flex>
-                  <input matInput placeholder="Email" formControlName="email">
+                  <input matInput [placeholder]="'formFields.email' |  translate" formControlName="email">
                   <mat-error *ngIf="invEmail.invalid && (invEmail.dirty || invEmail.touched)">
                     <div *ngIf="invEmail.errors.required">
-                      Required. Please insert an email to reserve the table
+                      {{'bookTable.formErrors.emailRequired' | translate}}
                     </div>
                     <div *ngIf="invEmail.errors.pattern">
-                      Insert a valid email address to send reservation data. e.g. email@email.com.
+                       {{'bookTable.formErrors.emailPattern' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
               </div>
 
-              <h4>Guests</h4>
+              <h4>{{'formFields.guests' | translate}}</h4>
               <td-chips
                 class="pad-bottom-sm"
                 formControlName="invitedGuests"
                 name="invitedGuests"
                 (add)="validateEmail()"
-                placeholder="Enter invitation email">
+                [placeholder]="'formFields.guestsPH' | translate">
               </td-chips>
-              <mat-checkbox #termsi>Accept terms</mat-checkbox>
+              <mat-checkbox #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
               <div class="align-right">
-                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">Invite friends</button>
+                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
               </div>
             </form>
           </div>
