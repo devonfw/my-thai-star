@@ -1,17 +1,94 @@
 {
     "buttons": {
         "cancel": "Cancel",
-        "send": "Send"
+        "send": "Send",
+        "bookTable": "Book Table",
+        "inviteFriends": "Invite friends",
+        "viewMenu": "View Menu",
+        "addToOrder": "Add to order",
+        "clearFilters": "Clear Filters",
+        "applyFilters": "Apply Filters"
+    },
+    "alerts": {
+        "accessError": "Access denied, please log in first",
+        "genericError": "An error has ocurred, please try again later",
+        "urlError": "Url not found, please try again",
+        "email confirmations": {
+            "invitationAccept": "Invitation succesfully accepted",
+            "invitationReject": "Invitation succesfully rejected",
+            "bookingCancel": "Booking succesfully canceled",
+            "orderCancel": "Order succesfully canceled"
+        }
     },
     "formFields": {
         "date": "Date",
         "name": "Name",
         "email": "Email",
-        "assistants": "Assistants"
+        "assistants": "Assistants",
+        "friends": "Friends",
+        "terms": "Accept terms",
+        "dateTime": "Date and time",
+        "guests": "Guests",
+        "guestsPH": "Enter invitation email"
     },
     "bookTable": {
-        "bookDialog": {
-            "title": "Book Table"
+        "title": "You can invite your friends to lunch or book a table",
+        "bookingTitle": "Book your table",
+        "bookingSubtitle": "You can book a table and an order menu",
+        "reservationTitle": "Add your information and friends", 
+        "dialog": {
+            "title": "Book Table",
+            "bookingSuccess": "Table succesfully booked",
+            "bookingError": "Error booking, please try again later"
+        },
+        "formErrors": {
+            "nameRequired": "Required. Please insert a name to reserve the table",
+            "emailRequired": "Required. Please insert an email to reserve the table",
+            "emailPattern": "Insert a valid email address to send reservation data. e.g. email@email.com.",
+            "emailFormat": "Email format not valid",
+            "assistantsRequired": "Required. Please insert the number of assistants.",
+            "assistantsMax": "You cannot reserve more assistants than the size of the biggest table (8), if you need more tables, make more bookings.",
+            "assistantsMin": "You cannot reserve an empty or negative number of assistants"
+        }
+    },
+    "main": {
+        "home": "home",
+        "menu": "menu",
+        "book": "book table",
+        "orders": "orders",
+        "reservations": "reservations",
+        "userActions": {
+            "user": "user",
+            "logout": "Log out",
+            "changePassword": "Change password",
+            "twitterAccount": "Twitter account",
+            "signOut": "Sign out",
+            "orders": "orders"
+        }
+    },
+    "home": {
+        "subtitle": "More than just delicious food",
+        "restaurantTitle": "Our restaurant",
+        "restaurantContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
+        "menuTitle": "Our menu",
+        "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
+    },
+    "menu": {
+        "filter": {
+            "search": "Search our dishes",
+            "sort": "Sort By",
+            "price": "Price",
+            "likes": "Likes",
+            "name": "Name",
+            "mainDishes": "Main dishes",
+            "starters": "Starters",
+            "desserts": "Desserts",
+            "noodle": "Noodle",
+            "rice": "Rice",
+            "curry": "Curry",
+            "vegan": "Vegan",
+            "vegetarian": "Vegetarian",
+            "favourites": "Favourites"
         }
     }
 }

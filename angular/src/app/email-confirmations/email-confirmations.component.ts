@@ -3,6 +3,8 @@ import { EmailConfirmationsService } from './shared/email-confirmations.service'
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'public-email-confirmations',
@@ -15,10 +17,22 @@ export class EmailConfirmationsComponent implements OnInit {
 
   constructor(private snackBarService: SnackBarService,
     private emailService: EmailConfirmationsService,
+    private translate: TranslateService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    let errorString: string;
+    let errorUrlString: string;
+    let emailConfirmationStrings: any;
+    forkJoin(this.translate.get('alerts.genericError'),
+             this.translate.get('alerts.urlError'),
+             this.translate.get('alerts.email confirmations')).subscribe( (translation: any) => {
+               errorString = translation[0];
+               errorUrlString = translation[1];
+               emailConfirmationStrings = translation[2];
+    });
+
     this.route.paramMap
       .map((params: ParamMap) => params)
       .subscribe((params: ParamMap) => {
@@ -27,38 +41,38 @@ export class EmailConfirmationsComponent implements OnInit {
         switch (this.action) {
           case 'acceptInvite':
             this.emailService.sendAcceptInvitation(this.token).subscribe((res: InvitationResponse) => {
-              this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
+              this.snackBarService.openSnack(emailConfirmationStrings.invitationAccept, 10000, 'green');
             },
               (error: any) => {
-                this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                this.snackBarService.openSnack(errorString, 10000, 'red');
               });
             break;
           case 'rejectInvite':
             this.emailService.sendRejectInvitation(this.token).subscribe((res: InvitationResponse) => {
-              this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
+              this.snackBarService.openSnack(emailConfirmationStrings.invitationReject, 10000, 'red');
             },
               (error: any) => {
-                this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                this.snackBarService.openSnack(errorString, 10000, 'red');
               });
             break;
           case 'cancel':
             this.emailService.sendCancelBooking(this.token).subscribe((res: InvitationResponse) => {
-              this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
+              this.snackBarService.openSnack(emailConfirmationStrings.bookingCancel, 10000, 'green');
             },
               (error: any) => {
-                this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                this.snackBarService.openSnack(errorString, 10000, 'red');
               });
             break;
           case 'cancelOrder':
             this.emailService.sendCancelOrder(this.token).subscribe((res: boolean) => {
-              this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
+              this.snackBarService.openSnack(emailConfirmationStrings.orderCancel, 10000, 'green');
             },
               (error: any) => {
-                this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
+                this.snackBarService.openSnack(errorString, 10000, 'red');
               });
             break;
           default:
-            this.snackBarService.openSnack('Url not found, please try again', 10000, 'black');
+            this.snackBarService.openSnack(errorUrlString, 10000, 'black');
             break;
         }
       });

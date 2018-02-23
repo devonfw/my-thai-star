@@ -7,22 +7,25 @@
   <div *ngIf="auth.isPermited('CUSTOMER')" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link
+        class="text-upper"
         routerLink="/restaurant"
         routerLinkActive #restaurant="routerLinkActive"
         [class.navBottomBorder]="restaurant.isActive">
-        HOME
+          {{'main.home' | translate}}
       </a>
       <a mat-tab-link
+        class="text-upper"
         routerLink="/menu"
         routerLinkActive #menu="routerLinkActive"
         [class.navBottomBorder]="menu.isActive">
-        MENU
+          {{'main.menu' | translate}}
       </a>
       <a mat-tab-link
+        class="text-upper"
         routerLink="/bookTable"
         routerLinkActive #bookTable="routerLinkActive"
         [class.navBottomBorder]="bookTable.isActive">
-        BOOK TABLE
+          {{'main.book' | translate}}
       </a>
     </nav>
   </div>
@@ -32,38 +35,38 @@
         routerLink="/orders"
         routerLinkActive #orders="routerLinkActive"
         [class.navBottomBorder]="orders.isActive">
-        ORDERS
+          {{'main.orders' | translate}}
       </a>
       <a mat-tab-link
         routerLink="/reservations"
         routerLinkActive #reservations="routerLinkActive"
         [class.navBottomBorder]="reservations.isActive">
-        RESERVATIONS
+          {{'main.reservations' | translate}}
       </a>
     </nav>
   </div>
-  <button *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" matTooltip="User"><mat-icon>person_outline</mat-icon></button>
+  <button *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate"><mat-icon>person_outline</mat-icon></button>
   <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
     <button mat-icon-button [matMenuTriggerFor]="toolbarMenu1"><mat-icon>account_circle</mat-icon></button>
     <span class="forDesktop">{{auth.user}}</span>
-    <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" matTooltip="log out"><mat-icon>exit_to_app</mat-icon></button>
+    <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" [matTooltip]="'main.userActions.logout' | translate"><mat-icon>exit_to_app</mat-icon></button>
     <mat-menu #toolbarMenu1="matMenu">
       <button mat-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>settings</mat-icon>
-        <span>Change password</span>
+        <span>{{'main.userActions.changePassword' | translate}}</span>
       </button>
       <button mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>send</mat-icon>
-        <span>Twitter account</span>
+        <span>{{'main.userActions.twitterAccount' | translate}}</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-menu-item type="button" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
-        <span>Sign out</span>
+        <span>{{'main.userActions.signOut' | translate}}</span>
       </button>
     </mat-menu>
   </div>
   <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
-    <button mat-icon-button (click)="openCloseSideNav(sidenav.opened)" matTooltip="Orders"><mat-icon>shopping_basket</mat-icon></button>
+    <button mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate"><mat-icon>shopping_basket</mat-icon></button>
   </td-notification-count>
 </div>

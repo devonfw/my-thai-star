@@ -2,7 +2,7 @@
   <div class="home-title" flex>
     <div layout="column" class="property-text-center">
       <h1 class= "title-color title">MY THAI STAR</h1>
-      <span class= "title-color pull-top subtitle">More than just delicious food</span>
+      <span class= "title-color pull-top subtitle">{{'home.subtitle' | translate}}</span>
     </div>
   </div>
   <mat-card id="homeCard" class="card-over push-left-xl push-right-xl">
@@ -11,28 +11,24 @@
         <img mat-card-image src="../../assets/images/thai-restaurant.jpg">
         <mat-card-content>
           <div class="property-text-center pad">
-            <h3>OUR RESTAURANT</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-            </p>
+            <h3 class="text-upper">{{'home.restaurantTitle' | translate}}</h3>
+            <p> {{'home.restaurantContent' | translate}} </p>
           </div>
         </mat-card-content>
         <mat-card-actions class="property-text-center">
-          <button mat-raised-button color="accent" (click)="navigateTo('bookTable')">BOOK A TABLE</button>
+          <button mat-raised-button color="accent" class="text-upper" (click)="navigateTo('bookTable')">{{'buttons.bookTable' | translate}}</button>
         </mat-card-actions>
       </mat-card>
       <mat-card>
         <img mat-card-image src="../../assets/images/thai-restaurant-dish.jpg">
         <mat-card-content>
           <div class="property-text-center pad">
-            <h3>OUR MENU</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.
-            </p>
+            <h3>{{'home.menuTitle' | translate}}</h3>
+            <p> {{'home.menuContent' | translate}}</p>
           </div>
         </mat-card-content>
         <mat-card-actions class="property-text-center">
-          <button mat-raised-button color="accent" (click)="navigateTo('menu')">VIEW MENU</button>
+          <button mat-raised-button class="text-upper" color="accent" (click)="navigateTo('menu')">{{'buttons.viewMenu' | translate}}</button>
         </mat-card-actions>
       </mat-card>
     </div>
