@@ -12,11 +12,13 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    TranslateModule,
     HttpClientModule,
     CoreModule,
   ],
