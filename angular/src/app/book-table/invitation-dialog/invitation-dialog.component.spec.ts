@@ -9,6 +9,7 @@ import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { InvitationDialogComponent } from './invitation-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
@@ -19,6 +20,7 @@ describe('InvitationDialogComponent', () => {
       providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         BookTableModule,
         HttpClientModule,
       ],

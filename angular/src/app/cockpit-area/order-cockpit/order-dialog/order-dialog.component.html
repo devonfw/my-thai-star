@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>ORDER DETAILS - REFERENCE NUMBER: {{data.booking.bookingToken}} </h3>
+<h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | translate}} : {{data.booking.bookingToken}} </h3>
 <mat-divider></mat-divider>
 <td-data-table
   #dataTable
@@ -21,19 +21,19 @@
   [columns]="columnso">
 </td-data-table>
 <div layout="row" class="justify-space-between pad-right pad-left">
-  <h4>TOTAL</h4>
+  <h4 class="text-upper">{{'formFields.total' | translate}}</h4>
   <h4>{{totalPrice | number : '2.2-2'}}</h4>
 </div>
 <mat-divider></mat-divider>
 <td-paging-bar #pagingBar [firstLast]="false" [pageSize]="pageSize" [total]="datao.length" (change)="page($event)">
-  <span hide-xs>Rows per page:</span>
+  <span hide-xs>{{'table.rowsPage' | translate}}:</span>
   <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
     <mat-option *ngFor="let size of pageSizes" [value]="size">
       {{ size }}
     </mat-option>
   </mat-select>
-  <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>of {{pagingBar.total}}</span></span>
+  <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>{{'table.of' | translate}} {{pagingBar.total}}</span></span>
 </td-paging-bar>
 <div class="align-right pad-top" flex>
-  <button mat-button mat-dialog-close color="accent" class="text-upper">Close</button>
+  <button mat-button mat-dialog-close color="accent" class="text-upper">{{'buttons.close' | translate}}</button>
 </div>

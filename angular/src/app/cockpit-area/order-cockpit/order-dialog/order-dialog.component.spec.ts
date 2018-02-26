@@ -10,6 +10,7 @@ import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 
 import { OrderDialogComponent } from './order-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
@@ -21,6 +22,7 @@ describe('OrderDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
+        TranslateModule.forRoot(),
         CoreModule,
         HttpClientModule,
       ],

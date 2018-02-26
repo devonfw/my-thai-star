@@ -65,6 +65,8 @@ import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 
+import 'moment/locale/es';
+
 @NgModule({
   imports: [
     RouterModule,
