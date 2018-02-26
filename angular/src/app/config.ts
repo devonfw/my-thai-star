@@ -9,6 +9,11 @@ export const config: any = {
         { label: 'English', value: 'en' },
         { label: 'Español', value: 'es' },
         { label: 'हिन्दी', value: 'hi' },
+        { label: 'Deutsch', value: 'de' },
+        { label: 'Français', value: 'fr' },
+        { label: 'Polskie', value: 'pl' },
+        { label: 'Nederlands', value: 'nl' },
+        { label: 'Català', value: 'ca' },
     ],
 };
 
