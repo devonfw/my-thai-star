@@ -5,7 +5,7 @@
   <mat-card class="push-lg">
     <mat-tab-group mat-stretch-tabs>
 
-      <mat-tab label="Book a table">
+      <mat-tab [label]="'bookTable.bookingTab' | translate">
         <div layout-gt-xs="row" flex>
 
           <div flex-gt-xs="50" class= "menu-image forDesktop">
@@ -78,7 +78,7 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Invite friends">
+      <mat-tab [label]="'bookTable.reservationTab' | translate">
         <div layout-gt-xs="row" flex>
 
           <div  flex-gt-xs="50" class= "invite-image forDesktop">

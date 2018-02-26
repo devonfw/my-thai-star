@@ -11,7 +11,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
 import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -48,7 +48,14 @@ export class OrderCockpitComponent implements OnInit {
 
   ngOnInit(): void {
     this.applyFilters();
-    this.translate.get('cockpit.table').subscribe( (res: any) => {
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+    });
+  }
+
+  setTableHeaders(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
       this.columns = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
         { name: 'booking.email', label: res.emailH },
