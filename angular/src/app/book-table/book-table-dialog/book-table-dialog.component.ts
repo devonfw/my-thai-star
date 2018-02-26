@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'public-book-table-dialog',
@@ -16,6 +17,7 @@ export class BookTableDialogComponent implements OnInit {
 
   constructor (public snackBar: SnackBarService,
                public bookingService: BookTableService,
+               public translateService: TranslateService,
                private dialog: MatDialogRef<BookTableDialogComponent>,
                @Inject(MAT_DIALOG_DATA) dialogData: any) {
                  this.data = dialogData;
@@ -27,9 +29,13 @@ export class BookTableDialogComponent implements OnInit {
 
   sendBooking (): void {
     this.bookingService.postBooking(this.bookingService.composeBooking(this.data, 0)).subscribe( () => {
-      this.snackBar.openSnack('Table succesfully booked', 4000, 'green');
+      this.translateService.get('bookTable.dialog.bookingSuccess').subscribe( (text: string) => {
+        this.snackBar.openSnack(text, 4000, 'green');
+      });
     }, (error: any) => {
-      this.snackBar.openSnack('Error booking, please try again later', 4000, 'red');
+      this.translateService.get('bookTable.dialog.bookingError').subscribe((text: string) => {
+        this.snackBar.openSnack(text, 4000, 'red');
+      });
     });
     this.dialog.close(true);
   }

@@ -11,6 +11,7 @@ import { WindowService } from '../../core/windowService/windowService.service';
 import { MatDialog } from '@angular/material';
 
 import { OrderCockpitComponent } from './order-cockpit.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -31,6 +32,7 @@ describe('OrderCockpitComponent', () => {
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
+        TranslateModule.forRoot(),
         CoreModule,
         MomentModule,
       ],

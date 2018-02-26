@@ -10,6 +10,7 @@ import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 
 import { ReservationDialogComponent } from './reservation-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReservationDialogComponent', () => {
   let component: ReservationDialogComponent;
@@ -21,6 +22,7 @@ describe('ReservationDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
+        TranslateModule.forRoot(),
         CoreModule,
         HttpClientModule,
       ],

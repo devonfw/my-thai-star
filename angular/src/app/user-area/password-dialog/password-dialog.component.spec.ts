@@ -11,6 +11,7 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { PasswordDialogComponent } from './password-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
@@ -23,6 +24,7 @@ describe('PasswordDialogComponent', () => {
         CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         UserAreaModule,
         HttpClientModule,
       ],

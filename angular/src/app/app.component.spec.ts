@@ -13,6 +13,7 @@ import { AuthService } from './core/authentication/auth.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -26,6 +27,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         CoreModule,
+        TranslateModule.forRoot(),
         SidenavModule,
         HttpClientModule,
       ],
