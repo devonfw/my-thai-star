@@ -6,7 +6,7 @@
     "login": "Acceder",
     "register": "Registrar",
     "bookTable": "Reservar una mesa",
-    "inviteFriends": "Invitar amigos/as",
+    "inviteFriends": "Invitar amigos",
     "viewMenu": "Ver el menú",
     "addToOrder": "Añadir al pedido",
     "clearFilters": "Limpiar filtros",
@@ -46,22 +46,22 @@
     "name": "Nombre",
     "email": "Email",
     "assistants": "Asistentes",
-    "friends": "Amigos/as",
+    "friends": "Amigos",
     "terms": "Aceptar terminos",
     "dateTime": "Fecha y hora",
-    "guests": "Invitados/as",
-    "guestsPH": "Email de los invitados/as",
+    "guests": "Invitados",
+    "guestsPH": "Email de los invitados",
     "comment": "Comentario",
     "total": "Total",
     "referenceNumber": "Número de referencia"
   },
   "bookTable": {
-    "title": "Puedes invitar a tus amigos/as a cenar o reservar una mesa",
+    "title": "Puedes invitar a tus amigos a cenar o reservar una mesa",
     "bookingTab": "Reserva una mesa",
-    "reservationTab": "Invita amigos/as",
+    "reservationTab": "Invita amigos",
     "bookingTitle": "Reservar una mesa",
     "bookingSubtitle": "Puedes reservar una mesa y hacer pedidos",
-    "reservationTitle": "Añade tu información y amigos/as",
+    "reservationTitle": "Añade tu información y amigos",
     "dialog": {
       "title": "Reservar una mesa",
       "bookingSuccess": "Mesa reservada satisfactoriamente",
@@ -162,7 +162,7 @@
       "title": "Reservar",
       "dialogTitle": "Detalles de la reserva - NÚMERO DE REFERENCIA",
       "dialogTable": {
-        "guestEmailH": "Email de invitados/as",
+        "guestEmailH": "Email de invitados",
         "acceptanceH": "Aceptados y rechazados",
         "assistantsH": "Asistentes"
       }
