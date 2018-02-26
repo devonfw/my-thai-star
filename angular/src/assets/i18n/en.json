@@ -57,6 +57,8 @@
     },
     "bookTable": {
         "title": "You can invite your friends to lunch or book a table",
+        "bookingTab": "Book a table",
+        "reservationTab": "Invite friends",
         "bookingTitle": "Book your table",
         "bookingSubtitle": "You can book a table and an order menu",
         "reservationTitle": "Add your information and friends", 
@@ -98,6 +100,7 @@
         "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
     },
     "menu": {
+        "filterTitle": "FILTERS",        
         "filter": {
             "search": "Search our dishes",
             "sort": "Sort By",

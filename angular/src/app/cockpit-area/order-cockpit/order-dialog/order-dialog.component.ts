@@ -5,6 +5,7 @@ import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -38,6 +39,18 @@ export class OrderDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+    });
+
+    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
+    this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
+    this.datat.push(this.data.booking);
+    this.filter();
+  }
+
+  setTableHeaders(): void {
     this.translate.get('cockpit.table').subscribe((res: any) => {
       this.columnst = [
         { name: 'bookingDate', label: res.reservationDateH },
@@ -57,11 +70,6 @@ export class OrderDialogComponent implements OnInit {
         { name: 'dish.price', label: res.priceH, numeric: true, format: (v: number) => v.toFixed(2) },
       ];
     });
-
-    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
-    this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
-    this.datat.push(this.data.booking);
-    this.filter();
   }
 
   page(pagingEvent: IPageChangeEvent): void {

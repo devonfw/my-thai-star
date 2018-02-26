@@ -71,4 +71,15 @@
   <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
     <button mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate"><mat-icon>shopping_basket</mat-icon></button>
   </td-notification-count>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>language</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button [disabled]="translate.currentLang === 'en'" (click)="changeLanguage('en')" mat-menu-item>
+      <span>English</span>
+    </button>
+    <button [disabled]="translate.currentLang === 'es'" (click)="changeLanguage('es')" mat-menu-item>
+      <span>Español</span>
+    </button>
+  </mat-menu>
 </div>

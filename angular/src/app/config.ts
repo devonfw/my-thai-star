@@ -5,6 +5,7 @@ export const config: any = {
         {name: 'CUSTOMER', permission: 0},
         {name: 'WAITER', permission: 1},
     ],
+    langs: ['en', 'es'],
 };
 
 export enum BackendType {

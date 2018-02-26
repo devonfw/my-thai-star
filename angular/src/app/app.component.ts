@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { find } from 'lodash';
+import { config } from './config';
 
 @Component({
   selector: 'public-main',
@@ -16,7 +18,11 @@ export class AppComponent {
               public sidenav: SidenavService,
               public translate: TranslateService,
               public auth: AuthService) {
-    translate.use('en');
+    translate.addLangs(config.langs);
+    translate.setDefaultLang('en');
+    if (find(translate.getLangs(), (lang: string) => lang === translate.getBrowserLang())) {
+      translate.use(translate.getBrowserLang());
+    }
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {

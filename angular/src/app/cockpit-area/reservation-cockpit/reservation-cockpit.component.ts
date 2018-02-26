@@ -12,6 +12,7 @@ import { ReservationDialogComponent } from './reservation-dialog/reservation-dia
 import { config } from '../../config';
 import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
 import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -46,6 +47,14 @@ export class ReservationCockpitComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+    });
+    this.applyFilters();
+  }
+
+  setTableHeaders(): void {
     this.translate.get('cockpit.table').subscribe((res: any) => {
       this.columns = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
@@ -53,7 +62,6 @@ export class ReservationCockpitComponent implements OnInit {
         { name: 'booking.bookingToken', label: res.bookingTokenH },
       ];
     });
-    this.applyFilters();
   }
 
   filter(): void {

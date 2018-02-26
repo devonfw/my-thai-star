@@ -4,6 +4,7 @@ import { FriendsInvite, ReservationView } from '../../../shared/viewModels/inter
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -34,8 +35,18 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+    });
 
-    this.translate.get('cockpit.table').subscribe( (res: any) => {
+    this.datat.push(this.data);
+    this.datao = this.data.invitedGuests;
+    this.filter();
+  }
+
+  setTableHeaders(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
       this.columnst = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
         { name: 'booking.creationDate', label: res.creationDateH },
@@ -50,14 +61,11 @@ export class ReservationDialogComponent implements OnInit {
         { name: 'email', label: res.guestEmailH },
         { name: 'accepted', label: res.acceptanceH },
       ];
+
       if (this.data.booking.assistants) {
-        this.columnst.push({ name: 'booking.assistants', label: res.assistantsH});
+        this.columnst.push({ name: 'booking.assistants', label: res.assistantsH });
       }
     });
-
-    this.datat.push(this.data);
-    this.datao = this.data.invitedGuests;
-    this.filter();
   }
 
   page(pagingEvent: IPageChangeEvent): void {
