@@ -32,12 +32,14 @@
   <div *ngIf="auth.isPermited('WAITER')" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link
+        class="text-upper"
         routerLink="/orders"
         routerLinkActive #orders="routerLinkActive"
         [class.navBottomBorder]="orders.isActive">
           {{'main.orders' | translate}}
       </a>
       <a mat-tab-link
+        class="text-upper"
         routerLink="/reservations"
         routerLinkActive #reservations="routerLinkActive"
         [class.navBottomBorder]="reservations.isActive">
