@@ -8,6 +8,7 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
 
 import { MenuCardComponent } from './menu-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;
@@ -23,6 +24,7 @@ describe('MenuCardComponent', () => {
         SnackBarService,
       ],
       imports: [
+        TranslateModule.forRoot(),
         CoreModule,
       ],
     })

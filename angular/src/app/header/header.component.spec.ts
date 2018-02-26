@@ -12,6 +12,7 @@ import { UserAreaService } from '../user-area/shared/user-area.service';
 
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { HeaderComponent } from './header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -24,6 +25,7 @@ describe('HeaderComponent', () => {
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         CoreModule,
         SidenavModule,
         HttpClientModule,

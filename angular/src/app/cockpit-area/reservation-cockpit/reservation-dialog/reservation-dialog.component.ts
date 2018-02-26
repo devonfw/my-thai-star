@@ -3,6 +3,8 @@ import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@coval
 import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
+import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -11,43 +13,59 @@ import { config } from '../../../config';
 })
 export class ReservationDialogComponent implements OnInit {
 
-  private datao: FriendsInvite[] = [];
-  private columnso: ITdDataTableColumn[];
-  private pageSizes: number[];
-  private fromRow: number = 1;
-  private currentPage: number = 1;
-  private pageSize: number = 4;
+  datao: FriendsInvite[] = [];
+  columnso: ITdDataTableColumn[];
+  pageSizes: number[];
+  fromRow: number = 1;
+  currentPage: number = 1;
+  pageSize: number = 4;
 
   data: any;
 
   datat: ReservationView[] = [];
-  columnst: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.creationDate', label: 'Creation date'},
-    { name: 'booking.name', label: 'Owner' },
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.tableId', label: 'Table'},
-  ];
+  columnst: ITdDataTableColumn[];
 
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
+              private translate: TranslateService,
               @Inject(MAT_DIALOG_DATA) dialogData: any) {
     this.data = dialogData.row;
     this.pageSizes = config.pageSizesDialog;
-    this.columnso = [
-      { name: 'email', label: 'Guest email' },
-      { name: 'accepted', label: 'Acceptances and declines' },
-    ];
   }
 
   ngOnInit(): void {
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+    });
+
     this.datat.push(this.data);
     this.datao = this.data.invitedGuests;
-    if (this.data.booking.assistants) {
-      this.columnst.push({ name: 'booking.assistants', label: 'Assistants'});
-    }
     this.filter();
+  }
+
+  setTableHeaders(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
+      this.columnst = [
+        { name: 'booking.bookingDate', label: res.reservationDateH },
+        { name: 'booking.creationDate', label: res.creationDateH },
+        { name: 'booking.name', label: res.ownerH },
+        { name: 'booking.email', label: res.emailH },
+        { name: 'booking.tableId', label: res.tableH },
+      ];
+    });
+
+    this.translate.get('cockpit.reservations.dialogTable').subscribe((res: any) => {
+      this.columnso = [
+        { name: 'email', label: res.guestEmailH },
+        { name: 'accepted', label: res.acceptanceH },
+      ];
+
+      if (this.data.booking.assistants) {
+        this.columnst.push({ name: 'booking.assistants', label: res.assistantsH });
+      }
+    });
   }
 
   page(pagingEvent: IPageChangeEvent): void {

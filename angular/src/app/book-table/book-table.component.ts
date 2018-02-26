@@ -9,6 +9,7 @@ import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
 import { BookingInfo } from 'app/shared/backendModels/interfaces';
 import { AbstractControl } from '@angular/forms/src/model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'public-book-table',
@@ -34,6 +35,7 @@ export class BookTableComponent implements OnInit {
   };
 
   constructor(public window: WindowService,
+              public translate: TranslateService,
               public snackBarservice: SnackBarService,
               public dialog: MatDialog) {
   }
@@ -99,7 +101,10 @@ export class BookTableComponent implements OnInit {
   validateEmail(): void {
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.snackBarservice.openSnack('Email format not valid', 1000, 'red');
+      this.translate.get('bookTable.formErrors.emailFormat')
+          .subscribe( (text: string) => {
+            this.snackBarservice.openSnack(text, 1000, 'red');
+          });
     }
   }
 

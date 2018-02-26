@@ -10,6 +10,8 @@ import { WindowService } from '../core/windowService/windowService.service';
 import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { config } from '../config';
 
 @Component({
   selector: 'public-header',
@@ -18,14 +20,18 @@ import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dial
 })
 export class HeaderComponent {
 
+  selectableLangs: any[];
+
   @Output('openCloseSidenavMobile') sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public window: WindowService,
+              public translate: TranslateService,
               public router: Router,
               public sidenav: SidenavService,
               public dialog: MatDialog,
               public auth: AuthService,
               public userService: UserAreaService) {
+      this.selectableLangs = config.langs;
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -39,6 +45,10 @@ export class HeaderComponent {
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.sidenavNavigationEmitter.emit();
+  }
+
+  changeLanguage(lang: string): void {
+    this.translate.use(lang);
   }
 
   openLoginDialog(): void {
