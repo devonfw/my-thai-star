@@ -15,7 +15,7 @@
         "addComment": "Add comment"
     },
     "table": {
-        "rowsPage" : "Rows per page",
+        "rowsPage": "Rows per page",
         "of": "of",
         "noResults": "No results to display"
     },
@@ -29,7 +29,7 @@
             "bookingCancel": "Booking succesfully canceled",
             "orderCancel": "Order succesfully canceled"
         },
-        "orderID": "To order a menu it is necessary to obtain a booking id. Neither you enter your already known booking id or you book a table",
+        "orderID": "To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table",
         "passwordError": "Password Mismatch",
         "authAlerts": {
             "loginSuccess": "Login successful",
@@ -61,7 +61,7 @@
         "reservationTab": "Invite friends",
         "bookingTitle": "Book your table",
         "bookingSubtitle": "You can book a table and an order menu",
-        "reservationTitle": "Add your information and friends", 
+        "reservationTitle": "Add your information and friends",
         "dialog": {
             "title": "Book Table",
             "bookingSuccess": "Table succesfully booked",
@@ -100,7 +100,7 @@
         "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
     },
     "menu": {
-        "filterTitle": "FILTERS",        
+        "filterTitle": "FILTERS",
         "filter": {
             "search": "Search our dishes",
             "sort": "Sort By",
@@ -138,7 +138,7 @@
             "newPassword": "New Password",
             "verifyPassword": "Verify Password"
         },
-        "twitterDialog" : {
+        "twitterDialog": {
             "title": "Associate twitter account",
             "twitterUsernamePH": "Twitter username",
             "twitterPasswordPH": "Twitter password",
