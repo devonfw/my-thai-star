@@ -18,7 +18,7 @@ export class AppComponent {
               public sidenav: SidenavService,
               public translate: TranslateService,
               public auth: AuthService) {
-    translate.addLangs(config.langs);
+    translate.addLangs(config.langs.map( (value: any) => value.value ));
     translate.setDefaultLang('en');
     if (find(translate.getLangs(), (lang: string) => lang === translate.getBrowserLang())) {
       translate.use(translate.getBrowserLang());

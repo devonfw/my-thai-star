@@ -75,11 +75,8 @@
     <mat-icon>language</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button [disabled]="translate.currentLang === 'en'" (click)="changeLanguage('en')" mat-menu-item>
-      <span>English</span>
-    </button>
-    <button [disabled]="translate.currentLang === 'es'" (click)="changeLanguage('es')" mat-menu-item>
-      <span>Español</span>
+    <button *ngFor="let lang of selectableLangs" [disabled]="translate.currentLang === lang.value" (click)="changeLanguage(lang.value)" mat-menu-item>
+      <span>{{lang.label}}</span>
     </button>
   </mat-menu>
 </div>
