@@ -6,6 +6,7 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { CoreModule } from '../../core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UserAreaService', () => {
   beforeEach(() => {
@@ -18,6 +19,7 @@ describe('UserAreaService', () => {
       imports: [
         CoreModule,
         HttpClientModule,
+        TranslateModule.forRoot(),
         RouterTestingModule,
       ],
     });

@@ -8,6 +8,7 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { BookTableService } from '../shared/book-table.service';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { MatDialog } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
@@ -18,6 +19,7 @@ describe('BookTableDialogComponent', () => {
       providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         BookTableModule,
         HttpClientModule,
         CoreModule,
