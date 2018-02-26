@@ -46,5 +46,5 @@ describe('ReservationCockpitComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
+  }, 10000);
 });
