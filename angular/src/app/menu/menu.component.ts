@@ -4,6 +4,7 @@ import { MatSlider, MatInput } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
+import { Filter } from '../shared/backendModels/interfaces';
 
 @Component({
   selector: 'public-menu',
@@ -28,7 +29,8 @@ export class MenuComponent implements OnInit {
   }
 
   applyFilters(filters?: any): void {
-    this.menus = this.menuService.getDishes(this.menuService.composeFilters(filters, this.sortDir));
+    const composedFilters: Filter = this.menuService.composeFilters(filters, this.sortDir);
+    this.menus = this.menuService.getDishes(composedFilters);
   }
 
   clearFilters(form: FormGroup, price: MatSlider, likes: MatSlider): void {
