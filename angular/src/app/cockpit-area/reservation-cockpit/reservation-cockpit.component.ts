@@ -13,6 +13,7 @@ import { config } from '../../config';
 import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -47,9 +48,11 @@ export class ReservationCockpitComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    moment.locale(this.translate.currentLang);
     this.setTableHeaders();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.setTableHeaders();
+      moment.locale(this.translate.currentLang);
     });
     this.applyFilters();
   }
