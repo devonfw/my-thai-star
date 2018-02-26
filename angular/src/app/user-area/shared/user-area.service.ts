@@ -5,6 +5,7 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { LoginInfo } from 'app/shared/backendModels/interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class UserAreaService {
@@ -13,11 +14,18 @@ export class UserAreaService {
     private readonly currentUserRestPath: string = 'security/v1/currentuser/';
     private readonly registerRestPath: string = 'register';
     private readonly changePasswordRestPath: string = 'changepassword';
+    authAlerts: any;
 
     constructor(public snackBar: SnackBarService,
         public router: Router,
+        public translate: TranslateService,
         private http: HttpClient,
-        public authService: AuthService) { }
+        public authService: AuthService) {
+            this.translate.get('alerts.authAlerts')
+                .subscribe( (result: any) => {
+                    this.authAlerts = result;
+                });
+         }
 
     login(username: string, password: string): void {
         this.http.post(`${environment.restPathRoot}${this.loginRestPath}`,
@@ -30,7 +38,7 @@ export class UserAreaService {
                         this.authService.setUser(loginInfo.name);
                         this.authService.setRole(loginInfo.role);
                         this.router.navigate(['orders']);
-                        this.snackBar.openSnack('Login successful', 4000, 'green');
+                        this.snackBar.openSnack(this.authAlerts.loginSuccess, 4000, 'green');
                     });
             }, (err: any) => {
                 this.authService.setLogged(false);
@@ -42,9 +50,9 @@ export class UserAreaService {
         this.http.post(`${environment.restServiceRoot}${this.registerRestPath}`, {email: email, password: password})
             .map((res: LoginInfo) => res)
             .subscribe(() => {
-                this.snackBar.openSnack('Register successful', 4000, 'green');
+                this.snackBar.openSnack(this.authAlerts.registerSuccess, 4000, 'green');
             }, (error: any) => {
-                this.snackBar.openSnack('Register failed, username already in use', 4000, 'red');
+                this.snackBar.openSnack(this.authAlerts.registerFail, 4000, 'red');
             });
     }
 
@@ -54,7 +62,7 @@ export class UserAreaService {
         this.authService.setRole('CUSTOMER');
         this.authService.setToken('');
         this.router.navigate(['restarant']);
-        this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
+        this.snackBar.openSnack(this.authAlerts.logoutSuccess, 4000, 'black');
     }
 
     changePassword(data: any): void {

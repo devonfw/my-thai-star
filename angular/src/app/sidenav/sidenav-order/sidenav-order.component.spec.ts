@@ -6,6 +6,7 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CoreModule } from '../../core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SidenavOrderComponent', () => {
   let component: SidenavOrderComponent;
@@ -21,6 +22,7 @@ describe('SidenavOrderComponent', () => {
       ],
       imports: [
         CoreModule,
+        TranslateModule.forRoot(),
         HttpClientModule,
       ],
     })
