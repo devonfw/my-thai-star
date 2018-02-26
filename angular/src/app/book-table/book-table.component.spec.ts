@@ -12,6 +12,7 @@ import { WindowService } from '../core/windowService/windowService.service';
 
 import { BookTableComponent } from './book-table.component';
 import { emailValidator, EmailValidatorDirective } from '../shared/directives/email-validator.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -29,6 +30,7 @@ describe('BookTableComponent', () => {
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        TranslateModule.forRoot(),
         CoreModule,
         Md2Module,
       ],

@@ -14,6 +14,7 @@ import { MatSlider, MatInput } from '@angular/material';
 
 import { MenuComponent } from './menu.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -38,6 +39,7 @@ describe('MenuComponent', () => {
         BrowserAnimationsModule,
         BrowserDynamicTestingModule,
         HttpClientModule,
+        TranslateModule.forRoot(),
         FormsModule,
         CoreModule,
       ],
