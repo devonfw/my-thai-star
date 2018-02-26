@@ -21,7 +21,7 @@
     },
     "alerts": {
         "accessError": "Acceso prohibido, por favor identifíquese primero",
-        "genericError": "Ha ocurrido un error, por favor vuelva a intentarlo mas tarde",
+        "genericError": "Ha ocurrido un error, por favor vuelva a intentarlo más tarde",
         "urlError": "Url no encontrada, por favor vuelva a intentarlo",
         "email confirmations": {
             "invitationAccept": "Invitación aceptada satisfactoriamente",
@@ -65,7 +65,7 @@
         "dialog": {
             "title": "Reservar una mesa",
             "bookingSuccess": "Mesa reservada satisfactoriamente",
-            "bookingError": "Error reservando, inténtelo de nuevo mas tarde"
+            "bookingError": "Error reservando, inténtelo de nuevo más tarde"
         },
         "formErrors": {
             "nameRequired": "Requerido. Por favor inserte su nombre para reservar la mesa.",
@@ -73,7 +73,7 @@
             "emailPattern": "Inserte un email válido para enviar la información de la reserva, ej: email@email.com.",
             "emailFormat": "El formato del email no es válido.",
             "assistantsRequired": "Requerido. Por favor indique el número de asistentes.",
-            "assistantsMax": "No se puede reservar para mas asistentes que el tamaño máximo de las mesas (8), si necesita mas mesas, resérvelas aparte.",
+            "assistantsMax": "No se puede reservar para más asistentes que el tamaño máximo de las mesas (8), si necesita más mesas, resérvelas aparte.",
             "assistantsMin": "No se pueden reservar mesas vacías o con números negativos"
         }
     },
@@ -93,7 +93,7 @@
         }
     },
     "home": {
-        "subtitle": "Mas que solo comida deliciosa",
+        "subtitle": "Más que solo comida deliciosa",
         "restaurantTitle": "Nuestro restaurante",
         "restaurantContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
         "menuTitle": "Nuestro menú",
