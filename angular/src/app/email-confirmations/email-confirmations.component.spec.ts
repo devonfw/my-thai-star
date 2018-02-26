@@ -15,6 +15,7 @@ import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockp
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -35,6 +36,7 @@ describe('EmailConfirmationsComponent', () => {
       imports: [
         AppRoutingModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         BrowserAnimationsModule,
         ReactiveFormsModule,
         CoreModule,

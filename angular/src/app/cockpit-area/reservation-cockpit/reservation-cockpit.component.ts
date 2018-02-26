@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
 import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -30,11 +31,7 @@ export class ReservationCockpitComponent implements OnInit {
   reservations: ReservationView;
   totalReservations: number;
 
-  columns: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date' },
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.bookingToken', label: 'Reference number' },
-  ];
+  columns: ITdDataTableColumn[];
 
   pageSizes: number[] = config.pageSizes;
 
@@ -45,9 +42,17 @@ export class ReservationCockpitComponent implements OnInit {
   };
 
   constructor(private waiterCockpitService: WaiterCockpitService,
-    private dialog: MatDialog) { }
+              private translate: TranslateService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
+      this.columns = [
+        { name: 'booking.bookingDate', label: res.reservationDateH },
+        { name: 'booking.email', label: res.emailH },
+        { name: 'booking.bookingToken', label: res.bookingTokenH },
+      ];
+    });
     this.applyFilters();
   }
 

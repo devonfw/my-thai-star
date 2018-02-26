@@ -1,6 +1,7 @@
 {
     "buttons": {
         "cancel": "Cancel",
+        "close": "Close",
         "send": "Send",
         "login": "Login",
         "register": "Register",
@@ -81,12 +82,12 @@
         "orders": "Orders",
         "reservations": "Reservations",
         "userActions": {
-            "user": "user",
+            "user": "User",
             "logout": "Log out",
             "changePassword": "Change password",
             "twitterAccount": "Twitter account",
             "signOut": "Sign out",
-            "orders": "orders"
+            "orders": "Orders"
         }
     },
     "home": {
@@ -145,11 +146,31 @@
         "filter": "Filter",
         "orders": {
             "title": "Orders",
-            "dialogTitle": "ORDER DETAILS - REFERENCE NUMBER"
+            "dialogTitle": "ORDER DETAILS - REFERENCE NUMBER",
+            "dialogTable": {
+                "dishH": "Dish",
+                "commentsH": "Comments",
+                "extrasH": "Extra",
+                "quantityH": "Quantity",
+                "priceH": "Price"
+            }
         },
         "reservations": {
             "title": "Reservations",
-            "dialogTitle": "RESERVATION DETAILS - REFERENCE NUMBER"
+            "dialogTitle": "RESERVATION DETAILS - REFERENCE NUMBER",
+            "dialogTable": {
+                "guestEmailH": "Guest email",
+                "acceptanceH": "Acceptances and declines",
+                "assistantsH": "Assistants"
+            }
+        },
+        "table": {
+            "reservationDateH": "Reservation Date",
+            "emailH": "Email",
+            "bookingTokenH": "Reference Number",
+            "ownerH": "Owner",
+            "tableH": "Table",
+            "creationDateH": "Creation date"
         }
     }
 }

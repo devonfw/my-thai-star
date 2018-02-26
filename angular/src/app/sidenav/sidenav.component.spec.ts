@@ -9,6 +9,7 @@ import { SnackBarService } from '../core/snackService/snackService.service';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { SidenavComponent } from './sidenav.component';
 import { CoreModule } from '../core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -24,6 +25,7 @@ describe('SidenavComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         RouterTestingModule,
         CoreModule,
       ],
