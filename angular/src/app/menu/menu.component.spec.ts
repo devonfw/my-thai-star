@@ -50,6 +50,9 @@ describe('MenuComponent', () => {
   }));
 
   beforeEach(() => {
+    // fixture = TestBed.createComponent(MenuComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
     menuService = new MenuService(http);
     component = new MenuComponent(menuService);
   });
