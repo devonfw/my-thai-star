@@ -13,6 +13,7 @@ export const config: any = {
     { label: 'Français', value: 'fr' },
     { label: 'Polski', value: 'pl' },
     { label: 'Nederlands', value: 'nl' },
+    { label: 'Русский', value: 'ru' },
     { label: 'български', value: 'bg' },
     { label: 'Català', value: 'ca' },
   ],
