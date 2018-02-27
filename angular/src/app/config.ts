@@ -16,6 +16,7 @@ export const config: any = {
         { label: 'български', value: 'bg' },
         { label: 'Català', value: 'ca' },
     ],
+    langs: [{ label: 'English', value: 'en' }, { label: 'Español', value: 'es' }],
 };
 
 export enum BackendType {

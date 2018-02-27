@@ -65,10 +65,10 @@
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
-    "@angular-devkit/schematics": "0.4.2",
     "@angular/cli": "1.7.1",
     "@angular/compiler-cli": "5.2.6",
     "@angular/language-service": "5.2.6",
+    "@angular-devkit/schematics": "0.4.2",
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
