@@ -7,15 +7,15 @@ export const config: any = {
   ],
   langs: [
     { label: 'English', value: 'en' },
-    { label: 'Español', value: 'es' },
-    { label: 'हिन्दी', value: 'hi' },
     { label: 'Deutsch', value: 'de' },
+    { label: 'Español', value: 'es' },
+    { label: 'Català', value: 'ca' },
     { label: 'Français', value: 'fr' },
-    { label: 'Polski', value: 'pl' },
     { label: 'Nederlands', value: 'nl' },
+    { label: 'हिन्दी', value: 'hi' },
+    { label: 'Polski', value: 'pl' },
     { label: 'Русский', value: 'ru' },
     { label: 'български', value: 'bg' },
-    { label: 'Català', value: 'ca' },
   ],
 };
 
