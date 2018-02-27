@@ -1,4 +1,4 @@
-{
+﻿{
   "buttons": {
     "cancel": "Cancel·lar",
     "close": "Tancar",
@@ -6,7 +6,7 @@
     "login": "Accedir",
     "register": "Registrar",
     "bookTable": "Reservar una taula",
-    "inviteFriends": "Convidar amics/gues",
+    "inviteFriends": "Convidar amics/amigues",
     "viewMenu": "Veure el menú",
     "addToOrder": "Afegir a l'ordre",
     "clearFilters": "Netejar filtres",
@@ -25,10 +25,10 @@
       "Ha ocorregut un error, si us plau torni a intentar-ho més tard",
     "urlError": "Url no trobada, si us plau torni a intentar-ho",
     "email confirmations": {
-      "invitationAccept": "Invitació acceptada satisfactòriament",
-      "invitationReject": "Invitació cancel·lada satisfactòriament",
-      "bookingCancel": "Reserva cancel·lada satisfactòriament",
-      "orderCancel": "Comanda cancel·lada satisfactòriament"
+      "invitationAccept": "Invitació acceptada satisfactoriament",
+      "invitationReject": "Invitació cancel·lada satisfactoriament",
+      "bookingCancel": "Reserva cancel·lada satisfactoriament",
+      "orderCancel": "Comanda cancel·lada satisfactoriament"
     },
     "orderID":
       "Per fer una comanda és necessari tindre un ID de reserva. Introudeix l'ID de la taula que reservà o bé reservi-la ara mateix.",
@@ -50,7 +50,7 @@
     "assistants": "Assistents",
     "friends": "Amics",
     "terms": "Acceptar termes",
-    "dateTime": "Fecha y hora",
+    "dateTime": "Data y hora",
     "guests": "Convidats",
     "guestsPH": "Email dels covidats",
     "comment": "Comentari",
@@ -66,7 +66,7 @@
     "reservationTitle": "Afegeix la teva informació i amics",
     "dialog": {
       "title": "Reservar una taula",
-      "bookingSuccess": "Taula reservada satisfactòriament",
+      "bookingSuccess": "Taula reservada satisfactoriament",
       "bookingError": "Error reservant, intenti-ho de nou més tard"
     },
     "formErrors": {
@@ -76,7 +76,7 @@
         "Requerit. Si us plau inserti el seu email per reservar la taula.",
       "emailPattern":
         "Inserti un email vàlid per enviar la informació de la reserva, ej: email@email.com.",
-      "emailFormat": "El formato de l'email no és vàlid.",
+      "emailFormat": "El format de l'email no és vàlid.",
       "assistantsRequired":
         "Requerit. Si us plau indiqui el nombre d'assistents.",
       "assistantsMax":
@@ -164,7 +164,7 @@
       "dialogTable": {
         "dishH": "Plat",
         "commentsH": "Comentaris",
-        "extrasH": "Extras",
+        "extrasH": "Extres",
         "quantityH": "Quantitat",
         "priceH": "Preu"
       }
