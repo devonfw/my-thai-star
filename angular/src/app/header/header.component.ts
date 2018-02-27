@@ -19,19 +19,23 @@ import { config } from '../config';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-
   selectableLangs: any[];
+  flag: string;
 
-  @Output('openCloseSidenavMobile') sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
+  @Output('openCloseSidenavMobile')
+  sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public window: WindowService,
-              public translate: TranslateService,
-              public router: Router,
-              public sidenav: SidenavService,
-              public dialog: MatDialog,
-              public auth: AuthService,
-              public userService: UserAreaService) {
-      this.selectableLangs = config.langs;
+  constructor(
+    public window: WindowService,
+    public translate: TranslateService,
+    public router: Router,
+    public sidenav: SidenavService,
+    public dialog: MatDialog,
+    public auth: AuthService,
+    public userService: UserAreaService,
+  ) {
+    this.selectableLangs = config.langs;
+    this.getFlag(this.translate.currentLang);
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -49,12 +53,34 @@ export class HeaderComponent {
 
   changeLanguage(lang: string): void {
     this.translate.use(lang);
+    this.getFlag(lang);
+  }
+
+  getFlag(lang: string): void {
+    switch (lang) {
+      case 'ca':
+        this.flag = 'es';
+        break;
+      case 'en':
+        this.flag = 'gb';
+        break;
+      case 'hi':
+        this.flag = 'in';
+        break;
+
+      default:
+        this.flag = lang;
+        break;
+    }
   }
 
   openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
+      LoginDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         if (result.email) {
@@ -67,18 +93,24 @@ export class HeaderComponent {
   }
 
   openResetDialog(): void {
-    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(
+      PasswordDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       // TODO: manage user input
     });
   }
 
   openTwitterDialog(): void {
-    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(
+      TwitterDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       // TODO: manage user input
     });
