@@ -11,8 +11,9 @@ export const config: any = {
         { label: 'हिन्दी', value: 'hi' },
         { label: 'Deutsch', value: 'de' },
         { label: 'Français', value: 'fr' },
-        { label: 'Polskie', value: 'pl' },
+        { label: 'Polski', value: 'pl' },
         { label: 'Nederlands', value: 'nl' },
+        { label: 'български', value: 'bg' },
         { label: 'Català', value: 'ca' },
     ],
 };
@@ -21,9 +22,4 @@ export enum BackendType {
     IN_MEMORY,
     REST,
     GRAPHQL,
-}
-
-export class BackendConfig {
-    environmentType: BackendType;
-    restServiceRoot: string;
 }
