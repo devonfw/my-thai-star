@@ -12,6 +12,7 @@ import { OrderListView } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
 import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -43,14 +44,15 @@ export class OrderCockpitComponent implements OnInit {
   };
 
   constructor(private dialog: MatDialog,
-              private translate: TranslateService,
-              private waiterCockpitService: WaiterCockpitService) { }
+    private translate: TranslateService,
+    private waiterCockpitService: WaiterCockpitService) { }
 
   ngOnInit(): void {
     this.applyFilters();
     this.setTableHeaders();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.setTableHeaders();
+      moment.locale(this.translate.currentLang);
     });
   }
 

@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { /* ComponentFixture, */ TestBed, async } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -18,7 +18,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
-  let fixture: ComponentFixture<MenuComponent>;
+  // let fixture: ComponentFixture<MenuComponent>;
+  let http: HttpClient;
+  let menuService: MenuService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,9 +50,11 @@ describe('MenuComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture = TestBed.createComponent(MenuComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
+    menuService = new MenuService(http);
+    component = new MenuComponent(menuService);
   });
 
   it('should create', () => {
