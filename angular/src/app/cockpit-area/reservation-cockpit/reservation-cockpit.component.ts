@@ -44,11 +44,10 @@ export class ReservationCockpitComponent implements OnInit {
   };
 
   constructor(private waiterCockpitService: WaiterCockpitService,
-              private translate: TranslateService,
-              private dialog: MatDialog) { }
+    private translate: TranslateService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    moment.locale(this.translate.currentLang);
     this.setTableHeaders();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.setTableHeaders();

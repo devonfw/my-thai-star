@@ -14,22 +14,24 @@ import { LangChangeEvent } from '@ngx-translate/core';
 export class ReservationDialogComponent implements OnInit {
 
   datao: FriendsInvite[] = [];
-  columnso: ITdDataTableColumn[];
-  pageSizes: number[];
   fromRow: number = 1;
   currentPage: number = 1;
   pageSize: number = 4;
 
   data: any;
-
+  columnso: ITdDataTableColumn[] = [
+    { name: 'email', label: 'Guest email' },
+    { name: 'accepted', label: 'Acceptances and declines' },
+  ];
+  pageSizes: number[] = config.pageSizesDialog;
   datat: ReservationView[] = [];
   columnst: ITdDataTableColumn[];
 
   filteredData: any[] = this.datao;
 
   constructor(private _dataTableService: TdDataTableService,
-              private translate: TranslateService,
-              @Inject(MAT_DIALOG_DATA) dialogData: any) {
+    private translate: TranslateService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any) {
     this.data = dialogData.row;
     this.pageSizes = config.pageSizesDialog;
   }
