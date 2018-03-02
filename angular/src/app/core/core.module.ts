@@ -65,7 +65,14 @@ import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 
+// Moment locales
 import 'moment/locale/es';
+import 'moment/locale/fr';
+import 'moment/locale/hi';
+import 'moment/locale/pl';
+import 'moment/locale/nl';
+import 'moment/locale/de';
+import 'moment/locale/ca';
 
 @NgModule({
   imports: [
@@ -128,7 +135,7 @@ import 'moment/locale/es';
     Md2Module,
     HttpClientModule,
   ],
-  declarations: [ NotFoundComponent ],
+  declarations: [NotFoundComponent],
   providers: [
     AuthService,
     AuthGuardService,

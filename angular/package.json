@@ -52,6 +52,7 @@
     "@ngx-translate/http-loader": "2.0.1",
     "angular2-moment": "^1.8.0",
     "core-js": "^2.5.3",
+    "flag-icon-css": "^3.0.0",
     "hammerjs": "^2.0.8",
     "highlight.js": "^9.12.0",
     "intl": "^1.2.5",

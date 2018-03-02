@@ -1,8 +1,10 @@
-<div layout="column" class="justify-space-between" style ="height: 100%">
+<div layout="column" class="justify-space-between" style="height: 100%">
   <div layout="column" flex>
     <mat-toolbar>
       <div layout="row" style="align-items:center" flex>
-        <button class="forMobile" mat-icon-button (click)="closeSidenav()"><mat-icon>clear</mat-icon></button>
+        <button class="forMobile" mat-icon-button (click)="closeSidenav()">
+          <mat-icon>clear</mat-icon>
+        </button>
         <mat-icon class="forDesktop push-right-sm">shopping_basket</mat-icon>
         <span class="text-upper" style="font-weight: bold; font-size: 0.7em">{{'sidenav.title' | translate}}</span>
       </div>
@@ -26,7 +28,7 @@
         <div layout="row" class="justify-space-around" style="align-items:center" flex>
           <mat-icon class="mat-18 pad-right-sm">report_problem</mat-icon>
           <span flex="65" class="invitationAlert">{{'alerts.orderID' | translate}} </span>
-          <button mat-button color="accent" (click)="navigateTo('bookTable')">Book a table</button>
+          <button mat-button color="accent" (click)="navigateTo('bookTable')">{{'buttons.bookTable' | translate}}</button>
         </div>
       </mat-card>
       <mat-form-field class="push-left push-right" color="accent" flex>
@@ -37,6 +39,7 @@
   </div>
   <div style="text-align: right">
     <button mat-button (click)="closeSidenav()" class="text-upper property-text-bold">{{'buttons.cancel' | translate}}</button>
-    <button mat-button color="accent" (click)="sendOrders(bookingId.value)" [disabled]="!(bookingId.value.length > 0 && terms.checked)" class="text-upper property-text-bold">{{'buttons.send' | translate}}</button>
+    <button mat-button color="accent" (click)="sendOrders(bookingId.value)" [disabled]="!(bookingId.value.length > 0 && terms.checked)"
+      class="text-upper property-text-bold">{{'buttons.send' | translate}}</button>
   </div>
 </div>
