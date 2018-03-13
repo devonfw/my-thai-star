@@ -15,6 +15,7 @@ export const config: any = {
     { label: 'हिन्दी', value: 'hi' },
     { label: 'Polski', value: 'pl' },
     { label: 'Русский', value: 'ru' },
+    { label: 'български', value: 'bg' },
   ],
 };
 
