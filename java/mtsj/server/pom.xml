@@ -7,15 +7,14 @@
     <artifactId>mtsj</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
-  <groupId>io.oasp.application</groupId>
   <artifactId>mtsj-server</artifactId>
   <packaging>war</packaging>
   <name>${project.artifactId}</name>
   <description>Server for the mtsj application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-      <java.version>1.8</java.version>
-      <server.war.name>mythaistar</server.war.name>
+    <java.version>1.8</java.version>
+    <server.war.name>mythaistar</server.war.name>
   </properties>
 
   <dependencies>
@@ -24,13 +23,28 @@
       <artifactId>mtsj-core</artifactId>
       <version>${project.version}</version>
     </dependency>
- </dependencies>
+  </dependencies>
 
   <profiles>
     <profile>
+      <id>batch</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>mtsj-batch</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <!-- REVIEW (JH): IMHO this is dead stuff that can be removed (AFAIK MTS frontend and backend are separate apps)
+        otherwise should use frontend-maven-plugin -->
       <id>jsclient</id>
       <activation>
-        <!--<activeByDefault>true</activeByDefault>-->
+        <!--<activeByDefault>true</activeByDefault> -->
         <activeByDefault>false</activeByDefault>
       </activation>
       <build>
@@ -103,8 +117,8 @@
   </profiles>
 
   <build>
-  <finalName>${server.war.name}</finalName>
-    <resources>
+    <finalName>${server.war.name}</finalName>
+    <resources> <!-- Same as above - this is dead stuff that can be removed. -->
       <resource>
         <directory>${project.basedir}/src/main/resources</directory>
       </resource>
@@ -117,12 +131,12 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-            <configuration>
-              <mainClass>io.oasp.application.mtsj.SpringBootApp</mainClass>
-              <classifier>bootified</classifier>
-              <finalName>${project.artifactId}</finalName>
-            </configuration>
-                                <executions>
+        <configuration>
+          <mainClass>io.oasp.application.mtsj.SpringBootApp</mainClass>
+          <classifier>bootified</classifier>
+          <finalName>${project.artifactId}</finalName>
+        </configuration>
+        <executions>
           <execution>
             <goals>
               <goal>repackage</goal>
@@ -130,7 +144,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 
