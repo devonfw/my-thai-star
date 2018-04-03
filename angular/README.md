@@ -2,7 +2,7 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
-**UPDATE:** Angular CLI has been updated to 1.6.0. version. Please follow the instructions at the end of this README.
+**UPDATE:** Angular CLI has been updated to 1.7.3. version.
 
 ## Install or update the project
 
