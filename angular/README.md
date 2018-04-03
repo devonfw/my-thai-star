@@ -85,9 +85,11 @@ Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.gi
 
 ## Compodoc documentation
 
-Please, install globally [Compodoc](https://compodoc.github.io/website/) by `npm i -g @compodoc/compodoc`. Then run the script `yarn compodoc` or `npm run compodoc`. Then open the generated documentation in `/documentation/index.html`.
+1.  Please, install globally [Compodoc](https://compodoc.github.io/website/) by `npm i -g @compodoc/compodoc`.
+2.  Run the script `yarn compodoc` or `npm run compodoc`.
+3.  Then open the generated documentation in `/documentation/index.html`.
 
-**NOTE:** Compodoc could be installed locally in the project but we have detected some issues that recommends for the moment to use the global installation.
+**NOTE:** Compodoc has not been installed locally in the project, since we have detected some issues that recommends for the moment to use the global installation. In future versions `@compodoc/compodoc` development dependency will be included in the project.
 
 ## Further help
 
