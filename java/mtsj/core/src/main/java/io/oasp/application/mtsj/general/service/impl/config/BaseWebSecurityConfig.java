@@ -29,6 +29,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Value("${security.cors.enabled}")
   boolean corsEnabled = true;
 
+  long maxAge = 3600L;
+
   @Inject
   private UserDetailsService userDetailsService;
 
@@ -46,7 +48,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     config.addAllowedMethod("POST");
     config.addAllowedMethod("DELETE");
     config.addAllowedMethod("PATCH");
-    config.setMaxAge(3600L);
+    config.setMaxAge(this.maxAge);
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
