@@ -61,14 +61,14 @@
     "lodash": "^4.17.4",
     "md2": "^0.0.29",
     "moment": "^2.20.1",
-    "rxjs": "^5.5.8",
+    "rxjs": "^5.5.9",
     "showdown": "^1.8.6",
     "whatwg-fetch": "^2.0.3",
-    "zone.js": "^0.8.20"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/schematics": "0.4.8",
-    "@angular/cli": "1.7.3",
+    "@angular-devkit/schematics": "0.5.5",
+    "@angular/cli": "1.7.4",
     "@angular/compiler-cli": "5.2.9",
     "@angular/language-service": "5.2.9",
     "@types/hammerjs": "2.0.35",
