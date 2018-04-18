@@ -1,3 +1,4 @@
+-- Deleta all data for H2
 SET FOREIGN_KEY_CHECKS=0;
 
 DELETE FROM RestaurantTable;
