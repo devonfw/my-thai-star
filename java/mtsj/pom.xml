@@ -19,9 +19,9 @@
   </properties>
 
   <modules>
+    <module>api</module>
     <module>core</module>
     <module>server</module>
-    <module>api</module>
   </modules>
 
   <dependencyManagement>
@@ -47,14 +47,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    -->
   </dependencies>
 
   <build>
@@ -63,7 +65,7 @@
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
-            <version>1.0.0</version>
+          <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
@@ -160,6 +162,15 @@
       <properties>
         <oasp.test.excluded.groups></oasp.test.excluded.groups>
       </properties>
+    </profile>
+    <profile>
+      <id>batch</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>batch</module>
+      </modules>
     </profile>
   </profiles>
 
