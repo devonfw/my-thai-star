@@ -8,7 +8,8 @@ eclipse-target
 *.classpath
 *.project
 *.iml
-.*
+*.settings
+.*!travis.yml
 java/samples/server/target/
 
 java/samples/server/eclipse-target/
