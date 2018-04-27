@@ -3,23 +3,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>mtsjs</artifactId>
-  <packaging>jar</packaging>
-  <name>${project.artifactId}</name>
-  <description>Application based on the Open Application Standard Platform for Javascript (OASP4JS).</description>
-  
   <parent>
     <groupId>io.oasp.application</groupId>
     <artifactId>mts</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+  <artifactId>mtsjs</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+  <description>Application based on the Open Application Standard Platform for Javascript (OASP4JS).</description>
 
   <build>
     <plugins>
