@@ -1,0 +1,6 @@
+language: java
+dist: precise
+jdk:
+  - oraclejdk8
+script: mvn install
+sudo: false
