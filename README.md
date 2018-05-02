@@ -4,12 +4,11 @@ This repository is an **iCSD Capgemini** initiative that hosts an application re
 
 ## Technologies
 
-This project is intended to be an example for the usage of  new technologies in web development. Here is a list of all technologies involved:
+This project is intended to be an example for the usage of new technologies in web development. Here is a list of all technologies involved:
 
 * **Angular**
 
 Client-side developed using the latest version of this framework: Angular 5.
-
 
 * **Java**
 
@@ -29,11 +28,11 @@ Used this technology to define contracts between client-side(s) and server-side(
 
 * **Production Line**
 
-Tool used for Continuous Integration and Continious Delivery. Inside of this Jenkins and SonarQube are used. Also used **Docker** for the deployment in an external server.
+Tool used for Continuous Integration and Continuous Delivery. Inside of this Jenkins and SonarQube are used. Also used **Docker** for the deployment in an external server.
 
 * **GraphQL**
 
-GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system definen for data. 
+GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system defined for data.
 
 ## Deployment
 
@@ -53,4 +52,3 @@ fdb63e26d299        mythaistar_angular         "nginx -g 'daemon of…"   3 minu
 ```
 
 The usage of the `reverse-proxy` only uses 1 port of the Docker host (where this is deployed), the `8080`. All internal communication of containers is done using docker alias of services.
-
