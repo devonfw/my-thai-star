@@ -1,34 +1,20 @@
 <td-layout>
-  <div class="home-title" flex>
-    <div layout="column" class="property-text-center">
-      <h1 class= "title-color title">MY THAI STAR</h1>
-      <span class= "title-color pull-top subtitle">{{'home.subtitle' | translate}}</span>
-    </div>
+  <div class="home-header">
+      <h1 class= "title">MY THAI STAR</h1>
+      <span class= "pull-top subtitle">{{'home.subtitle' | translate}}</span>
   </div>
-  <mat-card id="homeCard" class="card-over push-left-xl push-right-xl">
-    <div layout-gt-xs="row" class="pad" flex>
-      <mat-card>
-        <img mat-card-image src="../../assets/images/thai-restaurant.jpg">
+  <mat-card id="homeCard" class="home-card">
+    <div class="clear-fix tiles">
+      <mat-card *ngFor="let tile of getTiles()">
+        <img mat-card-image src="{{tile.img}}">
         <mat-card-content>
-          <div class="property-text-center pad">
-            <h3 class="text-upper">{{'home.restaurantTitle' | translate}}</h3>
-            <p> {{'home.restaurantContent' | translate}} </p>
+          <div class="tile-content">
+            <h3>{{tile.title | translate}}</h3>
+            <p> {{tile.content | translate}} </p>
           </div>
         </mat-card-content>
-        <mat-card-actions class="property-text-center">
-          <button mat-raised-button color="accent" class="text-upper" (click)="navigateTo('bookTable')">{{'buttons.bookTable' | translate}}</button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card>
-        <img mat-card-image src="../../assets/images/thai-restaurant-dish.jpg">
-        <mat-card-content>
-          <div class="property-text-center pad">
-            <h3 class="text-upper">{{'home.menuTitle' | translate}}</h3>
-            <p> {{'home.menuContent' | translate}}</p>
-          </div>
-        </mat-card-content>
-        <mat-card-actions class="property-text-center">
-          <button mat-raised-button class="text-upper" color="accent" (click)="navigateTo('menu')">{{'buttons.viewMenu' | translate}}</button>
+        <mat-card-actions class="tile-action">
+          <button mat-raised-button color="accent" (click)="tile.navigate()">{{tile.button | translate}}</button>
         </mat-card-actions>
       </mat-card>
     </div>

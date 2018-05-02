@@ -1,29 +1,14 @@
-.title-color {
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: white;
-}
-
-@media (min-width: 1300px){
-  .star-image {
-    position: absolute;
-    left: 50%;
-    top: 1%;
-  }
-  
-  .title {
-    font-size: 3em;
-  }
-
-  .subtitle {
-    font-size: 1em;
-  }
-}
-
-@media (max-width: 1300px){
-  .star-image {
-    position: absolute;
-    left: 53%;
-    top: -2%;
-  }
+  padding-bottom: 25%;
+  padding-top: 5%;
+  background-image: url('../../assets/images/background-dish.png'), url('../../assets/images/star.png'), url('../../assets/images/Wood2.jpg');
+  background-position: bottom, top, center;
+  background-size: cover, 15%, cover;
+  background-repeat: no-repeat, no-repeat, repeat;
 
   .title {
     font-size: 1.5em;
@@ -33,34 +18,58 @@
     padding-top: 10px;
     font-size: 0.7em;
   }
-
-  .sizeImg {
-    max-width:75%;
-  }
-
 }
 
-.card-over {
-  margin-top: -75px;
-}
+.home-card {
+  margin: -50px 10px 10px 10px;
+  padding: 5px;
 
-.home-title {
-  padding-bottom: 25%;
-  padding-top: 5%;
-  background-image: url('../../assets/images/background-dish.png'), url('../../assets/images/star.png'), url('../../assets/images/Wood2.jpg');
-  background-position: bottom, top, center;
-  background-size: cover, 15%, cover;
-  background-repeat: no-repeat, no-repeat, repeat;
-}
+  .tiles {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 
-@media (max-width: 600px) {
-  .forDesktop {
-    display: none;
+    .tile-content {
+      padding: 5px;
+      text-align: center;
+
+      h3 {
+        text-transform: uppercase;
+      }
+    }
+    .tile-action {
+      display: flex;
+      justify-content: center;
+      button {
+        text-transform: uppercase;
+      }
+    }
   }
 }
 
 @media (min-width: 600px) {
-  .forMobile {
-    display: none;
+  .home-header {
+    .title {
+      font-size: 3em;
+    }
+
+    .subtitle {
+      font-size: 1em;
+    }
+  }
+
+  .home-card {
+    margin-top: -75px;
+    margin-left: 48px;
+    margin-right: 48px;
+    padding: 16px;
+
+    .tiles {
+      flex-direction: row;
+
+      .tile-content {
+        padding: 16px;
+      }
+    }
   }
 }
