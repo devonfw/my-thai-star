@@ -1,29 +1,83 @@
-.filter-group {
-  display: inline-flex;
-  flex-direction: column;
-  border-bottom: 1px solid grey;
-  margin-bottom:5%;
-  padding-bottom:5%;
-  width: 100%
-}
+.menu {
+  background-color: white;
 
-.filter-title {
-  font-size: 1.1 em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
+  .search {
+    justify-content: space-between;
+    padding: 10px 24px 0px 24px;
+    display: flex;
+    flex-direction: column;
 
-.margin-checkbox {
-  margin-left: 15px;
-}
+    .searchBy {
+      margin-bottom: -8px;
+    }
 
-.bottom-border {
-  border-bottom: 1px solid grey;
-}
+    .sortingBy {
+      display: flex;
+      flex-direction: row;
+      mat-form-field {
+        flex: 1;
+      }
+      .button-sort {
+        top: 15px;
+      }
+    }
+  }
+  @media (min-width: 600px) {
+    .search {
+      flex-direction: row;
 
-.button-sort {
-  top: 15px;
+      .sortingBy {
+        width: 30%;
+      }
+      .searchBy {
+        width: 30%;
+      }
+    }
+  }
+
+  .menu-filters {
+    padding: 0px 24px;
+    display: flex;
+    flex-direction: column;
+
+    .filter-checkboxes {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .filter-divider {
+        border-bottom: 1px solid lightgray;
+        display: block;
+      }
+
+      mat-checkbox {
+        margin: 8px 10px;
+        display: block;
+      }
+    }
+
+    .filter-sliders {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+
+      .slider {
+        display: flex;
+        flex-direction: column;
+        mat-slider {
+          margin-top: -10px;
+        }
+      }
+    }
+  }
+  .filter-actions {
+    text-align: right;
+    padding-top: 8px;
+    padding-bottom: 2px;
+    button {
+      text-transform: uppercase;
+    }
+  }
 }
 
 @media (min-width: 1300px){
@@ -39,29 +93,7 @@
 }
 
 @media (max-width: 600px) {
-  .forDesktop {
-    display: none;
-  }
-  .searchBy {
-    width: 100%;
-  }
-  .sortingBy {
-    padding-bottom: 10px;
-  }
-
   public-menu-card {
     width: 100%
-  }
-}
-
-@media (min-width: 600px) {
-  .forMobile {
-    display: none;
-  }
-  .sortingBy {
-    width: 30%;
-  }
-  .searchBy {
-    width: 30%;
   }
 }
