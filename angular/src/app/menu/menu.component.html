@@ -37,18 +37,23 @@
         <div class ="menu-filters">
 
           <div class="filter-checkboxes">
-            <mat-checkbox ngModel name="0">{{'menu.filter.mainDishes' | translate}}</mat-checkbox>
-            <mat-checkbox ngModel name="1">{{'menu.filter.starters' | translate}}</mat-checkbox>
-            <mat-checkbox ngModel name="2">{{'menu.filter.desserts' | translate}}</mat-checkbox>
-            <span class="filter-divider"></span>
-            <mat-checkbox ngModel name="3">{{'menu.filter.noodle' | translate}}</mat-checkbox>
-            <mat-checkbox ngModel name="4">{{'menu.filter.rice' | translate}}</mat-checkbox>
-            <mat-checkbox ngModel name="5">{{'menu.filter.curry' | translate}}</mat-checkbox>
-            <span class="filter-divider"></span>
-            <mat-checkbox ngModel name="6">{{'menu.filter.vegan' | translate}}</mat-checkbox>
-            <mat-checkbox ngModel name="7">{{'menu.filter.vegetarian' | translate}}</mat-checkbox>
-            <span class="filter-divider"></span>
-            <mat-checkbox ngModel name="8">{{'menu.filter.favourites' | translate}}</mat-checkbox>
+            <div class="filter-divider">
+                <mat-checkbox ngModel name="0">{{'menu.filter.mainDishes' | translate}}</mat-checkbox>
+                <mat-checkbox ngModel name="1">{{'menu.filter.starters' | translate}}</mat-checkbox>
+                <mat-checkbox ngModel name="2">{{'menu.filter.desserts' | translate}}</mat-checkbox>
+            </div>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="3">{{'menu.filter.noodle' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="4">{{'menu.filter.rice' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="5">{{'menu.filter.curry' | translate}}</mat-checkbox>
+            </div>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="6">{{'menu.filter.vegan' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="7">{{'menu.filter.vegetarian' | translate}}</mat-checkbox>
+            </div>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="8">{{'menu.filter.favourites' | translate}}</mat-checkbox>
+            </div>
           </div>
 
           <div class="filter-sliders">
