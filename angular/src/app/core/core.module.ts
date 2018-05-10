@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -38,11 +35,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import {
-  Md2Module,
-  NoConflictStyleCompatibilityMode,
-  MATERIAL_COMPATIBILITY_MODE,
-} from 'md2';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { CdkTableModule } from '@angular/cdk/table';
 import {
   CovalentChipsModule,
@@ -84,8 +77,8 @@ import 'moment/locale/ca';
     CovalentMediaModule,
     CovalentLayoutModule,
     CdkTableModule,
-    Md2Module,
-    NoConflictStyleCompatibilityMode,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   exports: [
     CommonModule,
@@ -132,7 +125,8 @@ import 'moment/locale/ca';
     MatTooltipModule,
     NotFoundComponent,
     MomentModule,
-    Md2Module,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     HttpClientModule,
   ],
   declarations: [NotFoundComponent],
@@ -141,9 +135,11 @@ import 'moment/locale/ca';
     AuthGuardService,
     SnackBarService,
     WindowService,
-    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptorService,
+      multi: true,
+    },
   ],
 })
-
-export class CoreModule { }
+export class CoreModule {}
