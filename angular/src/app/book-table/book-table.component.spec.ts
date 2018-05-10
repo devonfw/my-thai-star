@@ -2,7 +2,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { Md2Module } from 'md2';
 import { CoreModule } from '../core/core.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
@@ -11,7 +10,10 @@ import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/windowService/windowService.service';
 
 import { BookTableComponent } from './book-table.component';
-import { emailValidator, EmailValidatorDirective } from '../shared/directives/email-validator.directive';
+import {
+  emailValidator,
+  EmailValidatorDirective,
+} from '../shared/directives/email-validator.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableComponent', () => {
@@ -20,7 +22,7 @@ describe('BookTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookTableComponent, EmailValidatorDirective ],
+      declarations: [BookTableComponent, EmailValidatorDirective],
       providers: [
         SidenavService,
         SnackBarService,
@@ -32,10 +34,8 @@ describe('BookTableComponent', () => {
         ReactiveFormsModule,
         TranslateModule.forRoot(),
         CoreModule,
-        Md2Module,
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -50,6 +50,8 @@ describe('BookTableComponent', () => {
 
   it('Email should validate (easy)', () => {
     expect(emailValidator(new FormControl('bad@email').value)).toEqual(false);
-    expect(emailValidator(new FormControl('good@email.com').value)).toEqual(true);
+    expect(emailValidator(new FormControl('good@email.com').value)).toEqual(
+      true,
+    );
   });
 });

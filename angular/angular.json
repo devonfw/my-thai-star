@@ -16,16 +16,13 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": [
-              "src/assets",
-              "src/data",
-              "src/favicon.ico"
-            ],
+            "assets": ["src/assets", "src/data", "src/favicon.ico"],
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/@covalent/core/common/platform.css"
+              "node_modules/@covalent/core/common/platform.css",
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css"
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",
@@ -164,20 +161,13 @@
               "node_modules/flag-icon-css/css/flag-icon.min.css",
               "node_modules/@covalent/core/common/platform.css"
             ],
-            "assets": [
-              "src/assets",
-              "src/data",
-              "src/favicon.ico"
-            ]
+            "assets": ["src/assets", "src/data", "src/favicon.ico"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
             "exclude": []
           }
         }
@@ -198,9 +188,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
             "exclude": []
           }
         }
