@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { BookingResponse, OrderResponse, OrderView } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep } from 'lodash';
