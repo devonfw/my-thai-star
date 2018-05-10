@@ -1,8 +1,11 @@
-# My Thai Star
+= My Thai Star
+
+develop: image:https://travis-ci.org/oasp/my-thai-star.svg?branch=develop["build-status",link="https://travis-ci.org/oasp/my-thai-star"]
+
 
 This repository is an **iCSD Capgemini** initiative that hosts an application reference called **My Thai Star**. This application is about the management of a restaurant.
 
-## Technologies
+== Technologies
 
 This project is intended to be an example for the usage of new technologies in web development. Here is a list of all technologies involved:
 
@@ -34,7 +37,7 @@ Tool used for Continuous Integration and Continuous Delivery. Inside of this Jen
 
 GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system defined for data.
 
-## Deployment
+== Deployment
 
 This application can be easily deployed using **Docker** and **docker-compose**.
 
