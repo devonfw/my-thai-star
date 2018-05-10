@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FriendsInvite } from '../../shared/viewModels/interfaces';
 import { map } from 'lodash';
 import { BookingInfo } from 'app/shared/backendModels/interfaces';

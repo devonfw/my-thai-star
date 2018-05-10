@@ -56,7 +56,7 @@ import {
   CovalentNotificationsModule,
   CovalentCommonModule,
 } from '@covalent/core';
-import { MomentModule } from 'angular2-moment';
+import { MomentModule } from 'ngx-moment';
 
 import { WindowService } from './windowService/windowService.service';
 import { SnackBarService } from './snackService/snackService.service';
