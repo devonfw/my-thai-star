@@ -11,6 +11,7 @@ import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.com
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 import { config } from '../config';
 
 @Component({
@@ -33,9 +34,11 @@ export class HeaderComponent {
     public dialog: MatDialog,
     public auth: AuthService,
     public userService: UserAreaService,
+    public dateTimeAdapter: DateTimeAdapter<any>,
   ) {
     this.selectableLangs = config.langs;
     this.getFlag(this.translate.currentLang);
+    this.dateTimeAdapter.setLocale(this.translate.currentLang);
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -53,6 +56,7 @@ export class HeaderComponent {
 
   changeLanguage(lang: string): void {
     this.translate.use(lang);
+    this.dateTimeAdapter.setLocale(lang);
     this.getFlag(lang);
   }
 
