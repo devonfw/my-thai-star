@@ -35,7 +35,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule } from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { CdkTableModule } from '@angular/cdk/table';
 import {
   CovalentChipsModule,
@@ -78,7 +79,7 @@ import 'moment/locale/ca';
     CovalentLayoutModule,
     CdkTableModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
   ],
   exports: [
     CommonModule,
@@ -126,7 +127,7 @@ import 'moment/locale/ca';
     NotFoundComponent,
     MomentModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     HttpClientModule,
   ],
   declarations: [NotFoundComponent],
