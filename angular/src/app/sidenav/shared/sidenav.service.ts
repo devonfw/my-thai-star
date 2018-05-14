@@ -58,7 +58,7 @@ export class SidenavService {
     return this.findOrder(order).orderLine.amount -= 1;
   }
 
-  public removeOrder(order: OrderView): OrderView {
+  public removeOrder(order: OrderView): OrderView[] {
     return remove(this.orders, isOrderEqual(order));
   }
 
