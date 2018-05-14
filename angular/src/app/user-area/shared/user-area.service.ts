@@ -4,7 +4,6 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { LoginInfo } from 'app/shared/backendModels/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
