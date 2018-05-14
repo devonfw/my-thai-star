@@ -24,13 +24,20 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     CoreModule,
   ],
-  providers: [BookTableService, WindowService, SnackBarService],
+  providers: [
+    BookTableService,
+    WindowService,
+    SnackBarService,
+  ],
   declarations: [
     InvitationDialogComponent,
     BookTableDialogComponent,
     BookTableComponent,
   ],
   exports: [BookTableComponent],
-  entryComponents: [InvitationDialogComponent, BookTableDialogComponent],
+  entryComponents: [
+    InvitationDialogComponent,
+    BookTableDialogComponent,
+  ],
 })
 export class BookTableModule {}
