@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { find } from 'lodash';
 import { config } from '../../config';
+import { Role } from '../../shared/viewModels/interfaces';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,8 @@ export class AuthService {
     }
 
     public getPermission(roleName: string): number {
-        return find(config.roles, {name: roleName}).permission;
+        let role: Role = <Role>find(config.roles, { name: roleName });
+        return role.permission;
     }
 
     public isPermited(userRole: string): boolean {
