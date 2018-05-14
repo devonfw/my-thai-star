@@ -2,7 +2,7 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
-**UPDATE:** Angular CLI has been updated to 1.7.3. version.
+**UPDATE:** Angular CLI has been updated to 6.0.1 version.
 
 ## Install or update the project
 
@@ -87,7 +87,7 @@ Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.gi
 
 1.  Please, install globally [Compodoc](https://compodoc.github.io/website/) by `npm i -g @compodoc/compodoc`.
 2.  Run the script `yarn compodoc` or `npm run compodoc`.
-3.  Then open the generated documentation in `/documentation/index.html`.
+3.  Then open the generated documentation served at http://127.0.0.1:8080/.
 
 **NOTE:** Compodoc has not been installed locally in the project, since we have detected some issues that recommends for the moment to use the global installation. In future versions `@compodoc/compodoc` development dependency will be included in the project.
 

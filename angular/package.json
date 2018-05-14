@@ -5,7 +5,7 @@
     ".": "sh .angular-gui/.runner.sh",
     "ng": "ng",
     "start": "ng serve -pc proxy.conf.json -o",
-    "compodoc": "compodoc -p src/tsconfig.app.json",
+    "compodoc": "compodoc -p src/tsconfig.app.json -s",
     "test": "ng test --browsers Chrome",
     "test:ci": "ng test --browsers ChromeHeadless --watch=false",
     "test:firefox": "ng test --browsers Firefox",
