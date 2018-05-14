@@ -29,7 +29,7 @@ export class BookTableService {
     };
 
     if (type) {
-      composedBooking.invitedGuests = map(invitationData.invitedGuests, (guest: FriendsInvite) => { return { email: guest }; });
+      composedBooking.invitedGuests = map(invitationData.invitedGuests, (email: string) => { return { email: email }; });
     } else {
       composedBooking.booking.assistants = invitationData.assistants;
     }

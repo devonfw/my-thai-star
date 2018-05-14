@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
-import { BookingResponse, OrderResponse, OrderView } from '../../shared/viewModels/interfaces';
+import { BookingResponse, OrderResponse, OrderView, OrderViewResult } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep } from 'lodash';
 import { Pagination, Sorting, FilterCockpit } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
@@ -36,9 +36,10 @@ export class WaiterCockpitService {
     filters.sort = sorting;
     return this.http.post<BookingResponse[]>(`${environment.restServiceRoot}${this.getReservationsRestPath}`, filters);
   }
+
   orderComposer(orderList: OrderView[]): OrderView[] {
     let orders: OrderView[] = cloneDeep(orderList);
-    map(orders, (o: OrderView) => {
+    map(orders, (o: OrderViewResult) => {
       o.dish.price = this.priceCalculator.getPrice(o);
       o.extras = map(o.extras, 'name').join(', ');
     });

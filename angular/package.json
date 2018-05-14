@@ -11,8 +11,7 @@
     "test:firefox": "ng test --browsers Firefox",
     "test:ci:firefox": "ng test --browsers FirefoxHeadless --watch=false",
     "test:firefox-dev": "ng test --browsers FirefoxDeveloper",
-    "test:ci:firefox-dev":
-      "ng test --browsers FirefoxDeveloperHeadless --watch=false",
+    "test:ci:firefox-dev": "ng test --browsers FirefoxDeveloperHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ngsw-config": "node_modules/.bin/ngsw-config dist ngsw-config.json",
@@ -23,16 +22,13 @@
     "serve:prod": "ng serve --open --prod",
     "serve:prod:aot": "ng serve --open --prod --aot",
     "serve:prodcompose": "ng serve --open --configuration=prodcompose",
-    "serve:prodcompose:aot":
-      "ng serve --open --configuration=prodcompose --aot",
+    "serve:prodcompose:aot": "ng serve --open --configuration=prodcompose --aot",
     "serve:node": "ng serve --open --configuration=node",
     "serve:node:aot": "ng serve --open --configuration=node --aot",
     "build": "ng build --aot",
-    "build:pwa":
-      "ng build --configuration=pwa --prod --build-optimizer && npm run ngsw-config && npm run ngsw-copy",
+    "build:pwa": "ng build --configuration=pwa --prod --build-optimizer && npm run ngsw-config && npm run ngsw-copy",
     "build:prod": "ng build --configuration=prod --prod --build-optimizer",
-    "build:prodcompose":
-      "ng build --configuration=prodcompose --prod --build-optimizer"
+    "build:prodcompose": "ng build --configuration=prodcompose --prod --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -82,6 +78,7 @@
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
+    "@types/lodash": "^4.14.108",
     "@types/node": "~6.0.60",
     "@types/selenium-webdriver": "3.0.8",
     "codelyzer": "^4.3.0",
