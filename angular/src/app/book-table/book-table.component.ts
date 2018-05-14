@@ -16,9 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './book-table.component.html',
   styleUrls: ['./book-table.component.scss'],
 })
-
 export class BookTableComponent implements OnInit {
-
   invitationModel: string[] = [];
   minDate: Date = new Date();
   bookForm: FormGroup;
@@ -34,31 +32,48 @@ export class BookTableComponent implements OnInit {
     invitedGuests: undefined,
   };
 
-  constructor(public window: WindowService,
-              public translate: TranslateService,
-              public snackBarservice: SnackBarService,
-              public dialog: MatDialog) {
-  }
+  constructor(
+    public window: WindowService,
+    public translate: TranslateService,
+    public snackBarservice: SnackBarService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.invitationForm = new FormGroup({
-      'bookingDate': new FormControl(this.reservationInfo.booking.bookingDate, Validators.required),
-      'name': new FormControl(this.reservationInfo.booking.name, Validators.required),
-      'email': new FormControl(this.reservationInfo.booking.email, [
+      bookingDate: new FormControl(
+        this.reservationInfo.booking.bookingDate,
         Validators.required,
-        Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i),
+      ),
+      name: new FormControl(
+        this.reservationInfo.booking.name,
+        Validators.required,
+      ),
+      email: new FormControl(this.reservationInfo.booking.email, [
+        Validators.required,
+        Validators.pattern(
+          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        ),
       ]),
-      'invitedGuests': new FormControl(this.invitationModel),
+      invitedGuests: new FormControl(this.invitationModel),
     });
 
     this.bookForm = new FormGroup({
-      'bookingDate': new FormControl(this.reservationInfo.booking.bookingDate, Validators.required),
-      'name': new FormControl(this.reservationInfo.booking.name, Validators.required),
-      'email': new FormControl(this.reservationInfo.booking.email, [
+      bookingDate: new FormControl(
+        this.reservationInfo.booking.bookingDate,
         Validators.required,
-        Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i),
+      ),
+      name: new FormControl(
+        this.reservationInfo.booking.name,
+        Validators.required,
+      ),
+      email: new FormControl(this.reservationInfo.booking.email, [
+        Validators.required,
+        Validators.pattern(
+          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        ),
       ]),
-      'assistants': new FormControl(this.reservationInfo.booking.assistants, [
+      assistants: new FormControl(this.reservationInfo.booking.assistants, [
         Validators.required,
         Validators.min(1),
         Validators.max(8),
@@ -66,46 +81,62 @@ export class BookTableComponent implements OnInit {
     });
   }
 
-  get name(): AbstractControl { return this.bookForm.get('name'); }
-  get email(): AbstractControl { return this.bookForm.get('email'); }
-  get assistants(): AbstractControl { return this.bookForm.get('assistants'); }
+  get name(): AbstractControl {
+    return this.bookForm.get('name');
+  }
+  get email(): AbstractControl {
+    return this.bookForm.get('email');
+  }
+  get assistants(): AbstractControl {
+    return this.bookForm.get('assistants');
+  }
 
-  get invName(): AbstractControl { return this.invitationForm.get('name'); }
-  get invEmail(): AbstractControl { return this.invitationForm.get('email'); }
+  get invName(): AbstractControl {
+    return this.invitationForm.get('name');
+  }
+  get invEmail(): AbstractControl {
+    return this.invitationForm.get('email');
+  }
 
   showBookTableDialog(checkbox: MatCheckbox): void {
-    this.dialog.open(BookTableDialogComponent, {
-      width: this.window.responsiveWidth(),
-      data: this.bookForm.value,
-    }).afterClosed().subscribe((res: boolean) => {
-      if (res) {
-        this.bookForm.reset();
-        checkbox.checked = false;
-      }
-    });
+    this.dialog
+      .open(BookTableDialogComponent, {
+        width: this.window.responsiveWidth(),
+        data: this.bookForm.value,
+      })
+      .afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.bookForm.reset();
+          checkbox.checked = false;
+        }
+      });
   }
 
   showInviteDialog(checkbox: MatCheckbox): void {
-    this.dialog.open(InvitationDialogComponent, {
-      width: this.window.responsiveWidth(),
-      data: this.invitationForm.value,
-    }).afterClosed().subscribe((res: boolean) => {
-      if (res) {
-        this.invitationForm.reset();
-        this.invitationModel = [];
-        checkbox.checked = false;
-      }
-    });
+    this.dialog
+      .open(InvitationDialogComponent, {
+        width: this.window.responsiveWidth(),
+        data: this.invitationForm.value,
+      })
+      .afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.invitationForm.reset();
+          this.invitationModel = [];
+          checkbox.checked = false;
+        }
+      });
   }
 
   validateEmail(): void {
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.translate.get('bookTable.formErrors.emailFormat')
-          .subscribe( (text: string) => {
-            this.snackBarservice.openSnack(text, 1000, 'red');
-          });
+      this.translate
+        .get('bookTable.formErrors.emailFormat')
+        .subscribe((text: string) => {
+          this.snackBarservice.openSnack(text, 1000, 'red');
+        });
     }
   }
-
 }
