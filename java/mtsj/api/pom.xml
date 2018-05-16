@@ -7,7 +7,6 @@
     <artifactId>mtsj</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
-  <groupId>io.oasp.application</groupId>
   <artifactId>mtsj-api</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>

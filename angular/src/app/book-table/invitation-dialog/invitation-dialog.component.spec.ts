@@ -3,13 +3,13 @@ import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
-import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
 import { BookTableService } from '../shared/book-table.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { InvitationDialogComponent } from './invitation-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
@@ -20,9 +20,9 @@ describe('InvitationDialogComponent', () => {
       providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         BookTableModule,
         HttpClientModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
       ],
     })
     .compileComponents();

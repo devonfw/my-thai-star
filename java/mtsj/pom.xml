@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <artifactId>mtsj</artifactId>
-  <groupId>io.oasp.application</groupId>
-  <version>0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
@@ -19,9 +18,9 @@
   </properties>
 
   <modules>
+    <module>api</module>
     <module>core</module>
     <module>server</module>
-    <module>api</module>
   </modules>
 
   <dependencyManagement>
@@ -47,14 +46,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    -->
   </dependencies>
 
   <build>
@@ -63,7 +64,7 @@
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
-            <version>1.0.0</version>
+          <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
@@ -161,6 +162,15 @@
         <oasp.test.excluded.groups></oasp.test.excluded.groups>
       </properties>
     </profile>
+    <profile>
+      <id>batch</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>batch</module>
+      </modules>
+    </profile>
   </profiles>
 
   <distributionManagement>
@@ -175,5 +185,4 @@
       <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-
 </project>

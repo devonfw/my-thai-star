@@ -12,12 +12,18 @@ import { SnackBarService } from '../core/snackService/snackService.service';
 
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     Md2Module,
     SharedModule,
+    HttpClientModule,
+    TranslateModule,
     CoreModule,
   ],
   providers: [

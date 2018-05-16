@@ -1,4 +1,4 @@
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -7,13 +7,12 @@ import { CoreModule } from '../core/core.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../backend/booking/booking-data-service';
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/windowService/windowService.service';
 
 import { BookTableComponent } from './book-table.component';
 import { emailValidator, EmailValidatorDirective } from '../shared/directives/email-validator.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -27,11 +26,11 @@ describe('BookTableComponent', () => {
         SnackBarService,
         WindowService,
         BookTableService,
-        {provide: BookingDataService, useClass: BookingInMemoryService},
       ],
       imports: [
         BrowserAnimationsModule,
-        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
         CoreModule,
         Md2Module,
       ],

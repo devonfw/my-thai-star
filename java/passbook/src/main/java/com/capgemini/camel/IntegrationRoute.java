@@ -7,6 +7,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.swagger.annotations.ApiResponse;
@@ -14,10 +15,17 @@ import io.swagger.annotations.ApiResponse;
 @Component
 public class IntegrationRoute extends RouteBuilder {
 
-  private static String logger = "log:com.capgemini.camel.IntegrationRoute?showAll=true&multiline=true";
+  @Value("${verbose}")
+  private Boolean isVerbose;
+
+  private static String logger = "log:com.capgemini.camel.IntegrationRoute";
 
   @Override
   public void configure() throws Exception {
+
+    if (this.isVerbose) {
+      logger += "?showAll=true&multiline=true";
+    }
 
     restConfiguration().component("jetty").host("{{server.host}}").port("{{server.port}}")
         .bindingMode(RestBindingMode.json).dataFormatProperty("prettyPrint", "true")
@@ -59,19 +67,24 @@ public class IntegrationRoute extends RouteBuilder {
     from("direct:create").log("Post call recieved:").to(logger).setProperty("name")
         .spel("#{request.body['booking']['name']}").setProperty("bookingDate")
         .spel("#{request.body['booking']['bookingDate']}").setProperty("email")
-        .spel("#{request.body['booking']['email']}").marshal().json(JsonLibrary.Jackson)
+        .spel("#{request.body['booking']['email']}").marshal().json(JsonLibrary.Jackson).choice()
+        .when(simple("{{verbose}}")).setHeader("Trace", constant("verbose")).end()
         .log("send to MTS server {{mts.backend.uri}}:").to(logger).to("{{mts.backend.uri}}?bridgeEndpoint=true")
         .convertBodyTo(String.class).log("Answer from MTS server:").to(logger).transform()
         .simple("{ \"name\":\"${exchangeProperty.name}\",\"date\":\"${exchangeProperty.bookingDate}\" }")
         .setHeader("Content-type").simple(MediaType.APPLICATION_JSON).setHeader("Authorization")
         .simple("{{passbook.auth.key}}")
         .setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
-        .log("send to passbook API 1:").to(logger)
+        .log("send to passbook http4://api.passslot.com:80/v1/templates/{{passbook.template.no}}/pass:").to(logger)
         .to("http4://api.passslot.com:80/v1/templates/{{passbook.template.no}}/pass?bridgeEndpoint=true")
         .convertBodyTo(String.class).log("Answer from passbook API 1:").to(logger).unmarshal().json(JsonLibrary.Jackson)
         .setProperty("serialNumber").spel("#{request.body['serialNumber']}").transform()
-        .simple("{ \"email\":\"${exchangeProperty.email}\" }").log("send to passbook API 2:").to(logger)
-        .toD("https://api.passslot.com/v1/passes/pass.slot.developer1/${exchangeProperty.serialNumber}/email")
+        .simple("{ \"email\":\"${exchangeProperty.email}\" }")
+        .log(
+            "send to passbook https4://api.passslot.com/v1/passes/pass.slot.developer1/${exchangeProperty.serialNumber}/email:")
+        .to(logger)
+        .toD(
+            "https4://api.passslot.com/v1/passes/pass.slot.developer1/${exchangeProperty.serialNumber}/email?bridgeEndpoint=true")
         .convertBodyTo(String.class).log("Answer from passbook API 2:").to(logger);
 
     from("direct:health").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setHeader("Content-type")

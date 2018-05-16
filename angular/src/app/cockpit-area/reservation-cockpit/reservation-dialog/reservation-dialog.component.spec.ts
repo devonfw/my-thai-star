@@ -3,7 +3,6 @@ import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
-import { BackendModule } from '../../../backend/backend.module';
 import { WaiterCockpitModule } from '../../cockpit.module';
 import { CoreModule } from '../../../core/core.module';
 
@@ -11,6 +10,7 @@ import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 
 import { ReservationDialogComponent } from './reservation-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReservationDialogComponent', () => {
   let component: ReservationDialogComponent;
@@ -22,9 +22,9 @@ describe('ReservationDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
+        TranslateModule.forRoot(),
         CoreModule,
         HttpClientModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();

@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { BackendModule } from './backend/backend.module';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { CoreModule } from './core/core.module';
 
@@ -14,6 +13,7 @@ import { AuthService } from './core/authentication/auth.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -26,8 +26,8 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
-        BackendModule.forRoot({environmentType: 0, restServiceRoot: 'v1'}),
         CoreModule,
+        TranslateModule.forRoot(),
         SidenavModule,
         HttpClientModule,
       ],

@@ -1,27 +1,27 @@
 <td-layout>
-  <form (ngSubmit)="applyFilters(filterForm.form.value)" #filterForm="ngForm">
-    <div style= "background-color: white">
-      
-      <div layout-gt-xs="row" class="justify-space-between pad-left-md pad-right-md" style="align-items:center" flex>
-        <div layout="row" style="align-items:center" class="pad-top" flex>
-          <mat-form-field color="accent" class="searchBy" flex>
-            <button mat-icon-button matPrefix>
-              <mat-icon>search</mat-icon>
-            </button>
-            <input matInput placeholder="Search our dishes" ngModel name="searchBy">
-          </mat-form-field>
-        </div>
-        <div layout="row" class="pull-bottom pad-sm sortingBy">
-          <mat-form-field color="accent" flex>
-            <mat-select ngModel name="sortName" #sorting placeholder="Sort By" flex>
+  <form (ngSubmit)="applyFilters(filterForm.form.value)" #filterForm="ngForm" class="menu">
+      <div class="search">
+        <mat-form-field color="accent" class="searchBy">
+          <button type="button" mat-icon-button matPrefix>
+            <mat-icon>search</mat-icon>
+          </button>
+          <input matInput [placeholder]="'menu.filter.search' | translate" ngModel #searchBy name="searchBy">
+          <button *ngIf="searchBy.value.length > 0" type="button" (click)="clearSearchField(searchBy)" mat-icon-button matSuffix>
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="sortingBy">
+          <mat-form-field color="accent">
+            <mat-select ngModel name="sortName" #sorting [placeholder]="'menu.filter.sort' | translate">
               <mat-option value="price">
-                Price
+                {{'menu.filter.price' | translate}}
               </mat-option>
               <mat-option value="likes">
-                Likes
+                {{'menu.filter.likes' | translate}}
               </mat-option>
               <mat-option value="name">
-                Name
+                {{'menu.filter.name' | translate}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -30,53 +30,35 @@
           </button>
         </div>
       </div>
+
       <mat-divider></mat-divider>
-      
-      <td-expansion-panel label="FILTERS">
-        <div layout="column" class ="pad-left-md pad-top pad-right-md" flex>
-          
-          <div layout-gt-xs="column" class="justify-space-between flex-wrap forMobile" style="margin-bottom: 5px" flex>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm forMobile" flex>
-              <mat-checkbox ngModel name="1">Main dishes</mat-checkbox>
-              <mat-checkbox ngModel name="2">Starter</mat-checkbox>
-              <mat-checkbox ngModel name="3">Dessert</mat-checkbox>
+
+      <td-expansion-panel [label]="'menu.filterTitle' | translate">
+        <div class ="menu-filters">
+
+          <div class="filter-checkboxes">
+            <div class="filter-divider">
+                <mat-checkbox ngModel name="0">{{'menu.filter.mainDishes' | translate}}</mat-checkbox>
+                <mat-checkbox ngModel name="1">{{'menu.filter.starters' | translate}}</mat-checkbox>
+                <mat-checkbox ngModel name="2">{{'menu.filter.desserts' | translate}}</mat-checkbox>
             </div>
-            <mat-divider></mat-divider>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <mat-checkbox ngModel name="3">Noodle</mat-checkbox>
-              <mat-checkbox ngModel name="4">Rice</mat-checkbox>
-              <mat-checkbox ngModel name="5">Curry</mat-checkbox>
-            </div>    
-            <mat-divider></mat-divider>
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <mat-checkbox ngModel name="6">Vegan</mat-checkbox>
-              <mat-checkbox ngModel name="7">Vegetarian</mat-checkbox>
-            </div>   
-            <mat-divider></mat-divider>            
-            <div layout="row" class="justify-space-between pad-bottom-sm pad-top-sm" flex>
-              <mat-checkbox ngModel name="8">Favourites</mat-checkbox>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="3">{{'menu.filter.noodle' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="4">{{'menu.filter.rice' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="5">{{'menu.filter.curry' | translate}}</mat-checkbox>
             </div>
-            <mat-divider></mat-divider>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="6">{{'menu.filter.vegan' | translate}}</mat-checkbox>
+              <mat-checkbox ngModel name="7">{{'menu.filter.vegetarian' | translate}}</mat-checkbox>
+            </div>
+            <div class="filter-divider">
+              <mat-checkbox ngModel name="8">{{'menu.filter.favourites' | translate}}</mat-checkbox>
+            </div>
           </div>
 
-          <div layout-gt-xs="row" class="justify-space-between flex-wrap forDesktop" style="margin-bottom: 5px" flex>
-            <mat-checkbox ngModel name="0">Main dishes</mat-checkbox>
-            <mat-checkbox ngModel name="1">Starter</mat-checkbox>
-            <mat-checkbox ngModel name="2">Dessert</mat-checkbox>
-            <span style="border-right: 1px solid lightgray"></span>
-            <mat-checkbox ngModel name="3">Noodle</mat-checkbox>
-            <mat-checkbox ngModel name="4">Rice</mat-checkbox>
-            <mat-checkbox ngModel name="5">Curry</mat-checkbox>
-            <span style="border-right: 1px solid lightgray"></span>        
-            <mat-checkbox ngModel name="6">Vegan</mat-checkbox>
-            <mat-checkbox ngModel name="7">Vegetarian</mat-checkbox>
-            <span style="border-right: 1px solid lightgray"></span>        
-            <mat-checkbox ngModel name="8">Favourites</mat-checkbox>
-          </div>
-
-          <div layout-gt-xs="row" class="push-top-sm" flex>
-            <div flex-gt-xs="50" layout="column" flex>
-              <span class ="pull-bottom-md">Price</span>
+          <div class="filter-sliders">
+            <div class="slider">
+              <span>{{'menu.filter.price' | translate}}</span>
               <mat-slider
                 #price
                 ngModel
@@ -88,8 +70,8 @@
                 tick-interval="10">
               </mat-slider>
             </div>
-            <div flex-gt-xs="50" layout="column" flex>
-              <span class ="pull-bottom-md">Likes</span>
+            <div class="slider">
+              <span>{{'menu.filter.likes' | translate}}</span>
               <mat-slider
                 #likes
                 ngModel
@@ -104,17 +86,16 @@
           </div>
         </div>
       </td-expansion-panel>
-      <div class="align-right">
-        <button mat-button (click)="clearFilters(filterForm.form, price, likes)" class="text-upper property-text-bold">Clear filters</button>
-        <button mat-button type="submit" color="accent" class="text-upper property-text-bold">Apply filters</button>
+      <div class="filter-actions">
+        <button mat-button (click)="clearFilters(filterForm.form, price, likes)">{{'buttons.clearFilters' | translate}}</button>
+        <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | translate}}</button>
       </div>
-    </div>
   </form>
 
-  <div flex layout="row" *ngIf="menus | async as allMenus; else loading" class="justify-space-around flex-wrap">
+  <div flex layout="row" *ngIf="(menus | async)?.result as allMenus; else loading" class="justify-space-around flex-wrap">
     <public-menu-card *ngFor="let menu of allMenus" [menu]="menu"></public-menu-card>
   </div>
-  
+
   <ng-template #loading>
     <mat-progress-bar
       #loading
