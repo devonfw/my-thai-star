@@ -1,3 +1,5 @@
+# Only used for TravisCI purposes
+
 FROM blairguk/node-sass-alpine:8.9.4 AS build
 WORKDIR /app
 COPY . /app
