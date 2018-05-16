@@ -9,7 +9,7 @@
     </div>
   </td-layout-footer>
 
-  <mat-sidenav-container style= "height:100%">
+  <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(o)">
 
     <mat-sidenav class="sidenavMobile" (close)="openCloseSideNav(true)" [opened]="sidenav.opened" align="end">
       <public-sidenav></public-sidenav>
@@ -42,7 +42,7 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <router-outlet></router-outlet>
+    <router-outlet #o="outlet"></router-outlet>
 
   </mat-sidenav-container>
 </td-layout-nav>

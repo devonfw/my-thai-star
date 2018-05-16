@@ -1,14 +1,19 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { FilterCockpit, Pagination, Sorting } from '../../backend/backendModels/interfaces';
 import { ReservationView } from '../../shared/viewModels/interfaces';
 import { Component, OnInit } from '@angular/core';
-import { ITdDataTableSelectAllEvent,
-         IPageChangeEvent,
-         ITdDataTableColumn,
-         ITdDataTableSortChangeEvent } from '@covalent/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import {
+  ITdDataTableSelectAllEvent,
+  IPageChangeEvent,
+  ITdDataTableColumn,
+  ITdDataTableSortChangeEvent,
+} from '@covalent/core';
+import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
+import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
+import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -28,11 +33,7 @@ export class ReservationCockpitComponent implements OnInit {
   reservations: ReservationView;
   totalReservations: number;
 
-  columns: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.bookingToken', label: 'Reference number'},
-  ];
+  columns: ITdDataTableColumn[];
 
   pageSizes: number[] = config.pageSizes;
 
@@ -43,10 +44,26 @@ export class ReservationCockpitComponent implements OnInit {
   };
 
   constructor(private waiterCockpitService: WaiterCockpitService,
-              private dialog: MatDialog) {}
+    private translate: TranslateService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+      moment.locale(this.translate.currentLang);
+    });
     this.applyFilters();
+  }
+
+  setTableHeaders(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
+      this.columns = [
+        { name: 'booking.bookingDate', label: res.reservationDateH },
+        { name: 'booking.email', label: res.emailH },
+        { name: 'booking.bookingToken', label: res.bookingTokenH },
+      ];
+    });
   }
 
   filter(): void {
@@ -56,10 +73,10 @@ export class ReservationCockpitComponent implements OnInit {
 
   applyFilters(): void {
     this.waiterCockpitService.getReservations(this.pagination, this.sorting, this.filters)
-        .subscribe( (data: any) => {
-          this.reservations = data.result;
-          this.totalReservations = data.pagination.total;
-        });
+      .subscribe((data: any) => {
+        this.reservations = data.result;
+        this.totalReservations = data.pagination.total;
+      });
   }
 
   clearFilters(filters: any): void {
@@ -78,17 +95,14 @@ export class ReservationCockpitComponent implements OnInit {
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
-    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
+    this.sorting.push({ 'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order });
     this.applyFilters();
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    const dialogRef: MatDialogRef<ReservationDialogComponent> = this.dialog.open(ReservationDialogComponent, {
+    this.dialog.open(ReservationDialogComponent, {
       width: '80%',
       data: selection,
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 }

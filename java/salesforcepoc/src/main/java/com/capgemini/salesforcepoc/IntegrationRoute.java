@@ -39,11 +39,18 @@ public class IntegrationRoute extends RouteBuilder {
   @Value("${log.uri}")
   private String logger;
 
+  @Value("${verbose}")
+  private Boolean isVerbose;
+
   @Autowired
   CamelContext camelContext;
 
   @Override
   public void configure() throws Exception {
+
+    if (this.isVerbose) {
+      this.logger += "?showAll=true&multiline=true";
+    }
 
     SalesforceLoginConfig salesforceLoginConfig = new SalesforceLoginConfig();
     salesforceLoginConfig.setUserName(this.salesforceAuthUsername);
@@ -91,8 +98,8 @@ public class IntegrationRoute extends RouteBuilder {
         .setProperty("email").spel("#{request.body['email']}")
         /*
          * //API not implemented in MTS java backend. Uncomment if API is available .marshal().json(JsonLibrary.Jackson)
-         * .log("send to MTS server {{mts.backend.uri}}:").to(this.logger)
-         * .to("{{mts.backend.uri}}?bridgeEndpoint=true")
+         * .log("send to MTS server {{mts.backend.uri}}:").choice().when(simple("{{verbose}}")) .setHeader("Trace",
+         * constant("verbose")).end().to(this.logger) .to("{{mts.backend.uri}}?bridgeEndpoint=true")
          * .convertBodyTo(String.class).log("Answer from MTS server:").to(this.logger)
          */
         // forfeit the response and send the DTO to the Salesforce target uri to create a new Lead instead

@@ -6,6 +6,7 @@ import { SidenavModule } from '../sidenav.module';
 import { CoreModule } from '../../core/core.module';
 
 import { CommentDialogComponent } from './comment-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CommentDialogComponent', () => {
   let component: CommentDialogComponent;
@@ -16,6 +17,7 @@ describe('CommentDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         CoreModule,
+        TranslateModule.forRoot(),
         SidenavModule,
       ],
     })

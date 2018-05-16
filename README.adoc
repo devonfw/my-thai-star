@@ -1,0 +1,57 @@
+= My Thai Star
+
+develop: image:https://travis-ci.org/oasp/my-thai-star.svg?branch=develop["build-status",link="https://travis-ci.org/oasp/my-thai-star"]
+
+
+This repository is an **iCSD Capgemini** initiative that hosts an application reference called **My Thai Star**. This application is about the management of a restaurant.
+
+== Technologies
+
+This project is intended to be an example for the usage of new technologies in web development. Here is a list of all technologies involved:
+
+* **Angular**
+
+Client-side developed using the latest version of this framework: Angular 5.
+
+* **Java**
+
+Server-side developed using the 2.3 version of **oasp4j**.
+
+* **NodeJS**
+
+Server-side developed using the basics of the Express framework. Progressively updated to use **oasp4fn**.
+
+* **.NET**
+
+Server-side developed using the **dotnet** framework.
+
+* **Swagger**
+
+Used this technology to define contracts between client-side(s) and server-side(s). So necessary when every back-end of the project (.NET, NodeJS and Java) is prepared to match with the Angular client exactly in the same way, being transparent to the user.
+
+* **Production Line**
+
+Tool used for Continuous Integration and Continuous Delivery. Inside of this Jenkins and SonarQube are used. Also used **Docker** for the deployment in an external server.
+
+* **GraphQL**
+
+GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system defined for data.
+
+== Deployment
+
+This application can be easily deployed using **Docker** and **docker-compose**.
+
+`$ docker-compose up`
+
+As both **Angular** and **Java** `Dockerfile`(s) are using **multi-stage build**, apps are being built in their development environments (`node` for Angular and `maven` for Java) and then deployed in `nginx` and `tomcat` respectively.
+
+3 Docker containers will be created:
+
+```
+CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                                        NAMES
+23921e672489        mythaistar_java            "catalina.sh run"        3 minutes ago       Up 3 minutes        8080/tcp                                     mts_java
+1acf2d6b6653        mythaistar_reverse-proxy   "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes        0.0.0.0:443->443/tcp, 0.0.0.0:8080->80/tcp   mts_reverse_proxy
+fdb63e26d299        mythaistar_angular         "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes        80/tcp, 443/tcp                              mts_angular
+```
+
+The usage of the `reverse-proxy` only uses 1 port of the Docker host (where this is deployed), the `8080`. All internal communication of containers is done using docker alias of services.

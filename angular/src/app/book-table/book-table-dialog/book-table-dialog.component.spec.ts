@@ -2,13 +2,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from '../../core/core.module';
-import { BackendModule } from '../../backend/backend.module';
 import { BookTableModule } from '../book-table.module';
 
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { BookTableService } from '../shared/book-table.service';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { MatDialog } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
@@ -19,10 +19,10 @@ describe('BookTableDialogComponent', () => {
       providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         BookTableModule,
         HttpClientModule,
         CoreModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();

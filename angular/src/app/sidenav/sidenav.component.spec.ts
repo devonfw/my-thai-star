@@ -5,13 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { BookingDataService } from '../backend/booking/booking-data-service';
-import { BookingInMemoryService } from '../backend/booking/booking-in-memory.service';
-import { OrderInMemoryService } from '../backend/order/order-in-memory.service';
-import { OrderDataService } from '../backend/order/order-data-service';
+
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { SidenavComponent } from './sidenav.component';
 import { CoreModule } from '../core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -24,10 +22,10 @@ describe('SidenavComponent', () => {
         PriceCalculatorService,
         SidenavService,
         SnackBarService,
-        {provide: OrderDataService, useClass: OrderInMemoryService},
-        {provide: BookingDataService, useClass: BookingInMemoryService}],
+      ],
       imports: [
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         RouterTestingModule,
         CoreModule,
       ],
