@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IPageChangeEvent,
-         ITdDataTableSelectAllEvent,
-         ITdDataTableColumn,
-         ITdDataTableSortChangeEvent } from '@covalent/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import {
+  IPageChangeEvent,
+  ITdDataTableSelectAllEvent,
+  ITdDataTableColumn,
+  ITdDataTableSortChangeEvent,
+} from '@covalent/core';
+import { MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
-import { FilterCockpit, Pagination } from '../../backend/backendModels/interfaces';
 import { config } from '../../config';
+import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -29,11 +33,7 @@ export class OrderCockpitComponent implements OnInit {
   orders: OrderListView[];
   totalOrders: number;
 
-  columns: ITdDataTableColumn[] = [
-    { name: 'booking.bookingDate', label: 'Reservation date'},
-    { name: 'booking.email', label: 'Email' },
-    { name: 'booking.bookingToken', label: 'Reference number'},
-  ];
+  columns: ITdDataTableColumn[];
 
   pageSizes: number[] = config.pageSizes;
 
@@ -44,18 +44,34 @@ export class OrderCockpitComponent implements OnInit {
   };
 
   constructor(private dialog: MatDialog,
-              private waiterCockpitService: WaiterCockpitService) {}
+    private translate: TranslateService,
+    private waiterCockpitService: WaiterCockpitService) { }
 
   ngOnInit(): void {
     this.applyFilters();
+    this.setTableHeaders();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.setTableHeaders();
+      moment.locale(this.translate.currentLang);
+    });
+  }
+
+  setTableHeaders(): void {
+    this.translate.get('cockpit.table').subscribe((res: any) => {
+      this.columns = [
+        { name: 'booking.bookingDate', label: res.reservationDateH },
+        { name: 'booking.email', label: res.emailH },
+        { name: 'booking.bookingToken', label: res.bookingTokenH },
+      ];
+    });
   }
 
   applyFilters(): void {
     this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters)
-        .subscribe( (data: any) => {
-          this.orders = data.result;
-          this.totalOrders = data.pagination.total;
-        });
+      .subscribe((data: any) => {
+        this.orders = data.result;
+        this.totalOrders = data.pagination.total;
+      });
   }
 
   clearFilters(filters: any): void {
@@ -74,17 +90,14 @@ export class OrderCockpitComponent implements OnInit {
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
-    this.sorting.push({'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order});
+    this.sorting.push({ 'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order });
     this.applyFilters();
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
-    const dialogRef: MatDialogRef<OrderDialogComponent> = this.dialog.open(OrderDialogComponent, {
+    this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // TODO: manage user input
     });
   }
 }

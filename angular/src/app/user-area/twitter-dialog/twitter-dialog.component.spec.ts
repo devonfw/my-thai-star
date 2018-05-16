@@ -6,6 +6,7 @@ import { CoreModule } from '../../core/core.module';
 import { UserAreaModule } from '../user-area.module';
 
 import { TwitterDialogComponent } from './twitter-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TwitterDialogComponent', () => {
   let component: TwitterDialogComponent;
@@ -15,6 +16,7 @@ describe('TwitterDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
+        TranslateModule.forRoot(),
         BrowserAnimationsModule,
         UserAreaModule,
       ],

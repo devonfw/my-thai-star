@@ -1,15 +1,17 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { BookingInfo } from '../../backend/backendModels/interfaces';
 import { BookTableService } from './book-table.service';
-import { BookingInMemoryService } from '../../backend/booking/booking-in-memory.service';
-import { BookingDataService } from '../../backend/booking/booking-data-service';
+import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('BookTableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         BookTableService,
-        {provide: BookingDataService, useClass: BookingInMemoryService}],
+      ],
+      imports: [
+        HttpClientModule,
+      ],
     });
   });
 
@@ -54,7 +56,10 @@ describe('BookTableService', () => {
           email: 'email@email.com',
           bookingType: 1,
         },
-        invitedGuests: [{email: 'email@email.com'}, {email: 'email2@email.com'}],
+        invitedGuests: [
+          { email: 'email@email.com' },
+          { email: 'email2@email.com' },
+        ],
       };
 
       expect(service.composeBooking(reservationData, 1)).toEqual(reservationResult);

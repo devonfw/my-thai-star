@@ -10,6 +10,8 @@ import { WindowService } from '../core/windowService/windowService.service';
 import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { config } from '../config';
 
 @Component({
   selector: 'public-header',
@@ -17,15 +19,23 @@ import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dial
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  selectableLangs: any[];
+  flag: string;
 
-  @Output('openCloseSidenavMobile') sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
+  @Output('openCloseSidenavMobile')
+  sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public window: WindowService,
-              public router: Router,
-              public sidenav: SidenavService,
-              public dialog: MatDialog,
-              public auth: AuthService,
-              public userService: UserAreaService) {
+  constructor(
+    public window: WindowService,
+    public translate: TranslateService,
+    public router: Router,
+    public sidenav: SidenavService,
+    public dialog: MatDialog,
+    public auth: AuthService,
+    public userService: UserAreaService,
+  ) {
+    this.selectableLangs = config.langs;
+    this.getFlag(this.translate.currentLang);
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -41,10 +51,36 @@ export class HeaderComponent {
     this.sidenavNavigationEmitter.emit();
   }
 
+  changeLanguage(lang: string): void {
+    this.translate.use(lang);
+    this.getFlag(lang);
+  }
+
+  getFlag(lang: string): void {
+    switch (lang) {
+      case 'ca':
+        this.flag = 'es';
+        break;
+      case 'en':
+        this.flag = 'gb';
+        break;
+      case 'hi':
+        this.flag = 'in';
+        break;
+
+      default:
+        this.flag = lang;
+        break;
+    }
+  }
+
   openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(LoginDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
+      LoginDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         if (result.email) {
@@ -57,18 +93,24 @@ export class HeaderComponent {
   }
 
   openResetDialog(): void {
-    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(PasswordDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<PasswordDialogComponent> = this.dialog.open(
+      PasswordDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       // TODO: manage user input
     });
   }
 
   openTwitterDialog(): void {
-    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(TwitterDialogComponent, {
-      width: this.window.responsiveWidth(),
-    });
+    const dialogRef: MatDialogRef<TwitterDialogComponent> = this.dialog.open(
+      TwitterDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
     dialogRef.afterClosed().subscribe((result: any) => {
       // TODO: manage user input
     });

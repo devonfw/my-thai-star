@@ -6,12 +6,12 @@ import { MatDialog } from '@angular/material';
 import { UserAreaModule } from '../user-area.module';
 import { CoreModule } from '../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BackendModule } from '../../backend/backend.module';
 
 import { AuthService } from '../../core/authentication/auth.service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 
 import { PasswordDialogComponent } from './password-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
@@ -24,9 +24,9 @@ describe('PasswordDialogComponent', () => {
         CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
         UserAreaModule,
         HttpClientModule,
-        BackendModule.forRoot({ environmentType: 0, restServiceRoot: 'v1' }),
       ],
     })
       .compileComponents();

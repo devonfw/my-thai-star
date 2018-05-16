@@ -1,28 +1,44 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { LoginDataService } from '../../backend/login/login-data-service';
 import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
+import { LoginInfo } from 'app/shared/backendModels/interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class UserAreaService {
 
+    private readonly loginRestPath: string = 'login';
+    private readonly currentUserRestPath: string = 'security/v1/currentuser/';
+    private readonly registerRestPath: string = 'register';
+    private readonly changePasswordRestPath: string = 'changepassword';
+    authAlerts: any;
+
     constructor(public snackBar: SnackBarService,
         public router: Router,
-        public authService: AuthService,
-        public loginDataService: LoginDataService) { }
+        public translate: TranslateService,
+        private http: HttpClient,
+        public authService: AuthService) {
+            this.translate.get('alerts.authAlerts')
+                .subscribe( (result: any) => {
+                    this.authAlerts = result;
+                });
+         }
 
     login(username: string, password: string): void {
-        this.loginDataService.login(username, password)
+        this.http.post(`${environment.restPathRoot}${this.loginRestPath}`,
+            { username: username, password: password }, { responseType: 'text', observe: 'response' })
             .subscribe((res: any) => {
                 this.authService.setToken(res.headers.get('Authorization'));
-                this.loginDataService.getCurrentUser()
+                this.http.get(`${environment.restServiceRoot}${this.currentUserRestPath}`)
                     .subscribe((loginInfo: any) => {
                         this.authService.setLogged(true);
                         this.authService.setUser(loginInfo.name);
                         this.authService.setRole(loginInfo.role);
                         this.router.navigate(['orders']);
-                        this.snackBar.openSnack('Login successful', 4000, 'green');
+                        this.snackBar.openSnack(this.authAlerts.loginSuccess, 4000, 'green');
                     });
             }, (err: any) => {
                 this.authService.setLogged(false);
@@ -31,11 +47,12 @@ export class UserAreaService {
     }
 
     register(email: string, password: string): void {
-        this.loginDataService.register(email, password)
+        this.http.post(`${environment.restServiceRoot}${this.registerRestPath}`, {email: email, password: password})
+            .map((res: LoginInfo) => res)
             .subscribe(() => {
-                this.snackBar.openSnack('Register successful', 4000, 'green');
+                this.snackBar.openSnack(this.authAlerts.registerSuccess, 4000, 'green');
             }, (error: any) => {
-                this.snackBar.openSnack('Register failed, username already in use', 4000, 'red');
+                this.snackBar.openSnack(this.authAlerts.registerFail, 4000, 'red');
             });
     }
 
@@ -45,12 +62,13 @@ export class UserAreaService {
         this.authService.setRole('CUSTOMER');
         this.authService.setToken('');
         this.router.navigate(['restarant']);
-        this.snackBar.openSnack('Log out successful, come back soon!', 4000, 'black');
+        this.snackBar.openSnack(this.authAlerts.logoutSuccess, 4000, 'black');
     }
 
     changePassword(data: any): void {
         data.username = this.authService.getUser();
-        this.loginDataService.changePassword(data.username, data.oldPassword, data.newPassword)
+        this.http.post(`${environment.restServiceRoot}${this.changePasswordRestPath}`,
+        { username: data.username, oldPassword: data.oldPassword, newPassword: data.newPassword })
             .subscribe((res: any) => {
                 this.snackBar.openSnack(res.message, 4000, 'green');
             }, (error: any) => {

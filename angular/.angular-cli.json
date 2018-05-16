@@ -7,11 +7,7 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": [
-        "assets",
-        "data",
-        "favicon.ico"
-      ],
+      "assets": ["assets", "data", "favicon.ico"],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -23,6 +19,7 @@
       "styles": [
         "styles.scss",
         "theme.scss",
+        "../node_modules/flag-icon-css/css/flag-icon.min.css",
         "../node_modules/@covalent/core/common/platform.css"
       ],
       "scripts": [

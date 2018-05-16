@@ -1,18 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 import { MenuService } from './menu.service';
-import { DishesInMemoryService } from '../../backend/dishes/dishes-in-memory.service';
-import { DishesDataService } from '../../backend/dishes/dishes-data-service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('MenuService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpModule,
+        HttpClientModule,
       ],
       providers: [
         MenuService,
-        {provide: DishesDataService, useClass: DishesInMemoryService}],
+      ],
     });
   });
 

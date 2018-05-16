@@ -7,11 +7,15 @@ import { MenuService } from './shared/menu.service';
 
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuComponent } from './menu.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
+    TranslateModule,
+    HttpClientModule,
     FormsModule,
   ],
   providers: [

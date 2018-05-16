@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { CoreModule } from '../../core/core.module';
 
 import { LoginDialogComponent } from './login-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginDialogComponent', () => {
   let component: LoginDialogComponent;
@@ -15,6 +16,7 @@ describe('LoginDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
+        TranslateModule.forRoot(),
         BrowserAnimationsModule,
         UserAreaModule,
       ],

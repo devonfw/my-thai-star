@@ -1,11 +1,15 @@
 graphQL/node_modules/
 graphQL/.vscode/
+target
+eclipse-target
 
+*.log
 *.class
 *.classpath
 *.project
 *.iml
-.*
+*.settings
+.*!travis.yml
 java/samples/server/target/
 
 java/samples/server/eclipse-target/

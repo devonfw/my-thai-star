@@ -5,7 +5,6 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { CoreModule } from '../core/core.module';
 import { SnackBarService } from '../core/snackService/snackService.service';
-import { BackendModule } from '../backend/backend.module';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
@@ -15,6 +14,8 @@ import { BookTableComponent } from '../book-table/book-table.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -35,12 +36,10 @@ describe('EmailConfirmationsComponent', () => {
       imports: [
         AppRoutingModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         BrowserAnimationsModule,
+        ReactiveFormsModule,
         CoreModule,
-        BackendModule.forRoot({
-          environmentType: 0,
-          restServiceRoot: 'v1',
-        }),
       ],
     }).compileComponents();
   }));
