@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -38,11 +35,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import {
-  Md2Module,
-  NoConflictStyleCompatibilityMode,
-  MATERIAL_COMPATIBILITY_MODE,
-} from 'md2';
+import { OwlDateTimeModule } from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { CdkTableModule } from '@angular/cdk/table';
 import {
   CovalentChipsModule,
@@ -56,7 +50,7 @@ import {
   CovalentNotificationsModule,
   CovalentCommonModule,
 } from '@covalent/core';
-import { MomentModule } from 'angular2-moment';
+import { MomentModule } from 'ngx-moment';
 
 import { WindowService } from './windowService/windowService.service';
 import { SnackBarService } from './snackService/snackService.service';
@@ -84,8 +78,8 @@ import 'moment/locale/ca';
     CovalentMediaModule,
     CovalentLayoutModule,
     CdkTableModule,
-    Md2Module,
-    NoConflictStyleCompatibilityMode,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
   ],
   exports: [
     CommonModule,
@@ -132,7 +126,8 @@ import 'moment/locale/ca';
     MatTooltipModule,
     NotFoundComponent,
     MomentModule,
-    Md2Module,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
     HttpClientModule,
   ],
   declarations: [NotFoundComponent],
@@ -141,9 +136,11 @@ import 'moment/locale/ca';
     AuthGuardService,
     SnackBarService,
     WindowService,
-    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptorService,
+      multi: true,
+    },
   ],
 })
-
-export class CoreModule { }
+export class CoreModule {}

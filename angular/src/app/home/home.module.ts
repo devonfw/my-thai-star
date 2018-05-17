@@ -6,18 +6,9 @@ import { HomeComponent } from './home.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule,
-    TranslateModule,
-  ],
-  providers: [
-  ],
-  declarations: [
-    HomeComponent,
-  ],
-  exports: [
-    HomeComponent,
-  ],
+  imports: [CommonModule, CoreModule, TranslateModule],
+  providers: [],
+  declarations: [HomeComponent],
+  exports: [HomeComponent],
 })
-export class HomeModule { }
+export class HomeModule {}
