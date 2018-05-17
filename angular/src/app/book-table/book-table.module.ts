@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
-import { Md2Module } from 'md2';
 
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/windowService/windowService.service';
@@ -20,7 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    Md2Module,
     SharedModule,
     HttpClientModule,
     TranslateModule,
@@ -36,12 +34,10 @@ import { TranslateModule } from '@ngx-translate/core';
     BookTableDialogComponent,
     BookTableComponent,
   ],
-  exports: [
-    BookTableComponent,
-  ],
+  exports: [BookTableComponent],
   entryComponents: [
     InvitationDialogComponent,
     BookTableDialogComponent,
   ],
 })
-export class BookTableModule { }
+export class BookTableModule {}
