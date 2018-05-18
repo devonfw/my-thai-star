@@ -4,7 +4,7 @@ import { SnackBarService } from '../core/snackService/snackService.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'public-email-confirmations',

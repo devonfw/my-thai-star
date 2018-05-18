@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { FriendsInvite } from '../../shared/viewModels/interfaces';
+import { Observable } from 'rxjs';
 import { map } from 'lodash';
 import { BookingInfo } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
@@ -29,7 +28,7 @@ export class BookTableService {
     };
 
     if (type) {
-      composedBooking.invitedGuests = map(invitationData.invitedGuests, (guest: FriendsInvite) => { return { email: guest }; });
+      composedBooking.invitedGuests = map(invitationData.invitedGuests, (email: string) => { return { email: email }; });
     } else {
       composedBooking.booking.assistants = invitationData.assistants;
     }

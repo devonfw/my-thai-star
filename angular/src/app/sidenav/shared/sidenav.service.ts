@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ExtraView, OrderView, SaveOrderResponse } from '../../shared/viewModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
@@ -58,7 +58,7 @@ export class SidenavService {
     return this.findOrder(order).orderLine.amount -= 1;
   }
 
-  public removeOrder(order: OrderView): OrderView {
+  public removeOrder(order: OrderView): OrderView[] {
     return remove(this.orders, isOrderEqual(order));
   }
 
