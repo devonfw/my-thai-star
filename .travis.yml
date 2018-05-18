@@ -1,6 +1,6 @@
-language: java
-dist: precise
-jdk:
-  - oraclejdk8
-script: mvn install
-sudo: false
+sudo: required # required to use Docker inside TravisCI
+language: generic
+
+script:
+  - docker build -f angular/Dockerfile.travis -t my-thai-star-angular angular/.
+  - docker build -f java/Dockerfile.travis -t my-thai-star-java java/.
