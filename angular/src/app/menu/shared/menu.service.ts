@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
 import { map, assign } from 'lodash';

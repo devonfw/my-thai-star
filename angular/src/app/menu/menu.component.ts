@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSlider, MatInput } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
 import { Filter } from '../shared/backendModels/interfaces';
@@ -16,20 +16,25 @@ export class MenuComponent implements OnInit {
   sortDir: string = 'DESC';
   sortDirIcon: string = 'vertical_align_bottom';
 
-  constructor(private menuService: MenuService) {
-  }
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
     this.applyFilters();
   }
 
   changeSortDir(): void {
-    this.sortDir = (this.sortDir === 'ASC') ? 'DESC' : 'ASC';
-    this.sortDirIcon = (this.sortDirIcon === 'vertical_align_bottom') ? 'vertical_align_top' : 'vertical_align_bottom';
+    this.sortDir = this.sortDir === 'ASC' ? 'DESC' : 'ASC';
+    this.sortDirIcon =
+      this.sortDirIcon === 'vertical_align_bottom'
+        ? 'vertical_align_top'
+        : 'vertical_align_bottom';
   }
 
   applyFilters(filters?: any): void {
-    const composedFilters: Filter = this.menuService.composeFilters(filters, this.sortDir);
+    const composedFilters: Filter = this.menuService.composeFilters(
+      filters,
+      this.sortDir,
+    );
     this.menus = this.menuService.getDishes(composedFilters);
   }
 
