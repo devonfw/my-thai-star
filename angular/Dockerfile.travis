@@ -1,0 +1,9 @@
+# Only used for TravisCI purposes
+
+FROM blairguk/node-sass-alpine:8.9.4 AS build
+WORKDIR /app
+COPY . /app
+RUN npm i -g @angular/cli
+RUN apk update && apk add yarn
+RUN yarn
+RUN ng build --environment=docker --prod --build-optimizer
