@@ -8,27 +8,23 @@
       <mat-tab [label]="'bookTable.bookingTab' | translate">
         <div layout-gt-xs="row" flex>
 
-          <div flex-gt-xs="50" class= "menu-image forDesktop">
+          <div flex-gt-xs="50" class="menu-image forDesktop">
           </div>
-          
+
           <img mat-card-image src='../../assets/images/slider-1.jpg' class="forMobile">
 
           <div flex-gt-xs="50">
             <form class="pad" [formGroup]="bookForm">
               <div layout="column" flex>
                 <span class="title-card property-text-bold text-upper">{{'bookTable.bookingTitle' | translate}}</span>
-                <span class ="subtitle-card push-bottom">{{'bookTable.bookingSubtitle' | translate}}</span>
+                <span class="subtitle-card push-bottom">{{'bookTable.bookingSubtitle' | translate}}</span>
               </div>
-              <div layout= "column" flex>
-
-                <md2-datepicker 
-                  formControlName="bookingDate"
-                  openOnFocus="true"
-                  type="datetime"
-                  container="dialog"
-                  [min]="minDate"
-                  [placeholder]="'formFields.dateTime' | translate">
-                </md2-datepicker>
+              <div layout="column" flex>
+                <mat-form-field color="accent" flex>
+                  <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking1"
+                    [owlDateTime]="booking1">
+                  <owl-date-time [pickerMode]="'dialog'" #booking1></owl-date-time>
+                </mat-form-field>
 
                 <mat-form-field color="accent" flex>
                   <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
@@ -43,10 +39,10 @@
                   <input matInput [placeholder]="'formFields.email' | translate" formControlName="email">
                   <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div *ngIf="email.errors.required">
-                       {{'bookTable.formErrors.emailRequired' | translate}}
+                      {{'bookTable.formErrors.emailRequired' | translate}}
                     </div>
                     <div *ngIf="email.errors.pattern">
-                       {{'bookTable.formErrors.emailPattern' | translate}}
+                      {{'bookTable.formErrors.emailPattern' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
@@ -58,10 +54,10 @@
                       {{'bookTable.formErrors.assistantsRequired' | translate}}
                     </div>
                     <div *ngIf="assistants.errors.max">
-                       {{'bookTable.formErrors.assistantsMax' | translate}}
+                      {{'bookTable.formErrors.assistantsMax' | translate}}
                     </div>
                     <div *ngIf="assistants.errors.min">
-                       {{'bookTable.formErrors.assistantsMin' | translate}}
+                      {{'bookTable.formErrors.assistantsMin' | translate}}
                     </div>
                   </mat-error>
 
@@ -71,7 +67,8 @@
 
               </div>
               <div class="align-right">
-                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent" class="text-upper">{{'buttons.bookTable' | translate}}</button>
+                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
+                  class="text-upper">{{'buttons.bookTable' | translate}}</button>
               </div>
             </form>
           </div>
@@ -81,36 +78,33 @@
       <mat-tab [label]="'bookTable.reservationTab' | translate">
         <div layout-gt-xs="row" flex>
 
-          <div  flex-gt-xs="50" class= "invite-image forDesktop">
+          <div flex-gt-xs="50" class="invite-image forDesktop">
           </div>
 
           <img mat-card-image src='../../assets/images/slider-2.jpg' class="forMobile">
-          
-          <div  flex-gt-xs="50">
+
+          <div flex-gt-xs="50">
             <form class="pad" [formGroup]="invitationForm">
               <div layout="column" class="push-bottom" flex>
                 <span class="title-card property-text-bold text-upper">{{'bookTable.reservationTitle' | translate}}</span>
               </div>
 
-              <div layout= "column" flex>
-                <md2-datepicker 
-                  formControlName="bookingDate" 
-                  openOnFocus="true" 
-                  type="datetime" 
-                  container="dialog" 
-                  [min]="minDate" 
-                  [placeholder]="'formFields.dateTime' | translate">
-                </md2-datepicker>
-                
+              <div layout="column" flex>
+                <mat-form-field color="accent" flex>
+                  <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking2"
+                    [owlDateTime]="booking2">
+                </mat-form-field>
+                <owl-date-time [pickerMode]="'dialog'" #booking2></owl-date-time>
+
                 <mat-form-field color="accent" flex>
                   <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
                   <mat-error *ngIf="invName.invalid && (invName.dirty || invName.touched)">
                     <div *ngIf="invName.errors.required">
-                       {{'bookTable.formErrors.nameRequired' | translate}}
+                      {{'bookTable.formErrors.nameRequired' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
-                
+
                 <mat-form-field color="accent" flex>
                   <input matInput [placeholder]="'formFields.email' |  translate" formControlName="email">
                   <mat-error *ngIf="invEmail.invalid && (invEmail.dirty || invEmail.touched)">
@@ -118,15 +112,14 @@
                       {{'bookTable.formErrors.emailRequired' | translate}}
                     </div>
                     <div *ngIf="invEmail.errors.pattern">
-                       {{'bookTable.formErrors.emailPattern' | translate}}
+                      {{'bookTable.formErrors.emailPattern' | translate}}
                     </div>
                   </mat-error>
                 </mat-form-field>
               </div>
 
               <h4>{{'formFields.guests' | translate}}</h4>
-              <td-chips
-                class="pad-bottom-sm"
+              <td-chips class="pad-bottom-sm"
                 formControlName="invitedGuests"
                 name="invitedGuests"
                 (add)="validateEmail()"
@@ -134,7 +127,12 @@
               </td-chips>
               <mat-checkbox #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
               <div class="align-right">
-                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)" color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
+                <button mat-button
+                  type="button"
+                  (click)="showInviteDialog(termsi)"
+                  [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
+                  color="accent"
+                  class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
               </div>
             </form>
           </div>

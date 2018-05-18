@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable()
 export class SnackBarService {
+  public snackBarConfig: MatSnackBarConfig;
+  constructor(public snackBar: MatSnackBar) {}
 
-    constructor(public snackBar: MatSnackBar) { }
+  openSnack(message: string, duration: number, color: string): void {
+    this.snackBarConfig = {
+      duration: duration,
+      panelClass: ['bgc-' + color + '-600'],
+    };
 
-    openSnack(message: string, duration: number, color: string): void {
-            this.snackBar.open(message, 'OK', {
-                duration: duration,
-                extraClasses: ['bgc-' + color + '-600'],
-            });
-    }
+    this.snackBar.open(message, 'OK', this.snackBarConfig);
+  }
 }
