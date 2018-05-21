@@ -23,7 +23,7 @@
                 <mat-form-field color="accent" flex>
                   <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking1"
                     [owlDateTime]="booking1">
-                  <owl-date-time [pickerMode]="'dialog'" #booking1></owl-date-time>
+                  <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]="getFirstDayWeek()" #booking1></owl-date-time>
                 </mat-form-field>
 
                 <mat-form-field color="accent" flex>
@@ -94,7 +94,7 @@
                   <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking2"
                     [owlDateTime]="booking2">
                 </mat-form-field>
-                <owl-date-time [pickerMode]="'dialog'" #booking2></owl-date-time>
+                <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]="getFirstDayWeek()" #booking2></owl-date-time>
 
                 <mat-form-field color="accent" flex>
                   <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
@@ -119,20 +119,12 @@
               </div>
 
               <h4>{{'formFields.guests' | translate}}</h4>
-              <td-chips class="pad-bottom-sm"
-                formControlName="invitedGuests"
-                name="invitedGuests"
-                (add)="validateEmail()"
-                [placeholder]="'formFields.guestsPH' | translate">
+              <td-chips class="pad-bottom-sm" formControlName="invitedGuests" name="invitedGuests" (add)="validateEmail()" [placeholder]="'formFields.guestsPH' | translate">
               </td-chips>
               <mat-checkbox #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
               <div class="align-right">
-                <button mat-button
-                  type="button"
-                  (click)="showInviteDialog(termsi)"
-                  [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
-                  color="accent"
-                  class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
+                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
+                  color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
               </div>
             </form>
           </div>
