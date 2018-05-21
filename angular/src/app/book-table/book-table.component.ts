@@ -10,6 +10,7 @@ import { last } from 'lodash';
 import { BookingInfo } from 'app/shared/backendModels/interfaces';
 import { AbstractControl } from '@angular/forms/src/model';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'public-book-table',
@@ -79,6 +80,8 @@ export class BookTableComponent implements OnInit {
         Validators.max(8),
       ]),
     });
+
+    this.getFirstDayWeek();
   }
 
   get name(): AbstractControl {
@@ -138,5 +141,11 @@ export class BookTableComponent implements OnInit {
           this.snackBarservice.openSnack(text, 1000, 'red');
         });
     }
+  }
+
+  getFirstDayWeek(): string {
+    moment.locale(this.translate.currentLang);
+    const firstDay: string = moment(moment().weekday(0)).format('d');
+    return firstDay;
   }
 }
