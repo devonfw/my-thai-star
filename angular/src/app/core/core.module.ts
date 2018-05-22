@@ -35,7 +35,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import { OwlDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { CdkTableModule } from '@angular/cdk/table';
 import {
@@ -67,6 +67,12 @@ import 'moment/locale/pl';
 import 'moment/locale/nl';
 import 'moment/locale/de';
 import 'moment/locale/ca';
+
+// Default text strings for OwlDateTime
+export class DefaultIntl {
+  cancelBtnLabel: string = '\u{2716}';
+  setBtnLabel: String = '\u{2714}';
+}
 
 @NgModule({
   imports: [
@@ -141,6 +147,7 @@ import 'moment/locale/ca';
       useClass: HttpRequestInterceptorService,
       multi: true,
     },
+    { provide: OwlDateTimeIntl, useClass: DefaultIntl },
   ],
 })
 export class CoreModule {}
