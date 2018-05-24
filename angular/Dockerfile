@@ -5,7 +5,7 @@ COPY . /app
 RUN npm i -g @angular/cli
 RUN apk update && apk add yarn
 RUN yarn
-RUN ng build --environment=docker --prod --build-optimizer
+RUN ng build --configuration=docker --prod --build-optimizer
 
 # 2. Deploy
 FROM nginx:latest
