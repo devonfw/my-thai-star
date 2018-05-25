@@ -27,7 +27,7 @@
     "serve:node:aot": "ng serve --open --configuration=node --aot",
     "build": "ng build --aot",
     "build:pwa": "ng build --configuration=pwa --prod --build-optimizer && npm run ngsw-config && npm run ngsw-copy",
-    "build:prod": "ng build --configuration=prod --prod --build-optimizer",
+    "build:prod": "ng build --prod --build-optimizer",
     "build:prodcompose": "ng build --configuration=prodcompose --prod --build-optimizer"
   },
   "private": true,
