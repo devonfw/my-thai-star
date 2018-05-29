@@ -1,6 +1,6 @@
 {
   "name": "mythaistar-restaurant",
-  "version": "1.0.0",
+  "version": "1.6.0",
   "scripts": {
     ".": "sh .angular-gui/.runner.sh",
     "ng": "ng",
