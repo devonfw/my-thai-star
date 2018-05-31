@@ -1,19 +1,22 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ExtraView, OrderView, SaveOrderResponse } from '../../shared/viewModels/interfaces';
+import {
+  ExtraView,
+  OrderView,
+  SaveOrderResponse,
+} from '../../shared/viewModels/interfaces';
 import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
 import { OrderListInfo, OrderInfo } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 
-const isOrderEqual: Function =
-   (orderToFind: OrderView) => (o: OrderView) => o.dish.name === orderToFind.dish.name && isEqual(o.extras, orderToFind.extras);
+const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) =>
+  o.dish.name === orderToFind.dish.name &&
+  isEqual(o.extras, orderToFind.extras);
 
 @Injectable()
 export class SidenavService {
-
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
-
   private orders: OrderView[] = [];
 
   opened: boolean = false;
@@ -42,7 +45,10 @@ export class SidenavService {
 
   public addOrder(order: OrderView): void {
     let addOrder: OrderView = cloneDeep(order);
-    addOrder.extras = filter(addOrder.extras, (extra: ExtraView) => extra.selected);
+    addOrder.extras = filter(
+      addOrder.extras,
+      (extra: ExtraView) => extra.selected,
+    );
     if (this.findOrder(addOrder)) {
       this.increaseOrder(addOrder);
     } else {
@@ -51,11 +57,11 @@ export class SidenavService {
   }
 
   public increaseOrder(order: OrderView): number {
-    return this.findOrder(order).orderLine.amount += 1;
+    return (this.findOrder(order).orderLine.amount += 1);
   }
 
   public decreaseOrder(order: OrderView): number {
-    return this.findOrder(order).orderLine.amount -= 1;
+    return (this.findOrder(order).orderLine.amount -= 1);
   }
 
   public removeOrder(order: OrderView): OrderView[] {
@@ -68,31 +74,34 @@ export class SidenavService {
   }
 
   public sendOrders(token: string): Observable<SaveOrderResponse> {
-
     let orderList: OrderListInfo = {
-      booking: {bookingToken: token},
+      booking: { bookingToken: token },
       orderLines: this.composeOrders(this.orders),
     };
 
     this.closeSideNav();
-    return this.http.post<SaveOrderResponse>(`${environment.restServiceRoot}${this.saveOrdersPath}`, orderList);
+    return this.http.post<SaveOrderResponse>(
+      `${environment.restServiceRoot}${this.saveOrdersPath}`,
+      orderList,
+    );
   }
 
-   composeOrders(orders: OrderView[]): OrderInfo[] {
-      let composedOrders: OrderInfo[] = [];
-      orders.forEach( (order: OrderView) => {
-        let extras: any[] = [];
-        order.extras.filter( (extra: ExtraView) => extra.selected )
-                    .forEach( (extra: ExtraView) => extras.push({id: extra.id}));
-        composedOrders.push({
-          orderLine: {
-            dishId: order.dish.id,
-            amount: order.orderLine.amount,
-            comment: order.orderLine.comment,
-          },
-          extras: extras,
-        });
+  composeOrders(orders: OrderView[]): OrderInfo[] {
+    let composedOrders: OrderInfo[] = [];
+    orders.forEach((order: OrderView) => {
+      let extras: any[] = [];
+      order.extras
+        .filter((extra: ExtraView) => extra.selected)
+        .forEach((extra: ExtraView) => extras.push({ id: extra.id }));
+      composedOrders.push({
+        orderLine: {
+          dishId: order.dish.id,
+          amount: order.orderLine.amount,
+          comment: order.orderLine.comment,
+        },
+        extras: extras,
       });
-      return composedOrders;
-   }
+    });
+    return composedOrders;
+  }
 }
