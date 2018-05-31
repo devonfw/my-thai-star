@@ -35,8 +35,9 @@ export class AppComponent {
     moment.locale(this.translate.currentLang);
   }
 
-  openCloseSideNav(sidenavOpened: boolean): void {
-    sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
+  sidenavStatus(opened: boolean): boolean {
+    this.sidenav.opened = opened;
+    return opened;
   }
 
   navigateTo(route: string): void {
