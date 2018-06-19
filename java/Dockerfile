@@ -14,6 +14,8 @@ RUN mvn install
 # 3. Deploy jar
 FROM java:8
 WORKDIR /app
-ADD /server/target/mtsj-server-bootified.war mtsj-server-bootified.war
-ENTRYPOINT ["java","-jar","mtsj-server-bootified.war"]
+COPY --from=build /app/server/target/mtsj-server-bootified.war /app/
+# ADD /app/server/target/mtsj-server-bootified.war mtsj-server.war
+# ADD /root/.m2/repository/io/oasp/application/mtsj-server/0.1-SNAPSHOT/mtsj-server-0.1-SNAPSHOT-bootified.war mtsj-server.war
+ENTRYPOINT ["java","-jar","/app/mtsj-server-bootified.war"]
 EXPOSE 8080
