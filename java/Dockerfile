@@ -18,4 +18,5 @@ COPY --from=build /app/server/target/mtsj-server-bootified.war /app/
 # ADD /app/server/target/mtsj-server-bootified.war mtsj-server.war
 # ADD /root/.m2/repository/io/oasp/application/mtsj-server/0.1-SNAPSHOT/mtsj-server-0.1-SNAPSHOT-bootified.war mtsj-server.war
 ENTRYPOINT ["java","-jar","/app/mtsj-server-bootified.war"]
-EXPOSE 8080
+# EXPOSE 8080
+EXPOSE 8081
