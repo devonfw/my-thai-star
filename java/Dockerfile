@@ -5,8 +5,9 @@ COPY mtsj/. /app
 RUN ls -l
 RUN mvn install
 
-# 2. Deploy
-FROM tomcat:latest
+# 2. Deploy Java war
+FROM java:8
 WORKDIR /app
-COPY --from=build /app/server/target/mythaistar.war /usr/local/tomcat/webapps/
-EXPOSE 8080
+COPY --from=build /app/server/target/mtsj-server-bootified.war /app/
+ENTRYPOINT ["java","-jar","/app/mtsj-server-bootified.war"]
+EXPOSE 8081
