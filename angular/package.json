@@ -4,7 +4,7 @@
   "scripts": {
     ".": "sh .angular-gui/.runner.sh",
     "ng": "ng",
-    "start": "ng serve -pc proxy.conf.json -o",
+    "start": "ng serve --proxy-config proxy.conf.json -o",
     "compodoc": "compodoc -p src/tsconfig.app.json -s",
     "test": "ng test --browsers Chrome",
     "test:ci": "ng test --browsers ChromeHeadless --watch=false",
