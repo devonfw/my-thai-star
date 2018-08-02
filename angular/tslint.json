@@ -7,7 +7,7 @@
     ],
     "array-type": [
       true,
-      "array" 
+      "array"
     ],
     "arrow-parens": true,
     "ban": [
@@ -64,13 +64,13 @@
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": [true],
     "no-console": [
-      true, 
-      "assert", 
-      "count", 
-      "debug", 
-      "dir", 
-      "dirxml", 
-      "error", 
+      true,
+      "assert",
+      "count",
+      "debug",
+      "dir",
+      "dirxml",
+      "error",
       "group",
       "groupCollapsed",
       "groupEnd",
@@ -186,7 +186,7 @@
     ],
     // ANGULAR 2 Rules
     "directive-selector": [true, "attribute", [""], "camelCase"],
-    "component-selector": [true, "element", ["public", "cockpit"], "kebab-case"],
+    "component-selector": [true, "element", ["public", "cockpit", "own"], "kebab-case"],
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "use-input-property-decorator": true,
