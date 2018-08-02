@@ -1,12 +1,10 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { Tile } from './home-card/home-card.component';
 
-interface Tile {
-  title: string;
-  content: string;
-  img: string;
-  button: string;
-  navigate: Function;
+interface HomePageTiles {
+  restaurant: Tile;
+  menu: Tile;
 }
 
 @Component({
@@ -16,19 +14,19 @@ interface Tile {
 })
 export class HomeComponent {
 
-  tiles: any = {
+  tiles: HomePageTiles = {
     restaurant: {
-      title: 'home.restaurantTitle',
-      content: 'home.restaurantContent',
+      titleKey: 'home.restaurantTitle',
+      contentKey: 'home.restaurantContent',
       img: '../../assets/images/thai-restaurant.jpg',
-      button: 'buttons.bookTable',
+      buttonLabelKey: 'buttons.bookTable',
       navigate: () => this.navigateTo('bookTable'),
     },
     menu: {
-      title: 'home.menuTitle',
-      content: 'home.menuContent',
+      titleKey: 'home.menuTitle',
+      contentKey: 'home.menuContent',
       img: '../../assets/images/thai-restaurant-dish.jpg',
-      button: 'buttons.viewMenu',
+      buttonLabelKey: 'buttons.viewMenu',
       navigate: () => this.navigateTo('menu'),
     },
   };
@@ -41,7 +39,7 @@ export class HomeComponent {
   }
 
   getTiles(): Tile[] {
-    return Object.keys(this.tiles).map((key: string) => <Tile>this.tiles[key]);
+    return Object.keys(this.tiles).map((key: string) => this.tiles[key]);
   }
 
 }
