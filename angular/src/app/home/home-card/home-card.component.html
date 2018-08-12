@@ -7,7 +7,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="tile-action">
-    <button mat-raised-button color="accent" (click)="tile.navigate()">
+    <button mat-raised-button color="accent" (click)="onButtonClick($event)">
       {{tile.buttonLabelKey | translate}}
     </button>
   </mat-card-actions>

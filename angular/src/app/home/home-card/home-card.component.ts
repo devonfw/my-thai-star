@@ -1,12 +1,4 @@
-import { Component, Input } from '@angular/core';
-
-export interface Tile {
-  titleKey: string;
-  contentKey: string;
-  img: string;
-  buttonLabelKey: string;
-  navigate: () => void;
-}
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'own-home-card',
@@ -16,4 +8,17 @@ export interface Tile {
 export class HomeCardComponent {
   @Input()
   tile: Tile;
+  @Output('buttonClick')
+  buttonEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+
+  onButtonClick(event: Event): void {
+    this.buttonEmitter.emit(event);
+  }
+}
+
+export interface Tile {
+  titleKey: string;
+  contentKey: string;
+  img: string;
+  buttonLabelKey: string;
 }

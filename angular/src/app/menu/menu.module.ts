@@ -1,7 +1,7 @@
 import { CoreModule } from '../core/core.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MenuService } from './shared/menu.service';
 
@@ -9,6 +9,10 @@ import { MenuCardComponent } from './menu-card/menu-card.component';
 import { MenuComponent } from './menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { MenuFiltersComponent } from './menu-filters/menu-filters.component';
+import { FilterSearchComponent } from './menu-filters/filter-search/filter-search.component';
+import { FilterSortComponent } from './menu-filters/filter-sort/filter-sort.component';
+import { FilterCheckboxesComponent } from './menu-filters/filter-checkboxes/filter-checkboxes.component';
 
 @NgModule({
   imports: [
@@ -17,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     MenuService,
@@ -24,6 +29,10 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [
     MenuComponent,
     MenuCardComponent,
+    MenuFiltersComponent,
+    FilterSearchComponent,
+    FilterSortComponent,
+    FilterCheckboxesComponent,
   ],
   exports: [
     MenuComponent,
