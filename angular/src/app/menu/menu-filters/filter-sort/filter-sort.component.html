@@ -1,0 +1,26 @@
+<div [class.disabled]="disabled">
+  <mat-form-field color="accent">
+    <mat-select [placeholder]="'menu.filter.sort' | translate"
+      (selectionChange)="onSelectChange($event)"
+      [value]="sortValue.name"
+      >
+      <mat-option value="price">
+        {{'menu.filter.price' | translate}}
+      </mat-option>
+      <mat-option value="likes">
+        {{'menu.filter.likes' | translate}}
+      </mat-option>
+      <mat-option value="name">
+        {{'menu.filter.name' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-icon-button
+    color="accent"
+    (click)="changeSortDir($event)"
+    [matTooltip]="sortValue.direction"
+    class="button-sort"
+  >
+    <mat-icon>{{sortDirIcon}}</mat-icon>
+  </button>
+</div>

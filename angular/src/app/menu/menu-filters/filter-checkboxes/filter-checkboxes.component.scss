@@ -1,0 +1,44 @@
+.filter-checkboxes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .filter-divider {
+    border-bottom: 1px solid lightgray;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    mat-checkbox {
+      margin: 8px 10px;
+      display: block;
+    }
+  }
+
+  @media (min-width: 600px) {
+      .filter-divider {
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 100%;
+        justify-content: space-between;
+        mat-checkbox {
+          width: 30%;
+        }
+      }
+  }
+  @media (min-width: 1300px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    .filter-divider {
+      border-bottom: none;
+      border-right: 1px solid lightgray;
+      flex: auto;
+      justify-content: space-around;
+      &:last-of-type {
+        border-right: none;
+      }
+      mat-checkbox {
+        width: auto;
+      }
+    }
+  }
+}
