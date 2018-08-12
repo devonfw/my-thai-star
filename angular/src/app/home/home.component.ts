@@ -1,12 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Tile } from './home-card/home-card.component';
-
-interface HomePageTiles {
-  restaurant: Tile;
-  menu: Tile;
-}
-
 @Component({
   selector: 'public-home',
   templateUrl: './home.component.html',
@@ -38,8 +32,17 @@ export class HomeComponent {
     this.router.navigate([route]);
   }
 
-  getTiles(): Tile[] {
-    return Object.keys(this.tiles).map((key: string) => this.tiles[key]);
+  getTiles(): TileWithNavigation[] {
+    return Object.keys(this.tiles)
+      .map((key) => this.tiles[key]);
   }
 
+}
+
+interface TileWithNavigation extends Tile {
+  navigate: () => void;
+}
+interface HomePageTiles {
+  restaurant: TileWithNavigation;
+  menu: TileWithNavigation;
 }

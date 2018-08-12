@@ -13,9 +13,11 @@ export class MenuCardComponent {
 
   @Input('menu') menuInfo: DishView;
 
-  constructor(private menuService: MenuService,
+  constructor(
+    private menuService: MenuService,
     public auth: AuthService,
-    private sidenav: SidenavService) { }
+    private sidenav: SidenavService,
+  ) { }
 
   addOrderMenu(): void {
     this.sidenav.addOrder(this.menuService.menuToOrder(this.menuInfo));

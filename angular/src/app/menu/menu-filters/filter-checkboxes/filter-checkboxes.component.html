@@ -1,0 +1,19 @@
+<div class="filter-checkboxes">
+  <div class="filter-divider">
+      <mat-checkbox [checked]="categoriesValue.mainDishes" (change)="onToggle('mainDishes')">{{'menu.filter.mainDishes' | translate}}</mat-checkbox>
+      <mat-checkbox [checked]="categoriesValue.starters" (change)="onToggle('starters')">{{'menu.filter.starters' | translate}}</mat-checkbox>
+      <mat-checkbox [checked]="categoriesValue.desserts" (change)="onToggle('desserts')">{{'menu.filter.desserts' | translate}}</mat-checkbox>
+  </div>
+  <div class="filter-divider">
+    <mat-checkbox [checked]="categoriesValue.noodle" (change)="onToggle('noodle')">{{'menu.filter.noodle' | translate}}</mat-checkbox>
+    <mat-checkbox [checked]="categoriesValue.rice" (change)="onToggle('rice')">{{'menu.filter.rice' | translate}}</mat-checkbox>
+    <mat-checkbox [checked]="categoriesValue.curry" (change)="onToggle('curry')">{{'menu.filter.curry' | translate}}</mat-checkbox>
+  </div>
+  <div class="filter-divider">
+    <mat-checkbox [checked]="categoriesValue.vegan" (change)="onToggle('vegan')">{{'menu.filter.vegan' | translate}}</mat-checkbox>
+    <mat-checkbox [checked]="categoriesValue.vegetarian" (change)="onToggle('vegetarian')">{{'menu.filter.vegetarian' | translate}}</mat-checkbox>
+  </div>
+  <div class="filter-divider">
+    <mat-checkbox [checked]="categoriesValue.favourites" (change)="onToggle('favourites')">{{'menu.filter.favourites' | translate}}</mat-checkbox>
+  </div>
+</div>

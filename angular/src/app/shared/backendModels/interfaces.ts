@@ -7,7 +7,7 @@ export class Filter {
     sort: { name: string, direction: string }[];
     maxPrice: number;
     minLikes: number;
-    categories: [{ id: string }];
+    categories: { id: string }[];
 }
 
 export class FilterCockpit {
