@@ -35,6 +35,10 @@
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-security</artifactId>
     </dependency>
+        <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-jpa</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.hibernate</groupId>

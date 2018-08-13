@@ -2,9 +2,9 @@ package io.oasp.application.mtsj.imagemanagement.dataaccess.impl.dao;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.imagemanagement.common.api.datatype.ContentType;
@@ -12,6 +12,7 @@ import io.oasp.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 import io.oasp.application.mtsj.imagemanagement.dataaccess.api.dao.ImageDao;
 import io.oasp.application.mtsj.imagemanagement.logic.api.to.ImageSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link ImageDao}.
@@ -38,7 +39,7 @@ public class ImageDaoImpl extends ApplicationDaoImpl<ImageEntity> implements Ima
 
     ImageEntity image = Alias.alias(ImageEntity.class);
     EntityPathBase<ImageEntity> alias = Alias.$(image);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     String name = criteria.getName();
     if (name != null) {
@@ -56,7 +57,7 @@ public class ImageDaoImpl extends ApplicationDaoImpl<ImageEntity> implements Ima
     if (mimeType != null) {
       query.where(Alias.$(image.getMimeType()).toLowerCase().eq(mimeType.toLowerCase()));
     }
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
 }

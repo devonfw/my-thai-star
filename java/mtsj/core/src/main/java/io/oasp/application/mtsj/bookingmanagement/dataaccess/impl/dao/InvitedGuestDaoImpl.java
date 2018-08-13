@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitedGuestDao;
@@ -16,6 +16,7 @@ import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link InvitedGuestDao}.
@@ -42,7 +43,7 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
 
     InvitedGuestEntity invitedguest = Alias.alias(InvitedGuestEntity.class);
     EntityPathBase<InvitedGuestEntity> alias = Alias.$(invitedguest);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     Long booking = criteria.getBookingId();
     if (booking != null && invitedguest.getBooking() != null) {
@@ -64,7 +65,7 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     if (modificationDate != null) {
       query.where(Alias.$(invitedguest.getModificationDate()).eq(modificationDate));
     }
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<InvitedGuestEntity> alias, InvitedGuestEntity invitedguest,

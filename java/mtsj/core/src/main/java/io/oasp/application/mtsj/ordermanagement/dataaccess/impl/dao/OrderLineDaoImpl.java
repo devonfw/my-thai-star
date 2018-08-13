@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
@@ -15,6 +15,7 @@ import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCrit
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link OrderLineDao}.
@@ -41,7 +42,7 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
 
     OrderLineEntity orderline = Alias.alias(OrderLineEntity.class);
     EntityPathBase<OrderLineEntity> alias = Alias.$(orderline);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     Long order = criteria.getOrderId();
     if (order != null && orderline.getOrder() != null) {
@@ -59,7 +60,7 @@ public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implem
     if (comment != null) {
       query.where(Alias.$(orderline.getComment()).toLowerCase().eq(comment.toLowerCase()));
     }
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<OrderLineEntity> alias, OrderLineEntity orderline,

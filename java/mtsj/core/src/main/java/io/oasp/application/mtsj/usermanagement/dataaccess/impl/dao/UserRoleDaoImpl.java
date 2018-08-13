@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
@@ -15,6 +15,7 @@ import io.oasp.application.mtsj.usermanagement.logic.api.to.UserRoleSearchCriter
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link UserRoleDao}.
@@ -41,7 +42,7 @@ public class UserRoleDaoImpl extends ApplicationDaoImpl<UserRoleEntity> implemen
 
     UserRoleEntity userrole = Alias.alias(UserRoleEntity.class);
     EntityPathBase<UserRoleEntity> alias = Alias.$(userrole);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     String name = criteria.getName();
     if (name != null) {
@@ -51,7 +52,7 @@ public class UserRoleDaoImpl extends ApplicationDaoImpl<UserRoleEntity> implemen
     if (active != null) {
       query.where(Alias.$(userrole.getActive()).eq(active));
     }
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<UserRoleEntity> alias, UserRoleEntity userrole,

@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.TableDao;
@@ -15,6 +15,7 @@ import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link TableDao}.
@@ -41,13 +42,13 @@ public class TableDaoImpl extends ApplicationDaoImpl<TableEntity> implements Tab
 
     TableEntity table = Alias.alias(TableEntity.class);
     EntityPathBase<TableEntity> alias = Alias.$(table);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     Integer seatsNumber = criteria.getSeatsNumber();
     if (seatsNumber != null) {
       query.where(Alias.$(table.getSeatsNumber()).eq(seatsNumber));
     }
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<TableEntity> alias, TableEntity table, List<OrderByTo> sort) {

@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.CategoryEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.CategoryDao;
@@ -15,6 +15,7 @@ import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * This is the implementation of {@link CategoryDao}.
@@ -41,7 +42,7 @@ public class CategoryDaoImpl extends ApplicationDaoImpl<CategoryEntity> implemen
 
     CategoryEntity category = Alias.alias(CategoryEntity.class);
     EntityPathBase<CategoryEntity> alias = Alias.$(category);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
 
     String name = criteria.getName();
     if (name != null) {
@@ -53,7 +54,7 @@ public class CategoryDaoImpl extends ApplicationDaoImpl<CategoryEntity> implemen
     }
     int showOrder = criteria.getShowOrder();
     query.where(Alias.$(category.getShowOrder()).eq(showOrder));
-    return findPaginated(criteria, query, alias);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<CategoryEntity> alias, CategoryEntity category,
