@@ -12,7 +12,7 @@
 
   <properties>
     <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
-    <oasp4j.version>3.0.0-alpha.1</oasp4j.version>
+    <oasp4j.version>3.0.0-SNAPSHOT</oasp4j.version>
     <java.version>1.8</java.version>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>

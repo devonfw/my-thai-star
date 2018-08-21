@@ -8,20 +8,19 @@ import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.jpa.impl.JPAQuery;
 
-import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
+import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link OrderDao}.
  */
 @Named
-public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements OrderDao {
+public class OrderDaoImpl extends LegacyApplicationDaoImpl<OrderEntity> implements OrderDao {
 
   /**
    * The constructor.
@@ -42,7 +41,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
 
     OrderEntity order = Alias.alias(OrderEntity.class);
     EntityPathBase<OrderEntity> alias = Alias.$(order);
-    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<OrderEntity> query = new JPAQuery<OrderEntity>(getEntityManager()).from(alias);
 
     Long booking = criteria.getBookingId();
     if (booking != null && order.getBooking() != null) {
@@ -68,7 +67,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     }
 
     addOrderBy(query, alias, order, criteria.getSort());
-    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<OrderEntity> alias, OrderEntity order, List<OrderByTo> sort) {

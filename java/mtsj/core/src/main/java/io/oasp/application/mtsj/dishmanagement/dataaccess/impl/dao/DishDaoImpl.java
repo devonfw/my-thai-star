@@ -12,17 +12,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
-import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
+import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link DishDao}.
  */
 @Named
-public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishDao {
+public class DishDaoImpl extends LegacyApplicationDaoImpl<DishEntity> implements DishDao {
 
   /**
    * The constructor.
@@ -44,7 +43,7 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
     DishEntity dish = Alias.alias(DishEntity.class);
     EntityPathBase<DishEntity> alias = Alias.$(dish);
 
-    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<DishEntity> query = new JPAQuery<DishEntity>(getEntityManager()).from(alias);
 
     String searchBy = criteria.getSearchBy();
     if (searchBy != null) {
@@ -59,7 +58,7 @@ public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishD
 
     addOrderBy(query, alias, dish, criteria.getSort());
 
-    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query, alias);
 
   }
 

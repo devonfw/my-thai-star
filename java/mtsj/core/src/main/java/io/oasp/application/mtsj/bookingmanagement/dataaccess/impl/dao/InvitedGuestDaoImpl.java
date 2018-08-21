@@ -12,17 +12,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.InvitedGuestDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
-import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
+import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link InvitedGuestDao}.
  */
 @Named
-public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> implements InvitedGuestDao {
+public class InvitedGuestDaoImpl extends LegacyApplicationDaoImpl<InvitedGuestEntity> implements InvitedGuestDao {
 
   /**
    * The constructor.
@@ -43,7 +42,7 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
 
     InvitedGuestEntity invitedguest = Alias.alias(InvitedGuestEntity.class);
     EntityPathBase<InvitedGuestEntity> alias = Alias.$(invitedguest);
-    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<InvitedGuestEntity> query = new JPAQuery<InvitedGuestEntity>(getEntityManager()).from(alias);
 
     Long booking = criteria.getBookingId();
     if (booking != null && invitedguest.getBooking() != null) {
@@ -65,7 +64,7 @@ public class InvitedGuestDaoImpl extends ApplicationDaoImpl<InvitedGuestEntity> 
     if (modificationDate != null) {
       query.where(Alias.$(invitedguest.getModificationDate()).eq(modificationDate));
     }
-    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<InvitedGuestEntity> alias, InvitedGuestEntity invitedguest,

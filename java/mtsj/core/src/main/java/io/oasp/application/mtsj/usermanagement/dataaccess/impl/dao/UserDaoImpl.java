@@ -8,20 +8,19 @@ import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.jpa.impl.JPAQuery;
 
-import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.dao.UserDao;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
+import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link UserDao}.
  */
 @Named
-public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserDao {
+public class UserDaoImpl extends LegacyApplicationDaoImpl<UserEntity> implements UserDao {
 
   /**
    * The constructor.
@@ -42,7 +41,7 @@ public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserD
 
     UserEntity user = Alias.alias(UserEntity.class);
     EntityPathBase<UserEntity> alias = Alias.$(user);
-    JPAQuery query = (JPAQuery) new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<UserEntity> query = new JPAQuery<UserEntity>(getEntityManager()).from(alias);
 
     String username = criteria.getUsername();
     if (username != null) {
@@ -60,7 +59,7 @@ public class UserDaoImpl extends ApplicationDaoImpl<UserEntity> implements UserD
     if (userRole != null && user.getUserRole() != null) {
       query.where(Alias.$(user.getUserRole().getId()).eq(userRole));
     }
-    return LegacyDaoQuerySupport.findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query, alias);
   }
 
   private void addOrderBy(JPAQuery query, EntityPathBase<UserEntity> alias, UserEntity user, List<OrderByTo> sort) {
