@@ -11,11 +11,11 @@ export class MenuFiltersComponent implements OnInit {
   private formDefaults: FilterFormData = {
     searchBy: '',
     sort: {
-      name: '',
+      name: undefined,
       direction: SortDirection.DESC,
     },
-    maxPrice: 0,
-    minLikes: 0,
+    maxPrice: undefined,
+    minLikes: undefined,
     categories: {
       mainDishes: false,
       starters: false,
