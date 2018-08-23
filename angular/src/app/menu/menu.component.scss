@@ -6,6 +6,12 @@ public-menu-card {
 
 @media (min-width: $tablet-min-width){
   public-menu-card {
+    width: 90%
+  }
+}
+
+@media (min-width: 900px){
+  public-menu-card {
     width: 75%
   }
 }
