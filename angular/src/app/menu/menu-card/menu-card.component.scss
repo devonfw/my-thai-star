@@ -13,17 +13,6 @@
   color: sandybrown;
 }
 
-mat-list mat-list-item .twitter-title {
-  font-size: 1.1em;
-  color: white;
-  white-space: normal;
-}
-
-mat-list mat-list-item .twitter-text {
-  font-size: 0.8em;
-  color: white;
-}
-
 .details-card {
   display: flex;
   flex-direction: column;
@@ -40,7 +29,6 @@ mat-list mat-list-item .twitter-text {
 }
 
 .reviews {
-  background-color: rgba(0,0,0,0.3);
   height: 50%;
 }
 
@@ -93,5 +81,11 @@ mat-list mat-list-item .twitter-text {
   .extras{
     flex-direction: column;
     justify-content: space-around;
+  }
+}
+
+@media (min-width: $desktop-min-width) {
+  .details-card {
+    min-height: 55vh;
   }
 }
