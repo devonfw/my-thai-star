@@ -1,3 +1,8 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+
 .property-text-center {
     text-align: center;
 }
