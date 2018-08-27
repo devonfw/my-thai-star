@@ -14,6 +14,7 @@ import { FilterSearchComponent } from './menu-filters/filter-search/filter-searc
 import { FilterSortComponent } from './menu-filters/filter-sort/filter-sort.component';
 import { FilterCheckboxesComponent } from './menu-filters/filter-checkboxes/filter-checkboxes.component';
 import { MenuCardCommentsComponent } from './menu-card/menu-card-comments/menu-card-comments.component';
+import { MenuCardDetailsComponent } from './menu-card/menu-card-details/menu-card-details.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { MenuCardCommentsComponent } from './menu-card/menu-card-comments/menu-c
     FilterSortComponent,
     FilterCheckboxesComponent,
     MenuCardCommentsComponent,
+    MenuCardDetailsComponent,
   ],
   exports: [
     MenuComponent,

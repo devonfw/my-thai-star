@@ -1,6 +1,6 @@
   <own-menu-filters (applyForm)="onFilterChange($event)"></own-menu-filters>
 
-  <div flex layout="row" *ngIf="(dishes$ | async) as dishes; else loading" class="justify-space-around flex-wrap">
+  <div *ngIf="(dishes$ | async) as dishes; else loading" class="card-container">
     <public-menu-card *ngFor="let dish of dishes" [menu]="dish"></public-menu-card>
   </div>
 
