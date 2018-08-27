@@ -8,7 +8,7 @@ describe('MenuCardCommentsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuCardCommentsComponent ]
+      declarations: [ MenuCardCommentsComponent ],
     })
     .compileComponents();
   }));

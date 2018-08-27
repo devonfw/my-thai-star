@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DishView, ExtraView } from '../../../shared/viewModels/interfaces';
 
 @Component({

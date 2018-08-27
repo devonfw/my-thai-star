@@ -1,5 +1,18 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+export interface SortControlModel {
+  name: string;
+  direction: SortDirection;
+}
+export enum SortDirection {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+enum SortIcon {
+  ASC = 'vertical_align_top',
+  DESC = 'vertical_align_bottom',
+}
 
 @Component({
   selector: 'own-filter-sort',
@@ -52,18 +65,4 @@ export class FilterSortComponent implements ControlValueAccessor {
     this.sortValue = { ...this.sortValue, ...{direction: newDir} };
     this.updateForm(this.sortValue);
   }
-}
-
-export interface SortControlModel {
-  name: string;
-  direction: SortDirection;
-}
-
-export enum SortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-enum SortIcon {
-  ASC = 'vertical_align_top',
-  DESC = 'vertical_align_bottom',
 }
