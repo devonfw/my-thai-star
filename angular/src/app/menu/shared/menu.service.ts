@@ -1,12 +1,11 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { map, assign } from 'lodash';
+import { assign } from 'lodash';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Filter, Pagination } from 'app/shared/backendModels/interfaces';
 import { FilterFormData } from '../menu-filters/menu-filters.component';
-import { SortDirection } from '../menu-filters/filter-sort/filter-sort.component';
 
 const categoryNameToServerId: {[key: string]: number} = Object.freeze({
   mainDishes: 0,
@@ -28,13 +27,14 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   menuToOrder(menu: DishView): OrderView {
-    let order: OrderView;
-    order = assign(order, menu);
-    order.orderLine = {
-      amount: 1,
-      comment: '',
+    return {
+      dish: menu.dish,
+      extras: menu.extras,
+      orderLine: {
+        amount: 1,
+        comment: '',
+      },
     };
-    return order;
   }
 
   composeFilters(filters: FilterFormData): Filter {
@@ -55,7 +55,7 @@ export class MenuService {
   }
 
   clearSelectedExtras(menuInfo: DishView): void {
-    map(menuInfo.extras, (extra: ExtraView) => { extra.selected = false; });
+    menuInfo.extras.map((extra: ExtraView) => { extra.selected = false; });
   }
 
   getDishes(filters: Filter): Observable<{pagination: Pagination, result: DishView[]}> {

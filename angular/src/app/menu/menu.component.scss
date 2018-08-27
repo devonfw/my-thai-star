@@ -4,6 +4,12 @@ public-menu-card {
   width: 100%
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 @media (min-width: $tablet-min-width){
   public-menu-card {
     width: 90%
