@@ -1,37 +1,17 @@
 <mat-card class="details-card">
-    <div class= "menu-image" [style.background-image]="'url(' + menuInfo.image.content + ')'">
-      <button mat-fab *ngIf="auth.isLogged()" (click)="changeFavouriteState()" class="push-sm favourite-button">
-        <mat-icon [class.fab-on]="!menuInfo.isfav" [class.fab-off]="menuInfo.isfav">star</mat-icon>
-      </button>
-      <span *ngIf="!auth.isLogged()"></span>
-      <own-menu-card-comments class="reviews"></own-menu-card-comments>
-    </div>
+  <div class= "menu-image" [style.background-image]="'url(' + menuInfo.image.content + ')'">
+    <button mat-fab
+        *ngIf="auth.isLogged()"
+        (click)="changeFavouriteState()"
+        class="favourite-button"
+    >
+      <mat-icon [class.fab-on]="!menuInfo.isfav" [class.fab-off]="menuInfo.isfav">
+        star
+      </mat-icon>
+    </button>
+    <span *ngIf="!auth.isLogged()"></span>
+    <own-menu-card-comments class="reviews"></own-menu-card-comments>
+  </div>
 
-
-    <div class="pad">
-      <span class="price">
-        {{menuInfo.dish.price | number : '1.2-2'}} €
-      </span>
-      <h3 class="text-upper">
-        {{menuInfo.dish.name}}
-      </h3>
-      <p class="description">
-        {{menuInfo.dish.description}}
-      </p>
-      <div class="extras">
-        <mat-checkbox  *ngFor="let extra of menuInfo.extras"
-          [checked]="extra.selected"
-          (change)="selectedOption(extra)"
-        >
-          {{extra.name}} +{{extra.price}}€
-        </mat-checkbox>
-      </div>
-      <span flex></span>
-      <div class="order">
-        <button mat-button color="accent" (click)="addOrderMenu()" >
-          {{'buttons.addToOrder' | translate}}
-        </button>
-      </div>
-    </div>
-
+  <own-menu-card-details class="pad" [menuInfo]="menuInfo" (clickOrder)="addOrderMenu()" ></own-menu-card-details>
 </mat-card>
