@@ -8,7 +8,7 @@ describe('MenuFiltersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuFiltersComponent ]
+      declarations: [ MenuFiltersComponent ],
     })
     .compileComponents();
   }));

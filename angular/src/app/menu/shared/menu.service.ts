@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { assign } from 'lodash';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Filter, Pagination } from 'app/shared/backendModels/interfaces';

@@ -8,7 +8,7 @@ describe('HomeCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeCardComponent ]
+      declarations: [ HomeCardComponent ],
     })
     .compileComponents();
   }));
