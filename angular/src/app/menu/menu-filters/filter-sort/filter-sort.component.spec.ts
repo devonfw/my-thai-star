@@ -8,7 +8,7 @@ describe('FilterSortComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterSortComponent ]
+      declarations: [ FilterSortComponent ],
     })
     .compileComponents();
   }));

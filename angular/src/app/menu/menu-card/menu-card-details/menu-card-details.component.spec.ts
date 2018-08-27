@@ -8,7 +8,7 @@ describe('MenuCardDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuCardDetailsComponent ]
+      declarations: [ MenuCardDetailsComponent ],
     })
     .compileComponents();
   }));

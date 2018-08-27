@@ -5,7 +5,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'own-menu-filters',
   templateUrl: './menu-filters.component.html',
-  styleUrls: ['./menu-filters.component.scss']
+  styleUrls: ['./menu-filters.component.scss'],
 })
 export class MenuFiltersComponent implements OnInit {
   private formDefaults: FilterFormData = {
