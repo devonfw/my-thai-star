@@ -1,14 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-
-interface Tile {
-  title: string;
-  content: string;
-  img: string;
-  button: string;
-  navigate: Function;
-}
-
+import { Tile } from './home-card/home-card.component';
 @Component({
   selector: 'public-home',
   templateUrl: './home.component.html',
@@ -16,19 +8,19 @@ interface Tile {
 })
 export class HomeComponent {
 
-  tiles: any = {
+  tiles: HomePageTiles = {
     restaurant: {
-      title: 'home.restaurantTitle',
-      content: 'home.restaurantContent',
+      titleKey: 'home.restaurantTitle',
+      contentKey: 'home.restaurantContent',
       img: '../../assets/images/thai-restaurant.jpg',
-      button: 'buttons.bookTable',
+      buttonLabelKey: 'buttons.bookTable',
       navigate: () => this.navigateTo('bookTable'),
     },
     menu: {
-      title: 'home.menuTitle',
-      content: 'home.menuContent',
+      titleKey: 'home.menuTitle',
+      contentKey: 'home.menuContent',
       img: '../../assets/images/thai-restaurant-dish.jpg',
-      button: 'buttons.viewMenu',
+      buttonLabelKey: 'buttons.viewMenu',
       navigate: () => this.navigateTo('menu'),
     },
   };
@@ -40,8 +32,17 @@ export class HomeComponent {
     this.router.navigate([route]);
   }
 
-  getTiles(): Tile[] {
-    return Object.keys(this.tiles).map((key: string) => <Tile>this.tiles[key]);
+  getTiles(): TileWithNavigation[] {
+    return Object.keys(this.tiles)
+      .map((key) => this.tiles[key]);
   }
 
+}
+
+interface TileWithNavigation extends Tile {
+  navigate: () => void;
+}
+interface HomePageTiles {
+  restaurant: TileWithNavigation;
+  menu: TileWithNavigation;
 }

@@ -1,0 +1,64 @@
+@import "~variables.scss";
+
+.menu {
+  background-color: white;
+
+  .search {
+    justify-content: space-between;
+    padding: 10px 24px 0px 24px;
+    display: flex;
+    flex-direction: column;
+
+    .searchBy {
+      margin-bottom: -8px;
+    }
+  }
+  @media (min-width: $tablet-min-width) {
+    .search {
+      flex-direction: row;
+
+      .sortingBy {
+        width: 35%;
+      }
+      .searchBy {
+        width: 35%;
+      }
+    }
+  }
+
+  .menu-filters {
+    padding: 0px 24px;
+    display: flex;
+    flex-direction: column;
+
+    .filter-sliders {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+
+      .slider {
+        display: flex;
+        flex-direction: column;
+        mat-slider {
+          margin-top: -10px;
+        }
+      }
+    }
+    @media (min-width: $tablet-min-width) {
+      .filter-sliders {
+        flex-direction: row;
+        .slider {
+          flex: 1;
+        }
+      }
+    }
+  }
+  .filter-actions {
+    text-align: right;
+    padding-top: 8px;
+    padding-bottom: 2px;
+    button {
+      text-transform: uppercase;
+    }
+  }
+}

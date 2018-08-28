@@ -1,10 +1,22 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/viewModels/interfaces';
-import { map, assign } from 'lodash';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Filter } from 'app/shared/backendModels/interfaces';
+import { Filter, Pagination } from 'app/shared/backendModels/interfaces';
+import { FilterFormData } from '../menu-filters/menu-filters.component';
+
+const categoryNameToServerId: {[key: string]: number} = Object.freeze({
+  mainDishes: 0,
+  starters: 1,
+  desserts: 2,
+  noodle: 3,
+  rice: 4,
+  curry: 5,
+  vegan: 6,
+  vegetarian: 7,
+  favourites: 8,
+});
 
 @Injectable()
 export class MenuService {
@@ -14,54 +26,41 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   menuToOrder(menu: DishView): OrderView {
-    let order: OrderView;
-    order = assign(order, menu);
-    order.orderLine = {
-      amount: 1,
-      comment: '',
+    return {
+      dish: menu.dish,
+      extras: menu.extras,
+      orderLine: {
+        amount: 1,
+        comment: '',
+      },
     };
-    return order;
   }
 
-  composeFilters(filters: any, sortDir: string): Filter {
-    let filtersComposed: Filter;
-    let categories: any = [];
-    if (filters) {
-      map(filters, (value: boolean, field: string) => {
-        if (value === true) {
-          categories.push({ id: field });
-        }
-      });
-
-      filtersComposed = {
-        categories: categories,
+  composeFilters(filters: FilterFormData): Filter {
+    const categories: { id: string }[] = Object.keys(filters.categories)
+        .filter((categoryKey: string) => filters.categories[categoryKey])
+        .map((categoryKey: string) => ({id: categoryNameToServerId[categoryKey].toString()}));
+    return {
+        categories,
         searchBy: filters.searchBy,
         sort: [{
-          name: filters.sortName,
-          direction: sortDir,
+          name: filters.sort.name,
+          direction: filters.sort.direction,
         }],
         maxPrice: filters.maxPrice,
         minLikes: filters.minLikes,
-        isFav: filters.isFav,
+        isFav: undefined, // TODO: what is this field? It was present in interface but setting it will cause errors ...
       };
-    } else {
-      filtersComposed = {
-        searchBy: undefined,
-        sort: [],
-        maxPrice: undefined,
-        minLikes: undefined,
-        isFav: undefined,
-        categories: categories,
-      };
-    }
-    return filtersComposed;
   }
 
   clearSelectedExtras(menuInfo: DishView): void {
-    map(menuInfo.extras, (extra: ExtraView) => { extra.selected = false; });
+    menuInfo.extras.map((extra: ExtraView) => { extra.selected = false; });
   }
 
-  getDishes(filters: any): Observable<DishView[]> {
-    return this.http.post<DishView[]>(`${environment.restServiceRoot}${this.filtersRestPath}`, filters);
+  getDishes(filters: Filter): Observable<{pagination: Pagination, result: DishView[]}> {
+    return this.http.post<{pagination: Pagination, result: DishView[]}>(
+      `${environment.restServiceRoot}${this.filtersRestPath}`,
+      filters,
+    );
   }
 }
