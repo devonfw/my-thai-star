@@ -1,0 +1,15 @@
+:host {
+  background-color: rgba(0,0,0,0.3);
+
+  mat-list mat-list-item .twitter-title {
+    font-size: 1.1em;
+    color: white;
+    white-space: normal;
+  }
+
+  mat-list mat-list-item .twitter-text {
+    font-size: 0.8em;
+    color: white;
+  }
+}
+

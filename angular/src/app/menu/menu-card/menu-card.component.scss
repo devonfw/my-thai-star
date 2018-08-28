@@ -1,12 +1,9 @@
+@import "~variables.scss";
 
 .favourite-button {
   align-self:flex-end;
   background-color: white;
-}
-
-.price {
-  font-size: 2em;
-  color: #514f4f;
+  margin: 8px;
 }
 
 .fab-on {
@@ -17,31 +14,40 @@
   color: sandybrown;
 }
 
-.twitter-title {
-  font-size: 1.1em !important;
-  color: white !important;
-  white-space: normal !important;
-}
-
-.twitter-text {
-  font-size: 0.8em !important;
-  color: white !important;
-  white-space: normal !important;
+.details-card {
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-image {
   background-size: cover;
   background-repeat: no-repeat;
+  height: 50vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-@media (min-width: 900px){
-  .card-height {
-    height: 50vh;
+.reviews {
+  height: 50%;
+}
+
+
+@media (min-width: $tablet-min-width) {
+  .details-card {
+    flex-direction: row;
+  }
+
+  .menu-image {
+    min-height: 50vh;
+    height: auto;
+    max-width: 50%;
   }
 }
 
-@media (max-width: 900px){
-  .card-image-height {
-    height: 50vh;
+@media (min-width: $desktop-min-width) {
+  .details-card {
+    min-height: 55vh;
   }
 }
