@@ -1,0 +1,14 @@
+<mat-card>
+  <img mat-card-image src="{{tile.img}}">
+  <mat-card-content>
+    <div class="tile-content">
+      <h3>{{tile.titleKey | translate}}</h3>
+      <p> {{tile.contentKey | translate}} </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="tile-action">
+    <button mat-raised-button color="accent" (click)="onButtonClick($event)">
+      {{tile.buttonLabelKey | translate}}
+    </button>
+  </mat-card-actions>
+</mat-card>

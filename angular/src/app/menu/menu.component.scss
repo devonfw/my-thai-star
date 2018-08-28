@@ -1,138 +1,31 @@
-.menu {
-  background-color: white;
+@import "~variables.scss";
 
-  .search {
-    justify-content: space-between;
-    padding: 10px 24px 0px 24px;
-    display: flex;
-    flex-direction: column;
-
-    .searchBy {
-      margin-bottom: -8px;
-    }
-
-    .sortingBy {
-      display: flex;
-      flex-direction: row;
-      mat-form-field {
-        flex: 1;
-      }
-      .button-sort {
-        top: 15px;
-      }
-    }
-  }
-  @media (min-width: 600px) {
-    .search {
-      flex-direction: row;
-
-      .sortingBy {
-        width: 35%;
-      }
-      .searchBy {
-        width: 35%;
-      }
-    }
-  }
-
-  .menu-filters {
-    padding: 0px 24px;
-    display: flex;
-    flex-direction: column;
-
-    .filter-checkboxes {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      .filter-divider {
-        border-bottom: 1px solid lightgray;
-        &:last-of-type {
-          border-bottom: none;
-        }
-        mat-checkbox {
-          margin: 8px 10px;
-          display: block;
-        }
-      }
-
-      @media (min-width: 600px) {
-          .filter-divider {
-            display: flex;
-            flex-direction: row;
-            flex: 0 0 100%;
-            justify-content: space-between;
-            mat-checkbox {
-              width: 30%;
-            }
-          }
-      }
-    }
-
-    @media (min-width: 1300px) {
-      .filter-checkboxes {
-        flex-direction: row;
-        flex-wrap: wrap;
-        .filter-divider {
-          border-bottom: none;
-          border-right: 1px solid lightgray;
-          flex: auto;
-          justify-content: space-around;
-          &:last-of-type {
-            border-right: none;
-          }
-          mat-checkbox {
-            width: auto;
-          }
-        }
-      }
-    }
-    .filter-sliders {
-      display: flex;
-      flex-direction: column;
-      margin-top: 10px;
-
-      .slider {
-        display: flex;
-        flex-direction: column;
-        mat-slider {
-          margin-top: -10px;
-        }
-      }
-    }
-    @media (min-width: 600px) {
-      .filter-sliders {
-        flex-direction: row;
-        .slider {
-          flex: 1;
-        }
-      }
-    }
-  }
-  .filter-actions {
-    text-align: right;
-    padding-top: 8px;
-    padding-bottom: 2px;
-    button {
-      text-transform: uppercase;
-    }
-  }
+public-menu-card {
+  width: 100%
 }
 
-@media (min-width: 1300px){
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@media (min-width: $tablet-min-width){
   public-menu-card {
-    width: 50%
+    width: 90%
   }
 }
 
-@media (max-width: 1300px){
+@media (min-width: 900px){
   public-menu-card {
     width: 75%
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: $desktop-min-width){
   public-menu-card {
-    width: 100%
+    width: 50%
   }
 }
+
+

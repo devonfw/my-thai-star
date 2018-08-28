@@ -1,0 +1,40 @@
+@import "~variables.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  text-align: right;
+  font-size: 2em;
+  color: #514f4f;
+}
+
+.description {
+  display: flex;
+  margin-top: 0px;
+}
+
+.extras {
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    margin-bottom: 8px;
+  }
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex: 1;
+}
+
+@media (min-width: $tablet-min-width) {
+  .extras {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
