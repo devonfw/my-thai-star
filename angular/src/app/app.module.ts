@@ -1,7 +1,7 @@
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgModule } from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { BookTableModule } from './book-table/book-table.module';
 import { WaiterCockpitModule } from './cockpit-area/cockpit.module';
@@ -18,13 +18,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient } from '@angular/common/http';
 
+import { ElectronService } from './shared/electron/electron.service';
+import { WebviewDirective } from './shared/directives/webview.directive';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [AppComponent, WebviewDirective],
   imports: [
     BrowserModule,
     HeaderModule,
@@ -40,13 +43,15 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
     }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
-  providers: [],
-  bootstrap: [ AppComponent ],
+  providers: [ElectronService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
