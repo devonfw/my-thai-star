@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
+import { ElectronService } from './shared/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import { config } from './config';
@@ -21,6 +22,7 @@ export class AppComponent {
     public sidenav: SidenavService,
     public translate: TranslateService,
     public auth: AuthService,
+    public electronService: ElectronService,
   ) {
     translate.addLangs(config.langs.map((value: any) => value.value));
     translate.setDefaultLang('en');
@@ -33,6 +35,12 @@ export class AppComponent {
       translate.use(translate.getBrowserLang());
     }
     moment.locale(this.translate.currentLang);
+
+    if (electronService.isElectron()) {
+      // Elecron stuff
+    } else {
+      // Web stuff
+    }
   }
 
   sidenavStatus(opened: boolean): boolean {
