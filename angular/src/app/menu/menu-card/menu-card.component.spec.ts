@@ -1,4 +1,3 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from '../../core/core.module';
 
@@ -8,6 +7,8 @@ import { SnackBarService } from '../../core/snackService/snackService.service';
 import { AuthService } from '../../core/authentication/auth.service';
 
 import { MenuCardComponent } from './menu-card.component';
+import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
+import { MenuCardDetailsComponent } from './menu-card-details/menu-card-details.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('MenuCardComponent', () => {
@@ -16,19 +17,14 @@ describe('MenuCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MenuCardComponent],
-      providers: [
-        MenuService,
-        SidenavService,
-        AuthService,
-        SnackBarService,
+      declarations: [
+        MenuCardComponent,
+        MenuCardCommentsComponent,
+        MenuCardDetailsComponent,
       ],
-      imports: [
-        TranslateModule.forRoot(),
-        CoreModule,
-      ],
-    })
-      .compileComponents();
+      providers: [MenuService, SidenavService, AuthService, SnackBarService],
+      imports: [TranslateModule.forRoot(), CoreModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
