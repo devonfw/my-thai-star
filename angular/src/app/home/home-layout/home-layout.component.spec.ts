@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeLayoutComponent } from './home-layout.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../core/core.module';
 
 describe('HomeLayoutComponent', () => {
   let component: HomeLayoutComponent;
@@ -8,9 +10,9 @@ describe('HomeLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeLayoutComponent ],
-    })
-    .compileComponents();
+      declarations: [HomeLayoutComponent],
+      imports: [CoreModule, TranslateModule.forRoot()],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

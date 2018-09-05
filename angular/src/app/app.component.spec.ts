@@ -10,6 +10,7 @@ import { SnackBarService } from './core/snackService/snackService.service';
 import { WindowService } from './core/windowService/windowService.service';
 import { UserAreaService } from './user-area/shared/user-area.service';
 import { AuthService } from './core/authentication/auth.service';
+import { ElectronService } from './shared/electron/electron.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -22,7 +23,13 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, HeaderComponent],
-      providers: [WindowService, AuthService, UserAreaService, SnackBarService],
+      providers: [
+        WindowService,
+        AuthService,
+        UserAreaService,
+        SnackBarService,
+        ElectronService,
+      ],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
