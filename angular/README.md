@@ -57,8 +57,7 @@ $ yarn upgrade
 There are the following alternatives in order to run My Thai Star Angular client with the different server technologies and environments:
 
 ```bash
-$ npm run serve                     # OASP4J server
-$ npm run serve:aot                 # AOT compilation with OASP4J server
+$ npm run start                     # Local OASP4J server
 $ npm run serve:pwa                 # Build and run the app as PWA
 $ npm run serve:prod                # Production server
 $ npm run serve:prodcompose         # Production server with Docker compose
