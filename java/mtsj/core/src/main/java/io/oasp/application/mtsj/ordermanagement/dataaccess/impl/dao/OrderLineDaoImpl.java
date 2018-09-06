@@ -8,19 +8,19 @@ import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.jpa.impl.JPAQuery;
 
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderLineDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link OrderLineDao}.
  */
 @Named
-public class OrderLineDaoImpl extends LegacyApplicationDaoImpl<OrderLineEntity> implements OrderLineDao {
+public class OrderLineDaoImpl extends ApplicationDaoImpl<OrderLineEntity> implements OrderLineDao {
 
   /**
    * The constructor.

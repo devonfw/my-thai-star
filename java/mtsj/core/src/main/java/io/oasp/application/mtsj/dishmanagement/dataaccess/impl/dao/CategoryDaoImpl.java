@@ -11,16 +11,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.CategoryEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.CategoryDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.CategorySearchCriteriaTo;
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link CategoryDao}.
  */
 @Named
-public class CategoryDaoImpl extends LegacyApplicationDaoImpl<CategoryEntity> implements CategoryDao {
+public class CategoryDaoImpl extends ApplicationDaoImpl<CategoryEntity> implements CategoryDao {
 
   /**
    * The constructor.

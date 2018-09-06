@@ -12,16 +12,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.IngredientDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.IngredientSearchCriteriaTo;
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link IngredientDao}.
  */
 @Named
-public class IngredientDaoImpl extends LegacyApplicationDaoImpl<IngredientEntity> implements IngredientDao {
+public class IngredientDaoImpl extends ApplicationDaoImpl<IngredientEntity> implements IngredientDao {
 
   /**
    * The constructor.

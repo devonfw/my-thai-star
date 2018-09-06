@@ -3,6 +3,7 @@ package io.oasp.application.mtsj.general.dataaccess.base.dao;
 import org.springframework.stereotype.Repository;
 
 import io.oasp.application.mtsj.general.dataaccess.api.dao.ApplicationDao;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 import io.oasp.module.jpa.dataaccess.base.AbstractRevisionedDao;
 
@@ -14,7 +15,7 @@ import io.oasp.module.jpa.dataaccess.base.AbstractRevisionedDao;
  */
 @Repository
 public abstract class ApplicationDaoImpl<ENTITY extends MutablePersistenceEntity<Long>>
-    extends AbstractRevisionedDao<ENTITY> implements ApplicationDao<ENTITY> {
+    extends AbstractRevisionedDao<ENTITY> implements ApplicationDao<ENTITY>, LegacyDaoQuerySupport<ENTITY> {
 
   /**
    * The constructor.

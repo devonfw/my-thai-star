@@ -11,16 +11,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.TableDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link TableDao}.
  */
 @Named
-public class TableDaoImpl extends LegacyApplicationDaoImpl<TableEntity> implements TableDao {
+public class TableDaoImpl extends ApplicationDaoImpl<TableEntity> implements TableDao {
 
   /**
    * The constructor.

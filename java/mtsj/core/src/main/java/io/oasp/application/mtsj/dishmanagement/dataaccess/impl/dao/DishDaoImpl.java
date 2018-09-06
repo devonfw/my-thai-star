@@ -12,16 +12,16 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import io.oasp.application.mtsj.dishmanagement.dataaccess.api.dao.DishDao;
 import io.oasp.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link DishDao}.
  */
 @Named
-public class DishDaoImpl extends LegacyApplicationDaoImpl<DishEntity> implements DishDao {
+public class DishDaoImpl extends ApplicationDaoImpl<DishEntity> implements DishDao {
 
   /**
    * The constructor.

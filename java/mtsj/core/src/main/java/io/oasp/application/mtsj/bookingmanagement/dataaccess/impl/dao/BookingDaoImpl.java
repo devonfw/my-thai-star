@@ -13,16 +13,16 @@ import io.oasp.application.mtsj.bookingmanagement.common.api.datatype.BookingTyp
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import io.oasp.application.mtsj.bookingmanagement.dataaccess.api.dao.BookingDao;
 import io.oasp.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link BookingDao}.
  */
 @Named
-public class BookingDaoImpl extends LegacyApplicationDaoImpl<BookingEntity> implements BookingDao {
+public class BookingDaoImpl extends ApplicationDaoImpl<BookingEntity> implements BookingDao {
 
   /**
    * The constructor.

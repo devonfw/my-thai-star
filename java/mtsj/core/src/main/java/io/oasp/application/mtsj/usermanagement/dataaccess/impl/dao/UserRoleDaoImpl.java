@@ -8,19 +8,19 @@ import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.jpa.impl.JPAQuery;
 
+import io.oasp.application.mtsj.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
 import io.oasp.application.mtsj.usermanagement.dataaccess.api.dao.UserRoleDao;
 import io.oasp.application.mtsj.usermanagement.logic.api.to.UserRoleSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.base.LegacyApplicationDaoImpl;
 
 /**
  * This is the implementation of {@link UserRoleDao}.
  */
 @Named
-public class UserRoleDaoImpl extends LegacyApplicationDaoImpl<UserRoleEntity> implements UserRoleDao {
+public class UserRoleDaoImpl extends ApplicationDaoImpl<UserRoleEntity> implements UserRoleDao {
 
   /**
    * The constructor.
