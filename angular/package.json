@@ -24,7 +24,7 @@
     "ngsw-config": "npx ngsw-config dist ngsw-config.json",
     "ngsw-copy": "cp node_modules/@angular/service-worker/ngsw-worker.js dist/",
     "serve": "ng serve",
-    "serve:open": "npm run postinstall:web && ng serve --open",
+    "serve:open": "npm run start",
     "serve:pwa": "npm run build:pwa && http-server dist -p 8080",
     "serve:prod": "npm run postinstall:web && ng serve --open --prod",
     "serve:prodcompose": "npm run postinstall:web && ng serve --open --configuration=prodcompose",
