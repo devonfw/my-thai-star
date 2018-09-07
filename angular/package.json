@@ -95,7 +95,7 @@
     "@types/lodash": "^4.14.108",
     "@types/node": "~8.9.4",
     "@types/selenium-webdriver": "3.0.8",
-    "electron": "2.0.7",
+    "electron": "2.0.8",
     "electron-builder": "20.28.1",
     "electron-reload": "1.2.2",
     "codelyzer": "^4.3.0",
