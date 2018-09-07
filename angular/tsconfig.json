@@ -17,5 +17,12 @@
       "dom",
       "esnext.asynciterable"
     ]
-  }
+  },
+  "include": [
+    "main.ts",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -2,8 +2,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from '../app-routing.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
+
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
@@ -14,8 +16,14 @@ import { BookTableComponent } from '../book-table/book-table.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { HomeCardComponent } from '../home/home-card/home-card.component';
+import { HomeLayoutComponent } from '../home/home-layout/home-layout.component';
+import { MenuFiltersComponent } from '../menu/menu-filters/menu-filters.component';
+import { MenuCardCommentsComponent } from '../menu/menu-card/menu-card-comments/menu-card-comments.component';
+import { MenuCardDetailsComponent } from '../menu/menu-card/menu-card-details/menu-card-details.component';
+import { FilterSearchComponent } from '../menu/menu-filters/filter-search/filter-search.component';
+import { FilterCheckboxesComponent } from '../menu/menu-filters/filter-checkboxes/filter-checkboxes.component';
+import { FilterSortComponent } from '../menu/menu-filters/filter-sort/filter-sort.component';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -31,6 +39,14 @@ describe('EmailConfirmationsComponent', () => {
         OrderCockpitComponent,
         ReservationCockpitComponent,
         MenuCardComponent,
+        HomeCardComponent,
+        HomeLayoutComponent,
+        MenuFiltersComponent,
+        MenuCardCommentsComponent,
+        MenuCardDetailsComponent,
+        FilterSearchComponent,
+        FilterCheckboxesComponent,
+        FilterSortComponent,
       ],
       providers: [SnackBarService, EmailConfirmationsService],
       imports: [

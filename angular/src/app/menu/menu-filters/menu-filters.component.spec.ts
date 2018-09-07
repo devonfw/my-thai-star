@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuFiltersComponent } from './menu-filters.component';
+import { FilterSortComponent } from './filter-sort/filter-sort.component';
+import { FilterCheckboxesComponent } from './filter-checkboxes/filter-checkboxes.component';
+import { FilterSearchComponent } from './filter-search/filter-search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../core/core.module';
 
 describe('MenuFiltersComponent', () => {
   let component: MenuFiltersComponent;
@@ -8,9 +14,19 @@ describe('MenuFiltersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuFiltersComponent ],
-    })
-    .compileComponents();
+      declarations: [
+        MenuFiltersComponent,
+        FilterSortComponent,
+        FilterCheckboxesComponent,
+        FilterSearchComponent,
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
+        CoreModule,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
