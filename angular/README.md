@@ -57,15 +57,11 @@ $ yarn upgrade
 There are the following alternatives in order to run My Thai Star Angular client with the different server technologies and environments:
 
 ```bash
-$ npm run serve                     # OASP4J server
-$ npm run serve:aot                 # AOT compilation with OASP4J server
+$ npm run start                     # Local OASP4J server
 $ npm run serve:pwa                 # Build and run the app as PWA
 $ npm run serve:prod                # Production server
-$ npm run serve:prod:aot            # AOT compilation with production server
 $ npm run serve:prodcompose         # Production server with Docker compose
-$ npm run serve:prodcompose:aot     # AOT compilation with production server with Docker compose
 $ npm run serve:node                # Node.js or local Serverless server
-$ npm run serve:node:aot            # AOT compilation with Node.js or local Serverless server
 ```
 
 If you want to use `yarn`, use it instead of `npm run` in the above commands.
@@ -74,10 +70,31 @@ If you want to use `yarn`, use it instead of `npm run` in the above commands.
 
 Run `npm run build` or `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-* Use the `:prod` flag for a production build with AOT compilation or `:prodcompose` for a production build for the production server and Docker compose environment.
-* Use the `:pwa` flag to build the application as a PWA.
+- Use the `:prod` flag for a production build with AOT compilation or `:prodcompose` for a production build for the production server and Docker compose environment.
+- Use the `:pwa` flag to build the application as a PWA.
 
 Check the different build alternatives in the `package.json` file alongside the serve scripts.
+
+## Electron
+
+Electron support has been included in this new My Thai Star release. We have included scripts to run, build and package My Thai Star Angular as a desktop app.
+
+### Serve
+
+```bash
+$ npm run electron:start            # Build, run and serve in dev mode locally
+$ npm run electron:local            # Build, run and serve in prod mode locally
+```
+
+### Build and package
+
+The built app will be generated in the `release` folder.
+
+```bash
+$ npm run electron:windows          # Build and package as a Windows app
+$ npm run electron:linux            # Build and package as a Linux app
+$ npm run electron:mac              # Build and package as a macOS app
+```
 
 ## Running unit tests
 

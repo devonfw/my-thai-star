@@ -57,6 +57,7 @@ import { SnackBarService } from './snackService/snackService.service';
 import { HttpRequestInterceptorService } from './interceptor/httpRequestInterceptor.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
+
 import { NotFoundComponent } from './not-found/not-found.component';
 
 // Moment locales

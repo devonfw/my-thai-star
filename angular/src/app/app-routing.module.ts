@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes }  from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
@@ -37,8 +37,6 @@ const appRoutes: Routes = [
       { enableTracing: true }, // <-- debugging purposes only
     ),
   ],
-  exports: [
-    RouterModule,
-  ],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
