@@ -5,7 +5,7 @@
   },
   "files": [
     "**/*",
-    "!*.ts",
+    "!**/*.ts",
     "!*.code-workspace",
     "!LICENSE.md",
     "!package.json",
