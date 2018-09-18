@@ -31,7 +31,7 @@
       </a>
     </nav>
   </div>
-  <button id="loginMenu" *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
+  <button *ngIf="!auth.isLogged()" mat-icon-button name="loginMenu" (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>
   <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
