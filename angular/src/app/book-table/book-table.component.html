@@ -5,7 +5,7 @@
   <mat-card class="push-lg">
     <mat-tab-group mat-stretch-tabs>
 
-      <mat-tab [label]="'bookTable.bookingTab' | translate">
+      <mat-tab mame="bookTableTab" [label]="'bookTable.bookingTab' | translate">
         <div layout-gt-xs="row" flex>
 
           <div flex-gt-xs="50" class="menu-image forDesktop">
@@ -63,11 +63,11 @@
 
                 </mat-form-field>
 
-                <mat-checkbox class="push-top" #termsd>{{'formFields.terms' | translate}}</mat-checkbox>
+                <mat-checkbox mame="bookTableTerms" class="push-top" #termsd>{{'formFields.terms' | translate}}</mat-checkbox>
 
               </div>
               <div class="align-right">
-                <button mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
+                <button mame="bookTableSubmit" mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
                   class="text-upper">{{'buttons.bookTable' | translate}}</button>
               </div>
             </form>
@@ -75,7 +75,7 @@
         </div>
       </mat-tab>
 
-      <mat-tab [label]="'bookTable.reservationTab' | translate">
+      <mat-tab mame="inviteFriendsTab" [label]="'bookTable.reservationTab' | translate">
         <div layout-gt-xs="row" flex>
 
           <div flex-gt-xs="50" class="invite-image forDesktop">
@@ -121,9 +121,9 @@
               <h4>{{'formFields.guests' | translate}}</h4>
               <td-chips class="pad-bottom-sm" formControlName="invitedGuests" name="invitedGuests" (add)="validateEmail()" [placeholder]="'formFields.guestsPH' | translate">
               </td-chips>
-              <mat-checkbox #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
+              <mat-checkbox mame="inviteFriendsTerms" #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
               <div class="align-right">
-                <button mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
+                <button mame="inviteFriendsSubmit" mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
                   color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
               </div>
             </form>
