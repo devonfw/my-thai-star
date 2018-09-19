@@ -1,6 +1,6 @@
 <mat-tab-group mat-stretch-tabs class="pull">
 
-  <mat-tab [label]="'userArea.loginTitle' | translate">
+  <mat-tab name="loginTab" [label]="'userArea.loginTitle' | translate">
     <form (ngSubmit)="logInSubmit(loginForm.form.value)" class="pad" #loginForm="ngForm">
       <div layout= "column" flex>
         <mat-form-field color="accent" flex>
@@ -12,13 +12,13 @@
         </mat-form-field>
       </div>
       <div style="text-align: right">
-        <button mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
-        <button mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">{{'buttons.login' | translate}}</button>
+        <button name="cancelLogin" mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+        <button name="submitLogin" mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">{{'buttons.login' | translate}}</button>
       </div>
     </form>
   </mat-tab>
 
-  <mat-tab [label]="'userArea.signupTitle' | translate">
+  <mat-tab name="registerTab" [label]="'userArea.signupTitle' | translate">
     <form (ngSubmit)="signInSubmit(signForm.form.value)" class="pad" #signForm="ngForm">
       <div layout= "column" class="push-bottom-sm" flex>
 
@@ -37,11 +37,11 @@
         </mat-form-field>
       </div>
 
-      <mat-checkbox #termsd>{{'formFields.terms' | translate}}</mat-checkbox>
+      <mat-checkbox #termsd name="registerTerms">{{'formFields.terms' | translate}}</mat-checkbox>
 
       <div class="align-right" flex>
-        <button mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
-        <button mat-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">{{'buttons.register' | translate}}</button>
+        <button name="cancelSignUp" mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+        <button name="registerSubmit" mat-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent" class="text-upper">{{'buttons.register' | translate}}</button>
       </div>
     </form>
   </mat-tab>

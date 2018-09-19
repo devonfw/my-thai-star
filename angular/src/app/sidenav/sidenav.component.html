@@ -1,4 +1,4 @@
-<div layout="column" class="justify-space-between" style="height: 100%">
+<div name="orderDiv" layout="column" class="justify-space-between" style="height: 100%">
   <div layout="column" flex>
     <mat-toolbar>
       <div layout="row" style="align-items:center" flex>
@@ -13,7 +13,7 @@
       <h4 class="pad-bottom-sm text-upper" style="border-bottom: 1px solid lightgrey">{{'sidenav.header' | translate}}</h4>
       <div layout="row" *ngIf="orders.length < 1" style="align-items:center" class="justify-space-between push-bottom-lg">
         <span>{{'sidenav.noSelection' | translate}}</span>
-        <button mat-button color="accent" (click)="navigateTo('menu')">{{'buttons.viewMenu' | translate}}</button>
+        <button name="viewMenu" mat-button color="accent" (click)="navigateTo('menu')">{{'buttons.viewMenu' | translate}}</button>
       </div>
       <div class="pull-top" [class.scrollOrders]="orders.length > 3">
         <public-sidenav-order *ngFor="let order of orders" [order]="order"></public-sidenav-order>
@@ -28,18 +28,18 @@
         <div layout="row" class="justify-space-around" style="align-items:center" flex>
           <mat-icon class="mat-18 pad-right-sm">report_problem</mat-icon>
           <span flex="65" class="invitationAlert">{{'alerts.orderID' | translate}} </span>
-          <button mat-button color="accent" (click)="navigateTo('bookTable')">{{'buttons.bookTable' | translate}}</button>
+          <button name="bookTable" mat-button color="accent" (click)="navigateTo('bookTable')">{{'buttons.bookTable' | translate}}</button>
         </div>
       </mat-card>
       <mat-form-field class="push-left push-right" color="accent" flex>
-        <input matInput #bookingId [placeholder]="'sidenav.bookingId' | translate">
+        <input name="orderBookingID" matInput #bookingId [placeholder]="'sidenav.bookingId' | translate">
       </mat-form-field>
-      <mat-checkbox #terms class="push-left">{{'formFields.terms' | translate}}</mat-checkbox>
+      <mat-checkbox name="orderTerms" #terms class="push-left">{{'formFields.terms' | translate}}</mat-checkbox>
     </div>
   </div>
   <div style="text-align: right">
-    <button mat-button (click)="closeSidenav()" class="text-upper property-text-bold">{{'buttons.cancel' | translate}}</button>
-    <button mat-button color="accent" (click)="sendOrders(bookingId.value)" [disabled]="!(bookingId.value.length > 0 && terms.checked)"
+    <button name="orderCancel" mat-button (click)="closeSidenav()" class="text-upper property-text-bold">{{'buttons.cancel' | translate}}</button>
+    <button name="orderSubmit" mat-button color="accent" (click)="sendOrders(bookingId.value)" [disabled]="!(bookingId.value.length > 0 && terms.checked)"
       class="text-upper property-text-bold">{{'buttons.send' | translate}}</button>
   </div>
 </div>
