@@ -31,11 +31,11 @@
       </a>
     </nav>
   </div>
-  <button *ngIf="!auth.isLogged()" mat-icon-button name="loginMenu" (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
+  <button name="login" *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>
   <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
-    <button mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
+    <button name="account" mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
       <mat-icon>account_circle</mat-icon>
     </button>
     <span class="forDesktop">{{auth.user}}</span>
@@ -43,31 +43,31 @@
       <mat-icon>exit_to_app</mat-icon>
     </button>
     <mat-menu #toolbarMenu1="matMenu">
-      <button mat-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
+      <button name="changePassword" mat-menu-item type="button" (click)="openResetDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>settings</mat-icon>
         <span>{{'main.userActions.changePassword' | translate}}</span>
       </button>
-      <button mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
+      <button name="twitterAccount" mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>send</mat-icon>
         <span>{{'main.userActions.twitterAccount' | translate}}</span>
       </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item type="button" (click)="logout()">
+      <button name="logout" mat-menu-item type="button" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
         <span>{{'main.userActions.signOut' | translate}}</span>
       </button>
     </mat-menu>
   </div>
-  <button mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
+  <button name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
     <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
       <mat-icon>shopping_basket</mat-icon>
     </td-notification-count>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">
+  <button name="language" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">
     <span class="flag-icon flag-icon-{{ flag }}"></span>
   </button>
   <mat-menu #menu="matMenu">
-    <button *ngFor="let lang of selectableLangs" [disabled]="translate.currentLang === lang.value" (click)="changeLanguage(lang.value)"
+    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="translate.currentLang === lang.value" (click)="changeLanguage(lang.value)"
       mat-menu-item>
       <span>{{lang.label}}</span>
     </button>
