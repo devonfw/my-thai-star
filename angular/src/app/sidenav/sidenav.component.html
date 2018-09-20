@@ -1,4 +1,4 @@
-<div name="orderDiv" layout="column" class="justify-space-between" style="height: 100%">
+<div data-name="orderDiv" layout="column" class="justify-space-between" style="height: 100%">
   <div layout="column" flex>
     <mat-toolbar>
       <div layout="row" style="align-items:center" flex>
@@ -34,7 +34,7 @@
       <mat-form-field class="push-left push-right" color="accent" flex>
         <input name="orderBookingID" matInput #bookingId [placeholder]="'sidenav.bookingId' | translate">
       </mat-form-field>
-      <mat-checkbox name="orderTerms" #terms class="push-left">{{'formFields.terms' | translate}}</mat-checkbox>
+      <mat-checkbox data-name="orderTerms" #terms class="push-left">{{'formFields.terms' | translate}}</mat-checkbox>
     </div>
   </div>
   <div style="text-align: right">
