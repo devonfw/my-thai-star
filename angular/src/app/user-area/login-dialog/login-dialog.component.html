@@ -1,6 +1,6 @@
 <mat-tab-group mat-stretch-tabs class="pull">
 
-  <mat-tab data-name="loginTab" [label]="'userArea.loginTitle' | translate">
+  <mat-tab [label]="'userArea.loginTitle' | translate" class="loginTab">
     <form (ngSubmit)="logInSubmit(loginForm.form.value)" class="pad" #loginForm="ngForm">
       <div layout= "column" flex>
         <mat-form-field color="accent" flex>
@@ -18,7 +18,7 @@
     </form>
   </mat-tab>
 
-  <mat-tab data-name="registerTab" [label]="'userArea.signupTitle' | translate">
+  <mat-tab [label]="'userArea.signupTitle' | translate" class="registerTab">
     <form (ngSubmit)="signInSubmit(signForm.form.value)" class="pad" #signForm="ngForm">
       <div layout= "column" class="push-bottom-sm" flex>
 
