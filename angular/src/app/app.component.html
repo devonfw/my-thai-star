@@ -3,7 +3,7 @@
 
   <td-layout-footer class="forDesktop">
     <div layout="row" layout-align="center center" flex>
-      <span>MY THAI STAR 2017</span>
+      <span>MY THAI STAR 2018</span>
       <span flex></span>
       <span>Devonfw</span>
     </div>
@@ -28,6 +28,12 @@
         <a mat-list-item (click)="navigateTo('bookTable')">
           <mat-icon>bookmark</mat-icon>
           BOOK TABLE
+        </a>
+      </mat-nav-list>
+      <mat-nav-list menu-items *ngIf="auth.isPermited('MANAGER')">
+        <a mat-list-item (click)="navigateTo('prediction')">
+          <mat-icon>show_chart</mat-icon>
+          PREDICTION
         </a>
       </mat-nav-list>
       <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">

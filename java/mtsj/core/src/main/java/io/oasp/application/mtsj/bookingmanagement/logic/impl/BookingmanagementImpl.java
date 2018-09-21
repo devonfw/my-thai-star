@@ -113,7 +113,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  @RolesAllowed(Roles.WAITER)
+  @RolesAllowed({Roles.WAITER, Roles.MANAGER})
   public PaginatedListTo<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
 
     return findBookingCtos(criteria);

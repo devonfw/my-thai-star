@@ -6,6 +6,7 @@ import { MenuComponent } from './menu/menu.component';
 import { BookTableComponent } from './book-table/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
+import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 
@@ -16,6 +17,11 @@ const appRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'bookTable', component: BookTableComponent },
   { path: 'booking/:action/:token', component: EmailConfirmationsComponent },
+  {
+    path: 'prediction',
+    component: PredictionCockpitComponent,
+    canActivate: [AuthGuardService],
+  },
   {
     path: 'orders',
     component: OrderCockpitComponent,

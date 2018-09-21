@@ -49,6 +49,13 @@ export interface FriendsInvite {
   email: string;
   accepted: boolean;
 }
+export interface OrderDishView {
+    dish: {
+        id: number;
+        name: string;
+        price: number;
+    };
+}
 
 export interface OrderView {
   dish: {
@@ -81,6 +88,11 @@ export interface OrderListView {
   booking: BookingView;
 }
 
+export interface OrderDishListView {
+    orderLines: OrderDishView[];
+    booking: BookingView;
+}
+
 // Interface to recieve responeses from the server using httpclient for getReservations
 export interface BookingResponse {
   pagination: Pagination;
@@ -91,6 +103,12 @@ export interface BookingResponse {
 export interface OrderResponse {
   pagination: Pagination;
   result: OrderListView;
+}
+
+//Interface to recieve responeses from the server using httpclient for get OrderDishResponse
+export interface OrderDishResponse {
+    pagination: Pagination;
+    result: OrderDishListView;
 }
 
 // Interface to recieve responeses from the server using httpclient for email invitations
@@ -131,4 +149,21 @@ export interface SaveOrderResponse {
 export interface Role {
   name: string;
   permission: number;
+}
+
+// Interface for prediction data for a dish
+export interface OrdersData {
+    dates?: Date[],
+    holidays?: string[],
+    weather?: number[],
+    dishes: DishOrdersData[]
+}
+
+//Interface for order of a dish
+export interface DishOrdersData {
+    id: number,
+    //name of the dish
+    name: string,
+    //count of orders of the dish, that have been ordered in certain period
+    orders: number[],
 }

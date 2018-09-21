@@ -6,8 +6,10 @@ import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -87,5 +89,7 @@ public interface Ordermanagement {
    * @return the new {@link OrderLineEto} that has been saved with ID and version.
    */
   OrderLineEto saveOrderLine(OrderLineEto orderLine);
+
+  PaginatedListTo<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria);
 
 }

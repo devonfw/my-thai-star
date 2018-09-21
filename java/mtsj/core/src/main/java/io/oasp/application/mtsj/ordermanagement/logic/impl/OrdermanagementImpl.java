@@ -41,15 +41,22 @@ import io.oasp.application.mtsj.ordermanagement.common.api.exception.OrderAlread
 import io.oasp.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderDao;
 import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderLineDao;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderedDishesPerDayDao;
+import io.oasp.application.mtsj.ordermanagement.dataaccess.api.dao.OrderedDishesPerMonthDao;
 import io.oasp.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesCto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -75,6 +82,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineDao orderLineDao;
+
+  @Inject
+  private OrderedDishesPerDayDao orderedDishesPerDayDao;
+
+  @Inject
+  private OrderedDishesPerMonthDao orderedDishesPerMonthDao;
 
   @Inject
   private Bookingmanagement bookingManagement;
@@ -116,7 +129,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return cto;
   }
 
-  @RolesAllowed(Roles.WAITER)
+  @RolesAllowed({Roles.WAITER, Roles.MANAGER})
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);
@@ -267,6 +280,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   public OrderLineDao getOrderLineDao() {
 
     return this.orderLineDao;
+  }
+
+  public OrderedDishesPerDayDao getOrderedDishesPerDayDao() {
+
+    return this.orderedDishesPerDayDao;
+  }
+
+  public OrderedDishesPerMonthDao getOrderedDishesPerMonthDao() {
+
+    return this.orderedDishesPerMonthDao;
   }
 
   private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
@@ -440,4 +463,31 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     return (now > cancellationLimit) ? false : true;
   }
+
+  @Override
+  public PaginatedListTo<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
+    if (criteria.getType().equalsIgnoreCase("daily")) {
+      PaginatedListTo<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
+      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getResult()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+      return new PaginatedListTo<>(orderedDishesCtos, orderedDishes.getPagination());
+    } else {
+      PaginatedListTo<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao().findOrderedDishesPerMonth(criteria);
+      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getResult()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+      return new PaginatedListTo<>(orderedDishesCtos, orderedDishes.getPagination());
+    }
+  }
+
 }

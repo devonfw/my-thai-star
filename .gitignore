@@ -4,6 +4,7 @@ target
 eclipse-target
 
 *.log
+*.bat
 *.class
 *.classpath
 *.project

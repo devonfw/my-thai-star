@@ -13,8 +13,10 @@ import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesCto;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
 import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.application.mtsj.ordermanagement.logic.api.to.OrderedDishesSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
@@ -106,4 +108,9 @@ public interface OrdermanagementRestService {
   @Path("/orderline/search")
   @POST
   public PaginatedListTo<OrderLineCto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo);
+
+  @Path("/ordereddishes/history")
+  @POST
+  public PaginatedListTo<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo);
+
 }

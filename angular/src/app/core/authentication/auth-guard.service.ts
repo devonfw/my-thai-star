@@ -16,8 +16,11 @@ export class AuthGuardService implements CanActivate {
               private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (state.url === '/prediction' && this.authService.isLogged() && this.authService.isPermited('MANAGER')) {
+      return true;
+    }
 
-    if (this.authService.isLogged() && this.authService.isPermited('WAITER')) {
+    if ((state.url === '/orders' || state.url === '/reservations') && this.authService.isLogged() && this.authService.isPermited('WAITER')) {
       return true;
     }
 
