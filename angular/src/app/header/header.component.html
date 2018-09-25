@@ -38,7 +38,7 @@
     <button name="account" mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
       <mat-icon>account_circle</mat-icon>
     </button>
-    <span class="forDesktop">{{auth.user}}</span>
+    <span data-name="userNameLogged" class="forDesktop">{{auth.user}}</span>
     <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" [matTooltip]="'main.userActions.logout' | translate">
       <mat-icon>exit_to_app</mat-icon>
     </button>
