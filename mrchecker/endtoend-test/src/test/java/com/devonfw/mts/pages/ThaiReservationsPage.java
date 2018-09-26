@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -27,14 +26,14 @@ public class ThaiReservationsPage extends BasePage {
   /* Search criteria */
   private static final By reservationsTableSearch = By.xpath("//tbody[@class='td-data-table-body']/tr");
 
-  private static final By reservationRowSearch = By.xpath("./td//span");
+  // private static final By reservationRowSearch = By.xpath("./td//span");
 
-  private static final By nextPageSearch = By.xpath("//button[@class=\"td-paging-bar-next-page mat-icon-button\"]");
+  // private static final By nextPageSearch = By.xpath("//button[@class=\"td-paging-bar-next-page mat-icon-button\"]");
 
-  private static final By searchBarFilterParent = By.xpath("//div[@class=\"td-expansion-panel-header mat-ripple\"]");
+  private static final By searchBarFilter = By.className("td-expansion-panel-header");
 
   // private static final By searchBarFilterFromParent = By.className("td-expansion-label");
-  private static final By searchBarFilterFromParent = By.className("td-expand-icon");
+  // private static final By searchBarFilterFromParent = By.className("td-expand-icon");
 
   private static final By emailInputSearch = By.xpath("//input[@name=\"email\"]");
 
@@ -125,35 +124,43 @@ public class ThaiReservationsPage extends BasePage {
 
   public HashMap<String, List<Reservation>> searchDatesByEmail(String email) {
 
-    WebElement searchBarParent = getDriver().findElementDynamic(searchBarFilterParent);
-    WebElement searchBar = searchBarParent.findElement(searchBarFilterFromParent);
+    WebElement searchBarParent = getDriver().findElementDynamic(searchBarFilter);
+    // WebElement searchBar = searchBarParent.findElement(searchBarFilterFromParent);
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
-    js.executeScript("arguments[0].click()", searchBar);
+    js.executeScript("arguments[0].click()", searchBarParent);
     // searchBar.click();
+    try {
+      getDriver().findElementDynamic(By.xpath("adasd"), 2);
+    } catch (Exception e) {
 
-    WebElement emailInput = getDriver().findElementDynamics(emailInputSearch).get(1);
-    for (int i = 0; i < email.length(); i++) {
-      emailInput.sendKeys(email.charAt(i) + "");
     }
 
+    // WebElement emailInput = getDriver().findElementDynamics(emailInputSearch).get(1);
+    // for (int i = 0; i < email.length(); i++) {
+    // emailInput.sendKeys(email.charAt(i) + "");
+    // }
+
+    int index = 1;
+
+    Utils.sendKeysWithCheck(email, emailInputSearch, getDriver(), getWebDriverWait(), index);
     WebElement button = getDriver().findElementDynamic(submitButtonSearch);
     button.click();
 
     try {
-      System.out.println("Antes de esperar");
-      long a = System.currentTimeMillis();
-      TimeUnit.SECONDS.sleep(3);
-      long b = System.currentTimeMillis();
-      System.out.println("Despues de esperarAntes" + (b - a));
-    } catch (InterruptedException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
+      getDriver().findElementDynamics(By.cssSelector("fskjacb"), 2);
+    } catch (Exception e) {
+
     }
 
     // try {
-    // getDriver().findElementDynamics(By.cssSelector("fskjacb"), 3);
-    // } catch (Exception e) {
-    //
+    // System.out.println("Antes de esperar");
+    // long a = System.currentTimeMillis();
+    // TimeUnit.SECONDS.sleep(3);
+    // long b = System.currentTimeMillis();
+    // System.out.println("Despues de esperarAntes" + (b - a));
+    // } catch (InterruptedException e1) {
+    // // TODO Auto-generated catch block
+    // e1.printStackTrace();
     // }
 
     HashMap<String, List<Reservation>> idReservations = new HashMap<>();
@@ -170,16 +177,16 @@ public class ThaiReservationsPage extends BasePage {
     List<Reservation> reservationsByDate;
     String date, id, email;
 
-    System.out.println("ANTES DE BUSCAR");
+    // System.out.println("ANTES DE BUSCAR");
     reservations = getDriver().findElementDynamics(reservationsTableSearch);
-    System.out.println("DESPUES DE BUSCAR");
+    // System.out.println("DESPUES DE BUSCAR");
 
-    for (int i = 0; i < reservations.size(); i++) {
+    for (int i = 1; i <= reservations.size(); i++) {
       System.out.println(reservations.size());
 
-      date = getDriver().findElementDynamic(thisData(3 * i + 1)).getText();
-      email = getDriver().findElementDynamic(thisData(3 * i + 2)).getText();
-      id = getDriver().findElementDynamic(thisData(3 * i + 3)).getText();
+      date = getDriver().findElementDynamic(findDataCell(i, 1)).getText();
+      email = getDriver().findElementDynamic(findDataCell(i, 2)).getText();
+      id = getDriver().findElementDynamic(findDataCell(i, 3)).getText();
       try {
         date = Utils.changeDateFormat(date, "MMM dd, yyyy hh:mm a", "MM/dd/yyyy hh:mm a");
       } catch (ParseException e) {
@@ -199,9 +206,9 @@ public class ThaiReservationsPage extends BasePage {
     return idReservations;
   }
 
-  public By thisData(int index) {
+  public By findDataCell(int indexRow, int indexCol) {
 
-    return By.xpath("//tbody[@class='td-data-table-body']/tr/td[" + index + "]//span");
+    return By.xpath("//tbody[@class='td-data-table-body']/tr[" + indexRow + "]/td[" + indexCol + "]//span");
   }
 
 }

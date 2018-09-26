@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
+import com.devonfw.mts.common.utils.Utils;
 
 /**
  * @author jambulud
@@ -17,7 +18,7 @@ public class ThaiLoginPage extends BasePage {
 
   private static final By passwordSearch = By.name("password");
 
-  private static final By acessButtonSearch = By.xpath("//button[@type='submit']");
+  private static final By accessButtonSearch = By.name("submitLogin");
 
   @Override
   public boolean isLoaded() {
@@ -52,18 +53,19 @@ public class ThaiLoginPage extends BasePage {
     WebElement accessButton;
 
     // Due to a Selenium bug, we wrote character to character
-    for (char c : username.toCharArray()) {
-      usernameTextBox.sendKeys(c + "");
-    }
-
-    for (char c : password.toCharArray()) {
-      passwordTextBox.sendKeys(c + "");
-    }
-
+    // for (char c : username.toCharArray()) {
+    // usernameTextBox.sendKeys(c + "");
+    // }
+    //
+    // for (char c : password.toCharArray()) {
+    // passwordTextBox.sendKeys(c + "");
+    // }
+    Utils.sendKeysWithCheck(username, usernameSearch, getDriver(), getWebDriverWait());
+    Utils.sendKeysWithCheck(password, passwordSearch, getDriver(), getWebDriverWait());
     // Wait until all the password has been written
     driverWait
         .until((driver) -> driver.findElement(passwordSearch).getAttribute("value").length() == password.length());
-    accessButton = getDriver().findElementDynamic(acessButtonSearch);
+    accessButton = getDriver().findElementDynamic(accessButtonSearch);
     accessButton.click();
   }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
+import com.devonfw.mts.common.utils.Utils;
 
 /**
  * @author jambulud
@@ -17,12 +18,11 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 public class ThaiSummaryPage extends BasePage {
 
   /* Search criteria */
-  private static final By textBoxSearch = By.id("mat-input-0");
+  private static final By textBoxSearch = By.name("orderBookingID");
 
-  private static final By checkBoxSearch = By.xpath("//div[@class='mat-checkbox-inner-container']");
+  private static final By checkBoxSearch = By.xpath("//mat-checkbox[@data-name='orderTerms']");
 
-  private static final By acceptButtonSearch = By
-      .xpath("//button[@class='text-upper property-text-bold mat-button mat-accent']");
+  private static final By acceptButtonSearch = By.name("orderSubmit");
 
   @Override
   public boolean isLoaded() {
@@ -56,9 +56,11 @@ public class ThaiSummaryPage extends BasePage {
     WebElement checkBox = getDriver().findElementDynamic(checkBoxSearch);
     WebElement acceptButton = getDriver().findElementDynamic(acceptButtonSearch);
 
-    for (char c : bookingId.toCharArray()) {
-      textBox.sendKeys(c + "");
-    }
+    Utils.sendKeysWithCheck(bookingId, textBoxSearch, getDriver(), getWebDriverWait());
+
+    // for (char c : bookingId.toCharArray()) {
+    // textBox.sendKeys(c + "");
+    // }
 
     driverWait
         .until((driver) -> driver.findElement(textBoxSearch).getAttribute("value").length() == bookingId.length());
