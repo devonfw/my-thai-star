@@ -12,16 +12,16 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
  * @author Carlos Micó Egea
  */
 public class ThaiConfirmBookPage extends BasePage {
-  public static final By sendSearch = By.className("mat-dialog-container");
+  private static final By confirmationDialogSearch = By.className("mat-dialog-container");
 
-  public static final By sendButton = By
-      .xpath("//button[@class=\"text-upper mat-button mat-accent\" and not(@type=\"button\")]");
+  //////////////////////////////////////////////
+  private static final By sendButtonSearch = By.name("bookTableConfirm");
 
   @Override
   public boolean isLoaded() {
 
-    WebElement sendButton = getDriver().findElementDynamic(sendSearch);
-    return sendButton.isDisplayed();
+    WebElement confirmationDialog = getDriver().findElementDynamic(confirmationDialogSearch);
+    return confirmationDialog.isDisplayed();
 
   }
 
@@ -39,8 +39,8 @@ public class ThaiConfirmBookPage extends BasePage {
 
   public void confirmBookingData() {
 
-    WebElement send = getDriver().findElementDynamic(sendButton);
-    send.click();
+    WebElement sendButton = getDriver().findElementDynamic(sendButtonSearch);
+    sendButton.click();
   }
 
 }

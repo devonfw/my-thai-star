@@ -48,15 +48,15 @@ public class MyThaiStarTest extends BaseTest {
 
   }
 
-  // @Test
-  // @FileParameters(value = "src/test/resources/datadriven/test_users.csv", mapper = UserMapper.class)
+  @Test
+  @FileParameters(value = "src/test/resources/datadriven/test_users.csv", mapper = UserMapper.class)
   public void Test_loginAndLogOut(User user) {
 
     login(user);
     logOut();
   }
 
-  // @Test
+  @Test
   public void Test_loginFake() {
 
     User userfake = new User("userFake", "passwordfake");
@@ -77,15 +77,15 @@ public class MyThaiStarTest extends BaseTest {
     Reservation reservation = new Reservation(date, user.getUsername(), fakeEmail, guest);
     User waiter = new User("waiter", "waiter");
 
-    // login(user);
+    login(user);
     bookTable(reservation);
-    // logOut();
+    logOut();
     login(waiter);
     verifyBooking(reservation);
     logOut();
   }
 
-  // @Test
+  @Test
   public void Test_orderMenu() {
 
     String bookingId = "CB_20170510_123502655Z";
