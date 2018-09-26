@@ -176,7 +176,7 @@ Therefore we want to look for it like this:
 getDriver().findElementDynamic(By.name("login"));
 ----
 
-But following page object model, you want it to look like this:
+We can also write in a more refactored way:
 
 [source, java]
 ----
