@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 import com.devonfw.mts.common.data.Reservation;
+import com.devonfw.mts.common.utils.Utils;
 
 /**
  * @author Juan Andrés Ambuludi Olmedo
@@ -15,7 +16,7 @@ import com.devonfw.mts.common.data.Reservation;
  */
 public class ThaiBookPage extends BasePage {
 
-  private static final By inputFieldsSearch = By.xpath("//div[@class='mat-form-field-infix']");
+  // private static final By inputFieldsSearch = By.xpath("//div[@class='mat-form-field-infix']");
 
   private static final By dateSearch = By.cssSelector("input[formcontrolname='bookingDate']");
 
@@ -25,24 +26,24 @@ public class ThaiBookPage extends BasePage {
 
   private static final By guestsSearch = By.cssSelector("input[formcontrolname='assistants']");
 
-  private static final By checkboxSearch = By.className("mat-checkbox");
+  // private static final By checkboxSearch = By.className("mat-checkbox");
 
-  private static final String xpathBookTableButton = "//*[@id='mat-tab-content-0-0']/div/div/div[2]/form/div[3]/button";
+  // private static final String xpathBookTableButton =
+  // "//*[@id='mat-tab-content-0-0']/div/div/div[2]/form/div[3]/button";
 
-  private static final By bookTableButtonSearch = By.xpath(xpathBookTableButton);
+  // private static final By bookTableButtonSearch = By.xpath(xpathBookTableButton);
 
-  private static final By headerSearch = By.tagName("h3");
+  // private static final By headerSearch = By.tagName("h3");
 
   private static final By dialogSearch = By.className("bgc-green-600");
 
   @Override
   public boolean isLoaded() {
 
-    String text = "You can invite your friends to lunch or book a table";
-    WebElement header = getDriver().findElementDynamic(headerSearch);
-    String headerText = header.getText();
+    // String text = "You can invite your friends to lunch or book a table";
+    WebElement dateInput = getDriver().findElementDynamic(dateSearch);
 
-    return headerText.equals(text);
+    return dateInput.isDisplayed();
   }
 
   @Override
@@ -60,34 +61,38 @@ public class ThaiBookPage extends BasePage {
   public void enterTimeAndDate(String Date) {
 
     WebElement dateInput = getDriver().findElementDynamic(dateSearch);
-    dateInput.sendKeys(Date);
+    Utils.sendKeysWithCheck(Date, dateSearch, getDriver(), getWebDriverWait());
+    // dateInput.sendKeys(Date);
   }
 
   public void enterName(String name) {
 
     WebElement nameInput = getDriver().findElementDynamic(nameSearch);
-    nameInput.sendKeys(name);
+    Utils.sendKeysWithCheck(name, nameSearch, getDriver(), getWebDriverWait());
+    // nameInput.sendKeys(name);
   }
 
   public void enterEmail(String email) {
 
     WebElement emailInput = getDriver().findElementDynamic(emailSearch);
-    emailInput.sendKeys(email);
+    Utils.sendKeysWithCheck(email, emailSearch, getDriver(), getWebDriverWait());
+    // emailInput.sendKeys(email);
   }
 
   public void enterGuests(int amountOfGuests) {
 
     WebElement guestsInput = getDriver().findElementDynamic(guestsSearch);
-    guestsInput.sendKeys(Integer.toString(amountOfGuests));
+    Utils.sendKeysWithCheck(Integer.toString(amountOfGuests), guestsSearch, getDriver(), getWebDriverWait());
+    // guestsInput.sendKeys(Integer.toString(amountOfGuests));
   }
 
   public void acceptTerms() {
 
-    // JavascriptExecutor js = (JavascriptExecutor) getDriver();
-    // js.executeScript("document.getElementsByClassName('mat-checkbox-inner-container')[1].click();");
-    WebElement checkbox = getDriver()
-        .findElementDynamics(By.cssSelector("label.mat-checkbox-layout > div.mat-checkbox-inner-container")).get(1);
-    checkbox.click();
+    JavascriptExecutor js = (JavascriptExecutor) getDriver();
+    js.executeScript("document.getElementsByClassName('mat-checkbox-inner-container')[1].click();");
+    // WebElement checkbox = getDriver()
+    // .findElementDynamics(By.cssSelector("label.mat-checkbox-layout > div.mat-checkbox-inner-container")).get(1);
+    // checkbox.click();
 
     // System.out.println("OBTAIN CHECKBOX PARENT ID");
     // WebElement checkboxParent = getDriver()

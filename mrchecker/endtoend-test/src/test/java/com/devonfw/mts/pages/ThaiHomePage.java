@@ -15,23 +15,25 @@ import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundExcepti
 /**
  * @author jambulud
  */
+// @Configuration // no se si esto hace falta o no, lo he copiado de otra version (Carlos)
+// @PropertySource("file:config.properties")
 public class ThaiHomePage extends BasePage {
 
   /* Search criteria */
-  private static final String mathaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
+  private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
 
-  private static final By loginButtonSearch = By.cssSelector("button.mat-icon-button:nth-child(6)");
+  private static final By loginButtonSearch = By.name("login");
 
-  private static final By logoutButtonSearch = By.xpath("//button[@class=\"mat-icon-button\"]");
+  private static final By logoutButtonSearch = By.name("account");
 
-  private static final By logoutItemSearch = By.xpath("//button[@class=\"mat-menu-item\"]");
+  // private static final By logoutItemSearch = By.xpath("//button[@class=\"mat-menu-item\"]");
 
-  private static final By labelLoginSearch = By.xpath("//span[@class='forDesktop']");
+  private static final By labelLoginSearch = By.xpath("//span[@data-name='userNameLogged']");
 
   private static final By menuTabSearch = By.xpath("//a[@routerlink='/menu']");
 
-  private static final By bookTableButtonSearch = By
-      .xpath("//*[@id=\"homeCard\"]/own-home-card[1]/mat-card/mat-card-actions/button");
+  private static final By bookTableButtonSearch = By.name("buttons.bookTableNavigate");
+  // .xpath("//*[@id=\"homeCard\"]/own-home-card[1]/mat-card/mat-card-actions/button");
 
   @Override
   public boolean isLoaded() {
@@ -45,7 +47,7 @@ public class ThaiHomePage extends BasePage {
   @Override
   public void load() {
 
-    getDriver().get(mathaistarUrl);
+    getDriver().get(mythaistarUrl);
     getDriver().manage().window().maximize();
   }
 
