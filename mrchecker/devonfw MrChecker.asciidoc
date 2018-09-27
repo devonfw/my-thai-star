@@ -32,7 +32,7 @@ After you have it all in your computer, you need to import My Thai Star project 
 After following the last tutorial, you will have My Thai Star app running in localhost, so now you have everything you need to start writing Selenium tests using MrChecker to check if My Thai Star works properly.
 
 === Basics
-* First, we need the **WebDriver object**. In MrChecker's Selenium Module, it can be used by calling the **getDriver()** method. Notice that's it follows java's singleton pattern and only creates one object. This WebDriver object represents the whole navigator and we will call methods on it to find elements in it or interact with those elements.
+* First, we need the **WebDriver object**. In MrChecker's Selenium Module, it can be used by calling the **getDriver()** method. Notice that it follows java's singleton pattern and only creates one object. This WebDriver object represents the whole navigator and we will call methods on it to find elements in it or interact with those elements.
 
 
 * **findElementDynamic**: Tries to find an element by a speficied criterion. It expects a By object as argument, and returns a WebElement object. It can be used like this:
