@@ -52,19 +52,12 @@ public class ThaiLoginPage extends BasePage {
     WebElement passwordTextBox = getDriver().findElementDynamic(passwordSearch);
     WebElement accessButton;
 
-    // Due to a Selenium bug, we wrote character to character
-    // for (char c : username.toCharArray()) {
-    // usernameTextBox.sendKeys(c + "");
-    // }
-    //
-    // for (char c : password.toCharArray()) {
-    // passwordTextBox.sendKeys(c + "");
-    // }
     Utils.sendKeysWithCheck(username, usernameSearch, getDriver(), getWebDriverWait());
     Utils.sendKeysWithCheck(password, passwordSearch, getDriver(), getWebDriverWait());
+
     // Wait until all the password has been written
-    driverWait
-        .until((driver) -> driver.findElement(passwordSearch).getAttribute("value").length() == password.length());
+    // driverWait
+    // .until((driver) -> driver.findElement(passwordSearch).getAttribute("value").length() == password.length());
     accessButton = getDriver().findElementDynamic(accessButtonSearch);
     accessButton.click();
   }

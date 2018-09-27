@@ -14,7 +14,6 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 public class ThaiConfirmBookPage extends BasePage {
   private static final By confirmationDialogSearch = By.className("mat-dialog-container");
 
-  //////////////////////////////////////////////
   private static final By sendButtonSearch = By.name("bookTableConfirm");
 
   @Override
