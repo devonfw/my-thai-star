@@ -5,7 +5,6 @@ package com.devonfw.mts.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
@@ -58,14 +57,10 @@ public class ThaiSummaryPage extends BasePage {
 
     Utils.sendKeysWithCheck(bookingId, textBoxSearch, getDriver(), getWebDriverWait());
 
-    // for (char c : bookingId.toCharArray()) {
-    // textBox.sendKeys(c + "");
-    // }
+    // driverWait
+    // .until((driver) -> driver.findElement(textBoxSearch).getAttribute("value").length() == bookingId.length());
 
-    driverWait
-        .until((driver) -> driver.findElement(textBoxSearch).getAttribute("value").length() == bookingId.length());
-
-    (new Actions(getDriver())).moveToElement(checkBox).perform();
+    // (new Actions(getDriver())).moveToElement(checkBox).perform();
 
     checkBox.click();
     acceptButton.click();

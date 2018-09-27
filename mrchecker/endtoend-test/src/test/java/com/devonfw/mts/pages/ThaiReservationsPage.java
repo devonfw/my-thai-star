@@ -26,14 +26,9 @@ public class ThaiReservationsPage extends BasePage {
   /* Search criteria */
   private static final By reservationsTableSearch = By.xpath("//tbody[@class='td-data-table-body']/tr");
 
-  // private static final By reservationRowSearch = By.xpath("./td//span");
-
   // private static final By nextPageSearch = By.xpath("//button[@class=\"td-paging-bar-next-page mat-icon-button\"]");
 
   private static final By searchBarFilter = By.className("td-expansion-panel-header");
-
-  // private static final By searchBarFilterFromParent = By.className("td-expansion-label");
-  // private static final By searchBarFilterFromParent = By.className("td-expand-icon");
 
   private static final By emailInputSearch = By.xpath("//input[@name=\"email\"]");
 
@@ -124,21 +119,26 @@ public class ThaiReservationsPage extends BasePage {
 
   public HashMap<String, List<Reservation>> searchDatesByEmail(String email) {
 
-    WebElement searchBarParent = getDriver().findElementDynamic(searchBarFilter);
-    // WebElement searchBar = searchBarParent.findElement(searchBarFilterFromParent);
-    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-    js.executeScript("arguments[0].click()", searchBarParent);
+    // WebElement searchBar1 = getDriver()
+    // .findElementDynamic(By.cssSelector("td-expansion-panel[data-name='reservationFilter']"));
+    // WebElement searchBar2 = getDriver()
+    // .findElementDynamic(By.cssSelector("td-expansion-panel[data-name='reservationFilter']"))
+
+    WebElement searchBar = getDriver().findElementDynamic(searchBarFilter);
+
     // searchBar.click();
+
+    JavascriptExecutor js = (JavascriptExecutor) getDriver();
+    js.executeScript("arguments[0].click()", searchBar);
+
+    // new Actions(getDriver()).moveByOffset(631, 88).click().build().perform();
+    // searchBar4.click();
+
     try {
       getDriver().findElementDynamic(By.xpath("adasd"), 2);
     } catch (Exception e) {
 
     }
-
-    // WebElement emailInput = getDriver().findElementDynamics(emailInputSearch).get(1);
-    // for (int i = 0; i < email.length(); i++) {
-    // emailInput.sendKeys(email.charAt(i) + "");
-    // }
 
     int index = 1;
 
