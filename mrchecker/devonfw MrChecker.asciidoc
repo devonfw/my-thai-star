@@ -7,7 +7,7 @@ toc::[]
 MrChecker is a testing framework included in devonfw with several useful modules, from which we will focus on the Selenium Module, a module designed to make end-to-end testing easier to implement.
 
 === End-to-end testing
-End-to-end testing on an application tries to make sure that said application and all its components work as intended, testing it in a real-world scenario, testing UI, frontend and backend by trying to use the whole application's functioning.
+End-to-end testing on an application tries to make sure that said application and all its components work as intended, testing it in a real-world scenario; testing all: UI, frontend and backend by trying to use the whole application's functioning.
 
 But tests take a lot of time to implement and maintain, so it makes perfect sense trying to lighten the process by using a software to create tests.
 
