@@ -48,15 +48,15 @@ public class MyThaiStarTest extends BaseTest {
 
   }
 
-  // @Test
-  // @FileParameters(value = "src/test/resources/datadriven/test_users.csv", mapper = UserMapper.class)
+  @Test
+  @FileParameters(value = "src/test/resources/datadriven/test_users.csv", mapper = UserMapper.class)
   public void Test_loginAndLogOut(User user) {
 
     login(user);
     logOut();
   }
 
-  // @Test
+  @Test
   public void Test_loginFake() {
 
     User userfake = new User("userFake", "passwordfake");
@@ -85,7 +85,7 @@ public class MyThaiStarTest extends BaseTest {
     logOut();
   }
 
-  // @Test
+  @Test
   public void Test_orderMenu() {
 
     String bookingId = "CB_20170510_123502655Z";
