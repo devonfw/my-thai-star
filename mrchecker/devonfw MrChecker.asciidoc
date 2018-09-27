@@ -78,7 +78,7 @@ This method has an implicit wait included in it, unlike Selenium's _findElement_
 == How to use MrChecker with My Thai Star web app
 
 === Where is it?
-MrChecker comes inside MyThaiStar's project, in _my-thai-star/mrchecker/endtoend-test/_. Inside the folder you can find some test examples using MrChecker's Selenium module, ready to be executed by running as JUnit the file MyThaiStarTest.java, which is in _mrchecker/endtoend-test/src/test/java/com/devonfw/mts/tests_.
+MrChecker comes inside MyThaiStar's project, in _my-thai-star/mrchecker/endtoend-test/_. Inside the folder you can find some test examples using MrChecker's Selenium module, ready to be executed by running as JUnit the file **MyThaiStarTest.java**, which is in _mrchecker/endtoend-test/src/test/java/com/devonfw/mts/tests_.
 You can also make your own tests, as it is explained below.
 
 //=== Configuration
@@ -176,7 +176,7 @@ Therefore we want to look for it like this:
 getDriver().findElementDynamic(By.name("login"));
 ----
 
-We can also write in a more refactored way:
+We can also write it in a more refactored way:
 
 [source, java]
 ----
@@ -184,7 +184,7 @@ private static final By searchLoginButton = By.name("login");
 getDriver().findElementDynamic(searchLoginButton);
 ----
 
-We are going to make a new method called *clickLoginButton* to click that element:
+Now we are going to make a new method called *clickLoginButton* to click that element:
 
 [source, java]
 ----
@@ -526,13 +526,13 @@ public class SimplifiedTest extends BaseTest {
 ----
 
 Notice that this time we extend from BaseTest. Also notice that we are importing User class from _com.devonfw.mts.common.data_. +
-You can run your test by running SimplifiedTest as JUnit, and a browser should open to follow the steps in your test.
+You can execute your test by running **SimplifiedTest.java** as JUnit, and a browser should open to follow the steps in your test.
 
 
 
 
 == Test examples
-There are four different tests in MyThaiStarTest, which is inside _com.devonfw.mts.tests_. Those can be executed one by one or all in one go, comment or uncomment _@Test_ before those tests to enable or disable them.
+There are four different tests in **MyThaiStarTest.java**, which is inside _com.devonfw.mts.tests_. Those can be executed one by one or all in one go, comment or uncomment _@Test_ before those tests to enable or disable them.
 
 === Example 1: Test_loginAndLogOut
 Log in and log out.
