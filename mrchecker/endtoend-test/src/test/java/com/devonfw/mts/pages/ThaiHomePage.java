@@ -26,8 +26,6 @@ public class ThaiHomePage extends BasePage {
 
   private static final By logoutButtonSearch = By.name("account");
 
-  // private static final By logoutItemSearch = By.xpath("//button[@class=\"mat-menu-item\"]");
-
   private static final By labelLoginSearch = By.xpath("//span[@data-name='userNameLogged']");
 
   private static final By menuTabSearch = By.xpath("//a[@routerlink='/menu']");
