@@ -131,7 +131,19 @@ public class ThaiReservationsPage extends BasePage {
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     js.executeScript("arguments[0].click()", searchBar);
 
-    // new Actions(getDriver()).moveByOffset(631, 88).click().build().perform();
+    // for (int i = 0; i <= 10; i++) {
+    //
+    // try {
+    // new Actions(getDriver()).moveByOffset(i, i).click().build().perform();
+    // System.out.println("CLICK en " + i + " ," + i);
+    // getDriver().findElementDynamic(By.className("bliblobli"));
+    // // searchBar.click();
+    // } catch (Exception e) {
+    // System.out.println("NO PUEDO HACER CLICK ");
+    // }
+    //
+    // }
+
     // searchBar4.click();
 
     try {
