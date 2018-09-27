@@ -54,26 +54,26 @@ The second one is prefered as it is POM. +
 This method has an implicit wait included in it, unlike Selenium's _findElement_, so it will try to wait for the element to show up and if that never happens it will raise an exception after waiting for 20 seconds.
 
 * Some workable **By** types:
-** _By.name(someName)_
-** _By.tagName(someTagName)_: For example **By.tagName("div")** or **By.tagName("button")**.
-** _By.className(someClassName)_: For example **By.className("mat-checkbox")**.
-** _By.id(someId)_
-** _By.cssSelector(someCssSelector)_: For example **By.cssSelector("button.mat-icon-button:nth-child(6)")** or **By.cssSelector("input[formcontrolname='email']")**.
-** _By.xpath(someXpath)_: For example: **By.xpath("//button[@class='text-upper property-text-bold mat-button mat-accent']")**.
+** **By.name(someName)**
+** **By.tagName(someTagName)**: For example ``By.tagName("div")`` or ``By.tagName("button")``.
+** **By.className(someClassName)**: For example ``By.className("mat-checkbox")``.
+** **By.id(someId)**
+** **By.cssSelector(someCssSelector)**: For example ``By.cssSelector("button.mat-icon-button:nth-child(6)")`` or ``By.cssSelector("input[formcontrolname='email']")``.
+** **By.xpath(someXpath)**: For example: ``By.xpath("//button[@class='text-upper property-text-bold mat-button mat-accent']")``.
 
-* _findElementDynamic**s**_: Unlike the previous method, this one returns a list of WebElements. It's useful when two elements share the same class or a certain property and you need to stock both of them. It raises an exception if no elements are found.
+* **findElementDynamics**_: Unlike the previous method, this one returns a list of WebElements. It's useful when two elements share the same class or a certain property and you need to stock both of them. It raises an exception if no elements are found.
 
-* _myWebElement.click()_: It performs a click in the web element specified, as if the user was performing the click.
+* **myWebElement.click()**: It performs a click in the web element specified, as if the user was performing the click.
 
-* _myWebElement.sendKeys(someString)_: It takes a string as argument and tries to type those keys in the web element. It's typically used to fill inputs, but it can be used to send specific keys like *Enter* or *Backspace*, so it can be used to activate a button (by using Enter) like if we were clicking it.
+* **myWebElement.sendKeys(someString)**: It takes a string as argument and tries to type those keys in the web element. It's typically used to fill inputs, but it can be used to send specific keys like *Enter* or *Backspace*, so it can be used to activate a button (by using Enter) like if we were clicking it.
 
-* _myWebElement.getAttribute(attributeName)_: It returns the value of that attribute.
+* **myWebElement.getAttribute(attributeName)**: It returns the value of that attribute.
 
-* _myWebElement.getText()_: Returns ALL the text contained in that Web element. If text contained in children isn't wanted, _getAttribute("innerHTML")_ should be used instead.
+* **myWebElement.getText()**: Returns ALL the text contained in that Web element.
 
-* _findElementQuietly_: Used in the same way as findElementDynamic, but this one doesn't raise an exception if element isn't found.
+* **findElementQuietly**: Used in the same way as **findElementDynamic**, but this one doesn't raise an exception if element isn't found.
 
-//* _findElementQuietlys_: Used in the same way as findElementDynamics, but this one doesn't raise an exception if no elements are found.
+//* **findElementQuietlys**: Used in the same way as **findElementDynamics**, but this one doesn't raise an exception if no elements are found.
 
 == How to use MrChecker with My Thai Star web app
 
@@ -87,7 +87,7 @@ You can also make your own tests, as it is explained below.
 In this section we will make a basic login test for My Thai Star web app. If you followed the My Thai Star tutorial mentioned previously, you should have the app running. +
 Go to *localhost:4200* to check it. If you don't see it, make sure that it's running and that it's in that port.
 
-In src/test/java/com/devonfw/mts you can find a more complex login test, but we are going to build a simplified login test as an example.
+In _src/test/java/com/devonfw/mts_ you can find a more complex login test, but we are going to build a simplified login test as an example.
 
 What we want to do is to log in as an user, with the following credentials:
 
