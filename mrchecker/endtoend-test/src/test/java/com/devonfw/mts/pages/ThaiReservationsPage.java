@@ -19,7 +19,9 @@ import com.devonfw.mts.common.data.Reservation;
 import com.devonfw.mts.common.utils.Utils;
 
 /**
- * @author jambulud
+ * @author Juan Andrés Ambuludi Olmedo
+ * @author Jorge Dacal Cantos
+ * @author Carlos Micó Egea
  */
 public class ThaiReservationsPage extends BasePage {
 
@@ -119,32 +121,10 @@ public class ThaiReservationsPage extends BasePage {
 
   public HashMap<String, List<Reservation>> searchDatesByEmail(String email) {
 
-    // WebElement searchBar1 = getDriver()
-    // .findElementDynamic(By.cssSelector("td-expansion-panel[data-name='reservationFilter']"));
-    // WebElement searchBar2 = getDriver()
-    // .findElementDynamic(By.cssSelector("td-expansion-panel[data-name='reservationFilter']"))
-
     WebElement searchBar = getDriver().findElementDynamic(searchBarFilter);
-
-    // searchBar.click();
 
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     js.executeScript("arguments[0].click()", searchBar);
-
-    // for (int i = 0; i <= 10; i++) {
-    //
-    // try {
-    // new Actions(getDriver()).moveByOffset(i, i).click().build().perform();
-    // System.out.println("CLICK en " + i + " ," + i);
-    // getDriver().findElementDynamic(By.className("bliblobli"));
-    // // searchBar.click();
-    // } catch (Exception e) {
-    // System.out.println("NO PUEDO HACER CLICK ");
-    // }
-    //
-    // }
-
-    // searchBar4.click();
 
     try {
       getDriver().findElementDynamic(By.xpath("adasd"), 2);
@@ -164,17 +144,6 @@ public class ThaiReservationsPage extends BasePage {
 
     }
 
-    // try {
-    // System.out.println("Antes de esperar");
-    // long a = System.currentTimeMillis();
-    // TimeUnit.SECONDS.sleep(3);
-    // long b = System.currentTimeMillis();
-    // System.out.println("Despues de esperarAntes" + (b - a));
-    // } catch (InterruptedException e1) {
-    // // TODO Auto-generated catch block
-    // e1.printStackTrace();
-    // }
-
     HashMap<String, List<Reservation>> idReservations = new HashMap<>();
     return getReservationsShownByDate(idReservations);
   }
@@ -189,9 +158,7 @@ public class ThaiReservationsPage extends BasePage {
     List<Reservation> reservationsByDate;
     String date, id, email;
 
-    // System.out.println("ANTES DE BUSCAR");
     reservations = getDriver().findElementDynamics(reservationsTableSearch);
-    // System.out.println("DESPUES DE BUSCAR");
 
     for (int i = 1; i <= reservations.size(); i++) {
       System.out.println(reservations.size());
@@ -212,7 +179,6 @@ public class ThaiReservationsPage extends BasePage {
       reservationsByDate.add(new Reservation(date, email, id));
 
       idReservations.put(date, reservationsByDate);
-      // reservations = getDriver().findElementDynamics(reservationsTableSearch);
     }
 
     return idReservations;

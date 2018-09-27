@@ -10,7 +10,9 @@ import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
 /**
- * @author jambulud
+ * @author Juan Andrés Ambuludi Olmedo
+ * @author Jorge Dacal Cantos
+ * @author Carlos Micó Egea
  */
 public class ThaiMenuPage extends BasePage {
 
