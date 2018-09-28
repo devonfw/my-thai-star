@@ -19,9 +19,7 @@ import com.devonfw.mts.common.data.Reservation;
 import com.devonfw.mts.common.utils.Utils;
 
 /**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
+ * @author jambulud
  */
 public class ThaiReservationsPage extends BasePage {
 
@@ -30,11 +28,13 @@ public class ThaiReservationsPage extends BasePage {
 
   // private static final By nextPageSearch = By.xpath("//button[@class=\"td-paging-bar-next-page mat-icon-button\"]");
 
-  private static final By searchBarFilter = By.className("td-expansion-panel-header");
+  private static final By searchBarFilter = By.className("td-expansion-panel-header-content");
 
   private static final By emailInputSearch = By.xpath("//input[@name=\"email\"]");
 
   private static final By submitButtonSearch = By.xpath("//button[@type='submit']");
+
+  // private static final By byblabla = By.xpath("//td-expansion-panel[@data-name='reservationFilter']");
 
   /* Map to store email/reservation id data */
   private Map<String, List<String>> tableData;

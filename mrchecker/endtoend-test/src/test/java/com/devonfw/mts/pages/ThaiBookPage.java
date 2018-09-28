@@ -23,6 +23,8 @@ public class ThaiBookPage extends BasePage {
 
   private static final By guestsSearch = By.cssSelector("input[formcontrolname='assistants']");
 
+  private static final By checkboxSearch = By.cssSelector("mat-checkbox[data-name='bookTableTerms']");
+
   private static final By dialogSearch = By.className("bgc-green-600");
 
   @Override
@@ -71,7 +73,7 @@ public class ThaiBookPage extends BasePage {
 
   public void acceptTerms() {
 
-    WebElement checkbox = getDriver().findElementDynamic(By.cssSelector("mat-checkbox[data-name='bookTableTerms']"));
+    WebElement checkbox = getDriver().findElementDynamic(checkboxSearch);
     WebElement square = checkbox.findElement(By.className("mat-checkbox-inner-container"));
     square.click();
 
