@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundException;
+import com.devonfw.mts.common.readProperties.ConfigFileReader;
 
 /**
  * @author jambulud
@@ -20,7 +21,10 @@ import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundExcepti
 public class ThaiHomePage extends BasePage {
 
   /* Search criteria */
-  private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
+  private static final ConfigFileReader configFileReader = new ConfigFileReader();
+
+  private static final String mythaistarUrl = configFileReader.getUrl();
+  // private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
 
   private static final By loginButtonSearch = By.name("login");
 
