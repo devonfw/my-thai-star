@@ -75,6 +75,14 @@ This method has an implicit wait included in it, unlike Selenium's _findElement_
 
 //* **findElementQuietlys**: Used in the same way as **findElementDynamics**, but this one doesn't raise an exception if no elements are found.
 
+After the element was found, we need to perform an action on it, for example:
+* **sendKeys**: For example ``element.sendkeys("hello")``. It sends those keys to the specified element. When using Selenium on Angular apps, there is sometimes a bug where because keys are being sent too fast, one or more of those letters simply won't show up, and therefore any logins will fail.
+The solution we provided for it is **sendKeysWithCheck** which ensures Selenium didn't miss a letter. It's in _src/test/java/com/devonfw/mts/common/utils/Utils.java_
+* **click**: For example ``element.click()``. It performs a click in the middle of the specified element.
+
+There are some more, but these ones are the most used.
+
+
 == How to use MrChecker with My Thai Star web app
 
 === Where is it?
