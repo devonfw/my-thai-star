@@ -10,7 +10,7 @@ public class ConfigFileReader {
 
   private Properties properties;
 
-  private final String propertyFilePath = "src/test/resources/configuration.properties";
+  private final String propertyFilePath = "src/resources/settings.properties";
 
   public ConfigFileReader() {
 
@@ -32,7 +32,8 @@ public class ConfigFileReader {
 
   public String getUrl() {
 
-    String url = this.properties.getProperty("Url");
+    String url = this.properties.getProperty("mythaistar.url");
+    System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" + url);
     if (url != null)
       return url;
     else
