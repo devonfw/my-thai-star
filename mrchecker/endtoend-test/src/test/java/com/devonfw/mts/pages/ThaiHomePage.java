@@ -35,7 +35,6 @@ public class ThaiHomePage extends BasePage {
   private static final By menuTabSearch = By.xpath("//a[@routerlink='/menu']");
 
   private static final By bookTableButtonSearch = By.name("buttons.bookTableNavigate");
-  // .xpath("//*[@id=\"homeCard\"]/own-home-card[1]/mat-card/mat-card-actions/button");
 
   @Override
   public boolean isLoaded() {
