@@ -26,14 +26,13 @@ public class ConfigFileReader {
       }
     } catch (FileNotFoundException e) {
       e.printStackTrace();
-      throw new RuntimeException("Configuration.properties not found at " + this.propertyFilePath);
+      throw new RuntimeException("settings.properties not found at " + this.propertyFilePath);
     }
   }
 
-  public String getUrl() {
+  public String getProperty(String property) {
 
-    String url = this.properties.getProperty("mythaistar.url");
-    System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" + url);
+    String url = this.properties.getProperty(property);
     if (url != null)
       return url;
     else
