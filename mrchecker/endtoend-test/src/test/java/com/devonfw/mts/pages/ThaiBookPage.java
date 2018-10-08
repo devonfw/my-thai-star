@@ -1,6 +1,7 @@
 package com.devonfw.mts.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
@@ -75,7 +76,9 @@ public class ThaiBookPage extends BasePage {
 
     WebElement checkbox = getDriver().findElementDynamic(checkboxSearch);
     WebElement square = checkbox.findElement(By.className("mat-checkbox-inner-container"));
-    square.click();
+    // square.click();
+    JavascriptExecutor js = (JavascriptExecutor) getDriver();
+    js.executeScript("arguments[0].click()", square);
 
   }
 
