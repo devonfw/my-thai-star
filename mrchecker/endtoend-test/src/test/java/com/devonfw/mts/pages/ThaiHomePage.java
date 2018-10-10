@@ -23,8 +23,8 @@ public class ThaiHomePage extends BasePage {
   /* Search criteria */
   private static final ConfigFileReader configFileReader = new ConfigFileReader();
 
-  // private static final String mythaistarUrl = configFileReader.getProperty("mythaistar.url");
-  private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
+  private static final String mythaistarUrl = configFileReader.getProperty("mythaistar.url");
+  // private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
 
   private static final By loginButtonSearch = By.name("login");
 
