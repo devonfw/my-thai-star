@@ -36,7 +36,7 @@ public class ConfigFileReader {
     if (url != null)
       return url;
     else
-      throw new RuntimeException("Url not specified in the configuration.properties file.");
+      throw new RuntimeException("Url not specified in the settings.properties file.");
   }
 
 }
