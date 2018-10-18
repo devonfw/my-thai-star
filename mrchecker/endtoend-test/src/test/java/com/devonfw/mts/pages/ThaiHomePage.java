@@ -49,7 +49,7 @@ public class ThaiHomePage extends BasePage {
   public void load() {
 
     getDriver().get(mythaistarUrl);
-    getDriver().manage().window().maximize();
+    // getDriver().manage().window().maximize();
   }
 
   @Override
