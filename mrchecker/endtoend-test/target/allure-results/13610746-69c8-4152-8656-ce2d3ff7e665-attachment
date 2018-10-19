@@ -1,0 +1,14 @@
+2018-09-24 at 17:46:41 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) STARTED.
+2018-09-24 at 17:46:41 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: login] took [0.071 s]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] To add observer: com.devonfw.mts.pages.ThaiLoginPage_tutorial@71fe305a
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] BaseTestWatcher.observers: [com.devonfw.mts.pages.ThaiHomePage_tutorial@7d2cad8c]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] TestClassRule.classObservers: []
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: password] took [0.083 s]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: username] took [0.063 s]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: password] took [0.041 s]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: submitLogin] took [0.035 s]
+2018-09-24 at 17:46:42 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: submitLogin] took [0.024 s]
+2018-09-24 at 17:46:43 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.name: account] took [0.795 s]
+2018-09-24 at 17:46:43 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) PASSED.
+2018-09-24 at 17:46:43 CEST logDebug - [pool-1-thread-1] BasePage.onTestSuccess    ThaiHomePage_tutorial
+2018-09-24 at 17:46:43 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) duration: 0,04 min

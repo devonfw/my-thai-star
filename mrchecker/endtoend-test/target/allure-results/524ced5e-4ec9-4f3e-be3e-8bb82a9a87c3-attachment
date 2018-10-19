@@ -1,0 +1,4 @@
+2018-10-17 at 16:13:48 CEST logInfo - [pool-1-thread-1] Test_loginAndLogOut(com.devonfw.mts.tests.MyThaiStarTest) STARTED.
+2018-10-17 at 16:13:54 CEST logInfo - [pool-1-thread-1] Test_loginAndLogOut(com.devonfw.mts.tests.MyThaiStarTest) FAILED.
+2018-10-17 at 16:13:54 CEST logDebug - [pool-1-thread-1] BasePage.onTestFailure    ThaiHomePage
+2018-10-17 at 16:13:59 CEST logInfo - [pool-1-thread-1] Test_loginAndLogOut(com.devonfw.mts.tests.MyThaiStarTest) duration: 0,18 min
