@@ -44,11 +44,11 @@
         </license>
     </licenses>
 
-    <scm>
+    <!--<scm>
         <connection>scm:git:git://github.com/devonfw/devonfw-testing.git</connection>
         <developerConnection>scm:git:ssh://github.com:devonfw/devonfw-testing.git</developerConnection>
         <url>http://github.com/devonfw/devonfw-testing/tree/develop</url>
-    </scm>
+    </scm> -->
 
     <repositories>
         <repository>
