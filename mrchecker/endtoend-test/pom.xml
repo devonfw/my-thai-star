@@ -98,8 +98,8 @@
         <allure-maven-report-generator.version>2.9</allure-maven-report-generator.version>  <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
         <allure-cli-runner.version>2.6.0</allure-cli-runner.version> <!-- Url to download Allure report CLI https://bintray.com/qameta/generic/allure2 -->
 
-        <allure.report.directory>${pom.basedir}/target/</allure.report.directory>
-        <report-directory>${pom.basedir}/test-output/</report-directory>
+        <allure.report.directory>${basedir}/target/</allure.report.directory>
+        <report-directory>${basedir}/test-output/</report-directory>
         <aspectj.version>1.8.10</aspectj.version>
 
         <!-- Cucumber version -->
@@ -121,7 +121,7 @@
 
         <!-- Static analyze settings -->
         <formatter-maven-plugin.version>2.7.1</formatter-maven-plugin.version>
-        <style_format.directory>${pom.basedir}/../resources/style_format</style_format.directory>
+        <style_format.directory>${basedir}/../resources/style_format</style_format.directory>
 
     </properties>
 
