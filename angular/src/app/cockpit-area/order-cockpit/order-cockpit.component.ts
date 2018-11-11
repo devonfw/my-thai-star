@@ -10,7 +10,7 @@ import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
 import { config } from '../../config';
-import { Pagination, FilterCockpit } from '../../shared/backendModels/interfaces';
+import { Pageable, FilterCockpit } from '../../shared/backendModels/interfaces';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
 
@@ -21,10 +21,10 @@ import * as moment from 'moment';
 })
 export class OrderCockpitComponent implements OnInit {
 
-  private pagination: Pagination = {
-    size: 8,
-    page: 1,
-    total: 1,
+  private pageable: Pageable = {
+    pageSize: 8,
+    pageNumber: 0,
+    //total: 1,
   };
   private sorting: any[] = [];
 
@@ -67,10 +67,10 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getOrders(this.pagination, this.sorting, this.filters)
+    this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        this.orders = data.result;
-        this.totalOrders = data.pagination.total;
+        this.orders = data.content;
+        this.totalOrders = data.totalElements;
       });
   }
 
@@ -80,18 +80,22 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   page(pagingEvent: IPageChangeEvent): void {
-    this.pagination = {
-      size: pagingEvent.pageSize,
-      page: pagingEvent.page,
-      total: 1,
+    this.pageable = {
+      pageSize: pagingEvent.pageSize,
+      pageNumber: pagingEvent.page - 1,
+      sort: this.pageable.sort,
+      //total: 1,
     };
     this.applyFilters();
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
-    this.sorting.push({ 'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order });
-    this.applyFilters();
+    this.sorting.push({
+      property: sortEvent.name,
+      direction: '' + sortEvent.order,
+    });
+   this.applyFilters();
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {

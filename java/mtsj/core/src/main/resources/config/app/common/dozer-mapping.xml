@@ -27,9 +27,9 @@
        The hidden and transient reference allows to update the modificationCounter to the correct value on
        serialization. -->
   <mapping type="one-way">
-    <class-a>io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity</class-a>
-    <class-b>io.oasp.module.basic.common.api.to.AbstractEto</class-b>
-    <field custom-converter="io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter">
+    <class-a>com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity</class-a>
+    <class-b>com.devonfw.module.basic.common.api.to.AbstractEto</class-b>
+    <field custom-converter="com.devonfw.module.beanmapping.common.impl.dozer.IdentityConverter">
       <a>this</a>
       <b is-accessible="true">persistentEntity</b>
     </field>

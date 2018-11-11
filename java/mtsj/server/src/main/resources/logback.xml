@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Configuration file for logback -->
 <configuration scan="true" scanPeriod="60 seconds">
-  <property resource="io/oasp/logging/logback/application-logging.properties" />
+  <property resource="com/devonfw/logging/logback/application-logging.properties" />
   <property name="appname" value="mtsj"/>
   <property name="logPath" value="../logs"/>
   <!-- uncomment appenders-file-all for writing logs to file-->
-  <!-- <include resource="io/oasp/logging/logback/appenders-file-all.xml" /> -->
-  <include resource="io/oasp/logging/logback/appender-console.xml" />
+  <!-- <include resource="com/devonfw/logging/logback/appenders-file-all.xml" /> -->
+  <include resource="com/devonfw/logging/logback/appender-console.xml" />
 
   <root level="DEBUG">
   <!--
