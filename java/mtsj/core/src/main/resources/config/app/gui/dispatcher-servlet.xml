@@ -5,7 +5,7 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:component-scan base-package="io.oasp.application.mtsj.general.gui.api"/>
+  <context:component-scan base-package="com.devonfw.application.mtsj.general.gui.api"/>
 
   <beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
     <beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
