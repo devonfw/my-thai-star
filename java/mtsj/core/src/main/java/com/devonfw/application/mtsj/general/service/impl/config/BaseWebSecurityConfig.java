@@ -60,7 +60,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    String[] unsecuredResources = new String[] { "/login", "/h2/**", "/security/**", "/services/rest/login",
+    String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
     "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
     "/services/rest/ordermanagement/v1/order", "/services/rest/bookingmanagement/v1/booking",
     "/services/rest/bookingmanagement/v1/booking/cancel/**",
@@ -87,11 +87,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-    /*
-     * auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0")
-     * .password("password").roles("Customer");
-     */
 
     auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
         .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
