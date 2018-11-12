@@ -14,7 +14,7 @@ or
 
 The configuration files are in the following path: src/config/\*.ts
 
-Each file contains the following parameters to be retrieved by the configuration service depending on the execution enviroment:
+Each file contains the following parameters to be retrieved by the configuration service depending on the execution environment:
 
 - HOST: Host url .
 - PORT: Port number on where the requests are to be listened.
