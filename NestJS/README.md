@@ -29,7 +29,7 @@ Each file contains the following parameters to be retrieved by the configuration
 
 In this implementation Sqlite3 is used as persistence system with TypeOrm, no url nor further configuration needed.
 
-Database configuration parameters is in ormconfig.json in root folder.
+Database configuration parameters are in ormconfig.json in root folder.
 
 ## Build
 
