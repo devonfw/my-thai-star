@@ -35,7 +35,7 @@ Tool used for Continuous Integration and Continuous Delivery. Inside of this Jen
 
 === Deprecated
 
-Some folders have been marked as __deprecated__. They have not been removed for information purposes and in case it is necessary to recover previous work. They are:
+Some folders have been marked as __deprecated__. They have not been removed for information purposes and in case it is necessary to recover previous work. They are the following:
 
 - graphQL
 - node previous implementation
