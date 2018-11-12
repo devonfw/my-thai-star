@@ -25,7 +25,7 @@ describe('FilterSortComponent', () => {
     fixture = TestBed.createComponent(FilterSortComponent);
     component = fixture.componentInstance;
     component.sortValue = {
-      name: 'test',
+      property: 'test',
       direction: SortDirection.ASC,
     };
     fixture.detectChanges();
