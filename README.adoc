@@ -17,7 +17,7 @@ Client-side developed using the latest version of this framework: Angular 6.
 
 Server-side developed using the 2.3 version of **oasp4j**.
 
-* **Nest**
+* **Node**
 
 Server-side developed using the basics of the NestJS framework. A node.js framework built on top of Express.js based on TypeScript language. This server-side backend is based on the **devon4node** incubator.
 
@@ -38,7 +38,6 @@ Tool used for Continuous Integration and Continuous Delivery. Inside of this Jen
 Some folders have been marked as __deprecated__. They have not been removed for information purposes and in case it is necessary to recover previous work. They are the following:
 
 - graphQL
-- node previous implementation
 - serverless 
 
 Use them at your own risk. 
