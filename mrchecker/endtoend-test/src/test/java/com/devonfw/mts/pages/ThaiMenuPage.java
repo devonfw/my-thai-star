@@ -4,6 +4,7 @@
 package com.devonfw.mts.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
@@ -16,7 +17,9 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
  */
 public class ThaiMenuPage extends BasePage {
 
-  private static final By menuButtonSearch = By.xpath("//button[@class=\"text-upper mat-button mat-accent\"]");
+  private static final By orderOptionsSearch = By.tagName("own-menu-card-details");
+
+  private static final By addToOrderButtonSearch = By.tagName("button");
 
   @Override
   public boolean isLoaded() {
@@ -46,8 +49,13 @@ public class ThaiMenuPage extends BasePage {
    */
   public ThaiSummaryPage clickFirstMenu() {
 
-    WebElement menu = getDriver().findElementDynamic(menuButtonSearch);
-    menu.click();
+    WebElement firstOrderOption = getDriver().findElementDynamic(orderOptionsSearch);
+
+    WebElement addToOrderButton = firstOrderOption.findElement(addToOrderButtonSearch);
+    // addToOrderButton.click();
+
+    JavascriptExecutor js = (JavascriptExecutor) getDriver();
+    js.executeScript("arguments[0].click()", addToOrderButton);
 
     return new ThaiSummaryPage();
   }
