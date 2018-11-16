@@ -33,8 +33,8 @@ export class SidenavOrderComponent implements OnInit {
 
   addComment(): void {
     let dialogRef: MatDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
-    dialogRef.afterClosed().subscribe((result: string) => {
-      this.order.orderLine.comment = result;
+    dialogRef.afterClosed().subscribe((content: string) => {
+      this.order.orderLine.comment = content;
     });
   }
 

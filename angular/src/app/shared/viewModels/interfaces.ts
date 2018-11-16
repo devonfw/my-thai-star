@@ -1,4 +1,4 @@
-import { Pagination } from '../backendModels/interfaces';
+import { Pageable } from '../backendModels/interfaces';
 
 // DISHES
 export interface DishView {
@@ -25,8 +25,8 @@ export interface ExtraView {
 }
 
 export interface DishResponse {
-  pagination: Pagination;
-  result: DishView;
+  pageable: Pageable;
+  content: DishView;
 }
 
 // BOOKING
@@ -83,14 +83,14 @@ export interface OrderListView {
 
 // Interface to recieve responeses from the server using httpclient for getReservations
 export interface BookingResponse {
-  pagination: Pagination;
-  result: ReservationView;
+  pageable: Pageable;
+  content: ReservationView;
 }
 
 // Interface to recieve responeses from the server using httpclient for get orders
 export interface OrderResponse {
-  pagination: Pagination;
-  result: OrderListView;
+  pageable: Pageable;
+  content: OrderListView;
 }
 
 // Interface to recieve responeses from the server using httpclient for email invitations

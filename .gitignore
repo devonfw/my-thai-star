@@ -2,6 +2,8 @@ graphQL/node_modules/
 graphQL/.vscode/
 target
 eclipse-target
+NestJS/node_modules/
+NestJS/.vscode/
 
 *.log
 *.class

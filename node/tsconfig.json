@@ -1,25 +1,24 @@
 {
-    "compilerOptions": {
-        "outDir": "out",
-        "target": "es6",
-        "module": "commonjs",
-        "noEmitOnError": true,
-        "strict": true,
-        "experimentalDecorators": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": true,
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    },
-    "include": [
-        "src/**/*",
-        "test/**/*"
-    ],
-    "exclude": [
-        "out",
-        "node_modules",
-        "**/*.spec.ts"
-    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "esnext",
+    "sourceMap": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "baseUrl": "./src"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
