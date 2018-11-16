@@ -85,12 +85,12 @@ export class HeaderComponent {
         width: this.window.responsiveWidth(),
       },
     );
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        if (result.email) {
-          this.userService.register(result.email, result.password);
+    dialogRef.afterClosed().subscribe((content: any) => {
+      if (content) {
+        if (content.email) {
+          this.userService.register(content.email, content.password);
         } else {
-          this.userService.login(result.username, result.password);
+          this.userService.login(content.username, content.password);
         }
       }
     });
@@ -103,7 +103,7 @@ export class HeaderComponent {
         width: this.window.responsiveWidth(),
       },
     );
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((content: any) => {
       // TODO: manage user input
     });
   }
@@ -115,7 +115,7 @@ export class HeaderComponent {
         width: this.window.responsiveWidth(),
       },
     );
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((content: any) => {
       // TODO: manage user input
     });
   }

@@ -3,14 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.application</groupId>
+    <groupId>com.devonfw.java.mtsj</groupId>
     <artifactId>mtsj</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
   <artifactId>mtsj-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>Core of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Core of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (devon4j).</description>
 
   <properties>
     <java.version>1.8</java.version>
@@ -30,31 +30,50 @@
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-logging</artifactId>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-logging</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-beanmapping</artifactId>
-    </dependency>
-
-    <!-- Use oasp4j-starter-* as soon as available via release -->
-    <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-rest</artifactId>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-beanmapping</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-web</artifactId>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-security</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-json</artifactId>
+    </dependency>
+    <!-- Use devon4j-starter-* as soon as available via release -->
+    <dependency>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-rest</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-web</artifactId>
+    </dependency>
+    <!-- TODO remove below dependency after checking -->
+    <!-- <dependency>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-jpa</artifactId>
+      </dependency> -->
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-spring-data-jpa</artifactId>
+    </dependency>
+
 
     <dependency>
       <groupId>org.springframework</groupId>
