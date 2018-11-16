@@ -52,7 +52,7 @@
     <div class="mat-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>{{'table.noResults' | translate}}.</h3>
     </div>
-    <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="totalOrders" (change)="page($event)">
+    <td-paging-bar #pagingBar  [pageSize]="pageSize" [total]="totalOrders" (change)="page($event)">
       <span hide-xs>{{'table.rowsPage' | translate}}:</span>
       <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
         <mat-option *ngFor="let size of pageSizes" [value]="size">

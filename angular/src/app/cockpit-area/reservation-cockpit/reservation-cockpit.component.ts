@@ -10,7 +10,7 @@ import {
 import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
-import { FilterCockpit, Sorting, Pagination } from '../../shared/backendModels/interfaces';
+import { FilterCockpit, Sort, Pageable } from '../../shared/backendModels/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -22,12 +22,12 @@ import * as moment from 'moment';
 })
 export class ReservationCockpitComponent implements OnInit {
 
-  private sorting: Sorting[] = [];
+  private sorting: Sort[] = [];
 
-  pagination: Pagination = {
-    size: 8,
-    page: 1,
-    total: 1,
+  pageable: Pageable = {
+    pageSize: 8,
+    pageNumber: 0,
+    //total: 1,
   };
 
   reservations: ReservationView;
@@ -67,15 +67,15 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   filter(): void {
-    this.pagination.page = 1;
+    this.pageable.pageNumber = 0;
     this.applyFilters();
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getReservations(this.pagination, this.sorting, this.filters)
+    this.waiterCockpitService.getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        this.reservations = data.result;
-        this.totalReservations = data.pagination.total;
+        this.reservations = data.content;
+        this.totalReservations = data.totalElements;
       });
   }
 
@@ -85,17 +85,21 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   page(pagingEvent: IPageChangeEvent): void {
-    this.pagination = {
-      size: pagingEvent.pageSize,
-      page: pagingEvent.page,
-      total: 1,
+    this.pageable = {
+      pageSize: pagingEvent.pageSize,
+      pageNumber: pagingEvent.page - 1,
+      sort: this.pageable.sort,
+      //total: 1,
     };
     this.applyFilters();
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
-    this.sorting.push({ 'name': sortEvent.name.split('.').pop(), 'direction': '' + sortEvent.order });
+    this.sorting.push({
+      property: sortEvent.name.split('.').pop(),
+      direction: '' + sortEvent.order,
+    });
     this.applyFilters();
   }
 

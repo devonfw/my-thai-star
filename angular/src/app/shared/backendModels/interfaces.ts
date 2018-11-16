@@ -1,31 +1,31 @@
 // FILTERS
 
 export class Filter {
-    pagination?: Pagination;
+    pageable?: Pageable;
     isFav: boolean;
     searchBy: string;
-    sort: { name: string, direction: string }[];
+    //sort: { name: string, direction: string }[];
     maxPrice: number;
     minLikes: number;
     categories: { id: string }[];
 }
 
 export class FilterCockpit {
-    pagination?: Pagination;
-    sort?: Sorting[];
+    pageable?: Pageable;
+    //sort?: Sorting[];
     bookingDate: string;
     email: string;
     bookingToken: number;
 }
 
-export class Pagination {
-    size: number;
-    page: number;
-    total: number;
+export class Pageable {
+    pageSize: number;
+    pageNumber: number;
+    sort?: Array<Sort>;
 }
 
-export class Sorting {
-    name: string;
+export class Sort {
+    property: string;
     direction: string;
 }
 
