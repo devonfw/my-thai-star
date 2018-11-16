@@ -21,8 +21,8 @@ export class UserAreaService {
     private http: HttpClient,
     public authService: AuthService,
   ) {
-    this.translate.get('alerts.authAlerts').subscribe((result: any) => {
-      this.authAlerts = result;
+    this.translate.get('alerts.authAlerts').subscribe((content: any) => {
+      this.authAlerts = content;
     });
   }
 

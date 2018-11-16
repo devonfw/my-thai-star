@@ -2,7 +2,7 @@ import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface SortControlModel {
-  name: string;
+  property: string;
   direction: SortDirection;
 }
 export enum SortDirection {
@@ -54,7 +54,7 @@ export class FilterSortComponent implements ControlValueAccessor {
   // Binding Methods
 
   onSelectChange($event: any): void {
-    this.sortValue = { ...this.sortValue, ...{name: $event.value} };
+    this.sortValue = { ...this.sortValue, ...{property: $event.value} };
     this.updateForm(this.sortValue);
   }
   changeSortDir(event: Event): void {

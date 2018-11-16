@@ -4,20 +4,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>mtsj</artifactId>
-  <groupId>io.oasp.application</groupId>
+  <groupId>com.devonfw.java.mtsj</groupId>
   <version>0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Application based on the Devonfw framework for Java (devon4j).</description>
 
   <properties>
-    <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
-    <oasp4j.version>2.4.0</oasp4j.version>
+    <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+   <devon4j.version>3.0.0-alpha.1</devon4j.version>
     <java.version>1.8</java.version>
-    <oasp.port.range>81</oasp.port.range>
-    <oasp.http.port>${oasp.port.range}81</oasp.http.port>
-    <oasp.db.port>${oasp.port.range}43</oasp.db.port>
-    <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+    <devon.port.range>81</devon.port.range>
+    <devon.http.port>${devon.port.range}81</devon.http.port>
+    <devon.db.port>${devon.port.range}43</devon.db.port>
+    <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySubsystemTest,com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
   </properties>
 
   <modules>
@@ -31,7 +31,7 @@
       <dependency>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-core</artifactId>
-        <version>4.2.0</version>
+        <version>5.0.7</version>
       </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
@@ -41,11 +41,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- BOM of OASP4J -->
+      <!-- BOM of devon4j -->
       <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-bom</artifactId>
-        <version>${oasp4j.version}</version>
+        <groupId>com.devonfw.java.boms</groupId>
+        <artifactId>devon4j-bom</artifactId>
+        <version>${devon4j.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -54,8 +54,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-test</artifactId>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-test</artifactId>
       <scope>test</scope>
     </dependency>
     <!--
@@ -151,7 +151,7 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
+          <excludedGroups>${devon.test.excluded.groups}</excludedGroups>
         </configuration>
       </plugin>
     </plugins>
@@ -161,13 +161,13 @@
     <profile>
       <id>subsystemtest</id>
       <properties>
-        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+        <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
       </properties>
     </profile>
     <profile>
       <id>systemtest</id>
       <properties>
-        <oasp.test.excluded.groups></oasp.test.excluded.groups>
+        <devon.test.excluded.groups></devon.test.excluded.groups>
       </properties>
     </profile>
     <profile>
