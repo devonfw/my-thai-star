@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { BookingResponse, OrderResponse, OrderView, OrderViewResult } from '../../shared/viewModels/interfaces';
 import { map, cloneDeep } from 'lodash';
-import { Pagination, Sorting, FilterCockpit } from 'app/shared/backendModels/interfaces';
+import { Pageable, Sort, FilterCockpit } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 
@@ -17,10 +17,10 @@ export class WaiterCockpitService {
   constructor(private http: HttpClient,
               private priceCalculator: PriceCalculatorService) { }
 
-  getOrders(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<OrderResponse[]> {
+  getOrders(pageable: Pageable, sorting: Sort[], filters: FilterCockpit): Observable<OrderResponse[]> {
     let path: string;
-    filters.pagination = pagination;
-    filters.sort = sorting;
+    filters.pageable = pageable;
+    filters.pageable.sort = sorting;
     if (filters.email || filters.bookingToken) {
       path = this.filterOrdersRestPath;
     } else {
@@ -31,9 +31,9 @@ export class WaiterCockpitService {
     return this.http.post<OrderResponse[]>(`${environment.restServiceRoot}${path}`, filters);
   }
 
-  getReservations(pagination: Pagination, sorting: Sorting[], filters: FilterCockpit): Observable<BookingResponse[]> {
-    filters.pagination = pagination;
-    filters.sort = sorting;
+  getReservations(pageable: Pageable, sorting: Sort[], filters: FilterCockpit): Observable<BookingResponse[]> {
+    filters.pageable = pageable;
+    filters.pageable.sort = sorting;
     return this.http.post<BookingResponse[]>(`${environment.restServiceRoot}${this.getReservationsRestPath}`, filters);
   }
 

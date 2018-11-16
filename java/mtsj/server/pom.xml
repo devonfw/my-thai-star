@@ -3,14 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.application</groupId>
+    <groupId>com.devonfw.java.mtsj</groupId>
     <artifactId>mtsj</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
   <artifactId>mtsj-server</artifactId>
   <packaging>war</packaging>
   <name>${project.artifactId}</name>
-  <description>Server for the mtsj application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Server for the mtsj application - a simple example using the Open Application Standard Platform for Java (devon4j).</description>
 
   <properties>
     <java.version>1.8</java.version>
@@ -136,7 +136,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>io.oasp.application.mtsj.SpringBootApp</mainClass>
+          <mainClass>com.devonfw.application.mtsj.SpringBootApp</mainClass>
           <classifier>bootified</classifier>
           <finalName>${project.artifactId}</finalName>
         </configuration>

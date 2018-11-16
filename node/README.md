@@ -6,44 +6,30 @@ The first command required for the installation is:
 
     $ npm install
 
-or 
+or
 
     $ yarn
 
-Although, for the environment to work properly, some packages have to be installed globally, so you have to execute these commands next:
+## Configuration
 
-    $ npm install -g mocha
+The configuration files are in the following path: src/config/\*.ts
 
-    $ npm install -g ts-node
+Each file contains the following parameters to be retrieved by the configuration service depending on the execution environment:
 
-    $ npm install -g typescript
+- HOST: Host url .
+- PORT: Port number on where the requests are to be listened.
+- DB_URI: String of the database connection if needed. (Sqlite does not need it).
+- JWT_KEY: JWT secret to encrypt tokens.
+- SWAGGER_TITLE: Your App title for Swagger
+- SWAGGER_DESCRIPTION: Your App description for Swagger
+- SWAGGER_VERSION: Your App Version for Swagger
+- SWAGGER_BASEPATH: Your App BasePath for Swagger.
 
-    $ npm install -g nodemon
+### Database
 
-or
+In this implementation Sqlite3 is used as persistence system with TypeOrm, no url nor further configuration needed.
 
-    $ yarn global add mocha
-
-    $ yarn global add ts-node
-
-    $ yarn global add typescript
-
-    $ yarn global add nodemon
-
-## Config
-
-Before build and execute the server, you must modify server configs. To do this you must edit the file src/config.ts.
-
-* secret: configure the secret word for jwt tokens.
-* mailConfig:  configure how the emails will be sent.
-    * api: usign the Jose's email program
-    * mock: printing the email at console
-    * both: api + mock
-    * none: do nothing
-* emailAPIaddr: route to email server
-* frontendURL: route to frontend server
-* serverURL: route to this server
-* databaseURL: route to database server
+Database configuration parameters are in ormconfig.json in root folder.
 
 ## Build
 
@@ -51,29 +37,9 @@ To compile all typescript sources you should run:
 
     $ npm run build
 
-or 
-
-    $ yarn build
-
-## Database
-
-First of all, download DynamoDB in order to work with it in local: [http://docs.aws.amazon.com/...](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
-
-### Running DynamoDB Local:
-
-Move to the folder where you unzip the DynamoDB and run the command:
-
-    $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar
-
-### Create tables:
-
-Go back to the project folder and run the command:
-
-    $ npm run database
-
 or
 
-    $ yarn database
+    $ yarn build
 
 ## Execution
 
@@ -89,32 +55,8 @@ or
 
 ## Testing
 
-Before execute any test, you must create a new database for this purpose:
-
-    $ npm run database:test
-
-or
-
-    $ yarn database:test
-
-In order to run all unit test, run the command:
-
-    $ npm run test
+    $ npm test
 
 or
 
     $ yarn test
-
-## Debugging
-
-Not implemented yet.
-
-## Nodemon
-
-Build and monitors the server, with the nodemon command instead of node:
-
-    $ npm run serve
-
-or
-
-    $ yarn serve
