@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuService } from './shared/menu.service';
 import { DishView } from '../shared/viewModels/interfaces';
-import { Filter } from '../shared/backendModels/interfaces';
+import { Filter, Pageable } from '../shared/backendModels/interfaces';
 import { map } from 'rxjs/operators';
 
 export interface Filters {
@@ -24,14 +24,27 @@ export class MenuComponent {
 
   dishes$: Observable<DishView[]>;
 
+  /*pageable: Pageable = {
+    pageSize: 8,
+    pageNumber: 0,
+  };*/
+
   constructor(
     private menuService: MenuService,
   ) {}
 
   onFilterChange(filters: FilterFormData): void {
-    const composedFilters: Filter = this.menuService.composeFilters(filters);
+    let pageable: Pageable = {
+      pageSize: 8,
+      pageNumber: 0,
+      sort: [{
+        property: filters.sort.property,
+        direction: filters.sort.direction
+      }]
+    }; 
+    const composedFilters: Filter = this.menuService.composeFilters(pageable,filters);
     this.dishes$ = this.menuService.getDishes(composedFilters).pipe(
-      map((res) => res.result),
+      map((res) => res.content),
     );
   }
 }

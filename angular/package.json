@@ -33,7 +33,7 @@
     "build:pwa": "npm run postinstall:web && ng build --configuration=pwa --prod --build-optimizer && npm run ngsw-config && npm run ngsw-copy",
     "build:prod": "npm run postinstall:web && ng build --prod --build-optimizer",
     "build:prodcompose": "npm run postinstall:web && ng build --configuration=prodcompose --prod --build-optimizer",
-    "build:electron": "npm run postinstall:electron && npm run electron:serve-tsc && ng build",
+    "build:electron": "npm run postinstall:electron && npm run electron:serve-tsc && ng build --base-href ./",
     "build:electron:dev": "npm run build:electron -- -c dev",
     "build:electron:prod": "npm run build:electron -- -c production",
     "electron:start": "npm run postinstall:electron && npm-run-all -p serve electron:serve",

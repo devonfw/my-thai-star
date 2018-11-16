@@ -21,7 +21,7 @@
       <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
         <property name="fieldSetMapper">
           <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
-            <property name="targetType" value="io.oasp.application.mtsj.offermanagement.logic.api.to.DrinkEto"/>
+            <property name="targetType" value="com.devonfw.application.mtsj.offermanagement.logic.api.to.DrinkEto"/>
           </bean>
         </property>
         <property name="lineTokenizer">
@@ -40,7 +40,7 @@
       <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
         <property name="fieldSetMapper">
           <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
-            <property name="targetType" value="io.oasp.application.mtsj.offermanagement.logic.api.to.MealEto"/>
+            <property name="targetType" value="com.devonfw.application.mtsj.offermanagement.logic.api.to.MealEto"/>
           </bean>
         </property>
         <property name="lineTokenizer">
@@ -54,5 +54,5 @@
     <property name="resource" value="#{jobParameters['meals.file']}"/>
   </bean>
 
-  <bean id="productWriter" class="io.oasp.application.mtsj.offermanagement.batch.impl.productimport.writer.ProductWriter"/>
+  <bean id="productWriter" class="com.devonfw.application.mtsj.offermanagement.batch.impl.productimport.writer.ProductWriter"/>
 </beans>
