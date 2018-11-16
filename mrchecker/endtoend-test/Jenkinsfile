@@ -1,0 +1,83 @@
+node {
+    /*
+    stage('Checking out MyThaiStar') {
+        deleteDir()
+        git branch: 'fix_orderMenu', url: 'https://github.com/Jorge-Dacal/my-thai-star.git'
+        //git branch: 'develop', url: 'https://github.com/Jorge-Dacal/my-thai-star/mrchecker/endtoend-test.git'
+        sh "ls"
+        sh "pwd"
+        //sh "ls /home/pl/workspace/MTS"
+    }
+    */
+    
+    stage('Load tools') {
+        tool name: 'Maven3', type: 'maven'
+        //def chrome = 
+        //def chrome = tool name: 'Chrome-Headless-stable', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+        //def sonar = tool name: 'SonarQube-v3.2.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        //sh "pwd chromedriver"
+        //env.PATH = "${chrome}/bin:${env.PATH}"
+        //env.PATH ="/opt/google/chrome:${env.PATH}"
+        env.JAVA_HOME="${tool 'JDK 1.8'}"
+        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+        //env.PATH="${chrome}:${env.PATH}"
+        //env.PATH="${sonar}/bin:${env.PATH}"
+        //sh "echo path: $env.PATH"
+        sh "cat /etc/apt/sources.list"
+        //sh "ls /home/pl/workspace/MTS/MrChecker/mrchecker/endtoend-test/lib/webdrivers/chrome/"
+        //tool 'OpenJDK 1.8'
+    }
+    
+    stage('Change mythaistar route from properties'){
+        echo "do things"
+        //sh "ls /opt/google/chrome"
+        //sh "ls /usr/local/bin/"
+        //sh "ls /usr/local/bin/chromedriver"
+        //sh "ls /home/pl/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool/Chrome-Headless-stable"
+        //mypath = sh "pwd chromedriver"
+        //sh "ls ${mypath}"
+    }
+    /*
+    stage('Build Mr.Checker') {
+        dir('mrchecker/endtoend-test/') {
+            sh "ls"
+            withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven 3.5.4') {
+                sh "mvn --version"
+                sh "mvn build"
+            }
+        }
+    }
+    */
+    stage('SonarQube Analysis'){
+        //dir('mrchecker/endtoend-test/') {
+            ///withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven 3.5.4') {
+                //sh "mvn compile"
+                //withSonarQubeEnv('SonarQube') {
+                    // sh """sonar-scanner --version"""
+                   // sh "mvn sonar:sonar"
+                //}
+            //}
+        //}
+    }
+    stage('Run end to end tests') {
+        
+        dir('mrchecker/endtoend-test/') {
+            sh "ls"
+            withMaven(globalMavenSettingsConfig: 'MavenSettings', jdk: 'JDK 1.8', maven: 'Maven3') {
+        //        sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless"
+                //sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://172.16.14.192:4444/wd/hub' -Dos=LINUX"
+                sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://selenium-hub-core:4444/wd/hub' -Dos=LINUX"
+            }
+        }
+        
+        //sh "wget https://goo.gl/FCSwwD"
+        //sh "ls"
+        //sh "/usr/bin/java -jar FCSwwD -role hub" 
+        //sh "/usr/bin/java -jar FCSwwD -role node -hub http://172.16.48.149:4444/wd/hub" 
+        //sh "/usr/bin/java -jar FCSwwD -role node -hub http://172.16.48.149:4444/grid/register/" 
+        //sh "echo Registered"
+        //-hub http://localhost:4444/grid/register
+        //-Dwebdriver.chrome.driver='/home/pl/workspace/MTS/MrChecker/mrchecker/endtoend-test/lib/webdrivers/chrome/' 
+        
+    }
+}
