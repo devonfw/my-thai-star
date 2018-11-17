@@ -17,6 +17,7 @@ import * as moment from 'moment';
 })
 export class AppComponent {
   mobileSidenavOpened: boolean = false;
+  year: string = moment().format('YYYY');
   constructor(
     public router: Router,
     public sidenav: SidenavService,
