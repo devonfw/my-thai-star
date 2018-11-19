@@ -3,8 +3,9 @@ import { ApiUseTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { OrderService } from './order.service';
 import {
   OrderListInfo,
-  OrderResult,
+  Response,
   CustomOrderFilter,
+  OrderView,
 } from 'shared/interfaces';
 import { Order } from './models/order.entity';
 import { ApiException } from 'shared/api-exception.model';
@@ -34,10 +35,10 @@ export class OrderController {
   @Post('search')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles(UserRole.Waiter)
-  @ApiResponse({ status: HttpStatus.OK, type: OrderResult })
+  @ApiResponse({ status: HttpStatus.OK /*, type: Response<OrderView> */ })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ApiException })
   @ApiOperation(GetOperationId('Order', 'Search'))
-  async getAll(@Body() input: CustomOrderFilter): Promise<OrderResult> {
+  async getAll(@Body() input: CustomOrderFilter): Promise<Response<OrderView>> {
     try {
       return await this.service.getOrders(input);
     } catch (error) {
