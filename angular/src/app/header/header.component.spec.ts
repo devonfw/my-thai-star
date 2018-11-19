@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateTimeAdapter } from 'ng-pick-datetime';
+
 import { CoreModule } from '../core/core.module';
 
 import { WindowService } from '../core/windowService/windowService.service';
@@ -21,7 +23,7 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [WindowService, AuthService, UserAreaService, SnackBarService, HttpClient],
+      providers: [WindowService, AuthService, UserAreaService, SnackBarService, HttpClient, DateTimeAdapter],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
