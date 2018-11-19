@@ -4,7 +4,7 @@ export class Filter {
     pageable?: Pageable;
     isFav: boolean;
     searchBy: string;
-    //sort: { name: string, direction: string }[];
+    // sort: { name: string, direction: string }[];
     maxPrice: number;
     minLikes: number;
     categories: { id: string }[];
@@ -12,7 +12,7 @@ export class Filter {
 
 export class FilterCockpit {
     pageable?: Pageable;
-    //sort?: Sorting[];
+    // sort?: Sorting[];
     bookingDate: string;
     email: string;
     bookingToken: number;
@@ -21,7 +21,7 @@ export class FilterCockpit {
 export class Pageable {
     pageSize: number;
     pageNumber: number;
-    sort?: Array<Sort>;
+    sort?: Sort[];
 }
 
 export class Sort {

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateBookingVm, BookingDTO } from './models/view-models/booking-vm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { UserService } from 'management/user/user.service';
-import { CustomFilter, BookingResponse, BookingView } from 'shared/interfaces';
+import { CustomFilter, Response, BookingView } from 'shared/interfaces';
 import { EmailService } from 'shared/email/email.service';
 
 @Injectable()
@@ -38,21 +38,16 @@ export class BookingService extends BaseService<Booking> {
     }
   }
 
-  async findBookings(filter: CustomFilter): Promise<BookingResponse> {
+  async findBookings(filter: CustomFilter): Promise<Response<BookingView>> {
     try {
-      const response: BookingResponse = {
-        pagination: {
-          page: filter.pagination.page,
-          size: filter.pagination.size,
-          total: 0,
-        },
-        result: [],
+      const response: Response<BookingView> = {
+        pageable: filter.pageable || { pageNumber: 0, pageSize: 500 },
+        content: [],
       };
-      const offset = (filter.pagination.page - 1) * filter.pagination.size;
-      const total = await this._repository.count();
-      // Math.ceil(total / filter.pagination.size); if it must return total pages instead of total elements left
-      response.pagination.total = total - offset;
-      const query = await this.createQuery(filter, offset);
+      const offset =
+        (response.pageable.pageNumber - 1) * response.pageable.pageSize;
+      const size = response.pageable.pageSize;
+      const query = await this.createQuery(filter, offset, size);
       const reservations = await query.getMany();
       for (const element of reservations) {
         const resultElement: BookingView = {
@@ -63,7 +58,7 @@ export class BookingService extends BaseService<Booking> {
           table: element.table,
           orders: element.orders,
         };
-        response.result.push(resultElement);
+        response.content.push(resultElement);
       }
       return response;
     } catch (error) {
@@ -82,6 +77,7 @@ export class BookingService extends BaseService<Booking> {
   async createQuery(
     filter: CustomFilter,
     offset: number,
+    size: number,
   ): Promise<SelectQueryBuilder<Booking>> {
     try {
       const query = await this._repository.createQueryBuilder('booking');
@@ -90,15 +86,22 @@ export class BookingService extends BaseService<Booking> {
       query.leftJoinAndSelect('booking.orders', 'orders');
       query.leftJoinAndSelect('booking.table', 'table');
       query.leftJoinAndSelect('booking.invitedGuests', 'invitedGuest');
-      if (filter.sort.length !== 0) {
-        if (filter.sort[0].direction === 'ASC') {
-          query.addOrderBy(`booking.${filter.sort[0].name}`, 'ASC');
+      // TODO: why only ordering for 1 element? reworking here.
+      if (filter.pageable.sort.length !== 0) {
+        if (filter.pageable.sort[0].direction === 'ASC') {
+          query.addOrderBy(
+            `booking.${filter.pageable.sort[0].property}`,
+            'ASC',
+          );
         } else {
-          query.addOrderBy(`booking.${filter.sort[0].name}`, 'DESC');
+          query.addOrderBy(
+            `booking.${filter.pageable.sort[0].property}`,
+            'DESC',
+          );
         }
       }
       query.skip(offset);
-      query.take(filter.pagination.size);
+      query.take(size);
       return query;
     } catch (error) {
       throw error;

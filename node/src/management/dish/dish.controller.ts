@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiUseTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
-import { DishResponse, Filter } from 'shared/interfaces';
+import { Response, Filter, DishView } from 'shared/interfaces';
 import { DishService } from './dish.service';
 import { DishVm } from './models/view-models/dish-vm';
 import { Dish } from './models/dish.entity';
@@ -23,7 +23,7 @@ export class DishController {
   @ApiResponse({ status: HttpStatus.OK, type: DishResponseVm })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ApiException })
   @ApiOperation(GetOperationId('Dish', 'Search'))
-  async getDishes(@Body() filter: Filter): Promise<DishResponse> {
+  async getDishes(@Body() filter: Filter): Promise<Response<DishView>> {
     try {
       return await this._service.findDishes(filter);
     } catch (error) {

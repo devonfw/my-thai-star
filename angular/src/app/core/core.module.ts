@@ -70,9 +70,9 @@ import 'moment/locale/de';
 import 'moment/locale/ca';
 
 // Default text strings for OwlDateTime
-export class DefaultIntl {
+export class DefaultIntl extends OwlDateTimeIntl {
   cancelBtnLabel: string = '\u{2716}';
-  setBtnLabel: String = '\u{2714}';
+  setBtnLabel: string = '\u{2714}';
 }
 
 @NgModule({

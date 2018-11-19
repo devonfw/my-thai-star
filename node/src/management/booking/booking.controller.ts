@@ -16,15 +16,12 @@ import {
 import { BookingService } from './booking.service';
 import { ApiException } from 'shared/api-exception.model';
 import { GetOperationId } from 'shared/utilities/get-operation-id';
-import {
-  CustomFilter,
-  BookingResponse,
-  InvitationResponse,
-} from 'shared/interfaces';
+import { CustomFilter, Response, InvitationResponse } from 'shared/interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'shared/guards/roles.guard';
 import { Roles } from 'shared/decorators/role.decorator';
 import { UserRole } from '../user/models/user-role.enum';
+import { BookingView } from '../../shared/interfaces';
 
 @Controller('/services/rest/bookingmanagement/v1/booking')
 @ApiUseTags('Booking')
@@ -49,7 +46,7 @@ export class BookingController {
   @ApiResponse({ status: HttpStatus.OK, type: BookingResponseVm })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ApiException })
   @ApiOperation(GetOperationId('Booking', 'Search'))
-  async getAll(@Body() filter: CustomFilter): Promise<BookingResponse> {
+  async getAll(@Body() filter: CustomFilter): Promise<Response<BookingView>> {
     try {
       return await this._service.findBookings(filter);
     } catch (e) {

@@ -6,7 +6,7 @@ import { Repository, SelectQueryBuilder } from 'typeorm';
 import {
   OrderListInfo,
   CustomOrderFilter,
-  OrderResult,
+  Response,
   OrderView,
 } from 'shared/interfaces';
 import { OrderLine } from './models/orderLine.entity';
@@ -77,21 +77,17 @@ export class OrderService extends BaseService<Order> {
     }
   }
 
-  async getOrders(filter: CustomOrderFilter): Promise<OrderResult> {
+  async getOrders(filter: CustomOrderFilter): Promise<Response<OrderView>> {
     try {
-      const response: OrderResult = {
-        pagination: {
-          page: filter.pagination.page,
-          size: filter.pagination.size,
-          total: 0,
-        },
-        result: [],
+      const response: Response<OrderView> = {
+        pageable: filter.pageable || { pageNumber: 0, pageSize: 500 },
+        content: [],
       };
-      const offset = (filter.pagination.page - 1) * filter.pagination.size;
-      const total = await this._repository.count();
-      // Math.ceil(total / filter.pagination.size); if it must return total pages instead of total elements left
-      response.pagination.total = total - offset;
-      const query = await this.createQuery(filter, offset);
+      const offset =
+        (response.pageable.pageNumber - 1) * response.pageable.pageSize;
+      const size = response.pageable.pageSize;
+
+      const query = await this.createQuery(filter, offset, size);
       const orders = await query.getMany();
       for (const element of orders) {
         const orderLine: {
@@ -115,7 +111,7 @@ export class OrderService extends BaseService<Order> {
           order: element,
           orderLines: orderLine,
         };
-        response.result.push(resultElement);
+        response.content.push(resultElement);
       }
       return response;
     } catch (error) {
@@ -126,6 +122,7 @@ export class OrderService extends BaseService<Order> {
   async createQuery(
     filter: CustomOrderFilter,
     offset: number,
+    size: number,
   ): Promise<SelectQueryBuilder<Order>> {
     try {
       let query = await this._repository.createQueryBuilder('order');
@@ -141,15 +138,21 @@ export class OrderService extends BaseService<Order> {
       query.leftJoinAndSelect('order.host', 'host');
       if (filter.email || filter.bookingToken)
         query = await this.addFilter(query, filter);
-      if (filter.sort.length !== 0) {
-        if (filter.sort[0].direction === 'ASC') {
-          query.addOrderBy(`booking.${filter.sort[0].name}`, 'ASC');
+      if (filter.pageable.sort.length !== 0) {
+        if (filter.pageable.sort[0].direction === 'ASC') {
+          query.addOrderBy(
+            `booking.${filter.pageable.sort[0].property}`,
+            'ASC',
+          );
         } else {
-          query.addOrderBy(`booking.${filter.sort[0].name}`, 'DESC');
+          query.addOrderBy(
+            `booking.${filter.pageable.sort[0].property}`,
+            'DESC',
+          );
         }
       }
       query.skip(offset);
-      query.take(filter.pagination.size);
+      query.take(size);
       return query;
     } catch (e) {
       throw e;

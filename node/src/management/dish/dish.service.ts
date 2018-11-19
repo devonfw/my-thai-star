@@ -3,7 +3,7 @@ import { BaseService } from 'shared/base.service';
 import { Dish } from './models/dish.entity';
 import { Repository, getRepository, SelectQueryBuilder } from 'typeorm';
 import { DishVm } from './models/view-models/dish-vm';
-import { DishResponse, Filter, Pagination, DishView } from 'shared/interfaces';
+import { Response, Filter, Pageable, DishView, Sort } from 'shared/interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'model/category/category.entity';
 import { Ingredient } from 'model/ingredient/ingredient.entity';
@@ -25,10 +25,10 @@ export class DishService extends BaseService<Dish> {
     this._imageService = getRepository(Image);
   }
 
-  async findDishes(filter: Filter): Promise<DishResponse> {
+  async findDishes(filter: Filter): Promise<Response<DishView>> {
     try {
-      const pag: Pagination = { page: 1, size: 500, total: 500 };
-      const response: DishResponse = { pagination: pag, result: [] };
+      const pag: Pageable = filter.pageable || undefined;
+      const response: Response<DishView> = { pageable: pag, content: [] };
       let query = this._repository.createQueryBuilder('dish');
       query = await this.buildQuery(query, filter);
       const dishes = await query.getMany();
@@ -40,7 +40,7 @@ export class DishService extends BaseService<Dish> {
           extras: plate.extras,
           categories: plate.categories,
         };
-        response.result.push(resultElement);
+        response.content.push(resultElement);
       }
       return response;
     } catch (error) {
@@ -108,34 +108,45 @@ export class DishService extends BaseService<Dish> {
         query.andWhere('dish.name like :input', {
           input: `%${filter.searchBy}%`,
         });
-      query = await this.addOrderBy(query, filter);
+      if (filter.pageable) {
+        if (filter.pageable.sort) {
+          query = await this.addOrderBy(query, filter.pageable.sort);
+        }
+        query
+          .skip((filter.pageable.pageNumber - 1) * filter.pageable.pageSize)
+          .take(filter.pageable.pageSize);
+      }
       return query;
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async addOrderBy(
+  addOrderBy(
     query: SelectQueryBuilder<Dish>,
-    filter: Filter,
-  ): Promise<SelectQueryBuilder<Dish>> {
-    switch (filter.sort[0].name) {
-      case 'name':
-        if (filter.sort[0].direction === 'ASC') {
-          query.orderBy('dish.name', 'ASC');
-        } else {
-          query.orderBy('dish.name', 'DESC');
-        }
-        return query;
-      case 'price':
-        if (filter.sort[0].direction === 'ASC') {
-          query.orderBy('dish.price', 'ASC');
-        } else {
-          query.orderBy('dish.price', 'DESC');
-        }
-        return query;
-      default:
-        return query;
-    }
+    sort: Sort[],
+  ): SelectQueryBuilder<Dish> {
+    let newQuery = query;
+    sort.forEach((value, index, array) => {
+      switch (value.property) {
+        case 'name':
+          if (value.direction === 'ASC') {
+            newQuery = query.orderBy('dish.name', 'ASC');
+          } else {
+            newQuery = query.orderBy('dish.name', 'DESC');
+          }
+          break;
+        case 'price':
+          if (value.direction === 'ASC') {
+            newQuery = query.orderBy('dish.price', 'ASC');
+          } else {
+            newQuery = query.orderBy('dish.price', 'DESC');
+          }
+          break;
+        default:
+          break;
+      }
+    });
+    return newQuery;
   }
 }
