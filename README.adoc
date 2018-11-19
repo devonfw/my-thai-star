@@ -15,7 +15,7 @@ Client-side developed using the latest version of this framework: Angular 6.
 
 * **Java**
 
-Server-side developed using the 2.3 version of **oasp4j**.
+Server-side developed using the 3.0 version of **devon4j**.
 
 * **Node**
 

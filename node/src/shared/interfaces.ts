@@ -4,35 +4,32 @@ import { ApiModelProperty } from '@nestjs/swagger';
 // FILTERS
 
 export class Filter {
-  pagination?: Pagination;
+  pageable?: Pageable;
   isFav: boolean;
   searchBy: string;
-  sort: { name: string; direction: string }[];
   maxPrice: number;
   minLikes: number;
   categories: { id: string }[];
 }
 
 export class CustomFilter {
-  pagination?: Pagination;
-  sort?: { name: string; direction: string }[];
+  pageable?: Pageable;
 }
 
 export class CustomOrderFilter {
   bookingToken?: string;
   email?: string;
-  pagination?: Pagination;
-  sort?: { name: string; direction: string }[];
+  pageable?: Pageable;
 }
 
-export class Pagination {
-  size: number;
-  page: number;
-  total: number;
+export class Pageable {
+  pageSize: number;
+  pageNumber: number;
+  sort?: Sort[];
 }
 
-export class Sorting {
-  name: string;
+export class Sort {
+  property: string;
   direction: string;
 }
 
@@ -65,10 +62,15 @@ export interface ExtraView {
   selected?: boolean;
 }
 
-export interface DishResponse {
-  pagination: Pagination;
-  result: DishView[];
+export interface Response<E> {
+  pageable: Pageable;
+  content: E[];
 }
+
+// export interface DishResponse {
+//   pageable: Pageable;
+//   content: DishView[];
+// }
 
 // BOOKING
 
@@ -108,10 +110,10 @@ export class OrderListInfo {
   orderLines: OrderInfo[];
 }
 
-export interface BookingResponse {
-  pagination: Pagination;
-  result: BookingView[];
-}
+// export interface BookingResponse {
+//   pagination: Pagination;
+//   result: BookingView[];
+// }
 
 export class BookingView {
   booking: BookingDTO;
@@ -122,10 +124,10 @@ export class BookingView {
   user: any;
 }
 
-export class OrderResult {
-  pagination: Pagination;
-  result: OrderView[];
-}
+// export class OrderResult {
+//   pagination: Pagination;
+//   result: OrderView[];
+// }
 
 export class OrderView {
   booking: any;
