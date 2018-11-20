@@ -69,7 +69,12 @@ export class OrderCockpitComponent implements OnInit {
   applyFilters(): void {
     this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        this.orders = data.content;
+        if (data == null) {
+        this.orders = [];
+        }
+        else{
+          this.orders = data.content;
+        }
         this.totalOrders = data.totalElements;
       });
   }

@@ -44,7 +44,14 @@ export class MenuComponent {
     }; 
     const composedFilters: Filter = this.menuService.composeFilters(pageable,filters);
     this.dishes$ = this.menuService.getDishes(composedFilters).pipe(
-      map((res) => res.content),
+      map((res) => 
+      {
+        if(res==null){
+        return [];
+      }else{
+        return res.content;
+      }
+      }),
     );
   }
 }
