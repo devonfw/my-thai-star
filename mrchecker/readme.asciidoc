@@ -1,0 +1,60 @@
+:toc: macro
+toc::[]
+
+= MrChecker E2E Testing
+
+== Introduction
+MrChecker is a testing framework included in devonfw with several useful modules, from which we will focus on the Selenium Module, a module designed to make end-to-end testing easier to implement.
+
+== How to use it
+
+First of all download the repository.
+
+You must run My Thai Star frontend and backend application and modify your url to the front in `mrchecker/endtoend-test/src/resources/settings.properties`
+
+Now you can run end to end test to *check* if the application works properly.
+
+To run the e2e test you have two options:
+
+*The first option is using the command line in devonfw distribution*
+```
+cd mrchecker/endtoend-test/
+mvn test -Dtest=MyThaiStarTest -Dbrowser=Chrome
+
+```
+optionally you can use it with a headless version or using another navigator:
+```
+// chrome headless (without visual component)
+mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless
+// use firefox navigator
+mvn test -Dtest=MyThaiStarTest -Dbrowser=FireFox
+```
+
+*The second is importing the project in devonfw Eclipse and running _MyThaiStarTest.java_ as JUnit (right click, run as JUnit)* 
+
+They can be executed one by one or all in one go, comment or uncomment _@Test_ before those tests to enable or disable them.
+
+For more information about how to use MrChecker and build your own end to end test read:
+ * link:https://github.com/devonfw/devonfw-testing/wiki[MrChecker documentation] 
+ * link:https://github.com/devonfw-forge/devon-guide/wiki/mrchecker-mts[MrChecker tutorial for My Thai Star]
+
+
+
+== End to end tests in My Thai Star
+
+We have included a test suite with four tests to run in My Thai Star to verify everything works properly.
+
+The included tests do the following:
+
+* _Test_loginAndLogOut_: Log in and log out.
+
+* _Test_loginFake_: Attempt to log in with a fake user.
+
+* _Test_bookTable_: Log in and book a table, then login with a waiter and check if the table was successfully booked.
+
+* _Test_orderMenu_: Log in and order food for a certain booked table.
+
+These four tests can be found inside *MyThaiStarTest.java*, link:https://github.com/devonfw/my-thai-star/tree/develop/mrchecker/endtoend-test/src/test/java/com/devonfw/mts/tests[here]. 
+
+
+

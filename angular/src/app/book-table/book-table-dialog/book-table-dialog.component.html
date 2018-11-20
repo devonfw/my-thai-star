@@ -25,7 +25,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="align-right" flex>
-    <button mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
-    <button mat-button (click)="sendBooking()" color="accent" class="text-upper">{{'buttons.send' | translate}}</button>
+    <button name="bookTableCancel" mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+    <button name="bookTableConfirm" mat-button (click)="sendBooking()" color="accent" class="text-upper">{{'buttons.send' | translate}}</button>
   </div>
 </mat-dialog-actions>

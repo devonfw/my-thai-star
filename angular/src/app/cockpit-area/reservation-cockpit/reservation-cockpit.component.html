@@ -1,7 +1,7 @@
 <td-layout>
   <form (ngSubmit)="filter()" #filterForm="ngForm">
     <div style= "background-color: white">
-      <td-expansion-panel [label]="'cockpit.filter' | translate">
+      <td-expansion-panel data-name="reservationFilter" [label]="'cockpit.filter' | translate">
         <div layout="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
           <div layout-xs="column" class="justify-space-around" style="align-items:center" hide-gt-xs flex>
             <mat-form-field color="accent" class="searchBy">
@@ -21,8 +21,8 @@
           </div>
         </div>
         <div class="align-right">
-          <button mat-button type="button" (click)="clearFilters(filterForm)" class="text-upper property-text-bold">{{'buttons.clearFilters' | translate}}</button>
-          <button mat-button type="submit" color="accent" class="text-upper property-text-bold">{{'buttons.applyFilters' | translate}}</button>
+          <button name="reservationsClearFilters" mat-button type="button" (click)="clearFilters(filterForm)" class="text-upper property-text-bold">{{'buttons.clearFilters' | translate}}</button>
+          <button name="reservationApplyFilters" mat-button type="submit" color="accent" class="text-upper property-text-bold">{{'buttons.applyFilters' | translate}}</button>
         </div>
       </td-expansion-panel>
     </div>
@@ -35,7 +35,7 @@
   <mat-card>
     <mat-card-title>{{'cockpit.reservations.title' | translate}}</mat-card-title>
     <mat-divider></mat-divider>
-    <td-data-table
+    <td-data-table data-name="reservationDataTable"
       #dataTable
       [data]="reservations"
       [columns]="columns"
@@ -52,7 +52,7 @@
     <div class="mat-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
       <h3>{{'table.noResults' | translate}}.</h3>
     </div>
-    <td-paging-bar #pagingBar [pageSize]="pageable.pageSize" [total]="totalReservations" (change)="page($event)">
+    <td-paging-bar data-name="reservationPagingBar" #pagingBar [pageSize]="pageable.pageSize" [total]="totalReservations" (change)="page($event)">
       <span hide-xs>{{'table.rowsPage' | translate}}:</span>
       <mat-select [style.width.px]="50" [(ngModel)]="pageable.pageSize">
         <mat-option *ngFor="let size of pageSizes" [value]="size">

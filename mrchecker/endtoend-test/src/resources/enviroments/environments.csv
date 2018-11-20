@@ -1,0 +1,11 @@
+service variable,DEV,QA,PROD
+WWW_FONT_URL,http://demoqa.com/,https://pl.wiktionary.org/wiki/,http://orient-addicts.djamila.pl/
+TOOLS_QA,http://toolsqa.com/,,
+WEB_SERVICE,http://jsonplaceholder.typicode.com/,http://jsonplaceholder.typicode.com/,http://jsonplaceholder.typicode.com/
+THE_INTERNET_MAIN_PAGE,http://the-internet.herokuapp.com/,,
+SECURITY_CLIENT_ORIGIN,http://de-mucdevondepl01:8090,http://de-mucdevondepl01:8090,
+SECURITY_SERVER_ORIGIN,http://de-mucdevondepl01:9090,http://de-mucdevondepl01:9090,
+SECURITY_USER1_NAME,waiter,waiter,,,
+SECURITY_USER1_PASSWD,ENC(4Bf6vuKreMLOxKxEnqCfBg==),ENC(4Bf6vuKreMLOxKxEnqCfBg==),,,
+ELEMENTAL_SELENIUM_PAGE,http://elementalselenium.com/,,,,
+HTTPBIN,http://httpbin.org,,,,

@@ -1,0 +1,9 @@
+2018-10-02 at 11:04:58 CEST logInfo - [pool-1-thread-1] Test_orderMenu(com.devonfw.mts.tests.MyThaiStarTest) STARTED.
+2018-10-02 at 11:05:08 CEST logDebug - [pool-1-thread-1] Waiting for [findElementDynamic(): By.xpath: //a[@routerlink='/menu']] took [0.028 s]
+2018-10-02 at 11:05:09 CEST logDebug - [pool-1-thread-1] To add observer: com.devonfw.mts.pages.ThaiMenuPage@33a606ef
+2018-10-02 at 11:05:09 CEST logDebug - [pool-1-thread-1] BaseTestWatcher.observers: [com.devonfw.mts.pages.ThaiHomePage@59ef6e04]
+2018-10-02 at 11:05:09 CEST logDebug - [pool-1-thread-1] TestClassRule.classObservers: []
+2018-10-02 at 11:05:09 CEST logDebug - [pool-1-thread-1] Waiting for [waitForPageLoaded] took [0.064 s]
+2018-10-02 at 11:50:18 CEST logInfo - [pool-1-thread-1] Test_orderMenu(com.devonfw.mts.tests.MyThaiStarTest) FAILED.
+2018-10-02 at 11:50:18 CEST logDebug - [pool-1-thread-1] BasePage.onTestFailure    ThaiHomePage
+2018-10-02 at 11:50:26 CEST logInfo - [pool-1-thread-1] Test_orderMenu(com.devonfw.mts.tests.MyThaiStarTest) duration: 45,46 min
