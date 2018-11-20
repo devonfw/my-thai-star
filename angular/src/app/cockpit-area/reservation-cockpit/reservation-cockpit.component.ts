@@ -30,7 +30,7 @@ export class ReservationCockpitComponent implements OnInit {
     //total: 1,
   };
 
-  reservations: ReservationView;
+  reservations: ReservationView[];
   totalReservations: number;
 
   columns: ITdDataTableColumn[];
@@ -74,7 +74,11 @@ export class ReservationCockpitComponent implements OnInit {
   applyFilters(): void {
     this.waiterCockpitService.getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        this.reservations = data.content;
+        if(data == null){
+          this.reservations = [];
+        }else{
+          this.reservations = data.content;
+        }
         this.totalReservations = data.totalElements;
       });
   }
