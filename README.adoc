@@ -33,6 +33,10 @@ Used this technology to define contracts between client-side(s) and server-side(
 
 Tool used for Continuous Integration and Continuous Delivery. Inside of this Jenkins and SonarQube are used. Also used **Docker** for the deployment in an external server.
 
+* **Mr Checker**
+
+MrChecker is a testing framework included in devonfw with several useful modules, from which we will focus on the Selenium Module, a module designed to make end-to-end testing easier to implement. More about it [here](https://github.com/devonfw/devonfw-testing/wiki).
+
 === Deprecated
 
 Some folders have been marked as __deprecated__. They have not been removed for information purposes and in case it is necessary to recover previous work. They are the following:
