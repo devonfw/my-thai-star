@@ -14,8 +14,11 @@ import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundExcepti
 import com.devonfw.mts.common.readProperties.ConfigFileReader;
 
 /**
- * @author jambulud
+ * @author Juan Andrés Ambuludi Olmedo
+ * @author Jorge Dacal Cantos
+ * @author Carlos Micó Egea
  */
+
 // @Configuration // no se si esto hace falta o no, lo he copiado de otra version (Carlos)
 // @PropertySource("file:config.properties")
 public class ThaiHomePage extends BasePage {
