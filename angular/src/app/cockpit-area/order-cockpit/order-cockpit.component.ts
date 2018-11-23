@@ -24,7 +24,7 @@ export class OrderCockpitComponent implements OnInit {
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
-    //total: 1,
+    // total: 1,
   };
   private sorting: any[] = [];
 
@@ -69,10 +69,9 @@ export class OrderCockpitComponent implements OnInit {
   applyFilters(): void {
     this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        if (data == null) {
+        if (!data) {
         this.orders = [];
-        }
-        else{
+        } else {
           this.orders = data.content;
         }
         this.totalOrders = data.totalElements;
@@ -89,7 +88,6 @@ export class OrderCockpitComponent implements OnInit {
       pageSize: pagingEvent.pageSize,
       pageNumber: pagingEvent.page - 1,
       sort: this.pageable.sort,
-      //total: 1,
     };
     this.applyFilters();
   }
@@ -100,7 +98,7 @@ export class OrderCockpitComponent implements OnInit {
       property: sortEvent.name,
       direction: '' + sortEvent.order,
     });
-   this.applyFilters();
+    this.applyFilters();
   }
 
   selected(selection: ITdDataTableSelectAllEvent): void {
