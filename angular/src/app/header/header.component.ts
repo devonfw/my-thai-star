@@ -23,8 +23,7 @@ export class HeaderComponent {
   selectableLangs: any[];
   flag: string;
 
-  @Output('openCloseSidenavMobile')
-  sidenavNavigationEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() openCloseSidenavMobile = new EventEmitter<any>();
 
   constructor(
     public window: WindowService,
@@ -46,12 +45,12 @@ export class HeaderComponent {
   }
 
   openCloseNavigationSideNav(): void {
-    this.sidenavNavigationEmitter.emit();
+    this.openCloseSidenavMobile.emit();
   }
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
-    this.sidenavNavigationEmitter.emit();
+    this.openCloseSidenavMobile.emit();
   }
 
   changeLanguage(lang: string): void {

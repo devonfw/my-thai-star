@@ -18,7 +18,7 @@ export class BookTableService {
   }
 
   composeBooking(invitationData: any, type: number): BookingInfo {
-    let composedBooking: BookingInfo = {
+    const composedBooking: BookingInfo = {
       booking: {
         bookingDate: invitationData.bookingDate,
         name: invitationData.name,
@@ -28,7 +28,7 @@ export class BookTableService {
     };
 
     if (type) {
-      composedBooking.invitedGuests = map(invitationData.invitedGuests, (email: string) => { return { email: email }; });
+      composedBooking.invitedGuests = map(invitationData.invitedGuests, (email: string) => ({ email: email }));
     } else {
       composedBooking.booking.assistants = invitationData.assistants;
     }

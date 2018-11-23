@@ -13,26 +13,28 @@ import { map } from 'lodash';
   styleUrls: ['./sidenav-order.component.scss'],
 })
 export class SidenavOrderComponent implements OnInit {
-
   extras: string;
-  @Input('order') order: OrderView;
+  @Input() order: OrderView;
 
-  constructor(private sidenav: SidenavService,
-              public dialog: MatDialog,
-              private _dialogService: TdDialogService,
-              private calculator: PriceCalculatorService,
+  constructor(
+    private sidenav: SidenavService,
+    public dialog: MatDialog,
+    private _dialogService: TdDialogService,
+    private calculator: PriceCalculatorService,
   ) {}
 
   ngOnInit(): void {
     this.extras = map(this.order.extras, 'name').join(', ');
- }
+  }
 
   removeComment(): void {
     this.order.orderLine.comment = undefined;
   }
 
   addComment(): void {
-    let dialogRef: MatDialogRef<CommentDialogComponent> = this.dialog.open(CommentDialogComponent);
+    const dialogRef: MatDialogRef<CommentDialogComponent> = this.dialog.open(
+      CommentDialogComponent,
+    );
     dialogRef.afterClosed().subscribe((content: string) => {
       this.order.orderLine.comment = content;
     });
@@ -61,5 +63,4 @@ export class SidenavOrderComponent implements OnInit {
       closeButton: 'Close',
     });
   }
-
 }

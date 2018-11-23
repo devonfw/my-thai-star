@@ -30,12 +30,9 @@ export class MenuFiltersComponent implements OnInit {
   };
   filtersForm: FormGroup;
 
-  @Output('applyForm')
-  applyFormEmitter: EventEmitter<FilterFormData> = new EventEmitter();
+  @Output() applyForm: EventEmitter<FilterFormData> = new EventEmitter();
 
-  constructor(
-    private fb: FormBuilder,
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     // Hint: formDefaults work here nicely as form builder is used and API is consistent
@@ -49,7 +46,7 @@ export class MenuFiltersComponent implements OnInit {
     if (event) {
       event.preventDefault();
     }
-    this.applyFormEmitter.emit(this.filtersForm.value);
+    this.applyForm.emit(this.filtersForm.value);
   }
 
   clearFilters(event: Event, form: FormGroup): void {
@@ -60,18 +57,18 @@ export class MenuFiltersComponent implements OnInit {
 
 export class FilterFormData {
   searchBy: string;
-  sort: { property: string, direction: string };
+  sort: { property: string; direction: string };
   maxPrice: number;
   minLikes: number;
   categories: {
-    mainDishes: boolean,
-    starters: boolean,
-    desserts: boolean,
-    noodle: boolean,
-    rice: boolean,
-    curry: boolean,
-    vegan: boolean,
-    vegetarian: boolean,
-    favourites: boolean,
+    mainDishes: boolean;
+    starters: boolean;
+    desserts: boolean;
+    noodle: boolean;
+    rice: boolean;
+    curry: boolean;
+    vegan: boolean;
+    vegetarian: boolean;
+    favourites: boolean;
   };
 }

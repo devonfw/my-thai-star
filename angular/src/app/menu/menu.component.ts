@@ -21,30 +21,32 @@ export interface Filters {
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
-
   dishes$: Observable<DishView[]>;
 
-  constructor(
-    private menuService: MenuService,
-  ) {}
+  constructor(private menuService: MenuService) {}
 
   onFilterChange(filters: FilterFormData): void {
-    let pageable: Pageable = {
+    const pageable: Pageable = {
       pageSize: 8,
       pageNumber: 0,
-      sort: [{
-        property: filters.sort.property,
-        direction: filters.sort.direction,
-      }],
+      sort: [
+        {
+          property: filters.sort.property,
+          direction: filters.sort.direction,
+        },
+      ],
     };
-    const composedFilters: Filter = this.menuService.composeFilters(pageable, filters);
+    const composedFilters: Filter = this.menuService.composeFilters(
+      pageable,
+      filters,
+    );
     this.dishes$ = this.menuService.getDishes(composedFilters).pipe(
       map((res) => {
         if (!res) {
-        return [];
-      } else {
-        return res.content;
-      }
+          return [];
+        } else {
+          return res.content;
+        }
       }),
     );
   }
