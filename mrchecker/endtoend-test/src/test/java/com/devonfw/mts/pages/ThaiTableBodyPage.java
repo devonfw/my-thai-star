@@ -14,9 +14,11 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 import com.devonfw.mts.common.data.Reservation;
 
 /**
- * @author jambulud
- *
+ * @author Juan Andrés Ambuludi Olmedo
+ * @author Jorge Dacal Cantos
+ * @author Carlos Micó Egea
  */
+
 public class ThaiTableBodyPage extends BasePage {
 
   /* Search criteria */
@@ -70,7 +72,7 @@ public class ThaiTableBodyPage extends BasePage {
       email = reservationsRow.get(1);
       id = reservationsRow.get(2);
 
-      System.out.printf("date: %s, email: %s, id: %s\n", date, email, id);
+      // System.out.printf("date: %s, email: %s, id: %s\n", date, email, id);
 
       reservationsByDate = idReservations.getOrDefault(date, new LinkedList<Reservation>());
       reservationsByDate.add(new Reservation(date, email, id));

@@ -19,8 +19,11 @@ import com.devonfw.mts.common.data.Reservation;
 import com.devonfw.mts.common.utils.Utils;
 
 /**
- * @author jambulud
+ * @author Juan Andrés Ambuludi Olmedo
+ * @author Jorge Dacal Cantos
+ * @author Carlos Micó Egea
  */
+
 public class ThaiReservationsPage extends BasePage {
 
   /* Search criteria */
@@ -161,7 +164,6 @@ public class ThaiReservationsPage extends BasePage {
     reservations = getDriver().findElementDynamics(reservationsTableSearch);
 
     for (int i = 1; i <= reservations.size(); i++) {
-      System.out.println(reservations.size());
 
       date = getDriver().findElementDynamic(findDataCell(i, 1)).getText();
       email = getDriver().findElementDynamic(findDataCell(i, 2)).getText();
@@ -173,7 +175,7 @@ public class ThaiReservationsPage extends BasePage {
         e.printStackTrace();
       }
 
-      System.out.printf("date: %s, email: %s, id: %s\n", date, email, id);
+      // System.out.printf("date: %s, email: %s, id: %s\n", date, email, id);
 
       reservationsByDate = idReservations.getOrDefault(date, new LinkedList<Reservation>());
       reservationsByDate.add(new Reservation(date, email, id));
