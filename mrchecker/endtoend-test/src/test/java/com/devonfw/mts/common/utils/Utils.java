@@ -72,9 +72,10 @@ public class Utils {
         } catch (TimeoutException e) {
 
           System.out.println("Character not written: " + character);
+          System.out.println("Waiting for it to be written...");
         }
       }
-      System.out.println("Progress: " + text.substring(0, i + 1));
+      // System.out.println("Progress: " + text.substring(0, i + 1));
     }
 
   }

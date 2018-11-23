@@ -35,7 +35,7 @@ Tool used for Continuous Integration and Continuous Delivery. Inside of this Jen
 
 * **Mr Checker**
 
-MrChecker is a testing framework included in devonfw with several useful modules, from which we will focus on the Selenium Module, a module designed to make end-to-end testing easier to implement. More about it [here](https://github.com/devonfw/devonfw-testing/wiki).
+MrChecker is a testing framework included in devonfw with several useful modules, from which we will focus on the Selenium Module, a module designed to make end-to-end testing easier to implement. More about it link:https://github.com/devonfw/devonfw-testing/wiki[here].
 
 === Deprecated
 

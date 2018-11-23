@@ -114,7 +114,6 @@ public class MyThaiStarTest extends BaseTest {
 
     ThaiBookPage myBookPage = this.myThaiStarHome.clickBookTable();
 
-    System.out.println("Reserva in bookTable: " + reservation.getDate());
     ThaiConfirmBookPage myComfirmPage = myBookPage.enterBookingData(reservation);
     myComfirmPage.confirmBookingData();
     myBookPage.checkConfirmationDialog();
@@ -125,7 +124,6 @@ public class MyThaiStarTest extends BaseTest {
     ThaiWaiterPage myWaiterPage = new ThaiWaiterPage();
     ThaiReservationsPage myReservationsPage = myWaiterPage.switchToReservations();
     HashMap<String, List<Reservation>> reservations = myReservationsPage.searchDatesByEmail(reservation.getEmail());
-    System.out.println("Reserva in verifyBooking: " + reservation.getDate());
     Assert.assertTrue("Booking not found", reservations.containsKey(reservation.getDate()));
     List<Reservation> reservationsForDate = reservations.get(reservation.getDate());
     Assert.assertFalse("Booking not found", reservationsForDate.isEmpty());

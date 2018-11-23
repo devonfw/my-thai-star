@@ -75,7 +75,7 @@
 
         <!-- Allure test framework modules -->
         <mrchecker-core-module.version>4.12.0.10</mrchecker-core-module.version>
-        <mrchecker-selenium-module.version>3.8.1.12</mrchecker-selenium-module.version>
+        <mrchecker-selenium-module.version>3.8.1.13</mrchecker-selenium-module.version>
         <mrchecker-security-module.version>1.1.3</mrchecker-security-module.version>
         <mrchecker-webapi-module.version>1.1.5</mrchecker-webapi-module.version>
 
@@ -139,12 +139,30 @@
             <version>${mrchecker-core-module.version}</version>
         </dependency>
 
+
+
+ 
+
         <!-- Selenium module -->
+
+        <dependency>
+        
+               <groupId>com.capgemini.mrchecker</groupId>
+        
+               <artifactId>mrchecker-selenium-module</artifactId>
+        
+               <version>${mrchecker-selenium-module.version}</version>
+        
+        </dependency>
+
+ 
+        <!-- Selenium module 
         <dependency>
             <groupId>com.capgemini.mrchecker</groupId>
             <artifactId>mrchecker-selenium-module</artifactId>
             <version>${mrchecker-selenium-module.version}</version>
-        </dependency>
+        </dependency>-->
+
 
         <!-- Security module -->
         <dependency>

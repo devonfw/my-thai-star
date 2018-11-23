@@ -41,10 +41,8 @@ public class ThaiDateTimePage extends BasePage {
 
     WebElement arrowButton = getDriver().findElementDynamic(arrowSearch);
     WebElement ticButton = getDriver().findElementDynamic(ticSearch);
-    System.out.println("cosas hechas");
     arrowButton.click();
     ticButton.click();
-    System.out.println("clicks hechos");
   }
 
 }
