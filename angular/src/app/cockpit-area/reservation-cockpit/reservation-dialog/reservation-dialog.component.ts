@@ -1,6 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
-import { FriendsInvite, ReservationView } from '../../../shared/viewModels/interfaces';
+import {
+  IPageChangeEvent,
+  ITdDataTableColumn,
+  TdDataTableService,
+} from '@covalent/core';
+import {
+  FriendsInvite,
+  ReservationView,
+} from '../../../shared/viewModels/interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,11 +19,10 @@ import { LangChangeEvent } from '@ngx-translate/core';
   styleUrls: ['./reservation-dialog.component.scss'],
 })
 export class ReservationDialogComponent implements OnInit {
-
   datao: FriendsInvite[] = [];
-  fromRow: number = 1;
-  currentPage: number = 1;
-  pageSize: number = 4;
+  fromRow = 1;
+  currentPage = 1;
+  pageSize = 4;
 
   data: any;
   columnso: ITdDataTableColumn[] = [
@@ -29,9 +35,11 @@ export class ReservationDialogComponent implements OnInit {
 
   filteredData: any[] = this.datao;
 
-  constructor(private _dataTableService: TdDataTableService,
+  constructor(
+    private _dataTableService: TdDataTableService,
     private translate: TranslateService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any) {
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
+  ) {
     this.data = dialogData.row;
     this.pageSizes = config.pageSizesDialog;
   }
@@ -58,16 +66,21 @@ export class ReservationDialogComponent implements OnInit {
       ];
     });
 
-    this.translate.get('cockpit.reservations.dialogTable').subscribe((res: any) => {
-      this.columnso = [
-        { name: 'email', label: res.guestEmailH },
-        { name: 'accepted', label: res.acceptanceH },
-      ];
+    this.translate
+      .get('cockpit.reservations.dialogTable')
+      .subscribe((res: any) => {
+        this.columnso = [
+          { name: 'email', label: res.guestEmailH },
+          { name: 'accepted', label: res.acceptanceH },
+        ];
 
-      if (this.data.booking.assistants) {
-        this.columnst.push({ name: 'booking.assistants', label: res.assistantsH });
-      }
-    });
+        if (this.data.booking.assistants) {
+          this.columnst.push({
+            name: 'booking.assistants',
+            label: res.assistantsH,
+          });
+        }
+      });
   }
 
   page(pagingEvent: IPageChangeEvent): void {
@@ -79,8 +92,11 @@ export class ReservationDialogComponent implements OnInit {
 
   filter(): void {
     let newData: any[] = this.datao;
-    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-    setTimeout(() => this.filteredData = newData);
+    newData = this._dataTableService.pageData(
+      newData,
+      this.fromRow,
+      this.currentPage * this.pageSize,
+    );
+    setTimeout(() => (this.filteredData = newData));
   }
-
 }

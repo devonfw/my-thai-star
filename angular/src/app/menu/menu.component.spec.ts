@@ -25,6 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('MenuComponent', () => {
   let component: MenuComponent;
   // let fixture: ComponentFixture<MenuComponent>;
+  // tslint:disable-next-line:prefer-const
   let http: HttpClient;
   let menuService: MenuService;
 
