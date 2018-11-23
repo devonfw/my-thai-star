@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IPageChangeEvent, ITdDataTableColumn, TdDataTableService } from '@covalent/core';
+import {
+  IPageChangeEvent,
+  ITdDataTableColumn,
+  TdDataTableService,
+} from '@covalent/core';
 import { OrderView, BookingView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
@@ -13,11 +17,10 @@ import { LangChangeEvent } from '@ngx-translate/core';
   styleUrls: ['./order-dialog.component.scss'],
 })
 export class OrderDialogComponent implements OnInit {
+  private fromRow = 1;
+  private currentPage = 1;
 
-  private fromRow: number = 1;
-  private currentPage: number = 1;
-
-  pageSize: number = 4;
+  pageSize = 4;
 
   data: any;
   datat: BookingView[] = [];
@@ -30,21 +33,24 @@ export class OrderDialogComponent implements OnInit {
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
 
-  constructor(private _dataTableService: TdDataTableService,
+  constructor(
+    private _dataTableService: TdDataTableService,
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any) {
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
+  ) {
     this.data = dialogData.row;
   }
 
   ngOnInit(): void {
-
     this.setTableHeaders();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.setTableHeaders();
     });
 
-    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
+    this.totalPrice = this.waiterCockpitService.getTotalPrice(
+      this.data.orderLines,
+    );
     this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
     this.filter();
@@ -67,7 +73,12 @@ export class OrderDialogComponent implements OnInit {
         { name: 'orderLine.comment', label: res.commentsH },
         { name: 'extras', label: res.extrasH },
         { name: 'orderLine.amount', label: res.quantityH },
-        { name: 'dish.price', label: res.priceH, numeric: true, format: (v: number) => v.toFixed(2) },
+        {
+          name: 'dish.price',
+          label: res.priceH,
+          numeric: true,
+          format: (v: number) => v.toFixed(2),
+        },
       ];
     });
   }
@@ -81,7 +92,11 @@ export class OrderDialogComponent implements OnInit {
 
   filter(): void {
     let newData: any[] = this.datao;
-    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-    setTimeout(() => this.filteredData = newData);
+    newData = this._dataTableService.pageData(
+      newData,
+      this.fromRow,
+      this.currentPage * this.pageSize,
+    );
+    setTimeout(() => (this.filteredData = newData));
   }
 }
