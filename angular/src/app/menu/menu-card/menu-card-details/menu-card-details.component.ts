@@ -7,12 +7,8 @@ import { DishView, ExtraView } from '../../../shared/viewModels/interfaces';
   styleUrls: ['./menu-card-details.component.scss'],
 })
 export class MenuCardDetailsComponent {
-
-  @Input()
-  menuInfo: DishView;
-
-  @Output('clickOrder')
-  orderEmitter: EventEmitter<DishView> = new EventEmitter<DishView>();
+  @Input() menuInfo: DishView;
+  @Output() clickOrder: EventEmitter<DishView> = new EventEmitter<DishView>();
 
   onSelectExtra(extra: ExtraView): void {
     // extra.selected = !extra.selected;
@@ -20,12 +16,11 @@ export class MenuCardDetailsComponent {
     const oldExtra: ExtraView = this.menuInfo.extras[modifiedExtraIndex];
     this.menuInfo.extras[modifiedExtraIndex] = {
       ...oldExtra,
-      ...{selected: !oldExtra.selected },
+      ...{ selected: !oldExtra.selected },
     };
-
   }
 
   onClickOrder(): void {
-    this.orderEmitter.emit(this.menuInfo);
+    this.clickOrder.emit(this.menuInfo);
   }
 }

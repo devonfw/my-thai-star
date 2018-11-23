@@ -16,7 +16,7 @@ import * as moment from 'moment';
   animations: [fadeAnimation], // register the animation
 })
 export class AppComponent {
-  mobileSidenavOpened: boolean = false;
+  mobileSidenavOpened = false;
   year: string = moment().format('YYYY');
   constructor(
     public router: Router,

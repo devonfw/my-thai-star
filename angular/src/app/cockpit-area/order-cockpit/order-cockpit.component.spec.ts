@@ -17,10 +17,13 @@ import { TranslateService } from '@ngx-translate/core';
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
   // let fixture: ComponentFixture<OrderCockpitComponent>;
+  // tslint:disable-next-line:prefer-const
   let http: HttpClient;
   let priceCalculator: PriceCalculatorService;
   let waiterCockpitService: WaiterCockpitService;
+  // tslint:disable-next-line:prefer-const
   let translate: TranslateService;
+  // tslint:disable-next-line:prefer-const
   let dialog: MatDialog;
 
   // beforeEach(async(() => {
