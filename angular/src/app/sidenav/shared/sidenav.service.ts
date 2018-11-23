@@ -19,7 +19,7 @@ export class SidenavService {
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
   private orders: OrderView[] = [];
 
-  opened: boolean = false;
+  opened = false;
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +44,7 @@ export class SidenavService {
   }
 
   public addOrder(order: OrderView): void {
-    let addOrder: OrderView = cloneDeep(order);
+    const addOrder: OrderView = cloneDeep(order);
     addOrder.extras = filter(
       addOrder.extras,
       (extra: ExtraView) => extra.selected,
@@ -74,7 +74,7 @@ export class SidenavService {
   }
 
   public sendOrders(token: string): Observable<SaveOrderResponse> {
-    let orderList: OrderListInfo = {
+    const orderList: OrderListInfo = {
       booking: { bookingToken: token },
       orderLines: this.composeOrders(this.orders),
     };
@@ -87,9 +87,9 @@ export class SidenavService {
   }
 
   composeOrders(orders: OrderView[]): OrderInfo[] {
-    let composedOrders: OrderInfo[] = [];
+    const composedOrders: OrderInfo[] = [];
     orders.forEach((order: OrderView) => {
-      let extras: any[] = [];
+      const extras: any[] = [];
       order.extras
         .filter((extra: ExtraView) => extra.selected)
         .forEach((extra: ExtraView) => extras.push({ id: extra.id }));
