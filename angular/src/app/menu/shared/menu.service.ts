@@ -36,14 +36,14 @@ export class MenuService {
     };
   }
 
-  composeFilters(pageable: Pageable,filters: FilterFormData): Filter {
+  composeFilters(pageable: Pageable, filters: FilterFormData): Filter {
     const categories: { id: string }[] = Object.keys(filters.categories)
         .filter((categoryKey: string) => filters.categories[categoryKey])
         .map((categoryKey: string) => ({id: categoryNameToServerId[categoryKey].toString()}));
-    if (filters.sort.property == null) {
-     filters.sort = null;
-      pageable.sort = null;
-   } 
+    if (!filters.sort.property) {
+      filters.sort = undefined;
+      pageable.sort = undefined;
+   }
 
     return {
         categories,

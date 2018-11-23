@@ -27,7 +27,7 @@ export class ReservationCockpitComponent implements OnInit {
   pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
-    //total: 1,
+    // total: 1,
   };
 
   reservations: ReservationView[];
@@ -74,9 +74,9 @@ export class ReservationCockpitComponent implements OnInit {
   applyFilters(): void {
     this.waiterCockpitService.getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
-        if(data == null){
+        if (!data) {
           this.reservations = [];
-        }else{
+        } else {
           this.reservations = data.content;
         }
         this.totalReservations = data.totalElements;
@@ -93,7 +93,7 @@ export class ReservationCockpitComponent implements OnInit {
       pageSize: pagingEvent.pageSize,
       pageNumber: pagingEvent.page - 1,
       sort: this.pageable.sort,
-      //total: 1,
+      // total: 1,
     };
     this.applyFilters();
   }
