@@ -24,11 +24,6 @@ export class MenuComponent {
 
   dishes$: Observable<DishView[]>;
 
-  /*pageable: Pageable = {
-    pageSize: 8,
-    pageNumber: 0,
-  };*/
-
   constructor(
     private menuService: MenuService,
   ) {}
@@ -39,16 +34,15 @@ export class MenuComponent {
       pageNumber: 0,
       sort: [{
         property: filters.sort.property,
-        direction: filters.sort.direction
-      }]
-    }; 
-    const composedFilters: Filter = this.menuService.composeFilters(pageable,filters);
+        direction: filters.sort.direction,
+      }],
+    };
+    const composedFilters: Filter = this.menuService.composeFilters(pageable, filters);
     this.dishes$ = this.menuService.getDishes(composedFilters).pipe(
-      map((res) => 
-      {
-        if(res==null){
+      map((res) => {
+        if (!res) {
         return [];
-      }else{
+      } else {
         return res.content;
       }
       }),
