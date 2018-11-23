@@ -10,14 +10,13 @@ import { AuthService } from '../../core/authentication/auth.service';
   styleUrls: ['./menu-card.component.scss'],
 })
 export class MenuCardComponent {
-
-  @Input('menu') menuInfo: DishView;
+  @Input() menuInfo: DishView;
 
   constructor(
     private menuService: MenuService,
     public auth: AuthService,
     private sidenav: SidenavService,
-  ) { }
+  ) {}
 
   addOrderMenu(): void {
     this.sidenav.addOrder(this.menuService.menuToOrder(this.menuInfo));
@@ -32,5 +31,4 @@ export class MenuCardComponent {
   selectedOption(extra: ExtraView): void {
     extra.selected = !extra.selected;
   }
-
 }

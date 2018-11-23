@@ -20,7 +20,6 @@ import * as moment from 'moment';
   styleUrls: ['./order-cockpit.component.scss'],
 })
 export class OrderCockpitComponent implements OnInit {
-
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -28,7 +27,7 @@ export class OrderCockpitComponent implements OnInit {
   };
   private sorting: any[] = [];
 
-  pageSize: number = 8;
+  pageSize = 8;
 
   orders: OrderListView[];
   totalOrders: number;
@@ -43,9 +42,11 @@ export class OrderCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private translate: TranslateService,
-    private waiterCockpitService: WaiterCockpitService) { }
+    private waiterCockpitService: WaiterCockpitService,
+  ) {}
 
   ngOnInit(): void {
     this.applyFilters();
@@ -67,10 +68,11 @@ export class OrderCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters)
+    this.waiterCockpitService
+      .getOrders(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
         if (!data) {
-        this.orders = [];
+          this.orders = [];
         } else {
           this.orders = data.content;
         }
