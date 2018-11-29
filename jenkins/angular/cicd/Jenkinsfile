@@ -16,6 +16,16 @@ pipeline{
         lintScript = "lint"
         testScript = "test:ci"
         angularDir = "angular"
+
+        // sonarQube
+        sonarTool = 'SonarQube-scanner'
+        sonarEnv = "SonarQube"
+
+        // Nexus
+        artifactId = 'my-thai-star'
+        groupId = 'com.devonfw.mythaistar'
+        repositoryId = 'devon.snapshots'
+        repositoryUrl = 'https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/'
     }
 
     stages {
@@ -54,14 +64,14 @@ pipeline{
             steps {
                 script {
                     dir(angularDir) {
-                        def scannerHome = tool 'SonarQube-scanner'
-                        def props = readJSON file: 'package.json'
-                        withSonarQubeEnv('SonarQube') {
+                        def scannerHome = tool sonarTool
+                        env.PACK = readJSON file: 'package.json'
+                        withSonarQubeEnv(sonarEnv) {
                             sh """
                                 ${scannerHome}/bin/sonar-scanner \
-                                    -Dsonar.projectKey=${props.name} \
-                                    -Dsonar.projectName=${props.name} \
-                                    -Dsonar.projectVersion=${props.version} \
+                                    -Dsonar.projectKey=${env.PACK.name} \
+                                    -Dsonar.projectName=${env.PACK.name} \
+                                    -Dsonar.projectVersion=${env.PACK.version} \
                                     -Dsonar.sources=src
                             """
                         }
@@ -81,7 +91,19 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(angularDir) {
-
+                    zip dir: 'dist/', zipFile: """${env.PACK.name}.zip"""
+                    withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven3') {
+                        sh """
+                            mvn deploy:deploy-file \
+                                -DgroupId=${groupId} \
+                                -DartifactId=${env.PACK.name} \
+                                -Dversion=${env.PACK.version}-SNAPSHOT \
+                                -Dpackaging=zip \
+                                -Dfile=${env.PACK.name}.zip \
+                                -DrepositoryId=${repositoryId} \
+                                -Durl=${repositoryUrl}
+                        """
+                    }
                 }
             }
         }
