@@ -65,13 +65,13 @@ pipeline{
                 script {
                     dir(angularDir) {
                         def scannerHome = tool sonarTool
-                        env.PACK = readJSON file: 'package.json'
+                        def props = readJSON file: 'package.json'
                         withSonarQubeEnv(sonarEnv) {
                             sh """
                                 ${scannerHome}/bin/sonar-scanner \
-                                    -Dsonar.projectKey=${env.PACK.name} \
-                                    -Dsonar.projectName=${env.PACK.name} \
-                                    -Dsonar.projectVersion=${env.PACK.version} \
+                                    -Dsonar.projectKey=${props.name} \
+                                    -Dsonar.projectName=${props.name} \
+                                    -Dsonar.projectVersion=${props.version} \
                                     -Dsonar.sources=src
                             """
                         }
@@ -90,19 +90,22 @@ pipeline{
 
         stage ('Deliver application into Nexus') {
             steps {
-                dir(angularDir) {
-                    zip dir: 'dist/', zipFile: """${env.PACK.name}.zip"""
-                    withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven3') {
-                        sh """
-                            mvn deploy:deploy-file \
-                                -DgroupId=${groupId} \
-                                -DartifactId=${env.PACK.name} \
-                                -Dversion=${env.PACK.version}-SNAPSHOT \
-                                -Dpackaging=zip \
-                                -Dfile=${env.PACK.name}.zip \
-                                -DrepositoryId=${repositoryId} \
-                                -Durl=${repositoryUrl}
-                        """
+                script {
+                    dir(angularDir) {
+                        zip dir: 'dist/', zipFile: """${env.PACK.name}.zip"""
+                        def props = readJSON file: 'package.json'
+                        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven3') {
+                            sh """
+                                mvn deploy:deploy-file \
+                                    -DgroupId=${groupId} \
+                                    -DartifactId=${props.name} \
+                                    -Dversion=${props.version}-SNAPSHOT \
+                                    -Dpackaging=zip \
+                                    -Dfile=${props.name}.zip \
+                                    -DrepositoryId=${repositoryId} \
+                                    -Durl=${repositoryUrl}
+                            """
+                        }
                     }
                 }
             }
