@@ -3,7 +3,7 @@
   "version": "1.12.0",
   "main": "main.js",
   "scripts": {
-    "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps",
+    "postinstall": "node postinstall-web",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     ".": "sh .angular-gui/.runner.sh",
