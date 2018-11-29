@@ -62,8 +62,7 @@ pipeline{
                                     -Dsonar.projectKey=${props.name} \
                                     -Dsonar.projectName=${props.name} \
                                     -Dsonar.projectVersion=${props.version} \
-                                    -Dsonar.sources=src \
-                                    -X
+                                    -Dsonar.sources=src
                             """
                         }
                     }
