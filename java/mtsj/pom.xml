@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>mtsj</artifactId>
@@ -12,7 +12,7 @@
 
   <properties>
     <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-   <devon4j.version>3.0.0</devon4j.version>
+    <devon4j.version>3.0.0</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <devon.http.port>${devon.port.range}81</devon.http.port>
@@ -220,12 +220,12 @@
     <repository>
       <id>devon.releases</id>
       <name>devon Releases</name>
-      <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/releases/</url>
+      <url>http://nexus3-core:8081/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
       <id>devon.snapshots</id>
       <name>devon Snapshots</name>
-      <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/</url>
+      <url>http://nexus3-core:8081/nexus3/repository/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
