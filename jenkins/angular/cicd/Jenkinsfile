@@ -52,8 +52,8 @@ pipeline{
 
         stage ('SonarQube code analysis') {
             steps {
-                dir(angularDir) {
-                    script {
+                script {
+                    dir(angularDir) {
                         def scannerHome = tool 'SonarQube-scanner';
                         def package = readJSON file: 'package.json';
                         withSonarQubeEnv('SonarQube') {
