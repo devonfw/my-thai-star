@@ -1,0 +1,95 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        // disableConcurrentBuilds()
+    }
+
+    tools {
+        nodejs "NodeJS 10.14.0"
+    }
+
+    environment {
+        buildScript = "build:prodcompose"
+        lintScript = "lint"
+        testScript = "test:ci"
+        angularDir = "angular"
+    }
+
+    stages {
+        stage ('Loading Custom Tools') {
+            steps {
+                print "Hello world"
+
+                script {
+
+                    def sonar = tool name: 'SonarQube-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    // withSonarQubeEnv('SonarQube-scanner') {
+                    //     sh """sonar-scanner"""
+                    // }
+                    sh """${sonar}/sonar-scanner"""
+                }
+
+                // Check if it can be at tools
+                tool 'Chrome-stable'
+
+            }
+        }
+
+        stage ('Fresh Dependency Installation') {
+            steps {
+                dir(angularDir){
+                    sh "yarn"
+                }
+            }
+        }
+
+        stage ('Code Linting') {
+            steps {
+                dir(angularDir) {
+                    sh """yarn ${lintScript}"""
+                }
+            }
+        }
+
+        stage ('Execute Angular tests') {
+            steps {
+                dir(angularDir) {
+                    sh """yarn ${testScript}"""
+                }
+            }
+        }
+
+        stage ('SonarQube code analysis') {
+            steps {
+                dir(angularDir) {
+                    //sh "yarn test:ci"
+                }
+            }
+        }
+
+        stage ('Build Application') {
+            steps {
+                dir(angularDir) {
+                    sh """yarn ${buildScript}"""
+                }
+            }
+        }
+
+        stage ('Deliver application into Nexus') {
+            steps {
+                dir(angularDir) {
+
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
