@@ -26,6 +26,9 @@ pipeline{
         groupId = 'com.devonfw.mythaistar'
         repositoryId = 'devon.snapshots'
         repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
+        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
+        javaJdk = 'Java8'
+        mavenInstallation = 'Maven3'
     }
 
     stages {
@@ -98,7 +101,7 @@ pipeline{
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven3') {
+                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, jdk: javaJdk, maven: mavenInstallation) {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
