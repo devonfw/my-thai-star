@@ -92,8 +92,8 @@ pipeline{
             steps {
                 script {
                     dir(angularDir) {
-                        zip dir: 'dist/', zipFile: """${env.PACK.name}.zip"""
                         def props = readJSON file: 'package.json'
+                        zip dir: 'dist/', zipFile: """${props.name}.zip"""
                         withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven3') {
                             sh """
                                 mvn deploy:deploy-file \
