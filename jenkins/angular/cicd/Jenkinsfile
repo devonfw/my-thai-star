@@ -23,14 +23,14 @@ pipeline{
             steps {
                 print "Hello world"
 
-                script {
+                // script {
 
-                    def sonar = tool name: 'SonarQube-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    // withSonarQubeEnv('SonarQube-scanner') {
-                    //     sh """sonar-scanner"""
-                    // }
-                    sh """${sonar}/sonar-scanner"""
-                }
+                //     def sonar = tool name: 'SonarQube-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                //     // withSonarQubeEnv('SonarQube-scanner') {
+                //     //     sh """sonar-scanner"""
+                //     // }
+                //     sh """${sonar}/sonar-scanner"""
+                // }
 
                 // Check if it can be at tools
                 tool 'Chrome-stable'
