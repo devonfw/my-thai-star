@@ -1,0 +1,65 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        // disableConcurrentBuilds()
+    }
+
+    tools {
+        maven 'Maven3'
+        jdk 'Java8'
+    }
+
+    environment {
+        javaDir = 'java/mtsj'
+        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
+    }
+
+    stages {
+        stage ('Unit Tests') {
+            steps {
+                dir(javaDir) {
+                    withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                        sh "mvn clean test"
+                    }
+                }
+            }
+        }
+
+        stage ('SonarQube code analysis') {
+            steps {
+                script {
+                    dir(javaDir) {
+                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                            withSonarQubeEnv(sonarEnv) {
+                                sh "mvn sonar:sonar"
+                                def qg = waitForQualityGate() 
+                                if (qg.status != 'OK') {
+                                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage ('Deliver application into Nexus') {
+            steps {
+                dir(javaDir) {
+                    withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                        sh "mvn deploy -Dmaven.test.skip=true"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
