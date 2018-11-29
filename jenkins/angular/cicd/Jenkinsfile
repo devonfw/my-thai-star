@@ -21,18 +21,6 @@ pipeline{
     stages {
         stage ('Loading Custom Tools') {
             steps {
-                print "Hello world"
-
-                // script {
-
-                //     def sonar = tool name: 'SonarQube-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                //     // withSonarQubeEnv('SonarQube-scanner') {
-                //     //     sh """sonar-scanner"""
-                //     // }
-                //     sh """${sonar}/sonar-scanner"""
-                // }
-
-                // Check if it can be at tools
                 tool 'Chrome-stable'
 
             }
@@ -57,7 +45,7 @@ pipeline{
         stage ('Execute Angular tests') {
             steps {
                 dir(angularDir) {
-                    sh """yarn ${testScript}"""
+                    // sh """yarn ${testScript}"""
                 }
             }
         }
@@ -65,7 +53,20 @@ pipeline{
         stage ('SonarQube code analysis') {
             steps {
                 dir(angularDir) {
-                    //sh "yarn test:ci"
+                    script {
+                        def scannerHome = tool 'SonarQube-scanner';
+                        def package = readJSON file: 'package.json';
+                        withSonarQubeEnv('SonarQube') {
+                            sh """
+                                ${scannerHome}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=${package.name} \
+                                    -Dsonar.projectName=${package.name} \
+                                    -Dsonar.projectVersion=${package.version} \
+                                    -Dsonar.sources=src \
+                                    -X
+                            """
+                        }
+                    }
                 }
             }
         }
