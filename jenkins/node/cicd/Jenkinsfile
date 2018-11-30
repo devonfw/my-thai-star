@@ -49,7 +49,7 @@ pipeline{
             }
         }
 
-        stage ('Execute Angular tests') {
+        stage ('Execute tests') {
             steps {
                 dir(nodeDir) {
                     sh """npm run ${testScript}"""
