@@ -57,7 +57,7 @@ pipeline{
         stage ('Execute Angular tests') {
             steps {
                 dir(angularDir) {
-                    // sh """yarn ${testScript}"""
+                    sh """yarn ${testScript}"""
                 }
             }
         }
