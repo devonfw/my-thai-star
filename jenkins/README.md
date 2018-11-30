@@ -164,6 +164,11 @@ Most of them come pre-installed with the production line instance. The ones we n
 - NodeJS 10.14.0 + yarn
   ![nodejs](./nodejs.png)
 
+## How to create the pipelines
+
+You only need to create a new pipeline and modify the configuration following the image:
+![](./pipeline-config.png)
+
 **TIP**: All environment variables used on both Jenkinsfiles should be declared in the correspondant Jenkins Pipeline configuration more or less like this:
 
 ![](./jenkins-pipelines-params.png)
