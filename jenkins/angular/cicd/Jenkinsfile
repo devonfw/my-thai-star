@@ -22,10 +22,9 @@ pipeline{
         sonarEnv = "SonarQube"
 
         // Nexus
-        artifactId = 'my-thai-star'
         groupId = 'com.devonfw.mythaistar'
-        repositoryId = 'devon.snapshots'
-        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
+        repositoryId = 'devon.releases'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/releases'
         mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
         javaJdk = 'Java8'
         mavenInstallation = 'Maven3'
@@ -106,7 +105,7 @@ pipeline{
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
                                     -DartifactId=${props.name} \
-                                    -Dversion=${props.version}-SNAPSHOT \
+                                    -Dversion=${props.version} \
                                     -Dpackaging=zip \
                                     -Dfile=${props.name}.zip \
                                     -DrepositoryId=${repositoryId} \
