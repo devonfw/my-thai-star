@@ -4,9 +4,7 @@ pipeline{
     options {
         buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
         // Disable concurrent builds. It will wait until the pipeline finish before start a new one
-        // disableConcurrentBuilds()
-
-        checkoutToSubdirectory 'angular'
+        disableConcurrentBuilds()
     }
 
     tools {
@@ -14,22 +12,37 @@ pipeline{
     }
 
     environment {
-        buildScript = "build:prodcompose"
-        lintScript = "lint"
-        testScript = "test:ci"
-        angularDir = "angular"
+        // Script for build the application. Defined at package.json
+        buildScript = 'build:prodcompose'
+        // Script for lint the application. Defined at package.json
+        lintScript = 'lint'
+        // Script for test the application. Defined at package.json
+        testScript = 'test:ci'
+        // Angular directory
+        angularDir = 'angular'
+        // SRC folder. It will be angularDir/srcDir
+        srcDir = 'src'
+        // Name of the custom tool for chrome stable
         chrome = 'Chrome-stable'
 
         // sonarQube
+        // Name of the sonarQube tool
         sonarTool = 'SonarQube-scanner'
+        // Name of the sonarQube environment
         sonarEnv = "SonarQube"
 
         // Nexus
+        // Artifact groupId
         groupId = 'com.devonfw.mythaistar'
+        // Nexus repository ID
         repositoryId = 'devon.releases'
+        // Nexus internal URL
         repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/releases'
+        // Maven global settings ID
         mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
+        // JavaJDK tool id
         javaJdk = 'Java8'
+        // Maven tool id
         mavenInstallation = 'Maven3'
     }
 
@@ -43,39 +56,47 @@ pipeline{
 
         stage ('Fresh Dependency Installation') {
             steps {
-                sh "yarn"
+                dir(angularDir){
+                    sh "yarn"
+                }
             }
         }
 
         stage ('Code Linting') {
             steps {
-                sh """yarn ${lintScript}"""
+                dir(angularDir) {
+                    sh """yarn ${lintScript}"""
+                }
             }
         }
 
         stage ('Execute Angular tests') {
             steps {
+                dir(angularDir) {
                     sh """yarn ${testScript}"""
+                }
             }
         }
 
         stage ('SonarQube code analysis') {
             steps {
                 script {
-                    def scannerHome = tool sonarTool
-                    def props = readJSON file: 'package.json'
-                    withSonarQubeEnv(sonarEnv) {
-                        sh """
-                            ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.projectKey=${props.name} \
-                                -Dsonar.projectName=${props.name} \
-                                -Dsonar.projectVersion=${props.version} \
-                                -Dsonar.sources=src
-                        """
-                    }
-                    def qg = waitForQualityGate() 
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    dir(angularDir) {
+                        def scannerHome = tool sonarTool
+                        def props = readJSON file: 'package.json'
+                        withSonarQubeEnv(sonarEnv) {
+                            sh """
+                                ${scannerHome}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=${props.name} \
+                                    -Dsonar.projectName=${props.name} \
+                                    -Dsonar.projectVersion=${props.version} \
+                                    -Dsonar.sources=${srcDir}
+                            """
+                        }
+                        def qg = waitForQualityGate() 
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
                     }
                 }
             }
@@ -83,7 +104,9 @@ pipeline{
 
         stage ('Build Application') {
             steps {
-                sh """yarn ${buildScript}"""
+                dir(angularDir) {
+                    sh """yarn ${buildScript}"""
+                }
             }
         }
 
