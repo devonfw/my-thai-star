@@ -5,6 +5,8 @@ pipeline{
         buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
         // Disable concurrent builds. It will wait until the pipeline finish before start a new one
         // disableConcurrentBuilds()
+
+        checkoutToSubdirectory 'angular'
     }
 
     tools {
@@ -16,6 +18,7 @@ pipeline{
         lintScript = "lint"
         testScript = "test:ci"
         angularDir = "angular"
+        chrome = 'Chrome-stable'
 
         // sonarQube
         sonarTool = 'SonarQube-scanner'
@@ -33,54 +36,46 @@ pipeline{
     stages {
         stage ('Loading Custom Tools') {
             steps {
-                tool 'Chrome-stable'
+                tool chrome
 
             }
         }
 
         stage ('Fresh Dependency Installation') {
             steps {
-                dir(angularDir){
-                    sh "yarn"
-                }
+                sh "yarn"
             }
         }
 
         stage ('Code Linting') {
             steps {
-                dir(angularDir) {
-                    sh """yarn ${lintScript}"""
-                }
+                sh """yarn ${lintScript}"""
             }
         }
 
         stage ('Execute Angular tests') {
             steps {
-                dir(angularDir) {
                     sh """yarn ${testScript}"""
-                }
             }
         }
 
         stage ('SonarQube code analysis') {
             steps {
                 script {
-                    dir(angularDir) {
-                        def scannerHome = tool sonarTool
-                        def props = readJSON file: 'package.json'
-                        withSonarQubeEnv(sonarEnv) {
-                            sh """
-                                ${scannerHome}/bin/sonar-scanner \
-                                    -Dsonar.projectKey=${props.name} \
-                                    -Dsonar.projectName=${props.name} \
-                                    -Dsonar.projectVersion=${props.version} \
-                                    -Dsonar.sources=src
-                            """
-                        }
-                        def qg = waitForQualityGate() 
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
+                    def scannerHome = tool sonarTool
+                    def props = readJSON file: 'package.json'
+                    withSonarQubeEnv(sonarEnv) {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                                -Dsonar.projectKey=${props.name} \
+                                -Dsonar.projectName=${props.name} \
+                                -Dsonar.projectVersion=${props.version} \
+                                -Dsonar.sources=src
+                        """
+                    }
+                    def qg = waitForQualityGate() 
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
                 }
             }
@@ -88,9 +83,7 @@ pipeline{
 
         stage ('Build Application') {
             steps {
-                dir(angularDir) {
-                    sh """yarn ${buildScript}"""
-                }
+                sh """yarn ${buildScript}"""
             }
         }
 
