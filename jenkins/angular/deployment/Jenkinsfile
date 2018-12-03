@@ -4,7 +4,7 @@ pipeline{
     options {
         buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
         // Disable concurrent builds. It will wait until the pipeline finish before start a new one
-        // disableConcurrentBuilds()
+        disableConcurrentBuilds()
     }
 
     environment {
