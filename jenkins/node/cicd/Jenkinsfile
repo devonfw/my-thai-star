@@ -1,0 +1,121 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        // disableConcurrentBuilds()
+    }
+
+    tools {
+        nodejs "NodeJS 10.14.0"
+    }
+
+    environment {
+        buildScript = "compile"
+        lintScript = "lint"
+        testScript = "test"
+        nodeDir = "node"
+
+        // sonarQube
+        sonarTool = 'SonarQube-scanner'
+        sonarEnv = "SonarQube"
+
+        // Nexus
+        artifactId = 'my-thai-star'
+        groupId = 'com.devonfw.mythaistar'
+        repositoryId = 'devon.snapshots'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
+        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
+        javaJdk = 'Java8'
+        mavenInstallation = 'Maven3'
+    }
+
+    stages {
+
+        stage ('Fresh Dependency Installation') {
+            steps {
+                dir(nodeDir){
+                    sh "npm i"
+                }
+            }
+        }
+
+        stage ('Code Linting') {
+            steps {
+                dir(nodeDir) {
+                    sh """npm run ${lintScript}"""
+                }
+            }
+        }
+
+        stage ('Execute tests') {
+            steps {
+                dir(nodeDir) {
+                    sh """npm run ${testScript}"""
+                }
+            }
+        }
+
+        stage ('SonarQube code analysis') {
+            steps {
+                script {
+                    dir(nodeDir) {
+                        def scannerHome = tool sonarTool
+                        def props = readJSON file: 'package.json'
+                        withSonarQubeEnv(sonarEnv) {
+                            sh """
+                                ${scannerHome}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=${props.name} \
+                                    -Dsonar.projectName=${props.name} \
+                                    -Dsonar.projectVersion=${props.version} \
+                                    -Dsonar.sources=src
+                            """
+                        }
+                        def qg = waitForQualityGate() 
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage ('Build Application') {
+            steps {
+                dir(nodeDir) {
+                    sh """npm run ${buildScript}"""
+                }
+            }
+        }
+
+        stage ('Deliver application into Nexus') {
+            steps {
+                script {
+                    dir(nodeDir) {
+                        def props = readJSON file: 'package.json'
+                        zip dir: 'dist/', zipFile: """${props.name}.zip"""
+                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, jdk: javaJdk, maven: mavenInstallation) {
+                            sh """
+                                mvn deploy:deploy-file \
+                                    -DgroupId=${groupId} \
+                                    -DartifactId=${props.name} \
+                                    -Dversion=${props.version}-SNAPSHOT \
+                                    -Dpackaging=zip \
+                                    -Dfile=${props.name}.zip \
+                                    -DrepositoryId=${repositoryId} \
+                                    -Durl=${repositoryUrl}
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
