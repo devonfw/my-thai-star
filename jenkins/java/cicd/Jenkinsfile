@@ -13,9 +13,13 @@ pipeline{
     }
 
     environment {
+        // Directory with java project
         javaDir = 'java/mtsj'
+        // Maven global settings ID
         mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
 
+        // sonarQube
+        // Name of the sonarQube environment
         sonarEnv = "SonarQube"
     }
 

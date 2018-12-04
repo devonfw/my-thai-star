@@ -35,9 +35,9 @@ pipeline{
         // Artifact groupId
         groupId = 'com.devonfw.mythaistar'
         // Nexus repository ID
-        repositoryId = 'devon.releases'
+        repositoryId = 'devon.snapshots'
         // Nexus internal URL
-        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/releases'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
         // Maven global settings ID
         mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
         // JavaJDK tool id
@@ -121,7 +121,7 @@ pipeline{
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
                                     -DartifactId=${props.name} \
-                                    -Dversion=${props.version} \
+                                    -Dversion=${props.version}-SNAPSHOT \
                                     -Dpackaging=zip \
                                     -Dfile=${props.name}.zip \
                                     -DrepositoryId=${repositoryId} \
