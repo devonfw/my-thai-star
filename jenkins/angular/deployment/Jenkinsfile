@@ -28,6 +28,7 @@ pipeline{
     parameters {
         string(name: 'VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+        strint(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
     }
 
     stages {
@@ -69,12 +70,12 @@ pipeline{
                         sshagent (credentials: [sshAgentCredentials]) {
                             sh """
                                 # Copy resulting "dist" folder from workspace to deployment server
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p /root/mythaistar/reverse-proxy/angular/dist/
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r /root/mythaistar/reverse-proxy/angular/dist/* 2> /dev/null
-                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/angular/dist/
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}angular/dist/
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r ${params.APPLICATION_DIR}angular/dist/* 2> /dev/null
+                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}angular/dist/
                                 
                                 # Launch application in Docker container
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.yml up -d --build
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build
                             """
                         }
                     }
