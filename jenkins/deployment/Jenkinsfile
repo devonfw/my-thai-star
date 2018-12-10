@@ -21,7 +21,7 @@ pipeline{
         string(name: 'JAVA_VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Java Version number') 
         string(name: 'ANGULAR_VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Angulalr Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
-        strint(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+        string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
     }
 
 
