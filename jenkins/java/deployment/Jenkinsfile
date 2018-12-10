@@ -61,12 +61,11 @@ pipeline{
                 sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
                     sh """
                         # Copy resulting ".war" file from workspace to deployment server
-                        scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/java/
+                        scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/java/
                         
                         # Launch application in Docker container
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker rm -f mts-java
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker run -itd --name=mts-java -p ${containerPort}:8080 tomcat:latest
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build web
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build java
                     """
                 }
                 sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
