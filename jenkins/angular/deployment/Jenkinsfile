@@ -59,7 +59,7 @@ pipeline{
                             sh """
                                 # Copy resulting "dist" folder from workspace to deployment server
                                 ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p /root/mythaistar/reverse-proxy/angular/dist/
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r /root/mythaistar/reverse-proxy/angular/dist/*
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r /root/mythaistar/reverse-proxy/angular/dist/* 2> /dev/null
                                 scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/angular/dist/
                                 
                                 # Launch application in Docker container
