@@ -63,13 +63,11 @@ pipeline{
                         sshagent (credentials: [sshAgentCredentials]) {
                             sh """
                                 # Copy resulting "dist" folder from workspace to deployment server
-                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/angular/
+                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/angular/
                                 
                                 # Launch application in Docker container
-                                # ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker rm -f mts-angular
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker run -itd --name=mts-angular -p ${containerPort}:80 cbelda/nginx4angular:1.0
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker exec mts-angular bash -c \\"rm /usr/share/nginx/html/*\\"
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker cp mythaistar/angular/dist/. mts-angular:/usr/share/nginx/html/
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build web
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build angular
                             """
                             echo "Your app is available in http://${params.EXTERNAL_SERVER_IP}:${containerPort}"
                         }
