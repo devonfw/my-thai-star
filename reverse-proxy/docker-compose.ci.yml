@@ -8,9 +8,6 @@ services:
       - '8088:80'
     networks:
       - my-thai-star
-    depends_on:
-      - java
-      - angular
   java:
     build: java/
     image: my-thai-star/java:latest
