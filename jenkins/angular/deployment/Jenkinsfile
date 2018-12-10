@@ -10,13 +10,8 @@ pipeline{
     environment {
         containerPort = 8090
         sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
-        artifactId = 'mythaistar-restaurant'
 
-        nexusApiUrl = 'nexus3-core:8081/nexus3/'
-        groupId = 'com/devonfw/mythaistar/mythaistar-restaurant/'
-        repositoryId = 'devon.snapshots'
-        repositoryUrl = 'nexus3-core:8081/nexus3/repository/releases/'
-
+        nexusApiUrl = 'devon.s2-eu.capgemini.com/nexus3/'
         repository = 'snapshots'
         format = 'maven2'
         group = 'com.devonfw.mythaistar'
@@ -34,7 +29,7 @@ pipeline{
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'pl-technical-user', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                        def response = httpRequest """https://${user}:${pass}@devon.s2-eu.capgemini.com/nexus3/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
+                        def response = httpRequest """https://${user}:${pass}@${nexusApiUrl}service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
                         def props = readJSON text: response.content
                 
                         def num = -1
@@ -47,10 +42,10 @@ pipeline{
                             }
                         }
                         
-                        sh """wget -O ${artifactId}-${params.VERSION}.${extension} ${url.replace('https://','https://'+user+':'+pass+'@')}"""
+                        sh """wget -O ${name}-${params.VERSION}.${extension} ${url.replace('https://','https://'+user+':'+pass+'@')}"""
 
                         sh "mkdir -p dist"
-                        unzip dir: 'dist', zipFile: """${artifactId}-${params.VERSION}.${extension}"""                    
+                        unzip dir: 'dist', zipFile: """${name}-${params.VERSION}.${extension}"""                    
                     }
                 }
             }
@@ -68,10 +63,8 @@ pipeline{
                                 scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/angular/dist/
                                 
                                 # Launch application in Docker container
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build web
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.ci.yml up -d --build angular
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.yml up -d --build
                             """
-                            echo "Your app is available in http://${params.EXTERNAL_SERVER_IP}:${containerPort}"
                         }
                     }
                 }
