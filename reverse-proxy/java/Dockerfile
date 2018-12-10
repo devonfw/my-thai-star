@@ -1,5 +1,5 @@
 FROM java:8
 WORKDIR /app
-COPY ./mtsj-server-bootified.war /app/
-ENTRYPOINT ["java","-jar","/app/mtsj-server-bootified.war"]
+COPY ./mythaistar.war /app/
+ENTRYPOINT ["java","-jar","/app/mythaistar.war"]
 EXPOSE 8081
