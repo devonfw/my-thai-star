@@ -1,0 +1,60 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        // Jenkins credentials id for ssh agent
+        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
+
+        // Java Deploy Pipeline name
+        javaDeployPipeline = 'deployment_java'
+        // Angular Deploy Pipeline name
+        angularDeployPipeline = 'deployment_angular'
+    }
+
+    parameters {
+        string(name: 'JAVA_VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Java Version number') 
+        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Angulalr Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+        strint(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+    }
+
+
+    stages {
+        stage ('Copy files to remote server') {
+            steps {
+                sshagent (credentials: [sshAgentCredentials]) {
+                    sh """
+                        mkdir -p ${params.APPLICATION_DIR}
+                        scp -o StrictHostKeyChecking=no -r reverse-proxy/ root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
+                    """
+                }
+            }
+        }
+
+        stage ('Deploy java application') {
+            steps {
+                build job: javaDeployPipeline, parameters: [
+                    string(name: 'VERSION', value: params.JAVA_VERSION),
+                    string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
+                    string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)
+                ]
+            }
+        }
+        
+        stage ('Deploy angular application') {
+            steps {
+                build job: angularDeployPipeline, parameters: [
+                    string(name: 'VERSION', value: params.ANGULAR_VERSION),
+                    string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
+                    string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)
+                ]
+            }
+        }
+    }
+}
