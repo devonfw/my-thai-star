@@ -12,13 +12,13 @@ services:
       - java
       - angular
   java:
-    build: backend/
+    build: java/
     image: my-thai-star/java:latest
     restart: always
     networks:
       - my-thai-star
   angular:
-    build: frontend/
+    build: angular/
     image: my-thai-star/angular:latest
     restart: always
     networks:
