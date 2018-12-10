@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: my-thai-star/proxy:latest
+    restart: always
+    ports:
+      - '8088:80'
+    networks:
+      - my-thai-star
+    depends_on:
+      - java
+      - angular
+  java:
+    build: backend/
+    image: my-thai-star/java:latest
+    restart: always
+    networks:
+      - my-thai-star
+  angular:
+    build: frontend/
+    image: my-thai-star/angular:latest
+    restart: always
+    networks:
+      - my-thai-star
+
+networks:
+  my-thai-star:
+    driver: bridge

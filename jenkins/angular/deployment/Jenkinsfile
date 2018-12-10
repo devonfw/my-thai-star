@@ -1,0 +1,87 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        containerPort = 8090
+        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
+        artifactId = 'mythaistar-restaurant'
+
+        nexusApiUrl = 'nexus3-core:8081/nexus3/'
+        groupId = 'com/devonfw/mythaistar/mythaistar-restaurant/'
+        repositoryId = 'devon.snapshots'
+        repositoryUrl = 'nexus3-core:8081/nexus3/repository/releases/'
+
+        repository = 'snapshots'
+        format = 'maven2'
+        group = 'com.devonfw.mythaistar'
+        name = 'mythaistar-restaurant'
+        extension = 'zip'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+    }
+
+    stages {
+        stage ('Download artifact from Nexus') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'pl-technical-user', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        def response = httpRequest """https://${user}:${pass}@devon.s2-eu.capgemini.com/nexus3/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
+                        def props = readJSON text: response.content
+                
+                        def num = -1
+                        def url = ''
+                        props.items.each { 
+                            def n = (it.downloadUrl =~ /.*-(\d*)\.zip/)[0][1]
+                            if (n > num) {
+                                num = n
+                                url = it.downloadUrl
+                            }
+                        }
+                        
+                        sh """wget -O ${artifactId}-${params.VERSION}.${extension} ${url.replace('https://','https://'+user+':'+pass+'@')}"""
+
+                        sh "mkdir -p dist"
+                        unzip dir: 'dist', zipFile: """${artifactId}-${params.VERSION}.${extension}"""                    
+                    }
+                }
+            }
+        }
+        
+        stage ('Deployment') {
+            steps {
+                script {
+                    dir('dist'){
+                        sshagent (credentials: [sshAgentCredentials]) {
+                            sh """
+                                # Copy resulting "dist" folder from workspace to deployment server
+                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/angular/
+                                
+                                # Launch application in Docker container
+                                # ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker rm -f mts-angular
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker run -itd --name=mts-angular -p ${containerPort}:80 cbelda/nginx4angular:1.0
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker exec mts-angular bash -c \\"rm /usr/share/nginx/html/*\\"
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker cp mythaistar/angular/dist/. mts-angular:/usr/share/nginx/html/
+                            """
+                            echo "Your app is available in http://${params.EXTERNAL_SERVER_IP}:${containerPort}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
