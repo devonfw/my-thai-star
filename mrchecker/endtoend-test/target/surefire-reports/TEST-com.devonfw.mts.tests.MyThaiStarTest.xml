@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.devonfw.mts.tests.MyThaiStarTest" time="165.191" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.devonfw.mts.tests.MyThaiStarTest" time="121.282" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\java\jre\bin"/>
     <property name="java.vm.version" value="25.172-b11"/>
-    <property name="browser" value="chrome"/>
+    <property name="browser" value="Chrome"/>
     <property name="user.country.format" value="ES"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:\Devon-dist-current\Devon-dist_2.4.0\workspaces\MyThaiStar_MrChecker\my-thai-star\mrchecker\endtoend-test"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Devon-dist-current\Devon-dist_2.4.0\workspaces\Fix_date_formatting\my-thai-star\mrchecker\endtoend-test"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -17,9 +17,8 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="test" value="MyThaiStarTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Devon-dist-current\Devon-dist_2.4.0\workspaces\MyThaiStar_MrChecker\my-thai-star\mrchecker\endtoend-test"/>
+    <property name="user.dir" value="C:\Devon-dist-current\Devon-dist_2.4.0\workspaces\Fix_date_formatting\my-thai-star\mrchecker\endtoend-test"/>
     <property name="java.runtime.version" value="1.8.0_172-b11"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\java\jre\lib\endorsed"/>
@@ -31,7 +30,7 @@
     <property name="os.name" value="Windows 10"/>
     <property name="classworlds.conf" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\maven\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\java\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5\ConEmu;C:\Devon-dist-current\Devon-dist_2.4.0\software\vscode\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\tomcat\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\subversion;C:\Devon-dist-current\Devon-dist_2.4.0\software\sonarqube\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\python3;C:\Devon-dist-current\Devon-dist_2.4.0\software\nodejs;C:\Devon-dist-current\Devon-dist_2.4.0\software\maven\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\logs;C:\Devon-dist-current\Devon-dist_2.4.0\software\java\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\jasypt\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\eclipse;C:\Devon-dist-current\Devon-dist_2.4.0\software\devcon;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\ant\bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\cmicoege\AppData\Local\Programs\Python\Python36-32;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Microsoft VS Code\bin;C:\Users\cmicoege\AppData\Roaming\npm;C:\Users\cmicoege\AppData\Local\Programs\MiKTeX 2.9\miktex\bin\x64\;C:\Users\cmicoege\AppData\Local\Microsoft\WindowsApps;C:\Users\cmicoege\AppData\Local\Yarn\bin;C:\Users\cmicoege\AppData\Roaming\npm;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\;."/>
+    <property name="java.library.path" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\java\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\vendor\conemu-maximus5\ConEmu;C:\Devon-dist-current\Devon-dist_2.4.0\software\vscode\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\tomcat\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\subversion;C:\Devon-dist-current\Devon-dist_2.4.0\software\sonarqube\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\python3;C:\Devon-dist-current\Devon-dist_2.4.0\software\nodejs;C:\Devon-dist-current\Devon-dist_2.4.0\software\maven\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\logs;C:\Devon-dist-current\Devon-dist_2.4.0\software\java\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\jasypt\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\eclipse;C:\Devon-dist-current\Devon-dist_2.4.0\software\devcon;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\bin;C:\Devon-dist-current\Devon-dist_2.4.0\software\ant\bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\cmicoege\AppData\Local\Programs\Python\Python36-32;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\cmicoege\AppData\Roaming\npm;C:\Users\cmicoege\AppData\Local\Programs\MiKTeX 2.9\miktex\bin\x64\;C:\Users\cmicoege\AppData\Local\Microsoft\WindowsApps;C:\Users\cmicoege\AppData\Local\Yarn\bin;C:\Users\cmicoege\AppData\Roaming\npm;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Devon-dist-current\Devon-dist_2.4.0\software\cmder\;."/>
     <property name="maven.conf" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\maven\bin\../conf"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
@@ -39,8 +38,6 @@
     <property name="os.version" value="10.0"/>
     <property name="library.jansi.path" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\maven\bin\..\lib\jansi-native"/>
     <property name="user.home" value="C:\Devon-dist-current\Devon-dist_2.4.0\conf"/>
-    <property name="seleniumGrid" value="http://10.40.232.61:4444/wd/hub"/>
-    <property name="os" value="LINUX"/>
     <property name="user.timezone" value="Europe/Paris"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.8"/>
@@ -50,7 +47,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Devon-dist-current\Devon-dist_2.4.0\software\java\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid=http://10.40.232.61:4444/wd/hub -Dos=LINUX"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test -Dbrowser=Chrome"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="user.language.format" value="es"/>
@@ -70,8 +67,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="Test_orderMenu" classname="com.devonfw.mts.tests.MyThaiStarTest" time="26.722"/>
-  <testcase name="[0] user0, password (Test_loginAndLogOut)" classname="com.devonfw.mts.tests.MyThaiStarTest" time="24.898"/>
-  <testcase name="[0] user0, password (Test_bookTable)" classname="com.devonfw.mts.tests.MyThaiStarTest" time="72.533"/>
-  <testcase name="Test_loginFake" classname="com.devonfw.mts.tests.MyThaiStarTest" time="40.523"/>
+  <testcase name="Test_orderMenu" classname="com.devonfw.mts.tests.MyThaiStarTest" time="13.364"/>
+  <testcase name="[0] user0, password (Test_loginAndLogOut)" classname="com.devonfw.mts.tests.MyThaiStarTest" time="16.741"/>
+  <testcase name="[0] user0, password (Test_bookTable)" classname="com.devonfw.mts.tests.MyThaiStarTest" time="36.176"/>
+  <testcase name="Test_loginFake" classname="com.devonfw.mts.tests.MyThaiStarTest" time="54.782"/>
 </testsuite>
