@@ -13,7 +13,7 @@ pipeline{
 
     environment {
         // Script for build the application. Defined at package.json
-        buildScript = 'build:prodcompose'
+        buildScript = 'build --configuration=docker'
         // Script for lint the application. Defined at package.json
         lintScript = 'lint'
         // Script for test the application. Defined at package.json

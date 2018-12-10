@@ -1,0 +1,82 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        containerPort = 9091
+        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
+        artifactId = 'mythaistar-restaurant'
+
+        nexusApiUrl = 'nexus3-core:8081/nexus3/'
+        groupId = 'com/devonfw/mythaistar/mythaistar-restaurant/'
+        repositoryId = 'devon.snapshots'
+        repositoryUrl = 'nexus3-core:8081/nexus3/repository/releases/'
+        nexusCredentialsId = 'pl-technical-user'
+        classifier = 'bootified'
+
+        repository = 'snapshots'
+        format = 'maven2'
+        group = 'com.devonfw.java.mtsj'
+        name = 'mtsj-server'
+        extension = 'war'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+    }
+
+    stages {
+        stage ('Download artifact from Nexus') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: nexusCredentialsId, passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        def response = httpRequest """https://${user}:${pass}@devon.s2-eu.capgemini.com/nexus3/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.classifier=${classifier}&maven.extension=${extension}"""
+                        def props = readJSON text: response.content
+                
+                        def num = -1
+                        def url = ''
+                        props.items.each { 
+                            def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
+                            println n
+                            if (n > num) {
+                                num = n
+                                url = it.downloadUrl
+                            }
+                        }
+                        
+                        sh """wget -O mythaistar.war ${url.replace('https://','https://'+user+':'+pass+'@')}"""
+                    }
+                }
+            }
+        }
+        
+        stage('Deployment') {
+            steps {
+                sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+                    sh """
+                        # Copy resulting ".war" file from workspace to deployment server
+                        scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/java/
+                        
+                        # Launch application in Docker container
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker rm -f mts-java
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker run -itd --name=mts-java -p ${containerPort}:8080 tomcat:latest
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker cp mythaistar/java/mythaistar.war mts-java:/usr/local/tomcat/webapps/
+                    """
+                }
+                sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
