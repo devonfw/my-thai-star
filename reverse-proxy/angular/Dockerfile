@@ -1,4 +1,4 @@
 FROM nginx:latest
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./dist/* /var/www/
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./dist/ /var/www/
