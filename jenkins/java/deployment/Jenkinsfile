@@ -8,16 +8,24 @@ pipeline{
     }
 
     environment {
+        // Jenkins credentials id for ssh agent
         sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
-        artifactId = 'mythaistar-restaurant'
 
+        // Nexus3 API url 
         nexusApiUrl = 'devon.s2-eu.capgemini.com/nexus3/'
+        // Nexus3 credentials ID
         nexusCredentialsId = 'pl-technical-user'
+        // Maven artifact classifier
         classifier = 'bootified'
+        // Maven repository
         repository = 'snapshots'
+        // Repository format
         format = 'maven2'
+        // Artifact group
         group = 'com.devonfw.java.mtsj'
+        // Application name
         name = 'mtsj-server'
+        // Artifact extension
         extension = 'war'
     }
 
@@ -63,10 +71,9 @@ pipeline{
                         scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:/root/mythaistar/reverse-proxy/java/
                         
                         # Launch application in Docker container
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.yml up -d --build
+                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f /root/mythaistar/reverse-proxy/docker-compose.yml up -d --build java
                     """
                 }
-                sh 'echo \\"Server available at http://de-mucdevondepl01:9090/mythaistar\\"'
             }
         }
     }

@@ -8,14 +8,20 @@ pipeline{
     }
 
     environment {
-        containerPort = 8090
+        // Jenkins credentials id for ssh agent
         sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
 
+        // Nexus3 API url 
         nexusApiUrl = 'devon.s2-eu.capgemini.com/nexus3/'
+        // Maven repository
         repository = 'snapshots'
+        // Repository format
         format = 'maven2'
+        // Artifact group
         group = 'com.devonfw.mythaistar'
+        // Application name
         name = 'mythaistar-restaurant'
+        // Artifact extension
         extension = 'zip'
     }
 
@@ -28,10 +34,13 @@ pipeline{
         stage ('Download artifact from Nexus') {
             steps {
                 script {
+                    // Download artifact from nexus3 using the nexus3 beta api
                     withCredentials([usernamePassword(credentialsId: 'pl-technical-user', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        // Search the list of artifacts
                         def response = httpRequest """https://${user}:${pass}@${nexusApiUrl}service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
                         def props = readJSON text: response.content
                 
+                        // Get the last snapshot download url
                         def num = -1
                         def url = ''
                         props.items.each { 
@@ -42,8 +51,10 @@ pipeline{
                             }
                         }
                         
+                        // Download the snapshot
                         sh """wget -O ${name}-${params.VERSION}.${extension} ${url.replace('https://','https://'+user+':'+pass+'@')}"""
 
+                        // Unzip the angular application
                         sh "mkdir -p dist"
                         unzip dir: 'dist', zipFile: """${name}-${params.VERSION}.${extension}"""                    
                     }
