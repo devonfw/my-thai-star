@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  reverse-proxy:
     build: .
     image: my-thai-star/reverse-proxy:latest
     restart: always
