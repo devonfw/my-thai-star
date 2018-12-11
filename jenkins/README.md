@@ -148,6 +148,7 @@ In order to run all pipelines, we have installed the following plugins (maybe no
 - Xvnc plugin (xvnc)
 - Dashboard for Blue Ocean (blueocean-dashboard)
 - Script Security Plugin (script-security)
+- **HTTP Request Plugin (http_request)**
 
 Most of them come pre-installed with the production line instance. The ones we need are the ones related to the pipeline and the ones in bold.
 
@@ -168,6 +169,22 @@ Most of them come pre-installed with the production line instance. The ones we n
 
 You only need to create a new pipeline and modify the configuration following the image:
 ![](./pipeline-config.png)
+
+Or you can execute the create-pipelines.sh as follows:
+
+```bash
+$ ./create-pipelines.sh <jenkinsUrl> <username> <password>
+```
+
+example:
+
+```bash
+$ ./create-pipelines.sh devon.s2-eu.capgemini.com/jenkins devonfw capgemini
+```
+
+**Important:** you need a bash shell in order to execute the command. If you are using windows, you can open a new bash shell in the devonfw console:
+![console](./console.png)
+
 
 **TIP**: All environment variables used on both Jenkinsfiles should be declared in the correspondant Jenkins Pipeline configuration more or less like this:
 

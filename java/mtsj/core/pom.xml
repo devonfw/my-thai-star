@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.devonfw.java.mtsj</groupId>
     <artifactId>mtsj</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.12.2-SNAPSHOT</version>
   </parent>
   <artifactId>mtsj-core</artifactId>
   <packaging>jar</packaging>
@@ -15,7 +15,7 @@
   <properties>
     <java.version>1.8</java.version>
     <mts.database.name>h2</mts.database.name>
-    <mts.database.profile>h2mem</mts.database.profile> <!-- profile for spring -->
+    <mts.database.profile>h2mem</mts.database.profile>    <!-- profile for spring -->
     <mts.database.groupId>com.h2database</mts.database.groupId>
     <mts.database.artifactId>h2</mts.database.artifactId>
     <mts.database.version>1.4.194</mts.database.version>
