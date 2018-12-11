@@ -12,9 +12,9 @@ pipeline{
         sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
 
         // Java Deploy Pipeline name
-        javaDeployPipeline = 'deployment_java'
+        javaDeployPipeline = 'java'
         // Angular Deploy Pipeline name
-        angularDeployPipeline = 'deployment_angular'
+        angularDeployPipeline = 'angular'
     }
 
     parameters {
