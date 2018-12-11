@@ -20,12 +20,12 @@ public interface OrderedDishes extends ApplicationEntity {
   public void setBookingdate(Timestamp bookingdate);
 
   /**
-   * @return the mean temperature on the order date
+   * @return the mean temperature in the order period (time/day/month)
    */
   public Double getTemperature();
 
   /**
-   * Set the mean temperature on the order date
+   * Set the mean temperature in the order period (time/day/month)
    * @param temperature the mean temperature on the order date
    */
   public void setTemperature(Double temperature);

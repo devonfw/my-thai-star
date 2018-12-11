@@ -129,6 +129,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return cto;
   }
 
+  @Override
   @RolesAllowed({Roles.WAITER, Roles.MANAGER})
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
@@ -457,9 +458,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
     Timestamp bookingTime = booking.getBooking().getBookingDate();
-    Long bookingTimeMillis = bookingTime.getTime();
-    Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    Long now = Timestamp.from(Instant.now()).getTime();
+    long bookingTimeMillis = bookingTime.getTime();
+    long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
+    long now = Timestamp.from(Instant.now()).getTime();
 
     return (now > cancellationLimit) ? false : true;
   }
@@ -469,25 +470,27 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
     List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
-    if (criteria.getType().equalsIgnoreCase("daily")) {
-      PaginatedListTo<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
-      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getResult()) {
+    PaginatedListTo<?> orderedDishes;
+    if (criteria.getType() == OrderedDishesSearchCriteriaTo.Type.DAILY) {
+      PaginatedListTo<OrderedDishesPerDayEntity> orderedDishesPerDayList = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
+      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishesPerDayList.getResult()) {
         OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
         orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
         orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
         orderedDishesCtos.add(orderedDishesCto);
       }
-      return new PaginatedListTo<>(orderedDishesCtos, orderedDishes.getPagination());
+      orderedDishes = orderedDishesPerDayList;
     } else {
-      PaginatedListTo<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao().findOrderedDishesPerMonth(criteria);
-      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getResult()) {
+      PaginatedListTo<OrderedDishesPerMonthEntity> orderedDishesPerMonthList = getOrderedDishesPerMonthDao().findOrderedDishesPerMonth(criteria);
+      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishesPerMonthList.getResult()) {
         OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
         orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
         orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
         orderedDishesCtos.add(orderedDishesCto);
       }
-      return new PaginatedListTo<>(orderedDishesCtos, orderedDishes.getPagination());
+      orderedDishes = orderedDishesPerMonthList;
     }
+    return new PaginatedListTo<>(orderedDishesCtos, orderedDishes.getPagination());
   }
 
 }

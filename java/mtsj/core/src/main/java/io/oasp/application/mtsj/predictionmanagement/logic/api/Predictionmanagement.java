@@ -1,13 +1,13 @@
 package io.oasp.application.mtsj.predictionmanagement.logic.api;
 
 import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionCriteriaEto;
-import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataCto;
+import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataTo;
 
 /**
  * Interface for Predictionmanagement component.
  */
 public interface Predictionmanagement {
 
-  PredictionDataCto getNextWeekPrediction(PredictionCriteriaEto criteria);
+  PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria);
 
 }

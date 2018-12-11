@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionCriteriaEto;
-import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataCto;
+import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataTo;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Predictionmanagement}.
@@ -24,5 +24,5 @@ public interface PredictionmanagementRestService {
    */
   @POST
   @Path("/nextweek/")
-  public PredictionDataCto getNextWeekPrediction(PredictionCriteriaEto criteria);
+  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria);
 }

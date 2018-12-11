@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 import io.oasp.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
 import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionCriteriaEto;
-import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataCto;
+import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataTo;
 
 /**
  * The service implementation for REST calls in order to execute the logic of component {@link Predictionmanagement}.
@@ -17,7 +17,7 @@ public class PredictionmanagementRestServiceImpl implements Predictionmanagement
   private Predictionmanagement predictionmanagement;
 
   @Override
-  public PredictionDataCto getNextWeekPrediction(PredictionCriteriaEto criteria) {
+  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria) {
 
     return this.predictionmanagement.getNextWeekPrediction(criteria);
   }

@@ -20,7 +20,7 @@ export class PredictionService {
     return this.http.post(`${environment.restServiceRoot}${this.predictionRestPath}`, predictionCriteria)
       .pipe(map((res: any) => {
         let startDate = Date.parse(predictionCriteria.startBookingdate);
-        let { data } = res.predictionData;
+        let { data } = res;
         let dishes = data.reduce((acc, row) => {
           acc[row.dishId] = row.dishName;
           return acc;

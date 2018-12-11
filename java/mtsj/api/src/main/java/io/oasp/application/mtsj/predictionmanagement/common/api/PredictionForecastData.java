@@ -10,33 +10,33 @@ public interface PredictionForecastData extends Entity {
   /**
    * @return the time index of the prediction
    */
-  public Integer getTimestamp();
+  public int getTimestamp();
 
   /**
    * Set the time index of the prediction
    * @param timestamp the time index of the prediction
    */
-  public void setTimestamp(Integer timestamp);
+  public void setTimestamp(int timestamp);
 
   /**
    * @return the predicted temperature
    */
-  public Double getTemperature();
+  public double getTemperature();
 
   /**
    * Set the predicted temperature
    * @param temperature the predicted temperature
    */
-  public void setTemperature(Double temperature);
+  public void setTemperature(double temperature);
 
   /**
    * @return whether the prediction is for a holiday (1) or not (0)
    */
-  public Integer getHoliday();
+  public int getHoliday();
 
   /**
    * Set whether the prediction is for a holiday (1) or not (0)
    * @param holiday whether the prediction is for a holiday (1) or not (0)
    */
-  public void setHoliday(Integer holiday);
+  public void setHoliday(int holiday);
 }

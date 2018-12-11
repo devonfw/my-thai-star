@@ -51,7 +51,13 @@ public class PredictionDayDataEntity extends ApplicationPersistenceEntity implem
   @Override
   public void setDishId(Long dishId) {
 
-    throw new UnsupportedOperationException("The dish ID must be set via #setDish()");
+    if (dishId == null) {
+      this.dish = null;
+    } else {
+      DishEntity dishEntity = new DishEntity();
+      dishEntity.setId(dishId);
+      this.dish = dishEntity;
+    }
   }
 
   @Override

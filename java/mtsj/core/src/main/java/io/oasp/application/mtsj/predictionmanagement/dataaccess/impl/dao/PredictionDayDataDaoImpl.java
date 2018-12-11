@@ -53,24 +53,36 @@ public class PredictionDayDataDaoImpl extends ApplicationDaoImpl<PredictionDayDa
   }
 
   public void train(DishEntity dish, Timestamp startDate) {
-
+    
     // Check if training is necessary
 
     CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-    Root<PredictionModelDataEntity> countQueryRoot = countQuery.from(PredictionModelDataEntity.class);
-    countQuery.select(cb.count(countQueryRoot));
-    countQuery.where(
+    CriteriaQuery<Long> countPredictionQuery = cb.createQuery(Long.class);
+    Root<PredictionModelDataEntity> countPredictionQueryRoot = countPredictionQuery.from(PredictionModelDataEntity.class);
+    countPredictionQuery.select(cb.count(countPredictionQueryRoot));
+    countPredictionQuery.where(
         cb.and(
-            cb.equal(countQueryRoot.get("dish").get("id"), dish.getId()),
-            cb.equal(countQueryRoot.get("key"), "_date"),
-            cb.equal(countQueryRoot.get("value"), startDate.toString())
+            cb.equal(countPredictionQueryRoot.get("dish").get("id"), dish.getId()),
+            cb.equal(countPredictionQueryRoot.get("key"), "_date"),
+            cb.equal(countPredictionQueryRoot.get("value"), startDate.toString())
         )
     );
-    boolean alreadyTrained = getEntityManager().createQuery(countQuery).getSingleResult().longValue() > 0;
+    boolean alreadyTrained = getEntityManager().createQuery(countPredictionQuery).getSingleResult().longValue() > 0;
 
     if (alreadyTrained) {
     	return;
+    }
+    
+    // Check if training is possible
+    
+    CriteriaQuery<Long> countDishesQuery = cb.createQuery(Long.class);
+    Root<DishEntity> countDishesQueryRoot = countDishesQuery.from(DishEntity.class);
+    countDishesQuery.select(cb.count(countDishesQueryRoot));
+    
+    boolean existsTrainingData = getEntityManager().createQuery(countDishesQuery).getSingleResult().longValue() > 0;
+
+    if (!existsTrainingData) {
+        return;
     }
 
     // Prepare training data

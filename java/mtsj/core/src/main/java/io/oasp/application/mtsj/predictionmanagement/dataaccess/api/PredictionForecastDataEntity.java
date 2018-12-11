@@ -12,43 +12,43 @@ public class PredictionForecastDataEntity implements PredictionForecastData {
 
   private static final long serialVersionUID = 1L;
 
-  private Integer timestamp;
-  private Double temperature;
-  private Integer holiday;
+  private int timestamp;
+  private double temperature;
+  private int holiday;
 
   @Id
   @Override
-  public Integer getTimestamp() {
+  public int getTimestamp() {
 
     return this.timestamp;
   }
 
   @Override
-  public void setTimestamp(Integer timestamp) {
+  public void setTimestamp(int timestamp) {
 
     this.timestamp = timestamp;
   }
 
   @Override
-  public Double getTemperature() {
+  public double getTemperature() {
 
     return this.temperature;
   }
 
   @Override
-  public void setTemperature(Double temperature) {
+  public void setTemperature(double temperature) {
 
     this.temperature = temperature;
   }
 
   @Override
-  public Integer getHoliday() {
+  public int getHoliday() {
 
     return this.holiday;
   }
 
   @Override
-  public void setHoliday(Integer holiday) {
+  public void setHoliday(int holiday) {
 
     this.holiday = holiday;
   }

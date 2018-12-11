@@ -346,7 +346,7 @@
         <mts.database.profile>hana</mts.database.profile>
         <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
         <mts.database.artifactId>ngdbc</mts.database.artifactId>
-        <mts.database.version>2.2.16</mts.database.version>
+        <mts.database.version>2.3.48</mts.database.version>
       </properties>
       <build>
         <resources>

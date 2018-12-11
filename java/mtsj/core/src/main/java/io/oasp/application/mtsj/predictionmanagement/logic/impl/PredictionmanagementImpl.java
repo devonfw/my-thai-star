@@ -18,8 +18,7 @@ import io.oasp.application.mtsj.predictionmanagement.dataaccess.api.PredictionDa
 import io.oasp.application.mtsj.predictionmanagement.dataaccess.api.dao.PredictionDayDataDao;
 import io.oasp.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
 import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionCriteriaEto;
-import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataCto;
-import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataEto;
+import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDataTo;
 import io.oasp.application.mtsj.predictionmanagement.logic.api.to.PredictionDayDataEto;
 
 /**
@@ -52,12 +51,11 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
 
   @Override
   @RolesAllowed(Roles.MANAGER)
-  public PredictionDataCto getNextWeekPrediction(PredictionCriteriaEto criteria) {
+  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria) {
 
     LOG.debug("Generate predictions for next week.");
 
-    PredictionDataCto predictionDataCto = new PredictionDataCto();
-    PredictionDataEto predictionDataEto = new PredictionDataEto();
+    PredictionDataTo predictionDataTo = new PredictionDataTo();
     List<PredictionDayData> predictionDayDataEtos = new ArrayList<>();
 
     for (PredictionDayDataEntity entity : getPredictionDayDataDao().getPrediction(criteria)) {
@@ -70,10 +68,9 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
       predictionDayDataEtos.add(predictionDayDataEto);
     }
 
-    predictionDataEto.setData(predictionDayDataEtos);
-    predictionDataCto.setPredictionData(predictionDataEto);
+    predictionDataTo.setData(predictionDayDataEtos);
 
-    return predictionDataCto;
+    return predictionDataTo;
   }
 
 }

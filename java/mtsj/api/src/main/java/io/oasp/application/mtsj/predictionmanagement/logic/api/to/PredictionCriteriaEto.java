@@ -12,19 +12,19 @@ public class PredictionCriteriaEto extends AbstractEto implements PredictionCrit
 
   private static final long serialVersionUID = 1L;
 
-  private String type;
+  private Type type;
   private Timestamp startBookingdate;
   private List<Double> temperatures;
   private List<String> holidays;
 
   @Override
-  public String getType() {
+  public Type getType() {
 
     return this.type;
   }
 
   @Override
-  public void setType(String type) {
+  public void setType(Type type) {
 
     this.type = type;
   }
