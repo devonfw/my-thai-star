@@ -27,7 +27,7 @@ pipeline{
 
         // sonarQube
         // Name of the sonarQube tool
-        sonarTool = 'SonarQube-scanner'
+        sonarTool = 'SonarQube'
         // Name of the sonarQube environment
         sonarEnv = "SonarQube"
 
