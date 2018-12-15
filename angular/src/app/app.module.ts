@@ -1,4 +1,5 @@
 import { environment } from '../environments/environment';
+import { AppLoadModule } from './app-load.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,6 +21,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ElectronService } from './shared/electron/electron.service';
 import { WebviewDirective } from './shared/directives/webview.directive';
+import { config } from './config';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -29,6 +31,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [AppComponent, WebviewDirective],
   imports: [
+ AppLoadModule,
     BrowserModule,
     HeaderModule,
     HomeModule,
