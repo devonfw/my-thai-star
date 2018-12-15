@@ -1,4 +1,6 @@
 export const config: any = {
+  version: '1.0.0',
+  loadExternalConfig: true,
   pageSizes: [8, 16, 24],
   pageSizesDialog: [4, 8, 12],
   roles: [
