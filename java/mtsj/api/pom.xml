@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
+  xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.devonfw.java.mtsj</groupId>
     <artifactId>mtsj</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.12.2-SNAPSHOT</version>
   </parent>
   <artifactId>mtsj-api</artifactId>
   <packaging>jar</packaging>
@@ -31,7 +32,7 @@
       <artifactId>devon4j-jpa-envers</artifactId>
     </dependency>
 
-  <!-- <dependency>
+    <!-- <dependency>
     <groupId>com.devonfw.java.modules</groupId>
     <artifactId>devon4j-jpa</artifactId>
   </dependency> -->
@@ -40,7 +41,7 @@
       <groupId>com.devonfw.java.modules</groupId>
       <artifactId>devon4j-security</artifactId>
     </dependency>
-     <dependency>
+    <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>

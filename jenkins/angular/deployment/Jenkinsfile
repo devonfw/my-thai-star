@@ -1,0 +1,92 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        // Jenkins credentials id for ssh agent
+        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
+
+        // Nexus3 API url 
+        nexusApiUrl = 'devon.s2-eu.capgemini.com/nexus3/'
+        // Maven repository
+        repository = 'snapshots'
+        // Repository format
+        format = 'maven2'
+        // Artifact group
+        group = 'com.devonfw.mythaistar'
+        // Application name
+        name = 'mythaistar-restaurant'
+        // Artifact extension
+        extension = 'zip'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+        string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+    }
+
+    stages {
+        stage ('Download artifact from Nexus') {
+            steps {
+                script {
+                    // Download artifact from nexus3 using the nexus3 beta api
+                    withCredentials([usernamePassword(credentialsId: 'pl-technical-user', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        // Search the list of artifacts
+                        def response = httpRequest """https://${user}:${pass}@${nexusApiUrl}service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
+                        def props = readJSON text: response.content
+                
+                        // Get the last snapshot download url
+                        def num = -1
+                        def url = ''
+                        props.items.each { 
+                            def n = (it.downloadUrl =~ /.*-(\d*)\.zip/)[0][1]
+                            if (n > num) {
+                                num = n
+                                url = it.downloadUrl
+                            }
+                        }
+                        
+                        // Download the snapshot
+                        sh """wget -O ${name}-${params.VERSION}.${extension} ${url.replace('https://','https://'+user+':'+pass+'@')}"""
+
+                        // Unzip the angular application
+                        sh "mkdir -p dist"
+                        unzip dir: 'dist', zipFile: """${name}-${params.VERSION}.${extension}"""                    
+                    }
+                }
+            }
+        }
+        
+        stage ('Deployment') {
+            steps {
+                script {
+                    dir('dist'){
+                        sshagent (credentials: [sshAgentCredentials]) {
+                            sh """
+                                # Copy resulting "dist" folder from workspace to deployment server
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}angular/dist/
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r ${params.APPLICATION_DIR}angular/dist/* 2> /dev/null
+                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}angular/dist/
+                                
+                                # Launch application in Docker container
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

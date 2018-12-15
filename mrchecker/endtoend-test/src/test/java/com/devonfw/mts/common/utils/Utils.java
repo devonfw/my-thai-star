@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -31,7 +32,7 @@ public class Utils {
 
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DAY_OF_YEAR, 1);
-    return new SimpleDateFormat("MM/dd/yyyy hh:mm a").format(calendar.getTime());
+    return new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.ENGLISH).format(calendar.getTime());
   }
 
   public static int getRandom1toMax(int max) {
@@ -42,7 +43,7 @@ public class Utils {
 
   public static String changeDateFormat(String oldDate, String oldFormat, String newFormat) throws ParseException {
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat(oldFormat);
+    SimpleDateFormat dateFormat = new SimpleDateFormat(oldFormat, Locale.ENGLISH);
     Date date = dateFormat.parse(oldDate);
     dateFormat.applyPattern(newFormat);
 

@@ -48,6 +48,8 @@ Use them at your own risk.
 
 == Deployment
 
+=== From code
+
 This application can be easily deployed using **Docker** and **docker-compose**.
 
 `$ docker-compose up`
@@ -64,3 +66,13 @@ fdb63e26d299        mythaistar_angular         "nginx -g 'daemon of…"   3 minu
 ```
 
 The usage of the `reverse-proxy` only uses 1 port of the Docker host (where this is deployed), the `8080`. All internal communication of containers is done using docker alias of services.
+
+=== From artifact
+
+If we are using a CICD pipeline and we store the artifact on nexus, we can also deploy it without recompile all code. For this purpose there are three deployment pipelines:
+
+- deployment: deploy all application with a reserve-proxy
+- java: deploy only the java application
+- angular: deploy angular application + reverse-proxy (you must run the java deployment at least once before running this deployment)
+
+The result of this deployment will be the same as in the deployment from code, but instead of compiling the artifact again downloads it from nexus. All resources (docker-compose.yml, Dockerfiles and nginx.conf) are stored in the reverse-proxy folder.
