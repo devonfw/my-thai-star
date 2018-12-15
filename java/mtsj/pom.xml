@@ -5,7 +5,7 @@
 
   <artifactId>mtsj</artifactId>
   <groupId>com.devonfw.java.mtsj</groupId>
-  <version>0.1-SNAPSHOT</version>
+  <version>1.12.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Application based on the Devonfw framework for Java (devon4j).</description>
