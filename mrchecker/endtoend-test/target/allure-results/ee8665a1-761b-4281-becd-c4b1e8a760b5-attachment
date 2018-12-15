@@ -1,4 +1,0 @@
-2018-10-17 at 16:14:06 CEST logInfo - [pool-1-thread-1] Test_loginFake(com.devonfw.mts.tests.MyThaiStarTest) STARTED.
-2018-10-17 at 16:14:07 CEST logInfo - [pool-1-thread-1] Test_loginFake(com.devonfw.mts.tests.MyThaiStarTest) FAILED.
-2018-10-17 at 16:14:07 CEST logDebug - [pool-1-thread-1] BasePage.onTestFailure    ThaiHomePage
-2018-10-17 at 16:14:12 CEST logInfo - [pool-1-thread-1] Test_loginFake(com.devonfw.mts.tests.MyThaiStarTest) duration: 0,11 min

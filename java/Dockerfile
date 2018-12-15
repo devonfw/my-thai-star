@@ -1,7 +1,7 @@
 # 1. Build
 FROM maven:3.5-jdk-8-alpine AS build
 WORKDIR /app
-COPY mtsj/. /app
+COPY mtsj/ /app
 RUN ls -l
 RUN mvn install
 
