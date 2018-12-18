@@ -59,7 +59,7 @@ pipeline{
         
         stage('Deployment') {
             steps {
-                sshagent (credentials: sshAgentCredentials) {
+                sshagent (credentials: [sshAgentCredentials]) {
                     sh """
                         # Copy resulting ".war" file from workspace to deployment server
                         scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/
