@@ -34,7 +34,7 @@ pipeline{
             steps {
                 script {
                     // Search the list of artifacts
-                    def response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """https://${user}:${pass}@${nexusApiUrl}service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
+                    def response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """${nexusApiUrl}/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
                     def props = readJSON text: response.content
 
                     // Get the last snapshot download url
