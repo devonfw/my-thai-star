@@ -111,7 +111,7 @@ pipeline{
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(maven: mavenInstallation) {
+                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
