@@ -13,7 +13,7 @@ pipeline{
 
     environment {
         // Script for build the application. Defined at package.json
-        buildScript = 'build:prodcompose'
+        buildScript = 'build --configuration=docker'
         // Script for lint the application. Defined at package.json
         lintScript = 'lint'
         // Script for test the application. Defined at package.json
@@ -35,13 +35,9 @@ pipeline{
         // Artifact groupId
         groupId = 'com.devonfw.mythaistar'
         // Nexus repository ID
-        repositoryId = 'devon.snapshots'
+        repositoryId = 'pl-nexus'
         // Nexus internal URL
-        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
-        // Maven global settings ID
-        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
-        // JavaJDK tool id
-        javaJdk = 'Java8'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
         // Maven tool id
         mavenInstallation = 'Maven3'
     }
@@ -50,7 +46,6 @@ pipeline{
         stage ('Loading Custom Tools') {
             steps {
                 tool chrome
-
             }
         }
 
@@ -116,7 +111,7 @@ pipeline{
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, jdk: javaJdk, maven: mavenInstallation) {
+                        withMaven(maven: mavenInstallation) {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
