@@ -34,7 +34,7 @@ pipeline{
                 sshagent (credentials: [sshAgentCredentials]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}
-                        scp -o StrictHostKeyChecking=no -r reverse-proxy/ root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
+                        scp -o StrictHostKeyChecking=no -r reverse-proxy/* root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
                     """
                 }
             }
