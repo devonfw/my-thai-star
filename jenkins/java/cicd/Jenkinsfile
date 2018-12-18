@@ -4,7 +4,7 @@ pipeline{
     options {
         buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
         // Disable concurrent builds. It will wait until the pipeline finish before start a new one
-        // disableConcurrentBuilds()
+        disableConcurrentBuilds()
     }
 
     environment {
@@ -14,13 +14,19 @@ pipeline{
         // sonarQube
         // Name of the sonarQube environment
         sonarEnv = "SonarQube"
+
+        // Nexus3 configuration
+        // Maven global settings configuration ID
+        globalSettingsId = 'MavenSettings'
+        // Maven tool id
+        mavenInstallation = 'Maven3'
     }
 
     stages {
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                         sh "mvn clean test"
                     }
                 }
@@ -31,7 +37,7 @@ pipeline{
             steps {
                 script {
                     dir(javaDir) {
-                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                        withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             withSonarQubeEnv(sonarEnv) {
                                 sh "mvn sonar:sonar"
                             }
@@ -48,7 +54,7 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                         sh "mvn deploy -Dmaven.test.skip=true"
                     }
                 }

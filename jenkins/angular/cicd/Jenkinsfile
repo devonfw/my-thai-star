@@ -38,6 +38,8 @@ pipeline{
         repositoryId = 'pl-nexus'
         // Nexus internal URL
         repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
+        // Maven global settings configuration ID
+        globalSettingsId = globalSettingsId
         // Maven tool id
         mavenInstallation = 'Maven3'
     }
@@ -111,7 +113,7 @@ pipeline{
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                        withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
