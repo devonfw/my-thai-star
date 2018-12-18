@@ -66,7 +66,6 @@ pipeline{
                             sh """
                                 # Copy resulting "dist" folder from workspace to deployment server
                                 ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}angular/dist/
-                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -r ${params.APPLICATION_DIR}angular/dist/* 2> /dev/null
                                 scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}angular/dist/
                                 
                                 # Launch application in Docker container
