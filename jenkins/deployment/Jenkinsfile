@@ -8,9 +8,6 @@ pipeline{
     }
 
     environment {
-        // Jenkins credentials id for ssh agent
-        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
-
         // Java Deploy Pipeline name
         javaDeployPipeline = 'java'
         // Angular Deploy Pipeline name
@@ -24,7 +21,7 @@ pipeline{
         string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
 
         string(name: 'JAVA_VERSION', defaultValue: '1.12.2-SNAPSHOT', description: 'Java Version number') 
-        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Angulalr Version number') 
+        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.2-SNAPSHOT', description: 'Angulalr Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
 
