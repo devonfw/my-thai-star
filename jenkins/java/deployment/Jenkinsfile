@@ -9,7 +9,6 @@ pipeline{
 
     environment {
         // Jenkins credentials id for ssh agent
-        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
 
         // Nexus3 API url 
         nexusApiUrl = 'http://nexus3-core:8081/nexus3'
@@ -30,6 +29,7 @@ pipeline{
     }
 
     parameters {
+        string(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials') 
         string(name: 'VERSION', defaultValue: '1.12.2-SNAPSHOT', description: 'Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
