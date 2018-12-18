@@ -22,9 +22,7 @@ pipeline{
         nodeDir = "node"
 
         // sonarQube
-        // Name of the sonarQube tool
-        sonarTool = 'SonarQube-scanner'
-        // Name of the sonarQube environment
+        sonarTool = 'SonarQube'
         sonarEnv = "SonarQube"
 
         // Nexus
