@@ -62,7 +62,7 @@ pipeline{
                 sshagent (credentials: [sshAgentCredentials]) {
                     sh """
                         # Copy resulting ".war" file from workspace to deployment server
-                        scp -o StrictHostKeyChecking=no mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/
+                        scp -o StrictHostKeyChecking=no mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/mythaistar.war
                         
                         # Launch application in Docker container
                         ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build java
