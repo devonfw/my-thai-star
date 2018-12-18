@@ -9,9 +9,9 @@ pipeline{
 
     environment {
         // Java Deploy Pipeline name
-        javaDeployPipeline = 'java'
+        javaDeployPipeline = 'MyThaiStar_SERVER_DEPLOY2'
         // Angular Deploy Pipeline name
-        angularDeployPipeline = 'angular'
+        angularDeployPipeline = 'MyThaiStar_FRONTEND_DEPLOY2'
     }
 
     parameters {
