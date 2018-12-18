@@ -20,7 +20,7 @@ pipeline{
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
-                    withMaven(maven: 'Maven3'){
+                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3')
                         sh "mvn clean test"
                     }
                 }
@@ -31,7 +31,7 @@ pipeline{
             steps {
                 script {
                     dir(javaDir) {
-                        withMaven(maven: 'Maven3'){
+                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3')
                             withSonarQubeEnv(sonarEnv) {
                                 sh "mvn sonar:sonar"
                             }
@@ -48,7 +48,7 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(javaDir) {
-                    withMaven(maven: 'Maven3'){
+                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3')
                         sh "mvn deploy -Dmaven.test.skip=true"
                     }
                 }
