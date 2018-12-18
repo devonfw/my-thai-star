@@ -152,6 +152,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludedGroups>${devon.test.excluded.groups}</excludedGroups>
+          <forkCount>0</forkCount>
         </configuration>
       </plugin>
     </plugins>
