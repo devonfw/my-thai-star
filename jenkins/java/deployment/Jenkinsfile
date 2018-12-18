@@ -21,12 +21,12 @@ pipeline{
     }
 
     parameters {
-        string(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials') 
+        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials') 
         string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
-        string(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials')
+        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: "Username with password")
         string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
         string(name: 'VERSION', defaultValue: '1.12.2-SNAPSHOT', description: 'Version number') 
-        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '', description: 'Server IP', required: true) 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
     }
 
