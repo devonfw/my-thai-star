@@ -12,7 +12,7 @@ pipeline{
         sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
 
         // Nexus3 API url 
-        nexusApiUrl = 'http://nexus3-core:8081/nexus3/'
+        nexusApiUrl = 'http://nexus3-core:8081/nexus3'
         // Nexus3 credentials ID
         nexusCredentialsId = 'nexus-technical-api'
         // Maven artifact classifier
