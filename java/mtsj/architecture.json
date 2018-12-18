@@ -1,0 +1,12 @@
+{
+  "architecture": {
+    "components": [
+        {"name":"bookingmanagement","dependencies":["ordermanagement","usermanagement","mailservice"]},
+        {"name":"dishmanagement","dependencies":["imagemanagement"]},
+        {"name":"imagemanagement","dependencies":[]},
+        {"name":"ordermanagement","dependencies":["bookingmanagement","dishmanagement"]},
+        {"name":"usermanagement","dependencies":[]},
+        {"name":"mailservice","dependencies":[]}
+      ]
+  }
+}
