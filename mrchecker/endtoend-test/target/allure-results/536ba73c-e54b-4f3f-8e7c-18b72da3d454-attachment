@@ -1,4 +1,0 @@
-2018-09-24 at 16:16:07 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) STARTED.
-2018-09-24 at 16:16:51 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) FAILED.
-2018-09-24 at 16:16:51 CEST logDebug - [pool-1-thread-1] BasePage.onTestFailure    ThaiHomePage_tutorial
-2018-09-24 at 16:16:51 CEST logInfo - [pool-1-thread-1] Test_login(com.devonfw.mts.tests.MyThaiStarTest_tutorial) duration: 0,73 min
