@@ -7,16 +7,9 @@ pipeline{
         // disableConcurrentBuilds()
     }
 
-    tools {
-        maven 'Maven3'
-        jdk 'Java8'
-    }
-
     environment {
         // Directory with java project
         javaDir = 'java/mtsj'
-        // Maven global settings ID
-        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
 
         // sonarQube
         // Name of the sonarQube environment
@@ -27,7 +20,7 @@ pipeline{
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                    withMaven(maven: 'Maven3'){
                         sh "mvn clean test"
                     }
                 }
@@ -38,7 +31,7 @@ pipeline{
             steps {
                 script {
                     dir(javaDir) {
-                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                        withMaven(maven: 'Maven3'){
                             withSonarQubeEnv(sonarEnv) {
                                 sh "mvn sonar:sonar"
                             }
@@ -55,7 +48,7 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: mavenGlobalSettings){
+                    withMaven(maven: 'Maven3'){
                         sh "mvn deploy -Dmaven.test.skip=true"
                     }
                 }
