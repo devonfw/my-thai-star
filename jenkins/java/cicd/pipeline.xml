@@ -8,12 +8,12 @@
             <configVersion>2</configVersion>
             <userRemoteConfigs>
                 <hudson.plugins.git.UserRemoteConfig>
-                    <url>https://github.com/dario-rodriguez/my-thai-star.git</url>
+                    <url>https://github.com/devonfw/my-thai-star.git</url>
                 </hudson.plugins.git.UserRemoteConfig>
             </userRemoteConfigs>
             <branches>
                 <hudson.plugins.git.BranchSpec>
-                    <name>*/cicd-and-deployment</name>
+                    <name>*/develop</name>
                 </hudson.plugins.git.BranchSpec>
             </branches>
             <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

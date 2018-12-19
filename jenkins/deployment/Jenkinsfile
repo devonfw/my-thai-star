@@ -8,20 +8,23 @@ pipeline{
     }
 
     environment {
-        // Jenkins credentials id for ssh agent
-        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
-
         // Java Deploy Pipeline name
-        javaDeployPipeline = 'java'
+        javaDeployPipeline = 'MyThaiStar_SERVER_DEPLOY'
         // Angular Deploy Pipeline name
-        angularDeployPipeline = 'angular'
+        angularDeployPipeline = 'MyThaiStar_FRONTEND_DEPLOY'
     }
 
     parameters {
-        string(name: 'JAVA_VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Java Version number') 
-        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.0-SNAPSHOT', description: 'Angulalr Version number') 
-        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
+        string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
+        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
+
+        string(name: 'JAVA_VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Java Version number') 
+        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Angular Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+
     }
 
 
@@ -31,7 +34,7 @@ pipeline{
                 sshagent (credentials: [sshAgentCredentials]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}
-                        scp -o StrictHostKeyChecking=no -r reverse-proxy/ root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
+                        scp -o StrictHostKeyChecking=no -r reverse-proxy/* root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
                     """
                 }
             }
@@ -40,6 +43,10 @@ pipeline{
         stage ('Deploy java application') {
             steps {
                 build job: javaDeployPipeline, parameters: [
+                    credentials(name: 'sshAgentCredentials',value: sshAgentCredentials),
+                    string(name: 'nexusApiUrl',value: nexusApiUrl),
+                    credentials(name: 'nexusCredentialsId',value: nexusCredentialsId),
+                    string(name: 'repository',value: repository),
                     string(name: 'VERSION', value: params.JAVA_VERSION),
                     string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
                     string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)
@@ -50,6 +57,10 @@ pipeline{
         stage ('Deploy angular application') {
             steps {
                 build job: angularDeployPipeline, parameters: [
+                    credentials(name: 'sshAgentCredentials',value: sshAgentCredentials),
+                    string(name: 'nexusApiUrl',value: nexusApiUrl),
+                    credentials(name: 'nexusCredentialsId',value: nexusCredentialsId),
+                    string(name: 'repository',value: repository),
                     string(name: 'VERSION', value: params.ANGULAR_VERSION),
                     string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
                     string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)

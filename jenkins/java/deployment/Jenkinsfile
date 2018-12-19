@@ -8,17 +8,8 @@ pipeline{
     }
 
     environment {
-        // Jenkins credentials id for ssh agent
-        sshAgentCredentials = '3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11'
-
-        // Nexus3 API url 
-        nexusApiUrl = 'devon.s2-eu.capgemini.com/nexus3/'
-        // Nexus3 credentials ID
-        nexusCredentialsId = 'pl-technical-user'
         // Maven artifact classifier
         classifier = 'bootified'
-        // Maven repository
-        repository = 'snapshots'
         // Repository format
         format = 'maven2'
         // Artifact group
@@ -30,8 +21,12 @@ pipeline{
     }
 
     parameters {
-        string(name: 'VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Version number') 
-        string(name: 'EXTERNAL_SERVER_IP', defaultValue: '10.40.235.244', description: 'Server IP') 
+        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
+        string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
+        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
+        string(name: 'VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
     }
 
@@ -40,36 +35,34 @@ pipeline{
             steps {
                 script {
                     // Download artifact from nexus3 using the nexus3 beta api
-                    withCredentials([usernamePassword(credentialsId: nexusCredentialsId, passwordVariable: 'pass', usernameVariable: 'user')]) {
-                        // Search the list of artifacts
-                        def response = httpRequest """https://${user}:${pass}@${nexusApiUrl}service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.classifier=${classifier}&maven.extension=${extension}"""
-                        def props = readJSON text: response.content
-                
-                        // Get the last snapshot download url
-                        def num = -1
-                        def url = ''
-                        props.items.each { 
-                            def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
-                            println n
-                            if (n > num) {
-                                num = n
-                                url = it.downloadUrl
-                            }
+                    // Search the list of artifacts
+                    def response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """${nexusApiUrl}/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.classifier=${classifier}&maven.extension=${extension}"""
+                    def props = readJSON text: response.content
+
+                    // Get the last snapshot download url
+                    def num = -1
+                    def url = ''
+                    props.items.each { 
+                        def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
+                        println n
+                        if (n > num) {
+                            num = n
+                            url = it.downloadUrl
                         }
-                        
-                        // Download the snapshot
-                        sh """wget -O mythaistar.war ${url.replace('https://','https://'+user+':'+pass+'@')}"""
                     }
+
+                    // Download the snapshot
+                    httpRequest authentication: nexusCredentialsId, ignoreSslErrors: true, outputFile: 'mythaistar.war', responseHandle: 'NONE', url: url
                 }
             }
         }
         
         stage('Deployment') {
             steps {
-                sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+                sshagent (credentials: [sshAgentCredentials]) {
                     sh """
                         # Copy resulting ".war" file from workspace to deployment server
-                        scp -o StrictHostKeyChecking=no -r mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/
+                        scp -o StrictHostKeyChecking=no mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/mythaistar.war
                         
                         # Launch application in Docker container
                         ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build java

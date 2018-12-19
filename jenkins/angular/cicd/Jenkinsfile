@@ -27,7 +27,7 @@ pipeline{
 
         // sonarQube
         // Name of the sonarQube tool
-        sonarTool = 'SonarQube-scanner'
+        sonarTool = 'SonarQube'
         // Name of the sonarQube environment
         sonarEnv = "SonarQube"
 
@@ -35,13 +35,11 @@ pipeline{
         // Artifact groupId
         groupId = 'com.devonfw.mythaistar'
         // Nexus repository ID
-        repositoryId = 'devon.snapshots'
+        repositoryId = 'pl-nexus'
         // Nexus internal URL
-        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
-        // Maven global settings ID
-        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
-        // JavaJDK tool id
-        javaJdk = 'Java8'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
+        // Maven global settings configuration ID
+        globalSettingsId = 'MavenSettings'
         // Maven tool id
         mavenInstallation = 'Maven3'
     }
@@ -50,7 +48,6 @@ pipeline{
         stage ('Loading Custom Tools') {
             steps {
                 tool chrome
-
             }
         }
 
@@ -93,9 +90,11 @@ pipeline{
                                     -Dsonar.sources=${srcDir}
                             """
                         }
-                        def qg = waitForQualityGate() 
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        timeout(time: 1, unit: 'HOURS') {
+                            def qg = waitForQualityGate() 
+                            if (qg.status != 'OK') {
+                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
                         }
                     }
                 }
@@ -116,7 +115,7 @@ pipeline{
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, jdk: javaJdk, maven: mavenInstallation) {
+                        withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
