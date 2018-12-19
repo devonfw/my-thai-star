@@ -21,7 +21,7 @@ pipeline{
         string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
 
         string(name: 'JAVA_VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Java Version number') 
-        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Angulalr Version number') 
+        string(name: 'ANGULAR_VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Angular Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
 
