@@ -5,7 +5,7 @@
 
   <artifactId>mtsj</artifactId>
   <groupId>com.devonfw.java.mtsj</groupId>
-  <version>1.12.2-SNAPSHOT</version>
+  <version>1.12.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Application based on the Devonfw framework for Java (devon4j).</description>
@@ -150,8 +150,11 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.0</version>
         <configuration>
           <excludedGroups>${devon.test.excluded.groups}</excludedGroups>
+              <forkCount>0</forkCount>
+              <reuseForks>true</reuseForks>
         </configuration>
       </plugin>
     </plugins>
@@ -218,14 +221,14 @@
 
   <distributionManagement>
     <repository>
-      <id>devon.releases</id>
-      <name>devon Releases</name>
-      <url>http://nexus3-core:8081/nexus/content/repositories/releases/</url>
+      <id>pl-nexus</id>
+      <name>PL Releases</name>
+      <url>http://nexus3-core:8081/nexus/content/repositories/maven-releases/</url>
     </repository>
     <snapshotRepository>
-      <id>devon.snapshots</id>
-      <name>devon Snapshots</name>
-      <url>http://nexus3-core:8081/nexus3/repository/snapshots</url>
+      <id>pl-nexus</id>
+      <name>PL Snapshots</name>
+      <url>http://nexus3-core:8081/nexus3/repository/maven-snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
