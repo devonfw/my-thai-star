@@ -14,13 +14,19 @@ pipeline{
         // sonarQube
         // Name of the sonarQube environment
         sonarEnv = "SonarQube"
+
+        // Nexus 3
+        // Maven global settings configuration ID
+        globalSettingsId = 'MavenSettings'
+        // Maven tool id
+        mavenInstallation = 'Maven3'
     }
 
     stages {
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                         sh "mvn clean test"
                     }
                 }
@@ -31,7 +37,7 @@ pipeline{
             steps {
                 script {
                     dir(javaDir) {
-                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                        withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             withSonarQubeEnv(sonarEnv) {
                                 sh "mvn sonar:sonar"
                             }
@@ -50,7 +56,7 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
+                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                         sh "mvn deploy -Dmaven.test.skip=true"
                     }
                 }
