@@ -4,7 +4,7 @@ pipeline{
     options {
         buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
         // Disable concurrent builds. It will wait until the pipeline finish before start a new one
-        // disableConcurrentBuilds()
+        disableConcurrentBuilds()
     }
 
     tools {
@@ -29,13 +29,11 @@ pipeline{
         // Artifact groupId
         groupId = 'com.devonfw.mythaistar'
         // Nexus repository ID
-        repositoryId = 'devon.snapshots'
+        repositoryId = 'pl-nexus'
         // Nexus internal URL
-        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/snapshots'
+        repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
         // Maven global settings ID
-        mavenGlobalSettings = '9d437f6e-46e7-4a11-a8d1-2f0055f14033'
-        // JavaJDK tool id
-        javaJdk = 'Java8'
+        mavenGlobalSettings = 'MavenSettings'
         // Maven tool id
         mavenInstallation = 'Maven3'
     }
@@ -104,7 +102,7 @@ pipeline{
                     dir(nodeDir) {
                         def props = readJSON file: 'package.json'
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
-                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, jdk: javaJdk, maven: mavenInstallation) {
+                        withMaven(globalMavenSettingsConfig: mavenGlobalSettings, maven: mavenInstallation) {
                             sh """
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
