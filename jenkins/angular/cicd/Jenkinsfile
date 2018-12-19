@@ -39,7 +39,7 @@ pipeline{
         // Nexus internal URL
         repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
         // Maven global settings configuration ID
-        globalSettingsId = globalSettingsId
+        globalSettingsId = 'MavenSettings'
         // Maven tool id
         mavenInstallation = 'Maven3'
     }
