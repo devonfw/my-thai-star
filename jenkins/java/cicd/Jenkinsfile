@@ -14,19 +14,13 @@ pipeline{
         // sonarQube
         // Name of the sonarQube environment
         sonarEnv = "SonarQube"
-
-        // Nexus3 configuration
-        // Maven global settings configuration ID
-        globalSettingsId = 'MavenSettings'
-        // Maven tool id
-        mavenInstallation = 'Maven3'
     }
 
     stages {
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
+                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
                         sh "mvn clean test"
                     }
                 }
@@ -37,14 +31,14 @@ pipeline{
             steps {
                 script {
                     dir(javaDir) {
-                        withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
+                        withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
                             withSonarQubeEnv(sonarEnv) {
                                 sh "mvn sonar:sonar"
                             }
-                            //def qg = waitForQualityGate() 
-                            //if (qg.status != 'OK') {
-                            //    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                            //}
+                        }
+                        def qg = waitForQualityGate() 
+                        if (qg.status != 'OK') {
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         }
                     }
                 }
@@ -54,7 +48,7 @@ pipeline{
         stage ('Deliver application into Nexus') {
             steps {
                 dir(javaDir) {
-                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
+                    withMaven(globalMavenSettingsConfig: 'MavenSettings', maven: 'Maven3') {
                         sh "mvn deploy -Dmaven.test.skip=true"
                     }
                 }
