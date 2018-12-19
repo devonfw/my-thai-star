@@ -155,20 +155,20 @@ Most of them come pre-installed with the production line instance. The ones we n
 ## Tools
 
 - Java 8u192 JDK \
-  ![java8jdk](./java8-jdk.png)
+  ![java8jdk](./images/java8-jdk.png)
 - Google Chrome Stable \
-  ![googlechromestable](./google-chrome-stable.png)
+  ![googlechromestable](./images/google-chrome-stable.png)
 - SonarQube Scanner 3.2.0.1227 \
-  ![sonarscanner](./sonar-scanner.png)
+  ![sonarscanner](./images/sonar-scanner.png)
 - Maven 3.6.0
-  ![maven](./maven.png)
+  ![maven](./images/maven.png)
 - NodeJS 10.14.0 + yarn
-  ![nodejs](./nodejs.png)
+  ![nodejs](./images/nodejs.png)
 
 ## How to create the pipelines
 
 You only need to create a new pipeline and modify the configuration following the image:
-![](./pipeline-config.png)
+![](./images/pipeline-config.png)
 
 Or you can execute the create-pipelines.sh as follows:
 
@@ -183,9 +183,4 @@ $ ./create-pipelines.sh devon.s2-eu.capgemini.com/jenkins devonfw capgemini
 ```
 
 **Important:** you need a bash shell in order to execute the command. If you are using windows, you can open a new bash shell in the devonfw console:
-![console](./console.png)
-
-
-**TIP**: All environment variables used on both Jenkinsfiles should be declared in the correspondant Jenkins Pipeline configuration more or less like this:
-
-![](./jenkins-pipelines-params.png)
+![console](./images/console.png)
