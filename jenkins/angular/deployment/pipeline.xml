@@ -20,7 +20,7 @@
             <submoduleCfg class="list"/>
             <extensions/>
         </scm>
-        <scriptPath>jenkins/deployment/cicd/Jenkinsfile</scriptPath>
+        <scriptPath>jenkins/angular/deployment/Jenkinsfile</scriptPath>
         <lightweight>true</lightweight>
     </definition>
     <triggers/>
