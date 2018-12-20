@@ -1,6 +1,6 @@
 interface Role {
   name: string;
-  permission: Number;
+  permission: number;
 }
 
 interface Lang {
@@ -9,8 +9,8 @@ interface Lang {
 }
 
 interface Config {
-  pageSizes: Number[];
-  pageSizesDialog: Number[];
+  pageSizes: number[];
+  pageSizesDialog: number[];
   roles: Role[];
   langs: Lang[];
 }
