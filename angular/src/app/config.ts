@@ -1,4 +1,21 @@
-export const config: any = {
+interface Role {
+  name: string;
+  permission: Number;
+}
+
+interface Lang {
+  label: string;
+  value: string;
+}
+
+interface Config {
+  pageSizes: Number[];
+  pageSizesDialog: Number[];
+  roles: Role[];
+  langs: Lang[];
+}
+
+export const config: Config = {
   pageSizes: [8, 16, 24],
   pageSizesDialog: [4, 8, 12],
   roles: [
