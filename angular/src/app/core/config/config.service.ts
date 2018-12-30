@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { config } from './config';
+import { Config, config } from './config';
 
 
 @Injectable()
-export class AppLoadService {
+export class ConfigService {
 
   constructor(private httpClient: HttpClient) { }
 
-  static factory(appLoadService: AppLoadService) {
-    return () => appLoadService.getExternalConfig();
+  static factory(appLoadService: ConfigService) {
+    return () => appLoadService.loadExternalConfig();
   }
 
   //this method gets external configuration calling /config endpoint and merges into config object
-  getExternalConfig(): Promise<any> {
+  loadExternalConfig(): Promise<any> {
     if (!config.loadExternalConfig) {
       return Promise.resolve({});
     }
@@ -31,5 +31,9 @@ export class AppLoadService {
       });
 
     return promise;
+  }
+
+  getValues(): Config {
+    return config;
   }
 }

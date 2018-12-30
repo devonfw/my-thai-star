@@ -5,6 +5,7 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Filter, Pageable } from 'app/shared/backendModels/interfaces';
 import { FilterFormData } from '../menu-filters/menu-filters.component';
+import { ConfigService } from '../../core/config/config.service';
 
 const categoryNameToServerId: {[key: string]: number} = Object.freeze({
   mainDishes: 0,
@@ -21,9 +22,12 @@ const categoryNameToServerId: {[key: string]: number} = Object.freeze({
 @Injectable()
 export class MenuService {
 
+  private readonly restServiceRoot: string;
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
+   }
 
   menuToOrder(menu: DishView): OrderView {
     return {
@@ -61,7 +65,7 @@ export class MenuService {
 
   getDishes(filters: Filter): Observable<{ pageable: Pageable, content: DishView[]}> {
     return this.http.post<{ pageable: Pageable, content: DishView[]}>(
-      `${environment.restServiceRoot}${this.filtersRestPath}`,
+      `${this.restServiceRoot}${this.filtersRestPath}`,
       filters,
     );
   }
