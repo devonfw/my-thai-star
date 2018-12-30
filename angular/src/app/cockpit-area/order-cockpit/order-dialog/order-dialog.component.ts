@@ -7,9 +7,9 @@ import {
 import { OrderView, BookingView } from '../../../shared/viewModels/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
+import { ConfigService } from '../../../core/config/config.service';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -29,7 +29,7 @@ export class OrderDialogComponent implements OnInit {
   datao: OrderView[] = [];
   columnso: ITdDataTableColumn[];
 
-  pageSizes: number[] = config.pageSizesDialog;
+  pageSizes: number[];
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
 
@@ -38,8 +38,10 @@ export class OrderDialogComponent implements OnInit {
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
+    private configService: ConfigService
   ) {
     this.data = dialogData.row;
+    this.pageSizes = this.configService.getValues().pageSizes;
   }
 
   ngOnInit(): void {

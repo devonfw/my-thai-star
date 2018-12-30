@@ -9,10 +9,10 @@ import { MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/viewModels/interfaces';
-import { config } from '../../config';
 import { Pageable, FilterCockpit } from '../../shared/backendModels/interfaces';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { ConfigService } from '../../core/config/config.service';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -34,7 +34,7 @@ export class OrderCockpitComponent implements OnInit {
 
   columns: ITdDataTableColumn[];
 
-  pageSizes: number[] = config.pageSizes;
+  pageSizes: number[];
 
   filters: FilterCockpit = {
     bookingDate: undefined,
@@ -46,7 +46,10 @@ export class OrderCockpitComponent implements OnInit {
     private dialog: MatDialog,
     private translate: TranslateService,
     private waiterCockpitService: WaiterCockpitService,
-  ) {}
+    private configService: ConfigService
+  ) {
+    this.pageSizes = this.configService.getValues().pageSizes;
+  }
 
   ngOnInit(): void {
     this.applyFilters();

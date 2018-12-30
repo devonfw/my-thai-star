@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { find } from 'lodash';
-import { config } from '../../config';
 import { Role } from '../../shared/viewModels/interfaces';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class AuthService {
@@ -9,6 +9,9 @@ export class AuthService {
   private user = '';
   private currentRole = 'CUSTOMER';
   private token: string;
+
+  constructor(private configService:ConfigService){
+  }
 
   public isLogged(): boolean {
     return this.logged;
@@ -39,7 +42,7 @@ export class AuthService {
   }
 
   public getPermission(roleName: string): number {
-    const role: Role = <Role>find(config.roles, { name: roleName });
+    const role: Role = <Role>find(this.configService.getValues().roles, { name: roleName });
     return role.permission;
   }
 
