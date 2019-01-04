@@ -23,6 +23,9 @@ export class BookTableComponent implements OnInit {
   bookForm: FormGroup;
   invitationForm: FormGroup;
 
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+
   reservationInfo: BookingInfo = {
     booking: {
       name: '',
@@ -34,47 +37,48 @@ export class BookTableComponent implements OnInit {
   };
 
   constructor(
-    public window: WindowService,
-    public translate: TranslateService,
-    public snackBarservice: SnackBarService,
-    public dialog: MatDialog,
+    private window: WindowService,
+    private translate: TranslateService,
+    private snackBarservice: SnackBarService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
+    let booking = this.reservationInfo.booking;
+
     this.invitationForm = new FormGroup({
       bookingDate: new FormControl(
-        this.reservationInfo.booking.bookingDate,
+        booking.bookingDate,
         Validators.required,
       ),
       name: new FormControl(
-        this.reservationInfo.booking.name,
+        booking.name,
         Validators.required,
       ),
-      email: new FormControl(this.reservationInfo.booking.email, [
+      email: new FormControl(
+        booking.email, [
         Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        ),
+        Validators.pattern(this.REGEXP_EMAIL)
       ]),
       invitedGuests: new FormControl(this.invitationModel),
     });
 
     this.bookForm = new FormGroup({
       bookingDate: new FormControl(
-        this.reservationInfo.booking.bookingDate,
+        booking.bookingDate,
         Validators.required,
       ),
       name: new FormControl(
-        this.reservationInfo.booking.name,
+        booking.name,
         Validators.required,
       ),
-      email: new FormControl(this.reservationInfo.booking.email, [
+      email: new FormControl(
+        booking.email, [
         Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        ),
+        Validators.pattern(this.REGEXP_EMAIL)
       ]),
-      assistants: new FormControl(this.reservationInfo.booking.assistants, [
+      assistants: new FormControl(
+        booking.assistants, [
         Validators.required,
         Validators.min(1),
         Validators.max(8),
