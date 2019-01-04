@@ -1,6 +1,6 @@
 import { CoreModule } from '../../core/core.module';
 import { TestBed, inject } from '@angular/core/testing';
-import { SnackBarService } from './snackService.service';
+import { SnackBarService } from './snack.service';
 
 describe('SnackBarService', () => {
   beforeEach(() => {

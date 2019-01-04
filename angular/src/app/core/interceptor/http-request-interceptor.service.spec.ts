@@ -1,6 +1,6 @@
 import { CoreModule } from '../../core/core.module';
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpRequestInterceptorService } from './httpRequestInterceptor.service';
+import { HttpRequestInterceptorService } from './http-request-interceptor.service';
 
 describe('HttpRequestInterceptorService', () => {
     beforeEach(() => {

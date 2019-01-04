@@ -1,6 +1,6 @@
-import { InvitationResponse } from '../shared/viewModels/interfaces';
+import { InvitationResponse } from '../shared/view-models/interfaces';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
+import { SnackBarService } from '../core/snack/snack.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';

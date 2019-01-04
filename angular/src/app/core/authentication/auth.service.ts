@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { find } from 'lodash';
 import { config } from '../../config';
-import { Role } from '../../shared/viewModels/interfaces';
+import { Role } from '../../shared/view-models/interfaces';
 
 @Injectable()
 export class AuthService {

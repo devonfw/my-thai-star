@@ -1,4 +1,4 @@
-import { InvitationResponse } from '../../shared/viewModels/interfaces';
+import { InvitationResponse } from '../../shared/view-models/interfaces';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

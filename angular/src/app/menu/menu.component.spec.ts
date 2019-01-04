@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
+import { SnackBarService } from '../core/snack/snack.service';
 import { AuthService } from '../core/authentication/auth.service';
 import { MatSlider, MatInput } from '@angular/material';
 
