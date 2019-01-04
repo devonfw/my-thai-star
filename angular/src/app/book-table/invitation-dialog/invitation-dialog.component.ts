@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BookTableService } from '../shared/book-table.service';
-import { SnackBarService } from '../../core/snackService/snackService.service';
+import { SnackBarService } from '../../core/snack/snack.service';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 

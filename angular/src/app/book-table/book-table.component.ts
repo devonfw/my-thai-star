@@ -3,11 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatCheckbox } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
-import { WindowService } from '../core/windowService/windowService.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
+import { WindowService } from '../core/window/window.service';
+import { SnackBarService } from '../core/snack/snack.service';
 import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
-import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { BookingInfo } from 'app/shared/backend-models/interfaces';
 import { AbstractControl } from '@angular/forms/src/model';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -36,7 +36,7 @@ export class BookTableComponent implements OnInit {
   constructor(
     public window: WindowService,
     public translate: TranslateService,
-    public snackBarservice: SnackBarService,
+    public snackBarService: SnackBarService,
     public dialog: MatDialog,
   ) {}
 
@@ -138,7 +138,7 @@ export class BookTableComponent implements OnInit {
       this.translate
         .get('bookTable.formErrors.emailFormat')
         .subscribe((text: string) => {
-          this.snackBarservice.openSnack(text, 1000, 'red');
+          this.snackBarService.openSnack(text, 1000, 'red');
         });
     }
   }

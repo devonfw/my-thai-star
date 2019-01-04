@@ -1,5 +1,5 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
-import { ReservationView } from '../../shared/viewModels/interfaces';
+import { ReservationView } from '../../shared/view-models/interfaces';
 import { Component, OnInit } from '@angular/core';
 import {
   ITdDataTableSelectAllEvent,
@@ -10,7 +10,7 @@ import {
 import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import { config } from '../../config';
-import { FilterCockpit, Sort, Pageable } from '../../shared/backendModels/interfaces';
+import { FilterCockpit, Sort, Pageable } from '../../shared/backend-models/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';

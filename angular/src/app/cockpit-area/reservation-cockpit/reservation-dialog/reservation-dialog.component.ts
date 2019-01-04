@@ -7,7 +7,7 @@ import {
 import {
   FriendsInvite,
   ReservationView,
-} from '../../../shared/viewModels/interfaces';
+} from '../../../shared/view-models/interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';

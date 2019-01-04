@@ -4,9 +4,9 @@ import {
   ExtraView,
   OrderView,
   SaveOrderResponse,
-} from '../../shared/viewModels/interfaces';
+} from '../../shared/view-models/interfaces';
 import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
-import { OrderListInfo, OrderInfo } from 'app/shared/backendModels/interfaces';
+import { OrderListInfo, OrderInfo } from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 

@@ -4,7 +4,7 @@ import { CoreModule } from '../core/core.module';
 
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
-import { WindowService } from '../core/windowService/windowService.service';
+import { WindowService } from '../core/window/window.service';
 
 import { SidenavComponent } from './sidenav.component';
 import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
