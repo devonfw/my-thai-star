@@ -9,7 +9,7 @@ import { CoreModule } from '../core/core.module';
 
 import { WindowService } from '../core/window/window.service';
 import { AuthService } from '../core/authentication/auth.service';
-import { SnackBarService } from '../core/snack/snack.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { UserAreaService } from '../user-area/shared/user-area.service';
 
 import { SidenavModule } from '../sidenav/sidenav.module';

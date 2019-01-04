@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../core/core.module';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
 
-import { SnackBarService } from '../core/snack/snack.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/window/window.service';
 
