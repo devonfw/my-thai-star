@@ -6,13 +6,13 @@ import {
   OrderResponse,
   OrderView,
   OrderViewResult,
-} from '../../shared/viewModels/interfaces';
+} from '../../shared/view-models/interfaces';
 import { map, cloneDeep } from 'lodash';
 import {
   Pageable,
   Sort,
   FilterCockpit,
-} from 'app/shared/backendModels/interfaces';
+} from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 

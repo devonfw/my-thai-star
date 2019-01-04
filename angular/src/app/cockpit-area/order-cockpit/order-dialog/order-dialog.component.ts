@@ -4,7 +4,7 @@ import {
   ITdDataTableColumn,
   TdDataTableService,
 } from '@covalent/core';
-import { OrderView, BookingView } from '../../../shared/viewModels/interfaces';
+import { OrderView, BookingView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../config';

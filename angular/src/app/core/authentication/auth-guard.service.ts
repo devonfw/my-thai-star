@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from './auth.service';
-import { SnackBarService } from '../snackService/snackService.service';
+import { SnackBarService } from '../snack/snack.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()

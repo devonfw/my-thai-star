@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { BookTableModule } from '../book-table.module';
 
 import { BookTableService } from '../shared/book-table.service';
-import { SnackBarService } from '../../core/snackService/snackService.service';
+import { SnackBarService } from '../../core/snack/snack.service';
 
 import { InvitationDialogComponent } from './invitation-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
