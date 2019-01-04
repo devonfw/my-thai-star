@@ -2,7 +2,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { UserAreaService } from './user-area.service';
-import { SnackBarService } from '../../core/snack/snack.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { CoreModule } from '../../core/core.module';
 import { HttpClientModule } from '@angular/common/http';

@@ -7,7 +7,7 @@ import { CoreModule } from '../core/core.module';
 
 import { BookTableService } from './shared/book-table.service';
 import { WindowService } from '../core/window/window.service';
-import { SnackBarService } from '../core/snack/snack.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';

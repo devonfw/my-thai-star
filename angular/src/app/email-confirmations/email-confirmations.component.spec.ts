@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 
-import { SnackBarService } from '../core/snack/snack.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { EmailConfirmationsService } from './shared/email-confirmations.service';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';

@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from './shared/sidenav.service';
 import { PriceCalculatorService } from './shared/price-calculator.service';
-import { SnackBarService } from '../core/snack/snack.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { OrderView } from '../shared/view-models/interfaces';
 
 @Component({
