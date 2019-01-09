@@ -1,9 +1,8 @@
 # 1. Build
-FROM blairguk/node-sass-alpine:8.9.4 AS build
+FROM node:lts AS build
 WORKDIR /app
 COPY . /app
-RUN npm i -g @angular/cli
-RUN apk update && apk add yarn
+RUN npm i -g yarn
 RUN yarn
 RUN yarn build --configuration=docker
 
