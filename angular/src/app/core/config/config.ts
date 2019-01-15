@@ -1,3 +1,9 @@
+export enum BackendType {
+  IN_MEMORY,
+  REST,
+  GRAPHQL,
+}
+
 interface Role {
   name: string;
   permission: number;
@@ -8,7 +14,12 @@ interface Lang {
   value: string;
 }
 
-interface Config {
+export interface Config {
+  version: string;
+  backendType: BackendType;
+  restPathRoot: string;
+  restServiceRoot: string;
+  loadExternalConfig: boolean;
   pageSizes: number[];
   pageSizesDialog: number[];
   roles: Role[];
@@ -16,6 +27,11 @@ interface Config {
 }
 
 export const config: Config = {
+  version: 'dev',
+  backendType: BackendType.REST,
+  restPathRoot: 'http://localhost:8081/mythaistar/',
+  restServiceRoot: 'http://localhost:8081/mythaistar/services/rest/',
+  loadExternalConfig: false, // load external configuration on /config endpoint
   pageSizes: [8, 16, 24],
   pageSizesDialog: [4, 8, 12],
   roles: [
@@ -35,9 +51,3 @@ export const config: Config = {
     { label: 'български', value: 'bg' },
   ],
 };
-
-export enum BackendType {
-  IN_MEMORY,
-  REST,
-  GRAPHQL,
-}
