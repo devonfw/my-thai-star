@@ -9,9 +9,9 @@ import {
   ReservationView,
 } from '../../../shared/viewModels/interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { config } from '../../../config';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
+import { ConfigService } from '../../../core/config/config.service';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -29,7 +29,7 @@ export class ReservationDialogComponent implements OnInit {
     { name: 'email', label: 'Guest email' },
     { name: 'accepted', label: 'Acceptances and declines' },
   ];
-  pageSizes: number[] = config.pageSizesDialog;
+  pageSizes: number[];
   datat: ReservationView[] = [];
   columnst: ITdDataTableColumn[];
 
@@ -39,9 +39,10 @@ export class ReservationDialogComponent implements OnInit {
     private _dataTableService: TdDataTableService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
+    private configService: ConfigService
   ) {
     this.data = dialogData.row;
-    this.pageSizes = config.pageSizesDialog;
+    this.pageSizes = configService.getValues().pageSizesDialog;
   }
 
   ngOnInit(): void {

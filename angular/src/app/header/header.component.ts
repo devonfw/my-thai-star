@@ -12,7 +12,7 @@ import { PasswordDialogComponent } from '../user-area/password-dialog/password-d
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
-import { config } from '../config';
+import { ConfigService } from '../core/config/config.service';
 
 @Component({
   selector: 'public-header',
@@ -34,8 +34,9 @@ export class HeaderComponent {
     public auth: AuthService,
     public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
+    private configService: ConfigService
   ) {
-    this.selectableLangs = config.langs;
+    this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
   }

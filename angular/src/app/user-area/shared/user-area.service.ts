@@ -5,9 +5,12 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class UserAreaService {
+  private readonly restPathRoot: string;
+  private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly registerRestPath: string = 'register';
@@ -20,7 +23,10 @@ export class UserAreaService {
     public translate: TranslateService,
     private http: HttpClient,
     public authService: AuthService,
+    private configService: ConfigService
   ) {
+    this.restPathRoot = this.configService.getValues().restPathRoot;
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
     this.translate.get('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
@@ -29,7 +35,7 @@ export class UserAreaService {
   login(username: string, password: string): void {
     this.http
       .post(
-        `${environment.restPathRoot}${this.loginRestPath}`,
+        `${this.restPathRoot}${this.loginRestPath}`,
         { username: username, password: password },
         { responseType: 'text', observe: 'response' },
       )
@@ -37,7 +43,7 @@ export class UserAreaService {
         (res: any) => {
           this.authService.setToken(res.headers.get('Authorization'));
           this.http
-            .get(`${environment.restServiceRoot}${this.currentUserRestPath}`)
+            .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
             .subscribe((loginInfo: any) => {
               this.authService.setLogged(true);
               this.authService.setUser(loginInfo.name);
@@ -59,7 +65,7 @@ export class UserAreaService {
 
   register(email: string, password: string): void {
     this.http
-      .post(`${environment.restServiceRoot}${this.registerRestPath}`, {
+      .post(`${this.restServiceRoot}${this.registerRestPath}`, {
         email: email,
         password: password,
       })
@@ -90,7 +96,7 @@ export class UserAreaService {
   changePassword(data: any): void {
     data.username = this.authService.getUser();
     this.http
-      .post(`${environment.restServiceRoot}${this.changePasswordRestPath}`, {
+      .post(`${this.restServiceRoot}${this.changePasswordRestPath}`, {
         username: data.username,
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,

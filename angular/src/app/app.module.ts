@@ -1,4 +1,5 @@
 import { environment } from '../environments/environment';
+import { ConfigModule } from './core/config/config.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [AppComponent, WebviewDirective],
   imports: [
+    ConfigModule,
     BrowserModule,
     HeaderModule,
     HomeModule,
