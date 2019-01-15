@@ -4,17 +4,21 @@ import { map } from 'lodash';
 import { BookingInfo } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class BookTableService {
 
   private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
 
-  constructor(private http: HttpClient) {
+  private readonly restServiceRoot: string;
+
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
   }
 
   postBooking(bookInfo: BookingInfo): Observable<any> {
-    return this.http.post(`${environment.restServiceRoot}${this.booktableRestPath}`, bookInfo);
+    return this.http.post(`${this.restServiceRoot}${this.booktableRestPath}`, bookInfo);
   }
 
   composeBooking(invitationData: any, type: number): BookingInfo {
