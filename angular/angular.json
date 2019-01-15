@@ -20,7 +20,8 @@
               "src/assets",
               "src/data",
               "src/favicon.ico",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/external-config.json"
             ],
             "styles": [
               "src/styles.scss",
@@ -170,7 +171,8 @@
               "src/assets",
               "src/data",
               "src/favicon.ico",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/external-config.json"
             ]
           }
         },

@@ -9,11 +9,15 @@ import {
 } from '@covalent/core';
 import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
-import { config } from '../../config';
-import { FilterCockpit, Sort, Pageable } from '../../shared/backendModels/interfaces';
+import {
+  FilterCockpit,
+  Sort,
+  Pageable,
+} from '../../shared/backendModels/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { ConfigService } from '../../core/config/config.service';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -21,7 +25,6 @@ import * as moment from 'moment';
   styleUrls: ['./reservation-cockpit.component.scss'],
 })
 export class ReservationCockpitComponent implements OnInit {
-
   private sorting: Sort[] = [];
 
   pageable: Pageable = {
@@ -35,7 +38,7 @@ export class ReservationCockpitComponent implements OnInit {
 
   columns: ITdDataTableColumn[];
 
-  pageSizes: number[] = config.pageSizes;
+  pageSizes: number[];
 
   filters: FilterCockpit = {
     bookingDate: undefined,
@@ -43,9 +46,14 @@ export class ReservationCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
-  constructor(private waiterCockpitService: WaiterCockpitService,
+  constructor(
+    private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private configService: ConfigService,
+  ) {
+    this.pageSizes = this.configService.getValues().pageSizes;
+  }
 
   ngOnInit(): void {
     this.setTableHeaders();
@@ -72,7 +80,8 @@ export class ReservationCockpitComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.waiterCockpitService.getReservations(this.pageable, this.sorting, this.filters)
+    this.waiterCockpitService
+      .getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
         if (!data) {
           this.reservations = [];

@@ -5,9 +5,9 @@ import { AuthService } from './core/authentication/auth.service';
 import { ElectronService } from './shared/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
-import { config } from './config';
 import { fadeAnimation } from './animations/fade.animation';
 import * as moment from 'moment';
+import { ConfigService } from './core/config/config.service';
 
 @Component({
   selector: 'public-main',
@@ -18,14 +18,20 @@ import * as moment from 'moment';
 export class AppComponent {
   mobileSidenavOpened = false;
   year: string = moment().format('YYYY');
+  version: string;
+
   constructor(
     public router: Router,
     public sidenav: SidenavService,
     public translate: TranslateService,
     public auth: AuthService,
     public electronService: ElectronService,
+    public configService: ConfigService,
   ) {
-    translate.addLangs(config.langs.map((value: any) => value.value));
+    this.version = configService.getValues().version;
+    translate.addLangs(
+      configService.getValues().langs.map((value: any) => value.value),
+    );
     translate.setDefaultLang('en');
     if (
       find(

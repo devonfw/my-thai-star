@@ -15,6 +15,7 @@ import {
 } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class WaiterCockpitService {
@@ -25,10 +26,16 @@ export class WaiterCockpitService {
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
 
+  private readonly restServiceRoot: string;
+
   constructor(
     private http: HttpClient,
     private priceCalculator: PriceCalculatorService,
-  ) {}
+    private configService: ConfigService
+  ) {
+
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
+  }
 
   getOrders(
     pageable: Pageable,
@@ -46,7 +53,7 @@ export class WaiterCockpitService {
       path = this.getOrdersRestPath;
     }
     return this.http.post<OrderResponse[]>(
-      `${environment.restServiceRoot}${path}`,
+      `${this.restServiceRoot}${path}`,
       filters,
     );
   }
@@ -59,7 +66,7 @@ export class WaiterCockpitService {
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
     return this.http.post<BookingResponse[]>(
-      `${environment.restServiceRoot}${this.getReservationsRestPath}`,
+      `${this.restServiceRoot}${this.getReservationsRestPath}`,
       filters,
     );
   }

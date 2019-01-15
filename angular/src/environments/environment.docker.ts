@@ -1,13 +1,3 @@
-import { BackendType } from '../app/config';
-
-export const environment: {
-  production: boolean;
-  backendType: BackendType;
-  restPathRoot: string;
-  restServiceRoot: string;
-} = {
+export const environment: { production: boolean } = {
   production: true,
-  backendType: BackendType.REST,
-  restPathRoot: 'api/',
-  restServiceRoot: 'api/services/rest/',
 };

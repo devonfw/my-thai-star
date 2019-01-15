@@ -9,6 +9,7 @@ import { find, filter, isEqual, remove, cloneDeep } from 'lodash';
 import { OrderListInfo, OrderInfo } from 'app/shared/backendModels/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
+import { ConfigService } from '../../core/config/config.service';
 
 const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) =>
   o.dish.name === orderToFind.dish.name &&
@@ -16,12 +17,15 @@ const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) =>
 
 @Injectable()
 export class SidenavService {
+  private readonly restServiceRoot: string;
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
   private orders: OrderView[] = [];
 
   opened = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
+  }
 
   public openSideNav(): void {
     this.opened = true;
@@ -81,7 +85,7 @@ export class SidenavService {
 
     this.closeSideNav();
     return this.http.post<SaveOrderResponse>(
-      `${environment.restServiceRoot}${this.saveOrdersPath}`,
+      `${this.restServiceRoot}${this.saveOrdersPath}`,
       orderList,
     );
   }
