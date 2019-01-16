@@ -9,7 +9,7 @@ services:
     networks:
       - my-thai-star
     ports:
-      - '8080:80'
+      - '8081:80'
   angular:
     build: 'angular/'
     restart: always
