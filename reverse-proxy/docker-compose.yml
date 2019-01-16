@@ -5,7 +5,7 @@ services:
     image: my-thai-star/reverse-proxy:latest
     restart: always
     ports:
-      - '8090:80'
+      - '8081:80'
     networks:
       - my-thai-star
     depends_on:
