@@ -9,9 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.application.mtsj.general.security.TokenAuthenticationService;
 
@@ -24,9 +21,6 @@ import com.devonfw.application.mtsj.general.security.TokenAuthenticationService;
 @Named("SecurityRestService")
 @Transactional
 public class SecurityRestServiceImpl {
-
-  /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
 
   /**
    * Returns the user details from the jwt token included in the 'Authorization' header
