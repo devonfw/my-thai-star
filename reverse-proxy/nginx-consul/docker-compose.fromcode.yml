@@ -59,7 +59,7 @@ services:
     networks:
       - my-thai-star
     labels:
-      SERVICE_NAME: api
+      SERVICE_NAME: mythaistar
       SERVICE_8081_CHECK_HTTP: /mythaistar/services/rest/dishmanagement/v1/category/0/
       SERVICE_8081_CHECK_INTERVAL: 5s
       SERVICE_TAGS: production
