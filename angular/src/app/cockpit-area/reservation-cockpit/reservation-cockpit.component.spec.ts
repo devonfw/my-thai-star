@@ -6,6 +6,7 @@ import { HttpClient /*, HttpClientModule */ } from '@angular/common/http';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { ConfigService } from '../../core/config/config.service';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 // import { WindowService } from '../../core/windowService/windowService.service';
 import { MatDialog } from '@angular/material';
@@ -20,6 +21,7 @@ describe('ReservationCockpitComponent', () => {
   // tslint:disable-next-line:prefer-const
   let http: HttpClient;
   let priceCalculator: PriceCalculatorService;
+  let configService: ConfigService;
   let waiterCockpitService: WaiterCockpitService;
   // tslint:disable-next-line:prefer-const
   let translate: TranslateService;
@@ -54,11 +56,17 @@ describe('ReservationCockpitComponent', () => {
     // component = fixture.componentInstance;
     // fixture.detectChanges();
     priceCalculator = new PriceCalculatorService();
-    waiterCockpitService = new WaiterCockpitService(http, priceCalculator);
+    configService = new ConfigService(http);
+    waiterCockpitService = new WaiterCockpitService(
+      http,
+      priceCalculator,
+      configService,
+    );
     component = new ReservationCockpitComponent(
       waiterCockpitService,
       translate,
       dialog,
+      configService,
     );
   });
 
