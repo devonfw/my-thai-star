@@ -10,6 +10,7 @@ import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { MenuService } from './shared/menu.service';
 import { SnackBarService } from '../core/snackService/snackService.service';
 import { AuthService } from '../core/authentication/auth.service';
+import { ConfigService } from '../core/config/config.service';
 import { MatSlider, MatInput } from '@angular/material';
 
 import { MenuComponent } from './menu.component';
@@ -27,6 +28,7 @@ describe('MenuComponent', () => {
   // let fixture: ComponentFixture<MenuComponent>;
   // tslint:disable-next-line:prefer-const
   let http: HttpClient;
+  let configService: ConfigService;
   let menuService: MenuService;
 
   beforeEach(async(() => {
@@ -66,7 +68,8 @@ describe('MenuComponent', () => {
     // fixture = TestBed.createComponent(MenuComponent);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
-    menuService = new MenuService(http);
+    configService = new ConfigService(http);
+    menuService = new MenuService(http, configService);
     component = new MenuComponent(menuService);
   });
 
