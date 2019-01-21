@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { WindowService } from './windowService.service';
+import { WindowService } from './window.service';
 
 describe('WindowService', () => {
   beforeEach(() => {
