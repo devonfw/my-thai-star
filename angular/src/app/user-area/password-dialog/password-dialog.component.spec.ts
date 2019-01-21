@@ -8,7 +8,7 @@ import { CoreModule } from '../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from '../../core/authentication/auth.service';
-import { SnackBarService } from '../../core/snackService/snackService.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 
 import { PasswordDialogComponent } from './password-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
