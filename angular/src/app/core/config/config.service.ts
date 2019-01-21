@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, config } from './config';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class ConfigService {
 
   // this method gets external configuration calling /config endpoint and merges into config object
   loadExternalConfig(): Promise<any> {
-    if (!config.loadExternalConfig) {
+    if (!environment.loadExternalConfig) {
       return Promise.resolve({});
     }
 

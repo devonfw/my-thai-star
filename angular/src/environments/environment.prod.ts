@@ -1,3 +1,4 @@
-export const environment: { production: boolean } = {
-  production: true,
-};
+export const environment: {
+  production: boolean;
+  loadExternalConfig: boolean;
+} = { production: true, loadExternalConfig: false };

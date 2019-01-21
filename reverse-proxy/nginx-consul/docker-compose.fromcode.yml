@@ -37,7 +37,7 @@ services:
     networks:
       - my-thai-star
     ports:
-      - '8081:80'
+      - '8080:80'
     labels:
       SERVICE_IGNORE: 'yes'
     depends_on:
@@ -59,7 +59,7 @@ services:
     networks:
       - my-thai-star
     labels:
-      SERVICE_NAME: mythaistar
+      SERVICE_NAME: api
       SERVICE_8081_CHECK_HTTP: /mythaistar/services/rest/dishmanagement/v1/category/0/
       SERVICE_8081_CHECK_INTERVAL: 5s
       SERVICE_TAGS: production
