@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'lodash';
-import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { BookingInfo } from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { ConfigService } from '../../core/config/config.service';

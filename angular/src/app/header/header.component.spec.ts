@@ -7,9 +7,9 @@ import { DateTimeAdapter } from 'ng-pick-datetime';
 
 import { CoreModule } from '../core/core.module';
 
-import { WindowService } from '../core/windowService/windowService.service';
+import { WindowService } from '../core/window/window.service';
 import { AuthService } from '../core/authentication/auth.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { UserAreaService } from '../user-area/shared/user-area.service';
 
 import { SidenavModule } from '../sidenav/sidenav.module';
