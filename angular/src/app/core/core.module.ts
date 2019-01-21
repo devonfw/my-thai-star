@@ -52,9 +52,9 @@ import {
 } from '@covalent/core';
 import { MomentModule } from 'ngx-moment';
 
-import { WindowService } from './windowService/windowService.service';
-import { SnackBarService } from './snackService/snackService.service';
-import { HttpRequestInterceptorService } from './interceptor/httpRequestInterceptor.service';
+import { WindowService } from './window/window.service';
+import { SnackBarService } from './snack-bar/snack-bar.service';
+import { HttpRequestInterceptorService } from './interceptor/http-request-interceptor.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 
