@@ -1,4 +1,4 @@
-import { Pageable } from '../backendModels/interfaces';
+import { Pageable } from '../backend-models/interfaces';
 
 // DISHES
 export interface DishView {
