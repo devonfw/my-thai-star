@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { OrderView } from '../../shared/viewModels/interfaces';
+import { OrderView } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { WaiterCockpitService } from './waiter-cockpit.service';
 import { HttpClientModule } from '@angular/common/http';
