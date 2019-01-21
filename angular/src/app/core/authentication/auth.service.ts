@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { find } from 'lodash';
-import { Role } from '../../shared/viewModels/interfaces';
+import { Role } from '../../shared/view-models/interfaces';
 import { ConfigService } from '../config/config.service';
 
 @Injectable()

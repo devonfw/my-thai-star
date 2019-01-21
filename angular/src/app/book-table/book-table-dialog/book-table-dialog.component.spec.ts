@@ -4,7 +4,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from '../../core/core.module';
 import { BookTableModule } from '../book-table.module';
 
-import { SnackBarService } from '../../core/snackService/snackService.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { BookTableService } from '../shared/book-table.service';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { MatDialog } from '@angular/material';
