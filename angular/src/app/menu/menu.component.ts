@@ -2,8 +2,8 @@ import { FilterFormData } from './menu-filters/menu-filters.component';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuService } from './shared/menu.service';
-import { DishView } from '../shared/viewModels/interfaces';
-import { Filter, Pageable } from '../shared/backendModels/interfaces';
+import { DishView } from '../shared/view-models/interfaces';
+import { Filter, Pageable } from '../shared/backend-models/interfaces';
 import { map } from 'rxjs/operators';
 
 export interface Filters {
