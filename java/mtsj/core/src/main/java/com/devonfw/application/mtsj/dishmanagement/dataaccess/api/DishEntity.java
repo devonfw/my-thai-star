@@ -3,7 +3,6 @@ package com.devonfw.application.mtsj.dishmanagement.dataaccess.api;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;

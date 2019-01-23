@@ -84,8 +84,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   }
 
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
     auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")

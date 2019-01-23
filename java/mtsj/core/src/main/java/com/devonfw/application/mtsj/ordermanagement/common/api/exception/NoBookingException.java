@@ -6,18 +6,24 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEnti
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 
 /**
- * This exception is thrown if the token of an {@link OrderEto} has no {@link BookingEntity} related.
+ * This exception is thrown if the token of an {@link OrderEto} has no
+ * {@link BookingEntity} related.
  *
  */
 public class NoBookingException extends NlsRuntimeException {
 
-  /**
-   * The constructor.
-   *
-   * @param message the error message
-   */
-  public NoBookingException() {
-    super("The booking does not exist");
-  }
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The constructor.
+	 *
+	 * @param message the error message
+	 */
+	public NoBookingException() {
+		super("The booking does not exist");
+	}
 
 }
