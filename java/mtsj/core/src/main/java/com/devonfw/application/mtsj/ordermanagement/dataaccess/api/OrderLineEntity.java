@@ -2,7 +2,6 @@ package com.devonfw.application.mtsj.ordermanagement.dataaccess.api;
 
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;

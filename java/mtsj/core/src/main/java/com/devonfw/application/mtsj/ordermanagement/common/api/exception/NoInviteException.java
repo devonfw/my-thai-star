@@ -6,12 +6,18 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEnti
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 
 /**
- * This exception is thrown if the guest token of an {@link OrderEto} has no {@link BookingEntity} related.
+ * This exception is thrown if the guest token of an {@link OrderEto} has no
+ * {@link BookingEntity} related.
  *
  */
 public class NoInviteException extends NlsRuntimeException {
 
-  public NoInviteException() {
-    super("The invitation does not exist");
-  }
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public NoInviteException() {
+		super("The invitation does not exist");
+	}
 }

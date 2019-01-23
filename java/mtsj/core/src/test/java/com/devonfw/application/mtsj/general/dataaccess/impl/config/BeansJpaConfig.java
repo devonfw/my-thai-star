@@ -2,23 +2,19 @@ package com.devonfw.application.mtsj.general.dataaccess.impl.config;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import com.devonfw.application.mtsj.general.dataaccess.base.DatabaseMigrator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.devonfw.application.mtsj.general.dataaccess.base.DatabaseMigrator;
 
 /**
  * Java configuration for JPA
  */
 @Configuration
 public class BeansJpaConfig {
-
-  @Inject
-  private EntityManagerFactory entityManagerFactory;
 
   @Inject
   private DataSource appDataSource;

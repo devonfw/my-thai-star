@@ -18,8 +18,11 @@ import org.springframework.web.filter.GenericFilterBean;
  */
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
-  @SuppressWarnings("javadoc")
-  @Override
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
 
