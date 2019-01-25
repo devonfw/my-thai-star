@@ -3,11 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatCheckbox } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
-import { WindowService } from '../core/windowService/windowService.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
+import { WindowService } from '../core/window/window.service';
+import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
-import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { BookingInfo } from 'app/shared/backend-models/interfaces';
 import { AbstractControl } from '@angular/forms/src/model';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -23,6 +23,8 @@ export class BookTableComponent implements OnInit {
   bookForm: FormGroup;
   invitationForm: FormGroup;
 
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
   reservationInfo: BookingInfo = {
     booking: {
       name: '',
@@ -34,47 +36,33 @@ export class BookTableComponent implements OnInit {
   };
 
   constructor(
-    public window: WindowService,
-    public translate: TranslateService,
-    public snackBarservice: SnackBarService,
-    public dialog: MatDialog,
+    private window: WindowService,
+    private translate: TranslateService,
+    private snackBarService: SnackBarService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
+    const booking = this.reservationInfo.booking;
+
     this.invitationForm = new FormGroup({
-      bookingDate: new FormControl(
-        this.reservationInfo.booking.bookingDate,
+      bookingDate: new FormControl(booking.bookingDate, Validators.required),
+      name: new FormControl(booking.name, Validators.required),
+      email: new FormControl(booking.email, [
         Validators.required,
-      ),
-      name: new FormControl(
-        this.reservationInfo.booking.name,
-        Validators.required,
-      ),
-      email: new FormControl(this.reservationInfo.booking.email, [
-        Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        ),
+        Validators.pattern(this.REGEXP_EMAIL),
       ]),
       invitedGuests: new FormControl(this.invitationModel),
     });
 
     this.bookForm = new FormGroup({
-      bookingDate: new FormControl(
-        this.reservationInfo.booking.bookingDate,
+      bookingDate: new FormControl(booking.bookingDate, Validators.required),
+      name: new FormControl(booking.name, Validators.required),
+      email: new FormControl(booking.email, [
         Validators.required,
-      ),
-      name: new FormControl(
-        this.reservationInfo.booking.name,
-        Validators.required,
-      ),
-      email: new FormControl(this.reservationInfo.booking.email, [
-        Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        ),
+        Validators.pattern(this.REGEXP_EMAIL),
       ]),
-      assistants: new FormControl(this.reservationInfo.booking.assistants, [
+      assistants: new FormControl(booking.assistants, [
         Validators.required,
         Validators.min(1),
         Validators.max(8),
@@ -138,7 +126,7 @@ export class BookTableComponent implements OnInit {
       this.translate
         .get('bookTable.formErrors.emailFormat')
         .subscribe((text: string) => {
-          this.snackBarservice.openSnack(text, 1000, 'red');
+          this.snackBarService.openSnack(text, 1000, 'red');
         });
     }
   }

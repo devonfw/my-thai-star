@@ -8,8 +8,11 @@ import {
 import { MatDialog } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { OrderListView } from '../../shared/viewModels/interfaces';
-import { Pageable, FilterCockpit } from '../../shared/backendModels/interfaces';
+import { OrderListView } from '../../shared/view-models/interfaces';
+import {
+  Pageable,
+  FilterCockpit,
+} from '../../shared/backend-models/interfaces';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
@@ -46,7 +49,7 @@ export class OrderCockpitComponent implements OnInit {
     private dialog: MatDialog,
     private translate: TranslateService,
     private waiterCockpitService: WaiterCockpitService,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
   }

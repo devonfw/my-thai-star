@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { BookTableService } from './book-table.service';
-import { BookingInfo } from 'app/shared/backendModels/interfaces';
+import { BookingInfo } from 'app/shared/backend-models/interfaces';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('BookTableService', () => {

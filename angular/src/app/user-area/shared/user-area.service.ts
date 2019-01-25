@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { SnackBarService } from '../../core/snackService/snackService.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';

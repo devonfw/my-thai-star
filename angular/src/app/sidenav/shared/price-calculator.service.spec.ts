@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ExtraView, OrderView } from '../../shared/viewModels/interfaces';
+import { ExtraView, OrderView } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from './price-calculator.service';
 
 describe('PriceCalculatorService', () => {
