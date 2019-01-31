@@ -50,6 +50,8 @@ services:
       - my-thai-star
     labels:
       SERVICE_IGNORE: 'yes'
+    environment:
+      - ANGULAR_ENV=docker
     depends_on:
       - registrator
   java:

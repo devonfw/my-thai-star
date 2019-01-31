@@ -1,0 +1,5 @@
+{
+  "version": "prod-version",
+  "restPathRoot": "api/",
+  "restServiceRoot": "api/services/rest/"
+}

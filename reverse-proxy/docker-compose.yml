@@ -21,6 +21,8 @@ services:
     build: angular/
     image: my-thai-star/angular:latest
     restart: always
+    environment:
+      - ANGULAR_ENV=docker
     networks:
       - my-thai-star
 
