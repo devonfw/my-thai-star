@@ -10,7 +10,7 @@ RUN yarn build --configuration=docker
 FROM nginx:alpine-perl
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/dist/. /usr/share/nginx/html
+COPY --from=build /app/dist/. /var/www/
 COPY external-config/* /usr/share/nginx/html/configs/
 EXPOSE 80 443
 
