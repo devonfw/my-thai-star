@@ -51,7 +51,7 @@ services:
     labels:
       SERVICE_IGNORE: 'yes'
     environment:
-      - ANGULAR_ENV=docker
+      - ANGULAR_ENV=dev
     depends_on:
       - registrator
   java:
