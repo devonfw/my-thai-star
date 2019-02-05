@@ -22,7 +22,7 @@ services:
     image: my-thai-star/angular:latest
     restart: always
     environment:
-      - ANGULAR_ENV=docker
+      - 'ANGULAR_ENV={"version": "docker-version","restPathRoot": "api/","restServiceRoot": "api/services/rest/"}'
     networks:
       - my-thai-star
 

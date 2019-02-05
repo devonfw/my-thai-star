@@ -49,7 +49,7 @@ services:
     networks:
       - my-thai-star
     environment:
-      - ANGULAR_ENV=dev
+      - 'ANGULAR_ENV={"version": "docker-version","restPathRoot": "api/","restServiceRoot": "api/services/rest/"}'
     labels:
       SERVICE_IGNORE: 'yes'
     depends_on:

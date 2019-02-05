@@ -51,7 +51,7 @@ services:
     labels:
       SERVICE_IGNORE: 'yes'
     environment:
-      - ANGULAR_ENV=dev
+      - 'ANGULAR_ENV={"version": "docker-version","restPathRoot": "api/","restServiceRoot": "api/services/rest/"}'
     depends_on:
       - registrator
   java:

@@ -1,5 +1,0 @@
-{
-  "version": "dev-version",
-  "restPathRoot": "api/",
-  "restServiceRoot": "api/services/rest/"
-}

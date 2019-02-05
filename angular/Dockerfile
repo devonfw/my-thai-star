@@ -11,7 +11,6 @@ FROM nginx:alpine-perl
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/. /var/www/
-COPY external-config/* /usr/share/nginx/html/configs/
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]

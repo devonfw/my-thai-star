@@ -16,7 +16,7 @@ services:
     container_name: 'mts_angular'
     image: my-thai-star/angular:latest
     environment:
-      - ANGULAR_ENV=dev
+      - 'ANGULAR_ENV={"version": "docker-version","restPathRoot": "api/","restServiceRoot": "api/services/rest/"}'
     networks:
       - my-thai-star
   java:
