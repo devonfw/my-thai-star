@@ -1,7 +1,18 @@
 {
-  "type": "sqlite",
-  "database": "database.db",
-  "logging": false,
-  "synchronize": false,
-  "entities": ["./src/**/*.entity{.ts,.js}"]
+    "type": "mariadb",
+    "host": "localhost",
+    "port": 3306,
+    "username": "test",
+    "password": "test",
+    "database": "test",
+    "synchronize": false,
+    "migrationsRun": true,
+    "supportBigNumbers": true,
+    "logging": false,
+    "entities": ["./dist/**/*.entity{.js,.ts}"],
+    "migrations": ["dist/migrations/production/**/*.js"],
+    "subscribers": ["dist/subscriber/**/*.js"],
+    "cli": {
+        "migrationsDir": "src/migrations"
+    }
 }

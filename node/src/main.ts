@@ -1,46 +1,42 @@
+// Change the config folder before the config library is loaded
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { HttpExceptionFilter } from 'shared/filters/http-exception.filter';
 import * as helmet from 'helmet';
+import { AppModule } from './app/app.module';
+import { ConfigurationModule } from './app/core/configuration/configuration.module';
+import { ConfigurationService } from './app/core/configuration/configuration.service';
+import { WinstonLogger } from './app/shared/logger/winston.logger';
+import { ValidationPipe } from '@nestjs/common';
+import { CoreModule } from './app/core/core.module';
+import { Request, Response, NextFunction } from 'express';
 
-declare const module: any;
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const hostDomain = AppModule.isDev
-    ? `${AppModule.host}:${AppModule.port}`
-    : AppModule.host;
+  const app = await NestFactory.create(AppModule, {
+    logger: new WinstonLogger(),
+  });
 
-  if (hostDomain) {
-    const swaggerOptions = new DocumentBuilder()
-      .setTitle(AppModule.appName)
-      .setDescription(AppModule.appDescription)
-      .setVersion(AppModule.appVersion)
-      .setHost(hostDomain.split('//')[1])
-      .setSchemes(AppModule.isDev ? 'http' : 'https')
-      .setBasePath(AppModule.appBasePath)
+  const configModule = app
+    .select(ConfigurationModule)
+    .get(ConfigurationService);
+
+  if (configModule.globalPrefix) {
+    app.setGlobalPrefix(configModule.globalPrefix);
+  }
+
+  if (configModule.isDev) {
+    const options = new DocumentBuilder()
+      .setTitle(configModule.swaggerConfig.swaggerTitle)
+      .setDescription(configModule.swaggerConfig.swaggerDescription)
+      .setVersion(configModule.swaggerConfig.swaggerVersion)
+      .setHost(configModule.host + ':' + configModule.port)
+      .setBasePath(configModule.swaggerConfig.swaggerBasepath)
       .addBearerAuth('Authorization', 'header')
       .build();
 
-    const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
-
-    app.use(`${AppModule.appBasePath}/docs/swagger.json`, (req, res) => {
-      res.send(swaggerDoc);
-    });
-
-    SwaggerModule.setup('/api/docs', app, swaggerDoc, {
-      swaggerUrl: `${hostDomain}${AppModule.appBasePath}/docs/swagger.json`,
-      explorer: true,
-      swaggerOptions: {
-        docExpansion: 'list',
-        filter: true,
-        showRequestDuration: true,
-      },
-    });
+    const swaggerDoc = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('api', app, swaggerDoc);
   }
 
-  app.setGlobalPrefix(AppModule.appBasePath);
-  app.useGlobalFilters(new HttpExceptionFilter());
   app.use(helmet());
   app.enableCors({
     origin: '*',
@@ -48,6 +44,26 @@ async function bootstrap() {
     exposedHeaders: 'Authorization',
     allowedHeaders: 'authorization, content-type',
   });
-  await app.listen(AppModule.port);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+
+  const logger: WinstonLogger = app.select(CoreModule).get(WinstonLogger);
+  // Logger middleware
+  app.use(function(
+    this: any,
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) {
+    logger.log(req.path, req.ip);
+    next();
+  });
+
+  app.enableShutdownHooks();
+  await app.listen(configModule.port);
 }
 bootstrap();
