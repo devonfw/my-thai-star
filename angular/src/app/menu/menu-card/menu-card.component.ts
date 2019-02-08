@@ -4,6 +4,9 @@ import { SidenavService } from '../../sidenav/shared/sidenav.service';
 import { MenuService } from '../shared/menu.service';
 import { AuthService } from '../../core/authentication/auth.service';
 
+/* @export
+ * @class MenuCardComponent
+ */
 @Component({
   selector: 'public-menu-card',
   templateUrl: './menu-card.component.html',
@@ -12,6 +15,12 @@ import { AuthService } from '../../core/authentication/auth.service';
 export class MenuCardComponent {
   @Input() menuInfo: DishView;
 
+  /* Creates an instance of MenuCardComponent.
+   * @param {MenuService} menuService
+   * @param {AuthService} auth
+   * @param {SidenavService} sidenav
+   * @memberof MenuCardComponent
+   */
   constructor(
     private menuService: MenuService,
     public auth: AuthService,
@@ -28,6 +37,9 @@ export class MenuCardComponent {
     this.menuInfo.isfav = !this.menuInfo.isfav;
   }
 
+  /* @param {ExtraView} extra
+   * @memberof MenuCardComponent
+   */
   selectedOption(extra: ExtraView): void {
     extra.selected = !extra.selected;
   }

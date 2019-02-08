@@ -19,6 +19,10 @@ import { LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 
+/* @export
+ * @class ReservationCockpitComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'cockpit-reservation-cockpit',
   templateUrl: './reservation-cockpit.component.html',
@@ -46,6 +50,13 @@ export class ReservationCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
+  /* Creates an instance of ReservationCockpitComponent.
+   * @param {WaiterCockpitService} waiterCockpitService
+   * @param {TranslateService} translate
+   * @param {MatDialog} dialog
+   * @param {ConfigService} configService
+   * @memberof ReservationCockpitComponent
+   */
   constructor(
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
@@ -92,11 +103,17 @@ export class ReservationCockpitComponent implements OnInit {
       });
   }
 
+  /* @param {*} filters
+   * @memberof ReservationCockpitComponent
+   */
   clearFilters(filters: any): void {
     filters.reset();
     this.applyFilters();
   }
 
+  /* @param {IPageChangeEvent} pagingEvent
+   * @memberof ReservationCockpitComponent
+   */
   page(pagingEvent: IPageChangeEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
@@ -107,6 +124,9 @@ export class ReservationCockpitComponent implements OnInit {
     this.applyFilters();
   }
 
+  /* @param {ITdDataTableSortChangeEvent} sortEvent
+   * @memberof ReservationCockpitComponent
+   */
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
     this.sorting.push({
@@ -116,6 +136,9 @@ export class ReservationCockpitComponent implements OnInit {
     this.applyFilters();
   }
 
+  /* @param {ITdDataTableSelectAllEvent} selection
+   * @memberof ReservationCockpitComponent
+   */
   selected(selection: ITdDataTableSelectAllEvent): void {
     this.dialog.open(ReservationDialogComponent, {
       width: '80%',

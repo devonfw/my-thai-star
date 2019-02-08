@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
+/* @export
+ * @class EmailConfirmationsComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'public-email-confirmations',
   templateUrl: './email-confirmations.component.html',
@@ -15,6 +19,14 @@ export class EmailConfirmationsComponent implements OnInit {
   private action: string;
   private token: string;
 
+  /* Creates an instance of EmailConfirmationsComponent.
+   * @param {SnackBarService} snackBarService
+   * @param {EmailConfirmationsService} emailService
+   * @param {TranslateService} translate
+   * @param {Router} router
+   * @param {ActivatedRoute} route
+   * @memberof EmailConfirmationsComponent
+   */
   constructor(
     private snackBarService: SnackBarService,
     private emailService: EmailConfirmationsService,

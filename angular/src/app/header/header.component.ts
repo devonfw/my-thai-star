@@ -14,6 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
 
+/* @export
+ * @class HeaderComponent
+ */
 @Component({
   selector: 'public-header',
   templateUrl: './header.component.html',
@@ -25,6 +28,18 @@ export class HeaderComponent {
 
   @Output() openCloseSidenavMobile = new EventEmitter<any>();
 
+  /* Creates an instance of HeaderComponent.
+   * @param {WindowService} window
+   * @param {TranslateService} translate
+   * @param {Router} router
+   * @param {SidenavService} sidenav
+   * @param {MatDialog} dialog
+   * @param {AuthService} auth
+   * @param {UserAreaService} userService
+   * @param {DateTimeAdapter<any>} dateTimeAdapter
+   * @param {ConfigService} configService
+   * @memberof HeaderComponent
+   */
   constructor(
     public window: WindowService,
     public translate: TranslateService,
@@ -34,32 +49,46 @@ export class HeaderComponent {
     public auth: AuthService,
     public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
   }
 
+  /* @param {boolean} sidenavOpened
+   * @memberof HeaderComponent
+   */
   openCloseSideNav(sidenavOpened: boolean): void {
     sidenavOpened ? this.sidenav.closeSideNav() : this.sidenav.openSideNav();
   }
 
+  /* @memberof HeaderComponent
+   */
   openCloseNavigationSideNav(): void {
     this.openCloseSidenavMobile.emit();
   }
 
+  /* @param {string} route
+   * @memberof HeaderComponent
+   */
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.openCloseSidenavMobile.emit();
   }
 
+  /* @param {string} lang
+   * @memberof HeaderComponent
+   */
   changeLanguage(lang: string): void {
     this.translate.use(lang);
     this.dateTimeAdapter.setLocale(lang);
     this.getFlag(lang);
   }
 
+  /* @param {string} lang
+   * @memberof HeaderComponent
+   */
   getFlag(lang: string): void {
     switch (lang) {
       case 'ca':

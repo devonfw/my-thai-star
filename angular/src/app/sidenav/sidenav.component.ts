@@ -5,16 +5,27 @@ import { PriceCalculatorService } from './shared/price-calculator.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { OrderView } from '../shared/view-models/interfaces';
 
+/* @export
+ * @class SidenavComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'public-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
-
   orders: OrderView[];
 
-  constructor(private router: Router,
+  /* Creates an instance of SidenavComponent.
+   * @param {Router} router
+   * @param {SidenavService} sidenav
+   * @param {SnackBarService} snackBar
+   * @param {PriceCalculatorService} calculator
+   * @memberof SidenavComponent
+   */
+  constructor(
+    private router: Router,
     private sidenav: SidenavService,
     private snackBar: SnackBarService,
     private calculator: PriceCalculatorService,
@@ -37,14 +48,22 @@ export class SidenavComponent implements OnInit {
     return this.calculator.getTotalPrice(this.orders);
   }
 
+  /* @param {string} bookingId
+   * @memberof SidenavComponent
+   */
   sendOrders(bookingId: string): void {
-    this.sidenav.sendOrders(bookingId)
-        .subscribe(() => {
-            this.orders = this.sidenav.removeAllOrders();
-            this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-        },
-        (error: any) => {
-            this.snackBar.openSnack('Error sending order, please, try again later', 4000, 'red');
-        });
+    this.sidenav.sendOrders(bookingId).subscribe(
+      () => {
+        this.orders = this.sidenav.removeAllOrders();
+        this.snackBar.openSnack('Order correctly noted', 4000, 'green');
+      },
+      (error: any) => {
+        this.snackBar.openSnack(
+          'Error sending order, please, try again later',
+          4000,
+          'red',
+        );
+      },
+    );
   }
 }

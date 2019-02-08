@@ -17,6 +17,10 @@ export class EqualValidatorDirective implements Validator {
   // reverse property is to check if both fields are equal not matter which one is modified first
   @Input() public reverse: string;
 
+  /* @param {AbstractControl} control
+   * @returns {{ [key: string]: any }}
+   * @memberof EqualValidatorDirective
+   */
   validate(control: AbstractControl): { [key: string]: any } {
     // control value
     const controlValue: AbstractControl = control.root.get(this.validateEqual);
@@ -47,10 +51,20 @@ export class EqualValidatorDirective implements Validator {
     return undefined;
   }
 
+  /* @private
+   * @param {AbstractControl} c1
+   * @param {AbstractControl} c2
+   * @returns {boolean}
+   * @memberof EqualValidatorDirective
+   */
   private isValueEqual(c1: AbstractControl, c2: AbstractControl): boolean {
     return c1.value === c2.value;
   }
 
+  /* @private
+   * @returns {boolean}
+   * @memberof EqualValidatorDirective
+   */
   private isReverse(): boolean {
     return this.reverse && this.reverse === 'true';
   }

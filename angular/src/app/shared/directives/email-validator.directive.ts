@@ -21,6 +21,10 @@ export function emailValidator(c: string): boolean {
   ],
 })
 export class EmailValidatorDirective implements Validator {
+  /* @param {AbstractControl} c
+   * @returns {{ [key: string]: any }}
+   * @memberof EmailValidatorDirective
+   */
   validate(c: AbstractControl): { [key: string]: any } {
     return emailValidator(<string>c.value)
       ? undefined

@@ -9,6 +9,9 @@ import { fadeAnimation } from './animations/fade.animation';
 import * as moment from 'moment';
 import { ConfigService } from './core/config/config.service';
 
+/* @export
+ * @class AppComponent
+ */
 @Component({
   selector: 'public-main',
   templateUrl: './app.component.html',
@@ -20,6 +23,15 @@ export class AppComponent {
   year: string = moment().format('YYYY');
   version: string;
 
+  /* Creates an instance of AppComponent.
+   * @param {Router} router
+   * @param {SidenavService} sidenav
+   * @param {TranslateService} translate
+   * @param {AuthService} auth
+   * @param {ElectronService} electronService
+   * @param {ConfigService} configService
+   * @memberof AppComponent
+   */
   constructor(
     public router: Router,
     public sidenav: SidenavService,
@@ -50,16 +62,27 @@ export class AppComponent {
     }
   }
 
+  /* @param {boolean} opened
+   * @returns {boolean}
+   * @memberof AppComponent
+   */
   sidenavStatus(opened: boolean): boolean {
     this.sidenav.opened = opened;
     return opened;
   }
 
+  /* @param {string} route
+   * @memberof AppComponent
+   */
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.mobileSidenavOpened = false;
   }
 
+  /* @param {RouterOutlet} outlet
+   * @returns {*}
+   * @memberof AppComponent
+   */
   getRouterOutletState(outlet: RouterOutlet): any {
     return outlet.isActivated ? outlet.activatedRoute : '';
   }

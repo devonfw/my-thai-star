@@ -15,6 +15,9 @@ export interface Filters {
   sortDir: string;
 }
 
+/* @export
+ * @class MenuComponent
+ */
 @Component({
   selector: 'public-menu',
   templateUrl: './menu.component.html',
@@ -23,8 +26,15 @@ export interface Filters {
 export class MenuComponent {
   dishes$: Observable<DishView[]>;
 
+  /* Creates an instance of MenuComponent.
+   * @param {MenuService} menuService
+   * @memberof MenuComponent
+   */
   constructor(private menuService: MenuService) {}
 
+  /* @param {FilterFormData} filters
+   * @memberof MenuComponent
+   */
   onFilterChange(filters: FilterFormData): void {
     const pageable: Pageable = {
       pageSize: 8,

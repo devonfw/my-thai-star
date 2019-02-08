@@ -17,6 +17,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { ConfigService } from '../../core/config/config.service';
 
+/* @export
+ * @class WaiterCockpitService
+ */
 @Injectable()
 export class WaiterCockpitService {
   private readonly getReservationsRestPath: string =
@@ -28,15 +31,26 @@ export class WaiterCockpitService {
 
   private readonly restServiceRoot: string;
 
+  /* Creates an instance of WaiterCockpitService.
+   * @param {HttpClient} http
+   * @param {PriceCalculatorService} priceCalculator
+   * @param {ConfigService} configService
+   * @memberof WaiterCockpitService
+   */
   constructor(
     private http: HttpClient,
     private priceCalculator: PriceCalculatorService,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
-
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
   }
 
+  /* @param {Pageable} pageable
+   * @param {Sort[]} sorting
+   * @param {FilterCockpit} filters
+   * @returns {Observable<OrderResponse[]>}
+   * @memberof WaiterCockpitService
+   */
   getOrders(
     pageable: Pageable,
     sorting: Sort[],
@@ -58,6 +72,12 @@ export class WaiterCockpitService {
     );
   }
 
+  /* @param {Pageable} pageable
+   * @param {Sort[]} sorting
+   * @param {FilterCockpit} filters
+   * @returns {Observable<BookingResponse[]>}
+   * @memberof WaiterCockpitService
+   */
   getReservations(
     pageable: Pageable,
     sorting: Sort[],
@@ -71,6 +91,10 @@ export class WaiterCockpitService {
     );
   }
 
+  /* @param {OrderView[]} orderList
+   * @returns {OrderView[]}
+   * @memberof WaiterCockpitService
+   */
   orderComposer(orderList: OrderView[]): OrderView[] {
     const orders: OrderView[] = cloneDeep(orderList);
     map(orders, (o: OrderViewResult) => {
@@ -80,6 +104,10 @@ export class WaiterCockpitService {
     return orders;
   }
 
+  /* @param {OrderView[]} orderLines
+   * @returns {number}
+   * @memberof WaiterCockpitService
+   */
   getTotalPrice(orderLines: OrderView[]): number {
     return this.priceCalculator.getTotalPrice(orderLines);
   }

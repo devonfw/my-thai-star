@@ -1,6 +1,9 @@
 import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
+/* @export
+ * @class FilterCheckboxesComponent
+ */
 @Component({
   selector: 'own-filter-checkboxes',
   templateUrl: './filter-checkboxes.component.html',
@@ -20,26 +23,44 @@ export class FilterCheckboxesComponent {
 
   // ControlValueAccessor
 
+  /* @param {CategoriesModel} val
+   * @memberof FilterCheckboxesComponent
+   */
   writeValue(val: CategoriesModel): void {
     this.categoriesValue = val;
   }
+  /* @param {*} fn
+   * @memberof FilterCheckboxesComponent
+   */
   registerOnChange(fn: any): void {
     this.updateForm = fn;
   }
 
+  /* @param {*} fn
+   * @memberof FilterCheckboxesComponent
+   */
   registerOnTouched(fn: any): void {
     // Not implemented;
   }
 
+  /* @param {boolean} isDisabled
+   * @memberof FilterCheckboxesComponent
+   */
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
   // Binding Methods
 
+  /* @param {string} filterName
+   * @memberof FilterCheckboxesComponent
+   */
   onToggle(filterName: string): void {
     const toggledValue: boolean = !this.categoriesValue[filterName];
-    this.categoriesValue = { ...this.categoriesValue, ...{[filterName]: toggledValue}};
+    this.categoriesValue = {
+      ...this.categoriesValue,
+      ...{ [filterName]: toggledValue },
+    };
     this.updateForm(this.categoriesValue);
   }
 }

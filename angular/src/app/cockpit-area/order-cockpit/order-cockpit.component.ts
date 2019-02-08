@@ -17,6 +17,10 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 
+/* @export
+ * @class OrderCockpitComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'cockpit-order-cockpit',
   templateUrl: './order-cockpit.component.html',
@@ -45,6 +49,13 @@ export class OrderCockpitComponent implements OnInit {
     bookingToken: undefined,
   };
 
+  /* Creates an instance of OrderCockpitComponent.
+   * @param {MatDialog} dialog
+   * @param {TranslateService} translate
+   * @param {WaiterCockpitService} waiterCockpitService
+   * @param {ConfigService} configService
+   * @memberof OrderCockpitComponent
+   */
   constructor(
     private dialog: MatDialog,
     private translate: TranslateService,
@@ -86,11 +97,17 @@ export class OrderCockpitComponent implements OnInit {
       });
   }
 
+  /* @param {*} filters
+   * @memberof OrderCockpitComponent
+   */
   clearFilters(filters: any): void {
     filters.reset();
     this.applyFilters();
   }
 
+  /* @param {IPageChangeEvent} pagingEvent
+   * @memberof OrderCockpitComponent
+   */
   page(pagingEvent: IPageChangeEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
@@ -100,6 +117,9 @@ export class OrderCockpitComponent implements OnInit {
     this.applyFilters();
   }
 
+  /* @param {ITdDataTableSortChangeEvent} sortEvent
+   * @memberof OrderCockpitComponent
+   */
   sort(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sorting = [];
     this.sorting.push({
@@ -109,6 +129,9 @@ export class OrderCockpitComponent implements OnInit {
     this.applyFilters();
   }
 
+  /* @param {ITdDataTableSelectAllEvent} selection
+   * @memberof OrderCockpitComponent
+   */
   selected(selection: ITdDataTableSelectAllEvent): void {
     this.dialog.open(OrderDialogComponent, {
       width: '80%',

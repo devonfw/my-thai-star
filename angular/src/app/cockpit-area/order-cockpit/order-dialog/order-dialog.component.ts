@@ -11,6 +11,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
 
+/* @export
+ * @class OrderDialogComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'cockpit-order-dialog',
   templateUrl: './order-dialog.component.html',
@@ -33,12 +37,20 @@ export class OrderDialogComponent implements OnInit {
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
 
+  /* Creates an instance of OrderDialogComponent.
+   * @param {TdDataTableService} _dataTableService
+   * @param {WaiterCockpitService} waiterCockpitService
+   * @param {TranslateService} translate
+   * @param {*} dialogData
+   * @param {ConfigService} configService
+   * @memberof OrderDialogComponent
+   */
   constructor(
     private _dataTableService: TdDataTableService,
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.data = dialogData.row;
     this.pageSizes = this.configService.getValues().pageSizes;
@@ -85,6 +97,9 @@ export class OrderDialogComponent implements OnInit {
     });
   }
 
+  /* @param {IPageChangeEvent} pagingEvent
+   * @memberof OrderDialogComponent
+   */
   page(pagingEvent: IPageChangeEvent): void {
     this.fromRow = pagingEvent.fromRow;
     this.currentPage = pagingEvent.page;

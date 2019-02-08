@@ -6,21 +6,40 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { ConfigService } from '../../core/config/config.service';
 
+/* @export
+ * @class BookTableService
+ */
 @Injectable()
 export class BookTableService {
-
   private readonly booktableRestPath: string = 'bookingmanagement/v1/booking';
 
   private readonly restServiceRoot: string;
 
+  /* Creates an instance of BookTableService.
+   * @param {HttpClient} http
+   * @param {ConfigService} configService
+   * @memberof BookTableService
+   */
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
   }
 
+  /* @param {BookingInfo} bookInfo
+   * @returns {Observable<any>}
+   * @memberof BookTableService
+   */
   postBooking(bookInfo: BookingInfo): Observable<any> {
-    return this.http.post(`${this.restServiceRoot}${this.booktableRestPath}`, bookInfo);
+    return this.http.post(
+      `${this.restServiceRoot}${this.booktableRestPath}`,
+      bookInfo,
+    );
   }
 
+  /* @param {*} invitationData
+   * @param {number} type
+   * @returns {BookingInfo}
+   * @memberof BookTableService
+   */
   composeBooking(invitationData: any, type: number): BookingInfo {
     const composedBooking: BookingInfo = {
       booking: {
@@ -32,12 +51,14 @@ export class BookTableService {
     };
 
     if (type) {
-      composedBooking.invitedGuests = map(invitationData.invitedGuests, (email: string) => ({ email: email }));
+      composedBooking.invitedGuests = map(
+        invitationData.invitedGuests,
+        (email: string) => ({ email: email }),
+      );
     } else {
       composedBooking.booking.assistants = invitationData.assistants;
     }
 
     return composedBooking;
   }
-
 }

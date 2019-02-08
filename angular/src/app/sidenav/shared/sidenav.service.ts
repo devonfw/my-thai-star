@@ -15,6 +15,9 @@ const isOrderEqual: Function = (orderToFind: OrderView) => (o: OrderView) =>
   o.dish.name === orderToFind.dish.name &&
   isEqual(o.extras, orderToFind.extras);
 
+/* @export
+ * @class SidenavService
+ */
 @Injectable()
 export class SidenavService {
   private readonly restServiceRoot: string;
@@ -23,6 +26,11 @@ export class SidenavService {
 
   opened = false;
 
+  /* Creates an instance of SidenavService.
+   * @param {HttpClient} http
+   * @param {ConfigService} configService
+   * @memberof SidenavService
+   */
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
   }
@@ -43,10 +51,17 @@ export class SidenavService {
     return this.orders.length;
   }
 
+  /* @param {OrderView} order
+   * @returns {OrderView}
+   * @memberof SidenavService
+   */
   public findOrder(order: OrderView): OrderView {
     return find(this.orders, isOrderEqual(order));
   }
 
+  /* @param {OrderView} order
+   * @memberof SidenavService
+   */
   public addOrder(order: OrderView): void {
     const addOrder: OrderView = cloneDeep(order);
     addOrder.extras = filter(
@@ -60,23 +75,42 @@ export class SidenavService {
     }
   }
 
+  /* @param {OrderView} order
+   * @returns {number}
+   * @memberof SidenavService
+   */
   public increaseOrder(order: OrderView): number {
     return (this.findOrder(order).orderLine.amount += 1);
   }
 
+  /* @param {OrderView} order
+   * @returns {number}
+   * @memberof SidenavService
+   */
   public decreaseOrder(order: OrderView): number {
     return (this.findOrder(order).orderLine.amount -= 1);
   }
 
+  /* @param {OrderView} order
+   * @returns {OrderView[]}
+   * @memberof SidenavService
+   */
   public removeOrder(order: OrderView): OrderView[] {
     return remove(this.orders, isOrderEqual(order));
   }
 
+  /* @returns {OrderView[]}
+   * @memberof SidenavService
+   */
   public removeAllOrders(): OrderView[] {
     this.orders = [];
     return this.orders;
   }
 
+  /* @param {string} token
+   * @returns {Observable<SaveOrderResponse>}
+   * @memberof SidenavService
+   */
   public sendOrders(token: string): Observable<SaveOrderResponse> {
     const orderList: OrderListInfo = {
       booking: { bookingToken: token },
@@ -90,6 +124,10 @@ export class SidenavService {
     );
   }
 
+  /* @param {OrderView[]} orders
+   * @returns {OrderInfo[]}
+   * @memberof SidenavService
+   */
   composeOrders(orders: OrderView[]): OrderInfo[] {
     const composedOrders: OrderInfo[] = [];
     orders.forEach((order: OrderView) => {

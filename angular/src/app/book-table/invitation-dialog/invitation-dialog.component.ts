@@ -5,22 +5,35 @@ import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 
+/* @export
+ * @class InvitationDialogComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'public-invitation-dialog',
   templateUrl: './invitation-dialog.component.html',
   styleUrls: ['./invitation-dialog.component.scss'],
 })
 export class InvitationDialogComponent implements OnInit {
-
   data: any;
   date: string;
 
-  constructor(private snackBar: SnackBarService,
-              private invitationService: BookTableService,
-              private translateService: TranslateService,
-              private dialog: MatDialogRef<InvitationDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) dialogData: any) {
-                 this.data = dialogData;
+  /* Creates an instance of InvitationDialogComponent.
+   * @param {SnackBarService} snackBar
+   * @param {BookTableService} invitationService
+   * @param {TranslateService} translateService
+   * @param {MatDialogRef<InvitationDialogComponent>} dialog
+   * @param {*} dialogData
+   * @memberof InvitationDialogComponent
+   */
+  constructor(
+    private snackBar: SnackBarService,
+    private invitationService: BookTableService,
+    private translateService: TranslateService,
+    private dialog: MatDialogRef<InvitationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
+  ) {
+    this.data = dialogData;
   }
 
   ngOnInit(): void {
@@ -28,18 +41,24 @@ export class InvitationDialogComponent implements OnInit {
   }
 
   sendInvitation(): void {
-    this.invitationService.postBooking(this.invitationService.composeBooking(this.data, 1)).subscribe(() => {
-      this.translateService.get('bookTable.dialog.bookingSuccess')
-          .subscribe((text: string) => {
-            this.snackBar.openSnack(text, 4000, 'green');
-          });
-    }, (error: any) => {
-      this.translateService.get('bookTable.dialog.bookingError')
-          .subscribe((text: string) => {
-            this.snackBar.openSnack(text, 4000, 'red');
-          });
-    });
+    this.invitationService
+      .postBooking(this.invitationService.composeBooking(this.data, 1))
+      .subscribe(
+        () => {
+          this.translateService
+            .get('bookTable.dialog.bookingSuccess')
+            .subscribe((text: string) => {
+              this.snackBar.openSnack(text, 4000, 'green');
+            });
+        },
+        (error: any) => {
+          this.translateService
+            .get('bookTable.dialog.bookingError')
+            .subscribe((text: string) => {
+              this.snackBar.openSnack(text, 4000, 'red');
+            });
+        },
+      );
     this.dialog.close(true);
   }
-
 }

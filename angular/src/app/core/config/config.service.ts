@@ -7,6 +7,10 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class ConfigService {
+  /* Creates an instance of ConfigService.
+   * @param {HttpClient} httpClient
+   * @memberof ConfigService
+   */
   constructor(private httpClient: HttpClient) {}
 
   static factory(appLoadService: ConfigService) {
@@ -14,6 +18,9 @@ export class ConfigService {
   }
 
   // this method gets external configuration calling /config endpoint and merges into config object
+  /* @returns {Promise<any>}
+   * @memberof ConfigService
+   */
   loadExternalConfig(): Promise<any> {
     if (!environment.loadExternalConfig) {
       return Promise.resolve({});
@@ -35,6 +42,9 @@ export class ConfigService {
     return promise;
   }
 
+  /* @returns {Config}
+   * @memberof ConfigService
+   */
   getValues(): Config {
     return config;
   }

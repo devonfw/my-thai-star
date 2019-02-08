@@ -13,6 +13,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
 
+/* @export
+ * @class ReservationDialogComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'cockpit-reservation-dialog',
   templateUrl: './reservation-dialog.component.html',
@@ -35,11 +39,18 @@ export class ReservationDialogComponent implements OnInit {
 
   filteredData: any[] = this.datao;
 
+  /* Creates an instance of ReservationDialogComponent.
+   * @param {TdDataTableService} _dataTableService
+   * @param {TranslateService} translate
+   * @param {*} dialogData
+   * @param {ConfigService} configService
+   * @memberof ReservationDialogComponent
+   */
   constructor(
     private _dataTableService: TdDataTableService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.data = dialogData.row;
     this.pageSizes = configService.getValues().pageSizesDialog;
@@ -84,6 +95,9 @@ export class ReservationDialogComponent implements OnInit {
       });
   }
 
+  /* @param {IPageChangeEvent} pagingEvent
+   * @memberof ReservationDialogComponent
+   */
   page(pagingEvent: IPageChangeEvent): void {
     this.fromRow = pagingEvent.fromRow;
     this.currentPage = pagingEvent.page;

@@ -9,8 +9,19 @@ import { AuthService } from './auth.service';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { TranslateService } from '@ngx-translate/core';
 
+/* @export
+ * @class AuthGuardService
+ * @implements {CanActivate}
+ */
 @Injectable()
 export class AuthGuardService implements CanActivate {
+  /* Creates an instance of AuthGuardService.
+   * @param {SnackBarService} snackBar
+   * @param {AuthService} authService
+   * @param {TranslateService} translate
+   * @param {Router} router
+   * @memberof AuthGuardService
+   */
   constructor(
     public snackBar: SnackBarService,
     private authService: AuthService,
@@ -18,6 +29,11 @@ export class AuthGuardService implements CanActivate {
     private router: Router,
   ) {}
 
+  /* @param {ActivatedRouteSnapshot} route
+   * @param {RouterStateSnapshot} state
+   * @returns {boolean}
+   * @memberof AuthGuardService
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,

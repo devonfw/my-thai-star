@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DishView, ExtraView } from '../../../shared/view-models/interfaces';
 
+/* @export
+ * @class MenuCardDetailsComponent
+ */
 @Component({
   selector: 'own-menu-card-details',
   templateUrl: './menu-card-details.component.html',
@@ -10,6 +13,9 @@ export class MenuCardDetailsComponent {
   @Input() menuInfo: DishView;
   @Output() clickOrder: EventEmitter<DishView> = new EventEmitter<DishView>();
 
+  /* @param {ExtraView} extra
+   * @memberof MenuCardDetailsComponent
+   */
   onSelectExtra(extra: ExtraView): void {
     // extra.selected = !extra.selected;
     const modifiedExtraIndex: number = this.menuInfo.extras.indexOf(extra);

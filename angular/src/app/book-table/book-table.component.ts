@@ -12,6 +12,10 @@ import { AbstractControl } from '@angular/forms/src/model';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 
+/* @export
+ * @class BookTableComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'public-book-table',
   templateUrl: './book-table.component.html',
@@ -25,6 +29,9 @@ export class BookTableComponent implements OnInit {
 
   REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
+  /* @type {BookingInfo}
+   * @memberof BookTableComponent
+   */
   reservationInfo: BookingInfo = {
     booking: {
       name: '',
@@ -35,6 +42,13 @@ export class BookTableComponent implements OnInit {
     invitedGuests: undefined,
   };
 
+  /* Creates an instance of BookTableComponent.
+   * @param {WindowService} window
+   * @param {TranslateService} translate
+   * @param {SnackBarService} snackBarService
+   * @param {MatDialog} dialog
+   * @memberof BookTableComponent
+   */
   constructor(
     private window: WindowService,
     private translate: TranslateService,
@@ -72,6 +86,10 @@ export class BookTableComponent implements OnInit {
     this.getFirstDayWeek();
   }
 
+  /* @readonly
+   * @type {AbstractControl}
+   * @memberof BookTableComponent
+   */
   get name(): AbstractControl {
     return this.bookForm.get('name');
   }
@@ -89,6 +107,9 @@ export class BookTableComponent implements OnInit {
     return this.invitationForm.get('email');
   }
 
+  /* @param {MatCheckbox} checkbox
+   * @memberof BookTableComponent
+   */
   showBookTableDialog(checkbox: MatCheckbox): void {
     this.dialog
       .open(BookTableDialogComponent, {
@@ -104,6 +125,9 @@ export class BookTableComponent implements OnInit {
       });
   }
 
+  /* @param {MatCheckbox} checkbox
+   * @memberof BookTableComponent
+   */
   showInviteDialog(checkbox: MatCheckbox): void {
     this.dialog
       .open(InvitationDialogComponent, {
@@ -120,6 +144,8 @@ export class BookTableComponent implements OnInit {
       });
   }
 
+  /* @memberof BookTableComponent
+   */
   validateEmail(): void {
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
@@ -131,6 +157,9 @@ export class BookTableComponent implements OnInit {
     }
   }
 
+  /* @returns {string}
+   * @memberof BookTableComponent
+   */
   getFirstDayWeek(): string {
     moment.locale(this.translate.currentLang);
     const firstDay: string = moment(moment().weekday(0)).format('d');

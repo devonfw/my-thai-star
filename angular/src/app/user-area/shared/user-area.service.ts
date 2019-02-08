@@ -7,6 +7,9 @@ import { environment } from './../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../core/config/config.service';
 
+/* @export
+ * @class UserAreaService
+ */
 @Injectable()
 export class UserAreaService {
   private readonly restPathRoot: string;
@@ -17,13 +20,22 @@ export class UserAreaService {
   private readonly changePasswordRestPath: string = 'changepassword';
   authAlerts: any;
 
+  /* Creates an instance of UserAreaService.
+   * @param {SnackBarService} snackBar
+   * @param {Router} router
+   * @param {TranslateService} translate
+   * @param {HttpClient} http
+   * @param {AuthService} authService
+   * @param {ConfigService} configService
+   * @memberof UserAreaService
+   */
   constructor(
     public snackBar: SnackBarService,
     public router: Router,
     public translate: TranslateService,
     private http: HttpClient,
     public authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.restPathRoot = this.configService.getValues().restPathRoot;
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
@@ -32,6 +44,10 @@ export class UserAreaService {
     });
   }
 
+  /* @param {string} username
+   * @param {string} password
+   * @memberof UserAreaService
+   */
   login(username: string, password: string): void {
     this.http
       .post(
@@ -63,6 +79,10 @@ export class UserAreaService {
       );
   }
 
+  /* @param {string} email
+   * @param {string} password
+   * @memberof UserAreaService
+   */
   register(email: string, password: string): void {
     this.http
       .post(`${this.restServiceRoot}${this.registerRestPath}`, {
@@ -93,6 +113,9 @@ export class UserAreaService {
     this.snackBar.openSnack(this.authAlerts.logoutSuccess, 4000, 'black');
   }
 
+  /* @param {*} data
+   * @memberof UserAreaService
+   */
   changePassword(data: any): void {
     data.username = this.authService.getUser();
     this.http

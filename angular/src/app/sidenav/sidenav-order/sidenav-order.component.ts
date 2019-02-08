@@ -7,6 +7,10 @@ import { TdDialogService } from '@covalent/core';
 import { OrderView } from '../../shared/view-models/interfaces';
 import { map } from 'lodash';
 
+/* @export
+ * @class SidenavOrderComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'public-sidenav-order',
   templateUrl: './sidenav-order.component.html',
@@ -16,6 +20,13 @@ export class SidenavOrderComponent implements OnInit {
   extras: string;
   @Input() order: OrderView;
 
+  /* Creates an instance of SidenavOrderComponent.
+   * @param {SidenavService} sidenav
+   * @param {MatDialog} dialog
+   * @param {TdDialogService} _dialogService
+   * @param {PriceCalculatorService} calculator
+   * @memberof SidenavOrderComponent
+   */
   constructor(
     private sidenav: SidenavService,
     public dialog: MatDialog,

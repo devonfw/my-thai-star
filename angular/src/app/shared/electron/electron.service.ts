@@ -8,13 +8,15 @@ import * as fs from 'fs';
 
 @Injectable()
 export class ElectronService {
-
   ipcRenderer: typeof ipcRenderer;
   webFrame: typeof webFrame;
   remote: typeof remote;
   childProcess: typeof childProcess;
   fs: typeof fs;
 
+  /* Creates an instance of ElectronService.
+   * @memberof ElectronService
+   */
   constructor() {
     // Conditional imports
     if (this.isElectron()) {
@@ -29,6 +31,5 @@ export class ElectronService {
 
   isElectron = () => {
     return window && window.process && window.process.type;
-  }
-
+  };
 }
