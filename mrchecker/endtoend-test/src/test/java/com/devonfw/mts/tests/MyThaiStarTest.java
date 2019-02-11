@@ -24,11 +24,6 @@ import com.devonfw.mts.pages.ThaiWaiterPage;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 @RunWith(JUnitParamsRunner.class)
 public class MyThaiStarTest extends BaseTest {
 
