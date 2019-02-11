@@ -11,13 +11,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Ordermanagement}.

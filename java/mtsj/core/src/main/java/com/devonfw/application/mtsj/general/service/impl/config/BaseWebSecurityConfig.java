@@ -16,8 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.devonfw.application.mtsj.general.security.JWTAuthenticationFilter;
-import com.devonfw.application.mtsj.general.security.JWTLoginFilter;
+import com.devonfw.application.mtsj.general.common.base.JWTAuthenticationFilter;
+import com.devonfw.application.mtsj.general.common.base.JWTLoginFilter;
 
 /**
  * This type serves as a base class for extensions of the {@code WebSecurityConfigurerAdapter} and provides a default
@@ -84,11 +84,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   }
 
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
+  @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
     auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")

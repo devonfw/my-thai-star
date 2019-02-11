@@ -11,9 +11,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageSearchCriteriaTo;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.Imagemanagement;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageSearchCriteriaTo;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Imagemanagement}.
