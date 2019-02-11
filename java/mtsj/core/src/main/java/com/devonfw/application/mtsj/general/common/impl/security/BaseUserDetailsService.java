@@ -22,7 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
 import com.devonfw.application.mtsj.general.common.api.security.UserData;
-import com.devonfw.application.mtsj.general.service.impl.config.BaseWebSecurityConfig;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -56,7 +55,8 @@ import com.devonfw.module.security.common.base.accesscontrol.AccessControlGrante
  * </pre>
  *
  * <br/>
- * For another example, have a look at {@link BaseWebSecurityConfig}.
+ * For another example, have a look at
+ * {@link com.devonfw.application.mtsj.general.service.impl.config.BaseWebSecurityConfig}.
  */
 @Named
 public class BaseUserDetailsService implements UserDetailsService {

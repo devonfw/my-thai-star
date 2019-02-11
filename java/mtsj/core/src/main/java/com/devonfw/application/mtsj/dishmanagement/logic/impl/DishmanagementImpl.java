@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.devonfw.application.mtsj.dishmanagement.common.api.Category;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategorySearchCriteriaTo;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.CategoryEntity;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
@@ -24,12 +27,9 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepos
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.IngredientRepository;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.CategorySearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.IngredientSearchCriteriaTo;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
 

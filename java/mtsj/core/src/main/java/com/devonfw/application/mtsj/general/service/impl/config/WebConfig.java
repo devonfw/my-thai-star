@@ -2,18 +2,19 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 
 import javax.servlet.Filter;
 
-import com.devonfw.module.logging.common.api.DiagnosticContextFacade;
-import com.devonfw.module.logging.common.impl.DiagnosticContextFacadeImpl;
-import com.devonfw.module.logging.common.impl.DiagnosticContextFilter;
-import com.devonfw.module.logging.common.impl.PerformanceLogFilter;
-import com.devonfw.module.service.common.api.constants.ServiceConstants;
-
+import org.apache.catalina.filters.SetCharacterEncodingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import com.devonfw.module.logging.common.api.DiagnosticContextFacade;
+import com.devonfw.module.logging.common.impl.DiagnosticContextFacadeImpl;
+import com.devonfw.module.logging.common.impl.DiagnosticContextFilter;
+import com.devonfw.module.logging.common.impl.PerformanceLogFilter;
+import com.devonfw.module.service.common.api.constants.ServiceConstants;
 
 /**
  * Registers a number of filters for web requests.

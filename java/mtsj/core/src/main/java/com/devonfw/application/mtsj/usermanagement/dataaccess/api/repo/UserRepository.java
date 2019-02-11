@@ -4,8 +4,8 @@ import static com.querydsl.core.alias.Alias.$;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
-import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserSearchCriteriaTo;
 import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.core.alias.Alias;
