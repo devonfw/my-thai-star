@@ -6,11 +6,6 @@ import org.openqa.selenium.WebElement;
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiConfirmBookPage extends BasePage {
   private static final By confirmationDialogSearch = By.className("mat-dialog-container");
 

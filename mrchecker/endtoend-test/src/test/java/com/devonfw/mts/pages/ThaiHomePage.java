@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.devonfw.mts.pages;
 
 import java.util.List;
@@ -12,12 +9,6 @@ import org.openqa.selenium.WebElement;
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundException;
 import com.devonfw.mts.common.readProperties.ConfigFileReader;
-
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 
 // @Configuration // no se si esto hace falta o no, lo he copiado de otra version (Carlos)
 // @PropertySource("file:config.properties")

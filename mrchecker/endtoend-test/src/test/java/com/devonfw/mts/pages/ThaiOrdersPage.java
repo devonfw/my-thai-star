@@ -1,16 +1,8 @@
-/**
- *
- */
 package com.devonfw.mts.pages;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiOrdersPage extends BasePage {
 
   @Override

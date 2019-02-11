@@ -6,11 +6,6 @@ import java.util.List;
 
 import junitparams.mappers.CsvWithHeaderMapper;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class UserMapper extends CsvWithHeaderMapper {
 
   @Override
