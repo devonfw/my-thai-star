@@ -1,8 +1,8 @@
-package com.devonfw.application.mtsj.dishmanagement.logic.api.to;
+package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 
 import java.util.List;
 
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**

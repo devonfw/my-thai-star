@@ -5,7 +5,7 @@ import net.sf.mmm.util.nls.api.NlsMessage;
 
 /**
  * This exception is thrown if the token of an
- * {@link com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto} is not well formed (wrong prefix).
+ * {@link com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto} is not well formed (wrong prefix).
  *
  */
 public class WrongTokenException extends NlsRuntimeException {

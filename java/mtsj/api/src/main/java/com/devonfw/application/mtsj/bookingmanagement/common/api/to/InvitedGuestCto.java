@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.bookingmanagement.logic.api.to;
+package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 

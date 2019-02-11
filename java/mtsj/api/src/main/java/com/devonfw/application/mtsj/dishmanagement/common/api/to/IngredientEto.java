@@ -1,14 +1,14 @@
-package com.devonfw.application.mtsj.dishmanagement.logic.api.to;
+package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 
 import java.math.BigDecimal;
 
-import com.devonfw.application.mtsj.dishmanagement.common.api.Dish;
+import com.devonfw.application.mtsj.dishmanagement.common.api.Ingredient;
 import com.devonfw.module.basic.common.api.to.AbstractEto;
 
 /**
- * Entity transport object of Dish
+ * Entity transport object of Ingredient
  */
-public class DishEto extends AbstractEto implements Dish {
+public class IngredientEto extends AbstractEto implements Ingredient {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,8 +17,6 @@ public class DishEto extends AbstractEto implements Dish {
   private String description;
 
   private BigDecimal price;
-
-  private Long imageId;
 
   @Override
   public String getName() {
@@ -57,18 +55,6 @@ public class DishEto extends AbstractEto implements Dish {
   }
 
   @Override
-  public Long getImageId() {
-
-    return this.imageId;
-  }
-
-  @Override
-  public void setImageId(Long imageId) {
-
-    this.imageId = imageId;
-  }
-
-  @Override
   public int hashCode() {
 
     final int prime = 31;
@@ -76,8 +62,6 @@ public class DishEto extends AbstractEto implements Dish {
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
-    result = prime * result + ((this.imageId == null) ? 0 : this.imageId.hashCode());
-
     return result;
   }
 
@@ -94,7 +78,7 @@ public class DishEto extends AbstractEto implements Dish {
     if (!super.equals(obj)) {
       return false;
     }
-    DishEto other = (DishEto) obj;
+    IngredientEto other = (IngredientEto) obj;
     if (this.name == null) {
       if (other.name != null) {
         return false;
@@ -116,14 +100,6 @@ public class DishEto extends AbstractEto implements Dish {
     } else if (!this.price.equals(other.price)) {
       return false;
     }
-    if (this.imageId == null) {
-      if (other.imageId != null) {
-        return false;
-      }
-    } else if (!this.imageId.equals(other.imageId)) {
-      return false;
-    }
-
     return true;
   }
 }

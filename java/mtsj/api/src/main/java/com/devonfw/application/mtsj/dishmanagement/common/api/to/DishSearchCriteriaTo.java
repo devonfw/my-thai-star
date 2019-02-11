@@ -3,7 +3,6 @@ package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
 import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteriaTo;
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
 

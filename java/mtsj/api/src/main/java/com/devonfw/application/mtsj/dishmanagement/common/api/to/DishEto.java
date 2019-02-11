@@ -1,14 +1,14 @@
-package com.devonfw.application.mtsj.dishmanagement.logic.api.to;
+package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 
 import java.math.BigDecimal;
 
-import com.devonfw.application.mtsj.dishmanagement.common.api.Ingredient;
+import com.devonfw.application.mtsj.dishmanagement.common.api.Dish;
 import com.devonfw.module.basic.common.api.to.AbstractEto;
 
 /**
- * Entity transport object of Ingredient
+ * Entity transport object of Dish
  */
-public class IngredientEto extends AbstractEto implements Ingredient {
+public class DishEto extends AbstractEto implements Dish {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,6 +17,8 @@ public class IngredientEto extends AbstractEto implements Ingredient {
   private String description;
 
   private BigDecimal price;
+
+  private Long imageId;
 
   @Override
   public String getName() {
@@ -55,6 +57,18 @@ public class IngredientEto extends AbstractEto implements Ingredient {
   }
 
   @Override
+  public Long getImageId() {
+
+    return this.imageId;
+  }
+
+  @Override
+  public void setImageId(Long imageId) {
+
+    this.imageId = imageId;
+  }
+
+  @Override
   public int hashCode() {
 
     final int prime = 31;
@@ -62,6 +76,8 @@ public class IngredientEto extends AbstractEto implements Ingredient {
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
+    result = prime * result + ((this.imageId == null) ? 0 : this.imageId.hashCode());
+
     return result;
   }
 
@@ -78,7 +94,7 @@ public class IngredientEto extends AbstractEto implements Ingredient {
     if (!super.equals(obj)) {
       return false;
     }
-    IngredientEto other = (IngredientEto) obj;
+    DishEto other = (DishEto) obj;
     if (this.name == null) {
       if (other.name != null) {
         return false;
@@ -100,6 +116,14 @@ public class IngredientEto extends AbstractEto implements Ingredient {
     } else if (!this.price.equals(other.price)) {
       return false;
     }
+    if (this.imageId == null) {
+      if (other.imageId != null) {
+        return false;
+      }
+    } else if (!this.imageId.equals(other.imageId)) {
+      return false;
+    }
+
     return true;
   }
 }

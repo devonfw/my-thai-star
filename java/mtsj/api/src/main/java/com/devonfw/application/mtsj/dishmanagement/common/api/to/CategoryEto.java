@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.dishmanagement.logic.api.to;
+package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 
 import com.devonfw.application.mtsj.dishmanagement.common.api.Category;
 import com.devonfw.module.basic.common.api.to.AbstractEto;

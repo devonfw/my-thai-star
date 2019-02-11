@@ -1,11 +1,11 @@
-package com.devonfw.application.mtsj.bookingmanagement.logic.api.to;
+package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**
