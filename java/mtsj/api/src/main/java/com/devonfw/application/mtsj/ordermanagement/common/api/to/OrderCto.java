@@ -1,9 +1,9 @@
-package com.devonfw.application.mtsj.ordermanagement.logic.api.to;
+package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
 import java.util.List;
 
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**

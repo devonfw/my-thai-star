@@ -1,9 +1,9 @@
-package com.devonfw.application.mtsj.ordermanagement.logic.api.to;
+package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
 import java.util.List;
 
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**

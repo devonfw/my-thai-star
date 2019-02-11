@@ -2,13 +2,13 @@ package com.devonfw.application.mtsj.dishmanagement.logic.api;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategorySearchCriteriaTo;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientSearchCriteriaTo;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.CategoryEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishCto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishEto;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 
 /**
  * Interface for Dishmanagement component.

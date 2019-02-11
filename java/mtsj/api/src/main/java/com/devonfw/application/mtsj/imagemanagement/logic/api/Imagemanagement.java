@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageSearchCriteriaTo;
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
 
 /**
  * Interface for Imagemanagement component.

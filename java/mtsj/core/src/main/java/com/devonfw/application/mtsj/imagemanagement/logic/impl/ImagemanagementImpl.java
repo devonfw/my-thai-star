@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageSearchCriteriaTo;
 import com.devonfw.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
 import com.devonfw.application.mtsj.imagemanagement.dataaccess.api.repo.ImageRepository;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.Imagemanagement;
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
 
 /**
  * Implementation of component interface of imagemanagement

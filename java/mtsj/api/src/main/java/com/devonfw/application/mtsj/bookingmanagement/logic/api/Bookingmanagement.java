@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingCto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableEto;
 
 /**
  * Interface for Bookingmanagement component.

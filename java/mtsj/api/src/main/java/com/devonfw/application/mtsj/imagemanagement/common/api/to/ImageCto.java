@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.imagemanagement.logic.api.to;
+package com.devonfw.application.mtsj.imagemanagement.common.api.to;
 
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
