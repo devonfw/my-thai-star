@@ -1,10 +1,5 @@
 package com.devonfw.mts.common.data;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class Reservation {
   private String date;
 

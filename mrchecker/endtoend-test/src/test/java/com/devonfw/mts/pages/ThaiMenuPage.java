@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.devonfw.mts.pages;
 
 import org.openqa.selenium.By;
@@ -10,11 +7,6 @@ import org.openqa.selenium.WebElement;
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiMenuPage extends BasePage {
 
   private static final By orderOptionsSearch = By.tagName("own-menu-card-details");
