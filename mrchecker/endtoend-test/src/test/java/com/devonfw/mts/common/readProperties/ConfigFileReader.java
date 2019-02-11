@@ -1,10 +1,5 @@
 package com.devonfw.mts.common.readProperties;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

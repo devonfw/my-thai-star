@@ -8,11 +8,6 @@ import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 import com.devonfw.mts.common.utils.Utils;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiLoginPage extends BasePage {
 
   /* Search criteria */
