@@ -34,84 +34,84 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml" })
 public class ServiceConfig extends WsConfigurerAdapter {
 
-	/** Logger instance. */
-	private static final Logger LOG = LoggerFactory.getLogger(ServiceConfig.class);
+  /** Logger instance. */
+  private static final Logger LOG = LoggerFactory.getLogger(ServiceConfig.class);
 
-	/** The services "folder" of an URL. */
-	public static final String URL_FOLDER_SERVICES = "services";
+  /** The services "folder" of an URL. */
+  public static final String URL_FOLDER_SERVICES = "services";
 
-	public static final String URL_PATH_SERVICES = "/" + URL_FOLDER_SERVICES;
+  public static final String URL_PATH_SERVICES = "/" + URL_FOLDER_SERVICES;
 
-	public static final String URL_FOLDER_REST = "/rest";
+  public static final String URL_FOLDER_REST = "/rest";
 
-	public static final String URL_FOLDER_WEB_SERVICES = "/ws";
+  public static final String URL_FOLDER_WEB_SERVICES = "/ws";
 
-	public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_REST;
+  public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_REST;
 
-	public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_WEB_SERVICES;
+  public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_WEB_SERVICES;
 
-	@Value("${security.expose.error.details}")
-	boolean exposeInternalErrorDetails;
+  @Value("${security.expose.error.details}")
+  boolean exposeInternalErrorDetails;
 
-	@Inject
-	private ApplicationContext applicationContext;
+  @Inject
+  private ApplicationContext applicationContext;
 
-	@Inject
-	private ObjectMapperFactory objectMapperFactory;
+  @Inject
+  private ObjectMapperFactory objectMapperFactory;
 
-	@Bean(name = "cxf")
-	public SpringBus springBus() {
+  @Bean(name = "cxf")
+  public SpringBus springBus() {
 
-		return new SpringBus();
-	}
+    return new SpringBus();
+  }
 
-	@Bean
-	public JacksonJsonProvider jacksonJsonProvider() {
+  @Bean
+  public JacksonJsonProvider jacksonJsonProvider() {
 
-		return new JacksonJsonProvider(this.objectMapperFactory.createInstance());
-	}
+    return new JacksonJsonProvider(this.objectMapperFactory.createInstance());
+  }
 
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean() {
+  @Bean
+  public ServletRegistrationBean servletRegistrationBean() {
 
-		CXFServlet cxfServlet = new CXFServlet();
-		ServletRegistrationBean servletRegistration = new ServletRegistrationBean(cxfServlet, URL_PATH_SERVICES + "/*");
-		return servletRegistration;
-	}
+    CXFServlet cxfServlet = new CXFServlet();
+    ServletRegistrationBean servletRegistration = new ServletRegistrationBean(cxfServlet, URL_PATH_SERVICES + "/*");
+    return servletRegistration;
+  }
 
-	@Bean
-	public Server jaxRsServer() {
+  @Bean
+  public Server jaxRsServer() {
 
-		// List<Object> restServiceBeans = new
-		// ArrayList<>(this.applicationContext.getBeansOfType(RestService.class).values());
-		Collection<Object> restServices = findRestServices();
-		if (restServices.isEmpty()) {
-			LOG.info("No REST Services have been found. Rest Endpoint will not be enabled in CXF.");
-			return null;
-		}
-		Collection<Object> providers = this.applicationContext.getBeansWithAnnotation(Provider.class).values();
+    // List<Object> restServiceBeans = new
+    // ArrayList<>(this.applicationContext.getBeansOfType(RestService.class).values());
+    Collection<Object> restServices = findRestServices();
+    if (restServices.isEmpty()) {
+      LOG.info("No REST Services have been found. Rest Endpoint will not be enabled in CXF.");
+      return null;
+    }
+    Collection<Object> providers = this.applicationContext.getBeansWithAnnotation(Provider.class).values();
 
-		JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();
-		factory.setBus(springBus());
-		factory.setAddress(URL_FOLDER_REST);
-		// factory.set
-		factory.setServiceBeans(new ArrayList<>(restServices));
-		factory.setProviders(new ArrayList<>(providers));
+    JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();
+    factory.setBus(springBus());
+    factory.setAddress(URL_FOLDER_REST);
+    // factory.set
+    factory.setServiceBeans(new ArrayList<>(restServices));
+    factory.setProviders(new ArrayList<>(providers));
 
-		return factory.create();
-	}
+    return factory.create();
+  }
 
-	private Collection<Object> findRestServices() {
+  private Collection<Object> findRestServices() {
 
-		return this.applicationContext.getBeansWithAnnotation(Path.class).values();
-	}
+    return this.applicationContext.getBeansWithAnnotation(Path.class).values();
+  }
 
-	@Bean
-	public RestServiceExceptionFacade restServiceExceptionFacade() {
+  @Bean
+  public RestServiceExceptionFacade restServiceExceptionFacade() {
 
-		RestServiceExceptionFacade exceptionFacade = new RestServiceExceptionFacade();
-		exceptionFacade.setExposeInternalErrorDetails(this.exposeInternalErrorDetails);
-		return exceptionFacade;
-	}
+    RestServiceExceptionFacade exceptionFacade = new RestServiceExceptionFacade();
+    exceptionFacade.setExposeInternalErrorDetails(this.exposeInternalErrorDetails);
+    return exceptionFacade;
+  }
 
 }

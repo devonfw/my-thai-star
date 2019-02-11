@@ -7,14 +7,14 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.service.api.rest.BookingmanagementRestService;
 
 /**

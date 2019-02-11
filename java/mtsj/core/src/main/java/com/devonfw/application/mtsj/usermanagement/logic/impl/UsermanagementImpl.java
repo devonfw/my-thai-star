@@ -4,13 +4,15 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
@@ -18,8 +20,6 @@ import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleR
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserRoleEto;
-import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserRoleSearchCriteriaTo;
-import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserSearchCriteriaTo;
 
 /**
  * Implementation of component interface of usermanagement

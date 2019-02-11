@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
@@ -35,12 +35,14 @@ import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.to.IngredientEto;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
-import com.devonfw.application.mtsj.mailservice.Mail;
+import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
@@ -50,8 +52,6 @@ import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderSearchCriteriaTo;
 
 /**
  * Implementation of component interface of ordermanagement
@@ -349,6 +349,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     return orderEntity;
+
   }
 
   private BookingType getOrderType(String token) throws WrongTokenException {
@@ -463,7 +464,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         throw new NoInviteException();
       }
       return guest.getEmail();
-    } else {
+    } else
+
+    {
       return null;
     }
   }

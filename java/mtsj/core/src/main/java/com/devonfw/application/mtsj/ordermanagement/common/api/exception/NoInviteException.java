@@ -2,22 +2,16 @@ package com.devonfw.application.mtsj.ordermanagement.common.api.exception;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 
-import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-
 /**
- * This exception is thrown if the guest token of an {@link OrderEto} has no
- * {@link BookingEntity} related.
+ * This exception is thrown if the guest token of an
+ * {@link com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto} has no
+ * {@link com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity} related.
  *
  */
 public class NoInviteException extends NlsRuntimeException {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  public NoInviteException() {
 
-	public NoInviteException() {
-		super("The invitation does not exist");
-	}
+    super("The invitation does not exist");
+  }
 }
