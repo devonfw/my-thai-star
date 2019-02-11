@@ -9,11 +9,6 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 import com.devonfw.mts.common.data.Reservation;
 import com.devonfw.mts.common.utils.Utils;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiBookPage extends BasePage {
 
   private static final By dateSearch = By.cssSelector("input[formcontrolname='bookingDate']");
