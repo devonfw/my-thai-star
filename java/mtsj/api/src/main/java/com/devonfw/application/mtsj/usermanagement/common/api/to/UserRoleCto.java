@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.usermanagement.logic.api.to;
+package com.devonfw.application.mtsj.usermanagement.common.api.to;
 
 import java.util.List;
 

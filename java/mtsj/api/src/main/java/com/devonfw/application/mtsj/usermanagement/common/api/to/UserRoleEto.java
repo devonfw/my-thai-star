@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.usermanagement.logic.api.to;
+package com.devonfw.application.mtsj.usermanagement.common.api.to;
 
 import com.devonfw.application.mtsj.usermanagement.common.api.UserRole;
 import com.devonfw.module.basic.common.api.to.AbstractEto;

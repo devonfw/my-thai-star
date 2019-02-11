@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.ordermanagement.logic.api.to;
+package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
 import com.devonfw.application.mtsj.ordermanagement.common.api.Order;
 import com.devonfw.module.basic.common.api.to.AbstractEto;

@@ -5,13 +5,13 @@ import javax.inject.Named;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderCto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.service.api.rest.OrdermanagementRestService;
 
 /**
