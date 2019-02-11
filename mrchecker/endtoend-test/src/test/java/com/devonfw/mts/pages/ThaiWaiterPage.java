@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.devonfw.mts.pages;
 
 import org.openqa.selenium.By;
@@ -8,11 +5,6 @@ import org.openqa.selenium.By;
 import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
-/**
- * @author Juan Andrés Ambuludi Olmedo
- * @author Jorge Dacal Cantos
- * @author Carlos Micó Egea
- */
 public class ThaiWaiterPage extends BasePage {
 
   /* Search criteria */
