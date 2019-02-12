@@ -12,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingCto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Bookingmanagement}.
@@ -157,4 +157,5 @@ public interface BookingmanagementRestService {
   @Path("/table/search")
   @POST
   public Page<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo);
+
 }

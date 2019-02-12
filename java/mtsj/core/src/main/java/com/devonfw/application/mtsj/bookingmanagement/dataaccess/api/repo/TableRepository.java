@@ -2,8 +2,8 @@ package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.core.alias.Alias;

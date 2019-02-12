@@ -14,6 +14,7 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.exception.CancelInviteNotAllowedException;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingCto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
@@ -32,24 +39,18 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.Bookin
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.InvitedGuestRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingCto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingSearchCriteriaTo;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.InvitedGuestSearchCriteriaTo;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableEto;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
-import com.devonfw.application.mtsj.mailservice.Mail;
+import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderCto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import com.devonfw.application.mtsj.usermanagement.logic.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 
 /**
  * Implementation of component interface of bookingmanagement
  */
+
 @Named
 @Transactional
 public class BookingmanagementImpl extends AbstractComponentFacade implements Bookingmanagement {
@@ -238,7 +239,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
         + String.format("%02d", ldt1.getSecond());
 
-    MessageDigest md = MessageDigest.getInstance("MD5");
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
     md.update((email + date + time).getBytes());
     byte[] digest = md.digest();
     StringBuilder sb = new StringBuilder();
