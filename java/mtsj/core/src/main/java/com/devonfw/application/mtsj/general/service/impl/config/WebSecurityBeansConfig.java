@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
-import com.devonfw.application.mtsj.general.logic.impl.config.DefaultRolesPrefixPostProcessor;
+import com.devonfw.application.mtsj.general.common.base.DefaultRolesPrefixPostProcessor;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.base.accesscontrol.AccessControlSchemaProvider;
 import com.devonfw.module.security.common.impl.accesscontrol.AccessControlProviderImpl;

@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devonfw.application.mtsj.SpringBootApp;
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.Imagemanagement;
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageEto;
 import com.devonfw.module.test.common.base.ComponentTest;
 
 /**

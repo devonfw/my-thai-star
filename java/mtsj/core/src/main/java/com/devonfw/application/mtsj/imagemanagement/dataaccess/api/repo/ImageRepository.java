@@ -5,8 +5,8 @@ import static com.querydsl.core.alias.Alias.$;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
+import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageSearchCriteriaTo;
 import com.devonfw.application.mtsj.imagemanagement.dataaccess.api.ImageEntity;
-import com.devonfw.application.mtsj.imagemanagement.logic.api.to.ImageSearchCriteriaTo;
 import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.core.alias.Alias;
