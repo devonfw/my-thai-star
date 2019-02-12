@@ -8,12 +8,7 @@ import net.sf.mmm.util.exception.api.NlsRuntimeException;
  */
 public class CancelInviteNotAllowedException extends NlsRuntimeException {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public CancelInviteNotAllowedException() {
-		super("The booking can not be cancelled.");
-	}
+  public CancelInviteNotAllowedException() {
+    super("The booking can not be cancelled.");
+  }
 }

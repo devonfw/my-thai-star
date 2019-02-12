@@ -8,8 +8,9 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
 
 /**
  * Extended validation for Email fields to check domain

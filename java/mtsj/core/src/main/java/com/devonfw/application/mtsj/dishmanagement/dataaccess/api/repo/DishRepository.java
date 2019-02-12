@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishSearchCriteriaTo;
 import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.core.alias.Alias;

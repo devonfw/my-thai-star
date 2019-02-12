@@ -9,18 +9,18 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devonfw.application.mtsj.SpringBootApp;
-import com.devonfw.application.mtsj.bookingmanagement.logic.api.to.BookingEto;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
+import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
-import com.devonfw.application.mtsj.dishmanagement.logic.api.to.DishEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderCto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderEto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineCto;
-import com.devonfw.application.mtsj.ordermanagement.logic.api.to.OrderLineEto;
 import com.devonfw.module.test.common.base.ComponentTest;
 
 /**
