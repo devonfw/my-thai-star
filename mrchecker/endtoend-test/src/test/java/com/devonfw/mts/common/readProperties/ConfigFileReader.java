@@ -12,6 +12,9 @@ public class ConfigFileReader {
 
   private final String propertyFilePath = "src/resources/settings.properties";
 
+  /**
+   *
+   * */
   public ConfigFileReader() {
 
     BufferedReader reader;
