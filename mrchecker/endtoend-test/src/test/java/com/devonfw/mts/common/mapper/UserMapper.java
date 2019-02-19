@@ -16,7 +16,6 @@ public class UserMapper extends CsvWithHeaderMapper {
    * */
   @Override
   public Object[] map(Reader reader) {
-
     Object[] map = super.map(reader);
     List<Object[]> result = new LinkedList<Object[]>();
     for (Object lineObj : map) {
@@ -28,6 +27,7 @@ public class UserMapper extends CsvWithHeaderMapper {
       // Order of arguments must be inline with Person class constructor argument list
       result.add(lineSplitted);
     }
+
     return result.toArray();
   }
 }

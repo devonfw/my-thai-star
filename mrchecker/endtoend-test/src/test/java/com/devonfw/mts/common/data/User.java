@@ -1,23 +1,25 @@
 package com.devonfw.mts.common.data;
 
 public class User {
+
+  /** Username */
   private String username;
 
+  /** Password */
   private String password;
 
   /**
-   * Constructor.
+   * Constructor used to create a user
    * @param username. String that represents the name of a user.
    * @param password. Password for the user given.
    * */
   public User(String username, String password) {
     this.username = username;
     this.password = password;
-
   }
 
   /**
-   * Constructor
+   * Constructor used to create a user
    * @param username. String that represents the name of a user.
    * */
   public User(String username) {
@@ -26,6 +28,8 @@ public class User {
   }
 
   /**
+   * See also {@link User#username}
+   *
    * @return Username.
    * */
   public String getUsername() {
@@ -33,7 +37,9 @@ public class User {
   }
 
   /**
-   * @return Password of the user
+   * See also {@link User#password}
+   *
+   * @return Password of the user.
    * */
   public String getPassword() {
     return this.password;
