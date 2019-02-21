@@ -2,7 +2,7 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
-**UPDATE:** Angular CLI has been updated to 6.0.1 version.
+**UPDATE:** Angular CLI has been updated to 7.0.6 version.
 
 ## Install or update the project
 
@@ -14,21 +14,21 @@ $ npm cache clean
 $ npm install -g @angular/cli
 ```
 
-If you have a previous version of this project you must update the node modules:
+If you have a previous version of this project you must update the node modules. It is very important to point out that this project is using **yarn** and for that reason you can see committed in the repository `yarn.lock`. Therefore, it is mandatory to use it when installing dependencies as follows:
 
 Windows:
 
 ```bash
 $ rmdir /s node_modules
 $ rmdir /s dist
-$ npm install
+$ yarn
 ```
 
 Linux or macOS:
 
 ```bash
 $ rm -rf node_modules dist
-$ npm install
+$ yarn
 ```
 
 To test the application as a **PWA** you will need a small http server:
@@ -37,34 +37,19 @@ To test the application as a **PWA** you will need a small http server:
 $ npm i -g http-server
 ```
 
-## Yarn
-
-Project tested with the latest [Yarn](https://yarnpkg.com/lang/en/) version. Instead of using `npm` you can do the following:
-
-```bash
-$ rm -rf node_modules dist
-$ yarn
-```
-
-If you have a previous version of this project run the following command:
-
-```bash
-$ yarn upgrade
-```
-
 ## Run the project
 
 There are the following alternatives in order to run My Thai Star Angular client with the different server technologies and environments:
 
 ```bash
-$ npm run start                     # Local OASP4J server
-$ npm run serve:pwa                 # Build and run the app as PWA
-$ npm run serve:prod                # Production server
-$ npm run serve:prodcompose         # Production server with Docker compose
-$ npm run serve:node                # Node.js or local Serverless server
+$ yarn start                     # Local OASP4J server
+$ yarn serve:pwa                 # Build and run the app as PWA
+$ yarn serve:prod                # Production server
+$ yarn serve:prodcompose         # Production server with Docker compose
+$ yarn serve:node                # Node.js or local Serverless server
 ```
 
-If you want to use `yarn`, use it instead of `npm run` in the above commands.
+If you want to use `npm run`, use it instead of `yarn` in the above commands. It will work as you are not installing dependencies.
 
 ## Build
 
@@ -82,8 +67,8 @@ Electron support has been included in this new My Thai Star release. We have inc
 ### Serve
 
 ```bash
-$ npm run electron:start            # Build, run and serve in dev mode locally
-$ npm run electron:local            # Build, run and serve in prod mode locally
+$ yarn electron:start            # Build, run and serve in dev mode locally
+$ yarn electron:local            # Build, run and serve in prod mode locally
 ```
 
 ### Build and package
@@ -91,9 +76,9 @@ $ npm run electron:local            # Build, run and serve in prod mode locally
 The built app will be generated in the `release` folder.
 
 ```bash
-$ npm run electron:windows          # Build and package as a Windows app
-$ npm run electron:linux            # Build and package as a Linux app
-$ npm run electron:mac              # Build and package as a macOS app
+$ yarn electron:windows          # Build and package as a Windows app
+$ yarn electron:linux            # Build and package as a Linux app
+$ yarn electron:mac              # Build and package as a macOS app
 ```
 
 ## Running unit tests
