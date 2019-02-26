@@ -1,11 +1,14 @@
 package com.devonfw.application.mtsj.general.common;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 
 import net.sf.mmm.util.filter.api.Filter;
 import net.sf.mmm.util.reflect.api.ReflectionUtil;
@@ -13,15 +16,27 @@ import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.devonfw.application.mtsj.SpringBootApp;
+import com.devonfw.application.mtsj.dishmanagement.logic.impl.DishmanagementImpl;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.module.test.common.base.ModuleTest;
 
 /**
  * Tests the permission check in logic layer.
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = SpringBootApp.class)
 public class PermissionCheckTest extends ModuleTest {
 
+
+	@Inject
+	private DishmanagementImpl dishmanagementImpl;
   /**
    * Check if all relevant methods in use case implementations have permission checks i.e. {@link RolesAllowed},
    * {@link DenyAll} or {@link PermitAll} annotation is applied. This is only checked for methods that are declared in
@@ -64,5 +79,25 @@ public class PermissionCheckTest extends ModuleTest {
       }
     }
     assertions.assertAll();
+  }
+
+  /**
+ * Check if access to a {@link RolesAllowed} annotated method will be denied to an unauthorized user.
+ */
+@Test(expected = AccessDeniedException.class)
+  public void permissionAccessDenied() {
+	  TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY);
+	  dishmanagementImpl.findIngredient(1L);
+	  TestUtil.logout();
+  }
+
+/**
+* Check if access to a {@link RolesAllowed} annotated method will be granted to a user that has the required permission.
+*/
+  @Test()
+  public void permissionAccessGranted() {
+	  TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY, ApplicationAccessControlConfig.PERMISSION_FIND_INGREDIENT);
+	  dishmanagementImpl.findIngredient(1L);
+	  TestUtil.logout();
   }
 }
