@@ -1,43 +1,50 @@
-node {
-    
-    stage('Checking out MyThaiStar') {
-        //deleteDir()
-        //git branch: 'fix_orderMenu', url: 'https://github.com/Jorge-Dacal/my-thai-star.git'
-        //git branch: 'develop', url: 'https://github.com/Jorge-Dacal/my-thai-star/mrchecker/endtoend-test.git'
-        sh "ls"
-        sh "pwd"
-    }
-    
-    stage('Load tools') {
-        tool name: 'Maven3', type: 'maven'
-        env.JAVA_HOME="${tool 'OpenJDK 1.8.181'}"
-        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-        sh "cat /etc/apt/sources.list"
+pipeline {
+    agent any
+    environment {
+        // Repository
+        repo = 'http://gitlab'
+        branch = 'develop'
+        credentialsID = ''
 
+        openshiftUrl = "https://arkenstone.s2-eu.capgemini.com/"
     }
 
-    //stage('SonarQube Analysis'){
+    stages {
 
-        //dir('mrchecker/endtoend-test/') {
-            ///withMaven(globalMavenSettingsConfig: '9d437f6e-46e7-4a11-a8d1-2f0055f14033', jdk: 'Java8', maven: 'Maven 3.5.4') {
-                //sh "mvn compile"
-                //withSonarQubeEnv('SonarQube') {
-                    // sh """sonar-scanner --version"""
-                   // sh "mvn sonar:sonar"
-                //}
-            //}
-        //}
-    //}
-    stage('Run end to end tests') {
-        
-        dir('mrchecker/endtoend-test/') {
-            sh "ls"
-            withMaven(globalMavenSettingsConfig: 'MavenSettings', jdk: 'OpenJDK 1.8.181', maven: 'Maven3') {
-                sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://selenium-hub-core:4444/wd/hub' -Dos=LINUX"
-            }
+	    stage('Load tools') {
+	        steps {
+		        script {
+		        	tool name: 'Maven3', type: 'maven'
+			        env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
+			        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+			        sh "cat /etc/apt/sources.list"
+		        }
+	        }
+
+	    }
+
+	    stage('Run end to end tests') {
+
+	        steps {
+	        	script {
+	        		dir('mrchecker/endtoend-test/') {
+			            sh "ls"
+			            withMaven(globalMavenSettingsConfig: 'MavenSettings', jdk: 'OpenJDK 1.8', maven: 'Maven3') {
+			                sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://selenium-hub-core:4444/wd/hub' -Dos=LINUX"
+			            }
+			        }
+	        	}
+	        }
+
+
+	    }
+    }
+
+    post {
+        cleanup {
+            cleanWs()
+            deleteDir()
         }
-        
-        
     }
-
 }
+
