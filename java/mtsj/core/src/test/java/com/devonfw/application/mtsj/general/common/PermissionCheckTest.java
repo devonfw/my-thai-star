@@ -1,7 +1,5 @@
 package com.devonfw.application.mtsj.general.common;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.lang.reflect.Method;
 import java.util.Set;
 
@@ -34,9 +32,9 @@ import com.devonfw.module.test.common.base.ModuleTest;
 @SpringBootTest(classes = SpringBootApp.class)
 public class PermissionCheckTest extends ModuleTest {
 
+  @Inject
+  private DishmanagementImpl dishmanagementImpl;
 
-	@Inject
-	private DishmanagementImpl dishmanagementImpl;
   /**
    * Check if all relevant methods in use case implementations have permission checks i.e. {@link RolesAllowed},
    * {@link DenyAll} or {@link PermitAll} annotation is applied. This is only checked for methods that are declared in
@@ -82,22 +80,26 @@ public class PermissionCheckTest extends ModuleTest {
   }
 
   /**
- * Check if access to a {@link RolesAllowed} annotated method will be denied to an unauthorized user.
- */
-@Test(expected = AccessDeniedException.class)
+   * Check if access to a {@link RolesAllowed} annotated method will be denied to an unauthorized user.
+   */
+  @Test(expected = AccessDeniedException.class)
   public void permissionAccessDenied() {
-	  TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY);
-	  dishmanagementImpl.findIngredient(1L);
-	  TestUtil.logout();
+
+    TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY);
+    this.dishmanagementImpl.findIngredient(1L);
+    TestUtil.logout();
   }
 
-/**
-* Check if access to a {@link RolesAllowed} annotated method will be granted to a user that has the required permission.
-*/
+  /**
+   * Check if access to a {@link RolesAllowed} annotated method will be granted to a user that has the required
+   * permission.
+   */
   @Test()
   public void permissionAccessGranted() {
-	  TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY, ApplicationAccessControlConfig.PERMISSION_FIND_INGREDIENT);
-	  dishmanagementImpl.findIngredient(1L);
-	  TestUtil.logout();
+
+    TestUtil.login("waiter", ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY,
+        ApplicationAccessControlConfig.PERMISSION_FIND_INGREDIENT);
+    this.dishmanagementImpl.findIngredient(1L);
+    TestUtil.logout();
   }
 }
