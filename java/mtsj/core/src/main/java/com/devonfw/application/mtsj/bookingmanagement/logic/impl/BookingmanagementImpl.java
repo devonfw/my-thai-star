@@ -2,7 +2,6 @@ package com.devonfw.application.mtsj.bookingmanagement.logic.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -208,9 +207,8 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
-    bookingEntity.setCreationDate(Timestamp.from(Instant.now()));
-    bookingEntity
-        .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
+    bookingEntity.setCreationDate(Instant.now());
+    bookingEntity.setExpirationDate(bookingEntity.getBookingDate().minus(Duration.ofHours(1)));
 
     bookingEntity.setInvitedGuests(getBeanMapper().mapList(invited, InvitedGuestEntity.class));
 
@@ -239,7 +237,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
         + String.format("%02d", ldt1.getSecond());
 
-    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    MessageDigest md = MessageDigest.getInstance("MD5");
     md.update((email + date + time).getBytes());
     byte[] digest = md.digest();
     StringBuilder sb = new StringBuilder();
@@ -561,9 +559,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   private boolean cancelInviteAllowed(BookingEto booking) {
 
-    Long bookingTimeMillis = booking.getBookingDate().getTime();
+    Long bookingTimeMillis = booking.getBookingDate().toEpochMilli();
     Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    Long now = Timestamp.from(Instant.now()).getTime();
+    Long now = Instant.now().toEpochMilli();
 
     return (now > cancellationLimit) ? false : true;
   }

@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.general.common;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +52,7 @@ public class AccessControlSchemaXmlValidationTest extends ModuleTest {
 
     // create a Validator instance, which can be used to validate an instance document
     Validator validator = schema.newValidator();
-
+    assertNotNull(document);
     // validate the DOM tree
     validator.validate(new DOMSource(document));
   }

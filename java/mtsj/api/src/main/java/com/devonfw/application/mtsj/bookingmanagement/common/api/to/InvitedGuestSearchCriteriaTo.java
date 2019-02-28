@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteriaTo;
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
@@ -20,7 +20,7 @@ public class InvitedGuestSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private Boolean accepted;
 
-  private Timestamp modificationDate;
+  private Instant modificationDate;
 
   private StringSearchConfigTo guestTokenOption;
 
@@ -74,14 +74,14 @@ public class InvitedGuestSearchCriteriaTo extends AbstractSearchCriteriaTo {
     this.accepted = accepted;
   }
 
-  public Timestamp getModificationDate() {
+  public Instant getModificationDate() {
 
-    return (Timestamp) this.modificationDate.clone();
+    return this.modificationDate;
   }
 
-  public void setModificationDate(Timestamp modificationDate) {
+  public void setModificationDate(Instant modificationDate) {
 
-    this.modificationDate = (Timestamp) modificationDate.clone();
+    this.modificationDate = modificationDate;
   }
 
   /**

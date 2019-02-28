@@ -1,7 +1,6 @@
 package com.devonfw.application.mtsj.ordermanagement.logic.impl;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -474,10 +473,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   private boolean cancellationAllowed(OrderEntity order) {
 
     BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
-    Timestamp bookingTime = booking.getBooking().getBookingDate();
-    Long bookingTimeMillis = bookingTime.getTime();
+    Instant bookingTime = booking.getBooking().getBookingDate();
+    Long bookingTimeMillis = bookingTime.toEpochMilli();
     Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    Long now = Timestamp.from(Instant.now()).getTime();
+    Long now = Instant.now().toEpochMilli();
 
     return (now > cancellationLimit) ? false : true;
   }
