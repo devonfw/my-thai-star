@@ -1,14 +1,22 @@
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import {Injectable, OnChanges, OnInit} from '@angular/core';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../core/config/config.service';
+import {map, switchMap} from 'rxjs/operators';
+import {LoginSuccess, SetToken} from '../store/actions/auth.actions';
+import * as fromStore from '../store/reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {getToken, getUserState} from '../store/reducers';
 
 @Injectable()
-export class UserAreaService {
+export class UserAreaService implements OnInit{
+  getState$: Observable<any>;
+  getToken$: Observable<any>;
   private readonly restPathRoot: string;
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
@@ -23,45 +31,61 @@ export class UserAreaService {
     public translate: TranslateService,
     private http: HttpClient,
     public authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private store: Store<fromStore.AuthState>
   ) {
     this.restPathRoot = this.configService.getValues().restPathRoot;
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
     this.translate.get('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
+    this.getState$ = this.store.select(getUserState);
+    this.getToken$ = this.store.select(getToken);
   }
 
-  login(username: string, password: string): void {
-    this.http
-      .post(
+  ngOnInit(): void {
+    this.getState$.subscribe(state => {
+      this.authService.setLogged(state.logged);
+      this.authService.setUser(state.user);
+      this.authService.setRole(state.currentRole);
+    });
+    this.getToken$.subscribe(state => {
+      this.authService.setToken(state);
+    });
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
+  login(username: string, password: string) {
+    const httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json'
+    });
+
+    return this.http
+      .post (
         `${this.restPathRoot}${this.loginRestPath}`,
         { username: username, password: password },
-        { responseType: 'text', observe: 'response' },
+        {headers: httpHeaders, observe: 'response'}
       )
-      .subscribe(
-        (res: any) => {
-          this.authService.setToken(res.headers.get('Authorization'));
-          this.http
+      .pipe (
+        switchMap ((res: any) => {
+          localStorage.setItem('token', JSON.stringify(res.headers.get('Authorization')));
+          return this.http
             .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-            .subscribe((loginInfo: any) => {
-              this.authService.setLogged(true);
-              this.authService.setUser(loginInfo.name);
-              this.authService.setRole(loginInfo.role);
-              this.router.navigate(['orders']);
-              this.snackBar.openSnack(
-                this.authAlerts.loginSuccess,
-                4000,
-                'green',
-              );
-            });
-        },
-        (err: any) => {
-          this.authService.setLogged(false);
-          this.snackBar.openSnack(err.message, 4000, 'red');
-        },
+            .pipe(
+              map ((response: any) => {
+                // this.authService.setLogged(true);
+                // this.authService.setUser(response.name);
+                // this.authService.setRole('WAITER');
+                return response;
+              }),
+            );
+        })
       );
   }
+
 
   register(email: string, password: string): void {
     this.http
@@ -89,8 +113,6 @@ export class UserAreaService {
     this.authService.setUser('');
     this.authService.setRole('CUSTOMER');
     this.authService.setToken('');
-    this.router.navigate(['restarant']);
-    this.snackBar.openSnack(this.authAlerts.logoutSuccess, 4000, 'black');
   }
 
   changePassword(data: any): void {
