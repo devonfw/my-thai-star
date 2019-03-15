@@ -13,6 +13,10 @@ import { PasswordDialogComponent } from './password-dialog/password-dialog.compo
 import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import {StoreModule} from '@ngrx/store';
+import {AuthEffects} from './store/effects/auth.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthReducer} from './store/reducers/auth.reducer';
 
 @NgModule({
   imports: [
@@ -21,6 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     HttpClientModule,
     CoreModule,
+    StoreModule.forFeature('auth', AuthReducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   providers: [
     UserAreaService,

@@ -21,7 +21,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="auth.isPermited('WAITER')" class="forDesktop">
+  <div *ngIf="role === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/orders" routerLinkActive #orders="routerLinkActive" [class.navBottomBorder]="orders.isActive">
         {{'main.orders' | translate}}
@@ -59,7 +59,7 @@
     </mat-menu>
   </div>
   <button name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
-    <td-notification-count *ngIf="auth.isPermited('CUSTOMER')" color="accent" [notifications]="sidenav.getNumberOrders()">
+    <td-notification-count *ngIf="role === 'CUSTOMER'" color="accent" [notifications]="sidenav.getNumberOrders()">
       <mat-icon>shopping_basket</mat-icon>
     </td-notification-count>
   </button>
