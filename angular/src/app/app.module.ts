@@ -21,6 +21,12 @@ import { HttpClient } from '@angular/common/http';
 
 import { ElectronService } from './shared/electron/electron.service';
 import { WebviewDirective } from './shared/directives/webview.directive';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -52,6 +58,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
     }),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([AppEffects]),
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent],

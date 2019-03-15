@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -13,15 +13,24 @@ import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dial
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
+import {Observable} from 'rxjs';
+import * as fromStore from '../user-area/store/reducers';
+import {map} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {AuthState} from '../user-area/store/reducers';
+import {Login, Logout} from '../user-area/store/actions/auth.actions';
 
 @Component({
   selector: 'public-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   selectableLangs: any[];
   flag: string;
+
+  getState$: Observable<any>;
+  role: string | null;
 
   @Output() openCloseSidenavMobile = new EventEmitter<any>();
 
@@ -34,11 +43,21 @@ export class HeaderComponent {
     public auth: AuthService,
     public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private store: Store<AuthState>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
+    // this.getState$ = this.store.select(fromStore.getState).pipe(
+    //   map(res => res.auth.)
+    // )
+  }
+
+  ngOnInit(): void {
+    // this.getState$.subscribe((state) => {
+    //   this.role = state;
+    // });
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -121,6 +140,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
+    this.store.dispatch(new Logout());
     this.userService.logout();
     this.router.navigate(['restaurant']);
   }
