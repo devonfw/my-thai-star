@@ -22,7 +22,7 @@ services:
       - my-thai-star
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/api/;AddPrefix:/mythaistar"
-      - "traefik.backend.healthcheck.path=/health"
+      - "traefik.backend.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
       - "traefik.backend.healthcheck.interval=10s"
       - "traefik.backend.healthcheck.scheme=http"
   angular:
@@ -33,7 +33,7 @@ services:
       - my-thai-star
     labels:
       - "traefik.frontend.rule=PathPrefix:/"
-      - "traefik.backend.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
+      - "traefik.backend.healthcheck.path=/health"
       - "traefik.backend.healthcheck.interval=10s"
       - "traefik.backend.healthcheck.scheme=http"
 networks:
