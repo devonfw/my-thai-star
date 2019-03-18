@@ -8,7 +8,7 @@ services:
     networks:
       - my-thai-star
     ports:
-      - "8081:80"
+      - "8090:80"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
