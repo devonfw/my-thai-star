@@ -2,8 +2,8 @@ import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
-import { CoreModule } from '../../core/core.module';
-import { UserAreaModule } from '../user-area.module';
+import { CoreModule } from '../../../core/core.module';
+import { UserAreaModule } from '../../user-area.module';
 
 import { TwitterDialogComponent } from './twitter-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';

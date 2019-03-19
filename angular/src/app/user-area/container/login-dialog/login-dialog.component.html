@@ -1,0 +1,11 @@
+<mat-tab-group mat-stretch-tabs class="pull">
+
+  <mat-tab [label]="'userArea.loginTitle' | translate" class="loginTab">
+    <login-form (submitted)="onLoginSubmit($event)"></login-form>
+  </mat-tab>
+
+  <mat-tab [label]="'userArea.signupTitle' | translate" class="registerTab">
+    <sign-up-form (submitted)="onSignInSubmit($event)"></sign-up-form>
+  </mat-tab>
+
+</mat-tab-group>

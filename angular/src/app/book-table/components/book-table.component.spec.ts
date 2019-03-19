@@ -2,18 +2,18 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CoreModule } from '../core/core.module';
-import { SidenavService } from '../sidenav/shared/sidenav.service';
+import { CoreModule } from '../../core/core.module';
+import { SidenavService } from '../../sidenav/shared/sidenav.service';
 
-import { SnackBarService } from '../core/snack-bar/snack-bar.service';
-import { BookTableService } from './shared/book-table.service';
-import { WindowService } from '../core/window/window.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
+import { BookTableService } from '../shared/book-table.service';
+import { WindowService } from '../../core/window/window.service';
 
 import { BookTableComponent } from './book-table.component';
 import {
   emailValidator,
   EmailValidatorDirective,
-} from '../shared/directives/email-validator.directive';
+} from '../../shared/directives/email-validator.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookTableComponent', () => {

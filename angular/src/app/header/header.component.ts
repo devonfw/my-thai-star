@@ -7,18 +7,17 @@ import { SidenavService } from '../sidenav/shared/sidenav.service';
 import { UserAreaService } from '../user-area/shared/user-area.service';
 import { WindowService } from '../core/window/window.service';
 
-import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
-import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { LoginDialogComponent } from '../user-area/container/login-dialog/login-dialog.component';
+import { PasswordDialogComponent } from '../user-area/container/password-dialog/password-dialog.component';
+import { TwitterDialogComponent } from '../user-area/container/twitter-dialog/twitter-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
-import {Observable} from 'rxjs';
-import * as fromStore from '../user-area/store/reducers';
-import {map} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Logout } from '../user-area/store/actions/auth.actions';
 import {Store} from '@ngrx/store';
-import {AuthState} from '../user-area/store/reducers';
-import {Login, Logout} from '../user-area/store/actions/auth.actions';
+import * as fromApp from '../store/reducers';
+import * as fromAuth from 'app/user-area/store/reducers/auth.reducer';
 
 @Component({
   selector: 'public-header',
@@ -26,10 +25,9 @@ import {Login, Logout} from '../user-area/store/actions/auth.actions';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  authState$: Observable<fromAuth.State>;
   selectableLangs: any[];
   flag: string;
-
-  getState$: Observable<any>;
   role: string | null;
 
   @Output() openCloseSidenavMobile = new EventEmitter<any>();
@@ -44,20 +42,15 @@ export class HeaderComponent implements OnInit {
     public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
     private configService: ConfigService,
-    private store: Store<AuthState>,
+    private store: Store<fromApp.AppState>
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
-    // this.getState$ = this.store.select(fromStore.getState).pipe(
-    //   map(res => res.auth.)
-    // )
   }
 
   ngOnInit(): void {
-    // this.getState$.subscribe((state) => {
-    //   this.role = state;
-    // });
+    this.authState$ = this.store.select('auth');
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -141,7 +134,5 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.store.dispatch(new Logout());
-    this.userService.logout();
-    this.router.navigate(['restaurant']);
   }
 }
