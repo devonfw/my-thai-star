@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="pad" #loginForm="ngForm">
+  <div layout= "column" flex>
+    <mat-form-field color="accent" flex>
+      <input matInput [placeholder]="'formFields.username' | translate" formControlName="username" name="username" required>
+    </mat-form-field>
+
+    <mat-form-field color="accent" flex>
+      <input matInput [placeholder]="'formFields.password' | translate" formControlName="password" name="password" type="password" required>
+    </mat-form-field>
+  </div>
+  <div style="text-align: right">
+    <button name="cancelLogin" mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+    <button name="submitLogin" mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent" class="text-upper">{{'buttons.login' | translate}}</button>
+  </div>
+</form>

@@ -1,9 +1,9 @@
-import { UserAreaModule } from '../user-area.module';
+import { UserAreaModule } from '../../user-area.module';
 import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
 
-import { CoreModule } from '../../core/core.module';
+import { CoreModule } from '../../../core/core.module';
 
 import { LoginDialogComponent } from './login-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';

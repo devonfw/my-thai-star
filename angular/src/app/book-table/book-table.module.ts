@@ -1,4 +1,4 @@
-import { BookTableComponent } from './book-table.component';
+import { BookTableComponent } from './components/book-table.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
