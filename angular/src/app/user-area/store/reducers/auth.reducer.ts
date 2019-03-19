@@ -1,8 +1,7 @@
 import {AuthActions, AuthActionTypes} from '../actions/auth.actions';
-import {LoginInfo} from '../../../shared/backend-models/interfaces';
 import {User} from '../../models/user';
 
-export interface AuthState {
+export interface State {
   pending: boolean;
   errorMessage: string | null;
   textMessage: string | null;
@@ -10,25 +9,25 @@ export interface AuthState {
   token: string | null;
 }
 
-export const initialState: AuthState = {
+export const initialState: State = {
   pending: false,
   errorMessage: null,
   textMessage: null,
   userData: {
-    user: localStorage.getItem('user'),
-    currentRole: localStorage.getItem('currentRole'),
-    logged: localStorage.getItem('logged') === 'true' ? true : false
+    user: JSON.parse(localStorage.getItem('user')).user,
+    currentRole: JSON.parse(localStorage.getItem('user')).currentRole,
+    logged: JSON.parse(localStorage.getItem('user')).logged
   },
   token: null,
 };
 
-export function AuthReducer(
-  state: AuthState = initialState,
+export function reducer(
+  state = initialState,
   action: AuthActions
-): AuthState {
+): State {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
-      return {...state, pending: true, userData: {user: '', currentRole: 'CUSTOMER', logged: false}};
+      return {...state, pending: true};
 
     case AuthActionTypes.LOGIN_SUCCESS:
       return {...state, pending: false, userData: action.payload.userData};
@@ -40,10 +39,10 @@ export function AuthReducer(
       return initialState;
 
     case AuthActionTypes.LOGOUT_FAIL:
-      return { ...state, errorMessage: 'Something went wrong!'};
+      return {...state, errorMessage: 'Something went wrong!'};
 
     case AuthActionTypes.SET_TOKEN:
-      return { ...state, token: action.payload.token};
+      return {...state, token: action.payload.token};
 
     default: {
       return state;
@@ -51,5 +50,6 @@ export function AuthReducer(
   }
 }
 
-export const getUsers = (state: AuthState) => state.userData;
-export const getUsersToken = (state: AuthState) => state.token;
+
+export const getUsers = (state: State) => state.userData;
+export const getLoggedIn = (state: State) => state.userData.logged;

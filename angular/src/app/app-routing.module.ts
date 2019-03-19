@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
-import { BookTableComponent } from './book-table/book-table.component';
+import { BookTableComponent } from './book-table/components/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';

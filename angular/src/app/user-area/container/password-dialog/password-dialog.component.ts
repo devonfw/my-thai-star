@@ -1,4 +1,4 @@
-import { UserAreaService } from '../shared/user-area.service';
+import { UserAreaService } from '../../shared/user-area.service';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
 import { MatDialogRef } from '@angular/material';

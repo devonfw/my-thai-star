@@ -8,3 +8,8 @@ export class Credentials {
   username: string;
   password: string;
 }
+
+export class UserData {
+  email: string;
+  password: string;
+}

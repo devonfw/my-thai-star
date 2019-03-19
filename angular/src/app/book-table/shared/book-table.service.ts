@@ -36,7 +36,6 @@ export class BookTableService {
     } else {
       composedBooking.booking.assistants = invitationData.assistants;
     }
-
     return composedBooking;
   }
 

@@ -8,7 +8,7 @@
   <span>My Thai Star</span>
 
   <span flex></span>
-  <div *ngIf="auth.isPermited('CUSTOMER')" class="forDesktop">
+  <div *ngIf="(authState$ | async).userData.currentRole === 'CUSTOMER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/restaurant" routerLinkActive #restaurant="routerLinkActive" [class.navBottomBorder]="restaurant.isActive">
         {{'main.home' | translate}}
@@ -21,7 +21,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="role === 'WAITER'" class="forDesktop">
+  <div *ngIf="(authState$ | async).userData.currentRole === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/orders" routerLinkActive #orders="routerLinkActive" [class.navBottomBorder]="orders.isActive">
         {{'main.orders' | translate}}
@@ -31,15 +31,15 @@
       </a>
     </nav>
   </div>
-  <button name="login" *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
+  <button name="login" *ngIf="!(authState$ | async).userData.logged" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>
-  <div *ngIf="auth.isLogged()" layout="row" style="align-items:center">
+  <div *ngIf="(authState$ | async).userData.logged" layout="row" style="align-items:center">
     <button name="account" mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
       <mat-icon>account_circle</mat-icon>
     </button>
     <span data-name="userNameLogged" class="forDesktop">{{auth.user}}</span>
-    <button class="forDesktop" *ngIf="!auth.isLogged()" mat-icon-button (click)="logout()" [matTooltip]="'main.userActions.logout' | translate">
+    <button class="forDesktop" *ngIf="!(authState$ | async).userData.logged" mat-icon-button (click)="logout()" [matTooltip]="'main.userActions.logout' | translate">
       <mat-icon>exit_to_app</mat-icon>
     </button>
     <mat-menu #toolbarMenu1="matMenu">
