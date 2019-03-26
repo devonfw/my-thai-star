@@ -6,7 +6,6 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/reducers';
 import {BookingInfo} from '../../../shared/backend-models/interfaces';
 import {Observable} from 'rxjs';
-import * as fromBookTables from '../../../book-table/store/reducers';
 import {Booking} from '../../models/booking.model';
 
 @Component({
