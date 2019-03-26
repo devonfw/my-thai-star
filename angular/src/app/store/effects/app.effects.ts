@@ -6,21 +6,6 @@ import {fromEvent} from 'rxjs';
 
 @Injectable()
 export class AppEffects {
-  @Effect({ dispatch: false })
-  storeActions$ = this.actions$.pipe(
-    // intercepts actions for adding, checking off, or removing items
-    ofType(
-      AuthActionTypes.LOGIN_SUCCESS,
-      AuthActionTypes.LOGOUT
-    ),
-    tap(action => {
-      const storedActions = window.localStorage.getItem('LocalStorageState');
-      window.localStorage.setItem(
-        'LocalStorageState',
-        JSON.stringify(action)
-      );
-    }),
-  );
 
 
   constructor(private actions$: Actions<AuthActions>) {}

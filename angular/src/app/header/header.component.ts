@@ -47,10 +47,11 @@ export class HeaderComponent implements OnInit {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
+    this.authState$ = this.store.select('auth');
   }
 
   ngOnInit(): void {
-    this.authState$ = this.store.select('auth');
+    this.authState$.subscribe(x => console.log(x.userData.currentRole));
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {

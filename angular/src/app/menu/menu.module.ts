@@ -15,6 +15,10 @@ import { FilterSortComponent } from './menu-filters/filter-sort/filter-sort.comp
 import { FilterCheckboxesComponent } from './menu-filters/filter-checkboxes/filter-checkboxes.component';
 import { MenuCardCommentsComponent } from './menu-card/menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from './menu-card/menu-card-details/menu-card-details.component';
+import { EffectsModule } from '@ngrx/effects';
+import { MenuEffects } from './store/effects/menu.effects';
+import {MenuReducer} from './store/reducers/menu.reducer';
+import {StoreModule} from '@ngrx/store';
 
 @NgModule({
   imports: [
@@ -24,6 +28,8 @@ import { MenuCardDetailsComponent } from './menu-card/menu-card-details/menu-car
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([MenuEffects]),
+    StoreModule.forFeature('menu', MenuReducer),
   ],
   providers: [
     MenuService,
