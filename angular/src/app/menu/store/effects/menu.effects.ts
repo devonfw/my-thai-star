@@ -4,6 +4,7 @@ import { MenuService } from 'app/menu/shared/menu.service';
 import { MenuActionTypes, MenuActions, LoadMenuSuccess } from '../actions/menu.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import {UserAreaService} from '../../../user-area/shared/user-area.service';
 
 @Injectable()
 export class MenuEffects {

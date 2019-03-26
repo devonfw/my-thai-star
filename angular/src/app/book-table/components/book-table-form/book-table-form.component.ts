@@ -26,7 +26,6 @@ export class BookTableFormComponent implements OnInit {
   REGEXP_EMAIL: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   bookForm = new FormGroup({
-    id: new FormControl(UUID.UUID()),
     bookingDate: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     email: new FormControl('', [
