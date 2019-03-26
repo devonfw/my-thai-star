@@ -56,7 +56,7 @@ export class AuthEffects {
   logOut$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => {
-      localStorage.removeItem('user');
+      localStorage.setItem('user', JSON.stringify({user: '', currentRole: 'CUSTOMER', logged: false}));
       this.router.navigateByUrl('/restaurant');
       this.translate.get('alerts.authAlerts.logoutSuccess').subscribe((text: string) => {
         this.snackBar.openSnack(text, 4000, 'black');

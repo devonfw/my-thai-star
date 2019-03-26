@@ -8,7 +8,7 @@
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>
       <span>{{'formFields.name' | translate}}</span>
-      <span>{{data.name}}</span>
+      <span>{{(bookTablesState$ | async).booking.booking.name}}</span>
     </div>
     <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
     <div layout="row" class="justify-space-between" flex>

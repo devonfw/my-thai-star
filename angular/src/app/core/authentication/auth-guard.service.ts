@@ -20,9 +20,7 @@ export class AuthGuardService implements CanActivate {
     return this.store.select('auth')
       .pipe(take(1),
         map((authState: fromAuth.State) => {
-          const user = JSON.parse(localStorage.getItem('LocalStorageState'));
           if (authState.userData.logged && authState.userData.currentRole === 'WAITER') {
-            console.log(user.payload.userdata);
             return true;
           } else {
             if (this.router.url === '/') {
