@@ -17,7 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { EffectsModule } from '@ngrx/effects';
 import { InviteFriendsFormComponent } from './components/invite-friends-form/invite-friends-form.component';
-import * as fromBookings from 'app/book-table/store/reducers';
 import {StoreModule} from '@ngrx/store';
 import {BookTableEffects} from './store/effects/book-table.effects';
 
@@ -29,7 +28,6 @@ import {BookTableEffects} from './store/effects/book-table.effects';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-    StoreModule.forFeature('bookings', fromBookings.reducers),
     EffectsModule.forFeature([BookTableEffects]),
   ],
   providers: [

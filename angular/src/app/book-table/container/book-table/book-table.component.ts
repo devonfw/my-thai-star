@@ -4,8 +4,7 @@ import * as fromBookings from 'app/book-table/store/reducers/book-table.reducer'
 import {BookTable, LoadBookedTables, LoadBookedTablesSuccess} from '../../store/actions/book-table.actions';
 import {Booking} from '../../models/booking.model';
 import {Observable} from 'rxjs';
-import * as fromBooking from 'app/book-table/store/reducers';
-import {selectAllBookings} from 'app/book-table/store/reducers';
+import * as fromApp from 'app/store/reducers';
 
 
 @Component({
@@ -17,18 +16,14 @@ export class BookTableComponent implements OnInit {
   bookTableState$: Observable<Booking[]>;
   booking: Booking;
   constructor(
-    private store: Store<fromBooking.State>
+    private store: Store<fromApp.AppState>
   ) {
   }
 
   ngOnInit() {
-    this.store.dispatch(new LoadBookedTablesSuccess());
-    const tables$ = this.store.pipe(
-      select(selectAllBookings)
-    );
   }
 
   onBookTableSubmit(booking: Booking): void {
-    this.store.dispatch(new BookTable({booking: booking}));
+    this.store.dispatch(new BookTable(booking));
   }
 }
