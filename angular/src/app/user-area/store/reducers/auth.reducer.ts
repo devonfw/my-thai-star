@@ -1,6 +1,8 @@
 import {AuthActions, AuthActionTypes} from '../actions/auth.actions';
 import {User} from '../../models/user';
 
+const localStorageUser: User = JSON.parse(localStorage.getItem('user'));
+
 export interface State {
   pending: boolean;
   errorMessage: string | null;
@@ -14,9 +16,9 @@ export const initialState: State = {
   errorMessage: null,
   textMessage: null,
   userData: {
-    user: JSON.parse(localStorage.getItem('user')).user,
-    currentRole: JSON.parse(localStorage.getItem('user')).currentRole,
-    logged: JSON.parse(localStorage.getItem('user')).logged
+    user: (localStorageUser !== null) ? localStorageUser.user : '',
+    currentRole: (localStorageUser !== null) ? localStorageUser.currentRole : 'CUSTOMER',
+    logged: (localStorageUser !== null) ? localStorageUser.logged : false
   },
   token: null,
 };
@@ -49,7 +51,6 @@ export function reducer(
     }
   }
 }
-
 
 export const getUsers = (state: State) => state.userData;
 export const getLoggedIn = (state: State) => state.userData.logged;

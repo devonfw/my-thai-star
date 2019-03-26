@@ -12,7 +12,7 @@ import { EmailConfirmationsService } from './shared/email-confirmations.service'
 import { EmailConfirmationsComponent } from './email-confirmations.component';
 import { HomeComponent } from '../home/home.component';
 import { MenuComponent } from '../menu/menu.component';
-import { BookTableComponent } from '../book-table/components/book-table.component';
+import { BookTableFormComponent } from '../book-table/components/book-table-form/book-table-form.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
@@ -35,7 +35,7 @@ describe('EmailConfirmationsComponent', () => {
         EmailConfirmationsComponent,
         HomeComponent,
         MenuComponent,
-        BookTableComponent,
+        BookTableFormComponent,
         OrderCockpitComponent,
         ReservationCockpitComponent,
         MenuCardComponent,

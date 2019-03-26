@@ -1,0 +1,43 @@
+<form class="pad" [formGroup]="invitationForm" (ngSubmit)="submit()">
+  <div layout="column" class="push-bottom" flex>
+    <span class="title-card property-text-bold text-upper">{{'bookTable.reservationTitle' | translate}}</span>
+  </div>
+
+  <div layout="column" flex>
+    <mat-form-field color="accent" flex>
+      <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking2"
+             [owlDateTime]="booking2">
+    </mat-form-field>
+    <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]="getFirstDayWeek()" #booking2></owl-date-time>
+
+    <mat-form-field color="accent" flex>
+      <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
+      <mat-error *ngIf="invName.invalid && (invName.dirty || invName.touched)">
+        <div *ngIf="invName.errors.required">
+          {{'bookTable.formErrors.nameRequired' | translate}}
+        </div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" flex>
+      <input matInput [placeholder]="'formFields.email' |  translate" formControlName="email">
+      <mat-error *ngIf="invEmail.invalid && (invEmail.dirty || invEmail.touched)">
+        <div *ngIf="invEmail.errors.required">
+          {{'bookTable.formErrors.emailRequired' | translate}}
+        </div>
+        <div *ngIf="invEmail.errors.pattern">
+          {{'bookTable.formErrors.emailPattern' | translate}}
+        </div>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <h4>{{'formFields.guests' | translate}}</h4>
+  <td-chips class="pad-bottom-sm" formControlName="invitedGuests" name="invitedGuests" (add)="validateEmail()" [placeholder]="'formFields.guestsPH' | translate">
+  </td-chips>
+  <mat-checkbox data-name="inviteFriendsTerms" #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
+  <div class="align-right">
+    <button name="inviteFriendsSubmit" mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
+            color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
+  </div>
+</form>
