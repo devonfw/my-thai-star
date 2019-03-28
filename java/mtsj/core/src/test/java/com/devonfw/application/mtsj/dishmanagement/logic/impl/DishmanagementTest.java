@@ -17,28 +17,17 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.application.mtsj.general.common.TestUtil;
-import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
-import com.devonfw.module.test.common.base.ComponentTest;
+import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 
 /**
  * Tests for {@link Dishmanagement} component.
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ComponentTest {
+public class DishmanagementTest extends ApplicationComponentTest {
 
   @Inject
   private Dishmanagement dishmanagement;
-
-  /**
-   * Login to get access to Dishmanagement methods called in Test Methods
-   */
-  @Override
-  protected void doSetUp() {
-
-    TestUtil.login("user", ApplicationAccessControlConfig.PERMISSION_FIND_DISH);
-  }
 
   /**
    * This test gets all the available dishes using an empty SearchCriteria object
@@ -65,22 +54,13 @@ public class DishmanagementTest extends ComponentTest {
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
     criteria.setSearchBy("Garlic Paradise");
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
+    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "id"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
     assertThat(result).isNotNull();
     assertThat(result.getContent().size()).isGreaterThan(0);
     assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(1L);
-  }
-
-  /**
-   * Logout after testing in this class is finished.
-   */
-  @Override
-  protected void doTearDown() {
-
-    TestUtil.logout();
   }
 
 }

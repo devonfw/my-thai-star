@@ -34,6 +34,7 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
@@ -104,6 +105,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public OrderCto findOrder(Long id) {
 
     LOG.debug("Get Order with id {} from database.", id);
@@ -117,13 +119,14 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return cto;
   }
 
-  @RolesAllowed(Roles.WAITER)
+  @RolesAllowed({ Roles.WAITER, ApplicationAccessControlConfig.PERMISSION_FIND_ORDER })
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public List<OrderCto> findOrdersByInvitedGuest(Long invitedGuestId) {
 
     List<OrderCto> ctos = new ArrayList<>();
@@ -136,6 +139,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public List<OrderCto> findOrdersByBookingToken(String bookingToken) {
 
     List<OrderCto> ctos = new ArrayList<>();
@@ -148,6 +152,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     List<OrderCto> ctos = new ArrayList<>();
@@ -189,6 +194,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public List<OrderCto> findOrders(Long idBooking) {
 
     List<OrderCto> ctos = new ArrayList<>();
@@ -201,6 +207,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_ORDER)
   public boolean deleteOrder(Long orderId) {
 
     OrderEntity order = getOrderDao().find(orderId);
@@ -220,6 +227,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_ORDER)
   public OrderEto saveOrder(OrderCto order) {
 
     Objects.requireNonNull(order, "order");
@@ -264,6 +272,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER_LINE)
   public OrderLineEto findOrderLine(Long id) {
 
     LOG.debug("Get OrderLine with id {} from database.", id);
@@ -271,6 +280,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER_LINE)
   public Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria) {
 
     Page<OrderLineEntity> orderlines = getOrderLineDao().findOrderLines(criteria);
@@ -288,6 +298,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_ORDER_LINE)
   public boolean deleteOrderLine(Long orderLineId) {
 
     OrderLineEntity orderLine = getOrderLineDao().find(orderLineId);
@@ -297,6 +308,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_ORDER_LINE)
   public OrderLineEto saveOrderLine(OrderLineEto orderLine) {
 
     Objects.requireNonNull(orderLine, "orderLine");

@@ -6,16 +6,16 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devonfw.application.mtsj.SpringBootApp;
+import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.application.mtsj.imagemanagement.logic.api.Imagemanagement;
-import com.devonfw.module.test.common.base.ComponentTest;
 
 /**
  * Tests for {@link Imagemanagement} component.
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class ImagemanagementTest extends ComponentTest {
+public class ImagemanagementTest extends ApplicationComponentTest {
 
   @Inject
   private Imagemanagement imageManagement;
@@ -30,4 +30,5 @@ public class ImagemanagementTest extends ComponentTest {
     assertThat(eto).isNotNull();
     assertThat(eto.getName()).isEqualTo("basil-fried");
   }
+
 }

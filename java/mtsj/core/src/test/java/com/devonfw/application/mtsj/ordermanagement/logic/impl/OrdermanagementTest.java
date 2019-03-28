@@ -12,6 +12,7 @@ import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
+import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
@@ -21,14 +22,13 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
-import com.devonfw.module.test.common.base.ComponentTest;
 
 /**
  * Test for {@link Ordermanagement}
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class OrdermanagementTest extends ComponentTest {
+public class OrdermanagementTest extends ApplicationComponentTest {
 
   @Inject
   private Ordermanagement orderManagement;
@@ -40,6 +40,8 @@ public class OrdermanagementTest extends ComponentTest {
    */
   @Override
   public void doSetUp() {
+
+    super.doSetUp();
 
     // extra ingredients
     IngredientEntity i1 = new IngredientEntity();
@@ -166,4 +168,5 @@ public class OrdermanagementTest extends ComponentTest {
       assertThat(e.getClass()).isEqualTo(ni.getClass());
     }
   }
+
 }
