@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { CoreModule } from '../../../core/core.module';
 import { WaiterCockpitModule } from '../../cockpit.module';
 
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
 
 import { OrderDialogComponent } from './order-dialog.component';

@@ -1,9 +1,10 @@
 
 export class Booking {
-  booking: ReservationInfo;
-  invitedGuests?: {
-    [index: number]: { email: string },
-  };
+  bookingDate: string;
+  name: string;
+  email: string;
+  bookingType: number;
+  assistants?: number;
 }
 
 export class ReservationInfo {

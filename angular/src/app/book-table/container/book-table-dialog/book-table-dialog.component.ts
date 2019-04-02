@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BookTableService } from '../../shared/book-table.service';
+import { BookTableService } from '../../services/book-table.service';
 import * as moment from 'moment';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/reducers';
@@ -22,17 +22,13 @@ export class BookTableDialogComponent implements OnInit {
   constructor (
     public bookingService: BookTableService,
     private dialog: MatDialogRef<BookTableDialogComponent>,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.date = moment(this.data.bookingDate).format('LLL');
   }
 
   sendBooking (): void {
-
     this.dialog.close(true);
   }
-
-
 }

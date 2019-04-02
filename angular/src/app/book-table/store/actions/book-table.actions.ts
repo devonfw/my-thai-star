@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
 import {Booking} from '../../models/booking.model';
 import { Update } from '@ngrx/entity';
+import {BookingTableResponse} from '../../../shared/view-models/interfaces';
 
 export enum BookTableActionTypes {
   BOOK_TABLE = '[BookTable] Book table',
   BOOK_TABLE_SUCCESS = '[BookTable] Book table success',
+  BOOK_TABLE_RESPONSE = '[BookTable] Book table response',
   DELETE_BOOKED_TABLE = '[BookTable] Delete booked table',
   DELETE_BOOKED_TABLE_SUCCESS = '[BookTable] Delete booked table success',
   LOAD_BOOKED_TABLE = '[BookTable] Load booked tables',
@@ -27,7 +29,13 @@ export class BookTable implements Action {
 export class BookTableSuccess implements Action {
   readonly type = BookTableActionTypes.BOOK_TABLE_SUCCESS;
 
-  constructor(public payload: any) {}
+  constructor(public payload: {booking: Booking}) {}
+}
+
+export class BookTableResponse implements Action {
+  readonly type = BookTableActionTypes.BOOK_TABLE_RESPONSE;
+
+  constructor(public payload: {bookingTableResponse: BookingTableResponse}) {}
 }
 
 export class DeleteBookedTable implements Action {
@@ -57,6 +65,7 @@ export class SelectBookedTable implements Action {
 export type BookTableActions =
   BookTable
   | BookTableSuccess
+  | BookTableResponse
   | DeleteBookedTable
   | DeleteBookedTableSucccess
   | LoadBookedTables
