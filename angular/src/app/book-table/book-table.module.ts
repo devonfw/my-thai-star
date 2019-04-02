@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 
-import { BookTableService } from './shared/book-table.service';
+import { BookTableService } from './services/book-table.service';
 import { WindowService } from '../core/window/window.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mtsj-api" />
+        <module name="mtsj-batch" />
+        <module name="mtsj-core" />
+        <module name="mtsj-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mtsj" target="1.8" />
+      <module name="mtsj-api" target="1.8" />
+      <module name="mtsj-batch" target="1.8" />
+      <module name="mtsj-core" target="1.8" />
+      <module name="mtsj-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

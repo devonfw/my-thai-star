@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+
 import { Router, RouterOutlet } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
@@ -8,6 +8,7 @@ import { find } from 'lodash';
 import { fadeAnimation } from './animations/fade.animation';
 import * as moment from 'moment';
 import { ConfigService } from './core/config/config.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'public-main',
@@ -28,6 +29,7 @@ export class AppComponent {
     public electronService: ElectronService,
     public configService: ConfigService,
   ) {
+    console.log('aaaaaaaaaaaaaaaa');
     this.version = configService.getValues().version;
     translate.addLangs(
       configService.getValues().langs.map((value: any) => value.value),

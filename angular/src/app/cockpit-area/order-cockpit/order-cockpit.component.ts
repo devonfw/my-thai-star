@@ -6,7 +6,7 @@ import {
   ITdDataTableSortChangeEvent,
 } from '@covalent/core';
 import { MatDialog } from '@angular/material';
-import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import {

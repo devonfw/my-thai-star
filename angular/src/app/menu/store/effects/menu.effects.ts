@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { MenuService } from 'app/menu/shared/menu.service';
+import { MenuService } from 'app/menu/services/menu.service';
 import { MenuActionTypes, MenuActions, LoadMenuSuccess } from '../actions/menu.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
-import {UserAreaService} from '../../../user-area/shared/user-area.service';
+import {UserAreaService} from '../../../user-area/services/user-area.service';
 
 @Injectable()
 export class MenuEffects {

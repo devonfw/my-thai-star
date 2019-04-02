@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DishView, ExtraView } from '../../shared/view-models/interfaces';
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
-import { MenuService } from '../shared/menu.service';
+import { MenuService } from '../services/menu.service';
 import { AuthService } from '../../core/authentication/auth.service';
 
 @Component({

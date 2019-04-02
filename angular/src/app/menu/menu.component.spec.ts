@@ -7,7 +7,7 @@ import { CoreModule } from '../core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SidenavService } from '../sidenav/shared/sidenav.service';
-import { MenuService } from './shared/menu.service';
+import { MenuService } from './services/menu.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { AuthService } from '../core/authentication/auth.service';
 import { ConfigService } from '../core/config/config.service';

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../core/authentication/auth.service';
 import { SidenavService } from '../sidenav/shared/sidenav.service';
-import { UserAreaService } from '../user-area/shared/user-area.service';
+import { UserAreaService } from '../user-area/services/user-area.service';
 import { WindowService } from '../core/window/window.service';
 
 import { LoginDialogComponent } from '../user-area/container/login-dialog/login-dialog.component';

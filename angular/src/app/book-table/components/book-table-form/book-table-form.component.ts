@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatCheckbox } from '@angular/material';
 import { BookTableDialogComponent } from '../../container/book-table-dialog/book-table-dialog.component';
-import { InvitationDialogComponent } from '../../container/invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../../../core/window/window.service';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { emailValidator } from '../../../shared/directives/email-validator.directive';
@@ -10,8 +9,7 @@ import { last } from 'lodash';
 import { AbstractControl } from '@angular/forms/src/model';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
-import {BookingInfo} from '../../../shared/backend-models/interfaces';
-import { UUID } from 'angular2-uuid';
+import { BookingInfo } from '../../../shared/backend-models/interfaces';
 
 @Component({
   selector: 'book-table-form',

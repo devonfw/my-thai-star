@@ -7,7 +7,7 @@ import { HttpClient /* , HttpClientModule */ } from '@angular/common/http';
 
 import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
 import { ConfigService } from '../../core/config/config.service';
-import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 // import { WindowService } from '../../core/window/window.service';
 import { MatDialog } from '@angular/material';
 
