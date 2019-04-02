@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from '../../core/core.module';
 
 import { SidenavService } from '../../sidenav/shared/sidenav.service';
-import { MenuService } from '../shared/menu.service';
+import { MenuService } from '../services/menu.service';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {UserAreaService} from '../../shared/user-area.service';
+import {UserAreaService} from '../../services/user-area.service';
 import {Router} from '@angular/router';
 import {of, fromEvent, Observable} from 'rxjs';
 import {AuthActions, AuthActionTypes, LoginFail, LoginSuccess, LogoutFail} from '../actions/auth.actions';
@@ -11,6 +11,8 @@ import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/reducers';
 import * as fromAuth from '../reducers/auth.reducer';
+import {MatDialogRef} from '@angular/material';
+import {LoginDialogComponent} from '../../container/login-dialog/login-dialog.component';
 
 @Injectable()
 export class AuthEffects {
@@ -26,6 +28,7 @@ export class AuthEffects {
             this.translate.get('alerts.authAlerts.loginSuccess').subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
+            this.dialog.close();
             localStorage.setItem('user', JSON.stringify({user: res.name, currentRole: res.role, logged: true}));
             return new LoginSuccess({userData: {user: res.name, currentRole: res.role, logged: true}});
           }),
@@ -71,7 +74,7 @@ export class AuthEffects {
     private router: Router,
     public translate: TranslateService,
     public snackBar: SnackBarService,
-    private store: Store<fromApp.AppState>
+    private dialog: MatDialogRef<LoginDialogComponent>,
   ) {}
 }
 

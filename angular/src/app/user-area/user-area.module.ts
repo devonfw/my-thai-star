@@ -6,7 +6,7 @@ import { CoreModule } from '../core/core.module';
 
 import { AuthService } from '../core/authentication/auth.service';
 import { AuthGuardService } from '../core/authentication/auth-guard.service';
-import { UserAreaService } from './shared/user-area.service';
+import { UserAreaService } from './services/user-area.service';
 
 import { LoginDialogComponent } from './container/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from './container/password-dialog/password-dialog.component';

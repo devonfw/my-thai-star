@@ -6,7 +6,7 @@ import { CoreModule } from '../../../core/core.module';
 import { SidenavService } from '../../../sidenav/shared/sidenav.service';
 
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { BookTableService } from '../../shared/book-table.service';
+import { BookTableService } from '../../services/book-table.service';
 import { WindowService } from '../../../core/window/window.service';
 
 import { BookTableFormComponent } from './book-table-form.component';

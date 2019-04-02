@@ -1,7 +1,7 @@
 import { FilterFormData } from './menu-filters/menu-filters.component';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MenuService } from './shared/menu.service';
+import { MenuService } from './services/menu.service';
 import { DishView } from '../shared/view-models/interfaces';
 import { Filter, Pageable } from '../shared/backend-models/interfaces';
 import { AppState } from 'app/store/reducers';
