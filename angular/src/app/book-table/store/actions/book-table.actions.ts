@@ -1,23 +1,14 @@
 import { Action } from '@ngrx/store';
-import {Booking} from '../../models/booking.model';
-import { Update } from '@ngrx/entity';
-import {BookingTableResponse} from '../../../shared/view-models/interfaces';
+import {Booking} from 'app/book-table/models/booking';
 
 export enum BookTableActionTypes {
   BOOK_TABLE = '[BookTable] Book table',
-  BOOK_TABLE_SUCCESS = '[BookTable] Book table success',
   BOOK_TABLE_RESPONSE = '[BookTable] Book table response',
-  DELETE_BOOKED_TABLE = '[BookTable] Delete booked table',
-  DELETE_BOOKED_TABLE_SUCCESS = '[BookTable] Delete booked table success',
-  LOAD_BOOKED_TABLE = '[BookTable] Load booked tables',
-  LOAD_BOOKED_TABLE_SUCCESS = '[BookTable] Load booked tables success',
-  SELECT_BOOKED_TABLE = '[BookTable] Clear booked tables',
-}
-
-export class LoadBookedTables implements Action {
-  readonly type = BookTableActionTypes.LOAD_BOOKED_TABLE;
-
-  constructor(public payload: Booking) {}
+  BOOK_TABLE_SUCCESS = '[BookTable] Book table success',
+  BOOK_TABLE_FAIL = '[BookTable] Book table Fail',
+  INVITE_FRIENDS = '[InviteFriends] Invite friends',
+  INVITE_FRIENDS_SUCCESS = '[InviteFriends] Invite friends success',
+  INVITE_FRIENDS_FAIL = '[InviteFriends] Invite friends Fail',
 }
 
 export class BookTable implements Action {
@@ -26,48 +17,47 @@ export class BookTable implements Action {
   constructor(public payload: any) {}
 }
 
-export class BookTableSuccess implements Action {
-  readonly type = BookTableActionTypes.BOOK_TABLE_SUCCESS;
-
-  constructor(public payload: {booking: Booking}) {}
-}
-
 export class BookTableResponse implements Action {
   readonly type = BookTableActionTypes.BOOK_TABLE_RESPONSE;
-
-  constructor(public payload: {bookingTableResponse: BookingTableResponse}) {}
-}
-
-export class DeleteBookedTable implements Action {
-  readonly type = BookTableActionTypes.DELETE_BOOKED_TABLE;
-
-  constructor(public payload: Booking) {}
-}
-
-export class DeleteBookedTableSucccess implements Action {
-  readonly type = BookTableActionTypes.DELETE_BOOKED_TABLE_SUCCESS;
-
-  constructor(public payload: Booking) {}
-}
-
-export class LoadBookedTablesSuccess implements Action {
-  readonly type = BookTableActionTypes.LOAD_BOOKED_TABLE_SUCCESS;
-}
-
-export class SelectBookedTable implements Action {
-  readonly type = BookTableActionTypes.SELECT_BOOKED_TABLE;
 
   constructor(public payload: any) {}
 }
 
+export class BookTableSuccess implements Action {
+  readonly type = BookTableActionTypes.BOOK_TABLE_SUCCESS;
 
+  constructor(public payload: any) {}
+}
+
+export class BookTableFail implements Action {
+  readonly type = BookTableActionTypes.BOOK_TABLE_FAIL;
+
+  constructor(public payload: any) {}
+}
+
+export class InviteFriends implements Action {
+  readonly type = BookTableActionTypes.INVITE_FRIENDS;
+
+  constructor(public payload: any) {}
+}
+
+export class InviteFriendsSuccess implements Action {
+  readonly type = BookTableActionTypes.INVITE_FRIENDS_SUCCESS;
+
+  constructor(public payload: any) {}
+}
+
+export class InviteFriendsFail implements Action {
+  readonly type = BookTableActionTypes.INVITE_FRIENDS_FAIL;
+
+  constructor(public payload: any) {}
+}
 
 export type BookTableActions =
   BookTable
-  | BookTableSuccess
   | BookTableResponse
-  | DeleteBookedTable
-  | DeleteBookedTableSucccess
-  | LoadBookedTables
-  | LoadBookedTablesSuccess
-  | SelectBookedTable;
+  | BookTableSuccess
+  | BookTableFail
+  | InviteFriends
+  | InviteFriendsSuccess
+  | InviteFriendsFail;

@@ -4,7 +4,7 @@ import { CoreModule } from '../core/core.module';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
 
-import { EmailConfirmationsService } from './shared/email-confirmations.service';
+import { EmailConfirmationsService } from './services/email-confirmations.service';
 
 import { EmailConfirmationsRoutingModule } from './email-confirmations-routing.module';
 import { HttpClientModule } from '@angular/common/http';

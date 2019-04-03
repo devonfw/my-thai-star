@@ -10,15 +10,15 @@ import * as fromMenu from 'app/menu/store/reducers/menu.reducer';
 export interface AppState {
   router: fromRouter.RouterReducerState;
   auth: fromAuth.State;
-  bookTable: fromBookTable.State;
   menu: fromMenu.MenuState;
+  bookTable: fromBookTable.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   router: fromRouter.routerReducer,
   auth: fromAuth.reducer,
-  bookTable: fromBookTable.reducer,
-  menu: fromMenu.MenuReducer
+  menu: fromMenu.MenuReducer,
+  bookTable: fromBookTable.reducer
 };
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {

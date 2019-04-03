@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidenavService } from '../shared/sidenav.service';
-import { PriceCalculatorService } from '../shared/price-calculator.service';
+import { SidenavService } from '../services/sidenav.service';
+import { PriceCalculatorService } from '../services/price-calculator.service';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { CoreModule } from '../../core/core.module';
