@@ -21,6 +21,7 @@
         class="pad-bottom-sm text-upper"
         style="border-bottom: 1px solid lightgrey"
       >
+
         {{ 'sidenav.header' | translate }}
       </h4>
       <div
@@ -56,7 +57,7 @@
     </div>
     <div layout="column" class="pad-sm">
       <mat-card
-        *ngIf="!bookingId.value"
+        *ngIf="!(bookingState$ | async).bookings.bookingResponse.bookingToken"
         class="pad-sm"
         style="background-color:bisque"
       >
@@ -80,14 +81,6 @@
           </button>
         </div>
       </mat-card>
-      <mat-form-field class="push-left push-right" color="accent" flex>
-        <input
-          name="orderBookingID"
-          matInput
-          #bookingId
-          [placeholder]="'sidenav.bookingId' | translate"
-        />
-      </mat-form-field>
       <mat-checkbox data-name="orderTerms" #terms class="push-left">{{
         'formFields.terms' | translate
       }}</mat-checkbox>
@@ -106,8 +99,8 @@
       name="orderSubmit"
       mat-button
       color="accent"
-      (click)="sendOrders(bookingId.value)"
-      [disabled]="!(bookingId.value.length > 0 && terms.checked)"
+      (click)="sendOrders()"
+      [disabled]="!(terms.checked)"
       class="text-upper property-text-bold"
     >
       {{ 'buttons.send' | translate }}

@@ -11,8 +11,6 @@ import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/reducers';
 import * as fromAuth from '../reducers/auth.reducer';
-import {MatDialogRef} from '@angular/material';
-import {LoginDialogComponent} from '../../container/login-dialog/login-dialog.component';
 
 @Injectable()
 export class AuthEffects {
@@ -28,7 +26,6 @@ export class AuthEffects {
             this.translate.get('alerts.authAlerts.loginSuccess').subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
-            this.dialog.close();
             localStorage.setItem('user', JSON.stringify({user: res.name, currentRole: res.role, logged: true}));
             return new LoginSuccess({userData: {user: res.name, currentRole: res.role, logged: true}});
           }),
@@ -74,7 +71,7 @@ export class AuthEffects {
     private router: Router,
     public translate: TranslateService,
     public snackBar: SnackBarService,
-    private dialog: MatDialogRef<LoginDialogComponent>,
+    private store: Store<fromApp.AppState>
   ) {}
 }
 

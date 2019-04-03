@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DishView, ExtraView } from '../../../shared/view-models/interfaces';
+import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
 
 @Component({
   selector: 'own-menu-card-details',

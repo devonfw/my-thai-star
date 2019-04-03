@@ -1,9 +1,13 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SidenavService } from './shared/sidenav.service';
-import { PriceCalculatorService } from './shared/price-calculator.service';
+import { SidenavService } from './services/sidenav.service';
+import { PriceCalculatorService } from './services/price-calculator.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { OrderView } from '../shared/view-models/interfaces';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../store/reducers';
+import {Observable} from 'rxjs';
+import {BookTableState} from '../book-table/store/reducers';
 
 @Component({
   selector: 'public-sidenav',
@@ -11,14 +15,18 @@ import { OrderView } from '../shared/view-models/interfaces';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
-
+  bookingState$: Observable<BookTableState>;
   orders: OrderView[];
+  bookingId: string;
 
   constructor(private router: Router,
     private sidenav: SidenavService,
     private snackBar: SnackBarService,
     private calculator: PriceCalculatorService,
-  ) {}
+    private store: Store<fromApp.AppState>
+  ) {
+    this.bookingState$ = this.store.select('bookings');
+  }
 
   ngOnInit(): void {
     this.orders = this.sidenav.getOrderData();
@@ -37,14 +45,16 @@ export class SidenavComponent implements OnInit {
     return this.calculator.getTotalPrice(this.orders);
   }
 
-  sendOrders(bookingId: string): void {
-    this.sidenav.sendOrders(bookingId)
+  sendOrders(): void {
+    this.bookingState$.subscribe(id => {
+      this.sidenav.sendOrders(id.bookings.bookingResponse.bookingToken)
         .subscribe(() => {
             this.orders = this.sidenav.removeAllOrders();
             this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-        },
-        (error: any) => {
-            this.snackBar.openSnack('Error sending order, please, try again later', 4000, 'red');
-        });
+          },
+          (error: any) => {
+            this.snackBar.openSnack('Please book a table first', 4000, 'red');
+          });
+    });
   }
 }

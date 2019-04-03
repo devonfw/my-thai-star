@@ -2,12 +2,13 @@ import { FilterFormData } from './menu-filters/menu-filters.component';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuService } from './services/menu.service';
-import { DishView } from '../shared/view-models/interfaces';
-import { Filter, Pageable } from '../shared/backend-models/interfaces';
+import { DishView } from 'app/shared/view-models/interfaces';
+import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { AppState } from 'app/store/reducers';
 import { getAllDishes } from './store/reducers/menu.reducer';
 import { LoadMenuStart } from './store/actions/menu.actions';
-import {Store} from '@ngrx/store';
 
 export interface Filters {
   searchBy: string;
@@ -24,12 +25,12 @@ export interface Filters {
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
-  dishes$: Observable<DishView[]>;
+  dishes$: Observable<DishView[]> = this.store.select(getAllDishes);
 
   constructor(
+    private store: Store<AppState>,
     private menuService: MenuService,
-    private store: Store<AppState>
-  ) {}
+    ) {}
 
   onFilterChange(filters: FilterFormData): void {
     const pageable: Pageable = {
@@ -48,14 +49,5 @@ export class MenuComponent {
     );
 
     this.store.dispatch(new LoadMenuStart(composedFilters));
-    // this.dishes$ = this.menuService.getDishes(composedFilters).pipe(
-    //   map((res) => {
-    //     if (!res) {
-    //       return [];
-    //     } else {
-    //       return res.content;
-    //     }
-    //   }),
-    // );
   }
 }

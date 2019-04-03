@@ -15,12 +15,14 @@ export class SignUpFormComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   submit() {
     if (this.form.valid) {
+      console.log('Test: ', this.form.value);
       this.submitted.emit(this.form.value);
     }
   }

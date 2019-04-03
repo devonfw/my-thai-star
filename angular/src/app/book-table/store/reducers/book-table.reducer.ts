@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import {BookTableActions, BookTableActionTypes} from '../actions/book-table.actions';
-import {Booking} from '../../models/booking.model';
-import {BookingTableResponse} from '../../../shared/view-models/interfaces';
+import {Booking} from 'app/book-table/models/booking';
+import {BookingResponse} from '../../models/booking-response';
 
 
 export interface State {
@@ -9,17 +9,24 @@ export interface State {
   errorMessage: string | null;
   textMessage: string | null;
   booking: Booking | null;
-  bookingTableResponse: BookingTableResponse | null;
   token: string | null;
+  bookingResponse: BookingResponse | null;
 }
 
 export const initialState: State = {
   pending: false,
-  errorMessage: null,
-  textMessage: null,
+  errorMessage: '',
+  textMessage: '',
   booking: undefined,
-  bookingTableResponse: null,
-  token: null,
+  token: undefined,
+  bookingResponse: {
+    name: '',
+    bookingDate: '',
+    bookingToken: '',
+    tableId: undefined,
+    email: ''
+  }
+
 };
 
 export function reducer(
@@ -28,16 +35,13 @@ export function reducer(
 ): State {
   switch (action.type) {
     case BookTableActionTypes.BOOK_TABLE:
-      return {...state, pending: true};
-
-    case BookTableActionTypes.BOOK_TABLE_SUCCESS:
-      return {...state, pending: false, booking: action.payload.booking};
+      return {...state, pending: true, booking: action.payload};
 
     case BookTableActionTypes.BOOK_TABLE_RESPONSE:
-      return {...state, pending: false, bookingTableResponse: action.payload.bookingTableResponse};
+      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
 
-    case BookTableActionTypes.LOAD_BOOKED_TABLE:
-      return {...state, pending: false, };
+    case BookTableActionTypes.BOOK_TABLE_SUCCESS:
+      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
 
     default: {
       return state;
@@ -46,3 +50,4 @@ export function reducer(
 }
 
 export const getBookedTable = (state: State) => state.booking;
+export const getBookingToken = (state: State) => state.bookingResponse.bookingToken;

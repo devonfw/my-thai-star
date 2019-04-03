@@ -10,8 +10,6 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class UserAreaService {
-  getState$: Observable<any>;
-  getToken$: Observable<any>;
   private readonly restPathRoot: string;
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';

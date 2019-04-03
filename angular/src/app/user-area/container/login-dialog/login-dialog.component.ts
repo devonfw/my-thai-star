@@ -19,8 +19,10 @@ export class LoginDialogComponent {
 
   onLoginSubmit(credentials: Credentials): void {
     this.store.dispatch(new Login({credentials}));
+    this.dialog.close();
   }
 
   onSignInSubmit(formValue: FormGroup): void {
+    this.dialog.close();
   }
 }
