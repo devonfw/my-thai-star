@@ -1,5 +1,5 @@
-import { SidenavService } from '../shared/sidenav.service';
-import { PriceCalculatorService } from '../shared/price-calculator.service';
+import { SidenavService } from '../services/sidenav.service';
+import { PriceCalculatorService } from '../services/price-calculator.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input } from '@angular/core';

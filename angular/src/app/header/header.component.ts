@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../core/authentication/auth.service';
-import { SidenavService } from '../sidenav/shared/sidenav.service';
+import { SidenavService } from '../sidenav/services/sidenav.service';
 import { UserAreaService } from '../user-area/services/user-area.service';
 import { WindowService } from '../core/window/window.service';
 

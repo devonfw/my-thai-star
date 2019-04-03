@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 
-import { SidenavService } from './shared/sidenav.service';
-import { PriceCalculatorService } from './shared/price-calculator.service';
+import { SidenavService } from './services/sidenav.service';
+import { PriceCalculatorService } from './services/price-calculator.service';
 import { WindowService } from '../core/window/window.service';
 
 import { SidenavComponent } from './sidenav.component';
@@ -11,6 +11,10 @@ import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
+import * as fromOrderMenu from './store/reducers/order-menu.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { OrderMenuEffects } from './store/effects/order-menu.effects';
 
 @NgModule({
   imports: [
@@ -18,6 +22,8 @@ import { TranslateModule } from '@ngx-translate/core';
     HttpClientModule,
     TranslateModule,
     CoreModule,
+    StoreModule.forFeature('orderMenu', fromOrderMenu.reducer),
+    EffectsModule.forFeature([OrderMenuEffects]),
   ],
   providers: [
     SidenavService,

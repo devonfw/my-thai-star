@@ -1,5 +1,4 @@
-import { BookTableFormComponent } from './components/book-table-form/book-table-form.component';
-import { BookTableComponent } from './container/book-table/book-table.component';
+import { BookTablePageComponent } from './container/book-table-page/book-table-page.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,15 +9,17 @@ import { BookTableService } from './services/book-table.service';
 import { WindowService } from '../core/window/window.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 
-import { BookTableDialogComponent } from './container/book-table-dialog/book-table-dialog.component';
-import { InvitationDialogComponent } from './container/invitation-dialog/invitation-dialog.component';
+import { BookTableDialogComponent } from './components/book-table-dialog/book-table-dialog.component';
+import { InvitationDialogComponent } from './components/invitation-dialog/invitation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { EffectsModule } from '@ngrx/effects';
-import { InviteFriendsFormComponent } from './components/invite-friends-form/invite-friends-form.component';
-import {StoreModule} from '@ngrx/store';
 import {BookTableEffects} from './store/effects/book-table.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './store';
+import { BookTableFormComponent } from './components/book-table-form/book-table-form.component';
+import { InviteFriendsFormComponent } from './components/invite-friends-form/invite-friends-form.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {BookTableEffects} from './store/effects/book-table.effects';
     TranslateModule,
     CoreModule,
     EffectsModule.forFeature([BookTableEffects]),
+    StoreModule.forFeature('bookings', reducers),
   ],
   providers: [
     BookTableService,
@@ -38,11 +40,11 @@ import {BookTableEffects} from './store/effects/book-table.effects';
   declarations: [
     InvitationDialogComponent,
     BookTableDialogComponent,
+    BookTablePageComponent,
     BookTableFormComponent,
-    BookTableComponent,
     InviteFriendsFormComponent,
   ],
-  exports: [BookTableComponent],
+  exports: [BookTablePageComponent],
   entryComponents: [
     InvitationDialogComponent,
     BookTableDialogComponent,

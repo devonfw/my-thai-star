@@ -1,5 +1,5 @@
 import { InvitationResponse } from '../shared/view-models/interfaces';
-import { EmailConfirmationsService } from './shared/email-confirmations.service';
+import { EmailConfirmationsService } from './services/email-confirmations.service';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

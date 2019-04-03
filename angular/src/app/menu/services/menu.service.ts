@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DishView, ExtraView, OrderView } from '../../shared/view-models/interfaces';
-import { environment } from '../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
 import { FilterFormData } from '../menu-filters/menu-filters.component';

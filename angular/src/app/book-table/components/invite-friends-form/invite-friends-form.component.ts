@@ -1,14 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MatCheckbox, MatDialog} from '@angular/material';
-import {InvitationDialogComponent} from '../../container/invitation-dialog/invitation-dialog.component';
-import {WindowService} from '../../../core/window/window.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Booking} from '../../models/booking';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {emailValidator} from '../../../shared/directives/email-validator.directive';
-import {BookingInfo} from '../../../shared/backend-models/interfaces';
 import * as moment from 'moment';
-import { last } from 'lodash';
+import {last} from 'lodash';
 
 @Component({
   selector: 'invite-friends-form',
@@ -16,12 +13,13 @@ import { last } from 'lodash';
   styleUrls: ['./invite-friends-form.component.css']
 })
 export class InviteFriendsFormComponent implements OnInit {
-  @Output() submitt = new EventEmitter<BookingInfo>();
+  @Input() booking: Booking;
+  @Output() submitted = new EventEmitter();
 
   invitationModel: string[] = [];
   minDate: Date = new Date();
-  REGEXP_EMAIL: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   invitationForm = new FormGroup({
     bookingDate: new FormControl('', Validators.required),
@@ -34,43 +32,17 @@ export class InviteFriendsFormComponent implements OnInit {
   });
 
   constructor(
-    private window: WindowService,
     private translate: TranslateService,
     private snackBarService: SnackBarService,
-    private dialog: MatDialog,
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-    this.getFirstDayWeek();
-  }
+  ngOnInit() {}
 
-  get name(): AbstractControl {
-    return this.invitationForm.get('name');
-  }
-  get email(): AbstractControl {
-    return this.invitationForm.get('email');
-  }
   get invName(): AbstractControl {
     return this.invitationForm.get('name');
   }
   get invEmail(): AbstractControl {
     return this.invitationForm.get('email');
-  }
-
-  showInviteDialog(checkbox: MatCheckbox): void {
-    this.dialog
-      .open(InvitationDialogComponent, {
-        width: this.window.responsiveWidth(),
-        data: this.invitationForm.value,
-      })
-      .afterClosed()
-      .subscribe((res: boolean) => {
-        if (res) {
-          this.invitationForm.reset();
-          this.invitationModel = [];
-          checkbox.checked = false;
-        }
-      });
   }
 
   validateEmail(): void {
@@ -91,8 +63,6 @@ export class InviteFriendsFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.invitationForm.valid) {
-      this.submitt.emit(this.invitationForm.value);
-    }
+    this.submitted.emit(this.invitationForm.value);
   }
 }

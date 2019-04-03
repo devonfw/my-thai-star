@@ -8,7 +8,7 @@
       <span class="orderIngredients" *ngIf="extras.length === 0"> - </span>
       <span class="orderIngredients">{{extras}}</span>
     </div>
-    <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.orderLine.comment">{{'buttons.removeComment' | translate}}</label>
+    <label (click)="removeComment()" class="removeOrderComment" *ngIf="order.orderLine.comment">xxx{{'buttons.removeComment' | translate}}</label>
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.orderLine.comment">{{'buttons.addComment' | translate}}</label>
   </div>
 
@@ -24,3 +24,4 @@
 
   <span class="push-top-sm">{{calculateOrderPrice() | number : '2.2-2'}} €</span>
 </div>
+

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import {
   BookingResponse,
   OrderResponse,
@@ -14,7 +14,7 @@ import {
   FilterCockpit,
 } from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()

@@ -1,27 +1,29 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatCheckbox } from '@angular/material';
-import { BookTableDialogComponent } from '../../container/book-table-dialog/book-table-dialog.component';
-import { WindowService } from '../../../core/window/window.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { emailValidator } from '../../../shared/directives/email-validator.directive';
-import { last } from 'lodash';
-import { AbstractControl } from '@angular/forms/src/model';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import {MatCheckbox, MatDialog} from '@angular/material';
+import {Booking} from '../../models/booking';
 import * as moment from 'moment';
-import { BookingInfo } from '../../../shared/backend-models/interfaces';
+import {BookTableDialogComponent} from '../book-table-dialog/book-table-dialog.component';
+import {Store} from '@ngrx/store';
+import {BookTableState} from '../../store/reducers';
+import {Observable} from 'rxjs';
+import * as fromApp from 'app/store/reducers';
+import {getBookedTable, getBookingToken} from '../../store/reducers/book-table.reducer';
 
 @Component({
   selector: 'book-table-form',
   templateUrl: './book-table-form.component.html',
-  styleUrls: ['./book-table-form.component.scss'],
+  styleUrls: ['./book-table-form.component.css']
 })
 export class BookTableFormComponent implements OnInit {
-  @Output() submitted = new EventEmitter<BookingInfo>();
+  @Input() booking: Booking;
+  @Output() submitted = new EventEmitter();
+  bookingState$: Observable<BookTableState>;
 
-  invitationModel: string[] = [];
   minDate: Date = new Date();
-  REGEXP_EMAIL: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   bookForm = new FormGroup({
     bookingDate: new FormControl('', Validators.required),
@@ -30,23 +32,22 @@ export class BookTableFormComponent implements OnInit {
       Validators.required,
       Validators.pattern(this.REGEXP_EMAIL),
     ]),
-    assistants: new FormControl('', [
+    assistants: new FormControl(undefined, [
       Validators.required,
       Validators.min(1),
       Validators.max(8),
     ]),
-    bookingType: new FormControl(0),
   });
 
   constructor(
-    private window: WindowService,
     private translate: TranslateService,
-    private snackBarService: SnackBarService,
-    private dialog: MatDialog,
-  ) {}
+    private store: Store<fromApp.AppState>
+  ) {
+    this.bookingState$ = this.store.select('bookings');
+  }
 
-  ngOnInit(): void {
-    this.getFirstDayWeek();
+  ngOnInit() {
+    this.bookingState$.subscribe(x => console.log('Tokeennnnnnnnnnnnnnnnn ', x.bookings.bookingResponse));
   }
 
   get name(): AbstractControl {
@@ -57,32 +58,6 @@ export class BookTableFormComponent implements OnInit {
   }
   get assistants(): AbstractControl {
     return this.bookForm.get('assistants');
-  }
-
-  showBookTableDialog(checkbox: MatCheckbox): void {
-    this.dialog
-      .open(BookTableDialogComponent, {
-        width: this.window.responsiveWidth(),
-        data: this.bookForm.value,
-      })
-      .afterClosed()
-      .subscribe((res: boolean) => {
-        if (res) {
-          this.bookForm.reset();
-          checkbox.checked = false;
-        }
-      });
-  }
-
-  validateEmail(): void {
-    if (!emailValidator(last(this.invitationModel))) {
-      this.invitationModel.pop();
-      this.translate
-        .get('bookTable.formErrors.emailFormat')
-        .subscribe((text: string) => {
-          this.snackBarService.openSnack(text, 1000, 'red');
-        });
-    }
   }
 
   getFirstDayWeek(): string {

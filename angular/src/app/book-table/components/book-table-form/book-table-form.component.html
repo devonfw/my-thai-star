@@ -6,7 +6,7 @@
   <div layout="column" flex>
     <mat-form-field color="accent" flex>
       <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking1"
-        [owlDateTime]="booking1">
+             [owlDateTime]="booking1">
       <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]="getFirstDayWeek()" #booking1></owl-date-time>
     </mat-form-field>
 
@@ -51,7 +51,7 @@
 
   </div>
   <div class="align-right">
-    <button name="bookTableSubmit" mat-button type="submit"  [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
-      class="text-upper">{{'buttons.bookTable' | translate}}</button>
+    <button name="bookTableSubmit" mat-button type="submit" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
+            class="text-upper">{{'buttons.bookTable' | translate}}</button>
   </div>
 </form>

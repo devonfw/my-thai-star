@@ -37,7 +37,7 @@
   </td-chips>
   <mat-checkbox data-name="inviteFriendsTerms" #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
   <div class="align-right">
-    <button name="inviteFriendsSubmit" mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
+    <button name="inviteFriendsSubmit" mat-button type="submit"  [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
             color="accent" class="text-upper">{{'buttons.inviteFriends' | translate}}</button>
   </div>
 </form>

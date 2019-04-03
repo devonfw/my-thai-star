@@ -1,7 +1,8 @@
 import { Action, createSelector, createFeatureSelector } from '@ngrx/store';
+import { Pageable } from '../../../shared/backend-models/interfaces';
+import { DishView } from 'app/shared/view-models/interfaces';
 import { MenuActionTypes, MenuActions } from '../actions/menu.actions';
 import { AppState } from 'app/store/reducers';
-import {DishView} from '../../../shared/view-models/interfaces';
 
 export interface MenuState {
   loading: boolean;
