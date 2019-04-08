@@ -17,6 +17,8 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 
 /**
@@ -64,7 +66,7 @@ public interface OrdermanagementRestService {
    * Delegates to {@link Ordermanagement#findOrderCtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding orders.
-   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
+   * @return the {@link Page list} of matching {@link OrderCto}s.
    */
   @Path("/order/search")
   @POST
@@ -103,9 +105,14 @@ public interface OrdermanagementRestService {
    * Delegates to {@link Ordermanagement#findOrderLineEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding orderlines.
-   * @return the {@link PaginatedListTo list} of matching {@link OrderLineEto}s.
+   * @return the {@link Page list} of matching {@link OrderLineEto}s.
    */
   @Path("/orderline/search")
   @POST
   public Page<OrderLineCto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo);
+
+  @Path("/ordereddishes/history")
+  @POST
+  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo);
+
 }

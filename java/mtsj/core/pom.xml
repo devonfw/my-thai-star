@@ -230,7 +230,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
-      <version>1.5.2.RELEASE</version>
     </dependency>
 
     <dependency>
@@ -270,6 +269,12 @@
       <version>1.3.0</version>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
 
@@ -278,6 +283,9 @@
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <excludes>
+        	<exclude>**/orm.xml</exclude>
+        </excludes>
       </resource>
     </resources>
     <plugins>
@@ -365,7 +373,7 @@
         <mts.database.profile>hana</mts.database.profile>
         <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
         <mts.database.artifactId>ngdbc</mts.database.artifactId>
-        <mts.database.version>2.2.16</mts.database.version>
+        <mts.database.version>2.3.48</mts.database.version>
       </properties>
       <build>
         <resources>
