@@ -21,12 +21,11 @@
         class="pad-bottom-sm text-upper"
         style="border-bottom: 1px solid lightgrey"
       >
-
         {{ 'sidenav.header' | translate }}
       </h4>
       <div
         layout="row"
-        *ngIf="orders.length < 1"
+        *ngIf="(orders$ | async).length < 1"
         style="align-items:center"
         class="justify-space-between push-bottom-lg"
       >
@@ -40,15 +39,21 @@
           {{ 'buttons.viewMenu' | translate }}
         </button>
       </div>
-      <div class="pull-top" [class.scrollOrders]="orders.length > 3">
+      <div class="pull-top" [class.scrollOrders]="(orders$ | async).length > 3">
         <public-sidenav-order
-          *ngFor="let order of orders"
+          *ngFor="let order of orders$ | async"
           [order]="order"
-        ></public-sidenav-order>
+          (orderIncreased)="onOrderIncreased($event)"
+          (orderDecreased)="onOrderDecreased($event)"
+          (orderRemoved)="onOrderRemoved($event)"
+          (commentAdded)="onCommentAdded($event)"
+          (commentRemoved)="onCommentRemoved($event)"
+        >
+        </public-sidenav-order>
       </div>
     </div>
     <div
-      *ngIf="orders.length > 0"
+      *ngIf="(orders$ | async).length > 0"
       layout="row"
       class="justify-space-between pad-sm"
     >
@@ -105,5 +110,6 @@
     >
       {{ 'buttons.send' | translate }}
     </button>
+    <h3>{{ calculateTotal() | number: '1.2-2' }} €</h3>
   </div>
 </div>

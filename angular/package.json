@@ -83,6 +83,7 @@
     "ng-pick-datetime": "7.0.0",
     "ng-pick-datetime-moment": "1.0.8",
     "ngrx-forms": "^4.0.1",
+    "ngrx-store-localstorage": "^7.0.0",
     "ngx-moment": "3.2.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.3.3",

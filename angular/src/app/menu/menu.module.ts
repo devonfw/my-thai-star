@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuService } from './services/menu.service';
 
 import { MenuCardComponent } from './menu-card/menu-card.component';
-import { MenuComponent } from './menu.component';
+import { MenuComponent } from './container/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenuFiltersComponent } from './menu-filters/menu-filters.component';
