@@ -12,9 +12,9 @@ export enum AuthActionTypes {
 }
 
 /* @export
-* @class LogInAction
-* @implements {Action}
-*/
+ * @class LogInAction
+ * @implements {Action}
+ */
 export class Login implements Action {
   readonly type = AuthActionTypes.LOGIN;
 
