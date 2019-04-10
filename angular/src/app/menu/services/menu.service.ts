@@ -21,7 +21,6 @@ const categoryNameToServerId: {[key: string]: number} = Object.freeze({
 
 @Injectable()
 export class MenuService {
-
   private readonly restServiceRoot: string;
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 

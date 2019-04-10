@@ -38,6 +38,7 @@ export class HomeComponent {
 interface TileWithNavigation extends Tile {
   navigate: () => void;
 }
+
 interface HomePageTiles {
   restaurant: TileWithNavigation;
   menu: TileWithNavigation;

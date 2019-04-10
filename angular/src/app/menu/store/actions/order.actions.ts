@@ -60,13 +60,13 @@ export class UpdateOrders implements Action {
 export class DeleteOrder implements Action {
   readonly type = OrderActionTypes.DeleteOrder;
 
-  constructor(public payload: { id: string }) {}
+  constructor(public payload: { id: number }) {}
 }
 
 export class DeleteOrders implements Action {
   readonly type = OrderActionTypes.DeleteOrders;
 
-  constructor(public payload: { ids: string[] }) {}
+  constructor(public payload: { ids: number[] }) {}
 }
 
 export class ClearOrders implements Action {

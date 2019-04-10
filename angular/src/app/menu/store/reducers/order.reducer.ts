@@ -1,13 +1,14 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import {EntityState, EntityAdapter, createEntityAdapter, Dictionary} from '@ngrx/entity';
 import { Order } from '../../models/order.model';
 import { OrderActions, OrderActionTypes } from '../actions/order.actions';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 
 export interface State extends EntityState<Order> {
-  selectedOrderId: string | null;
+  selectedOrderId: number | null;
 }
 
 export const adapter: EntityAdapter<Order> = createEntityAdapter<Order>({
-  selectId: (order: Order) => order.id,
+  selectId: (order: Order) => order.order.dish.id,
   sortComparer: false,
 });
 
@@ -66,9 +67,23 @@ export function reducer(
   }
 }
 
+export const getOrderState = createFeatureSelector<State>('order');
+
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors();
+} = adapter.getSelectors(getOrderState);
+
+export const selectEntity = createSelector(
+  getOrderState,
+  selectIds
+);
+
+export const getSelectedOrder = createSelector(
+  getOrderState,
+  (state) => {
+    return state.entities[state.selectedOrderId];
+  }
+)

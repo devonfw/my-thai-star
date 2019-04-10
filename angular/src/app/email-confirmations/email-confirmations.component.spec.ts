@@ -11,7 +11,7 @@ import { EmailConfirmationsService } from './services/email-confirmations.servic
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
 import { HomeComponent } from '../home/home.component';
-import { MenuComponent } from '../menu/menu.component';
+import { MenuComponent } from '../menu/container/menu/menu.component';
 import { BookTableFormComponent } from '../book-table/components/book-table-form/book-table-form.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';

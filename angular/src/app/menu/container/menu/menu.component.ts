@@ -1,14 +1,13 @@
-import { FilterFormData } from './menu-filters/menu-filters.component';
+import { FilterFormData } from '../../menu-filters/menu-filters.component';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MenuService } from './services/menu.service';
+import { MenuService } from '../../services/menu.service';
 import { DishView } from 'app/shared/view-models/interfaces';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/store/reducers';
-import { getAllDishes } from './store/reducers/menu.reducer';
-import { LoadMenuStart } from './store/actions/menu.actions';
+import { getAllDishes } from '../../store/reducers/menu.reducer';
+import { LoadMenuStart } from '../../store/actions/menu.actions';
 
 export interface Filters {
   searchBy: string;
@@ -30,7 +29,7 @@ export class MenuComponent {
   constructor(
     private store: Store<AppState>,
     private menuService: MenuService,
-    ) {}
+  ) {}
 
   onFilterChange(filters: FilterFormData): void {
     const pageable: Pageable = {
