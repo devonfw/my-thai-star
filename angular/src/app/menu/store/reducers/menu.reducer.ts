@@ -19,21 +19,21 @@ export const initialState: MenuState = {
 export function MenuReducer(state = initialState, action: MenuActions): MenuState {
 
   switch (action.type) {
-    case MenuActionTypes.LoadMenuSuccess: {
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        dishes: action.payload.content
-      };
-    }
-
     case MenuActionTypes.LoadMenuStart: {
       return {
         ...state,
         loading: true,
         loaded: false,
         dishes: []
+      };
+    }
+
+    case MenuActionTypes.LoadMenuSuccess: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        dishes: action.payload.content
       };
     }
 

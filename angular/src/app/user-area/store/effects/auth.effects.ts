@@ -5,12 +5,13 @@ import {Router} from '@angular/router';
 import {of, fromEvent, Observable} from 'rxjs';
 import {AuthActions, AuthActionTypes, LoginFail, LoginSuccess, LogoutFail} from '../actions/auth.actions';
 import {catchError, exhaustMap, filter, map, tap} from 'rxjs/operators';
-import {Credentials} from '../../models/user';
+import {Credentials, User} from '../../models/user';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/reducers';
 import * as fromAuth from '../reducers/auth.reducer';
+import {AuthService} from '../../../core/authentication/auth.service';
 
 @Injectable()
 export class AuthEffects {
@@ -21,12 +22,12 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN),
     map(action => action.payload.credentials),
     exhaustMap((credentials: Credentials) => {
-        return this.authService.login(credentials.username, credentials.password)
+        return this.userAreaService.login(credentials.username, credentials.password)
           .pipe(map((res: any) => {
             this.translate.get('alerts.authAlerts.loginSuccess').subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
-            localStorage.setItem('user', JSON.stringify({user: res.name, currentRole: res.role, logged: true}));
+              localStorage.setItem('user', JSON.stringify({user: res.name, currentRole: res.role, logged: true}));
             return new LoginSuccess({userData: {user: res.name, currentRole: res.role, logged: true}});
           }),
           catchError(error => of(new LoginFail({error: error})))
@@ -67,7 +68,8 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions<AuthActions>,
-    private authService: UserAreaService,
+    private authService: AuthService,
+    private userAreaService: UserAreaService,
     private router: Router,
     public translate: TranslateService,
     public snackBar: SnackBarService,

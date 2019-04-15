@@ -1,4 +1,4 @@
-<form class="pad" [formGroup]="bookForm" (ngSubmit)="submit()">
+<form class="pad" [formGroup]="bookForm">
   <div layout="column" flex>
     <span class="title-card property-text-bold text-upper">{{'bookTable.bookingTitle' | translate}}</span>
     <span class="subtitle-card push-bottom">{{'bookTable.bookingSubtitle' | translate}}</span>
@@ -52,6 +52,7 @@
   </div>
   <div class="align-right">
     <button name="bookTableSubmit" mat-button type="submit" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
-            class="text-upper">{{'buttons.bookTable' | translate}}</button>
+            class="text-upper" (click)="showBookTableDialog(termsd)">{{'buttons.bookTable' | translate}}</button>
   </div>
 </form>
+

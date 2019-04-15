@@ -58,7 +58,7 @@
     </mat-menu>
   </div>
   <button name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
-    <td-notification-count *ngIf="role === 'CUSTOMER'" color="accent" [notifications]="sidenav.getNumberOrders()">
+    <td-notification-count *ngIf="(authState$ | async).userData.currentRole === 'CUSTOMER'" color="accent" [notifications]="sidenav.getNumberOrders()">
       <mat-icon>shopping_basket</mat-icon>
     </td-notification-count>
   </button>

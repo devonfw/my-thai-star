@@ -5,14 +5,12 @@ import { Order } from '../../models/order.model';
 export enum OrderActionTypes {
   LoadOrders = '[Order] Load Orders',
   AddOrder = '[Order] Add Order',
-  UpsertOrder = '[Order] Upsert Order',
   AddOrders = '[Order] Add Orders',
-  UpsertOrders = '[Order] Upsert Orders',
   UpdateOrder = '[Order] Update Order',
   UpdateOrders = '[Order] Update Orders',
   DeleteOrder = '[Order] Delete Order',
   DeleteOrders = '[Order] Delete Orders',
-  ClearOrders = '[Order] Clear Orders'
+  ClearOrders = '[Order] Clear Orders',
 }
 
 export class LoadOrders implements Action {
@@ -27,20 +25,8 @@ export class AddOrder implements Action {
   constructor(public payload: { order: Order }) {}
 }
 
-export class UpsertOrder implements Action {
-  readonly type = OrderActionTypes.UpsertOrder;
-
-  constructor(public payload: { order: Order }) {}
-}
-
 export class AddOrders implements Action {
   readonly type = OrderActionTypes.AddOrders;
-
-  constructor(public payload: { orders: Order[] }) {}
-}
-
-export class UpsertOrders implements Action {
-  readonly type = OrderActionTypes.UpsertOrders;
 
   constructor(public payload: { orders: Order[] }) {}
 }
@@ -76,9 +62,7 @@ export class ClearOrders implements Action {
 export type OrderActions =
  LoadOrders
  | AddOrder
- | UpsertOrder
  | AddOrders
- | UpsertOrders
  | UpdateOrder
  | UpdateOrders
  | DeleteOrder

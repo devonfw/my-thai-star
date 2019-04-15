@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
+import * as fromBookTable from '../../store/reducers/book-table.reducer';
+import {Store} from '@ngrx/store';
+import {BookTable} from '../../store/actions/book-table.actions';
 
 @Component({
   selector: 'public-book-table-dialog',
@@ -13,7 +16,9 @@ export class BookTableDialogComponent implements OnInit {
 
   constructor (
      private dialog: MatDialogRef<BookTableDialogComponent>,
-     @Inject(MAT_DIALOG_DATA) dialogData: any) {
+     private store: Store<fromBookTable.State>,
+     @Inject(MAT_DIALOG_DATA) dialogData: any
+  ) {
        this.data = dialogData;
   }
 
@@ -22,6 +27,7 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking (): void {
-    this.dialog.close();
+    this.store.dispatch(new BookTable({booking: this.data}));
+    this.dialog.close(true);
   }
 }
