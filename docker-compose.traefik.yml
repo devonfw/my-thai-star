@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    restart: always
+    image: traefik
+    command: --api --docker
+    networks:
+      - my-thai-star
+    ports:
+      - "8081:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    labels:
+      - "traefik.enable=false"
+  java:
+    build: "java/"
+    restart: always
+    image: my-thai-star/java:latest
+    networks:
+      - my-thai-star
+    labels:
+      - "traefik.frontend.rule=PathPrefixStrip:/api/;AddPrefix:/mythaistar"
+      - "traefik.backend.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
+      - "traefik.backend.healthcheck.interval=10s"
+      - "traefik.backend.healthcheck.scheme=http"
+  angular:
+    build: "angular/"
+    restart: always
+    image: my-thai-star/angular:latest
+    networks:
+      - my-thai-star
+    labels:
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.backend.healthcheck.path=/health"
+      - "traefik.backend.healthcheck.interval=10s"
+      - "traefik.backend.healthcheck.scheme=http"
+networks:
+  my-thai-star:
+    driver: bridge
