@@ -10,20 +10,20 @@ import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { EmailConfirmationsService } from './services/email-confirmations.service';
 
 import { EmailConfirmationsComponent } from './email-confirmations.component';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '../home/container/home/home.component';
 import { MenuComponent } from '../menu/container/menu/menu.component';
 import { BookTableFormComponent } from '../book-table/components/book-table-form/book-table-form.component';
 import { OrderCockpitComponent } from '../cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from '../cockpit-area/reservation-cockpit/reservation-cockpit.component';
-import { MenuCardComponent } from '../menu/menu-card/menu-card.component';
-import { HomeCardComponent } from '../home/home-card/home-card.component';
-import { HomeLayoutComponent } from '../home/home-layout/home-layout.component';
-import { MenuFiltersComponent } from '../menu/menu-filters/menu-filters.component';
-import { MenuCardCommentsComponent } from '../menu/menu-card/menu-card-comments/menu-card-comments.component';
-import { MenuCardDetailsComponent } from '../menu/menu-card/menu-card-details/menu-card-details.component';
-import { FilterSearchComponent } from '../menu/menu-filters/filter-search/filter-search.component';
-import { FilterCheckboxesComponent } from '../menu/menu-filters/filter-checkboxes/filter-checkboxes.component';
-import { FilterSortComponent } from '../menu/menu-filters/filter-sort/filter-sort.component';
+import { MenuCardComponent } from '../menu/components/menu-card/menu-card.component';
+import { HomeCardComponent } from '../home/components/home-card/home-card.component';
+import { HomeLayoutComponent } from '../home/components/home-layout/home-layout.component';
+import { MenuFiltersComponent } from '../menu/components/menu-filters/menu-filters.component';
+import { MenuCardCommentsComponent } from '../menu/components/menu-card/menu-card-comments/menu-card-comments.component';
+import { MenuCardDetailsComponent } from '../menu/components/menu-card/menu-card-details/menu-card-details.component';
+import { FilterSearchComponent } from '../menu/components/menu-filters/filter-search/filter-search.component';
+import { FilterCheckboxesComponent } from '../menu/components/menu-filters/filter-checkboxes/filter-checkboxes.component';
+import { FilterSortComponent } from '../menu/components/menu-filters/filter-sort/filter-sort.component';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;

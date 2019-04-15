@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home/container/home/home.component';
 import { MenuComponent } from './menu/container/menu/menu.component';
 import { BookTablePageComponent } from 'app/book-table/container/book-table-page/book-table-page.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
@@ -10,6 +10,7 @@ import { EmailConfirmationsComponent } from './email-confirmations/email-confirm
 import { NotFoundComponent } from './core/not-found/not-found.component';
 
 import { AuthGuardService } from './core/authentication/auth-guard.service';
+import {BookTableDialogComponent} from './book-table/components/book-table-dialog/book-table-dialog.component';
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },

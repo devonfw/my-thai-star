@@ -1,9 +1,7 @@
 import { Action } from '@ngrx/store';
-import {Booking} from 'app/book-table/models/booking';
 
 export enum BookTableActionTypes {
   BOOK_TABLE = '[BookTable] Book table',
-  BOOK_TABLE_RESPONSE = '[BookTable] Book table response',
   BOOK_TABLE_SUCCESS = '[BookTable] Book table success',
   BOOK_TABLE_FAIL = '[BookTable] Book table Fail',
   INVITE_FRIENDS = '[InviteFriends] Invite friends',
@@ -13,12 +11,6 @@ export enum BookTableActionTypes {
 
 export class BookTable implements Action {
   readonly type = BookTableActionTypes.BOOK_TABLE;
-
-  constructor(public payload: any) {}
-}
-
-export class BookTableResponse implements Action {
-  readonly type = BookTableActionTypes.BOOK_TABLE_RESPONSE;
 
   constructor(public payload: any) {}
 }
@@ -55,7 +47,6 @@ export class InviteFriendsFail implements Action {
 
 export type BookTableActions =
   BookTable
-  | BookTableResponse
   | BookTableSuccess
   | BookTableFail
   | InviteFriends

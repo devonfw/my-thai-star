@@ -25,16 +25,8 @@ export function reducer(
       return adapter.addOne(action.payload.order, state);
     }
 
-    case OrderActionTypes.UpsertOrder: {
-      return adapter.upsertOne(action.payload.order, state);
-    }
-
     case OrderActionTypes.AddOrders: {
       return adapter.addMany(action.payload.orders, state);
-    }
-
-    case OrderActionTypes.UpsertOrders: {
-      return adapter.upsertMany(action.payload.orders, state);
     }
 
     case OrderActionTypes.UpdateOrder: {

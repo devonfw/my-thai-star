@@ -4,6 +4,7 @@
   <public-menu-card
     *ngFor="let dish of dishes"
     [menuInfo]="dish"
+    (orderAdded)="onOrderAdded($event)"
   ></public-menu-card>
 </div>
 
