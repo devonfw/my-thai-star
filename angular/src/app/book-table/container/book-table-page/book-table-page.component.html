@@ -14,7 +14,7 @@
           <img mat-card-image src='./assets/images/slider-1.jpg' class="forMobile">
 
           <div flex-gt-xs="50">
-           <book-table-form (submitted)="onBookTableSubmit($event)" [booking]="booking$ | async"></book-table-form>
+           <book-table-form></book-table-form>
           </div>
         </div>
       </mat-tab>
@@ -28,7 +28,7 @@
           <img mat-card-image src='./assets/images/slider-2.jpg' class="forMobile">
 
           <div flex-gt-xs="50">
-            <invite-friends-form (submitted)="onInviteFriendsSubmit($event)" [booking]="booking$ | async"></invite-friends-form>
+            <invite-friends-form></invite-friends-form>
           </div>
         </div>
       </mat-tab>

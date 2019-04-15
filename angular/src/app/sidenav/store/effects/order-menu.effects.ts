@@ -13,7 +13,6 @@ export class OrderMenuEffects {
   @Effect()
   loadOrderMenus$ = this.actions$.pipe(
     ofType(OrderMenuActionTypes.LoadOrderMenus),
-    /** An EMPTY observable only emits completion. Replace with your own observable API request */
     concatMap(() => EMPTY)
   );
 

@@ -7,7 +7,7 @@ import {FormControl, FormGroup} from '@angular/forms';
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.css']
 })
-export class SignUpFormComponent implements OnInit {
+export class SignUpFormComponent {
   @Output() submitted = new EventEmitter<UserData>();
 
   form: FormGroup = new FormGroup({
@@ -15,10 +15,7 @@ export class SignUpFormComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor() {}
 
   submit() {
     if (this.form.valid) {

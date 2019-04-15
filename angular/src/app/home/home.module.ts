@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './container/home/home.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { HomeLayoutComponent } from './home-layout/home-layout.component';
-import { HomeCardComponent } from './home-card/home-card.component';
+import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
+import { HomeCardComponent } from './components/home-card/home-card.component';
+import {HomeRoutingModule} from './home-routing.module';
 
 @NgModule({
-  imports: [CommonModule, CoreModule, TranslateModule],
+  imports: [CommonModule, CoreModule, TranslateModule, HomeRoutingModule],
   providers: [],
   declarations: [HomeComponent, HomeLayoutComponent, HomeCardComponent],
   exports: [HomeComponent],

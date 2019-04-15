@@ -12,10 +12,7 @@ import {last} from 'lodash';
   templateUrl: './invite-friends-form.component.html',
   styleUrls: ['./invite-friends-form.component.css']
 })
-export class InviteFriendsFormComponent implements OnInit {
-  @Input() booking: Booking;
-  @Output() submitted = new EventEmitter();
-
+export class InviteFriendsFormComponent {
   invitationModel: string[] = [];
   minDate: Date = new Date();
 
@@ -35,8 +32,6 @@ export class InviteFriendsFormComponent implements OnInit {
     private translate: TranslateService,
     private snackBarService: SnackBarService,
   ) {}
-
-  ngOnInit() {}
 
   get invName(): AbstractControl {
     return this.invitationForm.get('name');
@@ -60,9 +55,5 @@ export class InviteFriendsFormComponent implements OnInit {
     moment.locale(this.translate.currentLang);
     const firstDay: string = moment(moment().weekday(0)).format('d');
     return firstDay;
-  }
-
-  submit() {
-    this.submitted.emit(this.invitationForm.value);
   }
 }

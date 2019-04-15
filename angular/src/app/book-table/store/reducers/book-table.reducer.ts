@@ -1,4 +1,3 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import {BookTableActions, BookTableActionTypes} from '../actions/book-table.actions';
 import {Booking} from 'app/book-table/models/booking';
 import {BookingResponse} from '../../models/booking-response';
@@ -26,7 +25,6 @@ export const initialState: State = {
     tableId: undefined,
     email: ''
   }
-
 };
 
 export function reducer(
@@ -37,11 +35,20 @@ export function reducer(
     case BookTableActionTypes.BOOK_TABLE:
       return {...state, pending: true, booking: action.payload};
 
-    case BookTableActionTypes.BOOK_TABLE_RESPONSE:
-      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
-
     case BookTableActionTypes.BOOK_TABLE_SUCCESS:
       return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
+
+    case BookTableActionTypes.BOOK_TABLE_FAIL:
+      return {...state, pending: false, errorMessage: action.payload};
+
+    case BookTableActionTypes.INVITE_FRIENDS:
+      return {...state, pending: true, booking: action.payload};
+
+    case BookTableActionTypes.INVITE_FRIENDS_SUCCESS:
+      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
+
+    case BookTableActionTypes.INVITE_FRIENDS_FAIL:
+      return {...state, pending: false, errorMessage: action.payload};
 
     default: {
       return state;

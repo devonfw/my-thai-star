@@ -6,9 +6,9 @@ import { SidenavService } from './services/sidenav.service';
 import { PriceCalculatorService } from './services/price-calculator.service';
 import { WindowService } from '../core/window/window.service';
 
-import { SidenavComponent } from './sidenav.component';
-import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
-import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
+import { SidenavComponent } from './container/sidenav/sidenav.component';
+import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';

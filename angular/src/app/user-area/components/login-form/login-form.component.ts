@@ -7,7 +7,7 @@ import {FormControl, FormGroup} from '@angular/forms';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
   @Output() submitted = new EventEmitter<Credentials>();
 
   form: FormGroup = new FormGroup({
@@ -15,11 +15,7 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+  constructor() {}
 
   submit() {
     if (this.form.valid) {
