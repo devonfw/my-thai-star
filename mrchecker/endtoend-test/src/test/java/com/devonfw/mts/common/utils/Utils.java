@@ -59,7 +59,7 @@ public class Utils {
    *
    * @param oldDate.
    * @param oldFormat.
-   * @param	newFormat.
+   * @param newFormat.
    * @return oldDate formated as String following the new format (newFormat)
    * */
   public static String changeDateFormat(String oldDate, String oldFormat, String newFormat) throws ParseException {
