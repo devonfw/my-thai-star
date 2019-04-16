@@ -1,50 +1,37 @@
 pipeline {
-    agent any
-    environment {
-        // Repository
-        repo = 'http://gitlab'
-        branch = 'develop'
-        credentialsID = ''
+  agent any
 
-        openshiftUrl = "https://arkenstone.s2-eu.capgemini.com/"
-    }
-
-    stages {
-
-	    stage('Load tools') {
-	        steps {
-		        script {
-		        	tool name: 'Maven3', type: 'maven'
-			        env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
-			        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-			        sh "cat /etc/apt/sources.list"
-		        }
-	        }
-
-	    }
-
-	    stage('Run end to end tests') {
-
-	        steps {
-	        	script {
-	        		dir('mrchecker/endtoend-test/') {
-			            sh "ls"
-			            withMaven(globalMavenSettingsConfig: 'MavenSettings', jdk: 'OpenJDK 1.8', maven: 'Maven3') {
-			                sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://selenium-hub-core:4444/wd/hub' -Dos=LINUX"
-			            }
-			        }
-	        	}
-	        }
-
-
-	    }
-    }
-
-    post {
-        cleanup {
-            cleanWs()
-            deleteDir()
+  stages {
+    stage('Load tools') {
+      steps {
+        script {
+          tool name: 'Maven3', type: 'maven'
+          env.JAVA_HOME="${tool 'OpenJDK 1.8'}"
+          env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+          sh "cat /etc/apt/sources.list"
         }
+      }
     }
+
+    stage('Run end to end tests') {
+      steps {
+        script {
+          dir('mrchecker/endtoend-test/') {
+            sh "ls"
+            withMaven(globalMavenSettingsConfig: 'MavenSettings', jdk: 'OpenJDK 1.8', maven: 'Maven3') {
+              sh "mvn test -Dtest=MyThaiStarTest -Dbrowser=chrome -DseleniumGrid='http://selenium-hub-core:4444/wd/hub' -Dos=LINUX"
+            }
+          }
+        }
+      }
+    }
+  }
+
+  post {
+    cleanup {
+      cleanWs()
+      deleteDir()
+    }
+  }
 }
 
