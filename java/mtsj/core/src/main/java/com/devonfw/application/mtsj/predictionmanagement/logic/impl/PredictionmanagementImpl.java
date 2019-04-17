@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +19,14 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepos
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionDayData;
-import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionCriteriaEto;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDayDataEto;
+import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionDayDataEntity;
+import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionForecastDataEntity;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionModelDataEntity;
-import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.dao.PredictionDayDataRepository;
-import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.dao.PredictionForecastDataRepository;
-import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.dao.PredictionModelDataRepository;
+import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.repo.PredictionDayDataRepository;
+import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.repo.PredictionModelDataRepository;
 import com.devonfw.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
 
 /**
@@ -43,13 +45,13 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
   private PredictionDayDataRepository predictionDayDataRepository;
 
   @Inject
-  private PredictionForecastDataRepository predictionForecastDataRepository;
-
-  @Inject
   private PredictionModelDataRepository predictionModelDataRepository;
 
   @Inject
   private DishRepository dishRepository;
+
+  @PersistenceContext
+  private EntityManager entityManager;
 
   /**
    * The constructor.
@@ -61,7 +63,7 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
 
   @Override
   @RolesAllowed(Roles.MANAGER)
-  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria) {
+  public PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria) {
 
     LOG.debug("Generate predictions for next week.");
 
@@ -70,9 +72,11 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
 
     // add new forecast data
     for (int i = 0; i < criteria.getTemperatures().size(); i++) {
-      this.predictionDayDataRepository.addNewForcastData(i + 1,
-          criteria.getTemperatures().get(i) == null ? 0 : criteria.getTemperatures().get(i),
-          criteria.getHolidays().get(i) == null ? 0 : 1);
+      PredictionForecastDataEntity forecastData = new PredictionForecastDataEntity();
+      forecastData.setTimestamp(i + 1);
+      forecastData.setTemperature(criteria.getTemperatures().get(i) == null ? 0 : criteria.getTemperatures().get(i));
+      forecastData.setHoliday(criteria.getHolidays().get(i) == null ? 0 : 1);
+      this.entityManager.persist(forecastData);
     }
 
     PredictionDataTo predictionDataTo = new PredictionDataTo();
@@ -107,19 +111,32 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
 
     // Prepare model parameters
     this.predictionModelDataRepository.deleteTmpPredictionModel();
+    List<PredictionModelDataEntity> predictionAllModels = this.predictionModelDataRepository.getPredictionAllModels();
+
+    for (PredictionModelDataEntity predictionModelDataEntity : predictionAllModels) {
+      System.out.println(predictionModelDataEntity.getKey() + ":::Key");
+      System.out.println(predictionModelDataEntity.getValue() + ":::Value");
+      System.out.println(predictionModelDataEntity.getDishId() + ":::Dish ID");
+      System.out.println(predictionModelDataEntity.getId() + ":::ID");
+    }
+
     this.predictionModelDataRepository.prepareModelPredictions(dish.getId());
     // Do prediction
-    this.predictionForecastDataRepository.deleteTmpPredictionForecast();
-    this.predictionForecastDataRepository.doPredictions();
+    this.predictionDayDataRepository.deleteTmpPredictionForecast();
+    this.entityManager
+        .createNativeQuery("CALL _SYS_AFL.PAL_ARIMA_FORECAST(PREDICTION_FORECAST_DATA, TMP_PREDICTION_MODEL, "
+            + "PREDICTION_ARIMA_PARAMS, TMP_PREDICTION_FORECAST) WITH OVERVIEW")
+        .executeUpdate();
     // Save prediction
     this.predictionDayDataRepository.deletePredictionDayDatabyDish(dish.getId());
-    this.predictionForecastDataRepository.savePredictions(dish.getId());
+    this.predictionDayDataRepository.savePredictions(dish.getId());
   }
 
   public void train(DishEntity dish, Timestamp startDate) {
 
     // is training necessary
-    boolean alreadyTrained = this.predictionModelDataRepository.isTrainingNecessary(dish.getId(), startDate) > 0;
+    boolean alreadyTrained = this.predictionModelDataRepository.isTrainingNecessary(dish.getId(),
+        startDate.toString()) > 0;
     if (alreadyTrained) {
       return;
     }
@@ -135,16 +152,22 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
     // Estimate model parameters
     this.predictionModelDataRepository.deleteTmpPredictionModel();
     this.predictionModelDataRepository.deleteTmpPredictionFit();
-    this.predictionModelDataRepository.estimateModelParameter();
+    this.entityManager
+        .createNativeQuery("CALL _SYS_AFL.PAL_AUTOARIMA(TMP_PREDICTION_DATA, PREDICTION_AUTOARIMA_PARAMS, "
+            + "TMP_PREDICTION_MODEL, TMP_PREDICTION_FIT) WITH OVERVIEW")
+        .executeUpdate();
 
     // Save model
     this.predictionModelDataRepository.deletePreditionDataModelbyDishId(dish.getId());
-    this.predictionModelDataRepository.addPredictionModel(dish.getId());
+    System.out.println(dish.getId() + "Dish Id::::::::::::");// bifuragate the below query
     PredictionModelDataEntity entity = new PredictionModelDataEntity();
     entity.setDish(dish);
     entity.setKey("_date");
     entity.setValue(startDate.toString());
     this.predictionModelDataRepository.save(entity);
+    Long id = this.predictionModelDataRepository.getLastIdentityPredictionAllModels();
+    System.out.print(id + ":::::getLastIdentityPredictionAllModels");
+    this.predictionModelDataRepository.addPredictionModel(dish.getId());
 
   }
 

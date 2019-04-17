@@ -1,11 +1,9 @@
 package com.devonfw.application.mtsj.predictionmanagement.common.api;
 
-import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
-
 /**
  * Prediction forecast data for a point in time
  */
-public interface PredictionForecastData extends ApplicationEntity {
+public interface PredictionForecastData {
 
   /**
    * @return the time index of the prediction

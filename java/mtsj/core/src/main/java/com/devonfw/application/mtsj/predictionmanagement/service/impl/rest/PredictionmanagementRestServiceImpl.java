@@ -3,7 +3,7 @@ package com.devonfw.application.mtsj.predictionmanagement.service.impl.rest;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionCriteriaEto;
+import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
 import com.devonfw.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
 import com.devonfw.application.mtsj.predictionmanagement.service.api.rest.PredictionmanagementRestService;
@@ -18,7 +18,7 @@ public class PredictionmanagementRestServiceImpl implements Predictionmanagement
   private Predictionmanagement predictionmanagement;
 
   @Override
-  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria) {
+  public PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria) {
 
     return this.predictionmanagement.getNextWeekPrediction(criteria);
   }

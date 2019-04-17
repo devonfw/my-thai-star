@@ -31,6 +31,13 @@
       </a>
     </nav>
   </div>
+  <div *ngIf="auth.isPermited('MANAGER')" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/prediction" routerLinkActive #prediction="routerLinkActive" [class.navBottomBorder]="prediction.isActive">
+        PREDICTION
+      </a>
+    </nav>
+  </div>
   <button name="login" *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>

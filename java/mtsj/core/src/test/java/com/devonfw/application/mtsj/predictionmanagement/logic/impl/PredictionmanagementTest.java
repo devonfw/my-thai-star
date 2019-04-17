@@ -14,9 +14,9 @@ import org.springframework.security.test.context.support.WithSecurityContextTest
 import org.springframework.test.context.TestExecutionListeners;
 
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
-import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionCriteriaEto;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDayDataEto;
+import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionDayDataEntity;
 import com.devonfw.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
 import com.devonfw.module.test.common.base.ComponentTest;
@@ -63,7 +63,7 @@ public class PredictionmanagementTest extends ComponentTest {
     List<Double> temperatures = new ArrayList<>();
     temperatures.add(Double.valueOf(20.5d));
 
-    PredictionCriteriaEto eto = new PredictionCriteriaEto();
+    PredictionSearchCriteriaTo eto = new PredictionSearchCriteriaTo();
     eto.setHolidays(holidays);
     eto.setTemperatures(temperatures);
     // eto.setType(Type.PREDICTION);

@@ -6,7 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionCriteriaEto;
+import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
 
 /**
@@ -24,5 +24,5 @@ public interface PredictionmanagementRestService {
    */
   @POST
   @Path("/nextweek/")
-  public PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria);
+  public PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria);
 }

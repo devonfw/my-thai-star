@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.predictionmanagement.logic.api;
 
-import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionCriteriaEto;
+import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
 
 /**
@@ -8,6 +8,6 @@ import com.devonfw.application.mtsj.predictionmanagement.common.api.to.Predictio
  */
 public interface Predictionmanagement {
 
-  PredictionDataTo getNextWeekPrediction(PredictionCriteriaEto criteria);
+  PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria);
 
 }

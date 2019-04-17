@@ -2,8 +2,6 @@ package com.devonfw.application.mtsj.predictionmanagement.dataaccess.api;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,7 +16,6 @@ import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionMo
  */
 @Entity
 @Table(name = "PREDICTION_ALL_MODELS")
-@IdClass(PredictionModelDataId.class)
 public class PredictionModelDataEntity extends ApplicationPersistenceEntity implements PredictionModelData {
 
   private static final long serialVersionUID = 1L;
@@ -29,7 +26,7 @@ public class PredictionModelDataEntity extends ApplicationPersistenceEntity impl
 
   private String value;
 
-  @Id
+  // @Id
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "IDDISH")
   public DishEntity getDish() {
@@ -51,7 +48,7 @@ public class PredictionModelDataEntity extends ApplicationPersistenceEntity impl
     return this.dish.getId();
   }
 
-  @Id
+  // @Id
   public String getKey() {
 
     return this.key;
