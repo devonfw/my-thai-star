@@ -2,14 +2,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
-
-import { BookTableModule } from '../book-table.module';
-
-import { BookTableService } from '../shared/book-table.service';
-import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
-
 import { InvitationDialogComponent } from './invitation-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {BookTableModule} from '../../book-table.module';
+import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import {BookTableService} from '../../services/book-table.service';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;

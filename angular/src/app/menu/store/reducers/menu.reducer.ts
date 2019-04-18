@@ -8,12 +8,14 @@ export interface MenuState {
   loading: boolean;
   loaded: boolean;
   dishes: DishView[];
+  errorMessage: string;
 }
 
 export const initialState: MenuState = {
   loading: false,
   loaded: false,
   dishes: [],
+  errorMessage: '',
 };
 
 export function MenuReducer(state = initialState, action: MenuActions): MenuState {
@@ -34,6 +36,13 @@ export function MenuReducer(state = initialState, action: MenuActions): MenuStat
         loading: false,
         loaded: true,
         dishes: action.payload.content
+      };
+    }
+
+    case MenuActionTypes.LoadMenuFail: {
+      return {
+        ...state,
+        errorMessage: action.payload
       };
     }
 

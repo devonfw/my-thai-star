@@ -11,10 +11,6 @@ import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
-import { StoreModule } from '@ngrx/store';
-import * as fromOrderMenu from './store/reducers/order-menu.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { OrderMenuEffects } from './store/effects/order-menu.effects';
 
 @NgModule({
   imports: [
@@ -22,8 +18,6 @@ import { OrderMenuEffects } from './store/effects/order-menu.effects';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-    StoreModule.forFeature('orderMenu', fromOrderMenu.reducer),
-    EffectsModule.forFeature([OrderMenuEffects]),
   ],
   providers: [
     SidenavService,

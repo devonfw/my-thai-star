@@ -1,5 +1,7 @@
 import {AuthActions, AuthActionTypes} from '../actions/auth.actions';
 import {User} from '../../models/user';
+import {createSelector} from '@ngrx/store';
+import {getAuthState} from './index';
 
 const localStorageUser: User = JSON.parse(localStorage.getItem('user'));
 
@@ -38,9 +40,6 @@ export function reducer(
       return {...state, isLoggedIn: false, errorMessage: 'Incorrect username / password.'};
 
     case AuthActionTypes.LOGOUT:
-      return {...state, textMessage: 'Logging out.'};
-
-    case AuthActionTypes.LOGOUT_SUCCESS:
       return initialState;
 
     case AuthActionTypes.LOGOUT_FAIL:
@@ -55,9 +54,4 @@ export function reducer(
   }
 }
 
-export const getSelectUser: any = (state: State) => state.isLoggedIn;
-export const getSelectError: any = (state: State) => state.errorMessage;
-export const getTextMessage: any = (state: State) => state.textMessage;
-
-export const getUsers = (state: State) => state.userData;
-export const getLoggedIn = (state: State) => state.userData.logged;
+export const getUserData: any = (state: State) => state.isLoggedIn;

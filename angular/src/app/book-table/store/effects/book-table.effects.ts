@@ -53,7 +53,7 @@ export class BookTableEffects {
         this.snackBar.openSnack(text, 4000, 'red');
       });
     })
-  )
+  );
 
   @Effect()
   inviteFriends$ = this.actions$.pipe(
@@ -86,7 +86,7 @@ export class BookTableEffects {
         this.snackBar.openSnack(text, 4000, 'red');
       });
     })
-  )
+  );
 
   constructor(
     private actions$: Actions<BookTableActions>,

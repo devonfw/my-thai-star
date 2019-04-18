@@ -1,15 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from '../../../core/core.module';
-
-import { SidenavService } from '../../../sidenav/services/sidenav.service';
-import { MenuService } from '../shared/menu.service';
-import { SnackBarService } from '../../core/snackService/snackService.service';
-import { AuthService } from '../../../core/authentication/auth.service';
-
 import { MenuCardComponent } from './menu-card.component';
 import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from './menu-card-details/menu-card-details.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {MenuService} from '../../services/menu.service';
+import {SidenavService} from '../../../sidenav/services/sidenav.service';
+import {CoreModule} from '../../../core/core.module';
+import {AuthService} from '../../../core/authentication/auth.service';
+import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;

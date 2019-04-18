@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { MenuService } from 'app/menu/services/menu.service';
-import { MenuActionTypes, MenuActions, LoadMenuSuccess } from '../actions/menu.actions';
+import { MenuActionTypes, MenuActions, LoadMenuSuccess, LoadMenuFail } from '../actions/menu.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { of } from 'rxjs';
 
 @Injectable()
 export class MenuEffects {
@@ -19,7 +19,9 @@ export class MenuEffects {
       mergeMap(action => this.menuService.getDishes(action.payload).pipe(
         map(
           result => new LoadMenuSuccess(result),
-          catchError(error => EMPTY)
+          catchError(error => of(new LoadMenuFail({
+            errorMessage: error
+          })))
           )
       ))
     );

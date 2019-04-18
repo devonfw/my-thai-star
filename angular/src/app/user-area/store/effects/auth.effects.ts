@@ -2,21 +2,20 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {UserAreaService} from '../../services/user-area.service';
 import {Router} from '@angular/router';
-import {of, fromEvent, Observable} from 'rxjs';
-import {AuthActions, AuthActionTypes, LoginFail, LoginSuccess, LogoutFail} from '../actions/auth.actions';
-import {catchError, exhaustMap, filter, map, tap} from 'rxjs/operators';
-import {Credentials, User} from '../../models/user';
+import {of, Observable} from 'rxjs';
+import {AuthActions, AuthActionTypes, LoginFail, LoginSuccess, Logout, LogoutFail, LogoutSuccess} from '../actions/auth.actions';
+import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
+import {Credentials} from '../../models/user';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
-import {Store} from '@ngrx/store';
-import * as fromApp from '../../../store/reducers';
-import * as fromAuth from '../reducers/auth.reducer';
 import {AuthService} from '../../../core/authentication/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  authState$: Observable<fromAuth.State>;
-
+  /*
+  * Dispatching the Login action
+  * Then communicate with the backend
+  * */
   @Effect()
   login$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN),
@@ -73,7 +72,6 @@ export class AuthEffects {
     private router: Router,
     public translate: TranslateService,
     public snackBar: SnackBarService,
-    private store: Store<fromApp.AppState>
   ) {}
 }
 
