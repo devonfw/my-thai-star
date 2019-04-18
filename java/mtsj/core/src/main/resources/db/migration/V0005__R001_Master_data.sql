@@ -1,7 +1,9 @@
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (0, 1, 'Customer', true);
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (1, 1, 'Waiter', true);
+INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (2, 1, 'Manager', true);
 INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (0, 1, 'user0', 'password', 'user0@mail.com', 0);
 INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (1, 1, 'waiter', 'waiter', 'waiter@mail.com', 1);
+INSERT INTO User(id, modificationCounter, username, password, email, idRole) VALUES (2, 1, 'manager', 'manager', 'manager@mail.com', 2);
 
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
@@ -20,7 +22,7 @@ INSERT INTO Booking(id, modificationCounter, idUser, name, bookingToken, comment
 -- Common Booking without orders
 INSERT INTO Booking(id, modificationCounter, idUser, name, bookingToken, comment, email, bookingDate, expirationDate, creationDate, canceled, bookingType, idTable, idOrder, assistants) VALUES(2, 1, 0, 'user2', 'CB_20170510_123502595Z', 'Booking Type GSR', 'user2@mail.com', DATEADD('DAY', 5, CURRENT_TIMESTAMP), DATEADD('DAY', 5, DATEADD('HOUR', -1, CURRENT_TIMESTAMP)), CURRENT_TIMESTAMP, false, 0, 2, null, 5);
 
--- Guest Booking 
+-- Guest Booking
 INSERT INTO Booking(id, modificationCounter, idUser, name, bookingToken, comment, email, bookingDate, expirationDate, creationDate, canceled, bookingType, idTable, idOrder) VALUES(3, 1, 0, 'host1', 'CB_20170510_123502655Z', 'Booking Type GSR', 'host1@mail.com', DATEADD('DAY', 5, CURRENT_TIMESTAMP), DATEADD('DAY', 5, DATEADD('HOUR', -1, CURRENT_TIMESTAMP)), CURRENT_TIMESTAMP, false, 1, 3, null);
 -- guests for booking with id 3
 INSERT INTO InvitedGuest(id, modificationCounter, idBooking, guestToken, email, accepted, modificationDate) VALUES(0, 1, 3, 'GB_20170510_02350266501Z', 'guest0@mail.com', true, DATEADD('DAY', 5, CURRENT_TIMESTAMP));
@@ -29,7 +31,7 @@ INSERT INTO InvitedGuest(id, modificationCounter, idBooking, guestToken, email, 
 INSERT INTO InvitedGuest(id, modificationCounter, idBooking, guestToken, email, accepted, modificationDate) VALUES(3, 1, 3, 'GB_20170510_32350266501Z', 'guest3@mail.com', true, DATEADD('DAY', 5, CURRENT_TIMESTAMP));
 INSERT INTO InvitedGuest(id, modificationCounter, idBooking, guestToken, email, accepted, modificationDate) VALUES(4, 1, 3, 'GB_20170510_42350266501Z', 'guest4@mail.com', false, DATEADD('DAY', 5, CURRENT_TIMESTAMP));
 
----- Guest Booking 
+---- Guest Booking
 INSERT INTO Booking(id, modificationCounter, idUser, name, bookingToken, comment, email, bookingDate, expirationDate, creationDate, canceled, bookingType, idTable, idOrder) VALUES(4, 1, 0, 'host1', 'CB_20170510_123503600Z', 'Booking Type GSR', 'host1@mail.com', DATEADD('DAY', 5, CURRENT_TIMESTAMP), DATEADD('DAY', 5, DATEADD('HOUR', -1, CURRENT_TIMESTAMP)), CURRENT_TIMESTAMP, false, 1, 3, null);
 ---- guests for booking with id 4
 INSERT INTO InvitedGuest(id, modificationCounter, idBooking, guestToken, email, accepted, modificationDate) VALUES(5, 1, 4, 'GB_20170510_52350266501Z', 'guest5@mail.com', true, DATEADD('DAY', 5, CURRENT_TIMESTAMP));
