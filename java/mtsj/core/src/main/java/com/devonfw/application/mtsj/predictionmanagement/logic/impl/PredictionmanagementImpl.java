@@ -107,18 +107,10 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
     return predictionDataTo;
   }
 
-  public void generatePredictionFor(DishEntity dish) {
+  private void generatePredictionFor(DishEntity dish) {
 
     // Prepare model parameters
     this.predictionModelDataRepository.deleteTmpPredictionModel();
-    List<PredictionModelDataEntity> predictionAllModels = this.predictionModelDataRepository.getPredictionAllModels();
-
-    for (PredictionModelDataEntity predictionModelDataEntity : predictionAllModels) {
-      System.out.println(predictionModelDataEntity.getKey() + ":::Key");
-      System.out.println(predictionModelDataEntity.getValue() + ":::Value");
-      System.out.println(predictionModelDataEntity.getDishId() + ":::Dish ID");
-      System.out.println(predictionModelDataEntity.getId() + ":::ID");
-    }
 
     this.predictionModelDataRepository.prepareModelPredictions(dish.getId());
     // Do prediction
@@ -132,7 +124,7 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
     this.predictionDayDataRepository.savePredictions(dish.getId());
   }
 
-  public void train(DishEntity dish, Timestamp startDate) {
+  private void train(DishEntity dish, Timestamp startDate) {
 
     // is training necessary
     boolean alreadyTrained = this.predictionModelDataRepository.isTrainingNecessary(dish.getId(),
@@ -165,8 +157,7 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
     entity.setKey("_date");
     entity.setValue(startDate.toString());
     this.predictionModelDataRepository.save(entity);
-    Long id = this.predictionModelDataRepository.getLastIdentityPredictionAllModels();
-    System.out.print(id + ":::::getLastIdentityPredictionAllModels");
+
     this.predictionModelDataRepository.addPredictionModel(dish.getId());
 
   }
