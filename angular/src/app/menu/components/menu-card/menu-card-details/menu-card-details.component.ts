@@ -9,15 +9,10 @@ import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
 export class MenuCardDetailsComponent {
   @Input() menuInfo: DishView;
   @Output() clickOrder: EventEmitter<DishView> = new EventEmitter<DishView>();
+  @Output() selectExtra: EventEmitter<ExtraView> = new EventEmitter<ExtraView>();
 
   onSelectExtra(extra: ExtraView): void {
-    // extra.selected = !extra.selected;
-    const modifiedExtraIndex: number = this.menuInfo.extras.indexOf(extra);
-    const oldExtra: ExtraView = this.menuInfo.extras[modifiedExtraIndex];
-    this.menuInfo.extras[modifiedExtraIndex] = {
-      ...oldExtra,
-      ...{ selected: !oldExtra.selected },
-    };
+    this.selectExtra.emit(extra);
   }
 
   onClickOrder(): void {

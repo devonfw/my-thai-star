@@ -6,10 +6,13 @@ import { HomeComponent } from './container/home/home.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
 import { HomeCardComponent } from './components/home-card/home-card.component';
-import {HomeRoutingModule} from './home-routing.module';
 
 @NgModule({
-  imports: [CommonModule, CoreModule, TranslateModule, HomeRoutingModule],
+  imports: [
+    CommonModule,
+    CoreModule,
+    TranslateModule
+  ],
   providers: [],
   declarations: [HomeComponent, HomeLayoutComponent, HomeCardComponent],
   exports: [HomeComponent],

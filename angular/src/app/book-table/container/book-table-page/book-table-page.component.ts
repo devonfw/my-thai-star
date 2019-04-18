@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import * as fromBookTable from '../../store/reducers/book-table.reducer';
-import {select, Store} from '@ngrx/store';
-import {BookTable} from '../../store/actions/book-table.actions';
-import {Booking} from '../../models/booking';
-import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'public-book-table',
@@ -12,7 +9,5 @@ import {Observable} from 'rxjs';
 })
 export class BookTablePageComponent {
 
-  constructor (
-    private store: Store<fromBookTable.State>,
-  ) {}
+  constructor () {}
 }

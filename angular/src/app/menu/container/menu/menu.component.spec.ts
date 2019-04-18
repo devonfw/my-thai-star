@@ -7,8 +7,6 @@ import { CoreModule } from '../../../core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SidenavService } from '../../../sidenav/services/sidenav.service';
-import { MenuService } from './shared/menu.service';
-import { SnackBarService } from '../core/snackService/snackService.service';
 import { AuthService } from '../../../core/authentication/auth.service';
 import { MatSlider, MatInput } from '@angular/material';
 
@@ -21,13 +19,23 @@ import { FilterSortComponent } from '../../components/menu-filters/filter-sort/f
 import { MenuCardCommentsComponent } from '../../components/menu-card/menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from '../../components/menu-card/menu-card-details/menu-card-details.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {MenuService} from '../../services/menu.service';
+import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import {ConfigService} from '../../../core/config/config.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../store/reducers';
+import * as fromOrder from '../../store/reducers/order.reducer';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
   // let fixture: ComponentFixture<MenuComponent>;
   // tslint:disable-next-line:prefer-const
   let http: HttpClient;
+  const configService: ConfigService = null;
   let menuService: MenuService;
+  const store: Store<AppState> = null;
+  const sidenav: SidenavService = null;
+  const orderStore: Store<fromOrder.State> = null;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -66,8 +74,12 @@ describe('MenuComponent', () => {
     // fixture = TestBed.createComponent(MenuComponent);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
-    menuService = new MenuService(http);
-    component = new MenuComponent(menuService);
+    menuService = new MenuService(http, configService);
+    component = new MenuComponent(
+      store,
+      menuService,
+      sidenav,
+      orderStore);
   });
 
   it('should create', () => {

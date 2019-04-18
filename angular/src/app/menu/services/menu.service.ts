@@ -24,9 +24,12 @@ export class MenuService {
   private readonly restServiceRoot: string;
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) {
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
-   }
+  }
 
   menuToOrder(menu: DishView): OrderView {
     return {
