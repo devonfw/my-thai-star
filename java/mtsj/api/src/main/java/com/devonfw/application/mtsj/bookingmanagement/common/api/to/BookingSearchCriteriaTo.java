@@ -89,32 +89,32 @@ public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   public Timestamp getBookingDate() {
 
-    return (Timestamp) this.bookingDate.clone();
+    return this.bookingDate;
   }
 
   public void setBookingDate(Timestamp bookingDate) {
 
-    this.bookingDate = (Timestamp) bookingDate.clone();
+    this.bookingDate = bookingDate;
   }
 
   public Timestamp getExpirationDate() {
 
-    return (Timestamp) this.expirationDate.clone();
+    return this.expirationDate;
   }
 
   public void setExpirationDate(Timestamp expirationDate) {
 
-    this.expirationDate = (Timestamp) expirationDate.clone();
+    this.expirationDate = expirationDate;
   }
 
   public Timestamp getCreationDate() {
 
-    return (Timestamp) this.creationDate.clone();
+    return this.creationDate;
   }
 
   public void setCreationDate(Timestamp creationDate) {
 
-    this.creationDate = (Timestamp) creationDate.clone();
+    this.creationDate = creationDate;
   }
 
   public String getEmail() {
