@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Booking} from '../../models/booking';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 import {emailValidator} from '../../../shared/directives/email-validator.directive';

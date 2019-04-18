@@ -20,6 +20,7 @@ import { MenuReducer } from './store/reducers/menu.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MenuEffects } from './store/effects/menu.effects';
 import * as fromOrder from './store/reducers/order.reducer';
+import {MenuRoutingModule} from './menu-routing.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import * as fromOrder from './store/reducers/order.reducer';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MenuRoutingModule,
     EffectsModule.forFeature([MenuEffects]),
     StoreModule.forFeature('menu', MenuReducer),
     StoreModule.forFeature('order', fromOrder.reducer),

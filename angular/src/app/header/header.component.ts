@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -18,11 +18,13 @@ import { Logout } from '../user-area/store/actions/auth.actions';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/reducers';
 import * as fromAuth from 'app/user-area/store/reducers/auth.reducer';
+import {getLoggedIn} from '../user-area/store/reducers';
 
 @Component({
   selector: 'public-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
   authState$: Observable<fromAuth.State>;
@@ -47,11 +49,10 @@ export class HeaderComponent implements OnInit {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
-    this.authState$ = this.store.select('auth');
   }
 
   ngOnInit(): void {
-    this.authState$.subscribe(x => console.log(x.userData.currentRole));
+    this.authState$ = this.store.select('auth');
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {

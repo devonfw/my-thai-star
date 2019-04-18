@@ -12,8 +12,6 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./book-table-form.component.scss']
 })
 export class BookTableFormComponent {
-  @Output() submitted = new EventEmitter();
-
   minDate: Date = new Date();
   REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 

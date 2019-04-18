@@ -8,8 +8,10 @@ import { AuthService } from '../../../core/authentication/auth.service';
   styleUrls: ['./menu-card.component.scss'],
 })
 export class MenuCardComponent {
+  @Input() extras: ExtraView;
   @Input() menuInfo: DishView;
   @Output() orderAdded = new EventEmitter<any>();
+  @Output() extraSelected = new EventEmitter<any>();
 
   constructor(
     public auth: AuthService,
@@ -25,5 +27,14 @@ export class MenuCardComponent {
 
   addOrderMenu(): void {
     this.orderAdded.emit(this.menuInfo);
+  }
+
+  receiveExtra($event) {
+    this.extras = $event;
+    this.extraSelected.emit(this.extras);
+  }
+
+  addSelectExtra(): void {
+    this.extraSelected.emit(this.extras);
   }
 }

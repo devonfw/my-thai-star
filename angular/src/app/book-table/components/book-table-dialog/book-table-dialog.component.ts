@@ -1,9 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import * as fromBookTable from '../../store/reducers/book-table.reducer';
 import {Store} from '@ngrx/store';
 import {BookTable} from '../../store/actions/book-table.actions';
+import {Order} from '../../../menu/models/order.model';
 
 @Component({
   selector: 'public-book-table-dialog',

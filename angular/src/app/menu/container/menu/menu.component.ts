@@ -12,6 +12,7 @@ import {AddOrder, UpdateOrder} from '../../store/actions/order.actions';
 import {Order} from '../../models/order.model';
 import * as fromOrder from 'app/menu/store/reducers/order.reducer';
 import {SidenavService} from '../../../sidenav/services/sidenav.service';
+import {ExtraView} from '../../models/dishes';
 
 export interface Filters {
   searchBy: string;
@@ -31,6 +32,8 @@ export class MenuComponent implements OnInit {
   dishes$: Observable<DishView[]> = this.store.select(getAllDishes);
   orders$: Observable<Order[]>;
   orders: Order[];
+  menuInfo: DishView;
+  extras: ExtraView[] = [];
 
   constructor(
     private store: Store<AppState>,
@@ -70,11 +73,26 @@ export class MenuComponent implements OnInit {
     return false;
   }
 
+  onExtraSelected(extra: ExtraView): void {
+    const modifiedExtraIndex: number = this.extras.indexOf(extra);
+    const oldExtra: ExtraView = this.extras[modifiedExtraIndex];
+    this.extras[modifiedExtraIndex] = {
+      ...oldExtra,
+      ...{ selected: !oldExtra.selected },
+    };
+  }
+
   onOrderAdded(order: any) {
     const orderView = this.menuService.menuToOrder(order);
       if (this.idExist(orderView.dish.id) === false) {
         this.store.dispatch(new AddOrder({
-          order: { id: orderView.dish.id, order: orderView }
+          order: {
+            id: orderView.dish.id,
+            order: {
+              ...orderView,
+              extras: this.extras
+            }
+          }
         }));
       } else {
         const orderDish: Order = this.orders.find(orderId => orderId.id === orderView.dish.id);
@@ -93,7 +111,6 @@ export class MenuComponent implements OnInit {
           }
         }));
       }
-
       this.sidenav.openSideNav();
   }
 }

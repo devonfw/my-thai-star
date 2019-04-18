@@ -78,4 +78,4 @@ export const getSelectedOrder = createSelector(
   (state) => {
     return state.entities[state.selectedOrderId];
   }
-)
+);

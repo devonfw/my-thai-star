@@ -8,9 +8,7 @@ import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
-
 import { AuthGuardService } from './core/authentication/auth-guard.service';
-import {BookTableDialogComponent} from './book-table/components/book-table-dialog/book-table-dialog.component';
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },
