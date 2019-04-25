@@ -12,7 +12,7 @@ import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 
 /**
- * Data access interface for PredictionDayData entities
+ * {@link DefaultRepository} for {@link PredictionDayDataEntity}.
  */
 public interface PredictionDayDataRepository extends DefaultRepository<PredictionDayDataEntity> {
 
@@ -39,10 +39,7 @@ public interface PredictionDayDataRepository extends DefaultRepository<Predictio
 
     PredictionDayDataEntity alias = newDslAlias();
     JPAQuery<PredictionDayDataEntity> query = newDslQuery(alias);
-    /*
-     * Timestamp startBookingDate = criteria.getStartBookingdate(); if (startBookingDate != null) {
-     * query.where(Alias.$(alias.getTimestamp()).eq(startBookingDate)); }
-     */
+
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
   }
 

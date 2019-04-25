@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Entity transport object of PredictionCriteria
+ *
+ *
+ * used to find {@link com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionForecastData}s.
  */
 public class PredictionSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
