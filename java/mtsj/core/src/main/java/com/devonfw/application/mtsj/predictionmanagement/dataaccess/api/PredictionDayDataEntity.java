@@ -11,10 +11,6 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionDayData;
 
-/**
- * The {@link io.oasp.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
- * {@link PredictionDayData}.
- */
 @Entity
 @Table(name = "PREDICTION_ALL_FORECAST")
 public class PredictionDayDataEntity extends ApplicationPersistenceEntity implements PredictionDayData {

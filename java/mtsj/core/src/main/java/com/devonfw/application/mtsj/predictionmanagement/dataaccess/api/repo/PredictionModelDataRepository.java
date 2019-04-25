@@ -11,9 +11,7 @@ import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.Predicti
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 
 /**
- * TODO VAPADWAL This type ...
- *
- * @since 1.12.3
+ * {@link DefaultRepository} for {@link PredictionModelDataEntity}.
  */
 public interface PredictionModelDataRepository extends DefaultRepository<PredictionModelDataEntity> {
   @Query("select count(modelData) from PredictionModelDataEntity modelData where modelData.dish.id=:idDish and modelData.key = '_date' and modelData.value = :startDate ")
@@ -42,12 +40,6 @@ public interface PredictionModelDataRepository extends DefaultRepository<Predict
   @Query(value = "DELETE FROM TMP_PREDICTION_FIT", nativeQuery = true)
   public void deleteTmpPredictionFit();
 
-  /*
-   * @Procedure(value =
-   * "CALL _SYS_AFL.PAL_AUTOARIMA(TMP_PREDICTION_DATA, PREDICTION_AUTOARIMA_PARAMS, TMP_PREDICTION_MODEL, TMP_PREDICTION_FIT) WITH OVERVIEW"
-   * ) public void estimateModelParameter();
-   */
-
   @Modifying
   @Query(value = "delete from PREDICTION_ALL_MODELS modelData where idDish=:idDish", nativeQuery = true)
   public void deletePreditionDataModelbyDishId(@Param("idDish") Long idDish);
@@ -61,16 +53,6 @@ public interface PredictionModelDataRepository extends DefaultRepository<Predict
   @Modifying
   @Query(value = "INSERT INTO PREDICTION_ALL_MODELS(modificationCounter, IDDISH, key, value) SELECT 1 AS modificationCounter, ?1 AS idDish, key, value FROM TMP_PREDICTION_MODEL", nativeQuery = true)
   public void addPredictionModel(@Param("idDish") Long idDish);
-
-  /*
-   * insert into PREDICTION_ALL_MODELS (modificationCounter, IDDISH, key, value, id) values (?, ?, ?, ?, ?)
-   *
-   * @Modifying
-   *
-   * @Query(value =
-   * "INSERT INTO PREDICTION_ALL_MODELS (id,modificationCounter, idDish, key, value) values (:id, 1, :idDish,'test', 'test')"
-   * , nativeQuery = true) public void addPredictionModel(@Param("id") Long id, @Param("idDish") Long idDish);
-   */
 
   @Modifying
   @Query(value = "INSERT INTO TMP_PREDICTION_MODEL SELECT key, value FROM PREDICTION_ALL_MODELS WHERE idDish = ?1", nativeQuery = true)
