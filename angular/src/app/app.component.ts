@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
-import { ElectronService } from './shared/electron/electron.service';
+import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import { fadeAnimation } from './animations/fade.animation';
@@ -43,7 +43,7 @@ export class AppComponent {
     }
     moment.locale(this.translate.currentLang);
 
-    if (electronService.isElectron()) {
+    if (electronService.isElectronApp) {
       // Elecron stuff
     } else {
       // Web stuff

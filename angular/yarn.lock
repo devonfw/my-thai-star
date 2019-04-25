@@ -4736,6 +4736,12 @@ ng-pick-datetime@7.0.0, ng-pick-datetime@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/ng-pick-datetime/-/ng-pick-datetime-7.0.0.tgz#c78d1cfaee183691a4a44cd4f39c98f9c1d1595f"
 
+ngx-electron@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-electron/-/ngx-electron-2.1.1.tgz#69077a0d4e1b33cb58ab8e53c22c14038974825e"
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-moment@3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/ngx-moment/-/ngx-moment-3.4.0.tgz#53bd64557e552c612b0f68b975d1c7ed34f28dfc"
