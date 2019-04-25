@@ -10,7 +10,6 @@ import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionFo
  * This entity does not extends ApplicationPersistenceEntity, as this entity is need while calling a procedure(
  * _SYS_AFL.PAL_ARIMA_FORECAST) required for doing prediction
  *
- * @since 1.12.3
  */
 @Entity
 @Table(name = "PREDICTION_FORECAST_DATA")

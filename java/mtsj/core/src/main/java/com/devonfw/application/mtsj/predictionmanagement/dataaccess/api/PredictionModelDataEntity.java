@@ -11,9 +11,6 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionModelData;
 
-/**
- * The persistent entity for {@link PredictionModelDataEntity}.
- */
 @Entity
 @Table(name = "PREDICTION_ALL_MODELS")
 public class PredictionModelDataEntity extends ApplicationPersistenceEntity implements PredictionModelData {

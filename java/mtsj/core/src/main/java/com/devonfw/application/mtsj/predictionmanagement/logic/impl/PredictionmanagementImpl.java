@@ -24,7 +24,6 @@ import com.devonfw.application.mtsj.predictionmanagement.common.api.to.Predictio
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionSearchCriteriaTo;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionDayDataEntity;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionForecastDataEntity;
-import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.PredictionModelDataEntity;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.repo.PredictionDayDataRepository;
 import com.devonfw.application.mtsj.predictionmanagement.dataaccess.api.repo.PredictionModelDataRepository;
 import com.devonfw.application.mtsj.predictionmanagement.logic.api.Predictionmanagement;
@@ -151,13 +150,6 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
 
     // Save model
     this.predictionModelDataRepository.deletePreditionDataModelbyDishId(dish.getId());
-    System.out.println(dish.getId() + "Dish Id::::::::::::");// bifuragate the below query
-    PredictionModelDataEntity entity = new PredictionModelDataEntity();
-    entity.setDish(dish);
-    entity.setKey("_date");
-    entity.setValue(startDate.toString());
-    this.predictionModelDataRepository.save(entity);
-
     this.predictionModelDataRepository.addPredictionModel(dish.getId());
 
   }
