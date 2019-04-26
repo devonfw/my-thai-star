@@ -15,8 +15,8 @@ import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenc
 import com.devonfw.application.mtsj.ordermanagement.common.api.OrderedDishes;
 
 /**
- * {@link ApplicationPersistenceEntity Entity} that represents a single
- * {@link OrderedDishesPerMonth} of an {@link OrderedDishesPerMonth}.
+ * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderedDishesPerMonth} of an
+ * {@link OrderedDishesPerMonth}.
  */
 @Entity
 @Immutable
@@ -27,7 +27,6 @@ public class OrderedDishesPerMonthEntity extends ApplicationPersistenceEntity im
 
   private DishEntity dish;
 
-  // the number of ordered dishes per month
   private Integer amount;
 
   private Double temperature;
@@ -52,36 +51,54 @@ public class OrderedDishesPerMonthEntity extends ApplicationPersistenceEntity im
     this.dish = dish;
   }
 
+  /**
+   * @return amount
+   */
   @Override
   public Integer getAmount() {
 
     return this.amount;
   }
 
+  /**
+   * @param number of ordered dished per day {@link #getAmount}.
+   */
   @Override
   public void setAmount(Integer amount) {
 
     this.amount = amount;
   }
 
+  /**
+   * @return temperature
+   */
   @Override
   public Double getTemperature() {
 
     return this.temperature;
   }
 
+  /**
+   * @param temperature new value of {@link #getTemperature}.
+   */
   @Override
   public void setTemperature(Double temperature) {
 
     this.temperature = temperature;
   }
 
+  /**
+   * @return bookingdate
+   */
   @Override
   public Timestamp getBookingdate() {
 
     return this.bookingdate;
   }
 
+  /**
+   * @param bookingdate new value of {@link #getBookingdate}.
+   */
   @Override
   public void setBookingdate(Timestamp bookingdate) {
 
