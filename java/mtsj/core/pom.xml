@@ -289,7 +289,7 @@
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
         <excludes>
-        	<exclude>**/orm.xml</exclude>
+          <exclude>**/orm.xml</exclude>
         </excludes>
       </resource>
     </resources>
