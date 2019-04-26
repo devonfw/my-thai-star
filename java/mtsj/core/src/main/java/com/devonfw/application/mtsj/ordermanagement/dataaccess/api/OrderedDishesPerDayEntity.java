@@ -15,8 +15,8 @@ import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenc
 import com.devonfw.application.mtsj.ordermanagement.common.api.OrderedDishes;
 
 /**
- * {@link ApplicationPersistenceEntity Entity} that represents a single
- * {@link OrderedDishesPerDay} of an {@link OrderedDishesPerDay}.
+ * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderedDishesPerDay} of an
+ * {@link OrderedDishesPerDay}.
  */
 @Entity
 @Immutable
@@ -27,12 +27,10 @@ public class OrderedDishesPerDayEntity extends ApplicationPersistenceEntity impl
 
   private DishEntity dish;
 
-  // the number of ordered dished per day
   private Integer amount;
 
   private Double temperature;
 
-  //Designation of holiday or event
   private String designation;
 
   private Timestamp bookingdate;
@@ -55,46 +53,70 @@ public class OrderedDishesPerDayEntity extends ApplicationPersistenceEntity impl
     this.dish = dish;
   }
 
+  /**
+   * @return amount
+   */
   @Override
   public Integer getAmount() {
 
     return this.amount;
   }
 
+  /**
+   * @param number of ordered dished per day {@link #getAmount}.
+   */
   @Override
   public void setAmount(Integer amount) {
 
     this.amount = amount;
   }
 
+  /**
+   * @return temperature
+   */
   @Override
   public Double getTemperature() {
 
     return this.temperature;
   }
 
+  /**
+   * @param temperature new value of {@link #getTemperature}.
+   */
   @Override
   public void setTemperature(Double temperature) {
 
     this.temperature = temperature;
   }
 
+  /**
+   * @return designation
+   */
   public String getDesignation() {
 
     return this.designation;
   }
 
+  /**
+   * @param designation of holiday or event {@link #getDesignation}.
+   */
   public void setDesignation(String designation) {
 
     this.designation = designation;
   }
 
+  /**
+   * @return bookingdate
+   */
   @Override
   public Timestamp getBookingdate() {
 
     return this.bookingdate;
   }
 
+  /**
+   * @param bookingdate new value of {@link #getBookingdate}.
+   */
   @Override
   public void setBookingdate(Timestamp bookingdate) {
 
