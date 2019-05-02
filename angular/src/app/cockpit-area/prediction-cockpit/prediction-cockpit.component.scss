@@ -1,0 +1,65 @@
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}
+
+.tab-content {
+  padding: 1em;
+}
+
+.prediction-edit-buttons {
+  margin-left: 45px;
+  margin-right: 45px;
+}
+
+.prediction-edit-buttons button {
+  width: 1.6em;
+  height: 1.6em;
+  line-height: 1;
+}
+
+.prediction-edit-buttons button.active {
+  background: #ccc;
+}
+
+.prediction-edit-buttons mat-icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.prediction-controls {
+  background: #f5f5f5;
+}
+
+.prediction-controls h4 {
+  margin-bottom: 1em;
+}
+
+.prediction-controls > * {
+  width: 22em;
+  margin: 0 auto;
+}
+
+.temperature-field mat-form-field {
+  width: 6em;
+}
+
+.temperature-field mat-slider {
+  width: 15em;
+  margin-left: .5em;
+}
+
+.temperature-field input {
+  text-align: right;
+}
+
+mat-progress-bar:not(.show) {
+  visibility: hidden;
+}

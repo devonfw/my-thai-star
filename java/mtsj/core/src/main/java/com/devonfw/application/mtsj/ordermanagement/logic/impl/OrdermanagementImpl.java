@@ -47,10 +47,17 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerDayRepository;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerMonthRepository;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 
 /**
@@ -76,6 +83,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
+
+  @Inject
+  private OrderedDishesPerDayRepository orderedDishesPerDayDao;
+
+  @Inject
+  private OrderedDishesPerMonthRepository orderedDishesPerMonthDao;
 
   @Inject
   private Bookingmanagement bookingManagement;
@@ -117,7 +130,8 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return cto;
   }
 
-  @RolesAllowed(Roles.WAITER)
+  @Override
+  @RolesAllowed({Roles.WAITER, Roles.MANAGER})
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);
@@ -319,6 +333,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return this.orderLineDao;
   }
 
+  public OrderedDishesPerDayRepository getOrderedDishesPerDayDao() {
+
+    return this.orderedDishesPerDayDao;
+  }
+
+  public OrderedDishesPerMonthRepository getOrderedDishesPerMonthDao() {
+
+    return this.orderedDishesPerMonthDao;
+  }
+
   private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
 
     // BOOKING VALIDATION
@@ -475,10 +499,38 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
     Timestamp bookingTime = booking.getBooking().getBookingDate();
-    Long bookingTimeMillis = bookingTime.getTime();
-    Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    Long now = Timestamp.from(Instant.now()).getTime();
+    long bookingTimeMillis = bookingTime.getTime();
+    long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
+    long now = Timestamp.from(Instant.now()).getTime();
 
     return (now > cancellationLimit) ? false : true;
   }
+
+  @Override
+  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria) {
+
+    List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
+    if (criteria.getType() == OrderedDishesSearchCriteriaTo.Type.DAILY) {
+      Page<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
+      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getContent()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+	  Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
+    } else {
+      Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao().findOrderedDishesPerMonth(criteria);
+      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getContent()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+	  Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
+    }
+  }
+
 }
