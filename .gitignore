@@ -6,6 +6,7 @@ NestJS/node_modules/
 NestJS/.vscode/
 
 *.log
+*.bat
 *.class
 *.classpath
 *.project

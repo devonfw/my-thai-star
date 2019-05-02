@@ -48,7 +48,12 @@ export class UserAreaService {
               this.authService.setLogged(true);
               this.authService.setUser(loginInfo.name);
               this.authService.setRole(loginInfo.role);
-              this.router.navigate(['orders']);
+              if (loginInfo.role==="CUSTOMER") 
+                this.router.navigate(['restaurant']);
+              else if (loginInfo.role==="WAITER")
+                this.router.navigate(['orders']);
+              else if (loginInfo.role==="MANAGER")
+                this.router.navigate(['prediction']);
               this.snackBar.openSnack(
                 this.authAlerts.loginSuccess,
                 4000,
