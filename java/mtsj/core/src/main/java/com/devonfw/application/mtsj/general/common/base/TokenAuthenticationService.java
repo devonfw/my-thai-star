@@ -71,7 +71,7 @@ public class TokenAuthenticationService {
 
   /**
    * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
-   * 
+   *
    * @param request the {@link HttpServletRequest}
    * @return the {@link UsernamePasswordAuthenticationToken}
    */
@@ -153,6 +153,8 @@ public class TokenAuthenticationService {
           userDetails.setRole(Role.WAITER);
         } else if (roles.get(0).equalsIgnoreCase(Role.CUSTOMER.getName())) {
           userDetails.setRole(Role.CUSTOMER);
+        } else if (roles.get(0).equalsIgnoreCase(Role.MANAGER.getName())) {
+          userDetails.setRole(Role.MANAGER);
         }
       }
     } catch (Exception e) {
