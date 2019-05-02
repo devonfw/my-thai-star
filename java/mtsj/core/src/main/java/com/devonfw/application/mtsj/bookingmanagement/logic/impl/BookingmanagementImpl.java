@@ -138,7 +138,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  @RolesAllowed(Roles.WAITER)
+  @RolesAllowed({ Roles.WAITER, Roles.MANAGER })
   public Page<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
 
     return findBookingCtos(criteria);
@@ -239,7 +239,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
         + String.format("%02d", ldt1.getSecond());
 
-    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    MessageDigest md = MessageDigest.getInstance("MD5");
     md.update((email + date + time).getBytes());
     byte[] digest = md.digest();
     StringBuilder sb = new StringBuilder();

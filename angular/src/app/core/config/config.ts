@@ -24,6 +24,7 @@ export interface Config {
   pageSizesDialog: number[];
   roles: Role[];
   langs: Lang[];
+  enablePrediction: boolean;
 }
 
 export const config: Config = {
@@ -37,6 +38,7 @@ export const config: Config = {
   roles: [
     { name: 'CUSTOMER', permission: 0 },
     { name: 'WAITER', permission: 1 },
+	{ name: 'MANAGER', permission: 2 },
   ],
   langs: [
     { label: 'English', value: 'en' },
@@ -50,4 +52,5 @@ export const config: Config = {
     { label: 'Русский', value: 'ru' },
     { label: 'български', value: 'bg' },
   ],
+  enablePrediction: false,
 };
