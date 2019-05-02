@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.imagemanagement.common.api.to;
 
+import java.sql.Clob;
+
 import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteriaTo;
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
@@ -14,7 +16,7 @@ public class ImageSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String name;
 
-  private String content;
+  private Clob content;
 
   private ContentType contentType;
 
@@ -44,12 +46,12 @@ public class ImageSearchCriteriaTo extends AbstractSearchCriteriaTo {
     this.name = name;
   }
 
-  public String getContent() {
+  public Clob getContent() {
 
     return this.content;
   }
 
-  public void setContent(String content) {
+  public void setContent(Clob content) {
 
     this.content = content;
   }

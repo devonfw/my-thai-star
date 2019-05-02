@@ -8,6 +8,7 @@ import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
+import { NotSupportedComponent } from './core/not-supported/not-supported.component';
 
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 
@@ -24,6 +25,11 @@ const appRoutes: Routes = [
   {
     path: 'reservations',
     component: ReservationCockpitComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'prediction',
+    component: NotSupportedComponent,
     canActivate: [AuthGuardService],
   },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },

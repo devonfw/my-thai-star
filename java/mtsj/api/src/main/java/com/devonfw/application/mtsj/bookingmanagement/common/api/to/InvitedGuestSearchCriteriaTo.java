@@ -76,12 +76,12 @@ public class InvitedGuestSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   public Timestamp getModificationDate() {
 
-    return (Timestamp) this.modificationDate.clone();
+    return this.modificationDate;
   }
 
   public void setModificationDate(Timestamp modificationDate) {
 
-    this.modificationDate = (Timestamp) modificationDate.clone();
+    this.modificationDate = modificationDate;
   }
 
   /**
