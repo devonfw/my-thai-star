@@ -1,0 +1,70 @@
+.map-container{
+  /* height: 100%; */
+  padding-top: 10px;
+}
+
+mat-grid-list{
+  height: 100%;
+}
+
+.sidebar {
+  height: 100%;
+  width: 300px;
+  border-left: solid 1px #ccc;
+}
+
+.sidebar mat-list{
+  height: 100%;
+  padding-top: 30px;
+}
+
+.clusters-list{
+  padding-top: 5px !important;
+  height: auto !important;
+}
+
+.dishSelect{
+  width: 220px;
+  padding-left: 10px;
+}
+
+.clusters-result .mat-toolbar{
+  box-shadow: none !important;
+}
+
+.settings-mat-card{
+  padding: 13px;
+  box-shadow: none;
+  border: 1px solid #e5e5e5;
+}
+
+.settings-mat-card .mat-toolbar{
+  height: auto;
+  padding: 8px;
+  margin-bottom: 20px;
+  box-shadow: none;
+  border: 1px solid #e5e5e5;
+}
+
+.container{
+  height: 100%;
+  padding-top: 10px;
+}
+
+mat-progress-bar:not(.show) {
+  visibility: hidden;
+}
+
+.mat-row:hover {
+  background-color: #e5e5e5;
+}
+
+.osmap {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.leaflet-popup-content{
+  width:300px !important;
+}

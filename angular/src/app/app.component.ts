@@ -5,6 +5,7 @@ import { find } from 'lodash';
 import * as moment from 'moment';
 import { fadeAnimation } from './animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
+import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
 import { AuthService } from './core/authentication/auth.service';
 import { ConfigService } from './core/config/config.service';
 import { ElectronService } from './shared/electron/electron.service';
@@ -44,15 +45,24 @@ export class AppComponent {
     }
     moment.locale(this.translate.currentLang);
 
-    if (configService.getValues().enablePrediction) {
-      // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
+    if (configService.getValues().enablePrediction || configService.getValues().enableClustering) {
       const currentRoutes = router.config;
       const newRoutes = currentRoutes.reduce((accum, current) => {
-        if (current.path === 'prediction') {
+        if (current.path === 'prediction' && configService.getValues().enablePrediction) {
+          // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
           accum.push(
             {
               path: current.path,
               component: PredictionCockpitComponent,
+              canActivate: current.canActivate,
+            }
+          );
+        } else if (current.path === 'clustering' && configService.getValues().enableClustering) {
+          // change clustering route component from NotSupportedComponent to ClusteringCockpitComponent
+          accum.push(
+            {
+              path: current.path,
+              component: ClusteringCockpitComponent,
               canActivate: current.canActivate,
             }
           );
