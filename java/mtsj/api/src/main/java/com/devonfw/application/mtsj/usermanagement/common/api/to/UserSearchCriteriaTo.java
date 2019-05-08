@@ -13,8 +13,6 @@ public class UserSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String username;
 
-  private String password;
-
   private String email;
 
   private Long userRoleId;
@@ -41,16 +39,6 @@ public class UserSearchCriteriaTo extends AbstractSearchCriteriaTo {
   public void setUsername(String username) {
 
     this.username = username;
-  }
-
-  public String getPassword() {
-
-    return this.password;
-  }
-
-  public void setPassword(String password) {
-
-    this.password = password;
   }
 
   public String getEmail() {
