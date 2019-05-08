@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-toolbar>
+    <span>Map</span>
+  </mat-toolbar>
+  <mat-grid-list cols="5" rowHeight="900px">
+    <mat-grid-tile [colspan]="4" [ngClass]="'map-container'">
+      <div class="osmap" #mapContainer></div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [ngClass]="'sidebar'" >
+      <div class="container" fxLayout>
+        <mat-card [ngClass]="'settings-mat-card'">
+          <mat-toolbar>
+            <mat-icon matListIcon >settings</mat-icon> <span>Settings</span>
+          </mat-toolbar>
+          <div class="item">
+            <input
+              [owlDateTime]="dtStartBookingdate"
+              [owlDateTimeTrigger]="dtStartBookingdate"
+              [(ngModel)]="clusteringFilter.startBookingdate"
+              placeholder="From">
+            <owl-date-time
+              #dtStartBookingdate="owlDateTime"
+              [pickerType]="'calendar'">
+            </owl-date-time>
+          </div>
+          <div class="item">
+            <input
+              [owlDateTime]="dtEndBookingdate"
+              [owlDateTimeTrigger]="dtEndBookingdate"
+              [(ngModel)]="clusteringFilter.endBookingdate"
+              placeholder="To">
+            <owl-date-time
+              #dtEndBookingdate="owlDateTime"
+              [pickerType]="'calendar'">
+            </owl-date-time>
+          </div>
+          <div class="item">
+            <mat-form-field [ngClass]="'dishSelect'">
+              <mat-select placeholder="Menu" [(ngModel)]="clusteringFilter.dishId" >
+                <mat-option *ngFor="let dish of menu" [value]="dish.id" >{{dish.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="item">
+            <button mat-button   color="accent" (click)="updateMap(event)">Update</button>
+          </div>
+        </mat-card>
+        <div class="item">
+          <div *ngIf="clustersfeatureLayer" [ngClass]="'clusters-result'">
+            <mat-toolbar>
+              <span>Result: ({{clustersfeatureLayer.features.length}}) Clusters</span>
+            </mat-toolbar>
+            <mat-table #table [dataSource]="clustersResultsDataSource">
+              <!-- Color Column -->
+              <ng-container matColumnDef="color">
+                <mat-header-cell *matHeaderCellDef> <Strong>Cluster</Strong> </mat-header-cell>
+                <mat-cell *matCellDef="let element"><mat-icon matListIcon [ngStyle]="{'color': element.properties.color}">fiber_manual_record</mat-icon>  </mat-cell>
+              </ng-container>
+              <!-- Size Column -->
+              <ng-container matColumnDef="amount">
+                <mat-header-cell *matHeaderCellDef> <Strong>Size</Strong> </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.properties.amount}} </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSelectedRow(row)"></mat-row>
+            </mat-table>
+          </div>
+          <mat-progress-bar [class.show]="clustersResultsBusy" mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
