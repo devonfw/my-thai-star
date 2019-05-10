@@ -1,0 +1,45 @@
+:toc: macro
+toc::[]
+
+= MyThaiStar Wiki
+
+== User Stories
+- link:user-stories.asciidoc[User Stories]
+
+== Technical design
+
+=== Data Model
+- link:my-thai-star-data-model.asciidoc[Data model]
+- link:my-thai-star-nosql-data-model.asciidoc[NoSQL data model]
+
+=== Server Side
+- link:java-design.asciidoc[Java design]
+- link:net-design.asciidoc[.NET design]
+- link:nodejs-design.asciidoc[Node.js design (deprecated)]
+- link:graphql-design.asciidoc[GraphQL design]
+
+=== Client Side
+- link:angular-design.asciidoc[Angular design]
+- link:xamarin-design.asciidoc[Xamarin design]
+
+== Testing
+
+=== Server Side
+- link:java-testing.asciidoc[Java testing]
+- link:net-testing.asciidoc[.NET testing]
+- link:nodejs-testing.asciidoc[Node.js testing]
+- link:graphql-testing.asciidoc[GraphQL testing]
+
+=== Client Side
+- link:angular-testing.asciidoc[Angular testing]
+- link:xamarin-testing.asciidoc[Xamarin testing]
+
+=== End to end
+- link:mrchecker.asciidoc[Mr.Checker testing]
+
+== UI design
+- link:style-guide.asciidoc[Style guide]
+
+==  CI/CD
+- link:production-line-ci.asciidoc[Production Line CI]
+- link:deployment.asciidoc[Deployment]
