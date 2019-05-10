@@ -1,0 +1,75 @@
+:toc: macro
+toc::[]
+
+= Deployment Pipelines
+
+As PL does not support deployments, we have created separate pipelines for this purpose. Those pipelines are: *MyThaiStar_DEPLOY-Together*, *MyThaiStar_FRONTEND_DEPLOY* and *MyThaiStar_SERVER_DEPLOY*.
+
+The application will be deployed using docker on a remote machine. The architecture is as follows:
+
+image::images/ci/deployment/deployment_arch.png[,link=images/ci/deployment/deployment_arch.png]
+
+The parts to be deployed are: an NGINX reverse proxy, the java application and the angular application.
+
+== MyThaiStar_DEPLOY-Together Pipeline
+
+The MyThaiStar_DEPLOY-Together pipeline will deploy all parts of My Thai Star application into a remote server via ssh.
+
+=== Parameters
+
+- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
+- *nexusCredentialsId*: The nexus credentials.
+- *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
+- *JAVA_VERSION*: The version of the java project that you want to deploy.
+- *ANGULAR_VERSION*: The version of the java project that you want to deploy.
+- *EXTERNAL_SERVER_IP*: The IP of the remote server where you will deploy My Thai Star.
+- *APPLICATION_DIR*: The folder of the application.
+
+=== Pipeline steps
+
+- *Copy files to remote server*: Copy all files required for the deployment to the remote server. Those files are all files inside the reverse_proxy folder in the My Thai Star repository.
+- *Deploy java application*: Call to *MyThaiStar_SERVER_DEPLOY* pipeline.
+- *Deploy angular application*: Call to *MyThaiStar_FRONTEND_DEPLOY* pipeline.
+
+== MyThaiStar_SERVER_DEPLOY Pipeline
+
+Deploys on the server the Java part of My Thai Star.
+
+NOTE: You need to run the MyThaiStar_DEPLOY-Together pipeline at least once before you run this one.
+
+=== Parameters
+
+- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
+- *nexusCredentialsId*: The nexus credentials.
+- *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
+- *JAVA_VERSION*: The version of the java project that you want to deploy.
+- *EXTERNAL_SERVER_IP*: The IP of the remote server where you will deploy My Thai Star.
+- *APPLICATION_DIR*: The folder of the application.
+
+=== Pipeline steps
+
+- *Download artifact from Nexus*: Download the artifact from nexus using the nexus3 API. The downloaded artifact will be the last snapshot of the version specified in the parameters.
+- *Deployment*: Deploy the download artifact in the remote server. It will create a new docker image and redeploy the java docker container.
+
+== MyThaiStar_FRONTEND_DEPLOY
+
+Deploys on the server the Angular part of My Thai Star
+
+NOTE: You need to run the MyThaiStar_DEPLOY-Together pipeline at least once before you run this one.
+
+=== Parameters
+
+- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
+- *nexusCredentialsId*: The nexus credentials.
+- *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
+- *ANGULAR_VERSION*: The version of the java project that you want to deploy.
+- *EXTERNAL_SERVER_IP*: The IP of the remote server where you will deploy My Thai Star.
+- *APPLICATION_DIR*: The folder of the application.
+
+=== Pipeline steps
+
+- *Download artifact from Nexus*: Download the artifact from nexus using the nexus3 API. The downloaded artifact will be the last snapshot of the version specified in the parameters.
+- *Deployment*: Deploy the download artifact in the remote server. It will create a new docker image and redeploy the angular docker container.

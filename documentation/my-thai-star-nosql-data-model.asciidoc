@@ -1,0 +1,3 @@
+= NoSQL Data Model
+
+image::images/nodejs/dynamodb-data-model-1.4.1.png[, link="images/nodejs/dynamodb-data-model-1.4.1.png"]
