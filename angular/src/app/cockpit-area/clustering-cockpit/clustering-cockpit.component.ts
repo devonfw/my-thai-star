@@ -105,7 +105,7 @@ export class ClusteringCockpitComponent implements OnInit {
     this.map.removeLayer(this.jsonLayer);
   }
 
-  updateMap(event) {
+  updateMap(event: any) {
     this.restClusters();
     this.drawClusters();
   }
