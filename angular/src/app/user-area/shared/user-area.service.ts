@@ -48,12 +48,13 @@ export class UserAreaService {
               this.authService.setLogged(true);
               this.authService.setUser(loginInfo.name);
               this.authService.setRole(loginInfo.role);
-              if (loginInfo.role==="CUSTOMER") 
+              if (loginInfo.role === 'CUSTOMER') {
                 this.router.navigate(['restaurant']);
-              else if (loginInfo.role==="WAITER")
+              } else if (loginInfo.role === 'WAITER') {
                 this.router.navigate(['orders']);
-              else if (loginInfo.role==="MANAGER")
+              } else if (loginInfo.role === 'MANAGER') {
                 this.router.navigate(['prediction']);
+              }
               this.snackBar.openSnack(
                 this.authAlerts.loginSuccess,
                 4000,
@@ -83,7 +84,7 @@ export class UserAreaService {
             'green',
           );
         },
-        (error: any) => {
+        () => {
           this.snackBar.openSnack(this.authAlerts.registerFail, 4000, 'red');
         },
       );
