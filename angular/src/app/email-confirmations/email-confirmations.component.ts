@@ -27,11 +27,11 @@ export class EmailConfirmationsComponent implements OnInit {
     let errorString: string;
     let errorUrlString: string;
     let emailConfirmationStrings: any;
-    forkJoin(
+    forkJoin([
       this.translate.get('alerts.genericError'),
       this.translate.get('alerts.urlError'),
       this.translate.get('alerts.email confirmations'),
-    ).subscribe((translation: any) => {
+    ]).subscribe((translation: any) => {
       errorString = translation[0];
       errorUrlString = translation[1];
       emailConfirmationStrings = translation[2];
