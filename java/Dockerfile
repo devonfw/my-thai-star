@@ -7,7 +7,7 @@ RUN mvn clean install
 # 2. Deploy Java war
 FROM java:8
 WORKDIR /app
-COPY --from=build /app/server/target/mtsj-server-bootified.war /app/
+COPY --from=build /app/server/target/mythaistar-bootified.war /app/
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl --fail http://localhost:8081/mythaistar/services/rest/dishmanagement/v1/category/0/ || exit 1 
-ENTRYPOINT ["java","-jar","/app/mtsj-server-bootified.war"]
+ENTRYPOINT ["java","-jar","/app/mythaistar-bootified.war"]
 EXPOSE 8081
