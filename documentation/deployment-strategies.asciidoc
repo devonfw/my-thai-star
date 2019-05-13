@@ -1,0 +1,89 @@
+:toc: macro
+toc::[]
+
+= Deployment Strategies
+
+In this chapter different way of deploying My Thai Star are explained. Everything will be based in Docker.
+
+== Independendent Docker containers
+
+The first way of deployment will use isolated Docker containers. That means that if the client-side container is deployed, it does not affect the server-side container's lifecycle and viceversa.
+
+Let's show how the containers will behave during their life cycle.
+
+- 0) Copy everything you need into the Deployment Server directory
+- 1) Remove existing container (Nginx or Tomcat)
++
+image::images/ci/angular/container1.png[, link="container1.png"]
++
+- 2) Run new one from the Docker images collection of the external Deployment Server.
++
+image::images/ci/angular/container2.png[, link="container2.png"]
++
+- 3) Add the artifact `/dist` to the "depoyable" folder of the Docker container (`/usr/share/nginx/html/`)
++
+image::images/ci/angular/container3.png[, link="container3.png"]
++
+Now, let's see how it's being executed in the command line (simplified due to documentation purposes). The next block of code represents what is inside of the last stage of the Pipeline.
++
+[source, groovy]
+----
+sshagent (credentials: ['my_ssh_token']) {
+    sh """
+        // Copy artifact from workspace to deployment server
+        
+        // Manage container:
+        docker rm -f [mts-container]
+        docker run -itd --name=[mts-container] [base_image]
+        docker exec [mts-container] bash -C \\"rm [container_deployment_folder]/*\\"
+        docker cp [artifact] [mts-container]:[container_deployment_folder]
+    """
+}
+----
++
+For every operation performed in the external Deployment Server, it is necessary to define _where_ those commands are going to be executed. So, for each one of previous `docker` commands, this should appear before:
+
+    ssh -o StrictHostKeyChecking=no root@10.40.235.244
+
+== Docker Compose
+
+The second way of deployment will be by orchestrating both elements of the application: The Angular client-side and the Java server-side. Both elements will be running in Docker containers as well, but in this case they won't be independendent anymore. *Docker Compose* will be in charge of keeping both containers up, or to put them down.
+
+
+=== Project adjustment
+
+In order to perform this second way of deployment, some files will be created in the project. The first one is the *Dockerfile* for the Angular client-side. This file will pull (if necessary) an *nginx* Docker image and copy the Angular artifact (`/dist` folder) inside of the deployment folder of the image. It will be located in the main directory of the Angular client-side project.
+
+image::images/ci/deployment/dockerfile-angular.PNG[, link="dockerfile-angular.PNG"]
+
+The second file is the *Dockerfile* for the Java server-side. Its function will be quite similar to the Angular one. It will run a *tomcat* Docker image and copy the Java artifact (`mythaistar.war` file) in its deployment folder.
+
+image::images/ci/deployment/dockerfile-java.PNG[, link="dockerfile-java.PNG"]
+
+Finally, as long as the *docker-compose* is being used, a file containing its configuration will be necessary as well. A new folder one the main My That Star's directory is created, and it's called `/docker`. Inside there is just a `docker-compose.yml` file. It contains all the information needed to orchestrate the deployment process. For example, which port both containers are going to be published on, and so on. This way of deployment will allow the application to be published or not just with one action.
+
+    docker-compose rm -f            # down
+    docker-compsoe up --build -d    # up fresh containers
+    
+
+image::images/ci/deployment/docker-compose.PNG[, link="docker-compose.PNG"]
+
+Let's have a look at the file itself:
+
+[source, yaml]
+----
+version: '3'
+services:
+  client_compose:
+    build: "angular"
+    ports:
+      - "8091:80"
+    depends_on:
+      - server_compose
+  server_compose:
+    build: "java"
+    ports:
+      - "9091:8080"
+----
+
+This Orchestrated Deployment will offer some interesting possibilities for link:future-deployment.asciidoc[the future of the application].
