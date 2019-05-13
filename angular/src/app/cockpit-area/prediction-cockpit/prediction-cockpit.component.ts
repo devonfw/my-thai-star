@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FilterOrdersCockpit, PredictionCriteria } from 'app/shared/backend-models/interfaces';
+import { FilterOrdersCockpit, PredictionCriteria } from '../../shared/backend-models/interfaces';
 import { Chart } from 'chart.js';
 import { Moment } from 'moment';
 import { OwlDateTimeComponent } from 'ng-pick-datetime';
