@@ -168,19 +168,19 @@ export interface DishOrdersData {
     orders: number[];
 }
 
-//Interface for cluster
-export interface cluster{
-    id: number,
-    dishId: number,
-    dishName: String,
-    amount: number,
-    polygon: {},
-    x: string,
-    y: string
+// Interface for Cluster
+export interface Cluster {
+    id: number;
+    dishId: number;
+    dishName: String;
+    amount: number;
+    polygon: {};
+    x: string;
+    y: string;
 
 }
 export interface ClustersData {
-    data: cluster[],
-    id: number,
-    modificationCounter: number
+    data: Cluster[];
+    id: number;
+    modificationCounter: number;
 }
