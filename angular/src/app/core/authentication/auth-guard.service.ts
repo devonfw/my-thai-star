@@ -26,7 +26,9 @@ export class AuthGuardService implements CanActivate {
       return true;
     }
 
-    if ((state.url === '/orders' || state.url === '/reservations') && this.authService.isLogged() && this.authService.isPermited('WAITER')) {
+    if ((state.url === '/orders' || state.url === '/reservations')
+      && this.authService.isLogged()
+      && this.authService.isPermited('WAITER')) {
       return true;
     }
 
