@@ -11,7 +11,7 @@ import { ConfigService } from '../../core/config/config.service';
 export class ClusteringService {
 
   private readonly clusteringRestPath: string = 'clustermanagement/v1/geoclusters';
-  
+
   private readonly restServiceRoot: string;
 
   constructor(
@@ -24,7 +24,7 @@ export class ClusteringService {
   getClusters(clusteringCriteria: ClusteringCriteria): Observable<ClustersData> {
 
     return this.http.post(`${this.restServiceRoot}${this.clusteringRestPath}`, clusteringCriteria)
-                        .pipe(map((res: any)=>{
+                        .pipe(map((res: any) => {
                           return res.clustersData;
                         }));
     // map the results later

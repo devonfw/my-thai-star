@@ -9,12 +9,12 @@ import { MenuService } from '../../menu/shared/menu.service';
 
 describe('ClusteringCockpitComponent', () => {
   let component: ClusteringCockpitComponent;
-  let http: HttpClient;
+  const http: HttpClient;
   let configService: ConfigService;
   let clusteringService: ClusteringService;
   let menuService: MenuService;
-  let translate: TranslateService;
-  let dialog: MatDialog;
+  const translate: TranslateService;
+  const dialog: MatDialog;
 
   beforeEach(() => {
     configService = new ConfigService(http);
