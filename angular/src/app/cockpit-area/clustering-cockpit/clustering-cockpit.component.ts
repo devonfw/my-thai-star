@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { ClusteringCriteria, FilterOrdersCockpit, Pageable } from '../../shared/backend-models/interfaces';
 import { ClusteringService } from '../shared/clustering.service';
 import { ClustersData } from '../../shared/view-models/interfaces';
@@ -13,21 +13,21 @@ import * as L from 'leaflet';
   templateUrl: './clustering-cockpit.component.html',
   styleUrls: ['./clustering-cockpit.component.scss']
 })
-export class ClusteringCockpitComponent implements OnInit {
+export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   @ViewChild('mapContainer') mapContainer;
 
-  //OSM
+  // Open Street Map
   map: L.Map = null;
   jsonLayer = null;
 
-  mapLatitude: number = 49.401780;
-  mapLongitude: number = 8.684582;
-  defaultZoom: number = 13;
+  mapLatitude = 49.401780;
+  mapLongitude = 8.684582;
+  defaultZoom = 13;
   clustersfeatureLayer;
 
   menu;
 
-  //Clusters Statistics table
+  // Clusters Statistics table
   displayedColumns = ['color', 'amount'];
   clustersResultsBusy = false;
   clustersResultsDataSource;
@@ -67,17 +67,17 @@ export class ClusteringCockpitComponent implements OnInit {
       },
     });
     this.drawClusters();
-  };
+  }
 
   onZoomChanged(zoomLevel) {
-  };
+  }
 
   ngAfterViewInit() {
-    //the map doesn't load completelty in the begining,
-    //until the browser window is resized..
-    //so the map's tiles have to be reloaded with the following method
+    // the map doesn't load completelty in the begining,
+    // until the browser window is resized..
+    // so the map's tiles have to be reloaded with the following method
     this.map.invalidateSize();
-  };
+  }
 
   getMenu(filters: any): void {
     const pageable: Pageable = {
@@ -92,7 +92,7 @@ export class ClusteringCockpitComponent implements OnInit {
     };
     this.menuService.getDishes(this.menuService.composeFilters(pageable, filters))
       .pipe(map((res: any) => {
-        return res.content.map(item => item.dish)
+        return res.content.map(item => item.dish);
       }))
       .subscribe(menu => {
         this.menu = menu;
@@ -111,22 +111,22 @@ export class ClusteringCockpitComponent implements OnInit {
   }
 
   getClusterColor(sizes: number[]) {
-    let max = Math.max(...sizes);
-    let min = Math.min(...sizes);
+    const max = Math.max(...sizes);
+    const min = Math.min(...sizes);
 
-    let steps = 10;
+    const steps = 10;
     // Blue hue over purple hue to red hue
-    let hs = Array(steps).fill(0).map((_, i) => 2 / 3 + i / (steps - 1) * 1 / 3);
-    let s = 1;
-    let v = .8;
-    let p = v * (1 - s);
+    const hs = Array(steps).fill(0).map((_, i) => 2 / 3 + i / (steps - 1) * 1 / 3);
+    const s = 1;
+    const v = .8;
+    const p = v * (1 - s);
 
-    let gradientStops = hs.map(h => {
+    const gradientStops = hs.map(h => {
       let r, g, b;
-      let i = Math.floor(h * 6);
-      let f = h * 6 - i;
-      let q = v * (1 - f * s);
-      let t = v * (1 - (1 - f) * s);
+      const i = Math.floor(h * 6);
+      const f = h * 6 - i;
+      const q = v * (1 - f * s);
+      const t = v * (1 - (1 - f) * s);
 
       switch (i % 6) {
         case 0: r = v, g = t, b = p; break;
@@ -141,16 +141,17 @@ export class ClusteringCockpitComponent implements OnInit {
     });
 
     return sizes.map(size => {
-      let percentage = Math.min((size - min) / (max - min), 1);
-      let gradientPercentages = gradientStops.map((_, i) => i / (gradientStops.length - 1));
-      let gradientIndex1 = gradientPercentages.findIndex((p, i, a) => p <= percentage && (a[i + 1] == null || a[i + 1] > percentage));
-      let gradientIndex2 = gradientPercentages.findIndex((p, i, a) => p > percentage || a[i + 1] == null);
-      let p = gradientIndex2 !== gradientIndex1
-        ? (percentage - gradientPercentages[gradientIndex1]) / (gradientPercentages[gradientIndex2] - gradientPercentages[gradientIndex1]) : 0;
+      const percentage = Math.min((size - min) / (max - min), 1);
+      const gradientPercentages = gradientStops.map((_, i) => i / (gradientStops.length - 1));
+      const gradientIndex1 = gradientPercentages.findIndex((gp, i, a) => gp <= percentage && (a[i + 1] == null || a[i + 1] > percentage));
+      const gradientIndex2 = gradientPercentages.findIndex((gp, i, a) => gp > percentage || a[i + 1] == null);
+      const gradientPercentage = gradientIndex2 !== gradientIndex1
+        ? (percentage - gradientPercentages[gradientIndex1]) / (gradientPercentages[gradientIndex2] - gradientPercentages[gradientIndex1])
+        : 0;
 
-      let color1 = gradientStops[gradientIndex1];
-      let color2 = gradientStops[gradientIndex2];
-      let color = color1.map((x, i) => Math.round(x * (1 - p) + color2[i] * p));
+      const color1 = gradientStops[gradientIndex1];
+      const color2 = gradientStops[gradientIndex2];
+      const color = color1.map((x, i) => Math.round(x * (1 - gradientPercentage) + color2[i] * gradientPercentage));
 
       return `rgb(${color.join(',')})`;
     });
@@ -164,20 +165,20 @@ export class ClusteringCockpitComponent implements OnInit {
     this.showProgressBar(true);
     this.clusteringService.getClusters(this.clusteringFilter)
       .subscribe((clustersData: ClustersData) => {
-        let features = [];
+        const features = [];
         this.clustersfeatureLayer = {
-          type: "FeatureCollection",
+          type: 'FeatureCollection',
           features: []
         };
         if (clustersData.data.length > 0) {
-          let colors = this.getClusterColor(clustersData.data.map(cluster => cluster.amount));
+          const colors = this.getClusterColor(clustersData.data.map(cluster => cluster.amount));
 
           clustersData.data.forEach((cluster, i) => {
             if (cluster.id !== 0) { // cluster with id=0 represents noise, don't visualize it
-              let color = colors[i];
+              const color = colors[i];
               if (cluster.polygon !== null) {
-                let feature = {
-                  type: "Feature",
+                const feature = {
+                  type: 'Feature',
                   properties: {
                     id: cluster.id,
                     dishId: cluster.dishId,
@@ -189,19 +190,19 @@ export class ClusteringCockpitComponent implements OnInit {
                   },
                   geometry: JSON.parse(cluster.polygon.toString())
                 };
-                feature.geometry.infoWindow
+
                 this.clustersfeatureLayer.features.push(feature);
               }
             }
           });
-          //Add feature layer to the map , and define the style of the features
+          // Add feature layer to the map , and define the style of the features
           this.jsonLayer = L.geoJSON(this.clustersfeatureLayer,
             {
               style: this.getFeatureStyle,
               onEachFeature: this.onFeatureClicked
             });
           this.jsonLayer.addTo(this.map);
-          //------------------------------------------------------------------
+          // ------------------------------------------------------------------
           this.clustersResultsDataSource = new MatTableDataSource(this.clustersfeatureLayer.features);
         }
         this.showProgressBar(false);
@@ -216,7 +217,7 @@ export class ClusteringCockpitComponent implements OnInit {
       color: feature.properties.color,
       fillOpacity: 0.3
     });
-  };
+  }
 
   onFeatureClicked(feature, layer) {
     if (feature.properties) {
@@ -226,7 +227,7 @@ export class ClusteringCockpitComponent implements OnInit {
           lon = 'W';
       }
       if (feature.properties.averageY < 0) {
-          lon = 'S';
+          lat = 'S';
       }
       layer.bindPopup(`<strong>Dish:</strong>  ${feature.properties.dishName}<br/><br/>
         <strong>Size:</strong> ${feature.properties.amount}<br/><br/>
@@ -236,7 +237,7 @@ export class ClusteringCockpitComponent implements OnInit {
   }
 
   getSelectedRow(row) {
-    //console.log(row);
+    // console.log(row);
   }
 
 }
