@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { Route, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidenavService } from './sidenav/shared/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
 import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
-import { fadeAnimation } from './animations/fade.animation';
 import * as moment from 'moment';
-import { ConfigService } from './core/config/config.service';
+import { fadeAnimation } from './animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
-import { AuthGuardService } from './core/authentication/auth-guard.service';
+import { ConfigService } from './core/config/config.service';
 
 @Component({
   selector: 'public-main',
@@ -44,25 +43,24 @@ export class AppComponent {
       translate.use(translate.getBrowserLang());
     }
     moment.locale(this.translate.currentLang);
-  
+
     if (configService.getValues().enablePrediction) {
-	  // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
-      var currentRoutes = router.config;
-      var newRoutes = [];
-      for (var i = 0 ; i < currentRoutes.length ; i++) {
-        if (currentRoutes[i].path == "prediction") {
-          newRoutes.push(
+      // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
+      const currentRoutes = router.config;
+      const newRoutes = currentRoutes.reduce((accum, current) => {
+        if (current.path === 'prediction') {
+          accum.push(
             {
-              path: currentRoutes[i].path,
+              path: current.path,
               component: PredictionCockpitComponent,
-              canActivate: currentRoutes[i].canActivate,
+              canActivate: current.canActivate,
             }
           );
+        } else {
+          accum.push(current);
         }
-        else {
-          newRoutes.push(currentRoutes[i]);
-        }
-      }
+        return accum;
+      }, []);
       router.resetConfig(newRoutes);
     }
 

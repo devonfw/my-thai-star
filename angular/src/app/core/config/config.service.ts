@@ -28,7 +28,7 @@ export class ConfigService {
         });
         return settings;
       })
-      .catch((error) => {
+      .catch(() => {
         return 'ok, no external configuration';
       });
 

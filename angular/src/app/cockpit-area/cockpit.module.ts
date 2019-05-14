@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-	  FormsModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [
