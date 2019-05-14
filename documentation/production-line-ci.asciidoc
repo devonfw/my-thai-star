@@ -1,0 +1,49 @@
+:toc: macro
+toc::[]
+
+= My Thai Star in Production Line
+
+=== What is PL?
+
+The Production Line Project is a set of server-side collaboration tools for Capgemini engagements. It has been developed for supporting project engagements with individual tools like issue tracking, continuous integration, continuous deployment, documentation, binary storage and much more!
+
+image::images/ci/pl_logo.png[, link="images/ci/pl_logo.png"]
+
+=== Introduction
+
+Although the PL Project is a wide set of tools, only 3 are going to be mainly used for My Thai Star projects to build a Continuous Integration and Continuos Delivery environment. All three are available in the link:https://devon.s2-eu.capgemini.com/#https://devon.s2-eu.capgemini.com/jenkins/[PL instance] used for this project.
+
+. Jenkins
++
+This is going to be the "main tool". Jenkins helps to automate the non-human part of the development with Continuos Integration and is going to host all Pipelines (and, obviously, execute them).
++
+. Nexus
++
+Nexus manages software "artifacts" required for development. It is possible to both download dependencies from Nexus and publish artifacts as well. It allows to share resources within an organization.
++
+. SonarQube
++
+It is a platform for continuous inspection of the code. It is going to be used for the Java back-end.
+
+== Where can I find all My Thai Star Pipelines?
+
+They are located under the *MTS* folder of the PL instance:
+
+image::images/jenkins/mts-pipelines.png[, link="iamges/jenkins/mts-pipelines.png"]
+
+Those Jenkins Pipelines will not have any code to execute. They're just pointing to all *Jenkinsfiles* under the `/jenkins` folder of the repository. They can be found link:https://github.com/devonfw/my-thai-star/tree/develop/jenkins[here].
+
+//== Needed Resources
+
+//As long as the final step of every implemented pipeline is going to be the *deployment*, it is going to be needed an external Deployment Server. This whole project is deployed in http://http://de-mucdevondepl01 .
+
+//So, having both a PL instance and an external Deployment Server, the project is ready to be integrated in a CI-CD environment.
+
+== CI in My Thai Star stack
+
+- link:angular-ci.asciidoc[Angular CI]
+- link:java-ci.asciidoc[Java CI]
+
+== How to configure everything out of the box
+
+Production Line currently has a template to integrate My Thai Star. All information can be found at link:https://github.com/devonfw-forge/devon-production-line[devon production line repository]

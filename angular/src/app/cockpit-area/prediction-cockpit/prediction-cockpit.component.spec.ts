@@ -1,20 +1,22 @@
-import { HttpClient/*, HttpClientModule*/ } from '@angular/common/http';
-import { PredictionCockpitComponent } from './prediction-cockpit.component';
-import { PredictionService } from '../shared/prediction.service';
-import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../../core/config/config.service';
-import { MatDialog } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
+import { PredictionService } from '../shared/prediction.service';
+import { PredictionCockpitComponent } from './prediction-cockpit.component';
+import { TestBed } from '@angular/core/testing';
 
 describe('PredictionCockpitComponent', () => {
   let component: PredictionCockpitComponent;
   let http: HttpClient;
   let configService: ConfigService;
   let predictionService: PredictionService;
-  let translate: TranslateService;
-  let dialog: MatDialog;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
+    http = TestBed.get(HttpClient);
+
     configService = new ConfigService(http);
     predictionService = new PredictionService(
       http,

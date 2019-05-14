@@ -1,0 +1,14 @@
+:toc: macro
+toc::[]
+
+= Client and Server CI - deprecated
+
+The fact that there are 2 different pipelines dedicated to 2 different technologies ( *my_thai_star_angular* and *my_thai_star_java* ) does not mean that both can be _fusioned_ in another different one. That is the case of the *mts* pipeline. Basically the greater difference is the way of deploying at the end of it. Both only-one-part pipelines use the first deployment strategy (deploying independent Docker containers) but this one uses the second one: Docker Compose. 
+
+== Pipeline
+
+The flow of processes is going to be almost exactly a merge of other 2 pipelines.
+
+image::images/ci/clientserver/clientserver_pipeline_flow.PNG[, link="images/ci/clientserver/clientserver_pipeline_flow.PNG"]
+
+The result is going to be exactly the same at the end of *mts*. It will be possible to know if any aspect of both Angular client-side and Java server-side fails and there will be a complete application deployed in `[serverPath]:8091` (client) and `[serverPath]:9091`.
