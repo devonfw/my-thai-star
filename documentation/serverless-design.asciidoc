@@ -1,0 +1,256 @@
+:toc: macro
+toc::[]
+
+= Serverless design (deprecated)
+
+== Introduction
+
+The Node.js backend for My Thai Star application is going to be based on:
+
+ - *Serverless* as serverless framework
+ - *OASP4Fn* as data access layer framework
+ - *DynamoDB* as NoSQL Database
+
+To know more details about the above technologies please visit the following documentation:
+
+ - https://serverless.com/[Serverless]
+ - https://github.com/oasp/oasp4fn/wiki[OASP4Fn]
+ - https://aws.amazon.com/dynamodb/developer-resources/[DynamoDB]
+
+== Basic architecture details
+
+This structure can be shown in the following example image:
+
+image::images/serverless/folder_organization.png[, link="images/serverless/folder_organization.png"]
+
+* handlers - All function handlers following oasp4fn structure
+* src
+** model - Folder with all data model
+** utils - Folder with all utils like classes and functions
+** _config.ts_ - File with server configs
+** _logic.ts_ - File with the business logic
+* test - Folder with all tests
+
+== Layers
+
+- Service Layer: this layer will expose the REST api to exchange information with the client applications.
+- Logic Layer: the layer in charge of hosting the business logic of the application.
+- Data Access Layer: the layer to communicate with the data base.
+
+=== Service layer
+
+The services layer will be solved using REST services with https://serverless.com/[Serverless]
+
+To give service to the defined _User Stories_ we will need to implement the following services:
+
+- provide all available dishes.
+
+- save a booking.
+
+- save an order.
+
+- provide a list of bookings (only for waiters) and allow filtering.
+
+- provide a list of orders (only for waiters) and allow filtering.
+
+- login service (see the _Security_ section).
+
+- provide the _current user_ data (see the _Security_ section)
+
+
+In order to be compatible with the other backend implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
+
+- (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order`.
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter` (to filter with fields that does not belong to the Order entity).
+
+- (POST) `/mythaistar/login`.
+
+- (GET) `/mythaistar/services/rest/security/v1/currentuser/`.
+
+
+You can find all the details for the services implementation in the https://github.com/oasp/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
+
+To treat these http services, we must define the handlers following the https://github.com/oasp/oasp4fn/wiki/Structure[oasp4fn convention]:
+
+- (handlers/Http/POST/dish-search-handler) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
+
+- (handlers/Http/POST/booking-handler) `/mythaistar/services/rest/bookingmanagement/v1/booking`.
+
+- (handlers/Http/POST/order-handler) `/mythaistar/services/rest/ordermanagement/v1/order`.
+
+- (handlers/Http/POST/booking-search-handler) `/mythaistar/services/rest/bookingmanagement/v1/booking/search`.
+
+- (handlers/Http/POST/order-search-handler) `/mythaistar/services/rest/ordermanagement/v1/order/search`.
+
+- (handlers/Http/POST/order-filter-handler) `/mythaistar/services/rest/ordermanagement/v1/order/filter` (to filter with fields that does not belong to the Order entity).
+
+- (handlers/Http/POST/login-handler) `/mythaistar/login`.
+
+- (handlers/Http/GET/current-user-handler) `/mythaistar/services/rest/security/v1/currentuser/`.
+
+These handlers will define the behavior for each service and use the logical layer.
+
+An example of handler definition:
+
+[source, javascript]
+----
+oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
+export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {
+    try {
+        const search = <types.SearchCriteria>event.body;
+        const authToken = event.headers.Authorization;
+        // falta lo que viene siendo comprobar el token y eso
+
+        auth.decode(authToken, (err, decoded) => {
+            if (err || decoded.role !== 'WAITER') {
+                throw { code: 403, message: 'Forbidden'};
+            }
+
+            // body content must be SearchCriteria
+            if (!types.isSearchCriteria(search)) {
+                throw { code: 400, message: 'No booking token given' };
+            }
+
+            business.searchBooking(search, (err: types.Error | null, bookingEntity: types.PaginatedList) => {
+                if (err) {
+                    callback(new Error(`[${err.code || 500}] ${err.message}`));
+                } else {
+                    callback(null, bookingEntity);
+                }
+            });
+        });
+    } catch (err) {
+        callback(new Error(`[${err.code || 500}] ${err.message}`));
+    }
+}
+----
+
+The default integration for a handler is _lambda_. See https://github.com/oasp/oasp4fn/wiki/Configuration[oasp documentation] for more information about default values and how to change it.
+[NOTE]
+====
+If you change the integration to lambda-proxy, you must take care that in this case the data will not be parsed. You must do JSON.parse explicitly 
+====
+
+After defining all the handlers, we must execute the _fun_ command, which will generate the files serverless.yml and webpack.config.js. 
+
+=== Logic layer and Data access layer
+
+link:nodejs-design.asciidoc#logic-layer-and-data-access-layer[See in nodejs section]
+
+== Security with Json Web Token
+
+For the _Authentication_ and _Authorization_ the app will implement the https://jwt.io/[json web token] protocol.
+
+=== Jwt basics
+
+Refer to link:java-design.asciidoc#jwt-basics[Jwt basiscs] for more information.
+
+=== Jwt implementation details
+
+The _Json Web Token_ pattern will be implemented based on the https://github.com/auth0/node-jsonwebtoken[_JSON web token_] library available on npm.
+
+==== Authentication
+
+Based on the _JSON web token_ approach, we will implement two methods in order to verify and user + generate the token and decode the token + return the user data. Also, as _My Thai Star_ is a mainly _public_ application, we will define here the resources that won't be secured.
+
+List of _unsecured resources_:
+
+- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
+- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
+- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
+- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+
+To configure the _login_ we will create a handler called login and then we will use the methond _code_ for verify the user and generate the token.
+
+[source, javascript]
+----
+app.post(oasp4fn.config({ integration: 'lambda-proxy', path: '/mythaistar/login' });
+export async function login(event: HttpEvent, context: Context, callback: Function) {
+.
+.
+.
+.
+}
+----
+
+We have two default users created in the database:
+
+- user: _waiter_
+- password: _waiter_
+- role: _WAITER_
+
+- user: _user0_
+- password: _password_
+- role: _CUSTOMER_
+
+==== Token set up
+
+link:nodejs-design.asciidoc#token-set-up[See in nodejs section]
+
+==== Current User request
+
+To provide the client with the current user data our application should expose a service to return the user details. In order to do this, we must define a handler called current-user-handler. This handler must decode the _Authorization token_ and return the user data.
+
+[source, javascript]
+----
+oasp4fn.config({
+    path: '/mythaistar/services/rest/security/v1/currentuser',
+});
+export async function currentUser(event: HttpEvent, context: Context, callback: Function) {
+    let authToken = event.headers.Authorization;
+    try {
+        auth.decode(authToken, (err: any, decoded?: any) => {
+            if (err) {
+                callback(new Error(`[403] Forbidden`));
+            } else {
+                callback(null, decoded);
+            }
+        });
+    } catch (err) {
+        callback(new Error(`[${err.code || 500}] ${err.message}`));
+    }
+}
+----
+
+==== Authorization
+
+We need to secure three services, that only should be accessible for users with role _Waiter_:
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter`.
+
+To ensure this, we must decode the _Autorization token_ and check the result. As the role is included in the token, once validated we will have this information and can guarantee access or return a 403 error.
+
+[source, javascript]
+----
+oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
+export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {
+    const authToken = event.headers.Authorization;
+    auth.decode(authToken, (err, decoded) => {
+        try {
+            if (err || decoded.role !== 'WAITER') {
+                throw { code: 403, message: 'Forbidden' };
+            }
+
+            [...]
+
+        } catch (err) {
+            callback(new Error(`[${err.code || 500}] ${err.message}`));
+        }
+    });
+}
+----

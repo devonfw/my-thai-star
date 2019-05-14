@@ -38,7 +38,7 @@ export const config: Config = {
   roles: [
     { name: 'CUSTOMER', permission: 0 },
     { name: 'WAITER', permission: 1 },
-	{ name: 'MANAGER', permission: 2 },
+    { name: 'MANAGER', permission: 2 },
   ],
   langs: [
     { label: 'English', value: 'en' },

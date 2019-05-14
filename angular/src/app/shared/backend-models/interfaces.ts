@@ -83,7 +83,7 @@ export class OrderListInfo {
 }
 
 export class PredictionCriteria {
-	pageable?: Pageable;
+    pageable?: Pageable;
     type: string;
     startBookingdate: string;
     temperatures: number[];
