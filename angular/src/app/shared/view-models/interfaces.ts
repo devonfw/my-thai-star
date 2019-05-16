@@ -167,3 +167,20 @@ export interface DishOrdersData {
     // count of orders of the dish, that have been ordered in certain period
     orders: number[];
 }
+
+// Interface for Cluster
+export interface Cluster {
+    id: number;
+    dishId: number;
+    dishName: String;
+    amount: number;
+    polygon: {};
+    x: string;
+    y: string;
+
+}
+export interface ClustersData {
+    data: Cluster[];
+    id: number;
+    modificationCounter: number;
+}
