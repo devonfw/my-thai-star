@@ -90,6 +90,13 @@ export class PredictionCriteria {
     holidays: string[];
 }
 
+export class ClusteringCriteria {
+    startBookingdate: string;
+    endBookingdate: string;
+    dishId: number;
+    clusters: number;
+}
+
 // LOGIN
 export class LoginInfo {
     username: string;
