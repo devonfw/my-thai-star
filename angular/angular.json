@@ -21,14 +21,20 @@
               "src/data",
               "src/favicon.ico",
               "src/manifest.json",
-              "src/external-config.json"
+              "src/external-config.json",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "leaflet/"
+              }
             ],
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/flag-icon-css/css/flag-icon.min.css",
               "node_modules/@covalent/core/common/platform.css",
-              "node_modules/ng-pick-datetime/assets/style/picker.min.css"
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",

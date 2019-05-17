@@ -25,6 +25,7 @@ export interface Config {
   roles: Role[];
   langs: Lang[];
   enablePrediction: boolean;
+  enableClustering: boolean;
 }
 
 export const config: Config = {
@@ -53,4 +54,5 @@ export const config: Config = {
     { label: 'български', value: 'bg' },
   ],
   enablePrediction: false,
+  enableClustering: false,
 };
