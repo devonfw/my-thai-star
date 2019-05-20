@@ -6,6 +6,7 @@ import { CoreModule } from '../core/core.module';
 import { WaiterCockpitService } from './shared/waiter-cockpit.service';
 import { WindowService } from '../core/window/window.service';
 import { PredictionService } from './shared/prediction.service';
+import { ClusteringService } from './shared/clustering.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
@@ -14,6 +15,7 @@ import { ReservationDialogComponent } from './reservation-cockpit/reservation-di
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cockpit.component';
+import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cockpit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -22,13 +24,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-	  FormsModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [
     WaiterCockpitService,
     WindowService,
     PredictionService,
+    ClusteringService,
   ],
   declarations: [
     ReservationCockpitComponent,
@@ -36,16 +39,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReservationDialogComponent,
     OrderDialogComponent,
     PredictionCockpitComponent,
+    ClusteringCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,
     OrderCockpitComponent,
     PredictionCockpitComponent,
+    ClusteringCockpitComponent,
   ],
   entryComponents: [
     ReservationDialogComponent,
     OrderDialogComponent,
     PredictionCockpitComponent,
+    ClusteringCockpitComponent,
   ],
 })
 export class WaiterCockpitModule { }

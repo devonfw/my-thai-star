@@ -138,7 +138,6 @@
         <configuration>
           <mainClass>com.devonfw.application.mtsj.SpringBootApp</mainClass>
           <classifier>bootified</classifier>
-          <finalName>${project.artifactId}</finalName>
         </configuration>
         <executions>
           <execution>
