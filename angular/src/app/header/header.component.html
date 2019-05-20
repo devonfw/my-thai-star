@@ -38,6 +38,13 @@
       </a>
     </nav>
   </div>
+  <div *ngIf="auth.isPermited('MANAGER')" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/clustering" routerLinkActive #clustering="routerLinkActive" [class.navBottomBorder]="clustering.isActive">
+        CLUSTERING
+      </a>
+    </nav>
+  </div>
   <button name="login" *ngIf="!auth.isLogged()" mat-icon-button (click)="openLoginDialog()" [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>

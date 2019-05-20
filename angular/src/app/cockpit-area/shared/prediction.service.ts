@@ -1,36 +1,34 @@
-import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { FilterOrdersCockpit, PredictionCriteria } from 'app/shared/backend-models/interfaces';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { OrdersData } from '../../shared/view-models/interfaces';
-import { PredictionCriteria, FilterOrdersCockpit, Pageable, Sort } from 'app/shared/backend-models/interfaces';
-import { OrderResponse } from '../../shared/view-models/interfaces';
 import { ConfigService } from '../../core/config/config.service';
+import { OrdersData } from '../../shared/view-models/interfaces';
 
 @Injectable()
 export class PredictionService {
 
   private readonly predictionRestPath: string = 'predictionmanagement/v1/nextweek';
   private readonly getOrdereddishesRestPath: string = 'ordermanagement/v1/ordereddishes/history';
-  
+
   private readonly restServiceRoot: string;
 
   constructor(
     private http: HttpClient,
-	private configService: ConfigService
+  private configService: ConfigService
   ) {
 
-	this.restServiceRoot = this.configService.getValues().restServiceRoot;
+  this.restServiceRoot = this.configService.getValues().restServiceRoot;
   }
 
   getPrediction(predictionCriteria: PredictionCriteria): Observable<OrdersData> {
 
     return this.http.post(`${this.restServiceRoot}${this.predictionRestPath}`, predictionCriteria)
       .pipe(map((res: any) => {
-        let startDate = Date.parse(predictionCriteria.startBookingdate);
-        let { data } = res;
-        let dishes = data.reduce((acc, row) => {
+        const startDate = Date.parse(predictionCriteria.startBookingdate);
+        const { data } = res;
+        const dishes = data.reduce((acc, row) => {
           acc[row.dishId] = row.dishName;
           return acc;
         }, {});
@@ -38,7 +36,7 @@ export class PredictionService {
         return {
           dates: Array(7).fill(null)
             .map((_, i) => {
-              let result = new Date(startDate);
+              const result = new Date(startDate);
               result.setDate(result.getDate() + i);
               return result;
             }),
@@ -59,12 +57,12 @@ export class PredictionService {
   }
 
   getOrders(filters: FilterOrdersCockpit): Observable<OrdersData> {
-    let orders = { dates: [], dishes: [], weather: [], holidays: [] };
+    const orders = { dates: [], dishes: [], weather: [], holidays: [] };
 
     return this.http.post(`${this.restServiceRoot}${this.getOrdereddishesRestPath}`, filters)
       .pipe(map((data: any) => {
         data.content.forEach(record => {
-          let dish = orders.dishes.filter(dish => dish.id === record.dish.id);
+          const dish = orders.dishes.filter(value => value.id === record.dish.id);
 
           if (dish.length === 0) {
             orders.dishes.push({
@@ -76,7 +74,8 @@ export class PredictionService {
             dish[0].orders.push(record.orderedDishes.amount);
           }
 
-          let date = orders.dates.filter(date => date.toLocaleDateString('en-GB') == (new Date(record.orderedDishes.bookingdate)).toLocaleDateString('en-GB'));
+          const date = orders.dates.filter( value =>
+            value.toLocaleDateString('en-GB') === (new Date(record.orderedDishes.bookingdate)).toLocaleDateString('en-GB'));
 
           if (date.length === 0) {
             orders.dates.push(new Date(record.orderedDishes.bookingdate));
@@ -87,19 +86,20 @@ export class PredictionService {
 
       // sort the orders
       orders.dishes.sort((x, y) => x.id - y.id);
-      
-      var metadata = [];
-      for (var i = 0; i < orders.dates.length; i++) { 
-        metadata.push({'date': orders.dates[i], 'weather': orders.weather[i], 'holiday': orders.holidays[i]});
-      }
+
+      const metadata = orders.dates.reduce((accum, date, index) => {
+        accum.push({ 'date': date, 'weather': orders.weather[index], 'holiday': orders.holidays[index]});
+        return accum;
+      }, []);
 
       metadata.sort((x, y) => x.date - y.date);
 
-      for (var i = 0; i < metadata.length; i++) {
-        orders.dates[i] = metadata[i].date;
-        orders.weather[i] = metadata[i].weather;
-        orders.holidays[i] = metadata[i].holiday;
-      }
+      metadata.forEach((value, index) => {
+        orders.dates[index] = data.date;
+        orders.weather[index] = data.weather;
+        orders.holidays[index] = data.holiday;
+      });
+
       return orders;
     }));
   }
