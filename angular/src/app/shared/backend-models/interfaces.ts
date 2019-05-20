@@ -83,11 +83,18 @@ export class OrderListInfo {
 }
 
 export class PredictionCriteria {
-	pageable?: Pageable;
+    pageable?: Pageable;
     type: string;
     startBookingdate: string;
     temperatures: number[];
     holidays: string[];
+}
+
+export class ClusteringCriteria {
+    startBookingdate: string;
+    endBookingdate: string;
+    dishId: number;
+    clusters: number;
 }
 
 // LOGIN
