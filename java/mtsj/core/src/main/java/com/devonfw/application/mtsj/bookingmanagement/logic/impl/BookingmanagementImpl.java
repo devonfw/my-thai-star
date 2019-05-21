@@ -2,7 +2,6 @@ package com.devonfw.application.mtsj.bookingmanagement.logic.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -14,6 +13,7 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -23,6 +23,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.exception.CancelInviteNotAllowedException;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingCto;
@@ -188,6 +190,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public BookingEto saveBooking(BookingCto booking) {
 
     Objects.requireNonNull(booking, "booking");
+
     BookingEntity bookingEntity = getBeanMapper().map(booking.getBooking(), BookingEntity.class);
     bookingEntity.setCanceled(false);
     List<InvitedGuestEntity> invited = getBeanMapper().mapList(booking.getInvitedGuests(), InvitedGuestEntity.class);
@@ -208,9 +211,8 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       LOG.debug("MD5 Algorithm not available at the enviroment");
     }
 
-    bookingEntity.setCreationDate(Timestamp.from(Instant.now()));
-    bookingEntity
-        .setExpirationDate(Timestamp.from(bookingEntity.getBookingDate().toInstant().minus(Duration.ofHours(1))));
+    bookingEntity.setCreationDate(Instant.now());
+    bookingEntity.setExpirationDate(bookingEntity.getBookingDate().minus(Duration.ofHours(1)));
 
     bookingEntity.setInvitedGuests(getBeanMapper().mapList(invited, InvitedGuestEntity.class));
 
@@ -429,9 +431,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
           .append("\n");
       invitedMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
 
-      String linkAccept = "http://localhost:" + this.clientPort + "/booking/acceptInvite/" + guest.getGuestToken();
+      String linkAccept = getClientUrl() + "/booking/acceptInvite/" + guest.getGuestToken();
 
-      String linkDecline = "http://localhost:" + this.clientPort + "/booking/rejectInvite/" + guest.getGuestToken();
+      String linkDecline = getClientUrl() + "/booking/rejectInvite/" + guest.getGuestToken();
 
       invitedMailContent.append("To accept: ").append(linkAccept).append("\n");
       invitedMailContent.append("To decline: ").append(linkDecline).append("\n");
@@ -460,7 +462,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
           hostMailContent.append("-").append(guest.getEmail()).append("\n");
         }
       }
-      String cancellationLink = "http://localhost:" + this.clientPort + "/booking/cancel/" + booking.getBookingToken();
+      String cancellationLink = getClientUrl() + "/booking/cancel/" + booking.getBookingToken();
       hostMailContent.append(cancellationLink).append("\n");
       this.mailService.sendMail(booking.getEmail(), "Booking confirmation", hostMailContent.toString());
     } catch (Exception e) {
@@ -480,8 +482,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
       guestMailContent.append("Guest CODE: ").append(guest.getGuestToken()).append("\n");
       guestMailContent.append("Booking Date: ").append(booking.getBooking().getBookingDate()).append("\n");
 
-      String cancellationLink = "http://localhost:" + this.clientPort + "/booking/rejectInvite/"
-          + guest.getGuestToken();
+      String cancellationLink = getClientUrl() + "/booking/rejectInvite/" + guest.getGuestToken();
 
       guestMailContent.append("To cancel invite: ").append(cancellationLink).append("\n");
       this.mailService.sendMail(guest.getEmail(), "Invite accepted", guestMailContent.toString());
@@ -561,11 +562,21 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   private boolean cancelInviteAllowed(BookingEto booking) {
 
-    Long bookingTimeMillis = booking.getBookingDate().getTime();
+    Long bookingTimeMillis = booking.getBookingDate().toEpochMilli();
     Long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    Long now = Timestamp.from(Instant.now()).getTime();
+    Long now = Instant.now().toEpochMilli();
 
     return (now > cancellationLimit) ? false : true;
+  }
+
+  private String getClientUrl() {
+
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    String clientUrl = request.getHeader("origin");
+    if (clientUrl == null) {
+      return "http://localhost:" + this.clientPort;
+    }
+    return clientUrl;
   }
 
 }

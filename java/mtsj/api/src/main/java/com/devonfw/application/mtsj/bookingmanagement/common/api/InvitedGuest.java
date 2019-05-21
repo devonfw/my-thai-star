@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 
@@ -22,8 +22,8 @@ public interface InvitedGuest extends ApplicationEntity {
 
   public void setAccepted(Boolean accepted);
 
-  public Timestamp getModificationDate();
+  public Instant getModificationDate();
 
-  public void setModificationDate(Timestamp modificationDate);
+  public void setModificationDate(Instant modificationDate);
 
 }
