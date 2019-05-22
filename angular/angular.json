@@ -42,6 +42,7 @@
             ]
           },
           "configurations": {
+            "dev": {},
             "production": {
               "optimization": true,
               "outputHashing": "all",
