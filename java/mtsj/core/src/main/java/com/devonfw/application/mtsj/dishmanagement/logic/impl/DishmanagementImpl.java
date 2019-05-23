@@ -138,7 +138,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_DISH)
+  // @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_DISH)
   public Page<DishCto> findDishCtos(DishSearchCriteriaTo criteria) {
 
     List<DishCto> ctos = new ArrayList<>();
