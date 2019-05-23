@@ -17,14 +17,14 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
+import com.devonfw.module.test.common.base.ComponentTest;
 
 /**
  * Tests for {@link Dishmanagement} component.
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ApplicationComponentTest {
+public class DishmanagementTest extends ComponentTest {
 
   @Inject
   private Dishmanagement dishmanagement;
