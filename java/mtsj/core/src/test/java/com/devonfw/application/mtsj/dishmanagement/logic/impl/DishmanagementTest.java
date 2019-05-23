@@ -54,7 +54,7 @@ public class DishmanagementTest extends ApplicationComponentTest {
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
     criteria.setSearchBy("Garlic Paradise");
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "id"));
+    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
