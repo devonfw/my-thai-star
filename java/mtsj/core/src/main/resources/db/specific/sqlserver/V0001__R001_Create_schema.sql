@@ -24,7 +24,7 @@ CREATE TABLE UserRole (
 );
 
 -- *** User ***
-CREATE TABLE User (
+CREATE TABLE Users (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   username VARCHAR (255) NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Booking (
   idOrder BIGINT,
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
-  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
+  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES Users(id) NOCHECK,
   CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES DinnerTable(id) NOCHECK
 );
 
@@ -179,7 +179,7 @@ CREATE TABLE UserFavourite (
   idUser BIGINT NOT NULL,
   idDish BIGINT NOT NULL,
   CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
-  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
+  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES Users(id) NOCHECK,
   CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
 );
 
