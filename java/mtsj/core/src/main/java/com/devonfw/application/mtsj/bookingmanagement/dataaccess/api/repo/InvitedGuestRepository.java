@@ -2,7 +2,7 @@ package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo;
 
 import static com.querydsl.core.alias.Alias.$;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -62,7 +62,7 @@ public interface InvitedGuestRepository extends DefaultRepository<InvitedGuestEn
     if (accepted != null) {
       query.where(Alias.$(alias.getAccepted()).eq(accepted));
     }
-    Timestamp modificationDate = criteria.getModificationDate();
+    Instant modificationDate = criteria.getModificationDate();
     if (modificationDate != null) {
       query.where(Alias.$(alias.getModificationDate()).eq(modificationDate));
     }
