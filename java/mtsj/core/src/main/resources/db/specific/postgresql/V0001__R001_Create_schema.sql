@@ -32,7 +32,7 @@ CREATE TABLE Users (
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),
-  CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
+  CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id)
 );
 
 -- *** Booking ***
@@ -47,14 +47,14 @@ CREATE TABLE Booking (
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
-  canceled BOOLEAN NOT NULL DEFAULT ((0)) ,
+  canceled BOOLEAN NOT NULL DEFAULT ((FALSE)),
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
-  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES Users(id) NOCHECK,
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES DinnerTable(id) NOCHECK
+  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES Users(id),
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES DinnerTable(id)
 );
 
 -- *** InvitedGuest ***
@@ -68,7 +68,7 @@ CREATE TABLE InvitedGuest (
   modificationDate TIMESTAMP,
   idOrder BIGINT,
   CONSTRAINT PK_InvitedGuest PRIMARY KEY(id),
-  CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
+  CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id)
 );
 
 -- *** OrderDish ***
@@ -79,8 +79,8 @@ CREATE TABLE Orders (
   idInvitedGuest BIGINT,
   idHost BIGINT,
   CONSTRAINT PK_Order PRIMARY KEY(id),
-  CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
-  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
+  CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id),
+  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id)
 );
 
 -- *** Category ***
@@ -90,7 +90,7 @@ CREATE TABLE Category (
   name VARCHAR (255),
   description VARCHAR (4000),
   showOrder INTEGER,
-  CONSTRAINT PK_Category PRIMARY KEY(id),
+  CONSTRAINT PK_Category PRIMARY KEY(id)
 );
 
 -- *** Image ***
@@ -113,7 +113,7 @@ CREATE TABLE Dish (
   price DECIMAL (16,10),
   idImage BIGINT UNIQUE NOT NULL,
   CONSTRAINT PK_Dish PRIMARY KEY(id),
-  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
+  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id)
 );
 
 -- *** DishCategory ***
@@ -123,8 +123,8 @@ CREATE TABLE DishCategory (
   idDish BIGINT NOT NULL,
   idCategory BIGINT NOT NULL,
   CONSTRAINT PK_DishCategory PRIMARY KEY(id),
-  CONSTRAINT FK_DishCategory_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishCategory_idCategory FOREIGN KEY(idCategory) REFERENCES Category(id) NOCHECK
+  CONSTRAINT FK_DishCategory_idDish FOREIGN KEY(idDish) REFERENCES Dish(id),
+  CONSTRAINT FK_DishCategory_idCategory FOREIGN KEY(idCategory) REFERENCES Category(id)
 );
 
 -- *** Ingredient ***
@@ -144,8 +144,8 @@ CREATE TABLE DishIngredient (
   idDish BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
   CONSTRAINT PK_DishIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_DishIngredient_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
+  CONSTRAINT FK_DishIngredient_idDish FOREIGN KEY(idDish) REFERENCES Dish(id),
+  CONSTRAINT FK_DishIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id)
 );
 
 -- *** OrderLine ***
@@ -157,8 +157,8 @@ CREATE TABLE OrderLine (
   comment VARCHAR (255),
   idOrder BIGINT NOT NULL,
   CONSTRAINT PK_OrderLine PRIMARY KEY(id),
-  CONSTRAINT FK_OrderLine_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_OrderLine_idOrder FOREIGN KEY(idOrder) REFERENCES Orders(id) NOCHECK
+  CONSTRAINT FK_OrderLine_idDish FOREIGN KEY(idDish) REFERENCES Dish(id),
+  CONSTRAINT FK_OrderLine_idOrder FOREIGN KEY(idOrder) REFERENCES Orders(id)
 );
 
 -- *** OrderDishExtraIngredient ***
@@ -168,26 +168,26 @@ CREATE TABLE OrderDishExtraIngredient (
   idOrderLine BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
   CONSTRAINT PK_OrderDishExtraIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_OrderDishExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id) NOCHECK,
-  CONSTRAINT FK_OrderDishExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
+  CONSTRAINT FK_OrderDishExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id),
+  CONSTRAINT FK_OrderDishExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id)
 );
 
 -- *** UserFavourite ***
 CREATE TABLE UserFavourite (
-  id BIGSERIAL NOT NULL BIGSERIAL,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT NOT NULL,
   idDish BIGINT NOT NULL,
   CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
-  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES Users(id) NOCHECK,
-  CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
+  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES Users(id),
+  CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id)
 );
 
 -- *************************************************************************
 
 -- *** BinaryObject (BLOBs) ***
 CREATE TABLE BinaryObject (
-  id BIGSERIAL NOT NULL BIGSERIAL,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   data BLOB(2147483647),
   size BIGINT NOT NULL,
