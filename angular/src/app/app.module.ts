@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient } from '@angular/common/http';
 
-import { ElectronService } from './shared/electron/electron.service';
+import { NgxElectronModule } from 'ngx-electron';
 import { WebviewDirective } from './shared/directives/webview.directive';
 
 // AoT requires an exported function for factories
@@ -32,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   imports: [
     ConfigModule,
     BrowserModule,
+    NgxElectronModule,
     HeaderModule,
     HomeModule,
     MenuModule,
@@ -53,7 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       enabled: environment.production,
     }),
   ],
-  providers: [ElectronService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

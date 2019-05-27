@@ -17,6 +17,10 @@ function createWindow(): void {
     y: 0,
     width: size.width,
     height: size.height,
+    webPreferences: {
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true,
+    }
   });
 
   if (serve) {
@@ -29,7 +33,7 @@ function createWindow(): void {
     win.loadURL(
       url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
+        protocol: 'file',
         slashes: true,
       }),
     );
