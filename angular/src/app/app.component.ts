@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { SidenavService } from './sidenav/shared/sidenav.service';
+import { AuthService } from './core/authentication/auth.service';
+import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import * as moment from 'moment';
 import { fadeAnimation } from './animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
-import { AuthService } from './core/authentication/auth.service';
 import { ConfigService } from './core/config/config.service';
-import { ElectronService } from './shared/electron/electron.service';
-import { SidenavService } from './sidenav/shared/sidenav.service';
 
 @Component({
   selector: 'public-main',
@@ -74,7 +74,7 @@ export class AppComponent {
       router.resetConfig(newRoutes);
     }
 
-    if (electronService.isElectron()) {
+    if (electronService.isElectronApp) {
       // Elecron stuff
     } else {
       // Web stuff
