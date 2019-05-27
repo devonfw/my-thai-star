@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -26,11 +26,11 @@ public class BookingEto extends AbstractEto implements Booking {
 
   @NotNull
   @Future
-  private Timestamp bookingDate;
+  private Instant bookingDate;
 
-  private Timestamp expirationDate;
+  private Instant expirationDate;
 
-  private Timestamp creationDate;
+  private Instant creationDate;
 
   @NotNull
   @EmailExtended
@@ -85,37 +85,37 @@ public class BookingEto extends AbstractEto implements Booking {
   }
 
   @Override
-  public Timestamp getBookingDate() {
+  public Instant getBookingDate() {
 
     return this.bookingDate;
   }
 
   @Override
-  public void setBookingDate(Timestamp bookingDate) {
+  public void setBookingDate(Instant bookingDate) {
 
     this.bookingDate = bookingDate;
   }
 
   @Override
-  public Timestamp getExpirationDate() {
+  public Instant getExpirationDate() {
 
     return this.expirationDate;
   }
 
   @Override
-  public void setExpirationDate(Timestamp expirationDate) {
+  public void setExpirationDate(Instant expirationDate) {
 
     this.expirationDate = expirationDate;
   }
 
   @Override
-  public Timestamp getCreationDate() {
+  public Instant getCreationDate() {
 
     return this.creationDate;
   }
 
   @Override
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(Instant creationDate) {
 
     this.creationDate = creationDate;
   }

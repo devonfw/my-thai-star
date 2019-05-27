@@ -10,7 +10,7 @@ import { SnackBarService } from './core/snack-bar/snack-bar.service';
 import { WindowService } from './core/window/window.service';
 import { UserAreaService } from './user-area/shared/user-area.service';
 import { AuthService } from './core/authentication/auth.service';
-import { ElectronService } from './shared/electron/electron.service';
+import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -28,11 +28,11 @@ describe('AppComponent', () => {
         AuthService,
         UserAreaService,
         SnackBarService,
-        ElectronService,
       ],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
+        NgxElectronModule,
         CoreModule,
         TranslateModule.forRoot(),
         SidenavModule,
