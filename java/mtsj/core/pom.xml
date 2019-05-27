@@ -98,6 +98,13 @@
       <artifactId>jstl</artifactId>
     </dependency>
 
+    <!-- Java One Time API -->
+    <dependency>
+      <groupId>org.jboss.aerogear</groupId>
+      <artifactId>aerogear-otp-java</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
     <!-- Spring Security -->
     <!--
       <dependency>

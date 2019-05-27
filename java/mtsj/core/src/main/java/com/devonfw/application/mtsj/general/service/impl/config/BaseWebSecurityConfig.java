@@ -2,13 +2,17 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 
 import javax.inject.Inject;
 
+import com.devonfw.application.mtsj.general.common.impl.security.twofactor.BaseUserDetailsService;
+import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
+import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -31,10 +35,28 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   boolean corsEnabled = true;
 
   @Inject
-  private UserDetailsService userDetailsService;
+  private BaseUserDetailsService userDetailsService;
 
   @Inject
   private PasswordEncoder passwordEncoder;
+
+  @Bean
+  public DaoAuthenticationProvider daoAuthenticationProvider() {
+
+    DaoAuthenticationProvider authProvider
+            = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(this.userDetailsService);
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    return authProvider;
+  }
+
+  @Bean
+  public TwoFactorAuthenticationProvider twoFactorAuthenticationProvider() {
+    TwoFactorAuthenticationProvider authProvider
+            = new TwoFactorAuthenticationProvider();
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    return authProvider;
+  }
 
   private CorsFilter getCorsFilter() {
 
@@ -72,6 +94,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
+        // 2FA Filter
+        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager()),
+            UsernamePasswordAuthenticationFilter.class)
         // the api/login requests are filtered with the JWTLoginFilter
         .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
             UsernamePasswordAuthenticationFilter.class)
@@ -88,11 +113,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
-        .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
-        .password(this.passwordEncoder.encode("barkeeper")).roles("Barkeeper").and().withUser("chief")
-        .password(this.passwordEncoder.encode("chief")).roles("Chief").and()
-        .withUser("manager").password(this.passwordEncoder.encode("manager")).roles("Manager");
+    auth
+            .authenticationProvider(daoAuthenticationProvider())
+            .authenticationProvider(twoFactorAuthenticationProvider());
   }
-
 }
