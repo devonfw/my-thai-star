@@ -12,6 +12,14 @@ public interface User extends ApplicationEntity {
 
   public void setPassword(String password);
 
+  public String getSecret();
+
+  public void setSecret(String secret);
+
+  public Boolean isUsingTwoFactor();
+
+  public void setUsingTwoFactor(Boolean usingTwoFactor);
+
   public String getEmail();
 
   public void setEmail(String email);

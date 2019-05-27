@@ -27,6 +27,10 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
 
   private String email;
 
+  private String secret;
+
+  private Boolean usingTwoFactor;
+
   private UserRoleEntity userRole;
 
   private List<BookingEntity> bookings;
@@ -87,6 +91,39 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   public void setEmail(String email) {
 
     this.email = email;
+  }
+
+  /**
+   * @return secret
+   */
+  @Override
+  public String getSecret() {
+    return secret;
+  }
+
+  /**
+   * @param secret new value of {@link #getsecret}.
+   */
+  @Override
+  public void setSecret(String secret) {
+    this.secret = secret;
+  }
+
+  /**
+   * @return usingTwoFactor
+   */
+  @Override
+  public Boolean isUsingTwoFactor() {
+    return usingTwoFactor;
+  }
+
+  /**
+   *
+   * @param usingTwoFactor new value of {@link #isusingtwofactor()}
+   */
+  @Override
+  public void setUsingTwoFactor(Boolean usingTwoFactor) {
+    this.usingTwoFactor = usingTwoFactor;
   }
 
   /**
