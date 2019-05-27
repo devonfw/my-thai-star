@@ -8,7 +8,7 @@ CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
 
 -- *** Table ***
 CREATE TABLE DinnerTable (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
   CONSTRAINT PK_Table PRIMARY KEY(id)
@@ -16,7 +16,7 @@ CREATE TABLE DinnerTable (
 
 -- *** UserRole ***
 CREATE TABLE UserRole (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   active BOOLEAN,
@@ -25,7 +25,7 @@ CREATE TABLE UserRole (
 
 -- *** User ***
 CREATE TABLE User (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   username VARCHAR (255) NULL,
   password VARCHAR (255) NULL,
@@ -37,7 +37,7 @@ CREATE TABLE User (
 
 -- *** Booking ***
 CREATE TABLE Booking (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE Booking (
 
 -- *** InvitedGuest ***
 CREATE TABLE InvitedGuest (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
   guestToken VARCHAR (60),
@@ -73,7 +73,7 @@ CREATE TABLE InvitedGuest (
 
 -- *** OrderDish ***
 CREATE TABLE Orders (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
@@ -85,7 +85,7 @@ CREATE TABLE Orders (
 
 -- *** Category ***
 CREATE TABLE Category (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
@@ -95,7 +95,7 @@ CREATE TABLE Category (
 
 -- *** Image ***
 CREATE TABLE Image (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
   content VARCHAR(2147483647),
@@ -106,7 +106,7 @@ CREATE TABLE Image (
 
 -- *** Dish ***
 CREATE TABLE Dish (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
@@ -118,7 +118,7 @@ CREATE TABLE Dish (
 
 -- *** DishCategory ***
 CREATE TABLE DishCategory (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idDish BIGINT NOT NULL,
   idCategory BIGINT NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE DishCategory (
 
 -- *** Ingredient ***
 CREATE TABLE Ingredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   description VARCHAR (4000),
@@ -139,7 +139,7 @@ CREATE TABLE Ingredient (
 
 -- *** DishIngredient ***
 CREATE TABLE DishIngredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idDish BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE DishIngredient (
 
 -- *** OrderLine ***
 CREATE TABLE OrderLine (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   idDish BIGINT NOT NULL,
   amount INTEGER,
@@ -163,7 +163,7 @@ CREATE TABLE OrderLine (
 
 -- *** OrderDishExtraIngredient ***
 CREATE TABLE OrderDishExtraIngredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL,
   modificationCounter INTEGER,
   idOrderLine BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE OrderDishExtraIngredient (
 
 -- *** UserFavourite ***
 CREATE TABLE UserFavourite (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL BIGSERIAL,
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT NOT NULL,
   idDish BIGINT NOT NULL,
@@ -187,7 +187,7 @@ CREATE TABLE UserFavourite (
 
 -- *** BinaryObject (BLOBs) ***
 CREATE TABLE BinaryObject (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGSERIAL NOT NULL BIGSERIAL,
   modificationCounter INTEGER NOT NULL,
   data BLOB(2147483647),
   size BIGINT NOT NULL,
