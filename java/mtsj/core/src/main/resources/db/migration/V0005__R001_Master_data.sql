@@ -5,15 +5,15 @@ INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VA
 INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2y$12$wnbEyf6IrwhNSYQX2JJU1OnaIYRhq/idLsTDV3J.wX0CUnK3uXUrO', 'waiter@mail.com', 1);
 INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2y$12$RPi.bHwZXJnPuilt2YWubO1ZyCD5E/iQGaz5OtNAGtSG8yweRGeT2', 'manager@mail.com', 2);
 
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (4, 1, 6);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (5, 1, 6);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (6, 1, 6);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (7, 1, 8);
-INSERT INTO DinnerTable(id, modificationCounter, seatsNumber) VALUES (8, 1, 8);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (4, 1, 6);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (5, 1, 6);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (6, 1, 6);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (7, 1, 8);
+INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (8, 1, 8);
 
 
 -- Common Booking with already created orders
