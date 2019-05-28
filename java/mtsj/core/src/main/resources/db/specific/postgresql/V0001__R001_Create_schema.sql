@@ -7,7 +7,7 @@
 CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
 
 -- *** Table ***
-CREATE TABLE DinnerTable (
+CREATE TABLE "TABLE" (
   id BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE Booking (
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES Users(id),
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES DinnerTable(id)
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "TABLE"(id)
 );
 
 -- *** InvitedGuest ***
