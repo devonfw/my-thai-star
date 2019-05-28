@@ -11,32 +11,25 @@
   color: #514f4f;
 }
 
-.dish-card-parent {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
 .description {
-  border: 1px;
-  width: 100%;
+  display: flex; 
+  margin-top: 0px;
 }
 
 .extras {
   display: flex;
   justify-content: space-between;
-
+  
   > * {
     margin-bottom: 8px;
   }
-  width: 100%;
 }
 
 .order {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex: 1;
 }
 
 @media (min-width: $tablet-min-width) {
