@@ -42,6 +42,7 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.Invite
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
@@ -104,6 +105,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING)
   public BookingCto findBooking(Long id) {
 
     LOG.debug("Get Booking with id {} from database.", id);
@@ -118,6 +120,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING)
   public BookingCto findBookingByToken(String token) {
 
     BookingEntity entity = getBookingDao().findBookingByToken(token);
@@ -134,19 +137,21 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_INVITED_GUESTS)
   public InvitedGuestEto findInvitedGuestByToken(String token) {
 
     return getBeanMapper().map(getInvitedGuestDao().findInvitedGuestByToken(token), InvitedGuestEto.class);
   }
 
   @Override
-  @RolesAllowed({ Roles.WAITER, Roles.MANAGER })
+  @RolesAllowed({ Roles.WAITER, Roles.MANAGER, ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING })
   public Page<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
 
     return findBookingCtos(criteria);
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING)
   public Page<BookingCto> findBookingCtos(BookingSearchCriteriaTo criteria) {
 
     Page<BookingCto> pagListTo = null;
@@ -170,6 +175,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_BOOKING)
   public boolean deleteBooking(Long bookingId) {
 
     List<OrderCto> bookingOrders = this.orderManagement.findOrders(bookingId);
@@ -187,6 +193,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_BOOKING)
   public BookingEto saveBooking(BookingCto booking) {
 
     Objects.requireNonNull(booking, "booking");
@@ -262,6 +269,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_INVITED_GUESTS)
   public InvitedGuestEto findInvitedGuest(Long id) {
 
     LOG.debug("Get InvitedGuest with id {} from database.", id);
@@ -279,6 +287,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_INVITED_GUESTS)
   public Page<InvitedGuestEto> findInvitedGuestEtos(InvitedGuestSearchCriteriaTo criteria) {
 
     Page<InvitedGuestEntity> invitedguests = getInvitedGuestDao().findInvitedGuests(criteria);
@@ -286,6 +295,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_INVITED_GUESTS)
   public boolean deleteInvitedGuest(Long invitedGuestId) {
 
     InvitedGuestEntity invitedGuest = getInvitedGuestDao().find(invitedGuestId);
@@ -300,6 +310,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_INVITED_GUESTS)
   public InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedGuest) {
 
     Objects.requireNonNull(invitedGuest, "invitedGuest");
@@ -323,6 +334,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_TABLE)
   public TableEto findTable(Long id) {
 
     LOG.debug("Get Table with id {} from database.", id);
@@ -330,6 +342,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_TABLE)
   public Page<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
 
     Page<TableEntity> tables = getTableDao().findTables(criteria);
@@ -337,6 +350,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_TABLE)
   public boolean deleteTable(Long tableId) {
 
     TableEntity table = getTableDao().find(tableId);
@@ -346,6 +360,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_TABLE)
   public TableEto saveTable(TableEto table) {
 
     Objects.requireNonNull(table, "table");

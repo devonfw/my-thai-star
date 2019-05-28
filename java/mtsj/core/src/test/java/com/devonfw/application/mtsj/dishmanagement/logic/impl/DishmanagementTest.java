@@ -17,14 +17,14 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.module.test.common.base.ComponentTest;
+import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 
 /**
  * Tests for {@link Dishmanagement} component.
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ComponentTest {
+public class DishmanagementTest extends ApplicationComponentTest {
 
   @Inject
   private Dishmanagement dishmanagement;
@@ -54,7 +54,7 @@ public class DishmanagementTest extends ComponentTest {
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
     criteria.setSearchBy("Garlic Paradise");
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
+    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "id"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
