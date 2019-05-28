@@ -1,9 +1,9 @@
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (0, 1, 'Customer', true);
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (1, 1, 'Waiter', true);
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (2, 1, 'Manager', true);
-INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VALUES (0, 1, 'user0', '{bcrypt}$2y$12$QkELlzmG9R0ITyR18FhbFuHa./9xnInTMJSl7OEKuROB1m4AFPMhq', 'user0@mail.com', 0);
-INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2y$12$wnbEyf6IrwhNSYQX2JJU1OnaIYRhq/idLsTDV3J.wX0CUnK3uXUrO', 'waiter@mail.com', 1);
-INSERT INTO Users(id, modificationCounter, username, password, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2y$12$RPi.bHwZXJnPuilt2YWubO1ZyCD5E/iQGaz5OtNAGtSG8yweRGeT2', 'manager@mail.com', 2);
+INSERT INTO USER(id, modificationCounter, username, password, email, idRole) VALUES (0, 1, 'user0', '{bcrypt}$2y$12$QkELlzmG9R0ITyR18FhbFuHa./9xnInTMJSl7OEKuROB1m4AFPMhq', 'user0@mail.com', 0);
+INSERT INTO USER(id, modificationCounter, username, password, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2y$12$wnbEyf6IrwhNSYQX2JJU1OnaIYRhq/idLsTDV3J.wX0CUnK3uXUrO', 'waiter@mail.com', 1);
+INSERT INTO USER(id, modificationCounter, username, password, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2y$12$RPi.bHwZXJnPuilt2YWubO1ZyCD5E/iQGaz5OtNAGtSG8yweRGeT2', 'manager@mail.com', 2);
 
 INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO TABLE(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
