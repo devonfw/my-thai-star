@@ -70,6 +70,18 @@ public class TokenAuthenticationService {
   }
 
   /**
+   * This method sets a header field in order to notify the user for further authentication requirements
+   *
+   * @param res the {@HttpServletResponse}
+   * @param auth the {@Authentication} object with the user credentials
+   */
+  static void addRequiredAuthentication(HttpServletResponse res, Authentication auth) {
+
+    // Add possible required authentication factors into the header
+    res.addHeader("X-Mythaistar-Otp", auth.getDetails().toString());
+  }
+
+  /**
    * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
    *
    * @param request the {@link HttpServletRequest}
@@ -165,10 +177,30 @@ public class TokenAuthenticationService {
     return userDetails;
   }
 
+  /**
+   * Converts the name(s) to their respective user roles for an {@link Authentication} object
+   *
+   * @param auth
+   * @return A {@link List<GrantedAuthority>} List
+   */
+  public static List<GrantedAuthority> getRolesFromName(Authentication auth) {
+
+    List<GrantedAuthority> roles = new ArrayList<>();
+
+    if (auth.getName().equalsIgnoreCase(Role.WAITER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.WAITER.getName()));
+    } else if (auth.getName().equalsIgnoreCase(Role.CUSTOMER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.CUSTOMER.getName()));
+    } else if (auth.getName().equalsIgnoreCase(Role.MANAGER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.MANAGER.getName()));
+    }
+
+    return roles;
+  }
+
   static List<String> getRolesFromToken(String token) {
 
     return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
         .get(CLAIM_SCOPE, List.class);
   }
-
 }
