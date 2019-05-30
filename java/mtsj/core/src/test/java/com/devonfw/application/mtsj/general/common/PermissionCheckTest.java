@@ -2,6 +2,7 @@ package com.devonfw.application.mtsj.general.common;
 
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -264,9 +265,9 @@ public class PermissionCheckTest extends ModuleTest {
     BookingSearchCriteriaTo criteria = new BookingSearchCriteriaTo();
     Timestamp timestamp = new Timestamp(100L);
     PageRequest pageable = PageRequest.of(0, 100);
-    criteria.setBookingDate(timestamp);
-    criteria.setExpirationDate(timestamp);
-    criteria.setCreationDate(timestamp);
+    criteria.setBookingDate(timestamp.toInstant());
+    criteria.setExpirationDate(timestamp.toInstant());
+    criteria.setCreationDate(timestamp.toInstant());
     criteria.setPageable(pageable);
     this.bookingmanagementImpl.findBookingsByPost(criteria);
   }
@@ -278,9 +279,9 @@ public class PermissionCheckTest extends ModuleTest {
     BookingSearchCriteriaTo criteria = new BookingSearchCriteriaTo();
     Timestamp timestamp = new Timestamp(100L);
     PageRequest pageable = PageRequest.of(0, 100);
-    criteria.setBookingDate(timestamp);
-    criteria.setExpirationDate(timestamp);
-    criteria.setCreationDate(timestamp);
+    criteria.setBookingDate(timestamp.toInstant());
+    criteria.setExpirationDate(timestamp.toInstant());
+    criteria.setCreationDate(timestamp.toInstant());
     criteria.setPageable(pageable);
     this.bookingmanagementImpl.findBookingCtos(criteria);
   }
@@ -313,7 +314,7 @@ public class PermissionCheckTest extends ModuleTest {
     TestUtil.login("user", ApplicationAccessControlConfig.PERMISSION_FIND_INVITED_GUESTS);
     InvitedGuestSearchCriteriaTo criteria = new InvitedGuestSearchCriteriaTo();
     PageRequest pageable = PageRequest.of(0, 100);
-    criteria.setModificationDate(new Timestamp(System.currentTimeMillis()));
+    criteria.setModificationDate(Instant.now());
     criteria.setPageable(pageable);
     this.bookingmanagementImpl.findInvitedGuestEtos(criteria);
   }
