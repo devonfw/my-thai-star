@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.general.common.impl.security.twofactor;
+package com.devonfw.application.mtsj.general.common.base;
 
 import java.util.ArrayList;
 import java.util.Collection;
