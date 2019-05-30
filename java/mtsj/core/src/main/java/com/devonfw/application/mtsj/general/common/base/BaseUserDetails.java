@@ -1,6 +1,7 @@
-package com.devonfw.application.mtsj.general.common.impl.security.twofactor;
+package com.devonfw.application.mtsj.general.common.base;
 
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +20,9 @@ public class BaseUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         List<GrantedAuthority> authorities = new ArrayList<>();
-        String userRole = userEntity.getUserRole().getName();
+        String userRole = StringUtils.capitalize(userEntity.getUserRole().getName());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
         return authorities;
     }

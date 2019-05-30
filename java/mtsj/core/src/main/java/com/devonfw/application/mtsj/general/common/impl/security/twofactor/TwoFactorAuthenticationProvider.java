@@ -1,5 +1,6 @@
 package com.devonfw.application.mtsj.general.common.impl.security.twofactor;
 
+import com.devonfw.application.mtsj.general.common.base.TokenAuthenticationService;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import org.slf4j.Logger;
@@ -10,13 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.jboss.aerogear.security.otp.Totp;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
 
@@ -42,15 +40,22 @@ public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid username or password");
         }
 
-        if (true) {
+        if (user.isUsingTwoFactor()) {
             Totp totp = new Totp(user.getSecret());
+
+            if (!passwordEncoder.matches(auth.getCredentials().toString(), user.getPassword())) {
+                LOG.debug("Authentication failed: password does not match stored value");
+
+                throw new BadCredentialsException("Credentials are invalid");
+            }
+
             if (!isValidLong(twoFactorToken) || !totp.verify(twoFactorToken)) {
-                LOG.info("2FA Code {} was invalid", twoFactorToken);
+                LOG.debug("2FA Code {} was invalid", twoFactorToken);
                 throw new BadCredentialsException("Invalid verfication code");
             }
 
-            LOG.info("2FA authentication with code {} was successful", twoFactorToken);
-            return populateSuccessUsernamePasswordAuthentication(auth.getPrincipal(), auth);
+            LOG.debug("2FA authentication with code {} was successful", twoFactorToken);
+            return populateSuccessUsernamePasswordAuthentication(auth);
         }
 
         return null;
@@ -59,10 +64,6 @@ public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         Assert.notNull(passwordEncoder, "passwordEncoder cannot be null");
         this.passwordEncoder = passwordEncoder;
-    }
-
-    protected PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
     }
 
     private boolean isValidLong(String code) {
@@ -74,12 +75,11 @@ public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
         return true;
     }
 
-    private Authentication populateSuccessUsernamePasswordAuthentication(Object principal, Authentication auth) {
+    private Authentication populateSuccessUsernamePasswordAuthentication(Authentication auth) {
 
         UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
-                principal, auth.getCredentials(),
-                new ArrayList<>(Arrays.asList(new SimpleGrantedAuthority("ROLE_" + auth.getName()))));
-        result.setDetails(auth.getDetails());
+                auth.getPrincipal(), auth.getCredentials(), TokenAuthenticationService.getRolesFromName(auth));
+        result.setDetails(true);
 
         return result;
     }

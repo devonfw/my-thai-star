@@ -2,13 +2,13 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 
 import javax.inject.Inject;
 
-import com.devonfw.application.mtsj.general.common.impl.security.twofactor.BaseUserDetailsService;
+import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
+import com.devonfw.application.mtsj.general.common.base.BaseUserDetailsService;
 import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
 import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -41,12 +41,12 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   private PasswordEncoder passwordEncoder;
 
   @Bean
-  public DaoAuthenticationProvider daoAuthenticationProvider() {
+  public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
 
-    DaoAuthenticationProvider authProvider
-            = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(this.userDetailsService);
+    AdvancedDaoAuthenticationProvider authProvider
+            = new AdvancedDaoAuthenticationProvider();
     authProvider.setPasswordEncoder(this.passwordEncoder);
+    authProvider.setUserDetailsService(this.userDetailsService);
     return authProvider;
   }
 
@@ -57,6 +57,12 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     authProvider.setPasswordEncoder(this.passwordEncoder);
     return authProvider;
   }
+
+  @Inject
+  AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
+
+  @Inject
+  private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
 
   private CorsFilter getCorsFilter() {
 
@@ -114,7 +120,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
     auth
-            .authenticationProvider(daoAuthenticationProvider())
-            .authenticationProvider(twoFactorAuthenticationProvider());
+            .authenticationProvider(this.advancedDaoAuthenticationProvider)
+            .authenticationProvider(this.twoFactorAuthenticationProvider);
   }
 }
