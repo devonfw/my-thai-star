@@ -59,7 +59,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   }
 
   @Inject
-  AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
+  private AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
 
   @Inject
   private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
