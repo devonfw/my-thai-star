@@ -42,6 +42,8 @@ public class TokenAuthenticationService {
 
   static final String HEADER_STRING = "Authorization";
 
+  static final String HEADER_OTP = "X-Mythaistar-Otp";
+
   static final String EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
   static final String CLAIM_SUBJECT = "sub";
@@ -56,6 +58,10 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_ROLES = "roles";
 
+  static void addAllowedHeader(HttpServletResponse res){
+    res.addHeader(EXPOSE_HEADERS, HEADER_STRING + ", " + HEADER_OTP);
+  }
+
   /**
    * This method returns the token once the Authentication has been successful
    *
@@ -65,7 +71,6 @@ public class TokenAuthenticationService {
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
-    res.addHeader(EXPOSE_HEADERS, HEADER_STRING);
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
@@ -78,7 +83,7 @@ public class TokenAuthenticationService {
   static void addRequiredAuthentication(HttpServletResponse res, Authentication auth) {
 
     // Add possible required authentication factors into the header
-    res.addHeader("X-Mythaistar-Otp", auth.getDetails().toString());
+    res.addHeader(HEADER_OTP, auth.getDetails().toString());
   }
 
   /**

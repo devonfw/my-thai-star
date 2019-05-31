@@ -55,10 +55,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                                             Authentication auth) {
 
         if (auth.getDetails() != SecondFactor.NONE) {
+            TokenAuthenticationService.addAllowedHeader(res);
             TokenAuthenticationService.addRequiredAuthentication(res, auth);
         } else {
-            TokenAuthenticationService.addRequiredAuthentication(res, auth);
+            TokenAuthenticationService.addAllowedHeader(res);
             TokenAuthenticationService.addAuthentication(res, auth);
+            TokenAuthenticationService.addRequiredAuthentication(res, auth);
         }
     }
 
