@@ -2,6 +2,7 @@ package com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo;
 
 import java.math.BigDecimal;
 
+import com.devonfw.module.jpa.dataaccess.api.data.DefaultRevisionedRepository;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
