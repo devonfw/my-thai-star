@@ -105,6 +105,13 @@
       <version>1.0.0</version>
     </dependency>
 
+    <!-- Google ZXing Core -->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>javase</artifactId>
+      <version>3.4.0</version>
+    </dependency>
+
     <!-- Spring Security -->
     <!--
       <dependency>

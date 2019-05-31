@@ -49,6 +49,7 @@ public class TwoFactorFilter extends AbstractAuthenticationProcessingFilter {
                                             Authentication auth) {
 
         if ((Boolean) auth.getDetails()) {
+            TokenAuthenticationService.addAllowedHeader(res);
             TokenAuthenticationService.addAuthentication(res, auth);
         }
     }
