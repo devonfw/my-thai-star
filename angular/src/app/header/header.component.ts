@@ -13,6 +13,7 @@ import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dial
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
+import { QrCodeDialogComponent } from "../user-area/qr-code-dialog/qr-code-dialog.component";
 
 @Component({
   selector: 'public-header',
@@ -123,5 +124,14 @@ export class HeaderComponent {
   logout(): void {
     this.userService.logout();
     this.router.navigate(['restaurant']);
+  }
+
+  getQRCode(): void {
+    const dialogRef: MatDialogRef<QrCodeDialogComponent> = this.dialog.open(
+      QrCodeDialogComponent,
+      {
+        width: this.window.responsiveWidth(),
+      },
+    );
   }
 }
