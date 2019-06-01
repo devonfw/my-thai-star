@@ -1,1 +1,9 @@
-<img mat-card-sm-image  >
+<div layout="column" flex>
+  <mat-dialog-content>
+    <img *ngIf="qrcode" id="qrCodeId" src="{{qrcode}}" alt="{{qrcode}}" mat-card-sm-image>
+  </mat-dialog-content>
+</div>
+<div style="text-align: center">
+  <button name="cancelPairing" mat-raised-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+</div>
+

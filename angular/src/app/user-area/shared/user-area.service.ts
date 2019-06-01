@@ -22,7 +22,6 @@ export class UserAreaService {
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
-  private readonly pngFileExtension: string = '.png';
   authAlerts: any;
 
   constructor(
@@ -154,10 +153,12 @@ export class UserAreaService {
       );
   }
 
-  pairing(): Observable<any> {
+  pairing(): Observable<any>{
     return this.http
-      .get(`${this.restPathRoot}${this.pairingRestPath}${this.authService.getUser()}${this.pngFileExtension}`,
-        { responseType: 'blob', observe: 'response' });
+      .get(`${this.restPathRoot}${this.pairingRestPath}${this.authService.getUser()}`,
+        { headers: {'Content-Type': 'text/plain'},
+         responseType: 'text', observe: 'response',
+        });
   }
 
   logout(): void {
