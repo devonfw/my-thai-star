@@ -6,24 +6,35 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../core/config/config.service';
+import { WindowService } from "../../core/window/window.service";
+import { MatDialog, MatDialogRef } from "@angular/material";
+import { TwoFactorDialogComponent } from "../two-factor-dialog/two-factor-dialog.component";
+import { DomSanitizer } from "@angular/platform-browser";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class UserAreaService {
   private readonly restPathRoot: string;
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
+  private readonly verifyRestPath: string = 'verify';
+  private readonly pairingRestPath: string = 'pairing/';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
+  private readonly pngFileExtension: string = '.png';
   authAlerts: any;
 
   constructor(
     public snackBar: SnackBarService,
     public router: Router,
     public translate: TranslateService,
+    public window: WindowService,
+    public dialog: MatDialog,
     private http: HttpClient,
     public authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private domSanitizer: DomSanitizer,
   ) {
     this.restPathRoot = this.configService.getValues().restPathRoot;
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
@@ -37,6 +48,58 @@ export class UserAreaService {
       .post(
         `${this.restPathRoot}${this.loginRestPath}`,
         { username: username, password: password },
+        { responseType: 'text', observe: 'response' },
+      )
+      .subscribe(
+        (res: any) => {
+          this.authService.setToken(res.headers.get('Authorization'));
+
+          if(res.headers.get('X-Mythaistar-Otp') === 'NONE'){
+            this.http
+              .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
+              .subscribe((loginInfo: any) => {
+                this.authService.setLogged(true);
+                this.authService.setUser(loginInfo.name);
+                this.authService.setRole(loginInfo.role);
+                if (loginInfo.role === 'CUSTOMER') {
+                  this.router.navigate(['restaurant']);
+                } else if (loginInfo.role === 'WAITER') {
+                  this.router.navigate(['orders']);
+                } else if (loginInfo.role === 'MANAGER') {
+                  this.router.navigate(['prediction']);
+                }
+                this.snackBar.openSnack(
+                  this.authAlerts.loginSuccess,
+                  4000,
+                  'green',
+                );
+              });
+          } else if (res.headers.get('X-Mythaistar-Otp') === 'OTP') {
+            const dialogRef: MatDialogRef<TwoFactorDialogComponent> = this.dialog.open(
+              TwoFactorDialogComponent,
+              {
+                width: this.window.responsiveWidth(),
+              },
+            );
+            dialogRef.afterClosed().subscribe((content: any) => {
+              if (content) {
+                this.verify(username, password, content.token);
+              }
+            });
+          }
+        },
+        (err: any) => {
+          this.authService.setLogged(false);
+          this.snackBar.openSnack(err.message, 4000, 'red');
+        },
+      );
+  }
+
+  verify(username: string, password: string, token: string): void {
+    this.http
+      .post(
+        `${this.restPathRoot}${this.verifyRestPath}`,
+        { username: username, password: password, token: token },
         { responseType: 'text', observe: 'response' },
       )
       .subscribe(
@@ -63,6 +126,7 @@ export class UserAreaService {
             });
         },
         (err: any) => {
+          console.log("failed");
           this.authService.setLogged(false);
           this.snackBar.openSnack(err.message, 4000, 'red');
         },
@@ -88,6 +152,12 @@ export class UserAreaService {
           this.snackBar.openSnack(this.authAlerts.registerFail, 4000, 'red');
         },
       );
+  }
+
+  pairing(): Observable<any> {
+    return this.http
+      .get(`${this.restPathRoot}${this.pairingRestPath}${this.authService.getUser()}${this.pngFileExtension}`,
+        { responseType: 'blob', observe: 'response' });
   }
 
   logout(): void {

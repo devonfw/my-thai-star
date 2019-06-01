@@ -1,6 +1,7 @@
 {
   "buttons": {
     "cancel": "Abbrechen",
+    "apply": "Bestätigen",
     "close": "Schließen",
     "send": "Senden",
     "login": "Anmelden",
@@ -44,6 +45,7 @@
   "formFields": {
     "username": "Benutzername",
     "password": "Passwort",
+    "token": "Einmalpasswort",
     "confirmPassword": "Passwort bestätigen",
     "date": "Datum",
     "name": "Name",
@@ -94,6 +96,7 @@
     "reservations": "Reservierungen",
     "userActions": {
       "user": "Benutzer",
+      "settings": "Einstellungen",
       "logout": "Abmelden",
       "changePassword": "Passwort ändern",
       "twitterAccount": "Twitteraccount",
