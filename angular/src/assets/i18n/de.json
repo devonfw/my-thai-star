@@ -96,7 +96,7 @@
     "reservations": "Reservierungen",
     "userActions": {
       "user": "Benutzer",
-      "settings": "Einstellungen",
+      "pairing": "Pairing",
       "logout": "Abmelden",
       "changePassword": "Passwort ändern",
       "twitterAccount": "Twitteraccount",
