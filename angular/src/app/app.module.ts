@@ -21,6 +21,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { NgxElectronModule } from 'ngx-electron';
 import { WebviewDirective } from './shared/directives/webview.directive';
+import {TwoFactorDialogComponent} from "./user-area/two-factor-dialog/two-factor-dialog.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
