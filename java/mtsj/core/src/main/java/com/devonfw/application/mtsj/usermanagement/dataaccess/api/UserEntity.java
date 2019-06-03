@@ -60,7 +60,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return password
    */
-  @Override
   public String getPassword() {
 
     return this.password;
@@ -69,7 +68,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @param password new value of {@link #getpassword}.
    */
-  @Override
   public void setPassword(String password) {
 
     this.password = password;
@@ -96,7 +94,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return secret
    */
-  @Override
   public String getSecret() {
     return secret;
   }
@@ -104,7 +101,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @param secret new value of {@link #getsecret}.
    */
-  @Override
   public void setSecret(String secret) {
     this.secret = secret;
   }
@@ -112,7 +108,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return usingTwoFactor
    */
-  @Override
   public Boolean isUsingTwoFactor() {
     return usingTwoFactor;
   }
@@ -121,7 +116,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
    *
    * @param usingTwoFactor new value of {@link #isusingtwofactor()}
    */
-  @Override
   public void setUsingTwoFactor(Boolean usingTwoFactor) {
     this.usingTwoFactor = usingTwoFactor;
   }

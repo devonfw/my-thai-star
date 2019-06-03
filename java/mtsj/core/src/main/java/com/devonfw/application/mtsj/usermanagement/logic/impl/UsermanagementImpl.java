@@ -57,7 +57,14 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserEto findUser(Long id) {
 
     LOG.debug("Get User with id {} from database.", id);
-    return getBeanMapper().map(getUserDao().find(id), UserEto.class);
+    UserEntity entity = getUserDao().find(id);
+    UserEto eto = new UserEto();
+    eto.setUsername(entity.getUsername());
+    eto.setUserRoleId(entity.getUserRoleId());
+    eto.setEmail(entity.getEmail());
+    eto.setTwoFactorStatus(entity.isUsingTwoFactor());
+    eto.setUserRoleId(entity.getUserRoleId());
+    return eto;
   }
 
   @Override
