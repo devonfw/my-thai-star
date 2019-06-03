@@ -14,7 +14,10 @@ public class UserEto extends AbstractEto implements User {
 
   private String email;
 
+  private Boolean twoFactorStatus;
+
   private Long userRoleId;
+
 
   @Override
   public String getUsername() {
@@ -38,6 +41,16 @@ public class UserEto extends AbstractEto implements User {
   public void setEmail(String email) {
 
     this.email = email;
+  }
+
+  public Boolean getTwoFactorStatus() {
+
+    return twoFactorStatus;
+  }
+
+  public void setTwoFactorStatus(Boolean status) {
+
+    this.twoFactorStatus = status;
   }
 
   @Override
