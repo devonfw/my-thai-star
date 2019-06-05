@@ -8,10 +8,6 @@ public interface User extends ApplicationEntity {
 
   public void setUsername(String username);
 
-  public String getPassword();
-
-  public void setPassword(String password);
-
   public String getEmail();
 
   public void setEmail(String email);
