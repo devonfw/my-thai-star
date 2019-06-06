@@ -10,10 +10,11 @@ import { WindowService } from '../core/window/window.service';
 import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { QrCodeDialogComponent } from '../user-area/qr-code-dialog/qr-code-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
-import { QrCodeDialogComponent } from "../user-area/qr-code-dialog/qr-code-dialog.component";
+
 
 @Component({
   selector: 'public-header',
@@ -135,7 +136,7 @@ export class HeaderComponent {
       },
     );
     dialogRef.afterClosed().subscribe((content: any) => {
-      if(this.authService.getTwoFactorStatus()) {
+      if (this.authService.getTwoFactorStatus()) {
         this.dialog.open(QrCodeDialogComponent,
           {
             width: this.window.responsiveWidth(),
