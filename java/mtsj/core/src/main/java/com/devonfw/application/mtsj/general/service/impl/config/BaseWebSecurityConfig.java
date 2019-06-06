@@ -100,7 +100,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
-        // 2FA Filter
+        // verification with OTP are filtered with the TwoFactorFilter
         .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager()),
             UsernamePasswordAuthenticationFilter.class)
         // the api/login requests are filtered with the JWTLoginFilter

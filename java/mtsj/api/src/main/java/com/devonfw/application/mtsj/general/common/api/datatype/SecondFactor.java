@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.general.common.api.constants;
+package com.devonfw.application.mtsj.general.common.api.datatype;
 
 /**
  * All

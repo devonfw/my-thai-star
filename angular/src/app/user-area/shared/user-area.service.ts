@@ -9,7 +9,6 @@ import { ConfigService } from '../../core/config/config.service';
 import { WindowService } from "../../core/window/window.service";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { TwoFactorDialogComponent } from "../two-factor-dialog/two-factor-dialog.component";
-import { DomSanitizer } from "@angular/platform-browser";
 import { Observable } from "rxjs";
 
 @Injectable()
@@ -18,7 +17,7 @@ export class UserAreaService {
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
   private readonly verifyRestPath: string = 'verify';
-  private readonly pairingRestPath: string = 'pairing/';
+  private readonly pairingRestPath: string = 'usermanagement/v1/user/pairing/';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
@@ -33,7 +32,6 @@ export class UserAreaService {
     private http: HttpClient,
     public authService: AuthService,
     private configService: ConfigService,
-    private domSanitizer: DomSanitizer,
   ) {
     this.restPathRoot = this.configService.getValues().restPathRoot;
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
@@ -155,7 +153,7 @@ export class UserAreaService {
 
   pairing(): Observable<any>{
     return this.http
-      .get(`${this.restPathRoot}${this.pairingRestPath}${this.authService.getUser()}`,
+      .get(`${this.restServiceRoot}${this.pairingRestPath}${this.authService.getUser()}`,
         { headers: {'Content-Type': 'text/plain'},
          responseType: 'text', observe: 'response',
         });
