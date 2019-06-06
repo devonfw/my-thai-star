@@ -13,14 +13,13 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class BookTableFormComponent {
   minDate: Date = new Date();
-  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   bookForm = new FormGroup({
     bookingDate: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern(this.REGEXP_EMAIL),
+      Validators.email,
     ]),
     assistants: new FormControl(undefined, [
       Validators.required,

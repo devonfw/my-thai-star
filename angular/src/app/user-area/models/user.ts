@@ -1,15 +1,9 @@
-export class User {
+export class UserDataResponse {
   user: string;
-  currentRole: string;
+  role: string;
   logged: boolean;
 }
 
-export class Credentials {
-  username: string;
-  password: string;
-}
-
-export class UserData {
-  email: string;
-  password: string;
+export class TokenString {
+  token: string;
 }

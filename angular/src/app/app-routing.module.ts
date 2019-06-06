@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/container/home/home.component';
-import { MenuComponent } from './menu/container/menu/menu.component';
-import { BookTablePageComponent } from 'app/book-table/container/book-table-page/book-table-page.component';
+import { HomeComponent } from './home/home.component';
+import { MenuComponent } from './menu/container/menu.component';
+import { BookTableComponent } from './book-table/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
+import { NotSupportedComponent } from './core/not-supported/not-supported.component';
+
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },
   { path: 'menu', component: MenuComponent },
-  { path: 'bookTable', component: BookTablePageComponent },
+  { path: 'bookTable', component: BookTableComponent },
   { path: 'booking/:action/:token', component: EmailConfirmationsComponent },
   {
     path: 'orders',
@@ -24,6 +26,16 @@ const appRoutes: Routes = [
     path: 'reservations',
     component: ReservationCockpitComponent,
     canActivate: [AuthGuardService],
+  },
+  {
+    path: 'prediction',
+    component: NotSupportedComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'clustering',
+    component: NotSupportedComponent,
+    canActivate: [AuthGuardService]
   },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

@@ -47,7 +47,6 @@ export class MenuFiltersComponent implements OnInit {
       event.preventDefault();
     }
     this.applyForm.emit(this.filtersForm.value);
-    console.log(this.filtersForm.value);
   }
 
   clearFilters(event: Event, form: FormGroup): void {

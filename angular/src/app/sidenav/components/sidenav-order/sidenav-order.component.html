@@ -21,6 +21,6 @@
     <button mat-icon-button (click)="increaseOrder()" color="accent"><mat-icon>add</mat-icon></button>
   </div>
 
-  <span class="push-top-sm">{{calculateOrderPrice() | number : '2.2-2'}} €</span>
+  <span class="push-top-sm">{{order.order.dish.price * order.order.orderLine.amount | number : '2.2-2'}} €</span>
 </div>
 

@@ -1,8 +1,7 @@
-import { Action, createSelector, createFeatureSelector } from '@ngrx/store';
-import { Pageable } from '../../../shared/backend-models/interfaces';
-import { DishView } from 'app/shared/view-models/interfaces';
-import { MenuActionTypes, MenuActions } from '../actions/menu.actions';
-import { AppState } from 'app/store/reducers';
+
+import { MenuActions, MenuActionTypes } from '../actions/menu.actions';
+import {DishView} from '../../../shared/view-models/interfaces';
+import {AuthState} from '../../../user-area/store/reducers/auth.reducer';
 
 export interface MenuState {
   loading: boolean;
@@ -18,10 +17,10 @@ export const initialState: MenuState = {
   errorMessage: '',
 };
 
-export function MenuReducer(state = initialState, action: MenuActions): MenuState {
+export function reducer(state = initialState, action: MenuActions): MenuState {
 
   switch (action.type) {
-    case MenuActionTypes.LoadMenuStart: {
+    case MenuActionTypes.LOAD_MENUS: {
       return {
         ...state,
         loading: true,
@@ -30,7 +29,7 @@ export function MenuReducer(state = initialState, action: MenuActions): MenuStat
       };
     }
 
-    case MenuActionTypes.LoadMenuSuccess: {
+    case MenuActionTypes.LOAD_MENUS_SUCCESS: {
       return {
         ...state,
         loading: false,
@@ -39,7 +38,7 @@ export function MenuReducer(state = initialState, action: MenuActions): MenuStat
       };
     }
 
-    case MenuActionTypes.LoadMenuFail: {
+    case MenuActionTypes.LOAD_MENUS_FAIL: {
       return {
         ...state,
         errorMessage: action.payload
@@ -50,20 +49,3 @@ export function MenuReducer(state = initialState, action: MenuActions): MenuStat
       return state;
   }
 }
-
-const selectMenu = createFeatureSelector<AppState, MenuState>('menu');
-
-export const getAllDishes = createSelector(
-  selectMenu,
-  state => state.dishes
-);
-
-export const isLoading = createSelector(
-  selectMenu,
-  state => state.loading
-);
-
-export const isLoaded = createSelector(
-  selectMenu,
-  state => state.loaded
-);

@@ -1,9 +1,9 @@
 <mat-card class="details-card">
   <div class= "menu-image" [style.background-image]="'url(' + menuInfo.image.content + ')'">
     <button mat-fab
-        *ngIf="auth.isLogged()"
-        (click)="changeFavouriteState()"
-        class="favourite-button"
+            *ngIf="auth.isLogged()"
+            (click)="changeFavouriteState()"
+            class="favourite-button"
     >
       <mat-icon [class.fab-on]="!menuInfo.isfav" [class.fab-off]="menuInfo.isfav">
         star

@@ -19,25 +19,40 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient } from '@angular/common/http';
 
-import { ElectronService } from './shared/electron/electron.service';
+import { NgxElectronModule } from 'ngx-electron';
 import { WebviewDirective } from './shared/directives/webview.directive';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './store/reducers';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {ActionReducer, StoreModule} from '@ngrx/store';
+import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './store/effects/app.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { storageSync } from '@larscom/ngrx-store-storagesync';
+import * as RootState from 'app/store/reducers';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function storageSyncReducer(reducer: ActionReducer<RootState.State>): ActionReducer<RootState.State> {
+  return storageSync<RootState.State>({
+    version: 1,
+    features: [{ stateKey: 'auth', storageForFeature: window.sessionStorage }],
+    storageError: console.error,
+    storage: window.localStorage
+  })(reducer);
+}
+
+const metaReducers = environment.production
+  ? [storageSyncReducer]
+  : [storageSyncReducer];
+
 @NgModule({
   declarations: [AppComponent, WebviewDirective],
   imports: [
     ConfigModule,
     BrowserModule,
+    NgxElectronModule,
     HeaderModule,
     HomeModule,
     MenuModule,
@@ -59,11 +74,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       enabled: environment.production,
     }),
     StoreModule.forRoot(reducers, { metaReducers }),
-    StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AppEffects]),
+    StoreRouterConnectingModule.forRoot(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [ElectronService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
