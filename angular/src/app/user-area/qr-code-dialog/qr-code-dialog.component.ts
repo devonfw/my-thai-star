@@ -11,6 +11,7 @@ import { SnackBarService } from "../../core/snack-bar/snack-bar.service";
 export class QrCodeDialogComponent implements OnInit {
 
   private qrcode: string;
+  private secret: string;
 
   constructor(
     private dialog: MatDialogRef<QrCodeDialogComponent>,
@@ -25,7 +26,8 @@ export class QrCodeDialogComponent implements OnInit {
   private loadQrCode(): void {
     this.userAreaService.pairing().subscribe(
       (res: any) => {
-        this.qrcode = res.body;
+        this.qrcode = JSON.parse(res.body)['base64QrCode'];
+        this.secret = JSON.parse(res.body)['secret'];
       },
       (err: any) => {
         this.snackBar.openSnack(err.message, 4000, 'red');

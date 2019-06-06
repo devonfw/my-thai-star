@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.general.common.base;
 
-import com.devonfw.application.mtsj.general.common.api.constants.SecondFactor;
+import com.devonfw.application.mtsj.general.common.api.datatype.SecondFactor;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import org.slf4j.Logger;

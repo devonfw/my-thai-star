@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.general.common.base;
 
-import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAccountCredentials;
+import com.devonfw.application.mtsj.general.common.api.security.TwoFactorAccountCredentials;
 import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.general.common.base;
+package com.devonfw.application.mtsj.general.common.api.security;
 
 public class BasicAccountCredentials {
 
