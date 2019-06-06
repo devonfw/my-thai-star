@@ -8,12 +8,14 @@ import javax.persistence.Version;
 
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 import com.devonfw.module.basic.common.api.entity.PersistenceEntity;
+import org.hibernate.envers.Audited;
 
 /**
  * Abstract Entity for all Entities with an id and a version field.
  *
  */
 @MappedSuperclass
+@Audited
 public abstract class ApplicationPersistenceEntity implements ApplicationEntity, PersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;
