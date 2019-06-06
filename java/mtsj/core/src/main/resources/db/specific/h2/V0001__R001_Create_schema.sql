@@ -10,7 +10,6 @@ CREATE TABLE Table (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
-  revision binary(255),
   CONSTRAINT PK_Table PRIMARY KEY(id)
 );
 
@@ -20,7 +19,6 @@ CREATE TABLE UserRole (
   modificationCounter INTEGER NOT NULL,
   name VARCHAR (255),
   active BOOLEAN,
-  revision binary(255),
   CONSTRAINT PK_UserRole PRIMARY KEY(id)
 );
 
@@ -32,7 +30,6 @@ CREATE TABLE User (
   password VARCHAR (255) NULL,
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
-  revision binary(255),
   CONSTRAINT PK_User PRIMARY KEY(id),
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
@@ -54,7 +51,6 @@ CREATE TABLE Booking (
   idTable BIGINT,
   idOrder BIGINT,
   assistants INTEGER,
-  revision binary(255),
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
   CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
@@ -70,7 +66,6 @@ CREATE TABLE InvitedGuest (
   accepted BOOLEAN,
   modificationDate TIMESTAMP,
   idOrder BIGINT,
-  revision binary(255),
   CONSTRAINT PK_InvitedGuest PRIMARY KEY(id),
   CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
 );
@@ -82,7 +77,6 @@ CREATE TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
-  revision binary(255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
@@ -95,7 +89,6 @@ CREATE TABLE Category (
   name VARCHAR (255),
   description VARCHAR (4000),
   showOrder INTEGER,
-  revision binary(255),
   CONSTRAINT PK_Category PRIMARY KEY(id),
 );
 
@@ -104,7 +97,6 @@ CREATE CACHED TABLE PUBLIC.Category_AUD(
     name VARCHAR (255),
     description VARCHAR (4000),
     showOrder INTEGER,
-    revision binary(255),
     revtype TINYINT,
     rev BIGINT NOT NULL
 );
@@ -117,7 +109,6 @@ CREATE TABLE Image (
   content clob,
   contentType INTEGER,
   mimeType VARCHAR(255),
-  revision binary(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)
 );
 
@@ -127,7 +118,6 @@ CREATE CACHED TABLE PUBLIC.Image_AUD (
   content clob,
   contentType INTEGER,
   mimeType VARCHAR(255),
-  revision binary(255),
   revtype TINYINT,
   rev BIGINT NOT NULL
 );
@@ -140,20 +130,18 @@ CREATE TABLE Dish (
   description VARCHAR (4000),
   price DECIMAL (16,10),
   idImage BIGINT UNIQUE NOT NULL,
-  revision binary(255),
   CONSTRAINT PK_Dish PRIMARY KEY(id),
   CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
 );
 
 CREATE CACHED TABLE PUBLIC.DISH_AUD(
-    id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
   idImage BIGINT NOT NULL,
-  revision binary(255),
-    revtype TINYINT,
-    rev BIGINT NOT NULL
+  revtype TINYINT,
+  rev BIGINT NOT NULL
 );
 
 -- *** DishCategory ***
@@ -168,11 +156,11 @@ CREATE TABLE DishCategory (
 );
 
 CREATE CACHED TABLE PUBLIC.DishCategory_AUD(
-    id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   idDish BIGINT NOT NULL,
   idCategory BIGINT NOT NULL,
-    revtype TINYINT,
-    rev BIGINT NOT NULL
+  revtype TINYINT,
+  rev BIGINT NOT NULL
 );
 
 -- *** Ingredient ***
@@ -182,7 +170,7 @@ CREATE TABLE Ingredient (
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
-  revision binary(255),
+  
   CONSTRAINT PK_Ingredient PRIMARY KEY(id)
 );
 
@@ -191,7 +179,6 @@ CREATE CACHED TABLE PUBLIC.Ingredient_AUD(
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
-  revision binary(255),
   revtype TINYINT,
   rev BIGINT NOT NULL
 );
@@ -208,11 +195,11 @@ CREATE TABLE DishIngredient(
 );
 
 CREATE CACHED TABLE PUBLIC.DishIngredient_AUD(
-    id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   idDish BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
-    revtype TINYINT,
-    rev BIGINT NOT NULL
+  revtype TINYINT,
+  rev BIGINT NOT NULL
 );
 
 -- *** OrderLine ***
@@ -223,7 +210,7 @@ CREATE TABLE OrderLine (
   amount INTEGER,
   comment VARCHAR (255),
   idOrder BIGINT NOT NULL,
-  revision binary(255),
+  
   CONSTRAINT PK_OrderLine PRIMARY KEY(id),
   CONSTRAINT FK_OrderLine_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
   CONSTRAINT FK_OrderLine_idOrder FOREIGN KEY(idOrder) REFERENCES Orders(id) NOCHECK
@@ -246,7 +233,6 @@ CREATE TABLE UserFavourite (
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT NOT NULL,
   idDish BIGINT NOT NULL,
-  revision binary(255),
   CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
   CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
   CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
@@ -261,7 +247,6 @@ CREATE TABLE BinaryObject (
   content BLOB(2147483647),
   filesize BIGINT NOT NULL,
   mimeType VARCHAR(255),
-  revision binary(255),
   PRIMARY KEY (ID)
 );
 

@@ -1,7 +1,9 @@
 package com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import com.devonfw.module.jpa.dataaccess.api.RevisionMetadata;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRevisionedRepository;
 import org.springframework.data.domain.Page;
 
@@ -37,5 +39,25 @@ public interface DishRepository extends DefaultRevisionedRepository<DishEntity> 
     }
 
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
+  }
+
+  default DishEntity find(Long id, Number revision) {
+      // todo
+      return null;
+  }
+
+  default List<RevisionMetadata> getRevisionHistoryMetadata(Long id) {
+
+      return getRevisionHistoryMetadata(id, false);
+  }
+
+  default List<RevisionMetadata> getRevisionHistoryMetadata(Long id, boolean lazy) {
+      // todo
+      return null;
+  }
+
+  default RevisionMetadata getLastRevisionHistoryMetadata(Long id) {
+      // todo
+      return null;
   }
 }
