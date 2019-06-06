@@ -79,6 +79,14 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     }
 
     @Override
+    public UserEto getUserStatus(String username) {
+
+        LOG.debug("Get User with username {} from database.", username);
+        final UserEntity userEntity = getUserDao().findByUsername(username);
+        return new UserEto(userEntity.getUsername(), userEntity.getEmail(), userEntity.isUsingTwoFactor());
+    }
+
+    @Override
     public Page<UserEto> findUserEtos(UserSearchCriteriaTo criteria) {
 
         Page<UserEntity> users = getUserDao().findUsers(criteria);
@@ -105,6 +113,20 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
         LOG.debug("User with id '{}' has been created.", resultEntity.getId());
 
         return getBeanMapper().map(resultEntity, UserEto.class);
+    }
+
+    @Override
+    public UserEto saveUserTwoFactor(UserEto user) {
+        Objects.requireNonNull(user, "user");
+        UserEntity userEntity = getUserDao().findByUsername(user.getUsername());
+
+        userEntity.setUsingTwoFactor(user.getTwoFactorStatus());
+
+        // initialize, validate userEntity here if necessary
+        UserEntity resultEntity = getUserDao().save(userEntity);
+        LOG.debug("User with id '{}' has been persisted.", resultEntity.getId());
+
+        return new UserEto(resultEntity.getUsername(), resultEntity.getEmail(), resultEntity.isUsingTwoFactor());
     }
 
     /**

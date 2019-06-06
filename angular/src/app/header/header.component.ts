@@ -29,6 +29,7 @@ export class HeaderComponent {
   constructor(
     public window: WindowService,
     public translate: TranslateService,
+    public authService: AuthService,
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
@@ -133,5 +134,14 @@ export class HeaderComponent {
         width: this.window.responsiveWidth(),
       },
     );
+    dialogRef.afterClosed().subscribe((content: any) => {
+      if(this.authService.getTwoFactorStatus()) {
+        this.dialog.open(QrCodeDialogComponent,
+          {
+            width: this.window.responsiveWidth(),
+          },
+        );
+      }
+    });
   }
 }

@@ -18,6 +18,13 @@ public class UserEto extends AbstractEto implements User {
 
   private Long userRoleId;
 
+  public UserEto() { }
+
+  public UserEto(String username, String email, Boolean twoFactorStatus) {
+    this.username = username;
+    this.email = email;
+    this.twoFactorStatus = twoFactorStatus;
+  }
 
   @Override
   public String getUsername() {
