@@ -9,7 +9,7 @@ import {
 } from '../actions/book-table.actions';
 import {BookTableService} from '../../services/book-table.service';
 import {Router} from '@angular/router';
-import {Booking} from '../../models/booking';
+import {Booking} from '../../models/booking.model';
 import {of} from 'rxjs';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
 
@@ -20,18 +20,18 @@ export class BookTableEffects {
     ofType(BookTableActionTypes.BOOK_TABLE),
     map(action => action.payload),
     exhaustMap((booking: Booking) => this.bookTableService.postBooking(booking)),
-        map((res: any) => new BookTableSuccess({
-          bookingResponse: {
-            name: res.name,
-            bookingDate: res.bookingDate,
-            bookingToken: res.bookingToken,
-            tableId: res.tableId,
-            email: res.email
-          }
-        })),
-        catchError(error => of(new BookTableFail({
-          errorMessage: error
-        })))
+    map((res: any) => new BookTableSuccess({
+      bookingResponse: {
+        name: res.name,
+        bookingDate: res.bookingDate,
+        bookingToken: res.bookingToken,
+        tableId: res.tableId,
+        email: res.email
+      }
+    })),
+    catchError(error => of(new BookTableFail({
+      errorMessage: error
+    })))
   );
 
   @Effect({dispatch: false})
@@ -60,10 +60,10 @@ export class BookTableEffects {
     ofType(BookTableActionTypes.INVITE_FRIENDS),
     map(action => action.payload),
     exhaustMap((booking: Booking) => this.bookTableService.postBooking(booking)),
-        map((res: any) => new InviteFriendsSuccess(res)),
-        catchError(error => of(new InviteFriendsFail({
-          errorMessage: error
-        })))
+    map((res: any) => new InviteFriendsSuccess(res)),
+    catchError(error => of(new InviteFriendsFail({
+      errorMessage: error
+    })))
   );
 
   @Effect({dispatch: false})

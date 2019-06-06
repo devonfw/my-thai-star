@@ -1,43 +1,37 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { SidenavService } from '../../services/sidenav.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import {Router} from '@angular/router';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {BookTableState} from '../../../book-table/store/reducers';
-import {Order} from '../../../menu/models/order.model';
-import {DeleteOrder, DeleteOrders, UpdateOrder} from '../../../menu/store/actions/order.actions';
+import {Order} from 'app/sidenav/models/order.model';
 import {TdDialogService} from '@covalent/core';
-import * as fromApp from '../../../store/reducers';
-import * as fromOrder from 'app/menu/store/reducers/order.reducer';
+import * as fromApp from 'app/store/reducers';
+import * as fromOrder from 'app/sidenav/store/selectors';
+import {SidenavService} from '../../services/sidenav.service';
+import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import {ClearOrders, DeleteOrder, UpdateOrder} from '../../store/actions/order.actions';
 
 @Component({
   selector: 'public-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent implements OnInit {
-  bookingState$: Observable<BookTableState>;
   bookingId: string;
   orders$: Observable<Order[]>;
-  orders: Order[];
-  amountTotal: number;
+  totalPrice$: Observable<number>;
 
   constructor(
     private router: Router,
     private _dialogService: TdDialogService,
     private sidenav: SidenavService,
     private snackBar: SnackBarService,
-    private bookingStore: Store<fromApp.AppState>,
-    private orderStore: Store<fromOrder.State>
-  ) {
-    this.bookingState$ = this.bookingStore.select('bookings');
-  }
+    private store: Store<fromApp.State>,
+  ) {}
 
   ngOnInit(): void {
-    this.amountTotal = 0;
-    this.orders$ = this.orderStore.select(fromOrder.selectAll);
-    this.orderStore.select(fromOrder.selectAll).subscribe(orders => this.orders = orders);
+    this.orders$ = this.store.select(fromOrder.selectAll);
+    this.totalPrice$ = this.store.select(fromOrder.getTotalPrice);
   }
 
   closeSidenav(): void {
@@ -49,21 +43,19 @@ export class SidenavComponent implements OnInit {
     this.closeSidenav();
   }
 
-  sendOrders(): void {
-    this.bookingState$.subscribe(id => {
-      this.sidenav.sendOrders(id.bookings.bookingResponse.bookingToken)
-        .subscribe(() => {
-            this.orderStore.dispatch(new DeleteOrders({ids: this.orders.map(orders => orders.id)}));
-            this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-          },
-          (error: any) => {
-            this.snackBar.openSnack('Please book a table first', 4000, 'red');
-          });
-    });
+  sendOrders(bookingId: string): void {
+    this.sidenav.sendOrders(bookingId)
+      .subscribe(() => {
+          this.store.dispatch(new ClearOrders());
+          this.snackBar.openSnack('Order correctly noted', 4000, 'green');
+        },
+        (error: any) => {
+          this.snackBar.openSnack('Please book a table first', 4000, 'red');
+        });
   }
 
   onOrderIncreased(order: Order): void {
-    this.orderStore.dispatch(new UpdateOrder({
+    this.store.dispatch(new UpdateOrder({
       order: {
         id: order.order.dish.id,
         changes: {
@@ -81,7 +73,7 @@ export class SidenavComponent implements OnInit {
   }
 
   onOrderDecreased(order: Order): void {
-    this.orderStore.dispatch(new UpdateOrder({
+    this.store.dispatch(new UpdateOrder({
       order: {
         id: order.order.dish.id,
         changes: {
@@ -99,11 +91,11 @@ export class SidenavComponent implements OnInit {
   }
 
   onOrderRemoved(order: Order): void {
-    this.orderStore.dispatch(new DeleteOrder({id: order.id}));
+    this.store.dispatch(new DeleteOrder({id: order.id}));
   }
 
   onCommentRemoved(order: Order): void {
-    this.orderStore.dispatch(new UpdateOrder({
+    this.store.dispatch(new UpdateOrder({
       order: {
         id: order.order.dish.id,
         changes: {
@@ -121,7 +113,7 @@ export class SidenavComponent implements OnInit {
   }
 
   onCommentAdded(order: Order): void {
-    this.orderStore.dispatch(new UpdateOrder({
+    this.store.dispatch(new UpdateOrder({
       order: {
         id: order.order.dish.id,
         changes: {
@@ -136,11 +128,5 @@ export class SidenavComponent implements OnInit {
         }
       }
     }));
-  }
-
-  calculateTotal(): number {
-    this.amountTotal = 0;
-    this.orders.map(total => this.amountTotal = this.amountTotal + (total.order.dish.price * total.order.orderLine.amount));
-    return this.amountTotal;
   }
 }

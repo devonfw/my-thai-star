@@ -33,22 +33,19 @@ describe('SidenavOrderComponent', () => {
     fixture = TestBed.createComponent(SidenavOrderComponent);
     component = fixture.componentInstance;
     component.order = {
-      id: 0,
-      order: {
-        dish: {
-          id: 0,
-          name: 'Red Curry',
-          price: 5.90,
-        },
-        orderLine: {
-          amount: 0,
-          comment: 'comment',
-        },
-        extras: [
-          {id: 0, name: 'Tofu', price: 1, selected: false},
-          {id: 1, name: 'Chiken', price: 1, selected: false},
-          {id: 2, name: 'Pork', price: 2, selected: false}],
-      }
+      dish: {
+        id: 0,
+        name: 'Red Curry',
+        price: 5.90,
+      },
+      orderLine: {
+        amount: 0,
+        comment: 'comment',
+      },
+      extras: [
+        { id: 0, name: 'Tofu', price: 1, selected: false },
+        { id: 1, name: 'Chiken', price: 1, selected: false },
+        { id: 2, name: 'Pork', price: 2, selected: false }],
     };
     fixture.detectChanges();
   });

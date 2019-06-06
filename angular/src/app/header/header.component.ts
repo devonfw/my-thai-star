@@ -1,24 +1,19 @@
-import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { Router } from '@angular/router';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {Router} from '@angular/router';
+import {SidenavService} from '../sidenav/services/sidenav.service';
+import {WindowService} from '../core/window/window.service';
+import {PasswordDialogComponent} from '../user-area/components/password-dialog/password-dialog.component';
+import {TwitterDialogComponent} from '../user-area/components/twitter-dialog/twitter-dialog.component';
+import {TranslateService} from '@ngx-translate/core';
+import {DateTimeAdapter} from 'ng-pick-datetime';
+import {ConfigService} from '../core/config/config.service';
+import * as fromApp from 'app/store/reducers/';
+import * as fromAuth from 'app/user-area/store/selectors/';
+import {select, Store} from '@ngrx/store';
+import {Logout, OpenDialog} from '../user-area/store/actions/auth.actions';
+import {Observable} from 'rxjs';
 
-import { AuthService } from '../core/authentication/auth.service';
-import { SidenavService } from '../sidenav/services/sidenav.service';
-import { UserAreaService } from '../user-area/services/user-area.service';
-import { WindowService } from '../core/window/window.service';
-
-import { LoginDialogComponent } from '../user-area/container/login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from '../user-area/container/password-dialog/password-dialog.component';
-import { TwitterDialogComponent } from '../user-area/container/twitter-dialog/twitter-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
-import { DateTimeAdapter } from 'ng-pick-datetime';
-import { ConfigService } from '../core/config/config.service';
-import { Observable } from 'rxjs';
-import { Logout } from '../user-area/store/actions/auth.actions';
-import {Store} from '@ngrx/store';
-import * as fromApp from '../store/reducers';
-import * as fromAuth from 'app/user-area/store/reducers/auth.reducer';
-import {getLoggedIn} from '../user-area/store/reducers';
 
 @Component({
   selector: 'public-header',
@@ -27,10 +22,10 @@ import {getLoggedIn} from '../user-area/store/reducers';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-  authState$: Observable<fromAuth.State>;
+  logged$: Observable<boolean>;
+  role$: Observable<string>;
   selectableLangs: any[];
   flag: string;
-  role: string | null;
 
   @Output() openCloseSidenavMobile = new EventEmitter<any>();
 
@@ -40,11 +35,9 @@ export class HeaderComponent implements OnInit {
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
-    public auth: AuthService,
-    public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
     private configService: ConfigService,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.State>
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
@@ -52,7 +45,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authState$ = this.store.select('auth');
+    this.role$ = this.store.pipe(select(fromAuth.getRole));
+    this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -93,21 +87,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
-      LoginDialogComponent,
-      {
-        width: this.window.responsiveWidth(),
-      },
-    );
-    dialogRef.afterClosed().subscribe((content: any) => {
-      if (content) {
-        if (content.email) {
-          this.userService.register(content.email, content.password);
-        } else {
-          this.userService.login(content.username, content.password);
-        }
-      }
-    });
+    this.store.dispatch(new OpenDialog());
   }
 
   openResetDialog(): void {

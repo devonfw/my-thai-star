@@ -1,37 +1,54 @@
-import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
-import { environment } from '../../../environments/environment';
-import { storeFreeze } from 'ngrx-store-freeze';
-
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
-import * as fromAuth from 'app/user-area/store/reducers/auth.reducer';
-import * as fromBookTable from 'app/book-table/store/reducers/book-table.reducer';
-import * as fromMenu from 'app/menu/store/reducers/menu.reducer';
+import {ActivatedRouteSnapshot, Params, RouterStateSnapshot} from '@angular/router';
+import { environment } from '../../../environments/environment';
 
-export interface AppState {
-  router: fromRouter.RouterReducerState;
-  auth: fromAuth.State;
-  menu: fromMenu.MenuState;
-  bookTable: fromBookTable.State;
+/* @export
+ * @interface RouterStateUrl
+ */
+export interface RouterStateUrl {
+  url: string;
+  queryParams: Params;
+  params: Params;
 }
 
-export const reducers: ActionReducerMap<AppState> = {
-  router: fromRouter.routerReducer,
-  auth: fromAuth.reducer,
-  menu: fromMenu.MenuReducer,
-  bookTable: fromBookTable.reducer
+/* @export
+ * @interface State
+ */
+export interface State {
+  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+}
+
+export const reducers: ActionReducerMap<State> = {
+  routerReducer: fromRouter.routerReducer,
 };
 
-export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
-  return (state, action) => {
-    const result = reducer(state, action);
-    console.groupCollapsed(action.type);
-    console.log('prev state', state);
-    console.log('action', action);
-    console.log('next state', result);
-    console.groupEnd();
+export const getRouterState: any = createFeatureSelector<
+  fromRouter.RouterReducerState<RouterStateUrl>
+  >('routerReducer');
 
-    return result;
-  };
+/* @export
+ * @class CustomSerializer
+ * @implements {fromRouter.RouterStateSerializer<RouterStateUrl>}
+ */
+export class CustomSerializer
+  implements fromRouter.RouterStateSerializer<RouterStateUrl> {
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    const { url } = routerState;
+    const { queryParams } = routerState.root;
+    let state: ActivatedRouteSnapshot = routerState.root;
+    while (state.firstChild) {
+      state = state.firstChild;
+    }
+    const { params } = state;
+    return { url, queryParams, params };
+  }
 }
 
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [logger, storeFreeze] : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

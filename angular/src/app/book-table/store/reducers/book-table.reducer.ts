@@ -1,6 +1,6 @@
 import {BookTableActions, BookTableActionTypes} from '../actions/book-table.actions';
-import {Booking} from 'app/book-table/models/booking';
-import {BookingResponse} from '../../models/booking-response';
+import {BookingResponse} from 'app/book-table/models/booking-response.model';
+import {Booking} from '../../models/booking.model';
 
 
 export interface State {
@@ -55,6 +55,3 @@ export function reducer(
     }
   }
 }
-
-export const getBookedTable = (state: State) => state.booking;
-export const getBookingToken = (state: State) => state.bookingResponse.bookingToken;

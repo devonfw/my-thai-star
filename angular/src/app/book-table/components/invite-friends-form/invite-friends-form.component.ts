@@ -15,14 +15,12 @@ export class InviteFriendsFormComponent {
   invitationModel: string[] = [];
   minDate: Date = new Date();
 
-  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
   invitationForm = new FormGroup({
     bookingDate: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern(this.REGEXP_EMAIL),
+      Validators.email,
     ]),
     invitedGuests: new FormControl(this.invitationModel),
   });

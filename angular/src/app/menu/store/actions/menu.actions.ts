@@ -1,29 +1,32 @@
 import { Action } from '@ngrx/store';
-import { DishView } from 'app/shared/view-models/interfaces';
-import { Pageable, Filter } from 'app/shared/backend-models/interfaces';
+import {Filter, Pageable} from '../../../shared/backend-models/interfaces';
+import {DishView} from '../../../shared/view-models/interfaces';
 
 export enum MenuActionTypes {
-  LoadMenuStart = '[Menu] Load Menu Start',
-  LoadMenuSuccess = '[Menu] Load Menu Success',
-  LoadMenuFail = '[Menu] Load Menu Fail',
+  LOAD_MENUS = '[Menu] Load Menus',
+  LOAD_MENUS_SUCCESS = '[Menu] Load Menus Success',
+  LOAD_MENUS_FAIL = '[Menu] Load Menus Fail',
 }
 
-export class LoadMenuSuccess implements Action {
-  readonly type = MenuActionTypes.LoadMenuSuccess;
-
-  constructor(public payload:  {pageable?: Pageable, content?: DishView[]}) {}
-}
-
-export class LoadMenuStart implements Action {
-  readonly type = MenuActionTypes.LoadMenuStart;
+export class LoadMenus implements Action {
+  readonly type = MenuActionTypes.LOAD_MENUS;
 
   constructor(public payload: Filter) {}
 }
 
+export class LoadMenusSuccess implements Action {
+  readonly type = MenuActionTypes.LOAD_MENUS_SUCCESS;
+
+  constructor(public payload:  {pageable?: Pageable, content?: DishView[]}) {}
+}
+
 export class LoadMenuFail implements Action {
-  readonly type = MenuActionTypes.LoadMenuFail;
+  readonly type = MenuActionTypes.LOAD_MENUS_FAIL;
 
   constructor(public payload: any) {}
 }
 
-export type MenuActions = LoadMenuSuccess | LoadMenuStart | LoadMenuFail;
+export type MenuActions =
+  | LoadMenus
+  | LoadMenusSuccess
+  | LoadMenuFail;

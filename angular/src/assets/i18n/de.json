@@ -172,7 +172,7 @@
     },
     "reservations": {
       "title": "Reservierungen",
-      "dialogTitle": "RESERVIERUGSDETAILS - REFERENZNUMMER",
+      "dialogTitle": "RESERVIERUNGSDETAILS - REFERENZNUMMER",
       "dialogTable": {
         "guestEmailH": "Gäste email",
         "acceptanceH": "Zusagen und Absagen",

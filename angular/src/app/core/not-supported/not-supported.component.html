@@ -1,0 +1,22 @@
+<div layout-gt-sm="row" layout-align="center" layout-padding tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+  <div flex-gt-md="60" flex-mat-sm="75">
+    <mat-card>
+      <mat-card-title-group style="background:#eeeeee">
+        <mat-card-title>
+          <mat-icon color="accent">pan_tools</mat-icon>
+          Feature not supported
+        </mat-card-title>
+        <mat-card-subtitle>Feature not supported</mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <p class="pad">The page that you are trying to access uses a feature that is not supported by the current system configuration. Please,
+          go to the home page and navigate to other sections.</p>
+      </mat-card-content>
+      <mat-card-actions style="background:#eeeeee">
+        <a mat-raised-button color="accent" class="text-upper" [routerLink]="['/restaurant']">
+          Home
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

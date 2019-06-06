@@ -9,8 +9,8 @@
 </p>
 <div class="extras">
   <mat-checkbox  *ngFor="let extra of menuInfo.extras"
-  [checked]="extra.selected"
-  (change)="onSelectExtra(extra)"
+                 [checked]="extra.selected"
+                 (change)="onSelectExtra(extra)"
   >
     {{extra.name}} +{{extra.price}}€
   </mat-checkbox>
@@ -18,9 +18,9 @@
 
 <div class="order">
   <button mat-button
-      color="accent"
-      class="text-upper"
-      (click)="onClickOrder()"
+          color="accent"
+          class="text-upper"
+          (click)="onClickOrder()"
   >
     {{'buttons.addToOrder' | translate}}
   </button>

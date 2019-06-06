@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { MenuService } from 'app/menu/services/menu.service';
-import { MenuActionTypes, MenuActions, LoadMenuSuccess, LoadMenuFail } from '../actions/menu.actions';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+
+import {catchError, map, mergeMap} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {MenuActionTypes, MenuActions, LoadMenuFail, LoadMenusSuccess} from '../actions/menu.actions';
+import {MenuService} from '../../services/menu.service';
+
 
 @Injectable()
 export class MenuEffects {
+  @Effect()
+  loadDishes$ = this.actions$.pipe(
+    ofType(MenuActionTypes.LOAD_MENUS),
+    mergeMap(action => this.menuService.getDishes(action.payload).pipe(
+      map(
+        result => new LoadMenusSuccess(result),
+        catchError(error => of(new LoadMenuFail({
+          errorMessage: error
+        })))
+      )
+    ))
+  );
 
-  constructor(
+  constructor (
     private actions$: Actions<MenuActions>,
-    private menuService: MenuService,
-    ) {}
-
-    @Effect()
-    loadDishes$ = this.actions$.pipe(
-      ofType(MenuActionTypes.LoadMenuStart),
-      mergeMap(action => this.menuService.getDishes(action.payload).pipe(
-        map(
-          result => new LoadMenuSuccess(result),
-          catchError(error => of(new LoadMenuFail({
-            errorMessage: error
-          })))
-          )
-      ))
-    );
+    private menuService: MenuService
+  ) {}
 }
