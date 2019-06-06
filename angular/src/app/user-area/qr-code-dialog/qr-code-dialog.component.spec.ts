@@ -1,22 +1,34 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserAreaModule } from '../user-area.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule, Routes } from '@angular/router';
+import { async, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialog } from '@angular/material';
+
+import { CoreModule } from '../../core/core.module';
 
 import { QrCodeDialogComponent } from './qr-code-dialog.component';
 
 describe('QrCodeDialogComponent', () => {
   let component: QrCodeDialogComponent;
-  let fixture: ComponentFixture<QrCodeDialogComponent>;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QrCodeDialogComponent ]
+      imports: [
+        CoreModule,
+        TranslateModule.forRoot(),
+        BrowserAnimationsModule,
+        RouterModule.forRoot([]),
+        UserAreaModule,
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QrCodeDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    dialog = TestBed.get(MatDialog);
+    component = dialog.open(QrCodeDialogComponent).componentInstance;
   });
 
   it('should create', () => {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { FormGroup } from '@angular/forms';
-import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'app-two-factor-dialog',

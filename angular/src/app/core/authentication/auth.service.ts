@@ -25,7 +25,7 @@ export class AuthService {
     return this.twoFactorStatus;
   }
 
-  public setTwoFactorStaus(status: boolean): void {
+  public setTwoFactorStatus(status: boolean): void {
     this.twoFactorStatus = status;
   }
 
