@@ -6,15 +6,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import com.devonfw.application.mtsj.general.common.base.QrCodeService;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
@@ -28,128 +26,141 @@ import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 @Transactional
 public class UsermanagementImpl extends AbstractComponentFacade implements Usermanagement {
 
-  /**
-   * Logger instance.
-   */
-  private static final Logger LOG = LoggerFactory.getLogger(UsermanagementImpl.class);
+    /**
+     * Logger instance.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(UsermanagementImpl.class);
 
-  /**
-   * @see #getUserDao()
-   */
-  @Inject
-  private UserRepository userDao;
+    /**
+     * @see #getUserDao()
+     */
+    @Inject
+    private UserRepository userDao;
 
-  /**
-   * @see #getUserRoleDao()
-   */
-  @Inject
-  private UserRoleRepository userRoleDao;
+    /**
+     * @see #getUserRoleDao()
+     */
+    @Inject
+    private UserRoleRepository userRoleDao;
 
-  /**
-   * The constructor.
-   */
-  public UsermanagementImpl() {
+    /**
+     * The constructor.
+     */
+    public UsermanagementImpl() {
 
-    super();
-  }
+        super();
+    }
 
-  @Override
-  public UserEto findUser(Long id) {
+    @Override
+    public UserEto findUser(Long id) {
 
-    LOG.debug("Get User with id {} from database.", id);
-    UserEntity entity = getUserDao().find(id);
-    UserEto eto = new UserEto();
-    eto.setUsername(entity.getUsername());
-    eto.setUserRoleId(entity.getUserRoleId());
-    eto.setEmail(entity.getEmail());
-    eto.setTwoFactorStatus(entity.isUsingTwoFactor());
-    eto.setUserRoleId(entity.getUserRoleId());
-    return eto;
-  }
+        LOG.debug("Get User with id {} from database.", id);
+        UserEntity entity = getUserDao().find(id);
+        UserEto eto = new UserEto();
+        eto.setUsername(entity.getUsername());
+        eto.setUserRoleId(entity.getUserRoleId());
+        eto.setEmail(entity.getEmail());
+        eto.setTwoFactorStatus(entity.isUsingTwoFactor());
+        eto.setUserRoleId(entity.getUserRoleId());
+        return eto;
+    }
 
-  @Override
-  public Page<UserEto> findUserEtos(UserSearchCriteriaTo criteria) {
+    @Override
+    public UserQrCodeTo generateUserQrCode(String username) {
 
-    Page<UserEntity> users = getUserDao().findUsers(criteria);
-    return mapPaginatedEntityList(users, UserEto.class);
-  }
+        LOG.debug("Get User with username {} from database.", username);
+        final UserEntity user = getUserDao().findByUsername(username);
+        if (user != null && user.isUsingTwoFactor()) {
 
-  @Override
-  public boolean deleteUser(Long userId) {
+            return QrCodeService.generateQrCode(user);
+        } else {
+            return null;
+        }
+    }
 
-    UserEntity user = getUserDao().find(userId);
-    getUserDao().delete(user);
-    LOG.debug("The user with id '{}' has been deleted.", userId);
-    return true;
-  }
+    @Override
+    public Page<UserEto> findUserEtos(UserSearchCriteriaTo criteria) {
 
-  @Override
-  public UserEto saveUser(UserEto user) {
+        Page<UserEntity> users = getUserDao().findUsers(criteria);
+        return mapPaginatedEntityList(users, UserEto.class);
+    }
 
-    Objects.requireNonNull(user, "user");
-    UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
+    @Override
+    public boolean deleteUser(Long userId) {
 
-    // initialize, validate userEntity here if necessary
-    UserEntity resultEntity = getUserDao().save(userEntity);
-    LOG.debug("User with id '{}' has been created.", resultEntity.getId());
+        UserEntity user = getUserDao().find(userId);
+        getUserDao().delete(user);
+        LOG.debug("The user with id '{}' has been deleted.", userId);
+        return true;
+    }
 
-    return getBeanMapper().map(resultEntity, UserEto.class);
-  }
+    @Override
+    public UserEto saveUser(UserEto user) {
 
-  /**
-   * Returns the field 'userDao'.
-   *
-   * @return the {@link UserDao} instance.
-   */
-  public UserRepository getUserDao() {
+        Objects.requireNonNull(user, "user");
+        UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
 
-    return this.userDao;
-  }
+        // initialize, validate userEntity here if necessary
+        UserEntity resultEntity = getUserDao().save(userEntity);
+        LOG.debug("User with id '{}' has been created.", resultEntity.getId());
 
-  @Override
-  public UserRoleEto findUserRole(Long id) {
+        return getBeanMapper().map(resultEntity, UserEto.class);
+    }
 
-    LOG.debug("Get UserRole with id {} from database.", id);
-    return getBeanMapper().map(getUserRoleDao().find(id), UserRoleEto.class);
-  }
+    /**
+     * Returns the field 'userDao'.
+     *
+     * @return the {@link UserDao} instance.
+     */
+    public UserRepository getUserDao() {
 
-  @Override
-  public Page<UserRoleEto> findUserRoleEtos(UserRoleSearchCriteriaTo criteria) {
+        return this.userDao;
+    }
 
-    Page<UserRoleEntity> userroles = getUserRoleDao().findUserRoles(criteria);
-    return mapPaginatedEntityList(userroles, UserRoleEto.class);
-  }
+    @Override
+    public UserRoleEto findUserRole(Long id) {
 
-  @Override
-  public boolean deleteUserRole(Long userRoleId) {
+        LOG.debug("Get UserRole with id {} from database.", id);
+        return getBeanMapper().map(getUserRoleDao().find(id), UserRoleEto.class);
+    }
 
-    UserRoleEntity userRole = getUserRoleDao().find(userRoleId);
-    getUserRoleDao().delete(userRole);
-    LOG.debug("The userRole with id '{}' has been deleted.", userRoleId);
-    return true;
-  }
+    @Override
+    public Page<UserRoleEto> findUserRoleEtos(UserRoleSearchCriteriaTo criteria) {
 
-  @Override
-  public UserRoleEto saveUserRole(UserRoleEto userRole) {
+        Page<UserRoleEntity> userroles = getUserRoleDao().findUserRoles(criteria);
+        return mapPaginatedEntityList(userroles, UserRoleEto.class);
+    }
 
-    Objects.requireNonNull(userRole, "userRole");
-    UserRoleEntity userRoleEntity = getBeanMapper().map(userRole, UserRoleEntity.class);
+    @Override
+    public boolean deleteUserRole(Long userRoleId) {
 
-    // initialize, validate userRoleEntity here if necessary
-    UserRoleEntity resultEntity = getUserRoleDao().save(userRoleEntity);
-    LOG.debug("UserRole with id '{}' has been created.", resultEntity.getId());
+        UserRoleEntity userRole = getUserRoleDao().find(userRoleId);
+        getUserRoleDao().delete(userRole);
+        LOG.debug("The userRole with id '{}' has been deleted.", userRoleId);
+        return true;
+    }
 
-    return getBeanMapper().map(resultEntity, UserRoleEto.class);
-  }
+    @Override
+    public UserRoleEto saveUserRole(UserRoleEto userRole) {
 
-  /**
-   * Returns the field 'userRoleDao'.
-   *
-   * @return the {@link UserRoleDao} instance.
-   */
-  public UserRoleRepository getUserRoleDao() {
+        Objects.requireNonNull(userRole, "userRole");
+        UserRoleEntity userRoleEntity = getBeanMapper().map(userRole, UserRoleEntity.class);
 
-    return this.userRoleDao;
-  }
+        // initialize, validate userRoleEntity here if necessary
+        UserRoleEntity resultEntity = getUserRoleDao().save(userRoleEntity);
+        LOG.debug("UserRole with id '{}' has been created.", resultEntity.getId());
+
+        return getBeanMapper().map(resultEntity, UserRoleEto.class);
+    }
+
+    /**
+     * Returns the field 'userRoleDao'.
+     *
+     * @return the {@link UserRoleDao} instance.
+     */
+    public UserRoleRepository getUserRoleDao() {
+
+        return this.userRoleDao;
+    }
 
 }

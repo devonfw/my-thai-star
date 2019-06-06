@@ -1,11 +1,7 @@
 package com.devonfw.application.mtsj.usermanagement.logic.api;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
 import org.springframework.data.domain.Page;
-
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 
 /**
  * Interface for Usermanagement component.
@@ -43,6 +39,13 @@ public interface Usermanagement {
    * @return the new {@link UserEto} that has been saved with ID and version.
    */
   UserEto saveUser(UserEto user);
+
+  /**
+   * Create an QR Code to the belonging user
+   *
+   * @param username the {@link UserQrCodeTo} to create.
+   */
+  UserQrCodeTo generateUserQrCode(String username);
 
   /**
    * Returns a UserRole by its id 'id'.

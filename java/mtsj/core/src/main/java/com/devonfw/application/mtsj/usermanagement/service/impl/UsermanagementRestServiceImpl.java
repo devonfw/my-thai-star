@@ -1,16 +1,13 @@
-package com.devonfw.application.mtsj.usermanagement.service.impl.rest;
+package com.devonfw.application.mtsj.usermanagement.service.impl;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
 import org.springframework.data.domain.Page;
 
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
-import com.devonfw.application.mtsj.usermanagement.service.api.rest.UsermanagementRestService;
+import com.devonfw.application.mtsj.usermanagement.rest.api.UsermanagementRestService;
 
 /**
  * The service implementation for REST calls in order to execute the logic of component {@link Usermanagement}.
@@ -25,6 +22,12 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
   public UserEto getUser(long id) {
 
     return this.usermanagement.findUser(id);
+  }
+
+  @Override
+  public UserQrCodeTo getUserQrCode(String username) {
+
+    return this.usermanagement.generateUserQrCode(username);
   }
 
   @Override

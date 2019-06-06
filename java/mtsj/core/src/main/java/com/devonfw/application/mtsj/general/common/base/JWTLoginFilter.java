@@ -7,7 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.devonfw.application.mtsj.general.common.api.constants.SecondFactor;
+import com.devonfw.application.mtsj.general.common.api.datatype.SecondFactor;
+import com.devonfw.application.mtsj.general.common.api.security.BasicAccountCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;

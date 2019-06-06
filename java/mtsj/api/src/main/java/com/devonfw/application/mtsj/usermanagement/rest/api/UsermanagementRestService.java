@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.usermanagement.service.api.rest;
+package com.devonfw.application.mtsj.usermanagement.rest.api;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -10,12 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
-
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Usermanagement}.
@@ -34,6 +30,16 @@ public interface UsermanagementRestService {
   @GET
   @Path("/user/{id}/")
   public UserEto getUser(@PathParam("id") long id);
+
+  /**
+   * Delegates to {@link Usermanagement#generateUserQrCode}.
+   *
+   * @param username the username of the {@link UserQrCodeTo}
+   * @return the {@link UserQrCodeTo}
+   */
+  @GET
+  @Path("/user/pairing/{username}")
+  public UserQrCodeTo getUserQrCode(@PathParam("username") String username);
 
   /**
    * Delegates to {@link Usermanagement#saveUser}.
