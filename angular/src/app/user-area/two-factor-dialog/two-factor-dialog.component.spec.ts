@@ -1,22 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserAreaModule } from '../user-area.module';
+import { async, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialog } from '@angular/material';
+
+import { CoreModule } from '../../core/core.module';
 
 import { TwoFactorDialogComponent } from './two-factor-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 describe('TwoFactorDialogComponent', () => {
   let component: TwoFactorDialogComponent;
-  let fixture: ComponentFixture<TwoFactorDialogComponent>;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TwoFactorDialogComponent ]
+      imports: [
+        CoreModule,
+        TranslateModule.forRoot(),
+        BrowserAnimationsModule,
+        UserAreaModule,
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TwoFactorDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    dialog = TestBed.get(MatDialog);
+    component = dialog.open(TwoFactorDialogComponent).componentInstance;
   });
 
   it('should create', () => {

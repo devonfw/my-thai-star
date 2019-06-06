@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from "@angular/material";
-import { UserAreaService } from "../shared/user-area.service";
-import { SnackBarService } from "../../core/snack-bar/snack-bar.service";
-import { WindowService } from "../../core/window/window.service";
-import { AuthService } from "../../core/authentication/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { UserAreaService } from '../shared/user-area.service';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
+import { AuthService } from '../../core/authentication/auth.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -11,20 +10,16 @@ import { AuthService } from "../../core/authentication/auth.service";
   styleUrls: ['./qr-code-dialog.component.scss']
 })
 export class QrCodeDialogComponent implements OnInit {
-
-  @Input()
   private twoFactorStatus: boolean;
   private qrcode: string;
   private secret: string;
   private color = 'accent';
 
   constructor(
-    public window: WindowService,
     public authService: AuthService,
-    private dialog: MatDialogRef<QrCodeDialogComponent>,
-    private nestedDialog: MatDialog,
     private snackBar: SnackBarService,
-    private userAreaService: UserAreaService
+    public userAreaService: UserAreaService,
+    private dialogRef: MatDialogRef<QrCodeDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -40,18 +35,19 @@ export class QrCodeDialogComponent implements OnInit {
       (err: any) => {
         this.snackBar.openSnack(err.message, 4000, 'red');
       }
-    )
+    );
   }
 
   private changeStatus(): void {
     this.twoFactorStatus = !this.twoFactorStatus;
-    this.authService.setTwoFactorStaus(this.twoFactorStatus);
+    //this.authService.setTwoFactorStatus(this.twoFactorStatus);
     this.userAreaService.changeTwoFactor(this.twoFactorStatus).subscribe(
       (res: any) => {},
       (err: any) => {
-        this.snackBar.openSnack(err.message, 4000, 'red');
+        this.snackBar.openSnack(err.message, 4000,
+          'red');
       }
-    )
+    );
   }
 
   private loadQrCode(): void {
@@ -63,6 +59,6 @@ export class QrCodeDialogComponent implements OnInit {
       (err: any) => {
         this.snackBar.openSnack(err.message, 4000, 'red');
       }
-    )
+    );
   }
 }
