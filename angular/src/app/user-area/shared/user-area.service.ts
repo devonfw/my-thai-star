@@ -17,7 +17,10 @@ export class UserAreaService {
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
   private readonly verifyRestPath: string = 'verify';
-  private readonly pairingRestPath: string = 'usermanagement/v1/user/pairing/';
+  private readonly userRestPath: string = 'user';
+  private readonly usermanagementRestPath: string = 'usermanagement/v1/user/';
+  private readonly pairingRestPath: string = 'pairing/';
+  private readonly twofactorRestPath: string = 'twofactor/';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   private readonly registerRestPath: string = 'register';
   private readonly changePasswordRestPath: string = 'changepassword';
@@ -153,10 +156,26 @@ export class UserAreaService {
 
   pairing(): Observable<any>{
     return this.http
-      .get(`${this.restServiceRoot}${this.pairingRestPath}${this.authService.getUser()}`,
+      .get(`${this.restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${this.authService.getUser()}`,
         { headers: {'Content-Type': 'text/plain'},
          responseType: 'text', observe: 'response',
         });
+  }
+
+  twoFactorStatus(): Observable<any>{
+    return this.http
+      .get(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${this.authService.getUser()}`,
+        { headers: {'Content-Type': 'text/plain'},
+          responseType: 'text', observe: 'response',
+        });
+  }
+
+  changeTwoFactor(status: boolean): Observable<any> {
+    return this.http
+      .post(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}`, {
+        username: this.authService.getUser(),
+        twoFactorStatus: status
+      });
   }
 
   logout(): void {

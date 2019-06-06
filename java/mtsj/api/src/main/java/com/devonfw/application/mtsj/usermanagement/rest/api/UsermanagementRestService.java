@@ -38,7 +38,7 @@ public interface UsermanagementRestService {
    * @return the {@link UserQrCodeTo}
    */
   @GET
-  @Path("/user/pairing/{username}")
+  @Path("/user/pairing/{username}/")
   public UserQrCodeTo getUserQrCode(@PathParam("username") String username);
 
   /**
@@ -50,6 +50,26 @@ public interface UsermanagementRestService {
   @POST
   @Path("/user/")
   public UserEto saveUser(UserEto user);
+
+  /**
+   * Delegates to {@link Usermanagement#getUserStatus}.
+   *
+   * @param username the {@link UserEto} to be saved
+   * @return the recently created {@link UserEto}
+   */
+  @GET
+  @Path("/user/twofactor/{username}")
+  public UserEto getUserStatus(@PathParam("username") String username);
+
+  /**
+   * Delegates to {@link Usermanagement#saveUserTwoFactor}.
+   *
+   * @param user the {@link UserEto} to be saved
+   * @return the recently created {@link UserEto}
+   */
+  @POST
+  @Path("/user/twofactor")
+  public UserEto saveUserTwoFactor(UserEto user);
 
   /**
    * Delegates to {@link Usermanagement#deleteUser}.

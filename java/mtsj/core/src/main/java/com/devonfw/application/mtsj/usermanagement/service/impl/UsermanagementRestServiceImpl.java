@@ -37,6 +37,18 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
   }
 
   @Override
+  public UserEto getUserStatus(String username) {
+
+    return this.usermanagement.getUserStatus(username);
+  }
+
+  @Override
+  public UserEto saveUserTwoFactor(UserEto user) {
+
+    return this.usermanagement.saveUserTwoFactor(user);
+  }
+
+  @Override
   public void deleteUser(long id) {
 
     this.usermanagement.deleteUser(id);

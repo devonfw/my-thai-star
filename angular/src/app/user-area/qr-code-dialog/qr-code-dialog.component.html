@@ -2,6 +2,11 @@
   <mat-dialog-content>
     <img *ngIf="qrcode" id="qrCodeId" src="{{qrcode}}" alt="{{qrcode}}" mat-card-sm-image>
     <h2 style="text-align: center">{{secret}}</h2>
+    <mat-slide-toggle (change)="changeStatus()"
+      [color]="color"
+      [checked]="twoFactorStatus">
+      {{'userArea.qrcodeDialog.twofactorStatus' | translate}}
+    </mat-slide-toggle>
   </mat-dialog-content>
 </div>
 <div style="text-align: center">
