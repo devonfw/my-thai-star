@@ -41,6 +41,22 @@ public interface Usermanagement {
   UserEto saveUser(UserEto user);
 
   /**
+   * Pick the boolean and persist it for the user.
+   *
+   * @param user the {@link UserEto} to create.
+   * @return the new {@link UserEto} that has been saved with ID and version.
+   */
+  UserEto saveUserTwoFactor(UserEto user);
+
+  /**
+   * Only returns the necessary info.
+   *
+   * @param username the {@link String} to create.
+   * @return the new {@link UserEto} that has been saved with ID and version.
+   */
+  UserEto getUserStatus(String username);
+
+  /**
    * Create an QR Code to the belonging user
    *
    * @param username the {@link UserQrCodeTo} to create.

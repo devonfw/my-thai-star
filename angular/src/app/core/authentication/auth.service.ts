@@ -6,6 +6,7 @@ import { ConfigService } from '../config/config.service';
 @Injectable()
 export class AuthService {
   private logged = false;
+  private twoFactorStatus = false;
   private user = '';
   private currentRole = 'CUSTOMER';
   private token: string;
@@ -18,6 +19,14 @@ export class AuthService {
 
   public setLogged(login: boolean): void {
     this.logged = login;
+  }
+
+  public getTwoFactorStatus(): boolean {
+    return this.twoFactorStatus;
+  }
+
+  public setTwoFactorStaus(status: boolean): void {
+    this.twoFactorStatus = status;
   }
 
   public getUser(): string {

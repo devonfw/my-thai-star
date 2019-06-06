@@ -29,7 +29,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
 
   private String secret;
 
-  private Boolean usingTwoFactor;
+  private Boolean twoFactorStatus;
 
   private UserRoleEntity userRole;
 
@@ -108,16 +108,14 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return usingTwoFactor
    */
-  public Boolean isUsingTwoFactor() {
-    return usingTwoFactor;
-  }
+  public Boolean isUsingTwoFactor() { return this.twoFactorStatus; }
 
   /**
    *
    * @param usingTwoFactor new value of {@link #isusingtwofactor()}
    */
   public void setUsingTwoFactor(Boolean usingTwoFactor) {
-    this.usingTwoFactor = usingTwoFactor;
+    this.twoFactorStatus = usingTwoFactor;
   }
 
   /**

@@ -153,6 +153,9 @@
       "twitterUsernamePH": "Twitter username",
       "twitterPasswordPH": "Twitter password",
       "loginbutton": "Log in Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorStatus": "Two-factor authentication status"
     }
   },
   "cockpit": {
