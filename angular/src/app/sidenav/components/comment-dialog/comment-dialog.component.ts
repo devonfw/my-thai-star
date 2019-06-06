@@ -13,4 +13,5 @@ export class CommentDialogComponent {
   sendComment(comment: string): void {
     this.dialog.close(comment);
   }
+
 }

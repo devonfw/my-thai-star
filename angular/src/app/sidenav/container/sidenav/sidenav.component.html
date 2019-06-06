@@ -13,7 +13,7 @@
         <mat-icon class="forDesktop push-right-sm">shopping_basket</mat-icon>
         <span class="text-upper" style="font-weight: bold; font-size: 0.7em">{{
           'sidenav.title' | translate
-        }}</span>
+          }}</span>
       </div>
     </mat-toolbar>
     <div layout="column" class="pull-top pad-sm">
@@ -43,6 +43,7 @@
         <public-sidenav-order
           *ngFor="let order of orders$ | async"
           [order]="order"
+          [price]="price$"
           (orderIncreased)="onOrderIncreased($event)"
           (orderDecreased)="onOrderDecreased($event)"
           (orderRemoved)="onOrderRemoved($event)"
@@ -58,11 +59,10 @@
       class="justify-space-between pad-sm"
     >
       <h3>{{ 'formFields.total' | translate }}</h3>
-      <h3>{{ calculateTotal() | number: '1.2-2' }} €</h3>
+      <h3>{{ totalPrice$ | async | number: '1.2-2' }} €</h3>
     </div>
     <div layout="column" class="pad-sm">
       <mat-card
-        *ngIf="!(bookingState$ | async).bookings.bookingResponse.bookingToken"
         class="pad-sm"
         style="background-color:bisque"
       >
@@ -74,7 +74,7 @@
         >
           <mat-icon class="mat-18 pad-right-sm">report_problem</mat-icon>
           <span flex="65" class="invitationAlert"
-            >{{ 'alerts.orderID' | translate }}
+          >{{ 'alerts.orderID' | translate }}
           </span>
           <button
             name="bookTable"
@@ -86,9 +86,17 @@
           </button>
         </div>
       </mat-card>
+      <mat-form-field class="push-left push-right" color="accent" flex>
+        <input
+          name="orderBookingID"
+          matInput
+          #bookingId
+          [placeholder]="'sidenav.bookingId' | translate"
+        />
+      </mat-form-field>
       <mat-checkbox data-name="orderTerms" #terms class="push-left">{{
         'formFields.terms' | translate
-      }}</mat-checkbox>
+        }}</mat-checkbox>
     </div>
   </div>
   <div style="text-align: right">
@@ -104,12 +112,12 @@
       name="orderSubmit"
       mat-button
       color="accent"
-      (click)="sendOrders()"
-      [disabled]="!(terms.checked)"
+      (click)="sendOrders(bookingId.value)"
+      [disabled]="!(bookingId.value.length > 0 && terms.checked)"
       class="text-upper property-text-bold"
     >
       {{ 'buttons.send' | translate }}
     </button>
-    <h3>{{ calculateTotal() | number: '1.2-2' }} €</h3>
   </div>
 </div>
+{{(xx | async)}}

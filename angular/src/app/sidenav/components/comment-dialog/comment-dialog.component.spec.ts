@@ -2,8 +2,8 @@ import { async, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { SidenavModule } from '../../sidenav.module';
-import { CoreModule } from '../../../core/core.module';
+import { SidenavModule } from '../sidenav.module';
+import { CoreModule } from '../../core/core.module';
 
 import { CommentDialogComponent } from './comment-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';

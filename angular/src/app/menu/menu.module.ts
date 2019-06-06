@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuService } from './services/menu.service';
 
 import { MenuCardComponent } from './components/menu-card/menu-card.component';
-import { MenuComponent } from './container/menu/menu.component';
+import { MenuComponent } from './container/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenuFiltersComponent } from './components/menu-filters/menu-filters.component';
@@ -16,11 +16,9 @@ import { FilterCheckboxesComponent } from './components/menu-filters/filter-chec
 import { MenuCardCommentsComponent } from './components/menu-card/menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from './components/menu-card/menu-card-details/menu-card-details.component';
 import { StoreModule } from '@ngrx/store';
-import { MenuReducer } from './store/reducers/menu.reducer';
+import * as fromMenu from './store/reducers/menu.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MenuEffects } from './store/effects/menu.effects';
-import * as fromOrder from './store/reducers/order.reducer';
-import {MenuRoutingModule} from './menu-routing.module';
 
 @NgModule({
   imports: [
@@ -30,10 +28,8 @@ import {MenuRoutingModule} from './menu-routing.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MenuRoutingModule,
+    StoreModule.forFeature('menu', fromMenu.reducer),
     EffectsModule.forFeature([MenuEffects]),
-    StoreModule.forFeature('menu', MenuReducer),
-    StoreModule.forFeature('order', fromOrder.reducer),
   ],
   providers: [
     MenuService,

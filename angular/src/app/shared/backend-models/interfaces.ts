@@ -18,6 +18,14 @@ export class FilterCockpit {
     bookingToken: number;
 }
 
+export class FilterOrdersCockpit {
+    pageable?: Pageable;
+    // sort?: Sorting[];
+    type: string;
+    startBookingdate: string;
+    endBookingdate: string;
+}
+
 export class Pageable {
     pageSize: number;
     pageNumber: number;
@@ -72,6 +80,21 @@ export class OrderLineInfo {
 export class OrderListInfo {
     booking: { bookingToken: string };
     orderLines: OrderInfo[];
+}
+
+export class PredictionCriteria {
+    pageable?: Pageable;
+    type: string;
+    startBookingdate: string;
+    temperatures: number[];
+    holidays: string[];
+}
+
+export class ClusteringCriteria {
+    startBookingdate: string;
+    endBookingdate: string;
+    dishId: number;
+    clusters: number;
 }
 
 // LOGIN

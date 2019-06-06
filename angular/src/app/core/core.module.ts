@@ -59,6 +59,7 @@ import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NotSupportedComponent } from './not-supported/not-supported.component';
 
 // Moment locales
 import 'moment/locale/es';
@@ -132,12 +133,16 @@ export class DefaultIntl extends OwlDateTimeIntl {
     MatToolbarModule,
     MatTooltipModule,
     NotFoundComponent,
+    NotSupportedComponent,
     MomentModule,
     OwlDateTimeModule,
     OwlMomentDateTimeModule,
     HttpClientModule,
   ],
-  declarations: [NotFoundComponent],
+  declarations: [
+    NotFoundComponent,
+    NotSupportedComponent
+  ],
   providers: [
     AuthService,
     AuthGuardService,

@@ -1,0 +1,54 @@
+@import "~variables.scss";
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding-bottom: 25%;
+  padding-top: 5%;
+  background-image: url('../../../assets/images/background-dish.png'), url('../../../assets/images/star.png'), url('../../../assets/images/Wood2.jpg');
+  background-position: bottom, top, center;
+  background-size: cover, 15%, cover;
+  background-repeat: no-repeat, no-repeat, repeat;
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  .subtitle {
+    padding-top: 10px;
+    font-size: 0.7em;
+  }
+}
+.home-card {
+  margin: -50px 10px 10px 10px;
+  padding: 5px;
+}
+.tiles {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+@media (min-width: $tablet-min-width) {
+  .home-header {
+    .title {
+      font-size: 3em;
+    }
+
+    .subtitle {
+      font-size: 1em;
+    }
+  }
+
+  .home-card {
+    margin-top: -75px;
+    margin-left: 48px;
+    margin-right: 48px;
+    padding: 16px;
+  }
+  .tiles {
+    flex-direction: row;
+  }
+}

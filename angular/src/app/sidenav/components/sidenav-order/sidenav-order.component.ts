@@ -1,12 +1,9 @@
-import { SidenavService } from '../../services/sidenav.service';
-import { PriceCalculatorService } from '../../services/price-calculator.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import {Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
 import { TdDialogService } from '@covalent/core';
-import { OrderView } from '../../../shared/view-models/interfaces';
 import { map } from 'lodash';
-import {Order} from '../../../menu/models/order.model';
+import {Order} from 'app/sidenav/models/order.model';
 
 @Component({
   selector: 'public-sidenav-order',
@@ -16,6 +13,7 @@ import {Order} from '../../../menu/models/order.model';
 export class SidenavOrderComponent implements OnInit {
   extras: string;
   @Input() order: Order;
+  @Input() price: number;
   @Output() orderIncreased = new EventEmitter<Order>();
   @Output() orderDecreased = new EventEmitter<Order>();
   @Output() orderRemoved = new EventEmitter<Order>();
@@ -66,14 +64,14 @@ export class SidenavOrderComponent implements OnInit {
     dialogRef.afterClosed().subscribe((content: string) => {
       const order = {
         id: this.order.order.dish.id,
-          order: {
-            dish: this.order.order.dish,
-              orderLine: {
-              amount: this.order.order.orderLine.amount,
-                comment: content,
-            },
-            extras: this.order.order.extras
-          }
+        order: {
+          dish: this.order.order.dish,
+          orderLine: {
+            amount: this.order.order.orderLine.amount,
+            comment: content,
+          },
+          extras: this.order.order.extras
+        }
       };
       this.commentAdded.emit(order);
     });

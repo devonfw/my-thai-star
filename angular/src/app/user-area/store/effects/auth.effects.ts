@@ -1,54 +1,94 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {UserAreaService} from '../../services/user-area.service';
-import {Router} from '@angular/router';
-import {of, Observable} from 'rxjs';
-import {AuthActions, AuthActionTypes, LoginFail, LoginSuccess, Logout, LogoutFail, LogoutSuccess} from '../actions/auth.actions';
+
 import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
-import {Credentials} from '../../models/user';
+import {of} from 'rxjs';
+import 'rxjs/add/observable/from';
+import {AuthActions, AuthActionTypes, Login, LoginFail, LoginSuccess, LogoutFail, Token} from '../actions/auth.actions';
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {LoginDialogComponent} from '../../components/login-dialog/login-dialog.component';
+import {WindowService} from '../../../core/window/window.service';
+import {UserAreaService} from '../../services/user-area.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
-import {AuthService} from '../../../core/authentication/auth.service';
+import {Router} from '@angular/router';
+import {ConfigService} from '../../../core/config/config.service';
+import {HttpClient} from '@angular/common/http';
+import {Store} from '@ngrx/store';
+import * as fromAuth from '../reducers';
 
 @Injectable()
 export class AuthEffects {
-  /*
-  * Dispatching the Login action
-  * Then communicate with the backend
-  * */
+
+  private readonly restPathRoot: string;
+  private readonly restServiceRoot: string;
+  private readonly loginRestPath: string = 'login';
+  private readonly currentUserRestPath: string = 'security/v1/currentuser/';
+  private readonly registerRestPath: string = 'register';
+  private readonly changePasswordRestPath: string = 'changepassword';
+  authAlerts: any;
+
+  // Open Login Dialog
+  @Effect()
+  openDialog$ = this.actions$.pipe(
+    ofType(AuthActionTypes.OPEN_DIALOG),
+    exhaustMap(() => {
+      const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
+        LoginDialogComponent,
+        {
+          width: this.window.responsiveWidth(),
+        },
+      );
+      return dialogRef.afterClosed();
+    }),
+    map((result: any) => {
+      return new Login({username: result.username, password: result.password});
+    })
+  );
+
   @Effect()
   login$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN),
-    map(action => action.payload.credentials),
-    exhaustMap((credentials: Credentials) => {
-        return this.userAreaService.login(credentials.username, credentials.password)
-          .pipe(map((res: any) => {
-            this.translate.get('alerts.authAlerts.loginSuccess').subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
-              localStorage.setItem('user', JSON.stringify({user: res.name, currentRole: res.role, logged: true}));
-            return new LoginSuccess({userData: {user: res.name, currentRole: res.role, logged: true}});
+    map(userData => userData.payload),
+    exhaustMap((user: any) => {
+      return this.userService.login(user.username, user.password)
+        .pipe(
+          tap(res => {
+            this.store.dispatch(new Token({token: {token: res.headers.get('Authorization')}}));
           }),
-          catchError(error => of(new LoginFail({error: error})))
-          );
-      }));
+          switchMap(() => this.http
+            .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
+            .pipe(
+              map((loginInfo: any) => {
+              return new LoginSuccess ({
+                user: {
+                  user: loginInfo.name,
+                  role: loginInfo.role,
+                  logged: true
+                }
+              });
+            }))
+          )
+        );
+    }),
+    catchError(error => of(new LoginFail({error: error})))
+  );
 
   @Effect({dispatch: false})
   loginSuccess$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
-    tap(() => {
-      this.router.navigateByUrl('/orders');
-    })
-  );
-
-  @Effect({dispatch: false})
-  loginFail$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LOGIN_FAIL),
-    map(() => {
-      this.translate.get('alerts.accessError').subscribe((text: string) => {
-        this.snackBar.openSnack(text, 4000, 'red');
+    map(user => user.payload.user.role),
+    exhaustMap((role: string) => {
+      this.translate.get('alerts.authAlerts.loginSuccess').subscribe((text: string) => {
+        this.snackBar.openSnack(text, 4000, 'green');
       });
-      this.router.navigateByUrl('/restaurant');
+      if (role === 'CUSTOMER') {
+        return this.router.navigate(['restaurant']);
+      } else if (role === 'WAITER') {
+        return this.router.navigate(['orders']);
+      } else if (role === 'MANAGER') {
+        return this.router.navigate(['prediction']);
+      }
     })
   );
 
@@ -56,7 +96,6 @@ export class AuthEffects {
   logOut$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => {
-      localStorage.setItem('user', JSON.stringify({user: '', currentRole: 'CUSTOMER', logged: false}));
       this.router.navigateByUrl('/restaurant');
       this.translate.get('alerts.authAlerts.logoutSuccess').subscribe((text: string) => {
         this.snackBar.openSnack(text, 4000, 'black');
@@ -67,11 +106,21 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions<AuthActions>,
-    private authService: AuthService,
-    private userAreaService: UserAreaService,
-    private router: Router,
+    private dialog: MatDialog,
+    public window: WindowService,
+    public userService: UserAreaService,
     public translate: TranslateService,
+    private router: Router,
     public snackBar: SnackBarService,
-  ) {}
-}
+    private configService: ConfigService,
+    private http: HttpClient,
+    private store: Store<fromAuth.AppState>
 
+  ) {
+    this.restPathRoot = this.configService.getValues().restPathRoot;
+    this.restServiceRoot = this.configService.getValues().restServiceRoot;
+    this.translate.get('alerts.authAlerts').subscribe((content: any) => {
+      this.authAlerts = content;
+    });
+  }
+}

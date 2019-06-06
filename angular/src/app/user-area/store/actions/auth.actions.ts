@@ -1,64 +1,56 @@
 import { Action } from '@ngrx/store';
-import {Credentials, User} from '../../models/user';
+import {TokenString, UserDataResponse} from '../../models/user';
 
 export enum AuthActionTypes {
-  LOGIN = '[Auth] Login',
-  LOGIN_SUCCESS = '[Auth] Login Success',
-  LOGIN_FAIL = '[Auth] Login Fail',
-  LOGOUT = '[Auth] Logout',
-  LOGOUT_SUCCESS = '[Auth] Logout',
-  LOGOUT_FAIL = '[Auth] Logout Failure',
-  SET_TOKEN = '[Auth] Set Token'
+  OPEN_DIALOG = '[Auth] Open Dialog',
+  LOGIN = '[Auth] Login ',
+  LOGIN_SUCCESS = '[Auth] LoginSuccess',
+  LOGIN_FAIL = '[Auth] LoginFail',
+  LOGOUT = '[Auth] Logout ',
+  LOGOUT_FAIL = '[Auth] LogoutFail',
+  TOKEN = '[Auth] Token',
 }
 
+export class OpenDialog implements Action {
+  readonly type = AuthActionTypes.OPEN_DIALOG;
+}
 
 export class Login implements Action {
   readonly type = AuthActionTypes.LOGIN;
-
-  constructor(public payload: any) {}
-}
-
-export class SetToken implements Action {
-  readonly type = AuthActionTypes.SET_TOKEN;
-
-  constructor(public payload: {token: string}) {}
+  constructor(public payload: {username: string, password: string}) {}
 }
 
 export class LoginSuccess implements Action {
   readonly type = AuthActionTypes.LOGIN_SUCCESS;
+  constructor(public payload: { user: UserDataResponse }) {}
+}
 
-  constructor(public payload: {userData: User}) {}
+export class Token implements Action {
+  readonly type = AuthActionTypes.TOKEN;
+  constructor(public payload: { token: TokenString }) {}
 }
 
 export class LoginFail implements Action {
   readonly type = AuthActionTypes.LOGIN_FAIL;
-
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: Error }) {}
 }
 
 export class Logout implements Action {
   readonly type = AuthActionTypes.LOGOUT;
 }
 
-export class LogoutSuccess implements Action {
-  readonly type = AuthActionTypes.LOGOUT_SUCCESS;
-}
-
 export class LogoutFail implements Action {
   readonly type = AuthActionTypes.LOGOUT_FAIL;
-
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: Error }) {}
 }
 
+
+
 export type AuthActions =
+  | OpenDialog
   | Login
   | LoginSuccess
   | LoginFail
   | Logout
-  | LogoutSuccess
   | LogoutFail
-  | SetToken;
-
-
-
-
+  | Token;

@@ -1,19 +1,20 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { find } from 'lodash';
 import { Role } from '../../shared/view-models/interfaces';
 import { ConfigService } from '../config/config.service';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../user-area/store/reducers';
 
 @Injectable()
 export class AuthService {
+  private logged = false;
   private user = '';
   private currentRole = 'CUSTOMER';
   private token: string;
-  private logged = false;
 
   constructor(
     private configService: ConfigService,
-  ) {
-  }
+  ) {}
 
   public isLogged(): boolean {
     return this.logged;
