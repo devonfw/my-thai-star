@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserAreaService } from '../shared/user-area.service';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
-import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -10,16 +9,15 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./qr-code-dialog.component.scss']
 })
 export class QrCodeDialogComponent implements OnInit {
-  private twoFactorStatus: boolean;
-  private qrcode: string;
-  private secret: string;
-  private color = 'accent';
+  public twoFactorStatus: boolean;
+  public qrcode: string;
+  public secret: string;
+  public color = 'accent';
 
   constructor(
     public authService: AuthService,
     private snackBar: SnackBarService,
     public userAreaService: UserAreaService,
-    private dialogRef: MatDialogRef<QrCodeDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +36,9 @@ export class QrCodeDialogComponent implements OnInit {
     );
   }
 
-  private changeStatus(): void {
+  public changeStatus(): void {
     this.twoFactorStatus = !this.twoFactorStatus;
-    //this.authService.setTwoFactorStatus(this.twoFactorStatus);
+    this.authService.setTwoFactorStatus(this.twoFactorStatus);
     this.userAreaService.changeTwoFactor(this.twoFactorStatus).subscribe(
       (res: any) => {},
       (err: any) => {
