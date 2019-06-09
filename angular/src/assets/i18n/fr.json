@@ -93,6 +93,7 @@
     "reservations": "Réservations",
     "userActions": {
       "user": "Utilisateur",
+      "pairing": "Définir une authentification à deux facteurs",
       "logout": "Déconnexion",
       "changePassword": "Modifier le mot de passe",
       "twitterAccount": "Compte Twitter",
@@ -154,6 +155,13 @@
       "twitterUsernamePH": "Utilisateur Twitter",
       "twitterPasswordPH": "Mot de passe Twitter",
       "loginbutton": "Connectez-vous à Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "L'authentification à deux facteurs n'a pas encore été activée",
+      "twofactorTitle": "Paramètres pour l'authentification à deux facteurs",
+      "twofactorStatus": "Statut de l'authentification à deux facteurs",
+      "twofactorDescription": "Veuillez scanner le code QR avec Google Authenticator ou utiliser le code ci-dessus",
+      "twofactorclose": "Près"
     }
   },
   "cockpit": {
