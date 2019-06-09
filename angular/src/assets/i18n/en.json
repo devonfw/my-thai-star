@@ -91,7 +91,7 @@
     "reservations": "Reservations",
     "userActions": {
       "user": "User",
-      "pairing": "Pairing",
+      "pairing": "Set two-factor authentication",
       "logout": "Log out",
       "changePassword": "Change password",
       "twitterAccount": "Twitter account",

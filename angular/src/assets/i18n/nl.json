@@ -92,6 +92,7 @@
     "reservations": "Reserveringen",
     "userActions": {
       "user": "Gebruiker",
+      "pairing": "Definieer een two-factor authenticatie",
       "logout": "Uitloggen",
       "changePassword": "Wijzig wachtwoord",
       "twitterAccount": "Twitter account",
@@ -153,6 +154,13 @@
       "twitterUsernamePH": "Twitter gebruikersnaam",
       "twitterPasswordPH": "Twitter wachtwoord",
       "loginbutton": "Inloggen Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "Twee-factor-authenticatie is nog niet geactiveerd",
+      "twofactorTitle": "Einstellungen für Zwei-Faktor-Authentifizierung",
+      "twofactorStatus": "Instellingen voor two-factor authenticatie",
+      "twofactorDescription": "Scan de QR-code met de Google Authenticator of gebruik de bovenstaande code",
+      "twofactorclose": "Sluit venster"
     }
   },
   "cockpit": {
