@@ -90,6 +90,7 @@
     "reservations": "Резервации",
     "userActions": {
       "user": "Потребител",
+      "pairing": "Задайте двуфакторно удостоверяване",
       "logout": "Изход",
       "changePassword": "Смени парола",
       "twitterAccount": "Twitter акаунт",
@@ -151,6 +152,13 @@
       "twitterUsernamePH": "Twitter потребителско име",
       "twitterPasswordPH": "Twitter парола",
       "loginbutton": "Влез в Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "Двуфакторното удостоверяване все още не е активирано",
+      "twofactorTitle": "Настройки за двуфакторно удостоверяване",
+      "twofactorStatus": "Състояние на двуфакторното удостоверяване",
+      "twofactorDescription": "Моля, сканирайте QR кода с Google Authenticator или използвайте горния код",
+      "twofactorclose": "Затворете прозореца"
     }
   },
   "cockpit": {
