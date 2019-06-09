@@ -160,7 +160,11 @@
       "loginbutton": "In Twitter anmelden"
     },
     "qrcodeDialog": {
-      "twofactorStatus": "Status der Zwei-Faktor-Authentifizierung"
+      "twofactorNotFound": "Zwei-Faktor-Authentifizierung wurde noch nicht aktiviert",
+      "twofactorTitle": "Einstellungen für Zwei-Faktor-Authentifizierung",
+      "twofactorStatus": "Status der Zwei-Faktor-Authentifizierung",
+      "twofactorDescription": "Bitte scannen Sie den QR Code mit dem Google Authenticator ein oder nutzen Sie den oben genannten Code",
+      "twofactorclose": "Schließen"
     }
   },
   "cockpit": {

@@ -29,7 +29,7 @@ public class QrCodeService {
         try {
             String url = QrCodeService.generateUrl(userEntity);
             QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix matrix = writer.encode(url, BarcodeFormat.QR_CODE, 350, 350);
+            BitMatrix matrix = writer.encode(url, BarcodeFormat.QR_CODE, 264, 264);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             MatrixToImageWriter.writeToStream(matrix, PNG_EXTENSION, outputStream);
             qrCodeString = new Base64().encodeToString(outputStream.toByteArray());
