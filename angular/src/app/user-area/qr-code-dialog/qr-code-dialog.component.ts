@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UserAreaService } from '../shared/user-area.service';
-import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
-import { AuthService } from '../../core/authentication/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {UserAreaService} from '../shared/user-area.service';
+import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
+import {AuthService} from '../../core/authentication/auth.service';
+import {MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -9,6 +10,7 @@ import { AuthService } from '../../core/authentication/auth.service';
   styleUrls: ['./qr-code-dialog.component.scss']
 })
 export class QrCodeDialogComponent implements OnInit {
+  public initialstate = false;
   public twoFactorStatus: boolean;
   public qrcode: string;
   public secret: string;
@@ -18,11 +20,13 @@ export class QrCodeDialogComponent implements OnInit {
     public authService: AuthService,
     private snackBar: SnackBarService,
     public userAreaService: UserAreaService,
-  ) {}
+    private dialog: MatDialogRef<QrCodeDialogComponent>
+  ) {
+  }
 
   ngOnInit(): void {
-    this.loadQrCode();
     this.loadData();
+    this.loadQrCode();
   }
 
   private loadData(): void {
@@ -37,15 +41,36 @@ export class QrCodeDialogComponent implements OnInit {
   }
 
   public changeStatus(): void {
-    this.twoFactorStatus = !this.twoFactorStatus;
+    if (!this.initialstate && !this.twoFactorStatus) {
+      this.initialstate = true;
+      this.twoFactorStatus = true;
+    }
+    else { this.twoFactorStatus = !this.twoFactorStatus; }
     this.authService.setTwoFactorStatus(this.twoFactorStatus);
+    this.resetQrCode();
     this.userAreaService.changeTwoFactor(this.twoFactorStatus).subscribe(
-      (res: any) => {},
+      (res: any) => {
+        this.userAreaService.pairing().subscribe(
+          (res: any) => {
+            this.loadQrCode();
+          },
+          (err: any) => {
+            this.snackBar.openSnack(err.message, 4000,
+              'red');
+          }
+        )
+      },
       (err: any) => {
         this.snackBar.openSnack(err.message, 4000,
           'red');
       }
     );
+  }
+
+  private resetQrCode() {
+    if (!this.twoFactorStatus) {
+      this.qrcode = "";
+    }
   }
 
   private loadQrCode(): void {

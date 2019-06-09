@@ -135,14 +135,5 @@ export class HeaderComponent {
         width: this.window.responsiveWidth(),
       },
     );
-    dialogRef.afterClosed().subscribe((content: any) => {
-      if (this.authService.getTwoFactorStatus()) {
-        this.dialog.open(QrCodeDialogComponent,
-          {
-            width: this.window.responsiveWidth(),
-          },
-        );
-      }
-    });
   }
 }
