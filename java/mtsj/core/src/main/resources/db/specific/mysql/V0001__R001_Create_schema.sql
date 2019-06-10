@@ -201,3 +201,63 @@ CREATE TABLE RevInfo(
   timestamp BIGINT NOT NULL,
   userLogin VARCHAR(255)
 );
+
+-- *** Category_AUD ***
+CREATE CACHED TABLE PUBLIC.Category_AUD(
+  id BIGINT NOT NULL,
+  name VARCHAR (255),
+  description VARCHAR (4000),
+  showOrder INTEGER,
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
+
+-- *** Image_AUD ***
+CREATE CACHED TABLE PUBLIC.Image_AUD (
+  id BIGINT NOT NULL,
+  name VARCHAR(255),
+  content clob,
+  contentType INTEGER,
+  mimeType VARCHAR(255),
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
+
+-- *** Dish_AUD ***
+CREATE CACHED TABLE PUBLIC.DISH_AUD(
+  id BIGINT NOT NULL,
+  name VARCHAR (255),
+  description VARCHAR (4000),
+  price DECIMAL (16,10),
+  idImage BIGINT NOT NULL,
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
+
+-- *** DishCategory_AUD ***
+CREATE CACHED TABLE PUBLIC.DishCategory_AUD(
+  id BIGINT NOT NULL,
+  idDish BIGINT NOT NULL,
+  idCategory BIGINT NOT NULL,
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
+
+-- *** Ingredient_AUD ***
+CREATE CACHED TABLE PUBLIC.Ingredient_AUD(
+  id BIGINT NOT NULL,
+  name VARCHAR (255),
+  description VARCHAR (4000),
+  price DECIMAL (16,10),
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
+
+-- *** DishIngredient_AUD ***
+CREATE CACHED TABLE PUBLIC.DishIngredient_AUD(
+  id BIGINT NOT NULL,
+  idDish BIGINT NOT NULL,
+  idIngredient BIGINT NOT NULL,
+  revtype TINYINT,
+  rev BIGINT NOT NULL
+);
