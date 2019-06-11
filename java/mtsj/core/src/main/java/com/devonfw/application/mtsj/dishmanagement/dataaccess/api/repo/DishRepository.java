@@ -40,24 +40,4 @@ public interface DishRepository extends DefaultRevisionedRepository<DishEntity> 
 
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
   }
-
-  default DishEntity find(Long id, Number revision) {
-      // todo
-      return null;
-  }
-
-  default List<RevisionMetadata> getRevisionHistoryMetadata(Long id) {
-
-      return getRevisionHistoryMetadata(id, false);
-  }
-
-  default List<RevisionMetadata> getRevisionHistoryMetadata(Long id, boolean lazy) {
-      // todo
-      return null;
-  }
-
-  default RevisionMetadata getLastRevisionHistoryMetadata(Long id) {
-      // todo
-      return null;
-  }
 }
