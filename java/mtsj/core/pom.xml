@@ -56,6 +56,7 @@
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>devon4j-jpa-envers</artifactId>
+      <version>3.0.2</version>
     </dependency>
 
     <dependency>
