@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {SnackBarService} from "../../core/snack-bar/snack-bar.service";
+import { Injectable } from '@angular/core';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
