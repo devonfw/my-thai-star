@@ -1,0 +1,16 @@
+.code {
+  text-align: center;
+}
+
+@media (max-width: 320px) {
+  .code {
+    font-size: 12px;
+  }
+}
+
+.custom.mat-card-image{
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 320px;
+}
