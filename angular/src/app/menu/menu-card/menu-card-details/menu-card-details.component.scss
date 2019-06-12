@@ -12,14 +12,14 @@
 }
 
 .description {
-  display: flex;
+  display: flex; 
   margin-top: 0px;
 }
 
 .extras {
   display: flex;
   justify-content: space-between;
-
+  
   > * {
     margin-bottom: 8px;
   }
