@@ -1,26 +1,21 @@
-<div layout="column" flex>
+<mat-card>
   <h2 mat-dialog-title>{{'userArea.qrcodeDialog.twofactorTitle' | translate}}</h2>
-  <mat-dialog-content>
-    <mat-card>
-      <mat-card-content>
-        <img mat-card-image class="custom" *ngIf="qrcode" src="{{qrcode}}">
-        <h2 *ngIf="qrcode" class="code">{{secret}}</h2>
-        <mat-card-subtitle
-          *ngIf="!twoFactorStatus">{{'userArea.qrcodeDialog.twofactorNotFound' | translate}}</mat-card-subtitle>
-        <mat-card-subtitle
-          *ngIf="twoFactorStatus">{{'userArea.qrcodeDialog.twofactorDescription' | translate}}</mat-card-subtitle>
-        <mat-slide-toggle (change)="changeStatus()"
-                          [checked]="twoFactorStatus">
-          {{'userArea.qrcodeDialog.twofactorStatus' | translate}}
-        </mat-slide-toggle>
-      </mat-card-content>
-    </mat-card>
-  </mat-dialog-content>
-</div>
-<div style="text-align: center">
-  <mat-card-actions>
-    <button name="cancelPairing" mat-raised-button mat-dialog-close
-            class="text-upper">{{'userArea.qrcodeDialog.twofactorclose' | translate}}</button>
+  <img mat-card-image *ngIf="qrcode" src="{{qrcode}}">
+  <mat-card-content style="text-align: center">
+      <h2 *ngIf="qrcode">{{secret}}</h2>
+    <mat-card-subtitle
+      *ngIf="!twoFactorStatus">{{'userArea.qrcodeDialog.twofactorNotFound' | translate}}</mat-card-subtitle>
+    <mat-card-subtitle
+      *ngIf="twoFactorStatus">{{'userArea.qrcodeDialog.twofactorDescription' | translate}}</mat-card-subtitle>
+    <mat-slide-toggle (change)="changeStatus()"
+                      [checked]="twoFactorStatus">
+      {{'userArea.qrcodeDialog.twofactorStatus' | translate}}
+    </mat-slide-toggle>
+  </mat-card-content>
+  <mat-card-actions style="text-align: center">
+    <button name="cancelPairing" mat-raised-button
+            mat-dialog-close>
+      <span>{{'userArea.qrcodeDialog.twofactorclose' | translate}}</span>
+    </button>
   </mat-card-actions>
-</div>
-
+</mat-card>

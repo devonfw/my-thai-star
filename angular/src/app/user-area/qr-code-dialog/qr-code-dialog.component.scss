@@ -1,16 +1,11 @@
-.code {
+mat-card {
   text-align: center;
+  max-width: 400px;
 }
 
-@media (max-width: 320px) {
-  .code {
-    font-size: 12px;
-  }
-}
-
-.custom.mat-card-image{
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 320px;
+mat-card-image {
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 100px;
+  max-height: 100px;
 }
