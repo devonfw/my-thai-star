@@ -3,8 +3,8 @@
   <mat-dialog-content>
     <mat-card>
       <mat-card-content>
-        <img mat-card-image *ngIf="qrcode" src="{{qrcode}}">
-        <h2 *ngIf="qrcode" style="text-align: center">{{secret}}</h2>
+        <img mat-card-image class="custom" *ngIf="qrcode" src="{{qrcode}}">
+        <h2 *ngIf="qrcode" class="code">{{secret}}</h2>
         <mat-card-subtitle
           *ngIf="!twoFactorStatus">{{'userArea.qrcodeDialog.twofactorNotFound' | translate}}</mat-card-subtitle>
         <mat-card-subtitle
