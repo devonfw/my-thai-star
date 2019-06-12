@@ -131,9 +131,7 @@ export class HeaderComponent {
   getQRCode(): void {
     const dialogRef: MatDialogRef<QrCodeDialogComponent> = this.dialog.open(
       QrCodeDialogComponent,
-      {
-        width: this.window.responsiveWidth(),
-      },
+      {},
     );
   }
 }
