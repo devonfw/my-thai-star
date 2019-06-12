@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { SnackService } from "./snack-bar.service";
+import { SnackService } from './snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
