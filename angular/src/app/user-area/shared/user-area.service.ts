@@ -9,7 +9,8 @@ import { ConfigService } from '../../core/config/config.service';
 import { WindowService } from '../../core/window/window.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { TwoFactorDialogComponent } from '../two-factor-dialog/two-factor-dialog.component';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { TwoFactorResponse } from "../../shared/view-models/interfaces";
 
 @Injectable()
 export class UserAreaService {
@@ -17,7 +18,6 @@ export class UserAreaService {
   private readonly restServiceRoot: string;
   private readonly loginRestPath: string = 'login';
   private readonly verifyRestPath: string = 'verify';
-  private readonly userRestPath: string = 'user';
   private readonly usermanagementRestPath: string = 'usermanagement/v1/user/';
   private readonly pairingRestPath: string = 'pairing/';
   private readonly twofactorRestPath: string = 'twofactor/';
@@ -55,25 +55,7 @@ export class UserAreaService {
           this.authService.setToken(res.headers.get('Authorization'));
 
           if(res.headers.get('X-Mythaistar-Otp') === 'NONE'){
-            this.http
-              .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-              .subscribe((loginInfo: any) => {
-                this.authService.setLogged(true);
-                this.authService.setUser(loginInfo.name);
-                this.authService.setRole(loginInfo.role);
-                if (loginInfo.role === 'CUSTOMER') {
-                  this.router.navigate(['restaurant']);
-                } else if (loginInfo.role === 'WAITER') {
-                  this.router.navigate(['orders']);
-                } else if (loginInfo.role === 'MANAGER') {
-                  this.router.navigate(['prediction']);
-                }
-                this.snackBar.openSnack(
-                  this.authAlerts.loginSuccess,
-                  4000,
-                  'green',
-                );
-              });
+            this.loginHandler();
           } else if (res.headers.get('X-Mythaistar-Otp') === 'OTP') {
             const dialogRef: MatDialogRef<TwoFactorDialogComponent> = this.dialog.open(
               TwoFactorDialogComponent,
@@ -89,10 +71,31 @@ export class UserAreaService {
           }
         },
         (err: any) => {
-          this.authService.setLogged(false);
-          this.snackBar.openSnack(err.message, 4000, 'red');
+          this.errorHandler(err);
         },
       );
+  }
+
+  private loginHandler() {
+    this.http
+      .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
+      .subscribe((loginInfo: any) => {
+        this.authService.setLogged(true);
+        this.authService.setUser(loginInfo.name);
+        this.authService.setRole(loginInfo.role);
+        if (loginInfo.role === 'CUSTOMER') {
+          this.router.navigate(['restaurant']);
+        } else if (loginInfo.role === 'WAITER') {
+          this.router.navigate(['orders']);
+        } else if (loginInfo.role === 'MANAGER') {
+          this.router.navigate(['prediction']);
+        }
+        this.snackBar.openSnack(
+          this.authAlerts.loginSuccess,
+          4000,
+          'green',
+        );
+      });
   }
 
   verify(username: string, password: string, token: string): void {
@@ -105,32 +108,17 @@ export class UserAreaService {
       .subscribe(
         (res: any) => {
           this.authService.setToken(res.headers.get('Authorization'));
-          this.http
-            .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-            .subscribe((loginInfo: any) => {
-              this.authService.setLogged(true);
-              this.authService.setUser(loginInfo.name);
-              this.authService.setRole(loginInfo.role);
-              if (loginInfo.role === 'CUSTOMER') {
-                this.router.navigate(['restaurant']);
-              } else if (loginInfo.role === 'WAITER') {
-                this.router.navigate(['orders']);
-              } else if (loginInfo.role === 'MANAGER') {
-                this.router.navigate(['prediction']);
-              }
-              this.snackBar.openSnack(
-                this.authAlerts.loginSuccess,
-                4000,
-                'green',
-              );
-            });
+          this.loginHandler();
         },
         (err: any) => {
-          console.log("failed");
-          this.authService.setLogged(false);
-          this.snackBar.openSnack(err.message, 4000, 'red');
+          this.errorHandler(err);
         },
       );
+  }
+
+  private errorHandler(err: any) {
+    this.authService.setLogged(false);
+    this.snackBar.openSnack(err.message, 4000, 'red');
   }
 
   register(email: string, password: string): void {
@@ -154,20 +142,17 @@ export class UserAreaService {
       );
   }
 
-  pairing(): Observable<any>{
+  pairing(): Observable<any> {
     return this.http
-      .get(`${this.restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${this.authService.getUser()}`,
-        { headers: {'Content-Type': 'text/plain'},
-         responseType: 'text', observe: 'response',
+      .get<TwoFactorResponse>(`${this.restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${this.authService.getUser()}`,
+        { headers: {'Content-Type': 'text'},
         });
   }
 
   twoFactorStatus(): Observable<any>{
     return this.http
-      .get(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${this.authService.getUser()}`,
-        { headers: {'Content-Type': 'text/plain'},
-          responseType: 'text', observe: 'response',
-        });
+      .get<TwoFactorResponse>(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${this.authService.getUser()}`,
+        { headers: {'Content-Type': 'text'}});
   }
 
   changeTwoFactor(status: boolean): Observable<any> {
@@ -183,7 +168,7 @@ export class UserAreaService {
     this.authService.setUser('');
     this.authService.setRole('CUSTOMER');
     this.authService.setToken('');
-    this.router.navigate(['restarant']);
+    this.router.navigate(['restaurant']);
     this.snackBar.openSnack(this.authAlerts.logoutSuccess, 4000, 'black');
   }
 
