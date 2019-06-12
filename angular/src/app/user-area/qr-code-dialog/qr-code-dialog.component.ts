@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAreaService } from '../shared/user-area.service';
-import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
+import { SnackService } from '../shared/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
-import { MatDialogRef } from "@angular/material";
-import { TwoFactorResponse } from "../../shared/view-models/interfaces";
+import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -11,15 +10,15 @@ import { TwoFactorResponse } from "../../shared/view-models/interfaces";
   styleUrls: ['./qr-code-dialog.component.scss']
 })
 export class QrCodeDialogComponent implements OnInit {
+
   public twoFactorStatus: boolean;
   public qrcode: string;
   public secret: string;
 
   constructor(
     public authService: AuthService,
-    private snackBar: SnackBarService,
+    private snackBar: SnackService,
     public userAreaService: UserAreaService,
-    private dialog: MatDialogRef<QrCodeDialogComponent>
   ) {
   }
 
@@ -41,7 +40,7 @@ export class QrCodeDialogComponent implements OnInit {
         this.initialize();
       },
       (err: any) => {
-        this.snackBar.openSnack(err.message, 4000, 'red');
+        this.snackBar.fail(err.message);
       }
     );
   }
@@ -55,8 +54,7 @@ export class QrCodeDialogComponent implements OnInit {
         this.loadQrCode();
       },
       (err: any) => {
-        this.snackBar.openSnack(err.message, 4000,
-          'red');
+        this.snackBar.fail(err.message);
       }
     );
   }
@@ -69,7 +67,7 @@ export class QrCodeDialogComponent implements OnInit {
           this.secret = res.secret;
         },
         (err: any) => {
-          this.snackBar.openSnack(err.message, 4000, 'red');
+          this.snackBar.fail(err.message);
         }
       );
     }
