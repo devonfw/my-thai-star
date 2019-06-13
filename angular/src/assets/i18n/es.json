@@ -150,7 +150,9 @@
       "twofactorTitle": "Configuraciones para autenticación de dos factores",
       "twofactorStatus": "Estado de la autenticación de dos factores",
       "twofactorDescription": "Escanee el código QR con Google Authenticator o use el código de arriba",
-      "twofactorclose": "Cerrar ventana"
+      "twofactorclose": "Cerrar ventana",
+      "qrSwitchText": "QR",
+      "secretSwitchText": "Código secreto"
     }
   },
   "cockpit": {
