@@ -157,8 +157,10 @@
       "twofactorNotFound": "Двуфакторното удостоверяване все още не е активирано",
       "twofactorTitle": "Настройки за двуфакторно удостоверяване",
       "twofactorStatus": "Състояние на двуфакторното удостоверяване",
-      "twofactorDescription": "Моля, сканирайте QR кода с Google Authenticator или използвайте горния код",
-      "twofactorclose": "Затворете прозореца"
+      "twofactorDescription": "Моля, сканирайте QR кода с Google Authenticator или използвайте тайния ключ",
+      "twofactorclose": "Затворете прозореца",
+      "qrSwitchText": "QR код",
+      "secretSwitchText": "Тайният ключ"
     }
   },
   "cockpit": {
