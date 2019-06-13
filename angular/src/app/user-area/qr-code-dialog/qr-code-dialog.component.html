@@ -11,15 +11,16 @@
                       [checked]="twoFactorStatus">
       {{'userArea.qrcodeDialog.twofactorStatus' | translate}}
     </mat-slide-toggle>
-    <mat-slide-toggle (change)="changeQrSecret()"
+    <mat-slide-toggle *ngIf="twoFactorStatus" (change)="changeQrSecret()"
                       [checked]="qrSecret">
-      {{qrSecretText}}
+      <span *ngIf="qrSecret">{{'userArea.qrcodeDialog.qrSwitchText' | translate}}</span>
+      <span *ngIf="!qrSecret">{{'userArea.qrcodeDialog.secretSwitchText' | translate}}</span>
     </mat-slide-toggle>
   </mat-card-content>
   <mat-card-actions style="text-align: center">
     <button name="cancelPairing" mat-raised-button
             mat-dialog-close>
-      <span>{{'userArea.qrcodeDialog.twofactorclose' | translate}}</span>
+      <span *ngIf=qrSecret>{{'userArea.qrcodeDialog.twofactorclose' | translate}}</span>
     </button>
   </mat-card-actions>
 </mat-card>

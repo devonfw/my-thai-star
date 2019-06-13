@@ -149,8 +149,10 @@
         "twofactorNotFound": "Двухфакторная аутентификация еще не активирована",
         "twofactorTitle": "Настройки для двухфакторной аутентификации",
         "twofactorStatus": "Состояние двухфакторной аутентификации",
-        "twofactorDescription": "Просканируйте QR-код с помощью Google Authenticator или используйте указанный выше код",
-        "twofactorclose": "Закрыть окно"
+        "twofactorDescription": "Просканируйте QR-код с помощью Google Authenticator или используйте секретный ключ",
+        "twofactorclose": "Закрыть окно",
+        "qrSwitchText": "QR код",
+        "secretSwitchText": "Секретный ключ"
         }
     },
     "cockpit": {

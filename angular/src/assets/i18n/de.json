@@ -163,8 +163,10 @@
       "twofactorNotFound": "Zwei-Faktor-Authentifizierung wurde noch nicht aktiviert",
       "twofactorTitle": "Einstellungen für Zwei-Faktor-Authentifizierung",
       "twofactorStatus": "Status der Zwei-Faktor-Authentifizierung",
-      "twofactorDescription": "Bitte scannen Sie den QR Code mit dem Google Authenticator ein oder nutzen Sie den oben genannten Code",
-      "twofactorclose": "Schließen"
+      "twofactorDescription": "Bitte scannen Sie den QR Code mit dem Google Authenticator ein oder nutzen Sie den geheimen Schlüssel",
+      "twofactorclose": "Schließen",
+      "qrSwitchText": "QR Code",
+      "secretSwitchText": "Geheimer Schlüssel"
     }
   },
   "cockpit": {
