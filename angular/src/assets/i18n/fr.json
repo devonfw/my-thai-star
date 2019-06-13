@@ -160,8 +160,10 @@
       "twofactorNotFound": "L'authentification à deux facteurs n'a pas encore été activée",
       "twofactorTitle": "Paramètres pour l'authentification à deux facteurs",
       "twofactorStatus": "Statut de l'authentification à deux facteurs",
-      "twofactorDescription": "Veuillez scanner le code QR avec Google Authenticator ou utiliser le code ci-dessus",
-      "twofactorclose": "Près"
+      "twofactorDescription": "Veuillez scanner le code QR avec Google Authenticator ou utiliser la clé secrète",
+      "twofactorclose": "Près",
+      "qrSwitchText": "Code QR",
+      "secretSwitchText": "Clé secrète"
     }
   },
   "cockpit": {

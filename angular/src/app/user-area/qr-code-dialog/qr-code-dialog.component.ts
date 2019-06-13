@@ -7,22 +7,19 @@ import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 @Component({
   selector: 'app-qr-code-dialog',
   templateUrl: './qr-code-dialog.component.html',
-  styleUrls: ['./qr-code-dialog.component.scss']
+  styleUrls: ['./qr-code-dialog.component.scss'],
 })
 export class QrCodeDialogComponent implements OnInit {
-
   public twoFactorStatus: boolean;
-  public qrSecret = false;
+  public qrSecret = true;
   public qrcode: string;
   public secret: string;
-  public qrSecretText: 'QR' | 'Secret code' = 'QR';
 
   constructor(
     public authService: AuthService,
     private snackBar: SnackService,
     public userAreaService: UserAreaService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -43,17 +40,12 @@ export class QrCodeDialogComponent implements OnInit {
       },
       (err: any) => {
         this.snackBar.fail(err.message);
-      }
+      },
     );
   }
 
   public changeQrSecret(): void {
     this.qrSecret = !this.qrSecret;
-    if (!this.qrSecret) {
-      this.qrSecretText = 'QR';
-    } else {
-      this.qrSecretText = 'Secret code';
-    }
   }
 
   public changeStatus(): void {
@@ -65,7 +57,7 @@ export class QrCodeDialogComponent implements OnInit {
       },
       (err: any) => {
         this.snackBar.fail(err.message);
-      }
+      },
     );
   }
 
@@ -78,7 +70,7 @@ export class QrCodeDialogComponent implements OnInit {
         },
         (err: any) => {
           this.snackBar.fail(err.message);
-        }
+        },
       );
     }
   }

@@ -158,8 +158,10 @@
       "twofactorNotFound": "Uwierzytelnianie dwuskładnikowe nie zostało jeszcze aktywowane",
       "twofactorTitle": "Ustawienia uwierzytelniania dwuskładnikowego",
       "twofactorStatus": "Stan uwierzytelniania dwuskładnikowego",
-      "twofactorDescription": "Zeskanuj kod QR za pomocą Google Authenticator lub użyj powyższego kodu",
-      "twofactorclose": "Blisko"
+      "twofactorDescription": "Zeskanuj kod QR za pomocą Google Authenticator lub użyj tajnego klucza",
+      "twofactorclose": "Blisko",
+      "qrSwitchText": "Kod QR",
+      "secretSwitchText": "Tajny klucz"
     }
   },
   "cockpit": {
