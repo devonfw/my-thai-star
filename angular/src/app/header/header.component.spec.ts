@@ -1,48 +1,129 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DateTimeAdapter } from 'ng-pick-datetime';
-
-import { CoreModule } from '../core/core.module';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { SidenavService } from '../sidenav/services/sidenav.service';
 import { WindowService } from '../core/window/window.service';
-import { AuthService } from '../core/authentication/auth.service';
-import { SnackBarService } from '../core/snack-bar/snack-bar.service';
-import { UserAreaService } from '../user-area/services/user-area.service';
-
-import { SidenavModule } from '../sidenav/sidenav.module';
+import { TranslateService } from '@ngx-translate/core';
+import { DateTimeAdapter } from 'ng-pick-datetime';
+import { ConfigService } from '../core/config/config.service';
 import { HeaderComponent } from './header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import * as fromStore from 'app/store/reducers';
+
+export function mockStore<T>({
+  actions = new Subject<Action>(),
+  states = new Subject<T>(),
+}: {
+  actions?: Subject<Action>;
+  states?: Subject<T>;
+}): Store<T> {
+  const result = states as any;
+  result.dispatch = (action: Action) => actions.next(action);
+  return result;
+}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
-      providers: [WindowService, AuthService, UserAreaService, SnackBarService, HttpClient, DateTimeAdapter],
-      imports: [
-        RouterTestingModule,
-        BrowserAnimationsModule,
-        TranslateModule.forRoot(),
-        CoreModule,
-        SidenavModule,
-        HttpClientModule,
-      ],
-    });
-    TestBed.compileComponents();
-  }));
+  const actions = new Subject<Action>();
+  const states = new Subject<fromStore.State>();
+  const store = mockStore<fromStore.State>({ actions, states });
 
   beforeEach(() => {
+    const matDialogStub = {
+      open: (passwordDialogComponent1, object2) => ({
+        afterClosed: () => ({ subscribe: () => ({}) }),
+      }),
+    };
+    const routerStub = { navigate: (array1) => ({}) };
+    const sidenavServiceStub = {
+      closeSideNav: () => ({}),
+      openSideNav: () => ({}),
+    };
+    const windowServiceStub = { responsiveWidth: () => ({}) };
+    const translateServiceStub = { currentLang: {}, use: (lang1) => ({}) };
+    const dateTimeAdapterStub = { setLocale: (arg1) => ({}) };
+    const configServiceStub = { getValues: () => ({ langs: {} }) };
+    const storeStub = { pipe: (arg1) => ({}), dispatch: (arg1) => ({}) };
+
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [HeaderComponent],
+      providers: [
+        { provide: MatDialog, useValue: matDialogStub },
+        { provide: Router, useValue: routerStub },
+        { provide: SidenavService, useValue: sidenavServiceStub },
+        { provide: WindowService, useValue: windowServiceStub },
+        { provide: TranslateService, useValue: translateServiceStub },
+        { provide: DateTimeAdapter, useValue: dateTimeAdapterStub },
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: Store, useValue: storeStub },
+      ],
+    });
+    spyOn(HeaderComponent.prototype, 'getFlag');
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
-
-  it('should create', () => {
+  it('can load instance', () => {
     expect(component).toBeTruthy();
+  });
+  describe('constructor', () => {
+    it('makes expected calls', () => {
+      expect(HeaderComponent.prototype.getFlag).toHaveBeenCalled();
+    });
+  });
+  describe('ngOnInit', () => {
+    it('makes expected calls', () => {
+      spyOn(store, 'pipe').and.callThrough();
+      component.ngOnInit();
+      expect(store.pipe).toHaveBeenCalled();
+    });
+  });
+  describe('openLoginDialog', () => {
+    it('makes expected calls', () => {
+      spyOn(store, 'dispatch').and.callThrough();
+      component.openLoginDialog();
+      expect(store.dispatch).toHaveBeenCalled();
+    });
+  });
+  describe('openResetDialog', () => {
+    it('makes expected calls', () => {
+      const matDialogStub: MatDialog = fixture.debugElement.injector.get(
+        MatDialog,
+      );
+      const windowServiceStub: WindowService = fixture.debugElement.injector.get(
+        WindowService,
+      );
+      spyOn(matDialogStub, 'open').and.callThrough();
+      spyOn(windowServiceStub, 'responsiveWidth').and.callThrough();
+      component.openResetDialog();
+      expect(matDialogStub.open).toHaveBeenCalled();
+      expect(windowServiceStub.responsiveWidth).toHaveBeenCalled();
+    });
+  });
+  describe('openTwitterDialog', () => {
+    it('makes expected calls', () => {
+      const matDialogStub: MatDialog = fixture.debugElement.injector.get(
+        MatDialog,
+      );
+      const windowServiceStub: WindowService = fixture.debugElement.injector.get(
+        WindowService,
+      );
+      spyOn(matDialogStub, 'open').and.callThrough();
+      spyOn(windowServiceStub, 'responsiveWidth').and.callThrough();
+      component.openTwitterDialog();
+      expect(matDialogStub.open).toHaveBeenCalled();
+      expect(windowServiceStub.responsiveWidth).toHaveBeenCalled();
+    });
+  });
+  describe('logout', () => {
+    it('makes expected calls', () => {
+      spyOn(store, 'dispatch').and.callThrough();
+      component.logout();
+      expect(store.dispatch).toHaveBeenCalled();
+    });
   });
 });
