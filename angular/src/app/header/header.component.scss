@@ -1,0 +1,37 @@
+nav {
+    border-bottom: none;
+    margin-right: 20px;
+}
+
+nav a{
+    min-width: 100px !important;
+    color: white;
+}
+
+.navBottomBorder {
+    border-bottom: 3px solid white;
+}
+
+mat-sidenav {
+  width: 400px;
+}
+
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+  .sidenavMobile {
+    width: 100%;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}
+
+.mat-tab-nav-bar.mat-primary .mat-tab-label:focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+  background-color: #3e2723;
+}

@@ -1,0 +1,31 @@
+@import "~variables.scss";
+
+public-menu-card {
+  width: 100%
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@media (min-width: $tablet-min-width){
+  public-menu-card {
+    width: 90%
+  }
+}
+
+@media (min-width: 900px){
+  public-menu-card {
+    width: 75%
+  }
+}
+
+@media (min-width: $desktop-min-width){
+  public-menu-card {
+    width: 50%
+  }
+}
+
+

@@ -1,0 +1,20 @@
+@media (max-width: 600px) {
+  .forDesktop {
+    display: none;
+  }
+  .searchBy {
+    width: 100%;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+  .sortingBy {
+    width: 30%;
+  }
+  .searchBy {
+    width: 30%;
+  }
+}

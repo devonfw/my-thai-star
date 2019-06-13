@@ -1,0 +1,11 @@
+2017-09-29 09:38:36.600 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-29 09:38:36.624 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-29 09:38:36.636 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-29 09:38:36.637 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-29 09:38:46.294 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/  
+2017-09-29 09:38:46.351 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-09-29 09:38:46.494 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-09-29 09:38:46.505 +02:00 [Information] Request finished in 214.5495ms 200 text/html
+2017-09-29 09:38:46.978 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/v1/swagger.json  
+2017-09-29 09:38:46.980 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-09-29 09:38:47.205 +02:00 [Information] Request finished in 225.1378ms 200 application/json

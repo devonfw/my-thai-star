@@ -1,0 +1,53 @@
+@import "~variables.scss";
+
+.favourite-button {
+  align-self:flex-end;
+  background-color: white;
+  margin: 8px;
+}
+
+.fab-on {
+  color: lightgray;
+}
+
+.fab-off {
+  color: sandybrown;
+}
+
+.details-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 50vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.reviews {
+  height: 50%;
+}
+
+
+@media (min-width: $tablet-min-width) {
+  .details-card {
+    flex-direction: row;
+  }
+
+  .menu-image {
+    min-height: 50vh;
+    height: auto;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: $desktop-min-width) {
+  .details-card {
+    min-height: 55vh;
+  }
+}
