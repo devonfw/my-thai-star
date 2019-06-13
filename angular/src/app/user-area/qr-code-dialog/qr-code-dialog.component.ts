@@ -12,8 +12,10 @@ import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 export class QrCodeDialogComponent implements OnInit {
 
   public twoFactorStatus: boolean;
+  public qrSecret = false;
   public qrcode: string;
   public secret: string;
+  public qrSecretText: 'QR' | 'Secret code' = 'QR';
 
   constructor(
     public authService: AuthService,
@@ -45,9 +47,17 @@ export class QrCodeDialogComponent implements OnInit {
     );
   }
 
+  public changeQrSecret(): void {
+    this.qrSecret = !this.qrSecret;
+    if (!this.qrSecret) {
+      this.qrSecretText = 'QR';
+    } else {
+      this.qrSecretText = 'Secret code';
+    }
+  }
+
   public changeStatus(): void {
     this.twoFactorStatus = !this.twoFactorStatus;
-    this.authService.setTwoFactorStatus(this.twoFactorStatus);
     this.resetQrCode();
     this.userAreaService.changeTwoFactor(this.twoFactorStatus).subscribe(
       (res: any) => {
