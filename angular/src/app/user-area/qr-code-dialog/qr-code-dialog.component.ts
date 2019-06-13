@@ -2,26 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { UserAreaService } from '../shared/user-area.service';
 import { SnackService } from '../shared/snack-bar.service';
 import { AuthService } from '../../core/authentication/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 
 @Component({
   selector: 'app-qr-code-dialog',
   templateUrl: './qr-code-dialog.component.html',
-  styleUrls: ['./qr-code-dialog.component.scss']
+  styleUrls: ['./qr-code-dialog.component.scss'],
 })
 export class QrCodeDialogComponent implements OnInit {
-
   public twoFactorStatus: boolean;
-  public qrSecret = false;
+  public qrSecret = true;
   public qrcode: string;
   public secret: string;
-  public qrSecretText: 'QR' | 'Secret code' = 'QR';
+  public qrSecretText = 'QR';
+  private qrText = 'QR';
+  private secretText = 'Secret code';
 
   constructor(
     public authService: AuthService,
     private snackBar: SnackService,
     public userAreaService: UserAreaService,
+    public translate: TranslateService,
   ) {
+    this.translate
+      .get('userArea.qrcodeDialog.qrSwitchText')
+      .subscribe((content: string = 'QR') => {
+        this.qrText = content;
+      });
+
+    this.translate
+      .get('userArea.qrcodeDialog.secretSwitchText')
+      .subscribe((content: string = 'Secret code') => {
+        this.secretText = content;
+      });
   }
 
   ngOnInit(): void {
@@ -43,16 +57,17 @@ export class QrCodeDialogComponent implements OnInit {
       },
       (err: any) => {
         this.snackBar.fail(err.message);
-      }
+      },
     );
   }
 
   public changeQrSecret(): void {
     this.qrSecret = !this.qrSecret;
-    if (!this.qrSecret) {
-      this.qrSecretText = 'QR';
+
+    if (this.qrSecret) {
+      this.qrSecretText = this.qrText;
     } else {
-      this.qrSecretText = 'Secret code';
+      this.qrSecretText = this.secretText;
     }
   }
 
@@ -65,7 +80,7 @@ export class QrCodeDialogComponent implements OnInit {
       },
       (err: any) => {
         this.snackBar.fail(err.message);
-      }
+      },
     );
   }
 
@@ -78,7 +93,7 @@ export class QrCodeDialogComponent implements OnInit {
         },
         (err: any) => {
           this.snackBar.fail(err.message);
-        }
+        },
       );
     }
   }
