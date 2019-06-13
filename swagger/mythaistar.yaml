@@ -1,0 +1,683 @@
+swagger: '2.0'
+info:
+  version: v2.11
+  title: My Thai Star API
+host: 'localhost:8081'
+schemes:
+  - http
+paths:
+  /mythaistar/services/rest/Dishmanagement/v1/Dish/Search:
+    post:
+      tags:
+        - Dish
+      summary: Gets the  list of available dishes regarding the filter options
+      operationId: Dish_Search
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: filterView
+          in: body
+          description: >-
+            Contains the criteria values to perform the search. Case of null or
+            empty values will return the full set of dishes.
+          required: true
+          schema:
+            $ref: '#/definitions/DishFilterView'
+      responses:
+        '200':
+          description: Ok. The search process has beencompleted with no error.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DishesView'
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Ordermanagement/v1/order/search:
+    post:
+      tags:
+        - Order
+      summary: Gets the  list of available orders regarding the search criteria options
+      operationId: Order_Search
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: OrderSearchCriteriaView
+          in: body
+          description: >-
+            Contains the criteria values to perform the search. Case of null or
+            empty values will return the full set of orders.
+          required: true
+          schema:
+            $ref: '#/definitions/OrderSearchCriteriaView'
+      responses:
+        '200':
+          description: Ok. The search process has beencompleted with no error.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderView'
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/Ordermanagement/v1/order/filter:
+    post:
+      tags:
+        - Order
+      summary: Gets the  list of available orders regarding the filter options
+      operationId: Order_Filter
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: OrderFilterView
+          in: body
+          description: >-
+            Contains the filter values to perform the search. Case of null or
+            empty values will return the full set of orders.
+          required: true
+          schema:
+            $ref: '#/definitions/OrderFilterView'
+      responses:
+        '200':
+          description: Ok. The search process has beencompleted with no error.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderView'
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/{guestToken}':
+    get:
+      tags:
+        - Mail
+      summary: >-
+        Method to accept or decline an invitation updating the 'accepted' field
+        of the InvitedGuest entity.
+      operationId: Mail_Booking/AcceptInvitation
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: guestToken
+          in: path
+          description: Token generated in the reservation process where guests are invited.
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. The search process has beencompleted with no error.'
+          schema:
+            type: object
+        '400':
+          description: >-
+            Bad request. The invitation cannot be cancelled because the request
+            is 10 minutes before the event after being accepted before.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  '/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/{guestToken}':
+    get:
+      tags:
+        - Mail
+      summary: >-
+        Method to accept or decline an invitation updating the 'accepted' field
+        of the InvitedGuest entity.
+      operationId: Mail_Booking/DeclineInvitation
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: guestToken
+          in: path
+          description: Token generated in the reservation process where guests are invited.
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. The search process has beencompleted with no error.'
+          schema:
+            type: object
+        '400':
+          description: >-
+            Bad request. The invitation cannot be cancelled because the request
+            is 10 minutes before the event after being accepted before.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  '/mythaistar/services/rest/Bookingmanagement/v1/booking/cancel/{bookingToken}':
+    get:
+      tags:
+        - Mail
+      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be canceled if the cancelation request is not send an hour before the booking"
+      operationId: Mail_Booking/CancelInvitation
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: bookingToken
+          in: path
+          description: >-
+            Token generated in the booking process where guests are invited.
+            Mandatory
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. Invitation canceled'
+          schema:
+            type: object
+        '400':
+          description: >-
+            Bad Request. Incorrect Invitation token given or parse error.The
+            invitation cannot be cancelled because the request is an hour before
+            the event.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  '/mythaistar/services/rest/ordermanagement/v1/order/cancelorder/{id}':
+    get:
+      tags:
+        - Mail
+      summary: >-
+        Method to delete the order. Once the order is deleted the system will
+        send a cancelation email to all guests.
+      operationId: Mail_Booking/CancelOrder
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '204':
+          description: 'Ok, no content. Invitation canceled'
+          schema:
+            type: object
+        '400':
+          description: Bad Request. Incorrect Invitation token given or parse error.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/ordermanagement/v1/order:
+    post:
+      tags:
+        - Order
+      summary: >-
+        Order the order. Given an order view, the server side will prepare the
+        different order lines.
+      operationId: Order_Order
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: orderView
+          in: body
+          description: >-
+            The model of the ordert to be processed on the server side. The
+            InvitationToken field is mandatory.
+          required: true
+          schema:
+            $ref: '#/definitions/OrderPostView'
+      responses:
+        '201':
+          description: Ok. Created. Returns the created order reference
+          schema:
+            type: object
+            properties:
+              id:
+                format: int64
+                type: integer
+              bookingId:
+                format: int64
+                type: integer
+              invitedGuestId:
+                format: int64
+                type: integer
+              bookingToken:
+                type: string
+        '400':
+          description: Bad Request. No Invitation token given.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/bookingmanagement/v1/booking:
+    post:
+      tags:
+        - Booking
+      summary: >-
+        Method to make a reservation with potentiel guests. The method returns
+        the reservation token with the format:
+        {(CB_|GB_)}{now.Year}{now.Month:00}{now.Day:00}{_}{MD5({Host/Guest-email}{now.Year}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00})}
+      operationId: Booking_Booking
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: bookingView
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/BookingPostView'
+      responses:
+        '201':
+          description: Ok.
+          schema:
+            type: string
+        '400':
+          description: Bad request. Parser data error.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+  /mythaistar/services/rest/bookingmanagement/v1/booking/search:
+    post:
+      tags:
+        - Booking
+      summary: Method to get reservations
+      operationId: Booking_Search
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: bookingEntity
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/BookingEntity'
+      responses:
+        '201':
+          description: Ok.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BookingEntity'
+        '400':
+          description: Bad request. Parser data error.
+        '401':
+          description: Unathorized. Autentication fail
+        '403':
+          description: Forbidden. Authorization error.
+        '500':
+          description: Internal Server Error. The search process ended with error.
+definitions:
+  DishFilterView:
+    description: ''
+    type: object
+    properties:
+      categories:
+        description: ''
+        type: array
+        items:
+          $ref: '#/definitions/CategoryView'
+      maxPrice:
+        format: double
+        type: number
+      minLikes:
+        format: int32
+        type: integer
+      searchBy:
+        type: string
+      showOrder:
+        format: int32
+        type: integer
+      isFav:
+        type: boolean
+      sort:
+        type: array
+        items:
+          $ref: '#/definitions/SortByView'
+  CategoryView:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      selected:
+        type: boolean
+      showOrder:
+        format: int32
+        type: integer
+  DishesView:
+    description: Dish entity which represents a single dish structure from menu
+    type: object
+    properties:
+      dish:
+        $ref: '#/definitions/DishView'
+      image:
+        $ref: '#/definitions/ImageView'
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraIngredientView'
+  DishView:
+    description: Dish entity which represents a single dish structure from menu
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        format: double
+        type: number
+      imageId:
+        format: int64
+        type: integer
+  ImageView:
+    description: >-
+      Structure to define the image object. The content if contains binary data
+      must be represented in Base64String
+    type: object
+    properties:
+      name:
+        type: string
+      content:
+        type: string
+      contentType:
+        description: Binary or Url
+        type: string
+      mimeType:
+        type: string
+  ExtraIngredientView:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        format: double
+        type: number
+  FavouriteView:
+    type: object
+    properties:
+      isFav:
+        type: boolean
+      likes:
+        format: int32
+        type: integer
+  OrderView:
+    description: Contains the data related to an order.
+    type: object
+    properties:
+      order:
+        $ref: '#/definitions/OrderEntity'
+      booking:
+        $ref: '#/definitions/BookingEntity'
+      invitedGuest:
+        $ref: '#/definitions/InvitedGuestEntity'
+      orderLines:
+        type: array
+        items:
+          $ref: '#/definitions/OrderLinesView'
+  OrderPostView:
+    description: >-
+      InvitationToken contains the direct Booking Token or Invitation token
+      dependig on the type of the reservation
+    type: object
+    properties:
+      orderLines:
+        description: Contains the lines of the chosen order from client.
+        type: array
+        items:
+          $ref: '#/definitions/OrderLinesView'
+      booking:
+        type: object
+        properties:
+          bookingToken:
+            type: string
+  OrderLinesView:
+    type: object
+    properties:
+      orderLine:
+        $ref: '#/definitions/OrderLineView'
+      dish:
+        $ref: '#/definitions/DishView'
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraIngredientView'
+  OrderLineView:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      dishId:
+        format: int64
+        type: integer
+      amount:
+        format: int32
+        type: integer
+      comment:
+        type: string
+      orderId:
+        format: int64
+        type: integer
+  OrderSearchCriteriaView:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      invitedGuestId:
+        format: int64
+        type: integer
+  OrderFilterView:
+    type: object
+    properties:
+      email:
+        type: string
+      bookingToken:
+        type: string
+  BookingPostView:
+    type: object
+    properties:
+      booking:
+        $ref: '#/definitions/BookingEntity'
+      invitedGuests:
+        type: array
+        items:
+          $ref: '#/definitions/InvitedGuestEntity'
+  BookingView:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      bookintToken:
+        type: string
+      bookingType:
+        $ref: '#/definitions/BookingType'
+      name:
+        type: string
+      email:
+        type: string
+      assistants:
+        format: int32
+        type: integer
+      invitedGuests:
+        type: array
+        items:
+          type: string
+  BookingType:
+    type: string
+    enum:
+      - 0
+      - 1
+  SortByView:
+    type: object
+    properties:
+      name:
+        type: string
+      direction:
+        description: ASC for ascending and DESC for descending
+        type: string
+  BookingEntity:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
+      bookingToken:
+        type: string
+      comment:
+        type: string
+      bookingDate:
+        type: string
+      expirationDate:
+        type: string
+      creationDate:
+        type: string
+      email:
+        type: string
+      canceled:
+        type: boolean
+      bookingType:
+        $ref: '#/definitions/BookingType'
+      tableId:
+        format: int64
+        type: integer
+      orderId:
+        format: int64
+        type: integer
+      assistants:
+        format: int32
+        type: integer
+  OrderEntity:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      bookingId:
+        format: int64
+        type: integer
+      invitedGuestId:
+        format: int64
+        type: integer
+      bookingToken:
+        type: string
+  InvitedGuestEntity:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      bookingId:
+        format: int64
+        type: integer
+      guestToken:
+        type: string
+      email:
+        type: string
+      accepted:
+        type: boolean
+      modificationDate:
+        type: string

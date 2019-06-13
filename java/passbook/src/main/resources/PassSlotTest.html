@@ -1,0 +1,178 @@
+<html>
+<head>
+	<title>The Cafe Restaurant</title>
+	<script>
+		function validate()
+		{	
+			var loc = location.host;
+			//alert(loc);
+			var url = 'http://' + loc + '/mythaistar/services/rest/bookingmanagement/v1/booking';
+			//alert(url);
+			
+			flag = checkEmpty();
+			if(!flag) { return false; }			
+			
+			flag = nameValidation(document.getElementById("firstname").value);
+			if(!flag) { return false; }
+			
+			flag = nameValidation(document.getElementById("lastname").value);
+			if(!flag) { return false; }
+			
+			flag = emailValidation(document.getElementById("email").value);
+			if(!flag) { return false; }
+			
+			var invocation = new XMLHttpRequest();			
+			firstname=document.getElementById("firstname").value;
+			lastname=document.getElementById("lastname").value;
+			email=document.getElementById("email").value;
+			d=new Date(document.getElementById("date").value);
+			dd=d.getDate();
+			mm=d.getMonth();
+			mm++;
+			yyyy=d.getFullYear();
+			formatteddate=yyyy+"-"+mm+"-"+dd+"T18:00:00.000Z"
+			
+			var body = '{"booking":{"bookingDate" : "' + formatteddate + '", "name" : "' + firstname + ' ' + lastname + '", "email" : "' + email + '", "bookingType" : 0, "assistants" : 1}}';
+			//alert(body);
+			
+			if(invocation)
+			{
+				invocation.open('POST', url, true);
+				invocation.withCredentials = true;
+				invocation.setRequestHeader('Content-Type', 'application/json');
+				invocation.onreadystatechange = function()
+				{
+					if (invocation.readyState==4)
+// 					if (invocation.readyState==4 && invocation.status==200)
+					{
+						document.getElementById("httpresponse").innerHTML=invocation.responseText;
+					}
+				}
+				invocation.send(body);
+			}
+			
+			document.getElementById("firstname").value = "";
+			document.getElementById("lastname").value = "";			
+			document.getElementById("email").value = "";
+			document.getElementById("date").value = "";
+						
+			return true;
+		}
+		
+		
+		function nameValidation(formdata)
+		{
+			var flag=true;
+			var regex = /^[A-Za-z]{2,12}$/;			
+			var data = formdata;
+			
+			if (regex.test(data)) 
+			{
+				flag = true;
+		    }
+		    else 
+		    {
+		    	alert("Use only alphabets. No numbers or special character allowed");
+		    	flag = false;
+		    }
+			
+			return flag;
+		}
+		
+		function emailValidation(formdata)
+		{
+			var flag=true;
+			var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;			
+			var data = formdata;
+			
+			if (regex.test(data)) 
+			{
+				flag = true;
+		    }
+		    else 
+		    {
+		    	alert("Email Id is invalid");
+		    	flag = false;
+		    }
+			
+			return flag;
+		}
+		
+		function checkEmpty()
+		{
+			var key = document.getElementById("firstname").value;
+			var flag=true;
+			msg="";
+			if (key == null || key == "") {
+				msg += "First Name, ";
+				flag=false;
+			}
+			key = document.getElementById("lastname").value;
+			if (key == null || key == "") {
+				msg+="Last Name, ";
+				flag=false;
+			}
+						key = document.getElementById("date").value;
+			if (key == null || key == "") {
+				msg+="Date, ";
+				flag=false;
+			}
+			key = document.getElementById("email").value;
+			if (key == null || key == "") {
+				msg+="Email Id, ";
+				flag=false;
+			}
+			if(flag===false){
+				msg=msg.substring(0,msg.length-2)+" can't be empty. Please fill and resubmit.";
+				alert(msg);
+			}
+			return flag;
+		}
+	</script>
+</head>
+<body>
+	<h1><center>The Cafe Restaurant</center></h1>
+
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">	
+		<form>
+		<tr>
+			<td width="50%" align="right">
+				<font face="Arial" size="2" color="red"><b>First Name:&nbsp;&nbsp;&nbsp;</b></font>
+			</td>
+			<td width="50%">&nbsp;&nbsp;&nbsp;<input id="firstname" type="text" title="Use only alphabets" pattern="[A-Za-z]{2,12}" name="firstname" maxlength="12"></td>
+		</tr>
+		<tr>
+			<td width="50%" align="right">
+				<font face="Arial" size="2" color="red"><b>Last name:&nbsp;&nbsp;&nbsp;</b></td>
+			<td width="50%">&nbsp;&nbsp;&nbsp;<input id="lastname" type="text"  title="Use only alphabets" pattern="[A-Za-z]{2,12}" name="lastname" maxlength="12"></td>
+		</tr>
+		<tr>
+			<td width="50%" align="right">
+				<font face="Arial" size="2" color="red"><b>Email Address:&nbsp;&nbsp;&nbsp;</b></td>
+			<td width="50%">&nbsp;&nbsp;&nbsp;<input id="email" type="email" name="emailid" maxlength="35"></td>
+		</tr>
+		<tr>
+			<td width="50%" align="right">
+				<font face="Arial" size="2" color="red"><b>Date:&nbsp;&nbsp;&nbsp;</b></td>
+			<td width="50%">&nbsp;&nbsp;&nbsp;<input id="date" type="date" name="userdate"></td>
+		</tr>
+		<tr align='center'>
+			<td align="center" colspan="2">
+			<br>
+			<!--<input type="button" value="Submit" onclick="validate()">-->
+			<input type="button" value="Submit" onclick="validate()">
+			<br>
+			</td>
+		</tr>
+		
+		<tr height="100">
+			<td align="right">
+				<font face="Arial" size="2" color="red"><b> Response:&nbsp;&nbsp;&nbsp;</b></font>
+			</td>
+			<td><font face="Arial" size="2" color="black">&nbsp;&nbsp;&nbsp;<div id="httpresponse"></div></font></td>
+		</tr>
+	</form>
+	</table>
+	
+</body>
+</html>

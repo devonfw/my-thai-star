@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+
+  mat-sidenav-container {
+    flex: 1;
+    position: relative;
+  }
+
+  /deep/ router-outlet ~ * {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  nav {
+    border-bottom: none;
+    margin-right: 20px;
+
+    a {
+      min-width: 100px !important;
+    }
+  }
+
+  .navBottomBorder {
+    border-bottom: 3px solid white;
+  }
+
+  mat-sidenav {
+    width: 400px;
+  }
+
+  @media (max-width: 600px) {
+    .forDesktop {
+      display: none;
+    }
+    .sidenavMobile {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .forMobile {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<form
+    [formGroup]="filtersForm"
+    (ngSubmit)="applyFilters($event)"
+    class="menu"
+    novalidate
+  >
+      <div class="search">
+        <own-filter-search formControlName="searchBy" class="searchBy"></own-filter-search>
+        <own-filter-sort formControlName="sort" class="sortingBy"></own-filter-sort>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <td-expansion-panel [label]="'menu.filterTitle' | translate">
+        <div class ="menu-filters">
+          <own-filter-checkboxes formControlName="categories"></own-filter-checkboxes>
+
+          <div class="filter-sliders">
+            <div class="slider">
+              <span>{{'menu.filter.price' | translate}}</span>
+              <mat-slider
+                formControlName="maxPrice"
+                max="50"
+                min="1"
+                step="1"
+                thumbLabel
+              ></mat-slider>
+            </div>
+            <div class="slider">
+              <span>{{'menu.filter.likes' | translate}}</span>
+              <mat-slider
+                formControlName="minLikes"
+                max="500"
+                min="0"
+                step="5"
+                thumbLabel
+              ></mat-slider>
+            </div>
+          </div>
+        </div>
+      </td-expansion-panel>
+      <div class="filter-actions">
+        <button mat-button (click)="clearFilters($event, filtersForm)">{{'buttons.clearFilters' | translate}}</button>
+        <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | translate}}</button>
+      </div>
+  </form>
