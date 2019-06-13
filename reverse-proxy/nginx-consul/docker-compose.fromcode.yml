@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  consul:
+    image: consul
+    container_name: consul
+    restart: always
+    labels:
+      SERVICE_IGNORE: 'yes'
+    # Only for dev environments
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    # Only for producction environments
+    # environment:
+    #   CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
+    # command: 'agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap
+    ports:
+      - '8500:8500'
+    networks:
+      - my-thai-star
+  registrator:
+    command: '-internal consul://consul:8500'
+    image: gliderlabs/registrator:latest
+    container_name: registrator
+    restart: always
+    networks:
+      - my-thai-star
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock'
+    depends_on:
+      - consul
+  reverse-proxy:
+    build: '.'
+    restart: always
+    container_name: 'mts_reverse_proxy'
+    image: my-thai-star/reverse-proxy:latest
+    networks:
+      - my-thai-star
+    ports:
+      - '8080:80'
+    labels:
+      SERVICE_IGNORE: 'yes'
+    depends_on:
+      - registrator
+  angular:
+    build: '../../angular/'
+    restart: always
+    image: my-thai-star/angular:latest
+    networks:
+      - my-thai-star
+    labels:
+      SERVICE_IGNORE: 'yes'
+    depends_on:
+      - registrator
+  java:
+    build: '../../java/'
+    restart: always
+    image: my-thai-star/java:latest
+    networks:
+      - my-thai-star
+    labels:
+      SERVICE_NAME: api
+      SERVICE_8081_CHECK_HTTP: /mythaistar/services/rest/dishmanagement/v1/category/0/
+      SERVICE_8081_CHECK_INTERVAL: 5s
+      SERVICE_TAGS: production
+    depends_on:
+      - registrator
+
+networks:
+  my-thai-star:
+    driver: bridge

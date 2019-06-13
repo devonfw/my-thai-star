@@ -1,0 +1,87 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        // Repository format
+        format = 'maven2'
+        // Artifact group
+        group = 'com.devonfw.mythaistar'
+        // Application name
+        name = 'mythaistar-restaurant'
+        // Artifact extension
+        extension = 'zip'
+    }
+
+    parameters {
+        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
+        string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
+        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
+
+        string(name: 'VERSION', defaultValue: '1.12.3-SNAPSHOT', description: 'Version number') 
+        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
+        string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+    }
+
+    stages {
+        stage ('Download artifact from Nexus') {
+            steps {
+                script {
+                    // Search the list of artifacts
+                    def response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """${nexusApiUrl}/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.extension=${extension}"""
+                    def props = readJSON text: response.content
+
+                    // Get the last snapshot download url
+                    def num = -1
+                    def url = ''
+                    props.items.each { 
+                        def n = (it.downloadUrl =~ /.*-(\d*)\.zip/)[0][1]
+                        if (n > num) {
+                            num = n
+                            url = it.downloadUrl
+                        }
+                    }
+
+                    // Download the snapshot
+                    httpRequest authentication: nexusCredentialsId, ignoreSslErrors: true, outputFile: """${name}-${params.VERSION}.${extension}""", responseHandle: 'NONE', url: url
+
+                    // Unzip the angular application
+                    sh "mkdir -p dist"
+                    unzip dir: 'dist', zipFile: """${name}-${params.VERSION}.${extension}"""                    
+                }
+            }
+        }
+        
+        stage ('Deployment') {
+            steps {
+                script {
+                    dir('dist'){
+                        sshagent (credentials: [sshAgentCredentials]) {
+                            sh """
+                                # Copy resulting "dist" folder from workspace to deployment server
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}angular/dist/
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} rm -rf ${params.APPLICATION_DIR}angular/dist/* 2> /dev/null
+                                scp -o StrictHostKeyChecking=no -r . root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}angular/dist/
+                                
+                                # Launch application in Docker container
+                                ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

@@ -1,0 +1,88 @@
+2017-09-25 10:35:44.057 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 10:35:44.089 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 10:35:44.110 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 10:35:44.111 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 10:35:50.390 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/  
+2017-09-25 10:35:50.640 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.674 +02:00 [Information] Request finished in 287.8758ms 200 text/html
+2017-09-25 10:35:50.770 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/css/screen.css  
+2017-09-25 10:35:50.782 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/jquery-1.8.0.min.js  
+2017-09-25 10:35:50.787 +02:00 [Information] Sending file. Request path: '"/css/screen.css"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.788 +02:00 [Information] Sending file. Request path: '"/lib/jquery-1.8.0.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.789 +02:00 [Information] Request finished in 19.6934ms 200 text/css
+2017-09-25 10:35:50.828 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/jquery.wiggle.min.js  
+2017-09-25 10:35:50.829 +02:00 [Information] Sending file. Request path: '"/lib/jquery.wiggle.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.829 +02:00 [Information] Request finished in 1.1059ms 200 application/javascript
+2017-09-25 10:35:50.859 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/object-assign-pollyfill.js  
+2017-09-25 10:35:50.860 +02:00 [Information] Sending file. Request path: '"/lib/object-assign-pollyfill.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.860 +02:00 [Information] Request finished in 1.2478ms 200 application/javascript
+2017-09-25 10:35:50.888 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/css/reset.css  
+2017-09-25 10:35:50.889 +02:00 [Information] Sending file. Request path: '"/css/reset.css"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.889 +02:00 [Information] Request finished in 0.9113ms 200 text/css
+2017-09-25 10:35:50.891 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/swagger-ui.min.js  
+2017-09-25 10:35:50.892 +02:00 [Information] Sending file. Request path: '"/swagger-ui.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.902 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/jquery.slideto.min.js  
+2017-09-25 10:35:50.904 +02:00 [Information] Sending file. Request path: '"/lib/jquery.slideto.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.904 +02:00 [Information] Request finished in 1.9548ms 200 application/javascript
+2017-09-25 10:35:50.904 +02:00 [Information] Request finished in 122.0127ms 200 application/javascript
+2017-09-25 10:35:50.909 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/highlight.9.1.0.pack.js  
+2017-09-25 10:35:50.915 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.918 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/highlight.9.1.0.pack_extended.js  
+2017-09-25 10:35:50.921 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack_extended.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.921 +02:00 [Information] Request finished in 6.7757ms 200 application/javascript
+2017-09-25 10:35:50.921 +02:00 [Information] Request finished in 3.505ms 200 application/javascript
+2017-09-25 10:35:50.931 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/handlebars-4.0.5.js  
+2017-09-25 10:35:50.932 +02:00 [Information] Sending file. Request path: '"/lib/handlebars-4.0.5.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.932 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/jsoneditor.min.js  
+2017-09-25 10:35:50.936 +02:00 [Information] Sending file. Request path: '"/lib/jsoneditor.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.946 +02:00 [Information] Request finished in 14.3721ms 200 application/javascript
+2017-09-25 10:35:50.950 +02:00 [Information] Request finished in 18.3006ms 200 application/javascript
+2017-09-25 10:35:50.953 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/swagger-oauth.js  
+2017-09-25 10:35:50.954 +02:00 [Information] Sending file. Request path: '"/lib/swagger-oauth.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.954 +02:00 [Information] Request finished in 1.5767ms 200 application/javascript
+2017-09-25 10:35:50.958 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/css/typography.css  
+2017-09-25 10:35:50.961 +02:00 [Information] Sending file. Request path: '"/css/typography.css"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.965 +02:00 [Information] Request finished in 6.523ms 200 text/css
+2017-09-25 10:35:50.968 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/lodash.min.js  
+2017-09-25 10:35:50.969 +02:00 [Information] Sending file. Request path: '"/lib/lodash.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:50.970 +02:00 [Information] Request finished in 4.711ms 200 application/javascript
+2017-09-25 10:35:51.012 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/backbone-min.js  
+2017-09-25 10:35:51.013 +02:00 [Information] Sending file. Request path: '"/lib/backbone-min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:51.013 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/marked.js  
+2017-09-25 10:35:51.013 +02:00 [Information] Request finished in 1.1905ms 200 application/javascript
+2017-09-25 10:35:51.014 +02:00 [Information] Sending file. Request path: '"/lib/marked.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:51.014 +02:00 [Information] Request finished in 1.0075ms 200 application/javascript
+2017-09-25 10:35:51.017 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/lib/jquery.ba-bbq.min.js  
+2017-09-25 10:35:51.019 +02:00 [Information] Sending file. Request path: '"/lib/jquery.ba-bbq.min.js"'. Physical path: '"N/A"'
+2017-09-25 10:35:51.019 +02:00 [Information] Request finished in 2.9533ms 200 application/javascript
+2017-09-25 10:35:51.027 +02:00 [Information] Request finished in 135.6587ms 200 application/javascript
+2017-09-25 10:35:51.036 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/images/logo_small.png  
+2017-09-25 10:35:51.037 +02:00 [Information] Sending file. Request path: '"/images/logo_small.png"'. Physical path: '"N/A"'
+2017-09-25 10:35:51.037 +02:00 [Information] Request finished in 0.8805ms 200 image/png
+2017-09-25 10:35:51.062 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/css/print.css  
+2017-09-25 10:35:51.063 +02:00 [Information] Sending file. Request path: '"/css/print.css"'. Physical path: '"N/A"'
+2017-09-25 10:35:51.068 +02:00 [Information] Request finished in 6.0846ms 200 text/css
+2017-09-25 10:35:51.413 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/v1/swagger.json  
+2017-09-25 10:35:51.529 +02:00 [Information] Request finished in 115.999ms 200 application/json
+2017-09-25 12:16:14.330 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:16:14.358 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:16:14.372 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:16:14.372 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:31:44.092 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:31:44.117 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:31:44.128 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:31:44.129 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 12:31:50.632 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/  
+2017-09-25 12:31:50.842 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-09-25 12:31:50.874 +02:00 [Information] Request finished in 246.0149ms 200 text/html
+2017-09-25 12:31:51.419 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/v1/swagger.json  
+2017-09-25 12:31:51.780 +02:00 [Information] Request finished in 360.899ms 200 application/json
+2017-09-25 13:53:45.434 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 13:53:45.465 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 13:53:45.483 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 13:53:45.484 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-09-25 13:53:51.886 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/  
+2017-09-25 13:53:52.129 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-09-25 13:53:52.158 +02:00 [Information] Request finished in 275.6881ms 200 text/html
+2017-09-25 13:53:52.825 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2021/swagger/v1/swagger.json  
+2017-09-25 13:53:53.174 +02:00 [Information] Request finished in 349.3763ms 200 application/json

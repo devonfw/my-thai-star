@@ -1,0 +1,13 @@
+<span mat-dialog-title class="text-upper">{{'sidenav.dialog.title' | translate}}</span>
+<mat-dialog-content>
+  <span style="font-size: 0.9em">{{'sidenav.dialog.content' | translate}}</span>
+  <mat-form-field color="accent" style="width:100%">
+    <textarea matInput [placeholder]="'formFields.comment' | translate" #comment style="resize: none"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="align-right" flex>
+    <button mat-button mat-dialog-close class="text-upper">{{'buttons.cancel' | translate}}</button>
+    <button mat-button [disabled]="!comment.value.length" (click)="sendComment(comment.value)" color="accent" class="text-upper">{{'buttons.send' | translate}}</button>
+  </div>
+</mat-dialog-actions>

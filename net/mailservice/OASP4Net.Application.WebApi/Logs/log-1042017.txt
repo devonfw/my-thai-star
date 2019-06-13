@@ -1,0 +1,310 @@
+2017-10-04 11:05:33.257 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:05:33.298 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:05:33.314 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:05:33.315 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:05:43.554 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/  
+2017-10-04 11:05:43.817 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:05:43.983 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-10-04 11:05:43.997 +02:00 [Information] Request finished in 450.0069ms 200 text/html
+2017-10-04 11:05:44.604 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/v1/swagger.json  
+2017-10-04 11:05:44.718 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:05:45.105 +02:00 [Information] Request finished in 500.9538ms 200 application/json
+2017-10-04 11:05:49.185 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:05:49.243 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:05:49.245 +02:00 [Information] Policy execution successful.
+2017-10-04 11:06:33.097 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:06:33.103 +02:00 [Information] Request finished in 43918.3086ms 200 text/plain; charset=utf-8
+2017-10-04 11:06:50.984 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:06:51.042 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:06:51.042 +02:00 [Information] Policy execution successful.
+2017-10-04 11:07:29.645 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:07:29.646 +02:00 [Information] Request finished in 38662.0251ms 200 text/plain; charset=utf-8
+2017-10-04 11:08:21.025 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:08:21.075 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:08:21.075 +02:00 [Information] Policy execution successful.
+2017-10-04 11:10:37.628 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:10:37.656 +02:00 [Information] Request finished in 136631.0134ms 200 text/plain; charset=utf-8
+2017-10-04 11:10:42.971 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:10:43.033 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:10:43.033 +02:00 [Information] Policy execution successful.
+2017-10-04 11:10:54.767 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:10:54.768 +02:00 [Information] Request finished in 11797.7353ms 200 text/plain; charset=utf-8
+2017-10-04 11:11:02.386 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:11:02.448 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:11:02.448 +02:00 [Information] Policy execution successful.
+2017-10-04 11:12:04.950 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:12:04.951 +02:00 [Information] Request finished in 62565.0669ms 200 text/plain; charset=utf-8
+2017-10-04 11:12:06.826 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:12:06.872 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:12:06.872 +02:00 [Information] Policy execution successful.
+2017-10-04 11:13:22.623 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:13:22.653 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:13:22.669 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:13:22.669 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:13:23.872 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:13:24.074 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:13:24.076 +02:00 [Information] Policy execution successful.
+2017-10-04 11:13:38.459 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:13:38.472 +02:00 [Information] Request finished in 14606.0242ms 200 text/plain; charset=utf-8
+2017-10-04 11:13:58.291 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:13:58.343 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:13:58.344 +02:00 [Information] Policy execution successful.
+2017-10-04 11:14:20.806 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:14:20.807 +02:00 [Information] Request finished in 22515.1678ms 200 text/plain; charset=utf-8
+2017-10-04 11:14:22.809 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:14:22.877 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:14:22.877 +02:00 [Information] Policy execution successful.
+2017-10-04 11:16:43.735 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:16:43.736 +02:00 [Information] Request finished in 140927.0041ms 200 text/plain; charset=utf-8
+2017-10-04 11:18:21.693 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:18:21.757 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:18:21.757 +02:00 [Information] Policy execution successful.
+2017-10-04 11:21:46.729 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:21:46.770 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:21:46.790 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:21:46.791 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 11:21:54.748 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 546
+2017-10-04 11:21:54.946 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 11:21:54.950 +02:00 [Information] Policy execution successful.
+2017-10-04 11:22:04.690 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 11:22:04.704 +02:00 [Information] Request finished in 9960.7049ms 200 text/plain; charset=utf-8
+2017-10-04 12:32:33.867 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 12:32:33.903 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 12:32:33.915 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 12:32:33.916 +02:00 [Information] Saved 1 entities to in-memory store.
+2017-10-04 12:32:51.062 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/  
+2017-10-04 12:32:51.321 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:51.530 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-10-04 12:32:51.546 +02:00 [Information] Request finished in 487.7449ms 200 text/html
+2017-10-04 12:32:51.918 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/v1/swagger.json  
+2017-10-04 12:32:51.967 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:52.442 +02:00 [Information] Request finished in 522.9147ms 200 application/json
+2017-10-04 12:32:56.174 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/  
+2017-10-04 12:32:56.227 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.228 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.228 +02:00 [Information] Request finished in 54.0794ms 200 text/html
+2017-10-04 12:32:56.269 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/typography.css  
+2017-10-04 12:32:56.299 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery-1.8.0.min.js  
+2017-10-04 12:32:56.299 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/screen.css  
+2017-10-04 12:32:56.487 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.488 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/reset.css  
+2017-10-04 12:32:56.488 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.488 +02:00 [Information] Sending file. Request path: '"/css/screen.css"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.494 +02:00 [Information] Sending file. Request path: '"/css/typography.css"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.494 +02:00 [Information] Request finished in 195.4346ms 200 text/css
+2017-10-04 12:32:56.494 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.495 +02:00 [Information] Sending file. Request path: '"/lib/jquery-1.8.0.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.538 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/object-assign-pollyfill.js  
+2017-10-04 12:32:56.538 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.538 +02:00 [Information] Sending file. Request path: '"/css/reset.css"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.540 +02:00 [Information] Request finished in 51.0935ms 200 text/css
+2017-10-04 12:32:56.543 +02:00 [Information] Request finished in 273.6671ms 200 text/css
+2017-10-04 12:32:56.566 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.wiggle.min.js  
+2017-10-04 12:32:56.605 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.slideto.min.js  
+2017-10-04 12:32:56.625 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.645 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.645 +02:00 [Information] Sending file. Request path: '"/lib/object-assign-pollyfill.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.646 +02:00 [Information] Request finished in 108.4702ms 200 application/javascript
+2017-10-04 12:32:56.646 +02:00 [Information] Sending file. Request path: '"/lib/jquery.wiggle.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.648 +02:00 [Information] Request finished in 80.7471ms 200 application/javascript
+2017-10-04 12:32:56.667 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.667 +02:00 [Information] Sending file. Request path: '"/lib/jquery.slideto.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.668 +02:00 [Information] Request finished in 62.4623ms 200 application/javascript
+2017-10-04 12:32:56.671 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/lodash.min.js  
+2017-10-04 12:32:56.673 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/swagger-ui.min.js  
+2017-10-04 12:32:56.701 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/backbone-min.js  
+2017-10-04 12:32:56.743 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.745 +02:00 [Information] Sending file. Request path: '"/swagger-ui.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.787 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.807 +02:00 [Information] Sending file. Request path: '"/lib/lodash.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.807 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.808 +02:00 [Information] Sending file. Request path: '"/lib/backbone-min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.808 +02:00 [Information] Request finished in 107.5708ms 200 application/javascript
+2017-10-04 12:32:56.808 +02:00 [Information] Request finished in 136.6787ms 200 application/javascript
+2017-10-04 12:32:56.816 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/highlight.9.1.0.pack.js  
+2017-10-04 12:32:56.819 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/highlight.9.1.0.pack_extended.js  
+2017-10-04 12:32:56.908 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.927 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.927 +02:00 [Information] Request finished in 112.0035ms 200 application/javascript
+2017-10-04 12:32:56.927 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.930 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack_extended.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:56.931 +02:00 [Information] Request finished in 112.7741ms 200 application/javascript
+2017-10-04 12:32:56.931 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jsoneditor.min.js  
+2017-10-04 12:32:56.972 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:56.972 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.ba-bbq.min.js  
+2017-10-04 12:32:56.972 +02:00 [Information] Sending file. Request path: '"/lib/jsoneditor.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.003 +02:00 [Information] Request finished in 702.817ms 200 application/javascript
+2017-10-04 12:32:57.018 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/handlebars-4.0.5.js  
+2017-10-04 12:32:57.021 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.022 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/marked.js  
+2017-10-04 12:32:57.041 +02:00 [Information] Sending file. Request path: '"/lib/jquery.ba-bbq.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.041 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/swagger-oauth.js  
+2017-10-04 12:32:57.060 +02:00 [Information] Request finished in 69.9732ms 200 application/javascript
+2017-10-04 12:32:57.084 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.127 +02:00 [Information] Sending file. Request path: '"/lib/handlebars-4.0.5.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.147 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.147 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.147 +02:00 [Information] Sending file. Request path: '"/lib/marked.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.147 +02:00 [Information] Sending file. Request path: '"/lib/swagger-oauth.js"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.147 +02:00 [Information] Request finished in 106.9058ms 200 application/javascript
+2017-10-04 12:32:57.147 +02:00 [Information] Request finished in 125.5644ms 200 application/javascript
+2017-10-04 12:32:57.151 +02:00 [Information] Request finished in 219.1715ms 200 application/javascript
+2017-10-04 12:32:57.158 +02:00 [Information] Request finished in 155.2714ms 200 application/javascript
+2017-10-04 12:32:57.169 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/images/logo_small.png  
+2017-10-04 12:32:57.169 +02:00 [Information] Request finished in 496.5071ms 200 application/javascript
+2017-10-04 12:32:57.284 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.285 +02:00 [Information] Sending file. Request path: '"/images/logo_small.png"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.285 +02:00 [Information] Request finished in 115.6604ms 200 image/png
+2017-10-04 12:32:57.290 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/print.css  
+2017-10-04 12:32:57.340 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.340 +02:00 [Information] Sending file. Request path: '"/css/print.css"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.341 +02:00 [Information] Request finished in 51.3582ms 200 text/css
+2017-10-04 12:32:57.426 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/v1/swagger.json  
+2017-10-04 12:32:57.473 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/images/favicon-32x32.png  
+2017-10-04 12:32:57.540 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.541 +02:00 [Information] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed"
+2017-10-04 12:32:57.541 +02:00 [Information] Sending file. Request path: '"/images/favicon-32x32.png"'. Physical path: '"N/A"'
+2017-10-04 12:32:57.541 +02:00 [Information] Request finished in 68.7338ms 200 image/png
+2017-10-04 12:32:57.551 +02:00 [Information] Request finished in 125.6234ms 200 application/json
+2017-10-04 12:40:03.971 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/  
+2017-10-04 12:40:04.266 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.291 +02:00 [Information] Request finished in 331.1746ms 200 text/html
+2017-10-04 12:40:04.342 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/reset.css  
+2017-10-04 12:40:04.342 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/object-assign-pollyfill.js  
+2017-10-04 12:40:04.343 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.slideto.min.js  
+2017-10-04 12:40:04.343 +02:00 [Information] Sending file. Request path: '"/lib/jquery.slideto.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.343 +02:00 [Information] Sending file. Request path: '"/lib/object-assign-pollyfill.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.344 +02:00 [Information] Request finished in 1.1166ms 200 application/javascript
+2017-10-04 12:40:04.344 +02:00 [Information] Request finished in 2.0193ms 200 application/javascript
+2017-10-04 12:40:04.357 +02:00 [Information] Sending file. Request path: '"/css/reset.css"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.357 +02:00 [Information] Request finished in 15.0585ms 200 text/css
+2017-10-04 12:40:04.414 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/screen.css  
+2017-10-04 12:40:04.421 +02:00 [Information] Sending file. Request path: '"/css/screen.css"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.421 +02:00 [Information] Request finished in 7.0533ms 200 text/css
+2017-10-04 12:40:04.444 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.ba-bbq.min.js  
+2017-10-04 12:40:04.445 +02:00 [Information] Sending file. Request path: '"/lib/jquery.ba-bbq.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.445 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/typography.css  
+2017-10-04 12:40:04.445 +02:00 [Information] Request finished in 0.9335ms 200 application/javascript
+2017-10-04 12:40:04.446 +02:00 [Information] Sending file. Request path: '"/css/typography.css"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.455 +02:00 [Information] Request finished in 9.7744ms 200 text/css
+2017-10-04 12:40:04.457 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/lodash.min.js  
+2017-10-04 12:40:04.457 +02:00 [Information] Sending file. Request path: '"/lib/lodash.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.458 +02:00 [Information] Request finished in 1.223ms 200 application/javascript
+2017-10-04 12:40:04.478 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/swagger-ui.min.js  
+2017-10-04 12:40:04.478 +02:00 [Information] Sending file. Request path: '"/swagger-ui.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.565 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/highlight.9.1.0.pack.js  
+2017-10-04 12:40:04.566 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.566 +02:00 [Information] Request finished in 1.4972ms 200 application/javascript
+2017-10-04 12:40:04.586 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery-1.8.0.min.js  
+2017-10-04 12:40:04.587 +02:00 [Information] Sending file. Request path: '"/lib/jquery-1.8.0.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.605 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jquery.wiggle.min.js  
+2017-10-04 12:40:04.606 +02:00 [Information] Sending file. Request path: '"/lib/jquery.wiggle.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.606 +02:00 [Information] Request finished in 0.8437ms 200 application/javascript
+2017-10-04 12:40:04.633 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/backbone-min.js  
+2017-10-04 12:40:04.635 +02:00 [Information] Sending file. Request path: '"/lib/backbone-min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.635 +02:00 [Information] Request finished in 1.8568ms 200 application/javascript
+2017-10-04 12:40:04.651 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/handlebars-4.0.5.js  
+2017-10-04 12:40:04.651 +02:00 [Information] Sending file. Request path: '"/lib/handlebars-4.0.5.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.657 +02:00 [Information] Request finished in 6.4421ms 200 application/javascript
+2017-10-04 12:40:04.664 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/highlight.9.1.0.pack_extended.js  
+2017-10-04 12:40:04.667 +02:00 [Information] Sending file. Request path: '"/lib/highlight.9.1.0.pack_extended.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.668 +02:00 [Information] Request finished in 3.7381ms 200 application/javascript
+2017-10-04 12:40:04.673 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/marked.js  
+2017-10-04 12:40:04.673 +02:00 [Information] Sending file. Request path: '"/lib/marked.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.674 +02:00 [Information] Request finished in 0.9327ms 200 application/javascript
+2017-10-04 12:40:04.681 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/jsoneditor.min.js  
+2017-10-04 12:40:04.681 +02:00 [Information] Request finished in 94.6591ms 200 application/javascript
+2017-10-04 12:40:04.683 +02:00 [Information] Sending file. Request path: '"/lib/jsoneditor.min.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.690 +02:00 [Information] Request finished in 9.8651ms 200 application/javascript
+2017-10-04 12:40:04.702 +02:00 [Information] Request finished in 224.2243ms 200 application/javascript
+2017-10-04 12:40:04.709 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/lib/swagger-oauth.js  
+2017-10-04 12:40:04.710 +02:00 [Information] Sending file. Request path: '"/lib/swagger-oauth.js"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.710 +02:00 [Information] Request finished in 1.6366ms 200 application/javascript
+2017-10-04 12:40:04.721 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/images/logo_small.png  
+2017-10-04 12:40:04.721 +02:00 [Information] Sending file. Request path: '"/images/logo_small.png"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.722 +02:00 [Information] Request finished in 1.1516ms 200 image/png
+2017-10-04 12:40:04.729 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/css/print.css  
+2017-10-04 12:40:04.729 +02:00 [Information] Sending file. Request path: '"/css/print.css"'. Physical path: '"N/A"'
+2017-10-04 12:40:04.729 +02:00 [Information] Request finished in 0.9605ms 200 text/css
+2017-10-04 12:40:04.994 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/v1/swagger.json  
+2017-10-04 12:40:05.013 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/images/favicon-32x32.png  
+2017-10-04 12:40:05.014 +02:00 [Information] Sending file. Request path: '"/images/favicon-32x32.png"'. Physical path: '"N/A"'
+2017-10-04 12:40:05.014 +02:00 [Information] Request finished in 1.0439ms 200 image/png
+2017-10-04 12:40:05.295 +02:00 [Information] Request finished in 301.6417ms 200 application/json
+2017-10-04 16:10:59.378 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/  
+2017-10-04 16:10:59.729 +02:00 [Information] Sending file. Request path: '"/index.html"'. Physical path: '"N/A"'
+2017-10-04 16:10:59.776 +02:00 [Information] Request finished in 410.1188ms 200 text/html
+2017-10-04 16:11:00.564 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:2025/swagger/v1/swagger.json  
+2017-10-04 16:11:00.878 +02:00 [Information] Request finished in 314.5436ms 200 application/json
+2017-10-04 16:11:14.712 +02:00 [Information] Request starting HTTP/1.1 POST http://localhost:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json-patch+json 252
+2017-10-04 16:11:14.714 +02:00 [Information] Policy execution successful.
+2017-10-04 16:11:15.013 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 16:11:15.021 +02:00 [Information] Request finished in 309.1055ms 200 text/plain; charset=utf-8
+2017-10-04 16:11:41.824 +02:00 [Information] Request starting HTTP/1.1 GET http://127.0.0.1:2025/  
+2017-10-04 16:11:41.826 +02:00 [Information] Request finished in 1.9205ms 404 
+2017-10-04 16:16:50.637 +02:00 [Information] Request starting HTTP/1.1 GET http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send  
+2017-10-04 16:16:50.638 +02:00 [Information] Request finished in 0.6401ms 404 
+2017-10-04 16:16:50.769 +02:00 [Information] Request starting HTTP/1.1 GET http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send  
+2017-10-04 16:16:50.769 +02:00 [Information] Request finished in 0.4486ms 404 
+2017-10-04 16:27:57.762 +02:00 [Information] Request starting HTTP/1.1 GET http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send  
+2017-10-04 16:27:57.763 +02:00 [Information] Request finished in 0.3156ms 404 
+2017-10-04 16:57:43.031 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 16:57:43.039 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 16:57:43.040 +02:00 [Information] Request finished in 9.1646ms 200 text/plain; charset=utf-8
+2017-10-04 16:57:43.071 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 16:57:43.072 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 16:57:43.073 +02:00 [Information] Request finished in 2.4076ms 200 text/plain; charset=utf-8
+2017-10-04 17:00:02.582 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 17:00:15.800 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:00:15.802 +02:00 [Information] Request finished in 13219.3396ms 200 text/plain; charset=utf-8
+2017-10-04 17:00:15.818 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 17:00:51.414 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:00:51.414 +02:00 [Information] Request finished in 35595.9508ms 200 text/plain; charset=utf-8
+2017-10-04 17:04:06.152 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 17:04:07.745 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:04:07.749 +02:00 [Information] Request finished in 1596.4987ms 200 text/plain; charset=utf-8
+2017-10-04 17:04:07.761 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 273
+2017-10-04 17:04:08.594 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:04:08.597 +02:00 [Information] Request finished in 834.3656ms 200 text/plain; charset=utf-8
+2017-10-04 17:06:33.873 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 299
+2017-10-04 17:06:37.436 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:06:37.438 +02:00 [Information] Request finished in 3564.9018ms 200 text/plain; charset=utf-8
+2017-10-04 17:06:37.447 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 299
+2017-10-04 17:06:44.943 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:06:44.946 +02:00 [Information] Request finished in 7499.1072ms 200 text/plain; charset=utf-8
+2017-10-04 17:08:32.117 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 299
+2017-10-04 17:08:36.073 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:08:36.075 +02:00 [Information] Request finished in 3957.9179ms 200 text/plain; charset=utf-8
+2017-10-04 17:08:36.083 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 299
+2017-10-04 17:08:38.792 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:08:38.793 +02:00 [Information] Request finished in 2710.0687ms 200 text/plain; charset=utf-8
+2017-10-04 17:16:00.134 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 438
+2017-10-04 17:16:12.739 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:16:12.742 +02:00 [Information] Request finished in 12607.4436ms 200 text/plain; charset=utf-8
+2017-10-04 17:16:20.294 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 673
+2017-10-04 17:16:21.363 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:16:21.365 +02:00 [Information] Request finished in 1070.7028ms 200 text/plain; charset=utf-8
+2017-10-04 17:16:21.402 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 673
+2017-10-04 17:16:22.414 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:16:22.416 +02:00 [Information] Request finished in 1014.2485ms 200 text/plain; charset=utf-8
+2017-10-04 17:16:22.423 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 673
+2017-10-04 17:16:23.347 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:16:23.348 +02:00 [Information] Request finished in 924.4232ms 200 text/plain; charset=utf-8
+2017-10-04 17:18:29.199 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 434
+2017-10-04 17:18:30.301 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:18:30.302 +02:00 [Information] Request finished in 1103.657ms 200 text/plain; charset=utf-8
+2017-10-04 17:19:21.439 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 669
+2017-10-04 17:19:22.528 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:19:22.529 +02:00 [Information] Request finished in 1090.1828ms 200 text/plain; charset=utf-8
+2017-10-04 17:20:29.904 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 669
+2017-10-04 17:22:16.649 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:22:16.651 +02:00 [Information] Request finished in 106746.8743ms 200 text/plain; charset=utf-8
+2017-10-04 17:29:18.461 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 371
+2017-10-04 17:29:40.018 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:29:40.033 +02:00 [Information] Request finished in 21579.839ms 200 text/plain; charset=utf-8
+2017-10-04 17:29:57.833 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 606
+2017-10-04 17:30:12.545 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:30:12.545 +02:00 [Information] Request finished in 14711.9444ms 200 text/plain; charset=utf-8
+2017-10-04 17:30:15.405 +02:00 [Information] Request starting HTTP/1.1 POST http://127.0.0.1:2025/mythaistar/services/rest/EmailManagement/v1/Email/Send application/json; charset=utf-8 606
+2017-10-04 17:30:19.984 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-10-04 17:30:19.985 +02:00 [Information] Request finished in 4579.1799ms 200 text/plain; charset=utf-8

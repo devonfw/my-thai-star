@@ -1,0 +1,13 @@
+<mat-form-field color="accent" [class.disabled]="disabled">
+  <button type="button" mat-icon-button matPrefix>
+    <mat-icon>search</mat-icon>
+  </button>
+  <input matInput
+    [value]="inputValue"
+    (input)="onChange($event)"
+    [placeholder]="'menu.filter.search' | translate"
+  >
+  <button *ngIf="isSearchFieldNotEmpty()" type="button" (click)="clearSearchField()" mat-icon-button matSuffix>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

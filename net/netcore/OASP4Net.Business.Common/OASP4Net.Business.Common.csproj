@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OASP4Net.Domain.Entities\OASP4Net.Domain.Entities.csproj" />
+    <ProjectReference Include="..\OASP4Net.Domain.UnitOfWork\OASP4Net.Domain.UnitOfWork.csproj" />
+    <ProjectReference Include="..\OASP4Net.Infrastructure.Common\OASP4Net.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\OASP4Net.Infrastructure.Communication\OASP4Net.Infrastructure.Communication.csproj" />
+    <ProjectReference Include="..\OASP4Net.Infrastructure.JWT\OASP4Net.Infrastructure.JWT.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="General\DataType\" />
+  </ItemGroup>
+
+</Project>

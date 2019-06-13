@@ -1,0 +1,102 @@
+<div layout="row" layout-align="center center" style="align-items: center" flex>
+  <a mat-icon-button class="forMobile" (click)="openCloseNavigationSideNav()">
+    <mat-icon>dehaze</mat-icon>
+  </a>
+  <a mat-icon-button>
+    <mat-icon>star_border</mat-icon>
+  </a>
+  <span>My Thai Star</span>
+
+  <span flex></span>
+  <div *ngIf="(role$ | async) === 'CUSTOMER'" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/restaurant" routerLinkActive #restaurant="routerLinkActive"
+        [class.navBottomBorder]="restaurant.isActive">
+        {{'main.home' | translate}}
+      </a>
+      <a mat-tab-link class="text-upper" routerLink="/menu" routerLinkActive #menu="routerLinkActive"
+        [class.navBottomBorder]="menu.isActive">
+        {{'main.menu' | translate}}
+      </a>
+      <a mat-tab-link class="text-upper" routerLink="/bookTable" routerLinkActive #bookTable="routerLinkActive"
+        [class.navBottomBorder]="bookTable.isActive">
+        {{'main.book' | translate}}
+      </a>
+    </nav>
+  </div>
+  <div *ngIf="(role$ | async) === 'WAITER'" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/orders" routerLinkActive #orders="routerLinkActive"
+        [class.navBottomBorder]="orders.isActive">
+        {{'main.orders' | translate}}
+      </a>
+      <a mat-tab-link class="text-upper" routerLink="/reservations" routerLinkActive #reservations="routerLinkActive"
+        [class.navBottomBorder]="reservations.isActive">
+        {{'main.reservations' | translate}}
+      </a>
+    </nav>
+  </div>
+  <div *ngIf="(role$ | async) === 'MANAGER'" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/prediction" routerLinkActive #prediction="routerLinkActive"
+        [class.navBottomBorder]="prediction.isActive">
+        PREDICTION
+      </a>
+    </nav>
+  </div>
+  <div *ngIf="(role$ | async) === 'MANAGER'" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="text-upper" routerLink="/clustering" routerLinkActive #clustering="routerLinkActive"
+        [class.navBottomBorder]="clustering.isActive">
+        CLUSTERING
+      </a>
+    </nav>
+  </div>
+  <button name="login" *ngIf="!(logged$ | async)" mat-icon-button (click)="openLoginDialog()"
+    [matTooltip]="'main.userActions.user' | translate">
+    <mat-icon>person_outline</mat-icon>
+  </button>
+  <div *ngIf="(logged$ | async)" layout="row" style="align-items:center">
+    <button name="account" mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <span data-name="userNameLogged" class="forDesktop">{{ userName$ | async }}</span>
+    <button class="forDesktop" *ngIf="!(logged$ | async)" mat-icon-button (click)="logout()"
+      [matTooltip]="'main.userActions.logout' | translate">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <mat-menu #toolbarMenu1="matMenu">
+      <button name="changePassword" mat-menu-item type="button" (click)="openResetDialog()"
+        *ngIf="(role$ | async) === 'CUSTOMER'">
+        <mat-icon>settings</mat-icon>
+        <span>{{'main.userActions.changePassword' | translate}}</span>
+      </button>
+      <button name="twitterAccount" mat-menu-item type="button" (click)="openTwitterDialog()"
+        *ngIf="(role$ | async) === 'CUSTOMER'">
+        <mat-icon>send</mat-icon>
+        <span>{{'main.userActions.twitterAccount' | translate}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button name="logout" mat-menu-item type="button" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>{{'main.userActions.signOut' | translate}}</span>
+      </button>
+    </mat-menu>
+  </div>
+  <button name="order" *ngIf="(role$ | async) === 'CUSTOMER'" mat-icon-button (click)="openCloseSideNav(sidenav.opened)"
+    [matTooltip]="'main.userActions.orders' | translate">
+    <td-notification-count color="accent" [notifications]="sidenav.getNumberOrders()">
+      <mat-icon>shopping_basket</mat-icon>
+    </td-notification-count>
+  </button>
+  <button name="language" mat-icon-button [matMenuTriggerFor]="menu"
+    matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">
+    <span class="flag-icon flag-icon-{{ flag }}"></span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="translate.currentLang === lang.value"
+      (click)="changeLanguage(lang.value)" mat-menu-item>
+      <span>{{lang.label}}</span>
+    </button>
+  </mat-menu>
+</div>

@@ -1,0 +1,29 @@
+version: '3'
+services:
+  reverse-proxy:
+    build: .
+    image: my-thai-star/reverse-proxy:latest
+    restart: always
+    ports:
+      - '8090:80'
+    networks:
+      - my-thai-star
+    depends_on:
+      - java
+      - angular
+  java:
+    build: java/
+    image: my-thai-star/java:latest
+    restart: always
+    networks:
+      - my-thai-star
+  angular:
+    build: angular/
+    image: my-thai-star/angular:latest
+    restart: always
+    networks:
+      - my-thai-star
+
+networks:
+  my-thai-star:
+    driver: bridge
