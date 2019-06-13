@@ -1,39 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { Store } from '@ngrx/store';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { async, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 import { BookTableDialogComponent } from './book-table-dialog.component';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import { BookTableService } from 'app/book-table/services/book-table.service';
+import { BookTableModule } from 'app/book-table/book-table.module';
+import { CoreModule } from 'app/core/core.module';
+
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
-  let fixture: ComponentFixture<BookTableDialogComponent>;
-  beforeEach(() => {
-    const matDialogRefStub = { close: arg1 => ({}) };
-    const storeStub = { dispatch: arg1 => ({}) };
+  let dialog: MatDialog;
+
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
-      declarations: [BookTableDialogComponent],
-      providers: [
-        { provide: MatDialogRef, useValue: matDialogRefStub },
-        { provide: Store, useValue: storeStub }
-      ]
-    });
-    fixture = TestBed.createComponent(BookTableDialogComponent);
-    component = fixture.componentInstance;
+      providers: [SnackBarService, BookTableService, HttpClient],
+      imports: [
+        BrowserAnimationsModule,
+        TranslateModule.forRoot(),
+        BookTableModule,
+        HttpClientModule,
+        CoreModule,
+      ],
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    dialog = TestBed.get(MatDialog);
+    component = dialog.open(BookTableDialogComponent).componentInstance;
   });
-  it('can load instance', () => {
+
+  it('should create', () => {
     expect(component).toBeTruthy();
-  });
-  describe('sendBooking', () => {
-    it('makes expected calls', () => {
-      const matDialogRefStub: MatDialogRef = fixture.debugElement.injector.get(
-        MatDialogRef
-      );
-      const storeStub: Store = fixture.debugElement.injector.get(Store);
-      spyOn(matDialogRefStub, 'close').and.callThrough();
-      spyOn(storeStub, 'dispatch').and.callThrough();
-      component.sendBooking();
-      expect(matDialogRefStub.close).toHaveBeenCalled();
-      expect(storeStub.dispatch).toHaveBeenCalled();
-    });
   });
 });
