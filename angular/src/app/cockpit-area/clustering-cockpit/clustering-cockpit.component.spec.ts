@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ClusteringCockpitComponent } from './clustering-cockpit.component';
 import { ClusteringService } from '../services/clustering.service';
-import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { ConfigService } from '../../core/config/config.service';
 import { MenuService } from '../../menu/services/menu.service';
 

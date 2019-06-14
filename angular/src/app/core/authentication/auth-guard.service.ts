@@ -8,11 +8,11 @@ import {
 import { AuthService } from './auth.service';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { TranslateService } from '@ngx-translate/core';
-import {Observable, of} from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
 import * as fromApp from 'app/store/reducers';
 import * as fromAuth from 'app/user-area/store/selectors';
-import {map, take} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Injectable()

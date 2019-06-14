@@ -70,10 +70,7 @@ export class MenuComponent implements OnInit {
   }
 
   idExist(id: number): any {
-    if (this.orders.find((orderId) => orderId.order.dish.id === id)) {
-      return true;
-    }
-    return false;
+    return !!this.orders.find((orderId) => orderId.order.dish.id === id);
   }
 
   onExtraSelected(extra: ExtraView): void {

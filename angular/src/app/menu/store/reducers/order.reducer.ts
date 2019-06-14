@@ -1,4 +1,4 @@
-import {EntityState, EntityAdapter, createEntityAdapter, Dictionary} from '@ngrx/entity';
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import { Order } from '../../models/order.model';
 import { OrderActions, OrderActionTypes } from '../actions/order.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';

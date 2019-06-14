@@ -1,11 +1,11 @@
-@import "~variables.scss";
+@import "../../../../variables";
 
 .menu {
   background-color: white;
 
   .search {
     justify-content: space-between;
-    padding: 10px 24px 0px 24px;
+    padding: 10px 24px 0 24px;
     display: flex;
     flex-direction: column;
 
@@ -27,7 +27,7 @@
   }
 
   .menu-filters {
-    padding: 0px 24px;
+    padding: 0 24px;
     display: flex;
     flex-direction: column;
 

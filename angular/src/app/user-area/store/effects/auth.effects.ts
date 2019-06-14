@@ -31,10 +31,7 @@ export class AuthEffects {
 
   private readonly restPathRoot: string;
   private readonly restServiceRoot: string;
-  private readonly loginRestPath: string = 'login';
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
-  private readonly registerRestPath: string = 'register';
-  private readonly changePasswordRestPath: string = 'changepassword';
   authAlerts: any;
 
   // Open Login Dialog and dispatch Login

@@ -1,5 +1,4 @@
 import {AuthActions, AuthActionTypes} from '../actions/auth.actions';
-import {LoginInfo} from '../../../shared/backend-models/interfaces';
 import {TokenString, UserDataResponse} from '../../models/user';
 
 export interface AuthState {
