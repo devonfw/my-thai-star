@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="78a9a9de-19a1-495f-8796-c0faac5a8080" name="Default Changelist" comment="" />
+    <list default="true" id="78a9a9de-19a1-495f-8796-c0faac5a8080" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/angular/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/email-confirmations/email-confirmations.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/email-confirmations/email-confirmations.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/menu/components/menu-card/menu-card-details/menu-card-details.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/menu/components/menu-card/menu-card-details/menu-card-details.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/sidenav/container/sidenav/sidenav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/sidenav/container/sidenav/sidenav.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/polyfills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/polyfills.ts" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +27,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -33,6 +39,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -62,24 +69,20 @@
       <option name="presentableId" value="Default" />
       <updated>1560506626543</updated>
       <workItem from="1560506628891" duration="169000" />
+      <workItem from="1560517113864" duration="10000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="169000" />
+    <option name="totallyTimeSpent" value="179000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1032" extended-state="0" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2537961" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -87,12 +90,17 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
