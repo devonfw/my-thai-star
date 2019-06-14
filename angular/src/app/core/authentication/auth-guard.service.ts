@@ -28,7 +28,6 @@ export class AuthGuardService implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-<<<<<<< HEAD
   ): Observable<boolean> {
     return combineLatest(
         this.store.select(fromAuth.getRole),
@@ -38,18 +37,6 @@ export class AuthGuardService implements CanActivate {
           if ((state.url === '/prediction' || state.url === '/clustering') && role === 'MANAGER' && logged) {
             return true;
           }
-=======
-  ): boolean {
-    if ((state.url === '/prediction' || state.url === '/clustering') && this.authService.isLogged() && this.authService.isPermited('MANAGER')) {
-      return true;
-    }
-
-    if ((state.url === '/orders' || state.url === '/reservations')
-      && this.authService.isLogged()
-      && this.authService.isPermited('WAITER')) {
-      return true;
-    }
->>>>>>> upstream/develop
 
           if ((state.url === '/orders' || state.url === '/reservations') && role === 'WAITER' && logged) {
             return true;
