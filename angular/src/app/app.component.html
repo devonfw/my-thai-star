@@ -18,7 +18,7 @@
     </mat-sidenav>
 
     <mat-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
+      <mat-nav-list menu-items *ngIf="(role$ | async) === 'CUSTOMER'">
         <a mat-list-item (click)="navigateTo('restaurant')">
           <mat-icon>home</mat-icon>
           HOME
@@ -32,13 +32,13 @@
           BOOK TABLE
         </a>
       </mat-nav-list>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('MANAGER')">
+      <mat-nav-list menu-items *ngIf="(role$ | async) === 'MANAGER'">
         <a mat-list-item (click)="navigateTo('prediction')">
           <mat-icon>show_chart</mat-icon>
           PREDICTION
         </a>
       </mat-nav-list>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
+      <mat-nav-list menu-items *ngIf="(role$ | async) === 'WAITER'">
         <a mat-list-item (click)="navigateTo('orders')">
           <mat-icon>home</mat-icon>
           ORDERS

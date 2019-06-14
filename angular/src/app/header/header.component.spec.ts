@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
 import { HeaderComponent } from './header.component';
-import { of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import * as fromStore from 'app/store/reducers';

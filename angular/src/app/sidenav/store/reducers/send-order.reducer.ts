@@ -1,6 +1,5 @@
 
 import { SendOrderActions, SendOrderActionTypes } from '../actions/send-order.actions';
-import {OrderSend} from '../../models/order-send.model';
 
 export interface State {
   token: string;

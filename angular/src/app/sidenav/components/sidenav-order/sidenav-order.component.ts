@@ -1,6 +1,6 @@
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
-import {Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { TdDialogService } from '@covalent/core';
 import { map } from 'lodash';
 import {Order} from 'app/sidenav/models/order.model';

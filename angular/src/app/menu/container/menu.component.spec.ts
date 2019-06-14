@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ExtraView } from 'app/shared/view-models/interfaces';
 import { Store, Action } from '@ngrx/store';
 import { MenuService } from '../services/menu.service';
 import { SidenavService } from '../../sidenav/services/sidenav.service';

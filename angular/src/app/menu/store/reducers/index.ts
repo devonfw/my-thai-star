@@ -1,8 +1,5 @@
 import {
-  createSelector,
-  createFeatureSelector,
-  Action,
-  combineReducers, ActionReducerMap,
+  ActionReducerMap,
 } from '@ngrx/store';
 import * as fromMenu from './menu.reducer';
 
