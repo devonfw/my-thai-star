@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,11 +30,11 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String comment;
 
-  private Timestamp bookingDate;
+  private Instant bookingDate;
 
-  private Timestamp expirationDate;
+  private Instant expirationDate;
 
-  private Timestamp creationDate;
+  private Instant creationDate;
 
   private String email;
 
@@ -122,7 +122,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return bookingDate
    */
   @Override
-  public Timestamp getBookingDate() {
+  public Instant getBookingDate() {
 
     return this.bookingDate;
   }
@@ -131,7 +131,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @param bookingDate new value of {@link #getbookingDate}.
    */
   @Override
-  public void setBookingDate(Timestamp bookingDate) {
+  public void setBookingDate(Instant bookingDate) {
 
     this.bookingDate = bookingDate;
   }
@@ -140,7 +140,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return expirationDate
    */
   @Override
-  public Timestamp getExpirationDate() {
+  public Instant getExpirationDate() {
 
     return this.expirationDate;
   }
@@ -149,7 +149,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @param expirationDate new value of {@link #getexpirationDate}.
    */
   @Override
-  public void setExpirationDate(Timestamp expirationDate) {
+  public void setExpirationDate(Instant expirationDate) {
 
     this.expirationDate = expirationDate;
   }
@@ -158,7 +158,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return creationDate
    */
   @Override
-  public Timestamp getCreationDate() {
+  public Instant getCreationDate() {
 
     return this.creationDate;
   }
@@ -167,7 +167,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @param creationDate new value of {@link #getcreationDate}.
    */
   @Override
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(Instant creationDate) {
 
     this.creationDate = creationDate;
   }

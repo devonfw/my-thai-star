@@ -4,8 +4,8 @@
         {"name":"bookingmanagement","dependencies":["ordermanagement","usermanagement","mailservice"]},
         {"name":"dishmanagement","dependencies":["imagemanagement"]},
         {"name":"imagemanagement","dependencies":[]},
-        {"name":"ordermanagement","dependencies":["bookingmanagement","dishmanagement"]},
-        {"name":"usermanagement","dependencies":[]},
+        {"name":"ordermanagement","dependencies":["dishmanagement","mailservice"]},
+        {"name":"usermanagement","dependencies":["dishmanagement"]},
         {"name":"mailservice","dependencies":[]}
       ]
   }

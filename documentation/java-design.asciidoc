@@ -1,0 +1,558 @@
+:toc: macro
+toc::[]
+
+= Java design
+
+== Introduction
+
+The Java backend for My Thai Star application is going to be based on:
+
+- *DEVON4J* as the Java framework
+- *Devonfw* as the Development environment
+- *Cobigen* as code generation tool
+
+To know more details about the above technologies please visit the following documentation:
+
+- https://github.com/devonfw/devon4j/wiki[DEVON4J]
+
+- https://github.com/devonfw/devon/wiki[Devonfw]
+
+- https://github.com/devonfw/tools-cobigen/wiki[Cobigen]
+
+== Basic architecture details
+
+Following the DEVON4J conventions the Java My Thai Star backend is going to be developed dividing the application in _Components_ and using a three layers architecture.
+
+=== Project modules
+
+Using the DEVON4J approach for the Java backend project we will have a structure of a _Maven_ project formed by three projects
+
+image::images/java/project_modules.png[, link="images/java/project_modules.png"]
+
+- _api_: Stores all the REST interfaces and corresponding Request/Response objects.
+
+- _core_: Stores all the logic and functionality of the application.
+
+- _server_: Configures the packaging of the application.
+
+We can automatically generate this project structure https://github.com/devonfw/devon/wiki/getting-started-creating-new-devonfw-application#running-the-archetype[using the DEVON4J _Maven_ archetype]
+
+=== Components
+
+The application is going to be divided in different components to encapsulate the different domains of the application functionalities.
+
+image::images/java/mtsj_components.png[, link="images/java/mtsj_components.png"]
+
+As _main components_ we will find:
+
+- _Bookingmanagement_: Manages the bookings part of the application. With this component the users (anonymous/logged in) can create new bookings or cancel an existing booking. The users with waiter role can see all scheduled bookings.
+
+- _Ordermanagement_: This component handles the process to order dishes (related to bookings). A user (as a host or as a guest) can create orders (that contain dishes) or cancel an existing one. The users with waiter role can see all ordered orders.
+
+- _Dishmanagement_: This component groups the logic related to the menu (dishes) view. Its main feature is to provide the client with the data of the available dishes but also can be used by other components (Ordermanagement) as a data provider in some processes.
+
+- _Usermanagement_: Takes care of the User Profile management, allowing to create and update the data profiles.
+
+As _common components_ (that don't exactly represent an application's area but provide functionalities that can be used by the _main components_):
+
+- _Imagemanagement_: Manages the images of the application. In a first approach the _Dishmanagement_ component and the _Usermanagement_ component will have an image as part of its data. The _Imagemanagement_ component will expose the functionality to store and retrieve this kind of data.
+
+- _Mailservice_: with this service we will provide the functionality for sending email notifications. This is a shared service between different app components such as _bookingmanagement_ or _ordercomponent_.
+
+Other components:
+
+- Security (will manage the access to the _private_ part of the application using a https://jwt.io/[jwt] implementation).
+
+- Twitter integration: planned as a _Microservice_ will provide the twitter integration needed for some specific functionalities of the application. 
+
+
+=== Layers
+
+- https://github.com/devonfw/devon4j/wiki/guide-service-layer[Service Layer]: this layer will expose the REST api to exchange information with the client applications.
+
+- https://github.com/devonfw/devon4j/wiki/guide-logic-layer[Logic Layer]: the layer in charge of hosting the business logic of the application.
+
+- https://github.com/devonfw/devon4j/wiki/guide-dataaccess-layer[Data Access Layer]: the layer to communicate with the data base.
+
+This architecture is going to be reflected dividing each component of the application in different packages to match those three layers.
+
+=== Component structure
+
+Each one of the components defined previously are going to be structured using the _three-layers_ architecture. In each case we will have a _service_ package, a _logic_ package and a _dataaccess_ package to fit the layers definition.
+
+image::images/java/component_structure.png[, link="images/java/component_structure.png"]
+
+=== Dependency injection
+
+As it is explained in the https://github.com/devonfw/devon4j/wiki/guide-dependency-injection[devonfw documentation] we are going to implement the _dependency injection_ pattern basing our solution on _Spring_ and the Java standards: _java.inject_ (JSR330) combined with JSR250.
+
+image::images/java/dependency_injection.png[, link="images/java/dependency_injection.png"]
+
+- Separation of API and implementation: Inside each layer we will separate the elements in different packages: _api_ and _impl_. The _api_ will store the _interface_ with the methods definition and inside the _impl_ we will store the class that implements the _interface_.
+
+image::images/java/layer_api_impl.png[, link="images/java/layer_api_impl.png"]
+
+- Usage of JSR330: The Java standard set of annotations for _dependency injection_ (`@Named`, `@Inject`, `@PostConstruct`, `@PreDestroy`, etc.) provides us with all the needed annotations to define our beans and inject them.
+
+[source, java]
+----
+@Named
+public class MyBeanImpl implements MyBean {
+  @Inject
+  private MyOtherBean myOtherBean;
+
+  @PostConstruct
+  public void init() {
+    // initialization if required (otherwise omit this method)
+  }
+
+  @PreDestroy
+  public void dispose() {
+    // shutdown bean, free resources if required (otherwise omit this method)
+  }
+}
+----
+
+=== Layers communication
+
+The connection between layers, to access to the functionalities of each one, will be solved using the _dependency injection_ and the JSR330 annotations.
+
+image::images/java/layers_impl.png[, link="images/java/layers_impl.png"]
+
+*Connection Service - Logic*
+[source,java]
+----
+@Named("DishmanagementRestService")
+public class DishmanagementRestServiceImpl implements DishmanagementRestService {
+
+  @Inject
+  private Dishmanagement dishmanagement;
+
+  // use the 'this.dishmanagement' object to access to the functionalities of the logic layer of the component
+
+  ...
+
+}
+----
+
+*Connection Logic - Data Access*
+
+[source,java]
+----
+@Named
+public class DishmanagementImpl extends AbstractComponentFacade implements Dishmanagement {
+
+  @Inject
+  private DishDao dishDao;
+
+  // use the 'this.dishDao' to access to the functionalities of the data access layer of the component
+  ...
+
+}
+----
+
+== Service layer
+
+The services layer will be solved using REST services with the https://github.com/devonfw/devon4j/wiki/guide-rest#jax-rs[JAX-RS implementation]. 
+
+To give service to the defined _User Stories_ we will need to implement the following services:
+
+- provide all available dishes.
+
+- save a booking.
+
+- save an order.
+
+- provide a list of bookings (only for waiters) and allow filtering.
+
+- provide a list of orders (only for waiters) and allow filtering.
+
+- login service (see the _Security_ section).
+
+- provide the _current user_ data (see the _Security_ section)
+
+
+Following the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications we will define the following _end points_ for the listed services.
+
+- (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order`.
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter` (to filter with fields that does not belong to the Order entity).
+
+- (POST) `/mythaistar/login`.
+
+- (GET) `/mythaistar/services/rest/security/v1/currentuser/`.
+
+
+You can find all the details for the services implementation in the https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
+
+=== Service api
+
+The _api.rest_ package in the _service_ layer of a _component_ will store the definition of the service by a  _Java interface_. In this definition of the service we will set-up the _endpoints_ of the service, the type of data expected and returned, the _HTTP_ method for each endpoint of the service and other configurations if needed.
+
+[source, java]
+----
+@Path("/dishmanagement/v1")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public interface DishmanagementRestService {
+
+  @GET
+  @Path("/dish/{id}/")
+  public DishCto getDish(@PathParam("id") long id);
+
+  ...
+
+}
+----
+
+=== Service impl
+
+Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the _impl.rest_ package and implement the _RestService interface_.
+
+[source, java]
+----
+@Named("DishmanagementRestService")
+public class DishmanagementRestServiceImpl implements DishmanagementRestService {
+  
+  @Inject
+  private Dishmanagement dishmanagement;
+  
+  @Override
+  public DishCto getDish(long id) {
+    return this.dishmanagement.findDish(id);
+  }
+
+  ...
+
+}
+----
+
+[NOTE]
+====
+You can see the Devon4j conventions for REST services https://github.com/devonfw/devon4j/wiki/guide-rest[here]. And the My Thai Star services definition https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[here] as part of the https://github.com/devonfw/my-thai-star[My Thai Star] project.
+====
+
+== Logic layer
+
+In the _logic_ layer we will locate all the _business logic_ of the application. We will keep the same schema as we have done for the _service_ layer, having an _api_ package with the definition of the methods and a _impl_ package for the implementation.
+
+Also, inside the _api_ package, a _to_ package will be the place to store the https://github.com/devonfw/devon4j/wiki/guide-transferobject[_transfer objects_] needed to pass data through the layers of the component.
+
+image::images/java/logic_layer.png[, link="images/java/logic_layer.png"]
+
+The logic _api_ definition:
+[source, java]
+----
+public interface Dishmanagement {
+  
+  DishCto findDish(Long id);
+
+  ...
+}
+----
+
+The logic _impl_ class:
+
+[source, java]
+----
+@Named
+public class DishmanagementImpl extends AbstractComponentFacade implements Dishmanagement {
+
+  @Inject
+  private DishDao dishDao;
+
+
+  @Override
+  public DishCto findDish(Long id) {
+
+    return getBeanMapper().map(this.dishDao.findOne(id), DishCto.class);
+  }
+
+  ...
+
+}
+----
+
+The _BeanMapper_ will provide the needed transformations between _entity_ and _transfer objects_.
+
+Also, the _logic_ layer is the place to add validation for _Authorization_ based on _roles_ as we will see later.
+
+== Data Access layer
+
+The data-access layer is responsible for managing the connections to access and process data. The mapping between java objects to a relational database is done in _Devon4j_ with the https://spring.io/projects/spring-data-jpa[spring-data-jpa]. 
+
+As in the previous layers, the _data-access_ layer will have both _api_ and _impl_ packages. However, in this case, the implementation will be slightly different. The _api_ package will store the _component_ main _entities and, inside the _api_ package, another _api.repo_ package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
+
+For queries we will differentiate between _static queries_ (that will be located in a mapped file) and _dynamic queries_ (implemented with http://www.querydsl.com/[QueryDsl]). You can find all the details about how to manage queries with _Devon4j_ https://github.com/devonfw/devon4j/wiki/guide-jpa-query[here]. 
+
+The default data base included in the project will be the http://www.h2database.com/html/main.html[H2] instance included with the _Devon4j_ projects.
+
+To get more details about _pagination_, _data base security, _concurrency control_, _inheritance_ or how to solve the different _relationships_ between entities visit the official https://github.com/devonfw/devon4j/wiki/guide-dataaccess-layer[devon4j dataaccess documentation].
+
+== SAP Hana
+
+=== Download/Install Vmware/SAP hana
+
+- Download VMware Workstation Player to run SAP Hana database https://www.vmware.com/in/products/workstation-player/workstation-player-evaluation.html  
+- Install VMware and open. Using VMware browse check if you can find hxe.ova file. This file is not visible through windows explorer. This is the SAP Hana Express Edition image to be run inside VMware. If available open it in VMware. Otherwise, download Download Manager for SAP Hana from the link below. It may ask to register which is a simple process.
+https://www.sap.com/cmp/ft/crm-xu16-dat-hddedft/typ.html
+- Run the download manager and on the screen use the defaults and click download.
+
+=== Run SAP Hana Database Server
+
+- Once the .ova file has been opened inside VMware workstation. Click on the image and go to Edit Virtual Machine Settings. Set the memory allocation to 5GB. And Network Connection to NAT . NAT shows the IP for the virtual machine which will be used to establish JDBC connection
+- Click Play Virtual Machine. When first time the virtual machine runs it display following. Copy the IP address which will be used for JDBC connection
+- Type hxeadm, which is the username and hit Enter. Next it will ask for password which is HXEHana1. Once successfully logged in it will ask to set a new password. Choose a new password and remember.
+- You need to set Master password for SAP Hana database. Set it as you like and remember.
+- For “proceed with configuration” type y and hit Enter. Hana database has started in the background.
+- Try connecting with following command, replace the password with the master password
+[source, text]
+----
+hxehost:hxeadm>hdbsql
+   \c -d SYSTEMDB -n localhost:39013 -u SYSTEM -p <>
+----
+
+=== Setting up Database for MTSJ
+
+Once you have install SAP hana with VMware , you need to setup the DB.
+
+=== Connect to DB
+
+- After you start Vmware, login with hxeadm as login and the password.
+At the prompt  - hxehost:hxeadm>hdbsql
+Please note the IP address, that need to be put in mtsj java backend
+
+- On prompt hdbsql> type below to connect to the DB
+[source, sql]
+----
+\c -d SYSTEMDB -n localhost:39013 -u SYSTEM -p <password>
+----
+
+- Type below query to see, if you have access to tenant database i.e. HXE
+[source, sql]
+----
+SELECT DATABASE_NAME,  ACTIVE_STATUS FROM SYS.M_DATABASES ORDER BY 1;
+----
+
+=== Enabling the script server
+Run the below for enabling the script server
+[source, sql]
+----
+ALTER DATABASE HXE ADD 'scriptserver'
+----
+To check if the script server is enable, execute below statement
+[source, sql]
+----
+SELECT SERVICE_NAME, PORT, ACTIVE_STATUS FROM SYS.M_SERVICES ORDER BY 1;
+----
+It should see the scriptserver in it.
+
+=== Creating a User on HXE
+
+- Connect using the below
+[source, sql]
+----
+\c -d hxe -n localhost:39013 -u system -p <password>
+----
+- To create a user
+[source, sql]
+----
+Create user hanauser1 password <password> no force_first_password_change
+----
+- Grant below permission to the user
+[source, sql]
+----
+GRANT AFLPM_CREATOR_ERASER_EXECUTE TO hanauser1
+GRANT AFL__SYS_AFL_AFLPAL_EXECUTE TO hanauser1 – here we have 2 underscore
+grant AFL__SYS_AFL_AFLPAL_EXECUTE_WITH_GRANT_OPTION to hanauser1
+grant AFLPM_CREATOR_ERASER_EXECUTE to hanauser
+GRANT DATA ADMIN TO hanauser1
+GRANT IMPORT TO hanauser1
+
+GRANT EXECUTE on _SYS_REPO.GRANT_ACTIVATED_ROLE TO hanauser1
+GRANT EXECUTE ON system.afl_wrapper_generator to hanauser1
+
+GRANT EXECUTE ON system.afl_wrapper_eraser to hanauser1
+GRANT MODELING TO hanauser1
+----
+
+- Now connect to HXE tenant using below
+[source, sql]
+----
+\c -d hxe -n localhost:39013 -u hanauser1 -p <password>
+----
+=== Setting up MTSJ Java backend
+
+- Update applicaion.properties file
+
+[source, properties]
+----
+# update the below
+spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana
+# Add the below
+spring.jpa.database=default
+spring.jpa.database-platform=org.hibernate.dialect.HANAColumnStoreDialect
+spring.datasource.driver-class-name=com.sap.db.jdbc.Driver
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+
+#Comment the below
+#spring.profiles.active=h2mem
+
+spring.profiles.active=hana
+----
+
+- Update config/applicaion.properties file
+
+[source, properties]
+----
+# update the below
+spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana
+spring.datasource.url=jdbc:sap://ip:port/?databaseName=hxe
+spring.datasource.username=username
+spring.datasource.password=password
+----
+
+=== Enabling prediction usecase in MTSJ
+
+- Please refer link https://github.com/devonfw/my-thai-star/wiki/angular-design to enable prediction in gui
+- Setting up data for Predictive use case, please refer to https://github.com/SAP/hana-my-thai-star-data-generator 
+
+== Security with Json Web Token
+
+For the _Authentication_ and _Authorization_ the app will implement the https://jwt.io/[json web token] protocol.
+
+=== Jwt basics
+
+- A user will provide a username / password combination to our auth server.
+
+- The auth server will try to identify the user and, if the credentials match, will issue a token.
+
+- The user will send the token as the _Authorization_ header to access resources on server protected by JWT Authentication.
+
+image::images/java/jwt_schema.png[, link="images/java/jwt_schema.png"]
+
+=== Jwt implementation details
+
+The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
+
+==== Authentication
+
+Based on the _Spring Security_ approach, we will implement a class extending _WebSecurityConfigurerAdapter_ (_Devon4j_ already provides the _BaseWebSecurityConfig_ class) to define the security _entry point_ and filters. Also, as _My Thai Star_ is a mainly _public_ application, we will define here the resources that won't be secured.
+
+List of _unsecured resources_:
+
+- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
+- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
+- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
+- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+
+To configure the _login_ we will set up the _HttpSecurity_ object in the _configure_ method of the class. We will define a _JWTLoginFilter_ class that will handle the requests to the `/login` _endpoint_.
+
+[source, java]
+----
+http.[...].antMatchers(HttpMethod.POST, "/login").permitAll().[...].addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+----
+
+In the same _HttpSecurity_ object we will set up the filter for the rest of the requests, to check the presence of the JWT token in the header. First we will need to create a _JWTAuthenticationFilter_ class extending the _GenericFilterBean_ class. Then we can add the filter to the _HttpSecurity_ object
+
+[source, java]
+----
+http.[...].addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+----
+
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the _inMemoryAuthentication_ of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+
+- user: _waiter_
+- password: _waiter_
+- role: _Waiter_
+
+- user: _user0_
+- password: _password_
+- role: _Customer_
+
+[source, java]
+----
+auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0").password("password").roles("Customer");
+----
+
+==== Token set up
+
+Following the https://jwt.io/introduction/[official documentation] the implementation details for the MyThaiStar's jwt will be:
+
+* _Secret_: Used as part of the signature of the token, acting as a private key. For the showcase purposes we will use simply "ThisIsASecret". 
+
+* _Token Prefix_ schema: Bearer. The token will look like `Bearer <token>` 
+
+* _Header_: Authorization. The response header where the token will be included. Also, in the requests, when checking the token it will be expected to be in the same header.
+
+* The _Authorization_ header should be part of the `Access-Control-Expose-Headers` header to allow clients access to the _Authorization_ header content (the token);
+
+* The _claims_ are the content of the _payload_ of the token. The _claims_ are statements about the user, so we will include the user info in this section.
+
+  ** _subject_: "sub". The username.
+  ** _issuer_: "iss". Who creates the token. We could use the _url_ of our service but, as this is a showcase app, we simply will use "MyThaiStarApp"
+  ** _expiration date_: "exp". Defines when the token expires.
+  ** _creation date_: "iat". Defines when the token has been created.
+  ** _scope_: "scope". Array of strings to store the user roles.
+
+* Signature Algorithm: To encrypt the token we will use the default algorithm HS512.
+
+An example of a token claims before encryption would be:
+
+`{sub=waiter, scope=[ROLE_Waiter], iss=MyThaiStarApp, exp=1496920280, iat=1496916680}`
+
+
+==== Current User request
+
+To provide to the client with the current user data our application should expose a service to return the user details. In _Devon4j_ applications the `/general/service/impl/rest/SecurityRestServiceImpl.java` class is ready to do that.
+
+[source, java]
+----
+@Path("/security/v1")
+@Named("SecurityRestService")
+public class SecurityRestServiceImpl {
+
+  @Produces(MediaType.APPLICATION_JSON)
+  @GET
+  @Path("/currentuser/")
+  public UserDetailsClientTo getCurrentUserDetails(@Context HttpServletRequest request) {
+
+  }
+}
+----
+
+we only will need to implement the `getCurrentUserDetails` method.
+
+==== Authorization
+
+We need to secure three services, that only should be accessible for users with role _Waiter_:
+
+- (POST) `/mythaistar/services/rest/bookingmanagement/v1/booking/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/search`.
+
+- (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter`.
+
+
+As part of the token we are providing the user _Role_. So, when validating the token, we can obtain that same information and build a `UsernamePasswordAuthenticationToken` with username and the roles as collection of _Granted Authorities_.
+
+Doing so, afterwards, in the implementation class of the _logic_ layer we can set up the related methods with the _java security_ '@RolesAllowed' annotation to block the access to the resource to users that does not match the expected roles.
+
+[source,java]
+----
+@RolesAllowed(Roles.WAITER)
+public PaginatedListTo<BookingEto> findBookings(BookingSearchCriteriaTo criteria) {
+  return findBookings(criteria);
+}
+----
+

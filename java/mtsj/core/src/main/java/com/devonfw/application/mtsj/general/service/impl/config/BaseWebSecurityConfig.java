@@ -91,7 +91,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
         .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
         .password(this.passwordEncoder.encode("barkeeper")).roles("Barkeeper").and().withUser("chief")
-        .password(this.passwordEncoder.encode("chief")).roles("Chief");
+        .password(this.passwordEncoder.encode("chief")).roles("Chief").and()
+        .withUser("manager").password(this.passwordEncoder.encode("manager")).roles("Manager");
   }
 
 }
