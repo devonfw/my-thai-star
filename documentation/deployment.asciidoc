@@ -1,0 +1,42 @@
+:toc: macro
+toc::[]
+
+= Deployment
+
+The main deployment tool used for *My Thai Star* is be *Docker*.
+
+image::images/ci/deployment/docker.png[, link="https://www.docker.com/"]
+
+It is a tool to run application in isolated environments. Those _isolated environments_ will be what we call *Docker containers*. For instance, it won't be necessary any installation of *nginx* or *Apache tomcat* or anything necessary to deploy, because there will be some containers that actually _have_ those technologies inside.
+
+=== Where Docker containers will be running?
+
+Of course, it is necessary to have an external Deployment Server. Every Docker process will run in it. It will be accessed from Production Line pipelines via *SSH*. Thus, the pipeline itself will manage the scenario of, if every previous process like testing passes as OK, stop actual containers and create new ones.
+
+This external server will be located in http://de-mucdevondepl01 .
+
+= Container Schema
+
+3 Docker containers are being used for the deployment of My Thai Star:
+
+1. **nginx** for the Reverse Proxy
+2. **tomcat** for the Java Server
+3. **nginx** for the Angular Client
+
+The usage of the **Reverse Proxy** will allow the client to call via `/api` every single Java Server's REST operation. Moreover, there will only be 1 port in usage in the remote Docker host, the one mapped for the Reverse Proxy: `8080`. 
+Besides the deployment itself using **nginx** and **tomcat**, both client and server are previously built using **nodejs** and **maven** images. Artifacts produced by them will be pasted in servers' containers using multi-stage docker builds. It will all follow this schema:
+
+image::https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png[, link="https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png"]
+
+This orchestration of all 3 containers will be done by using a `docker-compose.yml` file. To redirect traffic from one container to another (i.e. rever-proxy to angular client or angular client to java server) will be done by using, as hostnames, the service name `docker-compose` defines for each of them, followed by the internal exposed port:
+
+- `http://reverse-proxy:80`
+- `http://angular:80`
+- `http://java:8080`
+
+= Run My Thai Star
+
+The steps to run **My Thai Star** are:
+
+1. Clone the repository `$ git clone https://github.com/devonfw/my-thai-star.git`
+2. Run the docker compose command: `$ docker-compose up`

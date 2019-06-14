@@ -1,0 +1,108 @@
+:toc: macro
+toc::[]
+
+= Java CI
+
+The Java server-side of My Thai Star is an *devon4j*-based application. As long as *Maven* and a *Java 8* are going to be needed, the Pipeline should have those tools available as well.
+
+== Pipeline
+
+This Pipeline is called *MyThaiStar_SERVER_BUILD*, and it is located exactly in the same PL instance's folder than *MyThaiStar_FRONTEND_BUILD*. Let's see how the Pipeline's flow behaves.
+
+image::images/ci/java/java_pipeline_flow.PNG[, link="java_pipeline_flow.PNG"] 
+
+Check those Pipeline stages with more detail:
+
+. *Declarative: Checkout SCM*
++
+Gets the code from https://github.com/devonfw/my-thai-star . This step is not defined directly in our pipeline, but as it is loaded from the repository this step should always be done at the beginning.
++
+. *Unit Tests*
++
+This step will execute the project unit test with maven.
++
+[source, groovy]
+----
+mvn clean test
+----
++
+. *SonarQube analysis*
++
+The code is evaluated using the integrated PL instance's SonarQube. Also, it will wait for the quality gate status. If the status is failing, the pipeline execution will be stoped.
++
+[source, groovy]
+----
+withSonarQubeEnv(sonarEnv) {
+    sh "mvn sonar:sonar"
+}
+
+def qg = waitForQualityGate() 
+if (qg.status != 'OK') {
+    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+}
+----
++
+. *Deliver application into Nexus*
++
+Store all artifacts into nexus.
++
+[source, groovy]
+----
+mvn deploy -Dmaven.test.skip=true
+----
+
+
+== Adjustments
+
+=== Pipeline Environment
+
+In order to easily reuse the pipeline in other java projects, all variables have been defined in the block environment. All variables have the default values that Production Line uses, so if you're going to work in production line you won't have to change anything. Example:
+
+[source, groovy]
+----
+environment {
+    // Directory with java project
+    javaDir = 'java/mtsj'
+
+    // sonarQube
+    // Name of the sonarQube environment
+    sonarEnv = "SonarQube"
+
+    // Nexus 3
+    // Maven global settings configuration ID
+    globalSettingsId = 'MavenSettings'
+    // Maven tool id
+    mavenInstallation = 'Maven3'
+}
+----
+
+==== Description
+- *javaDir*: Relative route to java application. In My Thai Star this is the java/mtsj folder. The actual directory (.) is also allowed.
++
+image::images/ci/java/java_directory.png[, link="java_directory.png"]
+- *sonarEnv*: Name of the sonarQube environment. SonarQube is the default value for PL.
+- *globalSettingsId*: The id of the global settings file. MavenSettings is the default value for PL.
++
+image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
+- *mavenInstallation*: The name of the maven tool. Maven3 is the default value for PL.
++
+image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]
+
+=== Distribution management
+The only _extra_ thing that needs to be added to the Java server-side is some information that determines where the artifact of the project is going to be stored in *Nexus*. This is going to be a section in the main `pom.xml` file called `<distributionManagement>`. This section will point to the PL instance's Nexus. Let's have a look at it. It's already configured with the PL default values.
+
+[source, xml]
+----
+<distributionManagement>
+    <repository>
+      <id>pl-nexus</id>
+      <name>PL Releases</name>
+      <url>http://nexus3-core:8081/nexus/content/repositories/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>pl-nexus</id>
+      <name>PL Snapshots</name>
+      <url>http://nexus3-core:8081/nexus3/repository/maven-snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
+----

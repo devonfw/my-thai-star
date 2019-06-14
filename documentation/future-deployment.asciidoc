@@ -1,0 +1,9 @@
+= Future Deployment
+
+The *My Thai Star* project is going to be built in many technologies. Thus, let's think about one deployment schema that allow the Angular client to communicate to all three backends: *Java*, *Node* and *.NET*.
+
+As long as *Docker containers* are being used, it shouldn't be that hard to deal with this "distributed" deployment. The schema represents 6 Docker containers that will have client-side(s) and server-side(s). Each of 3 Angular client containers (those in red) are going to communicate with different back-ends. So, when the deployment is finished, it would be possible to use all three server-sides just by changing the "port" in the URL.
+
+Let's see how it would look like:
+
+image::images/ci/future/deployment_schema.PNG[, link="images/ci/future/deployment_schema.PNG"]
