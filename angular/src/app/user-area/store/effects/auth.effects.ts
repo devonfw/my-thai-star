@@ -4,7 +4,16 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import 'rxjs/add/observable/from';
-import {AuthActions, AuthActionTypes, Login, LoginFail, LoginSuccess, LogoutFail, Token} from '../actions/auth.actions';
+import {
+  AuthActions,
+  AuthActionTypes,
+  CloseDialog,
+  Login,
+  LoginFail,
+  LoginSuccess,
+  LogoutFail,
+  Token
+} from '../actions/auth.actions';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {LoginDialogComponent} from '../../components/login-dialog/login-dialog.component';
 import {WindowService} from '../../../core/window/window.service';
@@ -28,7 +37,7 @@ export class AuthEffects {
   private readonly changePasswordRestPath: string = 'changepassword';
   authAlerts: any;
 
-  // Open Login Dialog
+  // Open Login Dialog and dispatch Login
   @Effect()
   openDialog$ = this.actions$.pipe(
     ofType(AuthActionTypes.OPEN_DIALOG),
@@ -42,10 +51,26 @@ export class AuthEffects {
       return dialogRef.afterClosed();
     }),
     map((result: any) => {
+      if (result === undefined) {
+        return new CloseDialog();
+      }
       return new Login({username: result.username, password: result.password});
     })
   );
 
+  // Close Login Dialog
+  @Effect({dispatch: false})
+  closeDialog$ = this.actions$.pipe(
+    ofType(AuthActionTypes.CLOSE_DIALOG),
+    map(() => {
+      const dialogRef = this.dialog.open(LoginDialogComponent);
+      return dialogRef.close();
+    }),
+  );
+
+  // Communicate with Server (this.userService.login),
+  // get the Token for authentication and push it to the store
+  // make an http call to get the payload username and role
   @Effect()
   login$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN),
