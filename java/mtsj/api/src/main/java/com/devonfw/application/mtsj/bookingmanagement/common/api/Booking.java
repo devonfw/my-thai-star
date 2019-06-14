@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
@@ -19,17 +19,17 @@ public interface Booking extends ApplicationEntity {
 
   public void setComment(String comment);
 
-  public Instant getBookingDate();
+  public Timestamp getBookingDate();
 
-  public void setBookingDate(Instant bookingDate);
+  public void setBookingDate(Timestamp bookingDate);
 
-  public Instant getExpirationDate();
+  public Timestamp getExpirationDate();
 
-  public void setExpirationDate(Instant expirationDate);
+  public void setExpirationDate(Timestamp expirationDate);
 
-  public Instant getCreationDate();
+  public Timestamp getCreationDate();
 
-  public void setCreationDate(Instant creationDate);
+  public void setCreationDate(Timestamp creationDate);
 
   public String getEmail();
 

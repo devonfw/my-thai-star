@@ -10,38 +10,29 @@ import com.devonfw.mts.common.utils.Utils;
 
 public class ThaiLoginPage extends BasePage {
 
-  /** Username field search criteria */
+  /* Search criteria */
   private static final By usernameSearch = By.name("username");
 
-  /** Password field search criteria */
   private static final By passwordSearch = By.name("password");
 
-  /** Button to submit username and password search criteria */
   private static final By accessButtonSearch = By.name("submitLogin");
 
-  /**
-  * {@inheritDoc}
-  * */
   @Override
   public boolean isLoaded() {
-    WebElement usernameTextBox = getDriver().findElementDynamic(passwordSearch);
 
+    WebElement usernameTextBox = getDriver().findElementDynamic(passwordSearch);
     return usernameTextBox.isDisplayed();
   }
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public void load() {
+
     BFLogger.logError("MyThaiStar login page was not loaded.");
   }
 
-  /**
-  * {@inheritDoc}
-  * */
   @Override
   public String pageTitle() {
+
     return "";
   }
 
@@ -52,6 +43,7 @@ public class ThaiLoginPage extends BasePage {
    * @param password the password for the username
    */
   public void enterCredentials(String username, String password) {
+
     WebDriverWait driverWait = new WebDriverWait(getDriver(), 10);
     WebElement usernameTextBox = getDriver().findElementDynamic(usernameSearch);
     WebElement passwordTextBox = getDriver().findElementDynamic(passwordSearch);

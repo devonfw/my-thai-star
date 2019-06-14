@@ -29,6 +29,10 @@ public interface UserRepository extends DefaultRepository<UserEntity> {
     if ((username != null) && !username.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getUsername()), username, criteria.getUsernameOption());
     }
+    String password = criteria.getPassword();
+    if ((password != null) && !password.isEmpty()) {
+      QueryUtil.get().whereString(query, $(alias.getPassword()), password, criteria.getPasswordOption());
+    }
     String email = criteria.getEmail();
     if ((email != null) && !email.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getEmail()), email, criteria.getEmailOption());

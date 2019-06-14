@@ -11,8 +11,6 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.ordermanagement.service.api.rest.OrdermanagementRestService;
 
@@ -78,12 +76,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   public Page<OrderLineCto> findOrderLinesByPost(OrderLineSearchCriteriaTo searchCriteriaTo) {
 
     return this.ordermanagement.findOrderLineCtos(searchCriteriaTo);
-  }
-
-  @Override
-  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo){
-
-    return this.ordermanagement.findOrderedDishes(searchCriteriaTo);
   }
 
 }

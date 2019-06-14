@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.InvitedGuest;
 import com.devonfw.module.basic.common.api.to.AbstractEto;
@@ -20,7 +20,7 @@ public class InvitedGuestEto extends AbstractEto implements InvitedGuest {
 
   private Boolean accepted;
 
-  private Instant modificationDate;
+  private Timestamp modificationDate;
 
   @Override
   public Long getBookingId() {
@@ -71,13 +71,13 @@ public class InvitedGuestEto extends AbstractEto implements InvitedGuest {
   }
 
   @Override
-  public Instant getModificationDate() {
+  public Timestamp getModificationDate() {
 
     return this.modificationDate;
   }
 
   @Override
-  public void setModificationDate(Instant modificationDate) {
+  public void setModificationDate(Timestamp modificationDate) {
 
     this.modificationDate = modificationDate;
   }

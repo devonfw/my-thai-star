@@ -7,36 +7,31 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
 public class ThaiWaiterPage extends BasePage {
 
-  /** Orders tab search criteria */
+  /* Search criteria */
   private static final By ordersTabSearch = By.xpath("//a[@routerlink='/orders']");
 
-  /** Reservations tab search criteria */
   private static final By reservationsTabSearch = By.xpath("//a[@routerlink='/reservations']");
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public boolean isLoaded() {
+
+    // TASK Auto-generated method stub
     getDriver().waitForPageLoaded();
 
     return getDriver().getCurrentUrl().contains("orders");
   }
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public void load() {
+
     BFLogger.logError("MyThaiStar waiter page was not loaded.");
 
   }
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public String pageTitle() {
+
+    // TASK Auto-generated method stub
     return "";
   }
 

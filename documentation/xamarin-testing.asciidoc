@@ -1,3 +1,0 @@
-= Xamarin testing
-
-TODO

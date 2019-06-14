@@ -12,6 +12,8 @@ public class UserEto extends AbstractEto implements User {
 
   private String username;
 
+  private String password;
+
   private String email;
 
   private Long userRoleId;
@@ -26,6 +28,18 @@ public class UserEto extends AbstractEto implements User {
   public void setUsername(String username) {
 
     this.username = username;
+  }
+
+  @Override
+  public String getPassword() {
+
+    return this.password;
+  }
+
+  @Override
+  public void setPassword(String password) {
+
+    this.password = password;
   }
 
   @Override
@@ -58,6 +72,7 @@ public class UserEto extends AbstractEto implements User {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
+    result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
     result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
 
     result = prime * result + ((this.userRoleId == null) ? 0 : this.userRoleId.hashCode());
@@ -84,6 +99,13 @@ public class UserEto extends AbstractEto implements User {
         return false;
       }
     } else if (!this.username.equals(other.username)) {
+      return false;
+    }
+    if (this.password == null) {
+      if (other.password != null) {
+        return false;
+      }
+    } else if (!this.password.equals(other.password)) {
       return false;
     }
     if (this.email == null) {
