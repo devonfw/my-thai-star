@@ -1,4 +1,3 @@
-<<<<<<< HEAD:angular/src/app/menu/components/menu-card/menu-card-details/menu-card-details.component.html
 <span class="price">
   {{menuInfo.dish.price | number : '1.2-2'}} €
 </span>
@@ -15,50 +14,13 @@
   >
     {{extra.name}} +{{extra.price}}€
   </mat-checkbox>
-=======
-
-<div layout="row"> 
-  <span class="price">
-    {{menuInfo.dish.price | number : '1.2-2'}} €
-  </span>
-</div>
-    
-<div layout="row">
-  <h3 class="text-upper">
-    {{menuInfo.dish.name}}
-  </h3>
-</div>
-
-<div layout="row">
-  <div flex="100">
-    <p class="description">{{menuInfo.dish.description}}</p>
-  </div>
-</div>
-
-<div layout="row"> 
-  <div class="extras">
-    <mat-checkbox  *ngFor="let extra of menuInfo.extras"
-    [checked]="extra.selected"
-    (change)="onSelectExtra(extra)"
-    >
-      {{extra.name}} +{{extra.price}}€
-    </mat-checkbox>
-  </div>
->>>>>>> upstream/develop:angular/src/app/menu/menu-card/menu-card-details/menu-card-details.component.html
 </div>
 
 <div layout="row">
   <button mat-button
-<<<<<<< HEAD:angular/src/app/menu/components/menu-card/menu-card-details/menu-card-details.component.html
           color="accent"
           class="text-upper"
-          (click)="onClickOrder()"
-=======
-  color="accent"
-  class="text-upper"
-  (click)="onClickOrder()"
->>>>>>> upstream/develop:angular/src/app/menu/menu-card/menu-card-details/menu-card-details.component.html
-  >
+          (click)="onClickOrder()">
     <span class="order">
       {{'buttons.addToOrder' | translate}}
     </span>

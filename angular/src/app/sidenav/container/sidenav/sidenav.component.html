@@ -16,7 +16,6 @@
           }}</span>
       </div>
     </mat-toolbar>
-
     <div layout="column" class="pull-top pad-sm">
       <h4
         class="pad-bottom-sm text-upper"
@@ -24,7 +23,6 @@
       >
         {{ 'sidenav.header' | translate }}
       </h4>
-    
       <div
         layout="row"
         *ngIf="(orders$ | async).length < 1"
@@ -100,7 +98,6 @@
         'formFields.terms' | translate
         }}</mat-checkbox>
     </div>
-  </div>
   </div>
   <div style="text-align: right">
     <button
