@@ -1,7 +1,8 @@
 package com.devonfw.application.mtsj.imagemanagement.common.api;
 
+import java.sql.Clob;
+
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
-import com.devonfw.application.mtsj.imagemanagement.common.api.Image;
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 
 /**
@@ -23,12 +24,12 @@ public interface Image extends ApplicationEntity {
   /**
    * @return content of the {@link Image}
    */
-  public String getContent();
+  public Clob getContent();
 
   /**
    * @param content of the {@link Image}
    */
-  public void setContent(String content);
+  public void setContent(Clob content);
 
   /**
    * @return contentType of the {@link Image}

@@ -1,0 +1,15 @@
+= Style guide
+
+image::images/mts_styleguide.png[, link="images/mts_styleguide.png"]
+
+= Low and high fidelity wireframes
+
+History of mockup designs for My Thai Star.
+
+* link:resources/MTS_Wireframes_Low_Fidelity.pdf[MTS Wireframes Low Fidelity]
+* link:resources/MTS_Wireframes_High_Fidelity_(Sprint_1).pdf[MTS Wireframes High Fidelity (Sprint 1)]
+* link:resources/MTS_Wireframes_High_Fidelity_(Sprint_1)-Copy.pdf[MTS Wireframes High Fidelity (Sprint 1) - Copy]
+* link:resources/MTS_Wireframes_High_Fidelity_(Sprint_1)-Mobile.pdf[MTS Wireframes High Fidelity (Sprint 1) - Mobile]
+* link:resources/MTS_Wireframes_High_Fidelity_(Sprint_2).pdf[MTS Wireframes High Fidelity (Sprint 2)]
+* link:resources/MTS_Wireframes_High_Fidelity_(Sprint_2)-Modifications.pdf[MTS Wireframes High Fidelity (Sprint 2) - Modifications]
+
