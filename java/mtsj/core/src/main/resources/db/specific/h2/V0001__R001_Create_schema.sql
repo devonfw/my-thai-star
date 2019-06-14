@@ -40,11 +40,7 @@ CREATE TABLE Booking (
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
-<<<<<<< HEAD
   bookingToken VARCHAR (255),
-=======
-  bookingToken VARCHAR (76),
->>>>>>> upstream/develop
   comment VARCHAR (4000),
   email VARCHAR(255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
