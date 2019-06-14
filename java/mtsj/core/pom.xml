@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -136,11 +136,6 @@
       <artifactId>${mts.database.artifactId}</artifactId>
       <version>${mts.database.version}</version>
     </dependency>
-    <dependency><!-- Need for SAP Hana-->
-      <groupId>com.sap.cloud.db.jdbc</groupId>
-      <artifactId>ngdbc</artifactId>
-      <version>2.3.48</version>
-    </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -235,6 +230,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+      <version>1.5.2.RELEASE</version>
     </dependency>
 
     <dependency>
@@ -275,12 +271,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -288,9 +278,6 @@
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
-        <excludes>
-          <exclude>**/orm.xml</exclude>
-        </excludes>
       </resource>
     </resources>
     <plugins>
@@ -378,7 +365,7 @@
         <mts.database.profile>hana</mts.database.profile>
         <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
         <mts.database.artifactId>ngdbc</mts.database.artifactId>
-        <mts.database.version>2.3.48</mts.database.version>
+        <mts.database.version>2.2.16</mts.database.version>
       </properties>
       <build>
         <resources>

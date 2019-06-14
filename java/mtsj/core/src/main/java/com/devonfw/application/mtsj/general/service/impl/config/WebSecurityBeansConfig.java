@@ -1,15 +1,9 @@
 package com.devonfw.application.mtsj.general.service.impl.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -82,18 +76,4 @@ public class WebSecurityBeansConfig {
 
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
-  
-  @Bean
-  public PasswordEncoder delegatingPasswordEncoder() {
-      PasswordEncoder defaultEncoder = new StandardPasswordEncoder();
-      Map<String, PasswordEncoder> encoders = new HashMap<>();
-      encoders.put("bcrypt", new BCryptPasswordEncoder());
-   
-      DelegatingPasswordEncoder passworEncoder = new DelegatingPasswordEncoder(
-        "bcrypt", encoders);
-      passworEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
-   
-      return passworEncoder;
-  }
-
 }

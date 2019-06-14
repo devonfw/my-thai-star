@@ -9,36 +9,28 @@ import com.capgemini.mrchecker.test.core.logger.BFLogger;
 
 public class ThaiMenuPage extends BasePage {
 
-  /** Order options search criteria */
   private static final By orderOptionsSearch = By.tagName("own-menu-card-details");
 
-  /** Button add-to-order search criteria */
   private static final By addToOrderButtonSearch = By.tagName("button");
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public boolean isLoaded() {
+
     getDriver().waitForPageLoaded();
 
     return getDriver().getCurrentUrl().contains("menu");
   }
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public void load() {
+
     BFLogger.logError("MyThaiStar menu page was not loaded.");
 
   }
 
-  /**
-   * {@inheritDoc}
-   * */
   @Override
   public String pageTitle() {
+
     return "";
   }
 
@@ -48,7 +40,9 @@ public class ThaiMenuPage extends BasePage {
    * @return ThaiSummaryPage an object that represents the summary of menus ordered
    */
   public ThaiSummaryPage clickFirstMenu() {
+
     WebElement firstOrderOption = getDriver().findElementDynamic(orderOptionsSearch);
+
     WebElement addToOrderButton = firstOrderOption.findElement(addToOrderButtonSearch);
     // addToOrderButton.click();
 

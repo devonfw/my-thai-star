@@ -4,6 +4,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
@@ -16,6 +17,9 @@ import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 @ConditionalOnProperty(prefix = "spring.mail", name = "enabled", havingValue = "false")
 public class MailMock implements Mail {
 
+  @Value("${spring.mail.username}")
+  private String from;
+
   /**
    * Logger instance.
    */
@@ -25,8 +29,8 @@ public class MailMock implements Mail {
   public boolean sendMail(String to, String subject, String text) {
 
     StringBuilder sb = new StringBuilder();
-    sb.append("To: ").append(to).append("|").append("Subject: ").append(subject).append("|").append("Text: ")
-        .append(text);
+    sb.append("From: ").append(this.from).append("|").append("To: ").append(to).append("|").append("Subject: ")
+        .append(subject).append("|").append("Text: ").append(text);
     LOG.info(sb.toString());
     return true;
   }

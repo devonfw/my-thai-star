@@ -10,8 +10,6 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 
 /**
  * Interface for Ordermanagement component.
@@ -114,7 +112,5 @@ public interface Ordermanagement {
    * @return the new {@link OrderLineEto} that has been saved with ID and version.
    */
   OrderLineEto saveOrderLine(OrderLineEto orderLine);
-
-  Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria);
 
 }
