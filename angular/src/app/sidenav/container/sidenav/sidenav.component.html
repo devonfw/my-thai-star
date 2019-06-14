@@ -16,6 +16,7 @@
           }}</span>
       </div>
     </mat-toolbar>
+
     <div layout="column" class="pull-top pad-sm">
       <h4
         class="pad-bottom-sm text-upper"
@@ -23,12 +24,14 @@
       >
         {{ 'sidenav.header' | translate }}
       </h4>
+    
       <div
         layout="row"
         *ngIf="(orders$ | async).length < 1"
         style="align-items:center"
         class="justify-space-between push-bottom-lg"
       >
+<<<<<<< HEAD:angular/src/app/sidenav/container/sidenav/sidenav.component.html
         <span>{{ 'sidenav.noSelection' | translate }}</span>
         <button
           name="viewMenu"
@@ -51,6 +54,27 @@
           (commentRemoved)="onCommentRemoved($event)"
         >
         </public-sidenav-order>
+=======
+      
+      <span>{{ 'sidenav.noSelection' | translate }}</span>
+  
+      <button
+        name="viewMenu"
+        mat-button
+        color="accent"
+        (click)="navigateTo('menu')"
+      >
+        {{ 'buttons.viewMenu' | translate }}
+      </button>
+      
+      <div>
+        <div class="pull-top" [class.scrollOrders]="orders.length > 3">
+          <public-sidenav-order
+            *ngFor="let order of orders"
+            [order]="order"
+          ></public-sidenav-order>
+        </div>
+>>>>>>> upstream/develop:angular/src/app/sidenav/sidenav.component.html
       </div>
     </div>
     <div
@@ -62,6 +86,7 @@
       <h3>{{ totalPrice$ | async | number: '1.2-2' }} €</h3>
     </div>
     <div layout="column" class="pad-sm">
+<<<<<<< HEAD:angular/src/app/sidenav/container/sidenav/sidenav.component.html
       <mat-card
         class="pad-sm"
         style="background-color:bisque"
@@ -97,7 +122,56 @@
       <mat-checkbox data-name="orderTerms" #terms class="push-left">{{
         'formFields.terms' | translate
         }}</mat-checkbox>
+=======
+      <div>
+        <mat-card
+          *ngIf="!bookingId.value"
+          class="pad-sm"
+          style="background-color:bisque"
+        >
+          <div
+            layout="row"
+            class="justify-space-around"
+            style="align-items:center"
+            flex
+          >
+            <mat-icon class="mat-18 pad-right-sm">report_problem</mat-icon>
+            
+            <span flex="65" class="invitationAlert"
+              >{{ 'alerts.orderID' | translate }}
+            </span>
+          
+            <button
+              name="bookTable"
+              mat-button
+              color="accent"
+              (click)="navigateTo('bookTable')"
+            >
+              {{ 'buttons.bookTable' | translate }}
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    
+      <div>
+        <mat-form-field class="push-left push-right" color="accent" flex>
+          <input
+            name="orderBookingID"
+            matInput
+            #bookingId
+            [placeholder]="'sidenav.bookingId' | translate"
+          />
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-checkbox data-name="orderTerms" #terms class="push-left">{{
+          'formFields.terms' | translate
+        }}</mat-checkbox>
+      </div>
+>>>>>>> upstream/develop:angular/src/app/sidenav/sidenav.component.html
     </div>
+  </div>
   </div>
   <div style="text-align: right">
     <button

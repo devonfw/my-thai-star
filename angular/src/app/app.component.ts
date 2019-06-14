@@ -6,7 +6,11 @@ import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import * as moment from 'moment';
+<<<<<<< HEAD
 import { fadeAnimation } from './core/animations/fade.animation';
+=======
+import { fadeAnimation } from './animations/fade.animation';
+>>>>>>> upstream/develop
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
 import { ConfigService } from './core/config/config.service';

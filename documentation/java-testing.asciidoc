@@ -1,0 +1,91 @@
+:toc: macro
+toc::[]
+
+= Java testing
+
+== Component testing
+
+We are going to test our components as a unit using _Spring Test_ and _Devon4j-test_ modules.
+
+In order to test a basic component of the app first we will create a test class in the `src/test/java` folder and inside the main package of the test module. We will name the class following the convetion
+
+----
+[Component]Test
+----
+
+Then, in the declaration of the test class we will use the `@SpringBootTest` annotation to run the application context. In addition, we will extend the `ComponentTest` from `Devon4j-test` module to have access to the main functionalities of the module, https://github.com/devonfw/devon4j/wiki/guide-testing[see more details here].
+
+_Spring Test_ allows us to use _Dependency Injection_ so we can inject our component directly using the `@Inject` annotation.
+
+Each test will be represented by a method annotated with `@Test`. Inside the method we will test one functionality, evaluating the result thanks to the _asserts_ provided by the _ComponentTest_ class that we are extending.
+
+A simple test example
+
+[source,java]
+----
+@SpringBootTest(classes = SpringBootApp.class)
+public class DishmanagementTest extends ComponentTest {
+
+  @Inject
+  private Dishmanagement dishmanagement;
+
+  @Test
+  public void findAllDishes() {
+
+    PaginatedListTo<DishCto> result = this.dishmanagement.findDishes();
+    assertThat(result).isNotNull();
+  }
+
+  ...
+}
+----
+
+== Running the tests
+
+=== From Eclipse
+
+We can run the test from within _Eclipse_ with the contextual menu _Run As > JUnit Test_. This functionality can be launched from method level, class level or even package level. The results will be shown in the _JUnit_ tab.
+
+image::images/java/test_results_eclipse.PNG[, link="images/java/test_results_eclipse.PNG"]
+
+=== From command line using Maven
+
+We can also run tests using _Maven_ and the command line, using the command _mvn test_ (or _mvn clean test_).
+
+----
+C:\MyThaiStar>mvn clean test
+----
+
+Doing this we will run all the tests of the project (recognized by the _Test_ word at the end of the classes) and the results will be shown by sub-project.
+
+----
+...
+
+[D: 2017-07-17 09:30:08,457] [P: INFO ] [C: ] [T: Thread-5] [L: org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - [M: Closing JPA EntityManagerFactory for persistence unit 'default']
+
+Results :
+
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 1
+
+...
+
+[INFO]
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ mtsj-server ---
+[INFO] No sources to compile
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ mtsj-server ---
+[INFO] No tests to run.
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] mtsj ............................................... SUCCESS [  0.902 s]
+[INFO] mtsj-core .......................................... SUCCESS [02:30 min]
+[INFO] mtsj-server ........................................ SUCCESS [  1.123 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 02:35 min
+[INFO] Finished at: 20XX-07-17T09:30:13+02:00
+[INFO] Final Memory: 39M/193M
+[INFO] ------------------------------------------------------------------------
+----

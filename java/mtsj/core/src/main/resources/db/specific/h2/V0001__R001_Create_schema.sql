@@ -40,7 +40,11 @@ CREATE TABLE Booking (
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
+<<<<<<< HEAD
   bookingToken VARCHAR (255),
+=======
+  bookingToken VARCHAR (76),
+>>>>>>> upstream/develop
   comment VARCHAR (4000),
   email VARCHAR(255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
@@ -97,7 +101,7 @@ CREATE TABLE Image (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
-  content VARCHAR(2147483647),
+  content clob,
   contentType INTEGER,
   mimeType VARCHAR(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)

@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.common.api.to;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteriaTo;
@@ -21,11 +21,11 @@ public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String comment;
 
-  private Timestamp bookingDate;
+  private Instant bookingDate;
 
-  private Timestamp expirationDate;
+  private Instant expirationDate;
 
-  private Timestamp creationDate;
+  private Instant creationDate;
 
   private String email;
 
@@ -87,34 +87,34 @@ public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
     this.comment = comment;
   }
 
-  public Timestamp getBookingDate() {
+  public Instant getBookingDate() {
 
-    return (Timestamp) this.bookingDate.clone();
+    return this.bookingDate;
   }
 
-  public void setBookingDate(Timestamp bookingDate) {
+  public void setBookingDate(Instant bookingDate) {
 
-    this.bookingDate = (Timestamp) bookingDate.clone();
+    this.bookingDate = bookingDate;
   }
 
-  public Timestamp getExpirationDate() {
+  public Instant getExpirationDate() {
 
-    return (Timestamp) this.expirationDate.clone();
+    return this.expirationDate;
   }
 
-  public void setExpirationDate(Timestamp expirationDate) {
+  public void setExpirationDate(Instant expirationDate) {
 
-    this.expirationDate = (Timestamp) expirationDate.clone();
+    this.expirationDate = expirationDate;
   }
 
-  public Timestamp getCreationDate() {
+  public Instant getCreationDate() {
 
-    return (Timestamp) this.creationDate.clone();
+    return this.creationDate;
   }
 
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(Instant creationDate) {
 
-    this.creationDate = (Timestamp) creationDate.clone();
+    this.creationDate = creationDate;
   }
 
   public String getEmail() {

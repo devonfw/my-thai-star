@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +26,7 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
 
   private Boolean accepted;
 
-  private Timestamp modificationDate;
+  private Instant modificationDate;
 
   private OrderEntity order;
 
@@ -106,7 +106,7 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
   /**
    * @return modificationDate
    */
-  public Timestamp getModificationDate() {
+  public Instant getModificationDate() {
 
     return this.modificationDate;
   }
@@ -114,7 +114,7 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
   /**
    * @param modificationDate new value of {@link #getmodificationDate}.
    */
-  public void setModificationDate(Timestamp modificationDate) {
+  public void setModificationDate(Instant modificationDate) {
 
     this.modificationDate = modificationDate;
   }

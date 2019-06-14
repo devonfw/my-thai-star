@@ -295,6 +295,7 @@
     showdown "1.6.4"
     tslib "^1.9.0"
 
+<<<<<<< HEAD
 "@larscom/ngrx-store-storagesync@^5.6.0":
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@larscom/ngrx-store-storagesync/-/ngrx-store-storagesync-5.6.0.tgz#62670ee9410d1eb410c1ba877631b3ee0211aab9"
@@ -332,6 +333,8 @@
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.4.0.tgz#525a343aa45d7f6ca60f3301a23a27669c14bbce"
   integrity sha512-kwTUHgfgBeAL4RQBjZO46z9v4Xzg8PXAgY4WwXdt3zUk1tF4ZvijMleFvFRUoiJJfxF/UM6jgIZ/yGrX2dXQuA==
 
+=======
+>>>>>>> upstream/develop
 "@ngtools/webpack@7.3.8":
   version "7.3.8"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.3.8.tgz#c8761d0f6959682e03032f8d3de718d1f811410e"
@@ -1782,12 +1785,21 @@ chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.3, chokidar@^2.0.4, chokidar@^2.
     upath "^1.1.1"
   optionalDependencies:
     fsevents "^1.2.7"
+<<<<<<< HEAD
 
 chownr@^1.0.1, chownr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
   integrity sha512-j38EvO5+LHX84jlo6h4UzmOwi0UgW61WRyPtJz4qaadK5eY3BTS5TY/S1Stc3Uk2lIM6TPevAlULiEJwie860g==
 
+=======
+
+chownr@^1.0.1, chownr@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
+  integrity sha512-j38EvO5+LHX84jlo6h4UzmOwi0UgW61WRyPtJz4qaadK5eY3BTS5TY/S1Stc3Uk2lIM6TPevAlULiEJwie860g==
+
+>>>>>>> upstream/develop
 chownr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
@@ -2353,6 +2365,7 @@ debug@3.1.0, debug@~3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+<<<<<<< HEAD
   dependencies:
     ms "2.0.0"
 
@@ -2361,6 +2374,16 @@ debug@^3.0.0, debug@^3.1.0, debug@^3.2.5, debug@^3.2.6:
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
   dependencies:
+=======
+  dependencies:
+    ms "2.0.0"
+
+debug@^3.0.0, debug@^3.1.0, debug@^3.2.5, debug@^3.2.6:
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
+  integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
+  dependencies:
+>>>>>>> upstream/develop
     ms "^2.1.1"
 
 debuglog@^1.0.1:

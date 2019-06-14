@@ -1,3 +1,4 @@
+<<<<<<< HEAD:angular/src/app/menu/components/menu-card/menu-card-details/menu-card-details.component.scss
 @import "~variables.scss";
 
 :host {
@@ -38,3 +39,45 @@
     justify-content: space-around;
   }
 }
+=======
+@import "~variables.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  text-align: right;
+  font-size: 2em;
+  color: #514f4f;
+}
+
+.description {
+  display: flex; 
+  margin-top: 0px;
+}
+
+.extras {
+  display: flex;
+  justify-content: space-between;
+  
+  > * {
+    margin-bottom: 8px;
+  }
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex: 1;
+}
+
+@media (min-width: $tablet-min-width) {
+  .extras {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+>>>>>>> upstream/develop:angular/src/app/menu/menu-card/menu-card-details/menu-card-details.component.scss

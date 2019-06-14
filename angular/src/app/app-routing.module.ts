@@ -35,7 +35,11 @@ const appRoutes: Routes = [
   {
     path: 'clustering',
     component: NotSupportedComponent,
+<<<<<<< HEAD
     canActivate: [AuthGuardService],
+=======
+    canActivate: [AuthGuardService]
+>>>>>>> upstream/develop
   },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

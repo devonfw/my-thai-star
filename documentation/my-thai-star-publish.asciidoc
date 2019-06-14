@@ -1,0 +1,205 @@
+:toc: macro
+toc::[]
+
+= Publishing the MyThaiStar Application
+
+This page will explain how to build and deploy the application.
+
+== Production Line Instance
+
+The Production Line instance being used can be found https://devon.s2-eu.capgemini.com[here]. After logging in you'll see a list of existing jobs and pipelines. 
+However, only a folder is relevant to this topic: *MTS*
+
+*Note*: A user account is required for authentication. Contact a devon team member to request a new account.
+
+== Pipeline Script
+
+We'll have a closer look at the pipeline configuration script and its stages:
+
+*Note*: Have a look at this wiki over https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline[here] to get a basic idea on how to write pipeline scripts.
+
+. Checking out my-thai-star form GitHub
++
+This stage will check out the source code directly from GitHub:
++
+[source, groovy]
+----
+git credentialsId:'github-devonfw-ci', url:'https://github.com/devonfw/my-thai-star/'
+----
++
+Credentials are required for authentication as we're checking out a private repository. 'github-devonfw-ci' is a pair of credentials that was created for this sole purpose. 
+. Loading custom tools
++
+To build the application, two tools are required: Node 6 and Angular CLI.
++
+They just have to be referenced, as the Custom Tool Plugin will handle the installation process:
++
+[source, groovy]
+----
+tool 'Node 6'
+tool 'Angular CLI'
+----
++
+. Fresh Dependency installation
+To ensure that we get fresh dependencies, we'll have to make sure that our dependencies folder _node_modules_ is removed and the installation process is run again.
++
+[source, groovy]
+----
+find . -name "node_modules" -exec rm -rf '{}' +
+npm i
+----
++
+. Code Linting
++
+By "linting" our Angular code we check the quality of the code. TypeScript provides a useful tool for that. It is call *tslint*. This process is triggered via Angular CLI.
++
+[source, groovy]
+----
+ng lint --format checkstyle
+----
++
+. Execute Unit Tests
++
+By default, Angular tests are executed using the Chrome browser. That can be a problem when they need to be executed in a CI environment, such as Jenkins (which is the case) or Travis. Angular projects can be prepared to deal with it, using the PhanomJS browser instead of chrome.
++
+We can prepare a script for that in our `package.json` file, or we can directly write it in the command line. Also, it is necessary to make sure that those test will just executed once, because by default it will be watching for changes.
++
+[source, groovy]
+----
+ng test --browsers PhantomJS --single-run
+----
++
+or
++
+[source, groovy]
+----
+yarn test:ci
+----
++
+. Build application
++
+The building process needs to be sufficiently flexible to be adapted for different deployments. As long as the My Thai Star Angular client needs (or _will need_) to point to different servers (devon4j, Node and .NET), it is mandatory to have the chance to separately "prepare" the artifact for all of them. 
++
+What does that mean? There are some files dedicated to those situations. They're called _environment_. They'll define some data to be used under different circumstances.
++
+[source, groovy]
+----
+ng build --aot --environment=prod
+----
++
+or
++
+[source, groovy]
+----
+yarn build:prod
+----
++
+The _ng build_ command creates a _dist_ folder which contains the application.
++
+. Deployment
++
+The deployment step has to be approved by a human. Otherwise it won't proceed.
++
+The user can decide on whether to proceed and deploy the application or to abort and just keep the generated files inside the _dist_ directory.
++
+After clicking on proceed, the following lines will be executed:
++
+[source, groovy]
+----
+# Change to Angular directory
+cd angular
+
+# Copy "dist" folder from workspace to deployment server
+scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+
+# Launch application in Docker container
+ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
+ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
+ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
+ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+----
++
+After deploying the application will be available at http://de-mucdevondepl01:8090[http://de-mucdevondepl01:8090]
+
+=== Complete Pipeline Script:
+
+The complete Groovy script:
+
+[source, groovy]
+----
+node {
+    stage 'Checking out my-thai-star from GitHub'
+        node {
+            git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+        }
+
+    stage 'Loading Custom Tools'
+        node {
+            tool 'Node 6'
+            tool 'Angular CLI'
+        }
+    
+    stage 'Fresh Dependency Installation'
+        node {
+            sh """
+                cd angular
+                find . -name "node_modules" -exec rm -rf '{}' +
+                npm i
+            """
+        }
+        
+    stage 'Code Linting'
+        node {
+            sh """
+                cd angular
+                ng lint --format checkstyle
+            """
+        }
+    
+    stage 'Execute Angular tests'
+        node {
+            sh """
+                cd angular
+                ng test --browsers PhantomJS --single-run
+            """
+        }
+        
+    stage 'Build Application'
+        node {
+            sh """
+                cd angular
+                ng build --aot --prod
+            """
+        }
+    
+    stage 'Deployment'
+        input 'Should this build be deployed?'
+            node {
+                sshagent (credentials: ['3d0fa2a4-5cf0-4cf5-a3fd-23655eb33c11']) {
+                    sh """
+                        cd angular
+                        # Copy resulting "dist" folder from workspace to deployment server
+                        scp -o StrictHostKeyChecking=no -r dist root@10.40.235.244:/root/mythaistar/
+                        
+                        # Launch application in Docker container
+                        ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker rm -f mythaistar
+                        ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker run -itd --name=mythaistar -p 8090:80 nginx
+                        ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker exec mythaistar bash -c \\"rm /usr/share/nginx/html/*\\"
+                        ssh -o StrictHostKeyChecking=no root@10.40.235.244 docker cp mythaistar/dist/. mythaistar:/usr/share/nginx/html/
+                    
+                    """
+                }
+                sh 'echo \\"Application available at http://de-mucdevondepl01:8090\\"'
+            }
+}
+----
+
+== Accessing MyThaiStar
+Finally, the application will be available at this URL: http://de-mucdevondepl01:8090[http://de-mucdevondepl01:8090].
+
+== Notes
+Make sure not to launch multiple instances of this pipeline in parallel. While a pipeline is waiting for approval it'll still be blocking a build executor. 
+This PL instance is set up to have *two* build executors. 
+
+This means: When launching this pipeline two times in parallel without approving the build, other jobs/pipeline won't be able
+to run properly.

@@ -1,11 +1,20 @@
 import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { ClusteringCriteria, FilterOrdersCockpit, Pageable } from '../../shared/backend-models/interfaces';
+<<<<<<< HEAD
 import { ClusteringService } from '../services/clustering.service';
 import { ClustersData } from '../../shared/view-models/interfaces';
 import { MenuService } from '../../menu/services/menu.service';
 import { MatTableDataSource } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { SortDirection } from 'app/menu/components/menu-filters/filter-sort/filter-sort.component';
+=======
+import { ClusteringService } from '../shared/clustering.service';
+import { ClustersData } from '../../shared/view-models/interfaces';
+import { MenuService } from '../../menu/shared/menu.service';
+import { MatTableDataSource } from '@angular/material';
+import { map } from 'rxjs/operators';
+import { SortDirection } from 'app/menu/menu-filters/filter-sort/filter-sort.component';
+>>>>>>> upstream/develop
 import * as L from 'leaflet';
 
 @Component({
