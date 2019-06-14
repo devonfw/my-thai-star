@@ -1,45 +1,26 @@
 <span mat-dialog-title class="text-upper">{{'bookTable.dialog.title' | translate }}</span>
 <mat-dialog-content>
   <div layout="column" class="push-bottom-sm" flex>
-
-    <div>
-      <div layout="row" class="justify-space-between" flex>
-        <span>{{'formFields.date' | translate}}</span>
-        <span>{{date}}</span>
-      </div>
+    <div layout="row" class="justify-space-between" flex>
+      <span>{{'formFields.date' | translate}}</span>
+      <span>{{date}}</span>
     </div>
-
-    <div>
-      <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
-      <div layout="row" class="justify-space-between" flex>
-        <span>{{'formFields.name' | translate}}</span>
-        <span>{{data.name}}</span>
-      </div>
-    </div>  
-
-    <div>
-      <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
-      <div layout="row" class="justify-space-between" flex>
-        <span>{{'formFields.email' | translate}}</span>
-        <span>{{data.email}}</span>
-      </div>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>{{'formFields.name' | translate}}</span>
+      <span>{{data.name}}</span>
     </div>
-
-    <div>
-      <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>{{'formFields.email' | translate}}</span>
+      <span>{{data.email}}</span>
     </div>
-    
-    <div>
-      <div layout="row" class="justify-space-between" flex>
-        <span>{{'formFields.assistants' | translate}}</span>
-        <span>{{data.assistants}}</span>
-      </div>
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
+    <div layout="row" class="justify-space-between" flex>
+      <span>{{'formFields.assistants' | translate}}</span>
+      <span>{{data.assistants}}</span>
     </div>
-    
-    <div>
-      <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
-    </div>
-
+    <span class="push-bottom-sm push-top-sm"><mat-divider></mat-divider></span>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
