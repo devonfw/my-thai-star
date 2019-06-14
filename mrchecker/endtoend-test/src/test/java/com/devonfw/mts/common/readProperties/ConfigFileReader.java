@@ -12,8 +12,10 @@ public class ConfigFileReader {
 
   private final String propertyFilePath = "src/resources/settings.properties";
 
+  /**
+   * Load properties
+   * */
   public ConfigFileReader() {
-
     BufferedReader reader;
     try {
       reader = new BufferedReader(new FileReader(this.propertyFilePath));
@@ -30,8 +32,12 @@ public class ConfigFileReader {
     }
   }
 
+  /**
+   * Get the value of a property.
+   *
+   * @param String. Name of a property.
+   * */
   public String getProperty(String property) {
-
     String url = this.properties.getProperty(property);
     if (url != null)
       return url;
