@@ -1,3 +1,0 @@
-= Data Model
-
-image::images/mts_datamodel.png[, link="images/mts_datamodel.png"]

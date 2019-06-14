@@ -2,8 +2,6 @@ package com.devonfw.application.mtsj.imagemanagement.dataaccess.api.repo;
 
 import static com.querydsl.core.alias.Alias.$;
 
-import java.sql.Clob;
-
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
@@ -32,9 +30,9 @@ public interface ImageRepository extends DefaultRepository<ImageEntity> {
     if ((name != null) && !name.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getName()), name, criteria.getNameOption());
     }
-    Clob content = criteria.getContent();
-    if (content != null) {
-      query.where($(alias.getContent()).eq(content));
+    String content = criteria.getContent();
+    if ((content != null) && !content.isEmpty()) {
+      QueryUtil.get().whereString(query, $(alias.getContent()), content, criteria.getContentOption());
     }
     ContentType contentType = criteria.getContentType();
     if (contentType != null) {
