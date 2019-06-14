@@ -17,40 +17,44 @@ import com.devonfw.mts.common.utils.Utils;
 
 public class ThaiReservationsPage extends BasePage {
 
-  /* Search criteria */
+  /** Reservations table search criteria */
   private static final By reservationsTableSearch = By.xpath("//tbody[@class='td-data-table-body']/tr");
 
-  // private static final By nextPageSearch = By.xpath("//button[@class=\"td-paging-bar-next-page mat-icon-button\"]");
-
+  /** Search bar search criteria*/
   private static final By searchBarFilter = By.className("td-expansion-panel-header-content");
 
+  /** Email input search criteria*/
   private static final By emailInputSearch = By.xpath("//input[@name=\"email\"]");
 
+  /** submit data button search criteria */
   private static final By submitButtonSearch = By.xpath("//button[@type='submit']");
 
-  // private static final By byblabla = By.xpath("//td-expansion-panel[@data-name='reservationFilter']");
-
-  /* Map to store email/reservation id data */
+  /** Map to store email/reservation id data */
   private Map<String, List<String>> tableData;
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public boolean isLoaded() {
-
     getDriver().waitForPageLoaded();
 
     return getDriver().getCurrentUrl().contains("reservations");
   }
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public void load() {
-
     BFLogger.logError("MyThaiStar reservation page was not loaded.");
-
   }
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public String pageTitle() {
-
     return "";
   }
 
@@ -65,54 +69,11 @@ public class ThaiReservationsPage extends BasePage {
   }
 
   /**
-   * @return
+   * Retrieves the list of reservations for a given email
+   *
+   * @param email
+   * @return List of reservations by email
    */
-  /*
-   * public Map<String, List<Reservation>> getAllReservations() {
-   *
-   * Map<String, List<Reservation>> idReservations = new HashMap<>(); WebElement nextPage =
-   * getDriver().findElementDynamic(nextPageSearch); int i = 0;
-   *
-   * boolean b = false; while (!b) { System.out.println("PRUEBA " + i + " " + b); idReservations =
-   * getReservations(idReservations);
-   *
-   * JavascriptExecutor js = ((JavascriptExecutor) getDriver()); i++;
-   *
-   * nextPage.click(); // (getDriver().waitForPageLoaded(); // getDriver().waitForElement(nextPageSearch); nextPage =
-   * getDriver().findElementDynamic(nextPageSearch, 35); b = (Boolean) js.executeScript("return arguments[0].disabled",
-   * nextPage); }
-   *
-   * return idReservations; }
-   */
-
-  /**
-   * @param date
-   * @return
-   */
-  /*
-   * public boolean AreThereReservations(String date) {
-   *
-   * return getAllReservations().getOrDefault(date, null) == null; }
-   *
-   * public ThaiTableBodyPage nextPage() {
-   *
-   * Button nextPage = getDriver().elementButton(nextPageSearch); nextPage.click();
-   *
-   * return new ThaiTableBodyPage(); }
-   *
-   * public Map<String, List<Reservation>> getAllReservationsRare() {
-   *
-   * ThaiTableBodyPage thaiTable = new ThaiTableBodyPage(); Map<String, List<Reservation>> idReservations = new
-   * HashMap<>(); idReservations = thaiTable.getReservations(idReservations);
-   *
-   * int i = 1;
-   *
-   * while (thaiTable.isThereANextPage()) { System.out.println("PRUEBA: " + i); thaiTable = thaiTable.nextPage();
-   * idReservations = thaiTable.getReservations(idReservations); i++; }
-   *
-   * return idReservations; }
-   */
-
   public HashMap<String, List<Reservation>> searchDatesByEmail(String email) {
 
     WebElement searchBar = getDriver().findElementDynamic(searchBarFilter);
@@ -133,7 +94,7 @@ public class ThaiReservationsPage extends BasePage {
     button.click();
 
     try {
-      getDriver().findElementDynamics(By.cssSelector("fskjacb"), 2);
+      getDriver().findElementDynamics(By.cssSelector("this-selector-doesnt-exist"), 2);
     } catch (Exception e) {
 
     }
@@ -143,7 +104,10 @@ public class ThaiReservationsPage extends BasePage {
   }
 
   /**
-   * @return
+   * List of reservations by date
+   *
+   * @param List of reservations
+   * @return List of reservations by date
    */
   private HashMap<String, List<Reservation>> getReservationsShownByDate(
       HashMap<String, List<Reservation>> idReservations) {
@@ -166,8 +130,6 @@ public class ThaiReservationsPage extends BasePage {
         e.printStackTrace();
       }
 
-      // System.out.printf("date: %s, email: %s, id: %s\n", date, email, id);
-
       reservationsByDate = idReservations.getOrDefault(date, new LinkedList<Reservation>());
       reservationsByDate.add(new Reservation(date, email, id));
 
@@ -177,8 +139,14 @@ public class ThaiReservationsPage extends BasePage {
     return idReservations;
   }
 
+  /** Return the search criteria by xpath for a cell
+   *
+   * @param indexRow.
+   * @param indexCol
+   *
+   * @return search criteria
+   * */
   public By findDataCell(int indexRow, int indexCol) {
-
     return By.xpath("//tbody[@class='td-data-table-body']/tr[" + indexRow + "]/td[" + indexCol + "]//span");
   }
 

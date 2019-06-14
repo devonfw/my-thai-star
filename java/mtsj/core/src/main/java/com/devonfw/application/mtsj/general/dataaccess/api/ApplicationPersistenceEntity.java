@@ -24,9 +24,6 @@ public abstract class ApplicationPersistenceEntity implements ApplicationEntity,
   /** @see #getModificationCounter() */
   private int modificationCounter;
 
-  /** @see #getRevision() */
-  private Number revision;
-
   /**
    * The constructor.
    */

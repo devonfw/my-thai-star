@@ -10,45 +10,53 @@ import com.capgemini.mrchecker.selenium.core.BasePage;
 import com.capgemini.mrchecker.selenium.core.exceptions.BFElementNotFoundException;
 import com.devonfw.mts.common.readProperties.ConfigFileReader;
 
-// @Configuration // no se si esto hace falta o no, lo he copiado de otra version (Carlos)
-// @PropertySource("file:config.properties")
 public class ThaiHomePage extends BasePage {
 
-  /* Search criteria */
+  /** File reader */
   private static final ConfigFileReader configFileReader = new ConfigFileReader();
 
+  /** My thai start application URL */
   private static final String mythaistarUrl = configFileReader.getProperty("mythaistar.url");
-  // private static final String mythaistarUrl = "http://mts-angular-my-thai-star-mrcheck.10.36.39.36.nip.io/";
 
+  /** Login button search criteria */
   private static final By loginButtonSearch = By.name("login");
 
+  /** Logout button search criteria */
   private static final By logoutButtonSearch = By.name("account");
 
+  /** Label login search criteria */
   private static final By labelLoginSearch = By.xpath("//span[@data-name='userNameLogged']");
 
+  /** Menu tab search criteria */
   private static final By menuTabSearch = By.xpath("//a[@routerlink='/menu']");
 
+  /** Book a table button search criteria */
   private static final By bookTableButtonSearch = By.name("buttons.bookTableNavigate");
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public boolean isLoaded() {
-
     if (getDriver().getTitle().equals(pageTitle())) {
       return true;
     }
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public void load() {
-
     getDriver().get(mythaistarUrl);
-    // getDriver().manage().window().maximize();
   }
 
+  /**
+   * {@inheritDoc}
+   * */
   @Override
   public String pageTitle() {
-
     return "My Thai Star";
   }
 
@@ -58,7 +66,6 @@ public class ThaiHomePage extends BasePage {
    * @return ThaiLoginPage an object that represents the login page
    */
   public ThaiLoginPage clickLogInButton() {
-
     WebElement loginButton = getDriver().findElementDynamic(loginButtonSearch);
     loginButton.click();
 
@@ -67,16 +74,11 @@ public class ThaiHomePage extends BasePage {
 
   /**
    * Seek for the login button and logs out
-   *
    */
   public void clickLogOutButton() {
-
     WebElement logoutButton = getDriver().findElementDynamic(logoutButtonSearch);
     logoutButton.click();
 
-    /*
-     * WebElement logoutItem = getDriver().findElementDynamic(logoutItemSearch); logoutItem.click();
-     */
     String scriptClick = "var we = document.getElementsByClassName(\"mat-menu-item\"); we[we.length-1].click();";
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     js.executeScript(scriptClick);
@@ -88,7 +90,6 @@ public class ThaiHomePage extends BasePage {
    * @return ThaiMenuPage an object that represents the reservations page
    */
   public ThaiMenuPage clickMenuButton() {
-
     WebElement menuTab = getDriver().findElementDynamic(menuTabSearch);
     menuTab.click();
 
@@ -102,7 +103,6 @@ public class ThaiHomePage extends BasePage {
    * @return boolean true if the user is logged else false
    */
   public boolean isUserLogged(String username) {
-
     try {
       List<WebElement> accessButton = getDriver().findElementDynamics(labelLoginSearch);
       if (accessButton.size() > 0 && accessButton.get(0).getText().equals(username)) {
@@ -114,8 +114,12 @@ public class ThaiHomePage extends BasePage {
     return false;
   }
 
+  /**
+  * Checks whether an user is logged or not
+  *
+  * @return boolean true if any user is logged else false
+  */
   public boolean isUserLogged() {
-
     try {
       List<WebElement> accessButton = getDriver().findElementDynamics(labelLoginSearch, 3);
       if (accessButton.size() > 0 && accessButton.get(0).getText().length() > 0) {
@@ -127,10 +131,16 @@ public class ThaiHomePage extends BasePage {
     return false;
   }
 
-  public ThaiBookPage clickBookTable() {
 
+  /**
+   * Click on the button used to book tables
+   *
+   * @return A Page that represents the Booking UI
+   * */
+  public ThaiBookPage clickBookTable() {
     WebElement bookTableButton = getDriver().findElementDynamic(bookTableButtonSearch);
     bookTableButton.click();
+
     return new ThaiBookPage();
 
   }

@@ -1,0 +1,226 @@
+:toc: macro
+toc::[]
+
+= Angular CI
+
+The Angular client-side of My Thai Star is going to have some specific needs for the CI-CD Pipeline to perform mandatory operations.
+
+== Pipeline
+
+The Pipeline for the Angular client-side is going to be called *MyThaiStar_FRONTEND_BUILD*. It is located in the PL instance, under the link:https://devon.s2-eu.capgemini.com/jenkins/job/MTS/[MTS folder] (as previously explained). It is going to follow a process flow like this one:
+
+image::images/ci/angular/angular_pipeline_flow.PNG[, link="angular_pipeline_flow.PNG"]
+
+Each of those steps are called _stages_ in the Jenkins context.Let's see what those steps mean in the context of the Angular application:
+
+. *Declarative: Checkout SCM*
++
+Retrieves the project from the GitHub repository which it's located. This step is not defined directly in our pipeline, but as it is loaded from the repository this step should always be done at the beginning.
++
+image::images/ci/angular/pipeline-config.png[, link="pipeline_config.PNG"]
+
+. *Declarative: Tool Install*
++
+The Pipeline needs some Tools to perform some operations with the Angular project. These tool is a correct version of *NodeJS* (10.14.0 LTS) with *Yarn* installed as global package.
++
+[source, groovy]
+----
+tools {
+    nodejs "NodeJS 10.14.0"
+}
+----
+. *Loading Custom Tools*
++
+The Pipeline also needs a browser in order to execute the tests, so in this step the chrome-stable will be loaded. We will use it in a headless mode.
++
+[source, groovy]
+----
+tool chrome
+----
+. *Fresh Dependency Installation*
++
+The script `$ yarn` does a package installation. As we always clean the workspace after the pipeline, all packages must be installed in every execution.
+. *Code Linting*
++
+This script executes a linting process of TypeScript. Rules can be defined in the `tslint.json` file of the project. It throws an exception whenever a file contains a non-compliant piece of code.
++
+. *Execute Angular tests*
++
+The CI testing of the Angular client is different than the standard local testing (addapted to CI environments, as specified in the *Addaptation* section of document). This script just executes the following commands:
++
+[source, groovy]
+----
+ng test --browsers ChromeHeadless --watch=false
+----
+. *SonarQube code analysis*
++
+The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to sonarQube and wait until sonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
+. *Build Application*
++
+The building process of the Angular client would result in a folder called `/dist` in the main Angular's directory. That folder is the one that is going to be served afterwards as an artifact. This process has also been addapted to some Deployment needs. This building script executes the following:
++
+[source, groovy]
+----
+ng build --configuration=docker
+----
+. *Deliver application into Nexus*
++
+Once the scripts produce the Angular artifact (`/dist` folder), it's time to package it and store into nexus.
+. Declarative: Post Actions
++
+At the end, this step is always executed, even if a previous stage fail. We use this step to clean up the workspace for future executions
++
+[source, groovy]
+----
+post {
+    always {
+        cleanWs()
+    }
+}
+----
+
+== Adjustments
+
+The Angular project Pipeline needed some "extra" features to complete all planned processes. Those features resulted in some additions to the project.
+
+=== Pipeline Environment
+
+In order to easily reuse the pipeline in other angular projects, all variables have been defined in the block environment. All variables have the default values that Production Line uses, so if you're going to work in production line you won't have to change anything. Example:
+
+[source, groovy]
+----
+environment {
+    // Script for build the application. Defined at package.json
+    buildScript = 'build --configuration=docker'
+    // Script for lint the application. Defined at package.json
+    lintScript = 'lint'
+    // Script for test the application. Defined at package.json
+    testScript = 'test:ci'
+    // Angular directory
+    angularDir = 'angular'
+    // SRC folder. It will be angularDir/srcDir
+    srcDir = 'src'
+    // Name of the custom tool for chrome stable
+    chrome = 'Chrome-stable'
+
+    // sonarQube
+    // Name of the sonarQube tool
+    sonarTool = 'SonarQube'
+    // Name of the sonarQube environment
+    sonarEnv = "SonarQube"
+
+    // Nexus
+    // Artifact groupId
+    groupId = 'com.devonfw.mythaistar'
+    // Nexus repository ID
+    repositoryId = 'pl-nexus'
+    // Nexus internal URL
+    repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
+    // Maven global settings configuration ID
+    globalSettingsId = 'MavenSettings'
+    // Maven tool id
+    mavenInstallation = 'Maven3'
+}
+----
+
+==== Description
+- *buildScript*: script for build the applicaction. It must be defined at package.json.
++
+Example (package.json):
++
+[source, json]
+----
+{
+    "name": "mythaistar-restaurant",
+    ...
+    "scripts": {
+        ...
+        "build": "ng build",
+        ...
+    }
+    ...
+}
+----
++
+This will be used as follows:
++
+[source, groovy]
+----
+sh """yarn ${buildScript}"""
+----
+- *lintScript*: Script for lint the application. Defined at package.json
++
+Example (package.json):
++
+[source, json]
+----
+{
+    "name": "mythaistar-restaurant",
+    ...
+    "scripts": {
+        ...
+        "lint": "ng lint",
+        ...
+    }
+    ...
+}
+----
++
+This will be used as follows:
++
+[source, groovy]
+----
+sh """yarn ${lintScript}"""
+----
+- *testScript*: Script for test the application. Defined at package.json
++
+Example (package.json):
++
+[source, json]
+----
+{
+    "name": "mythaistar-restaurant",
+    ...
+    "scripts": {
+        ...
+        "test:ci": "npm run postinstall:web && ng test --browsers ChromeHeadless --watch=false",
+        ...
+    }
+    ...
+}
+----
++
+This will be used as follows:
++
+[source, groovy]
+----
+sh """yarn ${testScript}"""
+----
+- *angularDir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
++
+image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
+- *srcDir*: Directory where you store the soruce code. For angular applications the default value is `src`
++
+image::images/ci/angular/src_directory.png[, link="src_directory.PNG"]
+- *chrome*: Since you need a browser to run your tests, we must provide one. This variable contains the name of the custom tool for google chrome.
++
+image::images/ci/angular/chrome_installation.png[, link="chrome_installation.PNG"]
+- *sonarTool*: Name of the sonarQube scanner installation.
++
+image::images/ci/angular/sonar-scanner.png[, link="sonar-scanner.PNG"]
+- *sonarEnv*: Name of the sonarQube environment. SonarQube is the default value for PL.
++
+image::images/ci/angular/sonar-env.png[, link="sonar-env.PNG"]
+- *groupId*: Group id of the application. It will be used to storage the application in nexus3
++
+image::images/ci/angular/nexus3_groupid.png[, link="nexus3_groupid.PNG"]
+- *repositoryId*: Id of the nexus3 repository. It must be defined at maven global config file.
++
+image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
+- *repositoryUrl*: The url of the repository.
+- *globalSettingsId*: The id of the global settings file.
++
+image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
+- mavenInstallation: The name of the maven tool.
++
+image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]

@@ -2,7 +2,7 @@ package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo;
 
 import static com.querydsl.core.alias.Alias.$;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
@@ -50,15 +50,15 @@ public interface BookingRepository extends DefaultRepository<BookingEntity> {
     if (comment != null && !comment.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getComment()), comment, criteria.getCommentOption());
     }
-    Timestamp bookingDate = criteria.getBookingDate();
+    Instant bookingDate = criteria.getBookingDate();
     if (bookingDate != null) {
       query.where(Alias.$(alias.getBookingDate()).eq(bookingDate));
     }
-    Timestamp expirationDate = criteria.getExpirationDate();
+    Instant expirationDate = criteria.getExpirationDate();
     if (expirationDate != null) {
       query.where(Alias.$(alias.getExpirationDate()).eq(expirationDate));
     }
-    Timestamp creationDate = criteria.getCreationDate();
+    Instant creationDate = criteria.getCreationDate();
     if (creationDate != null) {
       query.where(Alias.$(alias.getCreationDate()).eq(creationDate));
     }
