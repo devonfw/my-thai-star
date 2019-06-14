@@ -3,6 +3,7 @@ import {TokenString, UserDataResponse} from '../../models/user';
 
 export enum AuthActionTypes {
   OPEN_DIALOG = '[Auth] Open Dialog',
+  CLOSE_DIALOG = '[Auth] Close Dialog',
   LOGIN = '[Auth] Login ',
   LOGIN_SUCCESS = '[Auth] LoginSuccess',
   LOGIN_FAIL = '[Auth] LoginFail',
@@ -13,6 +14,10 @@ export enum AuthActionTypes {
 
 export class OpenDialog implements Action {
   readonly type = AuthActionTypes.OPEN_DIALOG;
+}
+
+export class CloseDialog implements Action {
+  readonly type = AuthActionTypes.CLOSE_DIALOG;
 }
 
 export class Login implements Action {
@@ -48,6 +53,7 @@ export class LogoutFail implements Action {
 
 export type AuthActions =
   | OpenDialog
+  | CloseDialog
   | Login
   | LoginSuccess
   | LoginFail
