@@ -1,7 +1,6 @@
 
 import { MenuActions, MenuActionTypes } from '../actions/menu.actions';
 import {DishView} from '../../../shared/view-models/interfaces';
-import {AuthState} from '../../../user-area/store/reducers/auth.reducer';
 
 export interface MenuState {
   loading: boolean;

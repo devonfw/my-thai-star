@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-import { ClusteringCriteria, FilterOrdersCockpit, Pageable } from '../../shared/backend-models/interfaces';
+import { Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import { ClusteringCriteria, Pageable } from '../../shared/backend-models/interfaces';
 import { ClusteringService } from '../services/clustering.service';
 import { ClustersData } from '../../shared/view-models/interfaces';
 import { MenuService } from '../../menu/services/menu.service';
@@ -209,6 +209,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
       });
   }
 
+  // noinspection JSMethodCanBeStatic
   getFeatureStyle(feature) {
     return ({
       clickable: true,

@@ -18,7 +18,6 @@ import { StoreModule } from '@ngrx/store';
 import * as fromBookTable from './store/reducers/book-table.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { BookTableEffects } from './store/effects/book-table.effects';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [

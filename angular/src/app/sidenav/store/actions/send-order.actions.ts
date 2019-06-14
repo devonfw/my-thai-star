@@ -1,6 +1,4 @@
 import { Action } from '@ngrx/store';
-import {Filter} from '../../../shared/backend-models/interfaces';
-import {OrderSend} from '../../models/order-send.model';
 
 export enum SendOrderActionTypes {
   SendOrders = '[SendOrder] Load SendOrders',

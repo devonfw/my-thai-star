@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import * as fromApp from 'app/store/reducers';
 import * as fromAuth from 'app/user-area/store/selectors';
-import {first, flatMap, map, mergeMap} from 'rxjs/operators';
+import {first, flatMap} from 'rxjs/operators';
 
 @Injectable()
 export class HttpRequestInterceptorService implements HttpInterceptor {

@@ -14,7 +14,6 @@ import {
   FilterCockpit,
 } from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../../environments/environment';
 import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()

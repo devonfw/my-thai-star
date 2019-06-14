@@ -1,5 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { OrderView } from '../../shared/view-models/interfaces';
 import { PredictionService } from './prediction.service';
 import { HttpClientModule } from '@angular/common/http';
 

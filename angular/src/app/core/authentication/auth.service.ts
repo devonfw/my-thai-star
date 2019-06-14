@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { find } from 'lodash';
 import { Role } from '../../shared/view-models/interfaces';
 import { ConfigService } from '../config/config.service';
-import {Store} from '@ngrx/store';
 import * as fromApp from '../../user-area/store/reducers';
 
 @Injectable()
@@ -18,10 +17,6 @@ export class AuthService {
 
   public isLogged(): boolean {
     return this.logged;
-  }
-
-  public setLogged(login: boolean): void {
-    this.logged = login;
   }
 
   public getUser(): string {
