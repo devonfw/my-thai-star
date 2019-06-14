@@ -5,13 +5,8 @@ import { CoreModule } from '../core/core.module';
 
 import { WaiterCockpitService } from './services/waiter-cockpit.service';
 import { WindowService } from '../core/window/window.service';
-<<<<<<< HEAD
 import { PredictionService } from './services/prediction.service';
 import { ClusteringService } from './services/clustering.service';
-=======
-import { PredictionService } from './shared/prediction.service';
-import { ClusteringService } from './shared/clustering.service';
->>>>>>> upstream/develop
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
