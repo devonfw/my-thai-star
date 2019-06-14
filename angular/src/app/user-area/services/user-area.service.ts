@@ -34,50 +34,12 @@ export class UserAreaService {
     });
   }
 
-<<<<<<< HEAD:angular/src/app/user-area/services/user-area.service.ts
   login(username: string, password: string) {
     return this.http.post(
       `${this.restPathRoot}${this.loginRestPath}`,
       { username: username, password: password },
       { responseType: 'text', observe: 'response' },
     );
-=======
-  login(username: string, password: string): void {
-    this.http
-      .post(
-        `${this.restPathRoot}${this.loginRestPath}`,
-        { username: username, password: password },
-        { responseType: 'text', observe: 'response' },
-      )
-      .subscribe(
-        (res: any) => {
-          this.authService.setToken(res.headers.get('Authorization'));
-          this.http
-            .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-            .subscribe((loginInfo: any) => {
-              this.authService.setLogged(true);
-              this.authService.setUser(loginInfo.name);
-              this.authService.setRole(loginInfo.role);
-              if (loginInfo.role === 'CUSTOMER') {
-                this.router.navigate(['restaurant']);
-              } else if (loginInfo.role === 'WAITER') {
-                this.router.navigate(['orders']);
-              } else if (loginInfo.role === 'MANAGER') {
-                this.router.navigate(['prediction']);
-              }
-              this.snackBar.openSnack(
-                this.authAlerts.loginSuccess,
-                4000,
-                'green',
-              );
-            });
-        },
-        (err: any) => {
-          this.authService.setLogged(false);
-          this.snackBar.openSnack(err.message, 4000, 'red');
-        },
-      );
->>>>>>> upstream/develop:angular/src/app/user-area/shared/user-area.service.ts
   }
 
   register(email: string, password: string): void {
