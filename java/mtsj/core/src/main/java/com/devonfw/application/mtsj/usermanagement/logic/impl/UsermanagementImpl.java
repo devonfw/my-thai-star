@@ -16,6 +16,7 @@ import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -67,6 +68,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
         LOG.debug("Get User with username {} from database.", username);
         UserEntity user = getBeanMapper().map(getUserDao().findByUsername(username), UserEntity.class);
+        initializeSecret(user);
         if (user != null && user.getTwoFactorStatus()) {
             return QrCodeService.generateQrCode(user);
         }
@@ -117,7 +119,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
         // initialize, validate userEntity here if necessary
         userEntity.setTwoFactorStatus(user.getTwoFactorStatus());
         UserEntity resultEntity = getUserDao().save(userEntity);
-        LOG.debug("User with id '{}' has modified.", resultEntity.getId());
+        LOG.debug("User with id '{}' has been modified.", resultEntity.getId());
         return getBeanMapper().map(resultEntity, UserEto.class);
     }
 
@@ -165,6 +167,19 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
         LOG.debug("UserRole with id '{}' has been created.", resultEntity.getId());
 
         return getBeanMapper().map(resultEntity, UserRoleEto.class);
+    }
+
+    /**
+     * Assigns a randomly generated secret for an specific user
+     *
+     * @param user
+     */
+    private void initializeSecret(UserEntity user) {
+        if(user.getSecret() == null){
+            user.setSecret(Base32.random());
+            UserEntity resultEntity = getUserDao().save(user);
+            LOG.debug("User with id '{}' has been modified.", resultEntity.getId());
+        }
     }
 
     /**
