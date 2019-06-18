@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
-import { AuthService } from '../../../core/authentication/auth.service';
 
 @Component({
   selector: 'public-menu-card',
@@ -10,11 +9,11 @@ import { AuthService } from '../../../core/authentication/auth.service';
 export class MenuCardComponent {
   @Input() extras: ExtraView;
   @Input() menuInfo: DishView;
+  @Input() auth: boolean;
   @Output() orderAdded = new EventEmitter<any>();
   @Output() extraSelected = new EventEmitter<any>();
 
   constructor(
-    public auth: AuthService,
   ) {}
 
   changeFavouriteState(): void {

@@ -8,7 +8,7 @@
             <input matInput [placeholder]="'formFields.username' | translate" ngModel name="username" required>
           </mat-form-field>
         </div>
-                
+
         <div>
           <mat-form-field color="accent" flex>
             <input matInput [placeholder]="'formFields.password' | translate" ngModel name="password" type="password" required>
@@ -22,7 +22,7 @@
     </form>
   </mat-tab>
 
-  
+
   <mat-tab [label]="'userArea.signupTitle' | translate" class="registerTab">
     <form (ngSubmit)="signInSubmit(signForm.form.value)" class="pad" #signForm="ngForm">
       <div layout= "column" class="push-bottom-sm" flex>
