@@ -12,8 +12,8 @@ import { fadeAnimation } from './core/animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
 import { ConfigService } from './core/config/config.service';
-import {Observable} from "rxjs";
-import {select, Store} from "@ngrx/store";
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 
 @Component({
   selector: 'public-main',
@@ -21,7 +21,7 @@ import {select, Store} from "@ngrx/store";
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation], // register the animation
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   logged$: Observable<boolean>;
   role$: Observable<string>;
   userName$: Observable<string>;
