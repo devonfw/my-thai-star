@@ -100,7 +100,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     public UserEto saveUser(UserEto user) {
 
         Objects.requireNonNull(user, "user");
-        UserEntity userEntity = getBeanMapper().map(getUserDao().findByUsername(user.getUsername()), UserEntity.class);
+        UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
 
         // initialize, validate userEntity here if necessary
         UserEntity resultEntity = getUserDao().save(userEntity);
