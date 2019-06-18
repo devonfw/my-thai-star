@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromOrder from 'app/sidenav/store/selectors';
 import * as fromMenu from 'app/menu/store/selectors';
 import * as fromApp from 'app/store/reducers';
@@ -15,6 +15,7 @@ import {
   AddOrder,
   UpdateOrder,
 } from '../../sidenav/store/actions/order.actions';
+import * as fromAuth from '../../user-area/store/selectors';
 
 export interface Filters {
   searchBy: string;
@@ -32,6 +33,7 @@ export interface Filters {
 })
 export class MenuComponent implements OnInit {
   dishes$: Observable<DishView[]> = this.store.select(fromMenu.getDishes);
+  logged$: Observable<boolean>;
   orders$: Observable<Order[]>;
   orders: Order[];
   menuInfo: DishView;
@@ -48,6 +50,7 @@ export class MenuComponent implements OnInit {
     this.store
       .select(fromOrder.selectAll)
       .subscribe((orders) => (this.orders = orders));
+    this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
 
   onFilterChange(filters: FilterFormData): void {
@@ -70,7 +73,7 @@ export class MenuComponent implements OnInit {
   }
 
   idExist(id: number): any {
-    return !!this.orders.find((orderId) => orderId.order.dish.id === id);
+    return !!this.orders.find(orderId => orderId.order.dish.id === id);
   }
 
   onExtraSelected(extra: ExtraView): void {

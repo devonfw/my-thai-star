@@ -4,6 +4,7 @@
   <public-menu-card
     *ngFor="let dish of dishes"
     [menuInfo]="dish"
+    [auth]="logged$ === TRUE"
     (orderAdded)="onOrderAdded($event)"
     (extraSelected)="onExtraSelected($event)"
   ></public-menu-card>
@@ -13,3 +14,4 @@
   <mat-progress-bar #loading color="accent" mode="indeterminate">
   </mat-progress-bar>
 </ng-template>
+
