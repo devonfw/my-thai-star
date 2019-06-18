@@ -3,7 +3,11 @@ package com.devonfw.application.mtsj.usermanagement.service.impl;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;

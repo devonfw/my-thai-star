@@ -9,7 +9,7 @@ public class UserQrCodeTo extends AbstractTo {
     private String base64QrCode;
 
     /*
-     * TODO: Encrypted object during transfer must be enforced with HTTPS or similar symmetric encryption
+     * TODO: Encrypted object during transfer must be enforced with HTTPS or similar encryption
      */
     private String secret;
 
