@@ -4,7 +4,7 @@ target
 eclipse-target
 NestJS/node_modules/
 NestJS/.vscode/
-.idea/
+idea/
 
 
 *.log
