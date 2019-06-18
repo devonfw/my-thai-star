@@ -11,7 +11,11 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Usermanagement}.

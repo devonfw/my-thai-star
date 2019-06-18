@@ -29,7 +29,7 @@ CREATE TABLE User (
   username VARCHAR (255) NULL,
   password VARCHAR (255) NULL,
   secret VARCHAR (255) NULL,
-  usingtwofactor BOOLEAN NULL DEFAULT ((0)),
+  twoFactorStatus BOOLEAN NULL DEFAULT ((0)),
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),

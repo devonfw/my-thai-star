@@ -52,7 +52,7 @@ public class AdvancedDaoAuthenticationProvider extends DaoAuthenticationProvider
             throw new BadCredentialsException("Credentials are invalid");
         }
 
-        if (user.isUsingTwoFactor()) {
+        if (user.getTwoFactorStatus()) {
             LOG.debug("Require additional authentication methods");
             return populateSuccessUsernamePasswordAuthentication(auth, SecondFactor.OTP);
         }

@@ -14,17 +14,9 @@ public class UserEto extends AbstractEto implements User {
 
   private String email;
 
-  private Boolean twoFactorStatus;
+  private boolean twoFactorStatus;
 
   private Long userRoleId;
-
-  public UserEto() { }
-
-  public UserEto(String username, String email, Boolean twoFactorStatus) {
-    this.username = username;
-    this.email = email;
-    this.twoFactorStatus = twoFactorStatus;
-  }
 
   @Override
   public String getUsername() {
@@ -50,14 +42,16 @@ public class UserEto extends AbstractEto implements User {
     this.email = email;
   }
 
-  public Boolean getTwoFactorStatus() {
+  @Override
+  public boolean getTwoFactorStatus() {
 
-    return twoFactorStatus;
+    return this.twoFactorStatus;
   }
 
-  public void setTwoFactorStatus(Boolean status) {
+  @Override
+  public void setTwoFactorStatus(boolean twoFactorStatus) {
 
-    this.twoFactorStatus = status;
+    this.twoFactorStatus = twoFactorStatus;
   }
 
   @Override
@@ -79,7 +73,6 @@ public class UserEto extends AbstractEto implements User {
     int result = super.hashCode();
     result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
     result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-
     result = prime * result + ((this.userRoleId == null) ? 0 : this.userRoleId.hashCode());
 
     return result;

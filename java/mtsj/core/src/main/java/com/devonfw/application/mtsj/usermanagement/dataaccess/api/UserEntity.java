@@ -29,7 +29,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
 
   private String secret;
 
-  private Boolean twoFactorStatus;
+  private boolean twoFactorStatus;
 
   private UserRoleEntity userRole;
 
@@ -49,7 +49,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param username new value of {@link #getusername}.
+   * @param username new value of {@link #getUsername()}.
    */
   @Override
   public void setUsername(String username) {
@@ -66,7 +66,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param password new value of {@link #getpassword}.
+   * @param password new value of {@link #getPassword()}.
    */
   public void setPassword(String password) {
 
@@ -83,7 +83,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param email new value of {@link #getemail}.
+   * @param email new value of {@link #getEmail()}.
    */
   @Override
   public void setEmail(String email) {
@@ -95,27 +95,35 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
    * @return secret
    */
   public String getSecret() {
+
     return secret;
   }
 
   /**
-   * @param secret new value of {@link #getsecret}.
+   * @param secret new value of {@link #getSecret()}.
    */
   public void setSecret(String secret) {
+
     this.secret = secret;
   }
 
   /**
-   * @return usingTwoFactor
+   * @return twoFactorStatus
    */
-  public Boolean isUsingTwoFactor() { return this.twoFactorStatus; }
+  @Override
+  public boolean getTwoFactorStatus() {
+
+    return this.twoFactorStatus;
+  }
 
   /**
    *
-   * @param usingTwoFactor new value of {@link #isusingtwofactor()}
+   * @param twoFactorStatus new value of {@link #getTwoFactorStatus()}
    */
-  public void setUsingTwoFactor(Boolean usingTwoFactor) {
-    this.twoFactorStatus = usingTwoFactor;
+  @Override
+  public void setTwoFactorStatus(boolean twoFactorStatus) {
+
+    this.twoFactorStatus = twoFactorStatus;
   }
 
   /**
@@ -129,7 +137,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param userRole new value of {@link #getuserRole}.
+   * @param userRole new value of {@link #getUserRole()}.
    */
   public void setUserRole(UserRoleEntity userRole) {
 
@@ -148,7 +156,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param favourites new value of {@link #getfavourites}.
+   * @param favourites new value of {@link #getFavourites()}.
    */
   public void setFavourites(List<DishEntity> favourites) {
 
@@ -165,7 +173,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param bookings new value of {@link #getbookings}.
+   * @param bookings new value of {@link #getBookings()}.
    */
   public void setBookings(List<BookingEntity> bookings) {
 

@@ -40,7 +40,7 @@ public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid username or password");
         }
 
-        if (user.isUsingTwoFactor()) {
+        if (user.getTwoFactorStatus()) {
             Totp totp = new Totp(user.getSecret());
 
             if (!passwordEncoder.matches(auth.getCredentials().toString(), user.getPassword())) {
