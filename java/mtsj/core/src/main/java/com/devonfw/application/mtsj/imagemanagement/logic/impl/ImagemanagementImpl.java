@@ -2,6 +2,7 @@ package com.devonfw.application.mtsj.imagemanagement.logic.impl;
 
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageSearchCriteriaTo;
@@ -40,6 +42,7 @@ public class ImagemanagementImpl extends AbstractComponentFacade implements Imag
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_IMAGE)
   public ImageEto findImage(Long id) {
 
     LOG.debug("Get Image with id {} from database.", id);
@@ -47,6 +50,7 @@ public class ImagemanagementImpl extends AbstractComponentFacade implements Imag
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_IMAGE)
   public Page<ImageEto> findImageEtos(ImageSearchCriteriaTo criteria) {
 
     Page<ImageEntity> images = getImageDao().findImages(criteria);
@@ -54,6 +58,7 @@ public class ImagemanagementImpl extends AbstractComponentFacade implements Imag
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_IMAGE)
   public boolean deleteImage(Long imageId) {
 
     ImageEntity image = getImageDao().find(imageId);
@@ -63,6 +68,7 @@ public class ImagemanagementImpl extends AbstractComponentFacade implements Imag
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_IMAGE)
   public ImageEto saveImage(ImageEto image) {
 
     Objects.requireNonNull(image, "image");

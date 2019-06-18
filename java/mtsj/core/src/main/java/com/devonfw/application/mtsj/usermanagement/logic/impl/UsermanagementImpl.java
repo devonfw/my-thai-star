@@ -2,6 +2,7 @@ package com.devonfw.application.mtsj.usermanagement.logic.impl;
 
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
@@ -54,6 +56,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_USER)
   public UserEto findUser(Long id) {
 
     LOG.debug("Get User with id {} from database.", id);
@@ -61,6 +64,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_USER)
   public Page<UserEto> findUserEtos(UserSearchCriteriaTo criteria) {
 
     Page<UserEntity> users = getUserDao().findUsers(criteria);
@@ -68,6 +72,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_USER)
   public boolean deleteUser(Long userId) {
 
     UserEntity user = getUserDao().find(userId);
@@ -77,6 +82,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_USER)
   public UserEto saveUser(UserEto user) {
 
     Objects.requireNonNull(user, "user");
@@ -100,6 +106,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_USER_ROLE)
   public UserRoleEto findUserRole(Long id) {
 
     LOG.debug("Get UserRole with id {} from database.", id);
@@ -107,6 +114,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_USER_ROLE)
   public Page<UserRoleEto> findUserRoleEtos(UserRoleSearchCriteriaTo criteria) {
 
     Page<UserRoleEntity> userroles = getUserRoleDao().findUserRoles(criteria);
@@ -114,6 +122,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_USER_ROLE)
   public boolean deleteUserRole(Long userRoleId) {
 
     UserRoleEntity userRole = getUserRoleDao().find(userRoleId);
@@ -123,6 +132,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_USER_ROLE)
   public UserRoleEto saveUserRole(UserRoleEto userRole) {
 
     Objects.requireNonNull(userRole, "userRole");
