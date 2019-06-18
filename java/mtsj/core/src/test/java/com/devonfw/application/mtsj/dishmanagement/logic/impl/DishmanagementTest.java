@@ -53,14 +53,14 @@ public class DishmanagementTest extends ApplicationComponentTest {
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
-    criteria.setSearchBy("Garlic Paradise");
+    criteria.setSearchBy("Thai Spicy Basil Fried Rice");
     PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "id"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
     assertThat(result).isNotNull();
     assertThat(result.getContent().size()).isGreaterThan(0);
-    assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(1L);
+    assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(0L);
   }
 
 }
