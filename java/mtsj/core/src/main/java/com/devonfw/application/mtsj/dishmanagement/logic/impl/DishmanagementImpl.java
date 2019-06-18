@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -31,7 +30,6 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.CategoryR
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepository;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.IngredientRepository;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 
@@ -74,7 +72,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY)
   public CategoryEto findCategory(Long id) {
 
     LOG.debug("Get Category with id {} from database.", id);
@@ -82,7 +79,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_CATEGORY)
   public Page<CategoryEto> findCategoryEtos(CategorySearchCriteriaTo criteria) {
 
     Page<CategoryEntity> categorys = getCategoryDao().findCategorys(criteria);
@@ -90,7 +86,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_CATEGORY)
   public boolean deleteCategory(Long categoryId) {
 
     CategoryEntity category = getCategoryDao().find(categoryId);
@@ -100,7 +95,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_CATEGORY)
   public CategoryEto saveCategory(CategoryEto category) {
 
     Objects.requireNonNull(category, "category");
@@ -124,7 +118,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_DISH)
   public DishCto findDish(Long id) {
 
     LOG.debug("Get Dish with id {} from database.", id);
@@ -138,7 +131,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_DISH)
   public Page<DishCto> findDishCtos(DishSearchCriteriaTo criteria) {
 
     List<DishCto> ctos = new ArrayList<>();
@@ -166,7 +158,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_DISH)
   public boolean deleteDish(Long dishId) {
 
     DishEntity dish = getDishDao().find(dishId);
@@ -176,7 +167,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_DISH)
   public DishEto saveDish(DishEto dish) {
 
     Objects.requireNonNull(dish, "dish");
@@ -189,7 +179,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     return getBeanMapper().map(resultEntity, DishEto.class);
   }
 
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_DISH)
   public Page<DishCto> findDishesByCategory(DishSearchCriteriaTo criteria, String categoryName) {
 
     List<DishCto> ctos = new ArrayList<>();
@@ -252,7 +241,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_INGREDIENT)
   public IngredientEto findIngredient(Long id) {
 
     LOG.debug("Get Ingredient with id {} from database.", id);
@@ -260,7 +248,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_INGREDIENT)
   public Page<IngredientEto> findIngredientEtos(IngredientSearchCriteriaTo criteria) {
 
     Page<IngredientEntity> ingredients = getIngredientDao().findIngredients(criteria);
@@ -268,7 +255,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_DELETE_INGREDIENT)
   public boolean deleteIngredient(Long ingredientId) {
 
     IngredientEntity ingredient = getIngredientDao().find(ingredientId);
@@ -278,7 +264,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_SAVE_INGREDIENT)
   public IngredientEto saveIngredient(IngredientEto ingredient) {
 
     Objects.requireNonNull(ingredient, "ingredient");
