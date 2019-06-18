@@ -4,12 +4,12 @@ INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (2, 1, 'Manag
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (3, 1, 'Cook', true);
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (4, 1, 'Barkeeper', true);
 INSERT INTO UserRole(id, modificationCounter, name, active) VALUES (5, 1, 'Chief', true);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (0, 1, 'user0', '{bcrypt}$2a$10$qPM1WjcRKAffHxWXYEfPJOh2vGPlT/Fdv.hJX/LaZjzg/Wtj2csqO', '24B7PMRQCDABFKS2', false, 'user0@mail.com', 0);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', 'H6DOO5BNDNYQJKB3', false, 'waiter@mail.com', 1);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', 'KBJROASFZWPIASJE', false, 'manager@mail.com', 2);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (3, 1, 'cook', '{bcrypt}$2a$10$NwpJKhs/3UFHAOWGZhbRW.33Eb.usBOEr4w73gYbyo7a1OD1doIGe', 'ODIZWXHYIN4JOKKV', false, 'cook@mail.com', 3);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (4, 1, 'barkeeper', '{bcrypt}$2a$10$8T0JB1c1sWCaClSVBHbP4us38Tg/5j.B.C4T0MJWjQU8CjSGqHuam', 'ZTEVHWDJO2D4MFYQ', false, 'barkeeper@mail.com', 4);
-INSERT INTO User(id, modificationCounter, username, password, secret, usingtwofactor, email, idRole) VALUES (5, 1, 'chief', '{bcrypt}$2a$10$hfYO45o.cIT0OtGJfNlIJ.l945JECKeEKEy3RxS0cI8jA90YDIpA.', '6P5XQO4L7T2W4RXD', false, 'chief@mail.com', 5);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (0, 1, 'user0', '{bcrypt}$2a$10$qPM1WjcRKAffHxWXYEfPJOh2vGPlT/Fdv.hJX/LaZjzg/Wtj2csqO', '24B7PMRQCDABFKS2', false, 'user0@mail.com', 0);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', 'H6DOO5BNDNYQJKB3', false, 'waiter@mail.com', 1);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', 'KBJROASFZWPIASJE', false, 'manager@mail.com', 2);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (3, 1, 'cook', '{bcrypt}$2a$10$NwpJKhs/3UFHAOWGZhbRW.33Eb.usBOEr4w73gYbyo7a1OD1doIGe', 'ODIZWXHYIN4JOKKV', false, 'cook@mail.com', 3);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (4, 1, 'barkeeper', '{bcrypt}$2a$10$8T0JB1c1sWCaClSVBHbP4us38Tg/5j.B.C4T0MJWjQU8CjSGqHuam', 'ZTEVHWDJO2D4MFYQ', false, 'barkeeper@mail.com', 4);
+INSERT INTO User(id, modificationCounter, username, password, secret, twoFactorStatus, email, idRole) VALUES (5, 1, 'chief', '{bcrypt}$2a$10$hfYO45o.cIT0OtGJfNlIJ.l945JECKeEKEy3RxS0cI8jA90YDIpA.', '6P5XQO4L7T2W4RXD', false, 'chief@mail.com', 5);
 
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);

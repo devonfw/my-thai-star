@@ -7,16 +7,20 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import com.devonfw.application.mtsj.general.common.base.QrCodeService;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.*;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 
 /**
@@ -55,35 +59,25 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     public UserEto findUser(Long id) {
 
         LOG.debug("Get User with id {} from database.", id);
-        UserEntity entity = getUserDao().find(id);
-        UserEto eto = new UserEto();
-        eto.setUsername(entity.getUsername());
-        eto.setUserRoleId(entity.getUserRoleId());
-        eto.setEmail(entity.getEmail());
-        eto.setTwoFactorStatus(entity.isUsingTwoFactor());
-        eto.setUserRoleId(entity.getUserRoleId());
-        return eto;
+        return getBeanMapper().map(getUserDao().find(id), UserEto.class);
     }
 
     @Override
     public UserQrCodeTo generateUserQrCode(String username) {
 
         LOG.debug("Get User with username {} from database.", username);
-        final UserEntity user = getUserDao().findByUsername(username);
-        if (user != null && user.isUsingTwoFactor()) {
-
+        UserEntity user = getBeanMapper().map(getUserDao().findByUsername(username), UserEntity.class);
+        if (user != null && user.getTwoFactorStatus()) {
             return QrCodeService.generateQrCode(user);
-        } else {
-            return null;
         }
+        else { return null; }
     }
 
     @Override
     public UserEto getUserStatus(String username) {
 
         LOG.debug("Get User with username {} from database.", username);
-        final UserEntity userEntity = getUserDao().findByUsername(username);
-        return new UserEto(userEntity.getUsername(), userEntity.getEmail(), userEntity.isUsingTwoFactor());
+        return getBeanMapper().map(getUserDao().findByUsername(username), UserEto.class);
     }
 
     @Override
@@ -106,33 +100,31 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     public UserEto saveUser(UserEto user) {
 
         Objects.requireNonNull(user, "user");
-        UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
+        UserEntity userEntity = getBeanMapper().map(getUserDao().findByUsername(user.getUsername()), UserEntity.class);
 
         // initialize, validate userEntity here if necessary
         UserEntity resultEntity = getUserDao().save(userEntity);
         LOG.debug("User with id '{}' has been created.", resultEntity.getId());
-
         return getBeanMapper().map(resultEntity, UserEto.class);
     }
 
     @Override
     public UserEto saveUserTwoFactor(UserEto user) {
-        Objects.requireNonNull(user, "user");
-        UserEntity userEntity = getUserDao().findByUsername(user.getUsername());
 
-        userEntity.setUsingTwoFactor(user.getTwoFactorStatus());
+        Objects.requireNonNull(user, "user");
+        UserEntity userEntity = getBeanMapper().map(getUserDao().findByUsername(user.getUsername()), UserEntity.class);
 
         // initialize, validate userEntity here if necessary
+        userEntity.setTwoFactorStatus(user.getTwoFactorStatus());
         UserEntity resultEntity = getUserDao().save(userEntity);
-        LOG.debug("User with id '{}' has been persisted.", resultEntity.getId());
-
-        return new UserEto(resultEntity.getUsername(), resultEntity.getEmail(), resultEntity.isUsingTwoFactor());
+        LOG.debug("User with id '{}' has modified.", resultEntity.getId());
+        return getBeanMapper().map(resultEntity, UserEto.class);
     }
 
     /**
      * Returns the field 'userDao'.
      *
-     * @return the {@link UserDao} instance.
+     * @return the {@link UserRepository} instance.
      */
     public UserRepository getUserDao() {
 
@@ -178,7 +170,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     /**
      * Returns the field 'userRoleDao'.
      *
-     * @return the {@link UserRoleDao} instance.
+     * @return the {@link UserRoleRepository} instance.
      */
     public UserRoleRepository getUserRoleDao() {
 
