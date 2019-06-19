@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.dishmanagement.logic.impl;
 
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -141,6 +143,11 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       DishCto cto = new DishCto();
       cto.setDish(getBeanMapper().map(dish, DishEto.class));
       cto.setImage(getBeanMapper().map(dish.getImage(), ImageEto.class));
+      try {
+        Clob dishContent = dish.getImage().getContent();
+        cto.getImage().setContent(dishContent.getSubString(1L, Long.valueOf(dishContent.length()).intValue()));
+      } catch (SQLException e) {
+      }
       cto.setCategories(getBeanMapper().mapList(dish.getCategories(), CategoryEto.class));
       cto.setExtras(getBeanMapper().mapList(dish.getExtras(), IngredientEto.class));
       ctos.add(cto);
