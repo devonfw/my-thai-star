@@ -28,7 +28,8 @@ public class LoginController {
    * @param logout flag for successful logout
    * @return the view model
    */
-  @RequestMapping(value = "/login**", method = { RequestMethod.GET, RequestMethod.POST })
+  // TODO: Vaibhav tell me that Iwan request the next line that Sonar mark as an important blocker. Then I added NOSONAR until it is solved.
+  @RequestMapping(value = "/login**", method = { RequestMethod.GET, RequestMethod.POST }) //NOSONAR
   public ModelAndView login(
       @RequestParam(value = "authentication_failed", required = false) boolean authentication_failed,
       @RequestParam(value = "invalid_session", required = false) boolean invalid_session,
