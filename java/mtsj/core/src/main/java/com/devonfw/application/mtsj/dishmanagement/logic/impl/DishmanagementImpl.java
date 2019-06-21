@@ -145,7 +145,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       cto.setImage(getBeanMapper().map(dish.getImage(), ImageEto.class));
       try {
         Clob dishContent = dish.getImage().getContent();
-        cto.getImage().setContent(dishContent.getSubString(1L, Long.valueOf(dishContent.length()).intValue()));
+        cto.getImage().setContent(dishContent.getSubString(1L, (int) dishContent.length()));
       } catch (SQLException e) {
       }
       cto.setCategories(getBeanMapper().mapList(dish.getCategories(), CategoryEto.class));
