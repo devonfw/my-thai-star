@@ -149,7 +149,6 @@ export class PredictionCockpitComponent implements OnInit {
       data.forEach((record, index) => {
         const color = colors[index];
         record.backgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
-        record.backgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
         record.borderColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
         record.pointBackgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
         record.pointBorderColor = '#fff';
