@@ -74,11 +74,13 @@ export class AppComponent {
       router.resetConfig(newRoutes);
     }
 
+    /* TODO: if electronService
     if (electronService.isElectronApp) {
       // Elecron stuff
     } else {
       // Web stuff
     }
+    */
   }
 
   sidenavStatus(opened: boolean): boolean {
