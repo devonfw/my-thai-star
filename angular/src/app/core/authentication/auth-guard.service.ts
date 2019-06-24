@@ -22,7 +22,9 @@ export class AuthGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): boolean {
-    if ((state.url === '/prediction' || state.url === '/clustering') && this.authService.isLogged() && this.authService.isPermited('MANAGER')) {
+    if ((state.url === '/prediction' || state.url === '/clustering')
+      && this.authService.isLogged()
+      && this.authService.isPermited('MANAGER')) {
       return true;
     }
 

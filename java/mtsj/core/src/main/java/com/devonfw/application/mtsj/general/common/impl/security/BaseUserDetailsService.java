@@ -87,7 +87,6 @@ public class BaseUserDetailsService implements UserDetailsService {
       userData.setUserProfile(principal);
       return userData;
     } catch (Exception e) {
-      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;
@@ -160,7 +159,6 @@ public class BaseUserDetailsService implements UserDetailsService {
     try {
       return this.usermanagement.findUserProfileByLogin(username);
     } catch (RuntimeException e) {
-      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;

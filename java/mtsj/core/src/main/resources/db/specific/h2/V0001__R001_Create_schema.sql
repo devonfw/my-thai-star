@@ -6,7 +6,7 @@
 CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
 
 -- *** Table ***
-CREATE TABLE TABLE (
+CREATE TABLE Table (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE UserRole (
 );
 
 -- *** User ***
-CREATE TABLE USER (
+CREATE TABLE User (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   username VARCHAR (255) NULL,
@@ -40,7 +40,7 @@ CREATE TABLE Booking (
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
-  bookingToken VARCHAR (60),
+  bookingToken VARCHAR (76),
   comment VARCHAR (4000),
   email VARCHAR(255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
@@ -52,8 +52,8 @@ CREATE TABLE Booking (
   idOrder BIGINT,
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
-  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES USER(id) NOCHECK,
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES TABLE(id) NOCHECK
+  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
 );
 
 -- *** InvitedGuest ***
@@ -178,7 +178,7 @@ CREATE TABLE UserFavourite (
   idUser BIGINT NOT NULL,
   idDish BIGINT NOT NULL,
   CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
-  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES USER(id) NOCHECK,
+  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
   CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
 );
 
