@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
 import com.devonfw.application.mtsj.general.common.api.security.UserData;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -66,6 +67,9 @@ public class BaseUserDetailsService implements UserDetailsService {
 
   private Usermanagement usermanagement;
 
+  @Inject
+  private com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement usermanagementcore;
+
   private AuthenticationManagerBuilder amBuilder;
 
   private AccessControlProvider accessControlProvider;
@@ -77,11 +81,9 @@ public class BaseUserDetailsService implements UserDetailsService {
 
     UserProfile principal = retrievePrincipal(username);
     Set<GrantedAuthority> authorities = getAuthorities(principal);
-    UserDetails user;
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
-      user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
-      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
+      UserEto userEto = this.usermanagementcore.findUserbyName(username);
+      UserData userData = new UserData(userEto.getUsername(), userEto.getPassword(), authorities);
       userData.setUserProfile(principal);
       return userData;
     } catch (Exception e) {

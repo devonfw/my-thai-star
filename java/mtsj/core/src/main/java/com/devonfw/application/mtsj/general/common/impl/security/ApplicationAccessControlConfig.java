@@ -1,10 +1,9 @@
 package com.devonfw.application.mtsj.general.common.impl.security;
 
-import java.util.Arrays;
-
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
+import com.devonfw.application.mtsj.general.common.api.constants.Roles;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlGroup;
 import com.devonfw.module.security.common.base.accesscontrol.AccessControlConfig;
 
@@ -84,11 +83,19 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
   public static final String PERMISSION_SAVE_USER_ROLE = PREFIX + "SaveUserRole";
 
-  public static final String GROUP_ADMIN = PREFIX + "Admin";
+  public static final String PERMISSION_GET_GEO_CLUSTER = PREFIX + "GetGeoCluster";
 
-  public static final String GROUP_WAITER = PREFIX + "Waiter";
+  public static final String PERMISSION_GET_NEXT_WEEK_PREDICTION = PREFIX + "GetNextWeekPrediction";
 
-  public static final String GROUP_CUSTOMER = PREFIX + "Customer";
+  public static final String GROUP_READ_MASTER_DATA = PREFIX + "ReadMasterData";
+
+  public static final String GROUP_ADMIN = "Admin";
+
+  public static final String GROUP_WAITER = Roles.WAITER;
+
+  public static final String GROUP_CUSTOMER = Roles.CUSTOMER;
+
+  public static final String GROUP_MANAGER = Roles.MANAGER;
 
   /**
    * Defining access control groups in the constructor.
@@ -97,21 +104,10 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
     super();
 
-    // What permissions should belong to waiter?
-    AccessControlGroup waiter = group(GROUP_WAITER, PERMISSION_FIND_CATEGORY, PERMISSION_DELETE_CATEGORY,
-        PERMISSION_SAVE_CATEGORY);
+    AccessControlGroup waiter = group(GROUP_WAITER, PERMISSION_FIND_ORDER, PERMISSION_FIND_BOOKING);
 
-    AccessControlGroup customer = group(GROUP_CUSTOMER, PERMISSION_FIND_CATEGORY, PERMISSION_SAVE_BOOKING,
-        PERMISSION_SAVE_ORDER, PERMISSION_FIND_BOOKING);
-
-    AccessControlGroup admin = group(GROUP_ADMIN, Arrays.asList(waiter, customer), PERMISSION_FIND_DISH,
-        PERMISSION_DELETE_DISH, PERMISSION_SAVE_DISH, PERMISSION_FIND_INGREDIENT, PERMISSION_DELETE_INGREDIENT,
-        PERMISSION_SAVE_INGREDIENT, PERMISSION_DELETE_BOOKING, PERMISSION_FIND_INVITED_GUESTS,
-        PERMISSION_DELETE_INVITED_GUESTS, PERMISSION_SAVE_INVITED_GUESTS, PERMISSION_FIND_TABLE,
-        PERMISSION_DELETE_TABLE, PERMISSION_SAVE_TABLE, PERMISSION_FIND_IMAGE, PERMISSION_DELETE_IMAGE,
-        PERMISSION_SAVE_IMAGE, PERMISSION_FIND_ORDER, PERMISSION_DELETE_ORDER, PERMISSION_FIND_ORDER_LINE,
-        PERMISSION_DELETE_ORDER_LINE, PERMISSION_SAVE_ORDER_LINE, PERMISSION_FIND_USER, PERMISSION_DELETE_USER,
-        PERMISSION_SAVE_USER, PERMISSION_FIND_USER_ROLE, PERMISSION_DELETE_USER_ROLE, PERMISSION_SAVE_USER_ROLE);
+    AccessControlGroup manager = group(GROUP_MANAGER, PERMISSION_FIND_BOOKING, PERMISSION_FIND_ORDER,
+        PERMISSION_GET_NEXT_WEEK_PREDICTION, PERMISSION_GET_GEO_CLUSTER);
 
   }
 

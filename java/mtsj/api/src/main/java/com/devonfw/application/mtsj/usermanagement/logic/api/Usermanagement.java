@@ -20,6 +20,8 @@ public interface Usermanagement {
    */
   UserEto findUser(Long id);
 
+  UserEto findUserbyName(String userName);
+
   /**
    * Returns a paginated list of Users matching the search criteria.
    *

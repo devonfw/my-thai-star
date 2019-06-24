@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepository;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.PredictionDayData;
 import com.devonfw.application.mtsj.predictionmanagement.common.api.to.PredictionDataTo;
@@ -61,7 +61,7 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
   }
 
   @Override
-  @RolesAllowed(Roles.MANAGER)
+  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_GET_NEXT_WEEK_PREDICTION })
   public PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria) {
 
     LOG.debug("Generate predictions for next week.");

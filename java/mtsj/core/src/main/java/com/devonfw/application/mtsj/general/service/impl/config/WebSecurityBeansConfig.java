@@ -14,9 +14,9 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import com.devonfw.application.mtsj.general.common.base.DefaultRolesPrefixPostProcessor;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.base.accesscontrol.AccessControlSchemaProvider;
-import com.devonfw.module.security.common.impl.accesscontrol.AccessControlProviderImpl;
 import com.devonfw.module.security.common.impl.accesscontrol.AccessControlSchemaProviderImpl;
 
 /**
@@ -34,7 +34,7 @@ public class WebSecurityBeansConfig {
   @Bean
   public AccessControlProvider accessControlProvider() {
 
-    return new AccessControlProviderImpl();
+    return new ApplicationAccessControlConfig();
   }
 
   /**
@@ -82,18 +82,17 @@ public class WebSecurityBeansConfig {
 
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
-  
+
   @Bean
   public PasswordEncoder delegatingPasswordEncoder() {
-      PasswordEncoder defaultEncoder = new StandardPasswordEncoder();
-      Map<String, PasswordEncoder> encoders = new HashMap<>();
-      encoders.put("bcrypt", new BCryptPasswordEncoder());
-   
-      DelegatingPasswordEncoder passworEncoder = new DelegatingPasswordEncoder(
-        "bcrypt", encoders);
-      passworEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
-   
-      return passworEncoder;
-  }
 
+    PasswordEncoder defaultEncoder = new StandardPasswordEncoder();
+    Map<String, PasswordEncoder> encoders = new HashMap<>();
+    encoders.put("bcrypt", new BCryptPasswordEncoder());
+
+    DelegatingPasswordEncoder passworEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
+    passworEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
+
+    return passworEncoder;
+  }
 }

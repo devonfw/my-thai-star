@@ -7,10 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -22,15 +25,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
+  private UserDetailsService userDetailsService;
+
   /**
    * The constructor.
    *
    * @param url the login url
    * @param authManager the {@link AuthenticationManager}
    */
-  public JWTLoginFilter(String url, AuthenticationManager authManager) {
+  @Autowired
+  public JWTLoginFilter(String url, AuthenticationManager authManager, UserDetailsService userDetailsService) {
+
     super(new AntPathRequestMatcher(url));
     setAuthenticationManager(authManager);
+    this.userDetailsService = userDetailsService;
   }
 
   @Override
@@ -38,8 +46,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
       throws AuthenticationException, IOException, ServletException {
 
     AccountCredentials creds = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
-    return getAuthenticationManager()
-        .authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword()));
+    UserDetails user = this.userDetailsService.loadUserByUsername(creds.getUsername());
+    return getAuthenticationManager().authenticate(
+        new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(), user.getAuthorities()));
   }
 
   @Override

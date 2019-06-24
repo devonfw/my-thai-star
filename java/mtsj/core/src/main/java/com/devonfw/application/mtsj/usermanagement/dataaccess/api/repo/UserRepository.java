@@ -3,6 +3,8 @@ package com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo;
 import static com.querydsl.core.alias.Alias.$;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
@@ -17,6 +19,14 @@ import com.querydsl.jpa.impl.JPAQuery;
 public interface UserRepository extends DefaultRepository<UserEntity> {
 
   /**
+   * @param token
+   * @return the {@link UserEntity} objects that matched the search.
+   */
+  @Query("SELECT user FROM UserEntity user" //
+      + " WHERE user.username = :userName")
+  UserEntity findUserbyName(@Param("userName") String userName);
+
+  /**
    * @param criteria the {@link UserSearchCriteriaTo} with the criteria to search.
    * @return the {@link Page} of the {@link UserEntity} objects that matched the search.
    */
@@ -28,6 +38,10 @@ public interface UserRepository extends DefaultRepository<UserEntity> {
     String username = criteria.getUsername();
     if ((username != null) && !username.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getUsername()), username, criteria.getUsernameOption());
+    }
+    String password = criteria.getPassword();
+    if ((password != null) && !password.isEmpty()) {
+      QueryUtil.get().whereString(query, $(alias.getPassword()), password, criteria.getPasswordOption());
     }
     String email = criteria.getEmail();
     if ((email != null) && !email.isEmpty()) {

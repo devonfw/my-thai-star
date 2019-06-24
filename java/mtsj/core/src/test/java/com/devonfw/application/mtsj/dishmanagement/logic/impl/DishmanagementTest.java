@@ -62,5 +62,4 @@ public class DishmanagementTest extends ApplicationComponentTest {
     assertThat(result.getContent().size()).isGreaterThan(0);
     assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(0L);
   }
-
 }

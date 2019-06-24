@@ -17,7 +17,7 @@ import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClusterDataE
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClustersDataCto;
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClustersDataEto;
 import com.devonfw.application.mtsj.clustermanagement.logic.api.Clustermanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 
 /**
@@ -44,7 +44,7 @@ public class ClustermanagementImpl extends AbstractComponentFacade implements Cl
   }
 
   @Override
-  @RolesAllowed(Roles.MANAGER)
+  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_GET_GEO_CLUSTER })
   public ClustersDataCto getGeoClusters(ClusterCriteriaEto criteria) {
     LOG.debug( "Clustering geo data." );
 

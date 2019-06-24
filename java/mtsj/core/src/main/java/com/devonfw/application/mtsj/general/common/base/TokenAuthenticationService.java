@@ -81,8 +81,8 @@ public class TokenAuthenticationService {
     if (token != null) {
 
       // The JWT parser will throw an exception if the token is not well formed or the token has expired
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
       return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token)) : null;
 
     }
@@ -141,8 +141,8 @@ public class TokenAuthenticationService {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
     try {
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
 
       List<String> roles = getRolesFromToken(token);
       if (user != null) {
