@@ -16,27 +16,25 @@ pipeline{
         string(name: 'BUILD_SCRIPT', defaultValue: 'build --configuration=docker', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the bild script found in the package.json to be executed for generate the artifacts used to create the docker image.')
         
         // Git Repository
-        string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/devonfw/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
-        string(name: 'GIT_BRANCH', defaultValue: 'develop', description: 'NEEDS TO BE SET!. The branch of your git repository')
+        string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/Jorge-Dacal/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
+        string(name: 'GIT_BRANCH', defaultValue: 'configureOpenShift', description: 'NEEDS TO BE SET!. The branch of your git repository')
 
         // Docker Registry
-        string(name: 'DOCKER_REGISTRY', defaultValue: 'docker-registry-devon.s2-eu.capgemini.com/', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
-        string(name: 'DOCKER_REGISTRY_CREDENTIALS', defaultValue: 'nexusDeployer', description: 'NEEDS TO BE SET!. Credentials to deploy and download of your docker registry repository.')
+        string(name: 'DOCKER_REGISTRY', defaultValue: 'docker-registry-devon.s2-eu.capgemini.com', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
+        string(name: 'DOCKER_REGISTRY_CREDENTIALS', defaultValue: 'nexus-devon', description: 'NEEDS TO BE SET!. Credentials to deploy and download of your docker registry repository.')
         string(name: 'DOCKER_TAG', defaultValue: 'dev', description: 'NEEDS TO BE SET!. The tag for the image created by docker.')
 
         // OpenShift
-        string(name: 'OPENSHIFT_URL', defaultValue: 'https://ocp.itaas.s2-eu.capgemini.com', description: 'NEEDS TO BE SET!. The url of your OpenShift cluster.') 
-        string(name: 'OPENSHIFT_CREDENTIALS', defaultValue: 'ocadmin', description: 'NEEDS TO BE SET!. Admin credentials of your OpenShift cluster.')
-        string(name: 'OPENSHIFT_NAMESPACE', defaultValue: 's2portaldev', description: 'NEEDS TO BE SET!. Namespace is the name of the project of OpenShift where the environment is going to be created.')
+        string(name: 'OPENSHIFT_URL', defaultValue: 'https://master.carm-c5bf.openshiftworkshop.com', description: 'NEEDS TO BE SET!. The url of your OpenShift cluster.') 
+        string(name: 'OPENSHIFT_CREDENTIALS', defaultValue: 'ocadmin-carm', description: 'NEEDS TO BE SET!. Admin credentials of your OpenShift cluster.')
+        string(name: 'OPENSHIFT_NAMESPACE', defaultValue: 'my-thai-star', description: 'NEEDS TO BE SET!. Namespace is the name of the project of OpenShift where the environment is going to be created.')
         string(name: 'APP_NAME_SUFFIX', defaultValue: '', description: 'OPTIONAL: suffix to add to your appname in OpenShift. The name is going to be read of your package.json, for example for develop environment you could use -dev value')
         string(name: 'HOSTNAME', defaultValue: '', description: 'OPTIONAL: Especify wich will be the hostname of your application in openshift.')
         booleanParam(name: 'SECURED_PROTOCOL', defaultValue: true, description: 'OPTIONAL: If false, the protocol will be http instead https.')
 
         // Tools
         string(name: 'OPENSHIFT_TOOL', defaultValue: 'OpenShiftv3.11.0', description: 'NEEDS TO BE SET!. Tool name of openshift client in Jenkins.')
-        string(name: 'NODEJS_TOOL', defaultValue: 'NodeJS-10.15.3', description: 'NEEDS TO BE SET!. Tool name of NodeJS in Jenkins.')
-        string(name: 'YARN_TOOL', defaultValue: 'Yarn', description: 'NEEDS TO BE SET!. Tool name of Yarn in Jenkins.')
-        string(name: 'CHROME_TOOL', defaultValue: 'Chrome-stable', description: 'NEEDS TO BE SET!. Tool name of Chrome in Jenkins.')
+        string(name: 'NODEJS_TOOL', defaultValue: 'NodeJS LTS', description: 'NEEDS TO BE SET!. Tool name of NodeJS in Jenkins.')
 
     }
     
@@ -68,8 +66,9 @@ pipeline{
                     def openshift = tool name: "${params.OPENSHIFT_TOOL}", type: 'oc'
                     env.PATH = "${openshift}:${node}/bin:${env.PATH}"
                 }
-                tool "${params.YARN_TOOL}"
-                tool "${params.CHROME_TOOL}"
+                // tool "${params.YARN_TOOL}"
+                sh "npm install -g yarn"
+                // tool "${params.CHROME_TOOL}"
             }
         }
         
@@ -94,8 +93,8 @@ pipeline{
                     sh "yarn"
                     sh """yarn ${params.BUILD_SCRIPT}"""
                     sh """
-                        cp ./nginx.openshift.conf ./dist/nginx.conf
-                        cp ./Dockerfile.openshift ./dist/Dockerfile
+                        cp nginx.openshift.conf dist/nginx.conf
+                        cp Dockerfile.openshift dist/Dockerfile
                     """
                 }
             }
