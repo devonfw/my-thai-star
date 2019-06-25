@@ -210,7 +210,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       List<CategoryEto> entityCats = dish.getCategories();
       for (Category entityCat : entityCats) {
         for (Category category : categories) {
-          if (category.getId().equals(entityCat.getId());) {
+          if (category.getId().equals(entityCat.getId())) {
             if (!dishAlreadyAdded(dishFiltered, dish)) {
               dishFiltered.add(dish);
               break;
