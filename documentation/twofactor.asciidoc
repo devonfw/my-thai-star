@@ -22,6 +22,8 @@ Here you can observe which filter will be used.
 
 image::images/security/filters_png.png[, ]
 
+NOTE: Whenever the secret or qr code gets transfered between two parties, one must enforce link:https://tools.ietf.org/html/rfc5246[SSL/TLS] or link:https://tools.ietf.org/html/rfc4301[IPsec] to be comply with https://tools.ietf.org/html/rfc6238#page-5[RFC 6238].
+
 
 === Activating Two-Factor Authentication
 
@@ -34,9 +36,12 @@ will be used for OTP generation. For this purpose we recommend the *Google Authe
 * Initialize your device with either a *QR-Code* or a *secret*
 
 === Frontend
+These are the two main options, which you can obtain my toggling between *QR-Code* and *secret*.
 
 image::images/security/2FA_qr_code_menu.png[, ]
 
 image::images/security/2FA_secret_menu.png[, ]
+
+After an activation and logout. This prompt will ask you to enter the OTP given from your device.
 
 image::images/security/otp_prompt.png[, ]
