@@ -81,9 +81,15 @@ public class BaseUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-     // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
-     this.user = userRepository.findByUsername(username);
-     return new BaseUserDetails(user);
+    try {
+      // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
+      this.user = userRepository.findByUsername(username);
+      return new BaseUserDetails(user);
+    } catch (Exception e) {
+      UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
+      LOG.warn("Failed to get user {}.", username, exception);
+      throw exception;
+    }
   }
 
   /**
@@ -152,7 +158,6 @@ public class BaseUserDetailsService implements UserDetailsService {
     try {
       return this.usermanagement.findUserProfileByLogin(username);
     } catch (RuntimeException e) {
-      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;
