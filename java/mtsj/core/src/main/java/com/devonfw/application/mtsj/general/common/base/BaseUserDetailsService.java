@@ -81,10 +81,13 @@ public class BaseUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+    UserProfile principal = retrievePrincipal(username);
+    Set<GrantedAuthority> authorities = getAuthorities(principal);
     try {
+      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
       // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
       this.user = userRepository.findByUsername(username);
-      return new BaseUserDetails(user);
+      return new BaseUserDetails(this.user);
     } catch (Exception e) {
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
@@ -122,7 +125,7 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   public Set<GrantedAuthority> getAuthoritiesFromList(/* UserProfile principal */List<String> roles)
-      throws AuthenticationException {
+          throws AuthenticationException {
 
     // if (principal == null) {
     // LOG.warn("Principal must not be null.");
@@ -228,7 +231,7 @@ public class BaseUserDetailsService implements UserDetailsService {
    */
   @Inject
   public void setPrincipalAccessControlProvider(
-      PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider) {
+          PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider) {
 
     this.principalAccessControlProvider = principalAccessControlProvider;
   }
