@@ -13,7 +13,7 @@ pipeline{
         booleanParam(name: 'CREATE_SECRET', defaultValue: false, description: 'OPTIONAL: This secrets is used to connect OpenShift with your docker-registry. If true, the secret will be add to your OpenShift. If more than one app use the same registry and openshift alredy have the secret added mark it as false.')
         string(name: 'REGISTRY_SECRET_NAME_SUFFIX', defaultValue: '-devon', description: 'OPTIONAL: suffix to add to your secret for the docker registry in OpenShift. The name is going to be docker-registry, if you use more than one docker-registry in the same namespace you need to add a suffix. For example you cuold add the name of your project, then to have the name as docker-registry-myprojectname you should use -myprojectname value')
         booleanParam(name: 'CREATE_DOCKER_BUILDER', defaultValue: true, description: 'OPTIONAL: If true, BuildConfig is going to be added in OpenShift to build the docker image for your application.')
-        // string(name: 'BUILD_SCRIPT', defaultValue: 'build', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the bild script found in the package.json to be executed for generate the artifacts used to create the docker image.')
+        string(name: 'BUILD_SCRIPT', defaultValue: 'build --configuration=docker', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the bild script found in the package.json to be executed for generate the artifacts used to create the docker image.')
         
         // Git Repository
         string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/devonfw/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
@@ -58,10 +58,6 @@ pipeline{
         nameForSecret='docker-registry'
         artifactsPath='./dist'
         port='8080-tcp'
-    }
-
-    environment {
-        
     }
 
     stages {
