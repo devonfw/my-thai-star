@@ -1,4 +1,4 @@
-package com.devonfw.application.mtsj.general.common.base;
+package com.devonfw.application.mtsj.general.common.impl.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,8 +9,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
-import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,6 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
+import com.devonfw.application.mtsj.general.common.base.BaseUserDetails;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -81,10 +82,7 @@ public class BaseUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    UserProfile principal = retrievePrincipal(username);
-    Set<GrantedAuthority> authorities = getAuthorities(principal);
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
       // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
       this.user = userRepository.findByUsername(username);
       return new BaseUserDetails(this.user);
