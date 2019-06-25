@@ -3,7 +3,7 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 import javax.inject.Inject;
 
 import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
-import com.devonfw.application.mtsj.general.common.base.BaseUserDetailsService;
+import com.devonfw.application.mtsj.general.common.impl.security.BaseUserDetailsService;
 import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
 import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
 import org.springframework.beans.factory.annotation.Value;
