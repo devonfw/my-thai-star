@@ -210,7 +210,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       List<CategoryEto> entityCats = dish.getCategories();
       for (Category entityCat : entityCats) {
         for (Category category : categories) {
-          if (category.getId().equals(entityCat.getId());) {
+          if (category.getId() == entityCat.getId()) {
             if (!dishAlreadyAdded(dishFiltered, dish)) {
               dishFiltered.add(dish);
               break;
@@ -229,9 +229,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
 
     boolean result = false;
     for (DishCto entity : dishEntitiesFiltered) {
-      Long entityId = entity.getDish().getId();
-      Long dishEntityId = dishEntity.getDish().getId();
-      if (entityId.equals(dishEntityId)) {
+      if (entity.getDish().getId() == dishEntity.getDish().getId()) {
         result = true;
         break;
       }
