@@ -1,4 +1,4 @@
-sudo: required # required to use Docker inside TravisCI
+sudo: required
 language: generic
 env:
   global:
@@ -10,7 +10,7 @@ env:
     - GH_REPO_SOURCE="github.com/${ORG}/${REPO_SOURCE}.git"
     - GH_REPO_DEST="github.com/${ORG}/${REPO_DEST}.git"
     - GH_REPO_CONSOLIDATE="github.com/${ORG}/${REPO_CONSOLIDATE}.git"
-    - secure: D56NqnFnAPm/IZz/HCtlAYSIV8sGS9Rxv0quzyv2u2w22SLj32pj/WmHt69+xPr8E28l7M7Ju3KTNScFxDFH9ciMOydf6iGbe7jJppITbMaD2JllSH1UNfaJFOT+l3pxv4kt1JJove6OJt/Pv9Wj2syDnggpHI8Zai28pEWDzwgRvBO6OpgD+ewyr+WcJZ6GvhqD/+ubwr8Uopmv0FE/Ccx1px03Fs5D1kVkfvm0bfgDAhynFJ8VUY7IDAQhdoaxDUusEfMIVN6FBxhCzzGn/FPEe8nJxcGcT9zprxlL9EiVQ1f2EWCdXtM2OUTN1clbraqlkJZ7YAvgroX1qrMYdyEyLHd48CjboL1gew1Qieqbv/cqoLnnGRga0cC6VTBOY/2waMYvmglOSEs3ejl69zL8/FS4ZcDK3lJpMQMhGw6TP6Zm1uaKtqN9oi2Nc1eHcf2NGks8xS+eYQ4lLDHojkuy9C55LbeOeDJ8uJ4A3NXLHBiuia/+g8PqBnP4GhNxD/pqY5FiyyKEFIrgJm2Es5YtyO+L1HZS1Ryw7KY8SUt6XjgCHS+EiKEZLMjfJN4C/c3r9RVDgJgxH1gPYS/GZ5ie0xZspKBnfprwXMtuNHL6RiQYuhBEKepW+5B7PEhHpaXzC1L0Gdyr9DPyofnCsfY4K3yZnTjpjaNGI/lcwyY=
+    - secure: MzGE/WWeE9SSuF/3e2qno8IxG2guIV1CEllOKrmJpQMeITIxY1sNzFWNYE3AzGNX304XfDk35dtDiPM5yh7v2cQkHJyKDJ8K+HQZtIc6/zFdMhKz8XM/RNr+LGO709/mWhhbHP7CE2ar8ytbtHDfAjOVNVqDrQ0yJCbMXSsa6wyNEO/90xft3AKiY2Gbdwmm/cIBeyz9nmjnESS17FPLz0ZGaqtE+no54RFT7chqrCZfIp5bZAnkL0HtYnvvqDQPXM4ZxTQM1BJIcgP3ichK5FOXfDsZPnS5YZ/WgLu3FOmndBDvdTp0NO+eut1J7lz6rh+eU59xRWS3HcKIjvOIHxRaNwo26HXNL2CoSzwMYEJkIsqZ31FHTRj0sYteFf3qw2NPy58XZ0hUFV+dgxRDeupYL7+FwwmLlWt4D2IfdHjXEBSI8nJNnx98z7Wx5rbNmRYhlwtMAei2BxbskaZgWKiyf+MmlhZCDXyfI+YDtN5zFewDNsOboXkeGtGvMOZltGb5pY5vcOgl5PF+SUfA7TaaRW3ZIQNejbanfsWD+L7MGvfNopHPay2Fsnef2KX4zzbOpHimv5lAnORiDatcY/s/BG/XZUzTT0rZp990AtNHnxhOwiegKGCPUDC5IQjM2bv3sblV28sMbqewj45yVLnEV4r1E80h8oXId18kTuM=
 stages:
   - name: Docker
     if: branch = develop
