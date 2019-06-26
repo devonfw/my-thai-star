@@ -11,7 +11,6 @@ import javax.persistence.*;
  *
  */
 @MappedSuperclass
-@Audited
 public abstract class ApplicationPersistenceEntity implements ApplicationEntity, PersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;

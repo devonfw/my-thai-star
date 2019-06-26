@@ -204,8 +204,8 @@ CREATE TABLE RevInfo(
 );
 
 -- *** Category_AUD ***
-CREATE CACHED TABLE PUBLIC.Category_AUD(
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.Category_AUD(
+  id BIGINT,
   name VARCHAR (255),
   description VARCHAR (4000),
   showOrder INTEGER,
@@ -214,8 +214,8 @@ CREATE CACHED TABLE PUBLIC.Category_AUD(
 );
 
 -- *** Image_AUD ***
-CREATE CACHED TABLE PUBLIC.Image_AUD (
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.Image_AUD (
+  id BIGINT,
   name VARCHAR(255),
   content clob,
   contentType INTEGER,
@@ -225,8 +225,8 @@ CREATE CACHED TABLE PUBLIC.Image_AUD (
 );
 
 -- *** Dish_AUD ***
-CREATE CACHED TABLE PUBLIC.DISH_AUD(
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.DISH_AUD(
+  id BIGINT,
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
@@ -236,8 +236,8 @@ CREATE CACHED TABLE PUBLIC.DISH_AUD(
 );
 
 -- *** DishCategory_AUD ***
-CREATE CACHED TABLE PUBLIC.DishCategory_AUD(
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.DishCategory_AUD(
+  id BIGINT,
   idDish BIGINT NOT NULL,
   idCategory BIGINT NOT NULL,
   revtype TINYINT,
@@ -245,8 +245,8 @@ CREATE CACHED TABLE PUBLIC.DishCategory_AUD(
 );
 
 -- *** Ingredient_AUD ***
-CREATE CACHED TABLE PUBLIC.Ingredient_AUD(
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.Ingredient_AUD(
+  id BIGINT,
   name VARCHAR (255),
   description VARCHAR (4000),
   price DECIMAL (16,10),
@@ -255,8 +255,8 @@ CREATE CACHED TABLE PUBLIC.Ingredient_AUD(
 );
 
 -- *** DishIngredient_AUD ***
-CREATE CACHED TABLE PUBLIC.DishIngredient_AUD(
-  id BIGINT NOT NULL,
+CREATE TABLE PUBLIC.DishIngredient_AUD(
+  id BIGINT,
   idDish BIGINT NOT NULL,
   idIngredient BIGINT NOT NULL,
   revtype TINYINT,
