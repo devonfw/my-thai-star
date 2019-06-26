@@ -56,7 +56,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return password
    */
-  @Override
   public String getPassword() {
 
     return this.password;
@@ -65,7 +64,6 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @param password new value of {@link #getpassword}.
    */
-  @Override
   public void setPassword(String password) {
 
     this.password = password;
