@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.dishmanagement.logic.impl;
 
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -141,6 +143,11 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       DishCto cto = new DishCto();
       cto.setDish(getBeanMapper().map(dish, DishEto.class));
       cto.setImage(getBeanMapper().map(dish.getImage(), ImageEto.class));
+      try {
+        Clob dishContent = dish.getImage().getContent();
+        cto.getImage().setContent(dishContent.getSubString(1L, (int) dishContent.length()));
+      } catch (SQLException e) {
+      }
       cto.setCategories(getBeanMapper().mapList(dish.getCategories(), CategoryEto.class));
       cto.setExtras(getBeanMapper().mapList(dish.getExtras(), IngredientEto.class));
       ctos.add(cto);
@@ -203,7 +210,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
       List<CategoryEto> entityCats = dish.getCategories();
       for (Category entityCat : entityCats) {
         for (Category category : categories) {
-          if (category.getId() == entityCat.getId()) {
+          if (category.getId().equals(entityCat.getId())) {
             if (!dishAlreadyAdded(dishFiltered, dish)) {
               dishFiltered.add(dish);
               break;
@@ -222,7 +229,9 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
 
     boolean result = false;
     for (DishCto entity : dishEntitiesFiltered) {
-      if (entity.getDish().getId() == dishEntity.getDish().getId()) {
+      Long entityId = entity.getDish().getId();
+      Long dishEntityId = dishEntity.getDish().getId();
+      if (entityId.equals(dishEntityId)) {
         result = true;
         break;
       }

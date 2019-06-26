@@ -1,27 +1,42 @@
-<span class="price">
-  {{menuInfo.dish.price | number : '1.2-2'}} €
-</span>
-<h3 class="text-upper">
-  {{menuInfo.dish.name}}
-</h3>
-<p class="description">
-  {{menuInfo.dish.description}}
-</p>
-<div class="extras">
-  <mat-checkbox  *ngFor="let extra of menuInfo.extras"
-  [checked]="extra.selected"
-  (change)="onSelectExtra(extra)"
-  >
-    {{extra.name}} +{{extra.price}}€
-  </mat-checkbox>
+
+<div layout="row"> 
+  <span class="price">
+    {{menuInfo.dish.price | number : '1.2-2'}} €
+  </span>
+</div>
+    
+<div layout="row">
+  <h3 class="text-upper">
+    {{menuInfo.dish.name}}
+  </h3>
 </div>
 
-<div class="order">
-  <button mat-button
-      color="accent"
-      class="text-upper"
-      (click)="onClickOrder()"
-  >
-    {{'buttons.addToOrder' | translate}}
-  </button>
+<div layout="row">
+  <div flex="100">
+    <p class="description">{{menuInfo.dish.description}}</p>
+  </div>
 </div>
+
+<div layout="row"> 
+  <div class="extras">
+    <mat-checkbox  *ngFor="let extra of menuInfo.extras"
+    [checked]="extra.selected"
+    (change)="onSelectExtra(extra)"
+    >
+      {{extra.name}} +{{extra.price}}€
+    </mat-checkbox>
+  </div>
+</div>
+
+<div layout="row">
+  <button mat-button
+  color="accent"
+  class="text-upper"
+  (click)="onClickOrder()"
+  >
+    <span class="order">
+      {{'buttons.addToOrder' | translate}}
+    </span>
+  </button>  
+</div>
+
