@@ -22,6 +22,9 @@ toc::[]
 - link:angular-design.asciidoc[Angular design]
 - link:xamarin-design.asciidoc[Xamarin design]
 
+== Security
+- link:twofactor.asciidoc[Two-Factor Authentication]
+
 == Testing
 
 === Server Side
