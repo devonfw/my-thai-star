@@ -22,7 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
 import com.devonfw.application.mtsj.general.common.api.security.UserData;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -70,6 +71,9 @@ public class BaseUserDetailsService implements UserDetailsService {
   @Inject
   private com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement usermanagementcore;
 
+  @Inject
+  private UserRepository userRepo;
+
   private AuthenticationManagerBuilder amBuilder;
 
   private AccessControlProvider accessControlProvider;
@@ -82,8 +86,8 @@ public class BaseUserDetailsService implements UserDetailsService {
     UserProfile principal = retrievePrincipal(username);
     Set<GrantedAuthority> authorities = getAuthorities(principal);
     try {
-      UserEto userEto = this.usermanagementcore.findUserbyName(username);
-      UserData userData = new UserData(userEto.getUsername(), userEto.getPassword(), authorities);
+      UserEntity userDetails = this.userRepo.findUserbyName(username);
+      UserData userData = new UserData(userDetails.getUsername(), userDetails.getPassword(), authorities);
       userData.setUserProfile(principal);
       return userData;
     } catch (Exception e) {

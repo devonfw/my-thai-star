@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,7 +32,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
    * @param url the login url
    * @param authManager the {@link AuthenticationManager}
    */
-  @Autowired
   public JWTLoginFilter(String url, AuthenticationManager authManager, UserDetailsService userDetailsService) {
 
     super(new AntPathRequestMatcher(url));
