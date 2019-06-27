@@ -82,11 +82,13 @@ export class AppComponent implements OnInit {
       router.resetConfig(newRoutes);
     }
 
+    /* TODO: if electronService
     if (electronService.isElectronApp) {
       // Elecron stuff
     } else {
       // Web stuff
     }
+    */
   }
 
   ngOnInit(): void {
