@@ -21,7 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.Usermanagement;
-import com.devonfw.application.mtsj.general.common.api.security.UserData;
+import com.devonfw.application.mtsj.general.common.base.BaseUserDetails;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -72,18 +74,18 @@ public class BaseUserDetailsService implements UserDetailsService {
 
   private PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider;
 
+  private UserEntity user;
+
+  @Inject
+  private UserRepository userRepository;
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    UserProfile principal = retrievePrincipal(username);
-    Set<GrantedAuthority> authorities = getAuthorities(principal);
-    UserDetails user;
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
-      user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
-      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
-      userData.setUserProfile(principal);
-      return userData;
+      // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
+      this.user = userRepository.findByUsername(username);
+      return new BaseUserDetails(this.user);
     } catch (Exception e) {
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
@@ -121,7 +123,7 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   public Set<GrantedAuthority> getAuthoritiesFromList(/* UserProfile principal */List<String> roles)
-      throws AuthenticationException {
+          throws AuthenticationException {
 
     // if (principal == null) {
     // LOG.warn("Principal must not be null.");
@@ -227,7 +229,7 @@ public class BaseUserDetailsService implements UserDetailsService {
    */
   @Inject
   public void setPrincipalAccessControlProvider(
-      PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider) {
+          PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider) {
 
     this.principalAccessControlProvider = principalAccessControlProvider;
   }

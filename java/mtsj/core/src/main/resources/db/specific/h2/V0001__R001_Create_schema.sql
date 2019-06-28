@@ -28,6 +28,8 @@ CREATE TABLE User (
   modificationCounter INTEGER NOT NULL,
   username VARCHAR (255) NULL,
   password VARCHAR (255) NULL,
+  secret VARCHAR (255) NULL,
+  twoFactorStatus BOOLEAN NULL DEFAULT ((0)),
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),

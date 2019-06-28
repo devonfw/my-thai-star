@@ -1,16 +1,17 @@
-package com.devonfw.application.mtsj.usermanagement.service.impl.rest;
+package com.devonfw.application.mtsj.usermanagement.service.impl;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.springframework.data.domain.Page;
-
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
+import org.springframework.data.domain.Page;
+
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
-import com.devonfw.application.mtsj.usermanagement.service.api.rest.UsermanagementRestService;
+import com.devonfw.application.mtsj.usermanagement.rest.api.UsermanagementRestService;
 
 /**
  * The service implementation for REST calls in order to execute the logic of component {@link Usermanagement}.
@@ -28,9 +29,27 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
   }
 
   @Override
+  public UserQrCodeTo getUserQrCode(String username) {
+
+    return this.usermanagement.generateUserQrCode(username);
+  }
+
+  @Override
   public UserEto saveUser(UserEto user) {
 
     return this.usermanagement.saveUser(user);
+  }
+
+  @Override
+  public UserEto getUserStatus(String username) {
+
+    return this.usermanagement.getUserStatus(username);
+  }
+
+  @Override
+  public UserEto saveUserTwoFactor(UserEto user) {
+
+    return this.usermanagement.saveUserTwoFactor(user);
   }
 
   @Override
