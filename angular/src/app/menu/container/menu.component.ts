@@ -77,7 +77,6 @@ export class MenuComponent implements OnInit {
   }
 
   onExtraSelected(extra: ExtraView): void {
-    console.log('extrass: ', this.extras);
     this.extras.push(extra);
     console.log('extrass: ', this.extras);
   }
