@@ -16,4 +16,8 @@ public interface User extends ApplicationEntity {
 
   public void setUserRoleId(Long userRoleId);
 
+  public boolean getTwoFactorStatus();
+
+  public void setTwoFactorStatus(boolean twoFactorStatus);
+
 }

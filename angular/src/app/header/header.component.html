@@ -61,6 +61,10 @@
         <mat-icon>settings</mat-icon>
         <span>{{'main.userActions.changePassword' | translate}}</span>
       </button>
+      <button name="setting" *ngIf="auth.isLogged()" mat-menu-item type="button" (click)="getQRCode()">
+        <mat-icon>important_devices</mat-icon>
+        <span>{{'main.userActions.pairing' | translate}}</span>
+      </button>
       <button name="twitterAccount" mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="auth.isPermited('CUSTOMER')">
         <mat-icon>send</mat-icon>
         <span>{{'main.userActions.twitterAccount' | translate}}</span>
