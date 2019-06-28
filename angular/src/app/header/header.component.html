@@ -8,7 +8,7 @@
   <span>My Thai Star</span>
 
   <span flex></span>
-  <div *ngIf="(role$ | async) === 'CUSTOMER'" class="forDesktop">
+  <div *ngIf="(auth.getRole() | async) === 'CUSTOMER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/restaurant" routerLinkActive #restaurant="routerLinkActive"
         [class.navBottomBorder]="restaurant.isActive">
@@ -24,7 +24,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="(role$ | async) === 'WAITER'" class="forDesktop">
+  <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/orders" routerLinkActive #orders="routerLinkActive"
         [class.navBottomBorder]="orders.isActive">
@@ -36,7 +36,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="(role$ | async) === 'MANAGER'" class="forDesktop">
+  <div *ngIf="(auth.getRole() | async) === 'MANAGER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/prediction" routerLinkActive #prediction="routerLinkActive"
         [class.navBottomBorder]="prediction.isActive">
@@ -44,7 +44,7 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="(role$ | async) === 'MANAGER'" class="forDesktop">
+  <div *ngIf="(auth.getRole() | async) === 'MANAGER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link class="text-upper" routerLink="/clustering" routerLinkActive #clustering="routerLinkActive"
         [class.navBottomBorder]="clustering.isActive">
@@ -52,7 +52,7 @@
       </a>
     </nav>
   </div>
-  <button name="login" *ngIf="!(logged$ | async)" mat-icon-button (click)="openLoginDialog()"
+  <button name="login" *ngIf="!(auth.isLogged() | async)" mat-icon-button (click)="openLoginDialog()"
     [matTooltip]="'main.userActions.user' | translate">
     <mat-icon>person_outline</mat-icon>
   </button>
@@ -61,18 +61,18 @@
       <mat-icon>account_circle</mat-icon>
     </button>
     <span data-name="userNameLogged" class="forDesktop">{{ userName$ | async }}</span>
-    <button class="forDesktop" *ngIf="!(logged$ | async)" mat-icon-button (click)="logout()"
+    <button class="forDesktop" *ngIf="!(auth.isLogged() | async)" mat-icon-button (click)="logout()"
       [matTooltip]="'main.userActions.logout' | translate">
       <mat-icon>exit_to_app</mat-icon>
     </button>
     <mat-menu #toolbarMenu1="matMenu">
       <button name="changePassword" mat-menu-item type="button" (click)="openResetDialog()"
-        *ngIf="(role$ | async) === 'CUSTOMER'">
+        *ngIf="(auth.getRole() | async) === 'CUSTOMER'">
         <mat-icon>settings</mat-icon>
         <span>{{'main.userActions.changePassword' | translate}}</span>
       </button>
       <button name="twitterAccount" mat-menu-item type="button" (click)="openTwitterDialog()"
-        *ngIf="(role$ | async) === 'CUSTOMER'">
+        *ngIf="(auth.getRole() | async) === 'CUSTOMER'">
         <mat-icon>send</mat-icon>
         <span>{{'main.userActions.twitterAccount' | translate}}</span>
       </button>
@@ -83,7 +83,7 @@
       </button>
     </mat-menu>
   </div>
-  <button name="order" *ngIf="(role$ | async) === 'CUSTOMER'" mat-icon-button (click)="openCloseSideNav(sidenav.opened)"
+  <button name="order" *ngIf="(auth.getRole() | async) === 'CUSTOMER'" mat-icon-button (click)="openCloseSideNav(sidenav.opened)"
     [matTooltip]="'main.userActions.orders' | translate">
     <td-notification-count color="accent" [notifications]="sidenav.getNumberOrders()">
       <mat-icon>shopping_basket</mat-icon>

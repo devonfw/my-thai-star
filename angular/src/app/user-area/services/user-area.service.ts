@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../core/config/config.service';
 import { Store } from '@ngrx/store';
 import * as fromAuth from '../store/reducers/';
+import {Logout, OpenDialog} from '../store/actions/auth.actions';
 
 @Injectable()
 export class UserAreaService {
@@ -37,8 +38,8 @@ export class UserAreaService {
   login(username: string, password: string) {
     return this.http.post(
       `${this.restPathRoot}${this.loginRestPath}`,
-      { username: username, password: password },
-      { responseType: 'text', observe: 'response' },
+      {username: username, password: password},
+      {responseType: 'text', observe: 'response'},
     );
   }
 
@@ -79,5 +80,13 @@ export class UserAreaService {
           this.snackBar.openSnack(error.message, 4000, 'red');
         },
       );
+  }
+
+  openLoginDialog(): void {
+    this.store.dispatch(new OpenDialog());
+  }
+
+  logout(): void {
+    this.store.dispatch(new Logout());
   }
 }
