@@ -8,12 +8,8 @@ import {TwitterDialogComponent} from '../user-area/components/twitter-dialog/twi
 import {TranslateService} from '@ngx-translate/core';
 import {DateTimeAdapter} from 'ng-pick-datetime';
 import {ConfigService} from '../core/config/config.service';
-import * as fromApp from 'app/store/reducers/';
-import * as fromAuth from 'app/user-area/store/selectors/';
-import {select, Store} from '@ngrx/store';
-import {Logout, OpenDialog} from '../user-area/store/actions/auth.actions';
-import {Observable} from 'rxjs';
-
+import {UserAreaService} from '../user-area/services/user-area.service';
+import {AuthService} from '../core/authentication/auth.service';
 
 @Component({
   selector: 'public-header',
@@ -21,10 +17,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
-  logged$: Observable<boolean>;
-  role$: Observable<string>;
-  userName$: Observable<string>;
+export class HeaderComponent {
   selectableLangs: any[];
   flag: string;
 
@@ -37,18 +30,13 @@ export class HeaderComponent implements OnInit {
     public sidenav: SidenavService,
     public dialog: MatDialog,
     public dateTimeAdapter: DateTimeAdapter<any>,
+    public userAreaService: UserAreaService,
+    public auth: AuthService,
     private configService: ConfigService,
-    private store: Store<fromApp.State>
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
     this.dateTimeAdapter.setLocale(this.translate.currentLang);
-  }
-
-  ngOnInit(): void {
-    this.role$ = this.store.pipe(select(fromAuth.getRole));
-    this.userName$ = this.store.pipe(select(fromAuth.getUserName));
-    this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -89,7 +77,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openLoginDialog(): void {
-    this.store.dispatch(new OpenDialog());
+    this.userAreaService.openLoginDialog();
   }
 
   openResetDialog(): void {
@@ -117,6 +105,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.store.dispatch(new Logout());
+    this.userAreaService.logout();
   }
 }
