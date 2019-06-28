@@ -1,6 +1,7 @@
 {
   "buttons": {
     "cancel": "Cancel",
+    "apply": "Apply",
     "close": "Close",
     "send": "Send",
     "login": "Login",
@@ -42,6 +43,7 @@
   "formFields": {
     "username": "Username",
     "password": "Password",
+    "token": "One Time Password",
     "confirmPassword": "Confirm Password",
     "date": "Date",
     "name": "Name",
@@ -89,6 +91,7 @@
     "reservations": "Reservations",
     "userActions": {
       "user": "User",
+      "pairing": "Set two-factor authentication",
       "logout": "Log out",
       "changePassword": "Change password",
       "twitterAccount": "Twitter account",
@@ -150,6 +153,15 @@
       "twitterUsernamePH": "Twitter username",
       "twitterPasswordPH": "Twitter password",
       "loginbutton": "Log in Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "Two Factor Authentication has not been activated yet",
+      "twofactorTitle": "Set up Two Factor Authentication",
+      "twofactorStatus": "Two Factor Authentication Status",
+      "twofactorDescription": "Please scan the QR code with the Google Authenticator or use the secret key",
+      "twofactorclose": "Close",
+      "qrSwitchText": "QR Code",
+      "secretSwitchText": "Secret Key"
     }
   },
   "cockpit": {

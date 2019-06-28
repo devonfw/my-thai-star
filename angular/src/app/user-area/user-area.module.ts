@@ -13,6 +13,8 @@ import { PasswordDialogComponent } from './password-dialog/password-dialog.compo
 import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { TwoFactorDialogComponent } from './two-factor-dialog/two-factor-dialog.component';
+import { QrCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
     LoginDialogComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
+    TwoFactorDialogComponent,
+    QrCodeDialogComponent,
   ],
   exports: [
     LoginDialogComponent,
@@ -40,6 +44,8 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   entryComponents: [
     LoginDialogComponent,
+    TwoFactorDialogComponent,
+    QrCodeDialogComponent,
     PasswordDialogComponent,
     TwitterDialogComponent,
   ],

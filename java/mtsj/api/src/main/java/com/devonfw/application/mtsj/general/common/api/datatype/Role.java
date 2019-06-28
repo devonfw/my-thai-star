@@ -18,4 +18,8 @@ public enum Role implements Principal {
   public String getName() {
     return "ROLE_" + this.name;
   }
+
+  public String getRole() {
+    return this.name;
+  }
 }

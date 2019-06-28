@@ -10,9 +10,11 @@ import { WindowService } from '../core/window/window.service';
 import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
 import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
+import { QrCodeDialogComponent } from '../user-area/qr-code-dialog/qr-code-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
+
 
 @Component({
   selector: 'public-header',
@@ -28,6 +30,7 @@ export class HeaderComponent {
   constructor(
     public window: WindowService,
     public translate: TranslateService,
+    public authService: AuthService,
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
@@ -123,5 +126,12 @@ export class HeaderComponent {
   logout(): void {
     this.userService.logout();
     this.router.navigate(['restaurant']);
+  }
+
+  getQRCode(): void {
+    const dialogRef: MatDialogRef<QrCodeDialogComponent> = this.dialog.open(
+      QrCodeDialogComponent,
+      {},
+    );
   }
 }
