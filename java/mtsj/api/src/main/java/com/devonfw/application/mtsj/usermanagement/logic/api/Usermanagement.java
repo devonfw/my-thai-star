@@ -1,5 +1,6 @@
 package com.devonfw.application.mtsj.usermanagement.logic.api;
 
+import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
@@ -98,5 +99,11 @@ public interface Usermanagement {
    * @return the new {@link UserRoleEto} that has been saved with ID and version.
    */
   UserRoleEto saveUserRole(UserRoleEto userRole);
+
+  /**
+   * @param login The login of the requested user.
+   * @return The {@link UserProfile} with the given <code>login</code> or {@code null} if no such object exists.
+   */
+  UserProfile findUserProfileByLogin(String login);
 
 }

@@ -6,6 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import com.devonfw.application.mtsj.general.common.api.UserProfile;
+import com.devonfw.application.mtsj.general.common.api.datatype.Role;
+import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.application.mtsj.general.common.base.QrCodeService;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
@@ -167,6 +170,18 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
         LOG.debug("UserRole with id '{}' has been created.", resultEntity.getId());
 
         return getBeanMapper().map(resultEntity, UserRoleEto.class);
+    }
+
+    @Override
+    public UserProfile findUserProfileByLogin(String login) {
+
+        // this is only a dummy - please replace with a real implementation
+        UserDetailsClientTo profile = new UserDetailsClientTo();
+        profile.setName(login);
+        profile.setFirstName("Peter");
+        profile.setLastName(login);
+        profile.setRole(Role.WAITER);
+        return profile;
     }
 
     /**
