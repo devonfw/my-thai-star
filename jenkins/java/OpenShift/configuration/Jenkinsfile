@@ -11,24 +11,23 @@ pipeline{
     parameters {
         // Options
         booleanParam(name: 'CREATE_SECRET', defaultValue: false, description: 'OPTIONAL: This secrets is used to connect OpenShift with your docker-registry. If true, the secret will be add to your OpenShift. If more than one app use the same registry and openshift alredy have the secret added mark it as false.')
-        string(name: 'REGISTRY_SECRET_NAME_SUFFIX', defaultValue: '-devon', description: 'OPTIONAL: suffix to add to your secret for the docker registry in OpenShift. The name is going to be docker-registry, if you use more than one docker-registry in the same namespace you need to add a suffix. For example you cuold add the name of your project, then to have the name as docker-registry-myprojectname you should use -myprojectname value')
+        string(name: 'REGISTRY_SECRET_NAME_SUFFIX', defaultValue: 'CHANGE ME', description: 'OPTIONAL: suffix to add to your secret for the docker registry in OpenShift. The name is going to be docker-registry, if you use more than one docker-registry in the same namespace you need to add a suffix. For example you cuold add the name of your project, then to have the name as docker-registry-myprojectname you should use -myprojectname value')
         booleanParam(name: 'CREATE_DOCKER_BUILDER', defaultValue: true, description: 'OPTIONAL: If true, BuildConfig is going to be added in OpenShift to build the docker image for your application.')
         string(name: 'JDK_VERSION', defaultValue: '8', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the version of jdk used to create the docker image.')
-        string(name: 'BUILD_SCRIPT', defaultValue: 'build --configuration=docker', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the bild script found in the package.json to be executed for generate the artifacts used to create the docker image.')
         
         // Git Repository
         string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/Jorge-Dacal/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
         string(name: 'GIT_BRANCH', defaultValue: 'configureOpenShift', description: 'NEEDS TO BE SET!. The branch of your git repository')
 
         // Docker Registry
-        string(name: 'DOCKER_REGISTRY', defaultValue: 'docker-registry-devon.s2-eu.capgemini.com', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
-        string(name: 'DOCKER_REGISTRY_CREDENTIALS', defaultValue: 'nexus-devon', description: 'NEEDS TO BE SET!. Credentials to deploy and download of your docker registry repository.')
-        string(name: 'DOCKER_TAG', defaultValue: 'dev', description: 'NEEDS TO BE SET!. The tag for the image created by docker.')
+        string(name: 'DOCKER_REGISTRY', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
+        string(name: 'DOCKER_REGISTRY_CREDENTIALS', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Credentials to deploy and download of your docker registry repository.')
+        string(name: 'DOCKER_TAG', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The tag for the image created by docker.')
 
         // OpenShift
-        string(name: 'OPENSHIFT_URL', defaultValue: 'https://master.carm-c5bf.openshiftworkshop.com', description: 'NEEDS TO BE SET!. The url of your OpenShift cluster.') 
-        string(name: 'OPENSHIFT_CREDENTIALS', defaultValue: 'ocadmin-carm', description: 'NEEDS TO BE SET!. Admin credentials of your OpenShift cluster.')
-        string(name: 'OPENSHIFT_NAMESPACE', defaultValue: 'my-thai-star', description: 'NEEDS TO BE SET!. Namespace is the name of the project of OpenShift where the environment is going to be created.')
+        string(name: 'OPENSHIFT_URL', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The url of your OpenShift cluster.') 
+        string(name: 'OPENSHIFT_CREDENTIALS', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Admin credentials of your OpenShift cluster.')
+        string(name: 'OPENSHIFT_NAMESPACE', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Namespace is the name of the project of OpenShift where the environment is going to be created.')
         string(name: 'APP_NAME_SUFFIX', defaultValue: '', description: 'OPTIONAL: suffix to add to your appname in OpenShift. The name is going to be read of your package.json, for example for develop environment you could use -dev value')
         string(name: 'HOSTNAME', defaultValue: '', description: 'OPTIONAL: Especify wich will be the hostname of your application in openshift.')
         booleanParam(name: 'SECURED_PROTOCOL', defaultValue: true, description: 'OPTIONAL: If false, the protocol will be http instead https.')
@@ -38,24 +37,11 @@ pipeline{
         string(name: 'GLOBAL_SETTINGS_ID', defaultValue: 'MavenSettings', description: 'NEEDS TO BE SET!. Maven global settings configuration ID.')
         string(name: 'MAVEN_INSTALLATION', defaultValue: 'Maven3', description: 'NEEDS TO BE SET!. Maven tool id.')
     }
-    
-/*
-    oc new-build --strategy docker --binary --docker-image openjdk:<version> --name=${props.name}-$environment --to=${DOCKER_REGISTRY}/${props.name}:${dockerTag} --to-docker=true
-*/
 
     environment {
-        // Repository format
-        // format = 'maven2'
-        // Artifact group
-        // group = 'com.devonfw.mythaistar'
-        // Application name
-        // name = 'mythaistar-java'
-        // Artifact extension
-        // extension = 'zip'
-        
         appDir='java/mtsj'
         nameForSecret='docker-registry'
-        artifactsPath='./dist'
+        artifactsPath='./server/target'
         port='8081-tcp'
     }
 
