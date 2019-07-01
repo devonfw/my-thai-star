@@ -16,8 +16,8 @@ pipeline{
         string(name: 'JDK_VERSION', defaultValue: '8', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the version of jdk used to create the docker image.')
         
         // Git Repository
-        string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/Jorge-Dacal/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
-        string(name: 'GIT_BRANCH', defaultValue: 'configureOpenShift', description: 'NEEDS TO BE SET!. The branch of your git repository')
+        string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/devonfw/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
+        string(name: 'GIT_BRANCH', defaultValue: 'develop', description: 'NEEDS TO BE SET!. The branch of your git repository')
 
         // Docker Registry
         string(name: 'DOCKER_REGISTRY', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
