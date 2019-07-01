@@ -154,6 +154,15 @@
       "twitterUsernamePH": "Usuari de Twitter",
       "twitterPasswordPH": "Contrasenya de Twitter",
       "loginbutton": "Accedir a Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "Encara no s’ha activat l’autenticació de dos factors",
+      "twofactorTitle": "Configuració per autenticar dos factors",
+      "twofactorStatus": "Estat d’autenticació de dos factors",
+      "twofactorDescription": "Si us plau, escaneu el codi QR amb el Google Authenticator o utilitzeu la clau secreta",
+      "twofactorclose": "A prop",
+      "qrSwitchText": "Codi QR",
+      "secretSwitchText": "Clau secreta"
     }
   },
   "cockpit": {

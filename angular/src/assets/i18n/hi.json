@@ -92,6 +92,7 @@
     "reservations": "आरक्षण",
     "userActions": {
       "user": "User",
+      "pairing": "एक दो-कारक प्रमाणीकरण को परिभाषित करें",
       "logout": "लोग आउट",
       "changePassword": "पासवर्ड बदलें",
       "twitterAccount": "ट्विटर खाता",
@@ -152,6 +153,15 @@
       "twitterUsernamePH": "ट्विटर उपयोगकर्ता का नाम",
       "twitterPasswordPH": "ट्विटर पासवर्ड",
       "loginbutton": "Log in Twitter"
+    },
+    "qrcodeDialog": {
+      "twofactorNotFound": "दो-कारक प्रमाणीकरण अभी तक सक्रिय नहीं हुआ है",
+      "twofactorTitle": "दो कारक प्रमाणीकरण सेटिंग्स",
+      "twofactorStatus": "दो-कारक प्रमाणीकरण की स्थिति",
+      "twofactorDescription": "कृपया Google प्रमाणक के साथ QR कोड को स्कैन करें या गुप्त कुंजी का उपयोग करें",
+      "twofactorclose": "विंडो बंद करें",
+      "qrSwitchText": "क्यूआर कोड",
+      "secretSwitchText": "गुप्त कुंजी"
     }
   },
   "cockpit": {
