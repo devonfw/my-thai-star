@@ -85,6 +85,7 @@
         "reservations": "Бронирование",
         "userActions": {
             "user": "Пользовател",
+            "pairing": "Установить двухфакторную аутентификацию",
             "logout": "Выйти",
             "changePassword": "Поменять пароль",
             "twitterAccount": "Аккаунт Твиттер",
@@ -143,6 +144,15 @@
             "twitterUsernamePH": "Имя пользователя в Твиттере",
             "twitterPasswordPH": "Пароль в Твиттере",
             "loginbutton": "Войти в Твиттер"
+        },
+        "qrcodeDialog": {
+        "twofactorNotFound": "Двухфакторная аутентификация еще не активирована",
+        "twofactorTitle": "Настройки для двухфакторной аутентификации",
+        "twofactorStatus": "Состояние двухфакторной аутентификации",
+        "twofactorDescription": "Просканируйте QR-код с помощью Google Authenticator или используйте секретный ключ",
+        "twofactorclose": "Закрыть окно",
+        "qrSwitchText": "QR код",
+        "secretSwitchText": "Секретный ключ"
         }
     },
     "cockpit": {
