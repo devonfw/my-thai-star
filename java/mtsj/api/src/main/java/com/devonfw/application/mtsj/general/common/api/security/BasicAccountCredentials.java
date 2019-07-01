@@ -1,6 +1,6 @@
-package com.devonfw.application.mtsj.general.common.base;
+package com.devonfw.application.mtsj.general.common.api.security;
 
-public class AccountCredentials {
+public class BasicAccountCredentials {
 
   private String username;
 

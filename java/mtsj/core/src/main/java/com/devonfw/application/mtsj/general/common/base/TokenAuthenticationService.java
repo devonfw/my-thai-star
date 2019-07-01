@@ -42,6 +42,8 @@ public class TokenAuthenticationService {
 
   static final String HEADER_STRING = "Authorization";
 
+  static final String HEADER_OTP = "X-Mythaistar-Otp";
+
   static final String EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
   static final String CLAIM_SUBJECT = "sub";
@@ -56,6 +58,10 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_ROLES = "roles";
 
+  static void addAllowedHeader(HttpServletResponse res){
+    res.addHeader(EXPOSE_HEADERS, HEADER_STRING + ", " + HEADER_OTP);
+  }
+
   /**
    * This method returns the token once the Authentication has been successful
    *
@@ -65,8 +71,19 @@ public class TokenAuthenticationService {
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
-    res.addHeader(EXPOSE_HEADERS, HEADER_STRING);
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
+  }
+
+  /**
+   * This method sets a header field in order to notify the user for further authentication requirements
+   *
+   * @param res the {@HttpServletResponse}
+   * @param auth the {@Authentication} object with the user credentials
+   */
+  static void addRequiredAuthentication(HttpServletResponse res, Authentication auth) {
+
+    // Add possible required authentication factors into the header
+    res.addHeader(HEADER_OTP, auth.getDetails().toString());
   }
 
   /**
@@ -165,10 +182,30 @@ public class TokenAuthenticationService {
     return userDetails;
   }
 
+  /**
+   * Converts the name(s) to their respective user roles for an {@link Authentication} object
+   *
+   * @param auth
+   * @return A {@link List<GrantedAuthority>} List
+   */
+  public static List<GrantedAuthority> getRolesFromName(Authentication auth) {
+
+    List<GrantedAuthority> roles = new ArrayList<>();
+
+    if (auth.getName().equalsIgnoreCase(Role.WAITER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.WAITER.getName()));
+    } else if (auth.getName().equalsIgnoreCase(Role.CUSTOMER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.CUSTOMER.getName()));
+    } else if (auth.getName().equalsIgnoreCase(Role.MANAGER.getRole())) {
+      roles.add(new SimpleGrantedAuthority(Role.MANAGER.getName()));
+    }
+
+    return roles;
+  }
+
   static List<String> getRolesFromToken(String token) {
 
     return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
         .get(CLAIM_SCOPE, List.class);
   }
-
 }

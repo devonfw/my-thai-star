@@ -184,3 +184,10 @@ export interface ClustersData {
     id: number;
     modificationCounter: number;
 }
+
+// Interface for Two-Factor Authentication
+export interface TwoFactorResponse {
+    twoFactorStatus?: boolean;
+    base64QrCode?: string;
+    secret?: string;
+}

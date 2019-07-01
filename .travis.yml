@@ -1,6 +1,55 @@
-sudo: required # required to use Docker inside TravisCI
+sudo: required
 language: generic
-
-script:
-  - docker build -f angular/Dockerfile.travis -t my-thai-star-angular angular/.
-  - docker build -f java/Dockerfile.travis -t my-thai-star-java java/.
+env:
+  global:
+    - ORG="devonfw"
+    - EMAIL="icsddevonfwsupport.apps2@capgemini.com"
+    - REPO_SOURCE="my-thai-star"
+    - REPO_DEST="my-thai-star.wiki"
+    - REPO_CONSOLIDATE="devonfw-guide"
+    - GH_REPO_SOURCE="github.com/${ORG}/${REPO_SOURCE}.git"
+    - GH_REPO_DEST="github.com/${ORG}/${REPO_DEST}.git"
+    - GH_REPO_CONSOLIDATE="github.com/${ORG}/${REPO_CONSOLIDATE}.git"
+    - secure: WY0RyJM2Q5GgkGAj4d++XHkjOdBY/VXIBiNSYNutePfHg9Slqsr+mYuJtOl7jJLmEefPpSmXGRdMsk6vd+27zPFytk9ph0zpXrTYvyBg7jLIUYHhOv4ALpIigxXvwOQx2Yd1Cl8bqmIL13GMWS+3gpjZYD8GCh2Yixfe3nyUrUYNNfiJ4T9kkdaLUsyUQrRd4VMA6NsN8SBWSVy/IcmWqf/Sttx7rsJH756A+PynzupF5DsWPjO0xwnPHX0Xz8QkJ+ut/YYHLe/WJ1hQNBYfxUruQ7frznCaefKWcjjUyN4g41tO3Pf6K9UQQGH5/oQoCHuheumBKpUVg56OSkryLBBSCLyZGAEWkNqKSih0cZxA5txDwWFIBE7owawS71P4fmdcIcGqJxFedbCp2fhzOglBUpW9wocv1C3zFwk/eag/61gsdcoX4EB/pw2zSvST9WA5QvU2itCuqpogujSH9fGRRgjYC/CJ+Wx0gIWgzRIEGlEbGN+cyMOPPGPyFgbX8TH52FAd1la5YyVzZr3ESBUDYTMvNk/WwMJ+t4VgVykVEt+uu0oLO0/+tUCdh8OSOLnt7SDa90Heoi5w6PvcWnlq+XMftsf5l547bVso++GfMc7V7r++EosHVZRnarfLm9nd95A+9sv6bxtjPgmd5O2T0FRpoc3faiGDgs+Lv+c=
+stages:
+  - name: Docker
+    if: branch = develop
+  - name: Documentation
+    if: (branch = develop) AND (type = push)
+jobs:
+  include:
+    - stage: Docker
+      script:
+        - docker build -f angular/Dockerfile.travis -t my-thai-star-angular angular/.
+        - docker build -f java/Dockerfile.travis -t my-thai-star-java java/.
+    - stage: Documentation
+      script:
+        # Clone repositories
+        - git clone -b develop --single-branch https://${GH_REPO_SOURCE}
+        - git clone https://${GH_REPO_DEST}
+        - git clone https://${GH_REPO_CONSOLIDATE}
+        # Update wiki repository with documentation folder contents
+        - yes | cp -rf ${REPO_SOURCE}/documentation/* ${REPO_DEST}/
+        - cd ${REPO_DEST}
+        # Terminate Travis CI build when no changes detected
+        - if git diff-index --quiet HEAD && [ ! -n "$(git status -s)" ]; then set +e; pkill -9 -P $$ &> /dev/null || true; exit 0; fi;
+        - git config user.email ${EMAIL}
+        - git config user.name ${USER}
+        - git status
+        - git add .
+        - git commit -m "${REPO_SOURCE} documentation | Travis CI build number $TRAVIS_BUILD_NUMBER"
+        - git remote add origin-wiki "https://${USER}:${GITHUB_TOKEN}@${GH_REPO_DEST}"
+        - git push origin-wiki master
+        # Update consolidated repo
+        - cd ../${REPO_CONSOLIDATE}
+        - if [ ! -d ${REPO_DEST} ]; then git submodule add https://${GH_REPO_DEST}; else return 0; fi;
+        - git submodule init
+        - git submodule update
+        - cd ${REPO_DEST}
+        - git checkout master
+        - git pull
+        - cd ..
+        - git add .
+        - git commit -m "${REPO_SOURCE} documentation | Travis CI build number $TRAVIS_BUILD_NUMBER"
+        - git remote add origin-wiki "https://${USER}:${GITHUB_TOKEN}@${GH_REPO_CONSOLIDATE}"
+        - git push origin-wiki master
