@@ -1,0 +1,34 @@
+## OpenShift
+
+Here you could found all that you need to configure and deploy my-thai-star on OpenShift.
+
+### Prerequisites
+Have a Docker registry where to store the images and add the credentials to Jenkins.
+Have a OpenShift user with permissions to create new applications and add the credentials to Jenkins.
+
+### Configure environment
+
+Inside the configuration folder you could find a Jenkinsfile to configure an environment to deploy My Thai Star java server application.
+
+You should add it a pipeline in Jenkins poitint to the Jenkinsfile and build it.
+
+NOTE: The first run will always fail because the form has not yet been downloaded. Please stop it when you pass the first step "Declarative: Checkout SCM" and buid it again by filling in the form.
+
+When you build it with parameters you could see a form. This are an example of the CHANGE-ME parameters used in our Jenkins of devonfw:
+
+[source]
+----
+REGISTRY_SECRET_NAME_SUFFIX = -hubdevonforge
+
+DOCKER_REGISTRY = docker.io/devonfwforge
+DOCKER_REGISTRY_CREDENTIALS = dockerhub-devonfwforge
+DOCKER_TAG = dev
+
+OPENSHIFT_URL = https://master.carm-c5bf.openshiftworkshop.com
+OPENSHIFT_CREDENTIALS = ocadmin-carm
+OPENSHIFT_NAMESPACE = my-thai-star
+
+HOSTNAME = my-thai-star.apps.$openshiftUrl --path=/mythaistar
+----
+
+NOTE: At the beginning of the form is the option to create an OpenShift secret where the credentials for the docker registry are stored. It is only necessary to create one for each namespace. If you are going to deploy several apps from the same registry in the same namespace, create only one and use it with all of them.

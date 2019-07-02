@@ -1,0 +1,12 @@
+FROM nginx:alpine-perl
+
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY . /var/www/
+RUN rm -f ./var/www/nginx.conf
+
+RUN chown -R nginx /var/cache/nginx && chmod -R 755 /var/cache/nginx && chmod 777 /var/cache/nginx
+RUN chown -R nginx /run && chmod -R 755 /run && chmod 777 /run
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]

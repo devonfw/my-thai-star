@@ -1,0 +1,212 @@
+pipeline{
+    agent any
+
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    //Jenkins Job Parameters
+    parameters {
+        // Options
+        booleanParam(name: 'CREATE_SECRET', defaultValue: false, description: 'OPTIONAL: This secrets is used to connect OpenShift with your docker-registry. If true, the secret will be add to your OpenShift. If more than one app use the same registry and openshift alredy have the secret added mark it as false.')
+        string(name: 'REGISTRY_SECRET_NAME_SUFFIX', defaultValue: 'CHANGE ME', description: 'OPTIONAL: suffix to add to your secret for the docker registry in OpenShift. The name is going to be docker-registry, if you use more than one docker-registry in the same namespace you need to add a suffix. For example you cuold add the name of your project, then to have the name as docker-registry-myprojectname you should use -myprojectname value')
+        booleanParam(name: 'CREATE_DOCKER_BUILDER', defaultValue: true, description: 'OPTIONAL: If true, BuildConfig is going to be added in OpenShift to build the docker image for your application.')
+        string(name: 'BUILD_SCRIPT', defaultValue: 'build:prod --configuration=docker', description: 'If CREATE_DOCKER_BUILDER is true, you need to specify which is the bild script found in the package.json to be executed for generate the artifacts used to create the docker image.')
+        
+        // Git Repository
+        string(name: 'GIT_REPOSITORY', defaultValue: 'https://github.com/devonfw/my-thai-star.git', description: 'NEEDS TO BE SET!. The url of your git repository') 
+        string(name: 'GIT_BRANCH', defaultValue: 'develop', description: 'NEEDS TO BE SET!. The branch of your git repository')
+
+        // Docker Registry
+        string(name: 'DOCKER_REGISTRY', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The url of your docker registry repository.')
+        string(name: 'DOCKER_REGISTRY_CREDENTIALS', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Credentials to deploy and download of your docker registry repository.')
+        string(name: 'DOCKER_TAG', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The tag for the image created by docker.')
+
+        // OpenShift
+        string(name: 'OPENSHIFT_URL', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. The url of your OpenShift cluster.') 
+        string(name: 'OPENSHIFT_CREDENTIALS', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Admin credentials of your OpenShift cluster.')
+        string(name: 'OPENSHIFT_NAMESPACE', defaultValue: 'CHANGE ME', description: 'NEEDS TO BE SET!. Namespace is the name of the project of OpenShift where the environment is going to be created.')
+        string(name: 'APP_NAME_SUFFIX', defaultValue: '', description: 'OPTIONAL: suffix to add to your appname in OpenShift. The name is going to be read of your package.json, for example for develop environment you could use -dev value')
+        string(name: 'HOSTNAME', defaultValue: '', description: 'OPTIONAL: Especify wich will be the hostname of your application in openshift.')
+        booleanParam(name: 'SECURED_PROTOCOL', defaultValue: true, description: 'OPTIONAL: If false, the protocol will be http instead https.')
+
+        // Tools
+        string(name: 'OPENSHIFT_TOOL', defaultValue: 'OpenShiftv3.11.0', description: 'NEEDS TO BE SET!. Tool name of openshift client in Jenkins.')
+        string(name: 'NODEJS_TOOL', defaultValue: 'NodeJS LTS', description: 'NEEDS TO BE SET!. Tool name of NodeJS in Jenkins.')
+
+    }
+    
+/*
+    oc new-build --strategy docker --binary --docker-image openjdk:<version> --name=${props.name}-$environment --to=${DOCKER_REGISTRY}/${props.name}:${dockerTag} --to-docker=true
+*/
+
+    environment {
+        appDir='angular'
+        nameForSecret='docker-registry'
+        artifactsPath='./dist'
+        port='8080-tcp'
+    }
+
+    stages {
+        stage('PL setup') {
+            steps{
+                script {
+                    def node = tool name: "${params.NODEJS_TOOL}", type: 'nodejs'
+                    def openshift = tool name: "${params.OPENSHIFT_TOOL}", type: 'oc'
+                    env.PATH = "${openshift}:${node}/bin:${env.PATH}"
+                }
+                sh "npm install -g yarn"
+            }
+        }
+        
+        stage('Download app repository') {
+            steps{
+                dir('dsf') {
+                    script{
+                        sh "git clone --depth 1 --single-branch --branch ${params.GIT_BRANCH} ${params.GIT_REPOSITORY} ."
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            when {
+                expression {
+                    return params.CREATE_DOCKER_BUILDER
+                }
+            }
+            steps{
+                dir("dsf/${appDir}") {
+                    sh "yarn"
+                    sh """yarn ${params.BUILD_SCRIPT}"""
+                    sh """
+                        cp nginx.openshift.conf dist/nginx.conf
+                        cp Dockerfile.openshift dist/Dockerfile
+                    """
+                }
+            }
+        }
+
+        stage('Create Secret') {
+            when {
+                expression {
+                    return params.CREATE_SECRET
+                }
+            }
+            steps{
+                script {
+                    dir("dsf/${appDir}") {
+                        props = readJSON file: 'package.json'
+                        withCredentials([usernamePassword(credentialsId: "${params.OPENSHIFT_CREDENTIALS}", passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "oc login -u ${user} -p ${pass} ${params.OPENSHIFT_URL} --insecure-skip-tls-verify"
+                            sh "oc project ${params.OPENSHIFT_NAMESPACE}"
+                            withCredentials([usernamePassword(credentialsId: "${params.DOCKER_REGISTRY_CREDENTIALS}", passwordVariable: 'drpass', usernameVariable: 'druser')]) {
+                                sh "oc create secret docker-registry ${nameForSecret}${params.REGISTRY_SECRET_NAME_SUFFIX} --docker-server=${params.DOCKER_REGISTRY} --docker-username=${druser} --docker-password=${drpass} --docker-email=no-reply@email.com"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Create Build config') {
+            when {
+                expression {
+                    return params.CREATE_DOCKER_BUILDER
+                }
+            }
+            steps{
+                script {
+                    dir("dsf/${appDir}") {
+                        props = readJSON file: 'package.json'
+                        withCredentials([usernamePassword(credentialsId: "${params.OPENSHIFT_CREDENTIALS}", passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "oc login -u ${user} -p ${pass} ${params.OPENSHIFT_URL} --insecure-skip-tls-verify"
+                            sh "oc project ${params.OPENSHIFT_NAMESPACE}"
+                            sh """
+                                oc new-build --strategy docker --binary --docker-image nginx:alpine-perl --name=${props.name}${params.APP_NAME_SUFFIX} --to=${params.DOCKER_REGISTRY}/${props.name}:${params.DOCKER_TAG} --to-docker=true
+                                oc patch bc/${props.name}${params.APP_NAME_SUFFIX} --patch '{"spec":{"resources":{"limits":{"memory": "400Mi"},"requests":{"memory": "400Mi"}}}}'
+                                oc set build-secret --push bc/${props.name}${params.APP_NAME_SUFFIX} ${nameForSecret}${params.REGISTRY_SECRET_NAME_SUFFIX}
+                            """
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        stage('Build Docker Image') {
+            when {
+                expression {
+                    return params.CREATE_DOCKER_BUILDER
+                }
+            }
+            steps{
+                script {
+                    dir("dsf/${appDir}") {
+                        props = readJSON file: 'package.json'
+                        withCredentials([usernamePassword(credentialsId: "${params.OPENSHIFT_CREDENTIALS}", passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "oc login -u ${user} -p ${pass} ${params.OPENSHIFT_URL} --insecure-skip-tls-verify"
+                            sh "oc project ${params.OPENSHIFT_NAMESPACE}"
+                            sh "oc start-build ${props.name}${params.APP_NAME_SUFFIX} --from-dir=${artifactsPath} --follow"
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Create New App') {
+            steps{
+                script {
+                    dir("dsf/${appDir}") {
+                        props = readJSON file: 'package.json'
+                        withCredentials([usernamePassword(credentialsId: "${params.OPENSHIFT_CREDENTIALS}", passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "oc login -u ${user} -p ${pass} ${params.OPENSHIFT_URL} --insecure-skip-tls-verify"
+                            sh "oc project ${params.OPENSHIFT_NAMESPACE}"
+                            sh "oc new-app --docker-image=${params.DOCKER_REGISTRY}/${props.name}:${params.DOCKER_TAG} --name=${props.name}${params.APP_NAME_SUFFIX} --source-secret=${nameForSecret}${params.REGISTRY_SECRET_NAME_SUFFIX}"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Create Routes') {
+            steps{
+                script {
+                    dir("dsf/${appDir}") {
+                        props = readJSON file: 'package.json'
+                        withCredentials([usernamePassword(credentialsId: "${params.OPENSHIFT_CREDENTIALS}", passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "oc login -u ${user} -p ${pass} ${params.OPENSHIFT_URL} --insecure-skip-tls-verify"
+                            sh "oc project ${params.OPENSHIFT_NAMESPACE}"
+                            sh "echo SECURED PROTOCOL: ${params.SECURED_PROTOCOL}"
+                            if (params.SECURED_PROTOCOL) {
+                                if ("${params.HOSTNAME}" != '') {
+                                    sh "echo HOSTNAME: ${params.HOSTNAME}"
+                                    sh "oc create route edge --service=${props.name}${params.APP_NAME_SUFFIX} --port=${port} --hostname=${params.HOSTNAME}"
+                                } else {
+                                    sh "echo HOSTNAME esta vacio"
+                                    sh "oc create route edge --service=${props.name}${params.APP_NAME_SUFFIX} --port=${port}"
+                                }
+                            } else {
+                                if ("${params.HOSTNAME}" != '') {
+                                    sh "echo HOSTNAME: ${params.HOSTNAME}"
+                                    sh "oc expose svc/${props.name}${params.APP_NAME_SUFFIX} --port=${port} --hostname=${params.HOSTNAME}"
+                                } else {
+                                    sh "echo HOSTNAME esta vacio"
+                                    sh "oc expose svc/${props.name}${params.APP_NAME_SUFFIX} --port=${port}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        cleanup {
+            cleanWs()
+            deleteDir()
+        }
+    }
+}
