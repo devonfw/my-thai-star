@@ -10,7 +10,7 @@ You should add it a pipeline in Jenkins poitint to the Jenkinsfile and build it.
 
 NOTE: The first run will always fail because the form has not yet been downloaded. Please stop it when you pass the first step "Declarative: Checkout SCM" and buid it again by filling in the form.
 
-When you build it with parameters you could see a form. This are an example of the CHANGE-ME parameters:
+When you build it with parameters you could see a form. This are an example of the CHANGE-ME parameters used in our Jenkins of devonfw:
 
 [source]
 ----
