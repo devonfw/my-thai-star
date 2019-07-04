@@ -31,7 +31,7 @@ jobs:
         # Update wiki repository with documentation folder contents
         - yes | cp -rf ${REPO_SOURCE}/documentation/* ${REPO_DEST}/
         - cd ${REPO_DEST}
-        - grep -lr "link:[a-zA-Z0-9_.-]*.asciidoc.*" documentation/| xargs -r sed -i "s/.asciidoc//g"
+        - grep -lr "link:[a-zA-Z0-9_.-]*.asciidoc.*" .| xargs -r sed -i "s/.asciidoc//g"
         # Terminate Travis CI build when no changes detected
         - if git diff-index --quiet HEAD && [ ! -n "$(git status -s)" ]; then set +e; pkill -9 -P $$ &> /dev/null || true; exit 0; fi;
         - git config user.email ${EMAIL}
