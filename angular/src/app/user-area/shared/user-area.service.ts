@@ -53,15 +53,14 @@ export class UserAreaService {
         (res: any) => {
           this.authService.setToken(res.headers.get('Authorization'));
 
-          if(res.headers.get('X-Mythaistar-Otp') === 'NONE'){
+          if (res.headers.get('X-Mythaistar-Otp') === 'NONE') {
             this.loginHandler();
           } else if (res.headers.get('X-Mythaistar-Otp') === 'OTP') {
-            const dialogRef: MatDialogRef<TwoFactorDialogComponent> = this.dialog.open(
-              TwoFactorDialogComponent,
-              {
-                width: this.window.responsiveWidth(),
-              },
-            );
+            const dialogRef: MatDialogRef<
+              TwoFactorDialogComponent
+            > = this.dialog.open(TwoFactorDialogComponent, {
+              width: this.window.responsiveWidth(),
+            });
             dialogRef.afterClosed().subscribe((content: any) => {
               if (content) {
                 this.verify(username, password, content.token);
@@ -134,24 +133,33 @@ export class UserAreaService {
   }
 
   pairing(): Observable<any> {
-    return this.http
-      .get<TwoFactorResponse>(`${this.restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${this.authService.getUser()}`,
-        { headers: {'Content-Type': 'text'},
-        });
+    return this.http.get<TwoFactorResponse>(
+      `${this.restServiceRoot}${this.usermanagementRestPath}${
+        this.pairingRestPath
+      }${this.authService.getUser()}`,
+      { headers: { 'Content-Type': 'text' } },
+    );
   }
 
-  twoFactorStatus(): Observable<any>{
-    return this.http
-      .get<TwoFactorResponse>(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${this.authService.getUser()}`,
-        { headers: {'Content-Type': 'text'}});
+  twoFactorStatus(): Observable<any> {
+    return this.http.get<TwoFactorResponse>(
+      `${this.restServiceRoot}${this.usermanagementRestPath}${
+        this.twofactorRestPath
+      }${this.authService.getUser()}`,
+      { headers: { 'Content-Type': 'text' } },
+    );
   }
 
   changeTwoFactor(status: boolean): Observable<any> {
-    return this.http
-      .post(`${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}`, {
+    return this.http.post(
+      `${this.restServiceRoot}${this.usermanagementRestPath}${
+        this.twofactorRestPath
+      }`,
+      {
         username: this.authService.getUser(),
-        twoFactorStatus: status
-      });
+        twoFactorStatus: status,
+      },
+    );
   }
 
   logout(): void {
