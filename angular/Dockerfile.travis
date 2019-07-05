@@ -10,4 +10,4 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 
 RUN npm i -g yarn
 RUN yarn
-RUN yarn test:ci && yarn build --configuration=docker
+RUN yarn test:ci && yarn lint && yarn build --configuration=docker
