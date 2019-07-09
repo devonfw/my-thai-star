@@ -1,6 +1,6 @@
 {
   "name": "mythaistar-restaurant",
-  "version": "1.12.3",
+  "version": "3.1.0",
   "main": "main.js",
   "scripts": {
     "postinstall": "npx electron-builder install-app-deps",
