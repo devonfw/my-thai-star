@@ -5,14 +5,14 @@
 
   <artifactId>mtsj</artifactId>
   <groupId>com.devonfw.java.mtsj</groupId>
-  <version>3.1.0</version>
+  <version>3.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Application based on the Devonfw framework for Java (devon4j).</description>
 
   <properties>
     <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-    <devon4j.version>3.2.0-SNAPSHOT</devon4j.version>
+    <devon4j.version>3.1.0</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <devon.http.port>${devon.port.range}81</devon.http.port>
