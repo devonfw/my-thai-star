@@ -34,6 +34,8 @@ This orchestration of all 3 containers will be done by using a `docker-compose.y
 - `http://angular:80`
 - `http://java:8080`
 
+NOTE: A implementation using link:traefik-reverse-proxy.asciidoc[Traefik as reverse proxy] instead of NGINX is also available.
+
 = Run My Thai Star
 
 The steps to run **My Thai Star** are:
