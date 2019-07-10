@@ -6,12 +6,16 @@
   [columns]="columnst">
   <ng-template tdDataTableTemplate="bookingDate" let-value="value" let-row="row" let-column="column">
     <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
+      <span time am-time-ago="myDate|amFromUnix">
+        {{value|amFromUnix|amDateFormat:'lll'}}
+      </span>
     </div>
   </ng-template>
   <ng-template tdDataTableTemplate="creationDate" let-value="value" let-row="row" let-column="column">
     <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
+      <span time am-time-ago="myDate|amFromUnix">
+        {{value|amFromUnix|amDateFormat:'lll'}}
+      </span>
     </div>
   </ng-template>
 </td-data-table>
