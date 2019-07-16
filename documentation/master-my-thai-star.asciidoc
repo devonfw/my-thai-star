@@ -1,0 +1,68 @@
+:toc: macro
+toc::[]
+
+= MyThaiStar Wiki
+
+== User Stories
+
+include::user-stories[]
+
+== Technical design
+
+=== Data Model
+
+include::my-thai-star-data-model[]
+
+include::my-thai-star-nosql-data-model[]
+
+=== Server Side
+
+include::java-design[]
+
+include::net-design[]
+
+include::nodejs-design[]
+
+include::graphql-design[]
+
+=== Client Side
+
+include::angular-design[]
+
+include::xamarin-design[]
+
+== Security
+
+include::twofactor[]
+
+== Testing
+
+=== Server Side
+
+include::java-testing[]
+
+include::net-testing[]
+
+include::nodejs-testing[]
+
+include::graphql-testing[]
+
+=== Client Side
+
+include::angular-testing[]
+
+include::xamarin-testing[]
+
+=== End to end
+
+include::mrchecker[]
+
+== UI design
+
+include::style-guide[]
+
+==  CI/CD
+
+include::production-line-ci[]
+
+include::deployment[]
