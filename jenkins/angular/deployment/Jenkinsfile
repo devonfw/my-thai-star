@@ -46,11 +46,12 @@ pipeline{
                     def num = -1
                     def url = ''
                     props.items.each { 
-                        def n = (it.downloadUrl =~ /.*-(\d*)\.zip/)[0][1].toInteger()
-                        if (n > num) {
-                            num = n
-                            url = it.downloadUrl
-                        }
+                        // def n = (it.downloadUrl =~ /.*-(\d*)\.zip/)[0][1].toInteger()
+                        // if (n > num) {
+                        //     num = n
+                        //     url = it.downloadUrl
+                        // }
+                        url = it.downloadUrl
                     }
 
                     // Download the snapshot

@@ -24,7 +24,7 @@ pipeline{
         credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
         string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
         credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
-        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
+        string(name: 'repository', defaultValue: 'maven-releases', description: 'maven repository')
         string(name: 'VERSION', defaultValue: '3.1.0', description: 'Version number') 
         string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
         string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
@@ -48,13 +48,15 @@ pipeline{
                     def num = -1
                     def url = ''
                     props.items.each { 
-                        def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
-                        println n
-                        if (n > num) {
-                            num = n
-                            url = it.downloadUrl
-                        }
+                        // def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
+                        // println n
+                        // if (n > num) {
+                        //     num = n
+                        //     url = it.downloadUrl
+                        // }
+                        url = it.downloadUrl
                     }
+
 
                     // Download the snapshot
                     httpRequest authentication: nexusCredentialsId, ignoreSslErrors: true, outputFile: 'mythaistar.war', responseHandle: 'NONE', url: url
