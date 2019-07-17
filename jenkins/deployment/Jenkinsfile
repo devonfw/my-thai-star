@@ -18,7 +18,7 @@ pipeline{
         credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
         string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
         credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
-        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
+        string(name: 'repository', defaultValue: 'maven-releases', description: 'maven repository')
 
         string(name: 'JAVA_VERSION', defaultValue: '3.1.0', description: 'Java Version number') 
         string(name: 'ANGULAR_VERSION', defaultValue: '3.1.0', description: 'Angular Version number') 
