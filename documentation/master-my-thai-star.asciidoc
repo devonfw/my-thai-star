@@ -5,13 +5,13 @@ toc::[]
 
 include::agile[leveloffset=1]
 
-include::user-stories[leveloffset=1]
+include::User-Stories[leveloffset=1]
 
 == Technical design
 
 === Data Model
 
-include::my-thai-star-data-model[leveloffset=3]
+include::My-Thai-Star-data-model[leveloffset=3]
 
 include::my-thai-star-nosql-data-model[leveloffset=3]
 
