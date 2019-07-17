@@ -120,7 +120,7 @@ pipeline{
                                 mvn deploy:deploy-file \
                                     -DgroupId=${groupId} \
                                     -DartifactId=${props.name} \
-                                    -Dversion=${props.version}-SNAPSHOT \
+                                    -Dversion=${props.version} \
                                     -Dpackaging=zip \
                                     -Dfile=${props.name}.zip \
                                     -DrepositoryId=${repositoryId} \
