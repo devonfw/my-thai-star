@@ -42,7 +42,7 @@
       >
         {{ 'buttons.viewMenu' | translate }}
       </button>
-      
+      </div>
       <div>
         <div class="pull-top" [class.scrollOrders]="orders.length > 3">
           <public-sidenav-order
@@ -51,7 +51,7 @@
           ></public-sidenav-order>
         </div>
       </div>
-    </div>
+    
     <div
       *ngIf="orders.length > 0"
       layout="row"
