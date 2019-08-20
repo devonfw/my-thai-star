@@ -1,11 +1,12 @@
+import { WindowService } from 'app/core/window/window.service';
 import { SidenavService } from '../shared/sidenav.service';
 import { PriceCalculatorService } from '../shared/price-calculator.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { Component, OnInit, Input } from '@angular/core';
-import { TdDialogService } from '@covalent/core';
 import { OrderView } from '../../shared/view-models/interfaces';
 import { map } from 'lodash';
+import { CommentAlertComponent } from '../comment-alert/comment-alert.component';
 
 @Component({
   selector: 'public-sidenav-order',
@@ -17,9 +18,9 @@ export class SidenavOrderComponent implements OnInit {
   @Input() order: OrderView;
 
   constructor(
+    public window: WindowService,
     private sidenav: SidenavService,
     public dialog: MatDialog,
-    private _dialogService: TdDialogService,
     private calculator: PriceCalculatorService,
   ) {}
 
@@ -57,10 +58,9 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   openCommentDialog(): void {
-    this._dialogService.openAlert({
-      message: this.order.orderLine.comment,
-      title: 'Comment',
-      closeButton: 'Close',
+    this.dialog.open(CommentAlertComponent, {
+      width: this.window.responsiveWidth(),
+      data: this.order.orderLine.comment,
     });
   }
 }

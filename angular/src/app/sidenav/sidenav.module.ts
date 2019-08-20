@@ -11,6 +11,7 @@ import { SidenavOrderComponent } from './sidenav-order/sidenav-order.component';
 import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommentAlertComponent } from './comment-alert/comment-alert.component';
 
 @NgModule({
   imports: [
@@ -28,12 +29,14 @@ import { TranslateModule } from '@ngx-translate/core';
     SidenavComponent,
     SidenavOrderComponent,
     CommentDialogComponent,
+    CommentAlertComponent,
   ],
   exports: [
     SidenavComponent,
   ],
   entryComponents: [
     CommentDialogComponent,
+    CommentAlertComponent,
   ],
 })
 export class SidenavModule { }

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
+  MatBadgeModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
@@ -38,18 +40,6 @@ import {
 import { OwlDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { CdkTableModule } from '@angular/cdk/table';
-import {
-  CovalentChipsModule,
-  CovalentLayoutModule,
-  CovalentExpansionPanelModule,
-  CovalentDataTableModule,
-  CovalentPagingModule,
-  CovalentDialogsModule,
-  CovalentLoadingModule,
-  CovalentMediaModule,
-  CovalentNotificationsModule,
-  CovalentCommonModule,
-} from '@covalent/core';
 import { MomentModule } from 'ngx-moment';
 
 import { WindowService } from './window/window.service';
@@ -83,26 +73,16 @@ export class DefaultIntl extends OwlDateTimeIntl {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    CovalentMediaModule,
-    CovalentLayoutModule,
     CdkTableModule,
     OwlDateTimeModule,
     OwlMomentDateTimeModule,
   ],
   exports: [
     CommonModule,
-    CovalentChipsModule,
-    CovalentLayoutModule,
-    CovalentExpansionPanelModule,
-    CovalentDataTableModule,
-    CovalentPagingModule,
-    CovalentDialogsModule,
-    CovalentLoadingModule,
-    CovalentMediaModule,
-    CovalentNotificationsModule,
-    CovalentCommonModule,
+    FormsModule,
     CdkTableModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,

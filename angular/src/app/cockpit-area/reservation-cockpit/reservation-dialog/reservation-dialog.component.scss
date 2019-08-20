@@ -1,0 +1,11 @@
+th {
+  width: 20%;
+  font-weight: bold;
+}
+
+@media (max-width: 599px) {
+  td,
+  th {
+    min-width: 100px;
+  }
+}
