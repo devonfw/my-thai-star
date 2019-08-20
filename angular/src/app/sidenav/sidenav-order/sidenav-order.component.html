@@ -1,10 +1,10 @@
-<div layout="row" class="pad-top-sm pad-right-sm" style="border-bottom: 1px solid lightgrey" flex>
+<div class="orderContainer">
   
-  <button mat-icon-button (click)="removeOrder()" class="push-bottom-xs"><mat-icon style="color: lightgray">clear</mat-icon></button>
+  <button mat-icon-button (click)="removeOrder()" class="removeOrderBtn"><mat-icon>clear</mat-icon></button>
   
-  <div layout="column" class="pull-top-xs" flex>
+  <div class="orderNameContainer">
     <span class="orderName">{{order.dish.name}}</span>
-    <div layout="row">
+    <div>
       <span class="orderIngredients" *ngIf="extras.length === 0"> - </span>
       <span class="orderIngredients">{{extras}}</span>
     </div>
@@ -12,15 +12,15 @@
     <label (click)="addComment()" class="addOrderComment" *ngIf="!order.orderLine.comment">{{'buttons.addComment' | translate}}</label>
   </div>
 
-  <button mat-icon-button [matTooltip]="'formFields.comment' | translate" (click)="openCommentDialog()" [class.hideButton]="!order.orderLine.comment" class="push-bottom-xs" matTooltipPosition="above">
+  <button mat-icon-button [matTooltip]="'formFields.comment' | translate" (click)="openCommentDialog()" [class.hideButton]="!order.orderLine.comment" style="margin-bottom: 4px;" matTooltipPosition="above">
     <mat-icon color="accent">speaker_notes</mat-icon>
   </button>
 
-  <div layout="row" class="push-bottom-xs" flex>
+  <div lass="orderAmountContainer">
     <button mat-icon-button [disabled]="order.orderLine.amount == 1" color="accent" (click)="decreaseOrder()"><mat-icon>remove</mat-icon></button>  
-    <span class="push-top-sm">{{order.orderLine.amount}}</span>               
+    <span style="margin-top: 8px;">{{order.orderLine.amount}}</span>               
     <button mat-icon-button (click)="increaseOrder()" color="accent"><mat-icon>add</mat-icon></button>                  
   </div>
 
-  <span class="push-top-sm">{{calculateOrderPrice() | number : '2.2-2'}} €</span>
+  <span style="margin-top: 8px;">{{calculateOrderPrice() | number : '2.2-2'}} €</span>
 </div>

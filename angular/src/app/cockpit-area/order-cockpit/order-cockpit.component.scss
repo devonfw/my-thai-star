@@ -1,9 +1,47 @@
-@media (max-width: 600px) {
+.formRow {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid lightgrey;
+  font-size: 16px;
+}
+
+.formDesktopRow {
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+
+  .searchBy {
+    flex: 1;
+    padding: 8px;
+  }
+}
+
+.formMobileRow {
+  flex: 1;
+  align-items: center;
+}
+
+form button, mat-card-title {
+  text-transform: uppercase;
+}
+
+@media (max-width: 599px) {
   .forDesktop {
     display: none;
   }
   .searchBy {
     width: 100%;
+  }
+  .formDesktopRow {
+    display: none;
+  }
+  .formMobileRow {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -16,5 +54,13 @@
   }
   .searchBy {
     width: 30%;
+  }
+  .formDesktopRow {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+  }
+  .formMobileRow {
+    display: none;
   }
 }

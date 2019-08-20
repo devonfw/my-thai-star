@@ -11,7 +11,10 @@
 
       <mat-divider></mat-divider>
 
-      <td-expansion-panel [label]="'menu.filterTitle' | translate">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ 'menu.filterTitle' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
         <div class ="menu-filters">
           <own-filter-checkboxes formControlName="categories"></own-filter-checkboxes>
 
@@ -38,7 +41,7 @@
             </div>
           </div>
         </div>
-      </td-expansion-panel>
+      </mat-expansion-panel>
       <div class="filter-actions">
         <button mat-button (click)="clearFilters($event, filtersForm)">{{'buttons.clearFilters' | translate}}</button>
         <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | translate}}</button>

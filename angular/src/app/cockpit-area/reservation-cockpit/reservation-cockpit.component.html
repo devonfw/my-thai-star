@@ -1,9 +1,11 @@
-<td-layout>
   <form (ngSubmit)="filter()" #filterForm="ngForm">
     <div style= "background-color: white">
-      <td-expansion-panel data-name="reservationFilter" [label]="'cockpit.filter' | translate">
-        <div layout="row" class="pad-left-md pad-right-md" style="align-items:center; border-bottom: 1px solid lightgrey" flex>
-          <div layout-xs="column" class="justify-space-around" style="align-items:center" hide-gt-xs flex>
+      <mat-expansion-panel data-name="reservationFilter">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ 'cockpit.filter' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="formRow">
+          <div class="formMobileRow">
             <mat-form-field color="accent" class="searchBy">
               <input matInput [placeholder]="'formFields.email' | translate" [(ngModel)]="filters.email" name="email">
             </mat-form-field>
@@ -11,20 +13,20 @@
               <input matInput [placeholder]="'formFields.referenceNumber' | translate" [(ngModel)]="filters.bookingToken" name="bookingToken">
             </mat-form-field>
           </div>
-          <div layout-gt-xs="row" class="justify-space-around" style="align-items:center" hide-xs flex>
-            <mat-form-field color="accent" class="searchBy pad-sm" flex>
+          <div class="formDesktopRow">
+            <mat-form-field color="accent" class="searchBy">
               <input matInput [placeholder]="'formFields.email' | translate" [(ngModel)]="filters.email" name="email">
             </mat-form-field>
-            <mat-form-field color="accent" class="searchBy pad-sm" flex>
+            <mat-form-field color="accent" class="searchBy">
               <input matInput [placeholder]="'formFields.referenceNumber' | translate" [(ngModel)]="filters.bookingToken" name="bookingToken">
             </mat-form-field>
           </div>
         </div>
         <div class="align-right">
-          <button name="reservationsClearFilters" mat-button type="button" (click)="clearFilters(filterForm)" class="text-upper property-text-bold">{{'buttons.clearFilters' | translate}}</button>
-          <button name="reservationApplyFilters" mat-button type="submit" color="accent" class="text-upper property-text-bold">{{'buttons.applyFilters' | translate}}</button>
+          <button name="reservationsClearFilters" mat-button type="button" (click)="clearFilters(filterForm)">{{'buttons.clearFilters' | translate}}</button>
+          <button name="reservationApplyFilters" mat-button type="submit" color="accent">{{'buttons.applyFilters' | translate}}</button>
         </div>
-      </td-expansion-panel>
+      </mat-expansion-panel>
     </div>
   </form>
   <mat-progress-bar
@@ -35,33 +37,37 @@
   <mat-card>
     <mat-card-title>{{'cockpit.reservations.title' | translate}}</mat-card-title>
     <mat-divider></mat-divider>
-    <td-data-table data-name="reservationDataTable"
-      #dataTable
-      [data]="reservations"
-      [columns]="columns"
-      [sortable]="true"
-      clickable="true"
-      (rowClick)="selected($event)"
-      (sortChange)="sort($event)">
-      <ng-template tdDataTableTemplate="booking.bookingDate" let-value="value" let-row="row" let-column="column">
-        <div layout="row">
-          <span time am-time-ago="myDate|amFromUnix">
-            {{value|amFromUnix|amDateFormat:'lll'}}
-          </span>
-        </div>
-      </ng-template>
-    </td-data-table>
-    <div class="mat-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+
+    <div style="width:100%; overflow:auto;">
+      <table mat-table [dataSource]="reservations" matSort (matSortChange)="sort($event)" style="width:100%">
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="bookingDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:33.33%; font-weight:bold;"> {{columns[0].label}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:33.33%; font-weight:bold;"> {{columns[1].label}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.booking.email}} </td>
+        </ng-container>
+
+        <!-- Ref No Column -->
+        <ng-container matColumnDef="bookingToken">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:33.33%; font-weight:bold;"> {{columns[2].label}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.booking.bookingToken}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row)"></tr>
+
+      </table>
+    </div>
+
+    <div class="property-text-center" *ngIf="reservations.length===0" style="padding:16px;">
       <h3>{{'table.noResults' | translate}}.</h3>
     </div>
-    <td-paging-bar data-name="reservationPagingBar" #pagingBar [pageSize]="pageable.pageSize" [total]="totalReservations" (change)="page($event)">
-      <span hide-xs>{{'table.rowsPage' | translate}}:</span>
-      <mat-select [style.width.px]="50" [(ngModel)]="pageable.pageSize">
-        <mat-option *ngFor="let size of pageSizes" [value]="size">
-          {{ size }}
-        </mat-option>
-      </mat-select>
-      <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>{{'table.of' | translate}} {{pagingBar.total}}</span></span>
-    </td-paging-bar>
+    <mat-paginator #pagingBar [length]="totalReservations" [pageSize]="pageable.pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="true" (page)="page($event)">
+    </mat-paginator>
   </mat-card>
-</td-layout>

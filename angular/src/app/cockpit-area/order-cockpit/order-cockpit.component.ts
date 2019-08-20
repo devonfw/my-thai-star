@@ -1,11 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  IPageChangeEvent,
-  ITdDataTableSelectAllEvent,
-  ITdDataTableColumn,
-  ITdDataTableSortChangeEvent,
-} from '@covalent/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, Sort, PageEvent, MatPaginator } from '@angular/material';
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderListView } from '../../shared/view-models/interfaces';
@@ -32,10 +26,14 @@ export class OrderCockpitComponent implements OnInit {
 
   pageSize = 8;
 
-  orders: OrderListView[];
+  @ViewChild('pagingBar') pagingBar: MatPaginator;
+
+  orders: OrderListView[] = [];
   totalOrders: number;
 
-  columns: ITdDataTableColumn[];
+  columns: any[];
+
+  displayedColumns: string[] = ['booking.bookingDate', 'booking.email', 'booking.bookingToken'];
 
   pageSizes: number[];
 
@@ -89,27 +87,30 @@ export class OrderCockpitComponent implements OnInit {
   clearFilters(filters: any): void {
     filters.reset();
     this.applyFilters();
+    this.pagingBar.firstPage();
   }
 
-  page(pagingEvent: IPageChangeEvent): void {
+  page(pagingEvent: PageEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
-      pageNumber: pagingEvent.page - 1,
+      pageNumber: pagingEvent.pageIndex,
       sort: this.pageable.sort,
     };
     this.applyFilters();
   }
 
-  sort(sortEvent: ITdDataTableSortChangeEvent): void {
+  sort(sortEvent: Sort): void {
     this.sorting = [];
-    this.sorting.push({
-      property: sortEvent.name,
-      direction: '' + sortEvent.order,
-    });
+    if (sortEvent.direction) {
+      this.sorting.push({
+        property: sortEvent.active,
+        direction: '' + sortEvent.direction,
+      });
+    }
     this.applyFilters();
   }
 
-  selected(selection: ITdDataTableSelectAllEvent): void {
+  selected(selection: OrderListView): void {
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,

@@ -1,4 +1,16 @@
-@media (max-width: 600px) {
+mat-tab-group {
+  margin: -16px;
+}
+
+form {
+  padding: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 599px) {
   .forgotPassword {
     cursor: pointer;
     color: seagreen;

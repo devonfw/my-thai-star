@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotFoundComponent } from './not-found.component';
 import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
-import { CovalentMediaModule, CovalentLayoutModule } from '@covalent/core';
 import { CdkTableModule } from '@angular/cdk/table';
 
 describe('NotFoundComponent', () => {
@@ -17,8 +16,6 @@ describe('NotFoundComponent', () => {
         MatCardModule,
         MatButtonModule,
         MatIconModule,
-        CovalentMediaModule,
-        CovalentLayoutModule,
         CdkTableModule,
         RouterTestingModule,
       ],

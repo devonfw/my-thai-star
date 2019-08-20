@@ -1,12 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {
-  IPageChangeEvent,
-  ITdDataTableColumn,
-  TdDataTableService,
-} from '@covalent/core';
 import { OrderView, BookingView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
@@ -17,31 +12,32 @@ import { ConfigService } from '../../../core/config/config.service';
   styleUrls: ['./order-dialog.component.scss'],
 })
 export class OrderDialogComponent implements OnInit {
-  private fromRow = 1;
+  private fromRow = 0;
   private currentPage = 1;
 
   pageSize = 4;
 
   data: any;
   datat: BookingView[] = [];
-  columnst: ITdDataTableColumn[];
+  columnst: any[];
+  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name', 'email', 'tableId'];
 
   datao: OrderView[] = [];
-  columnso: ITdDataTableColumn[];
+  columnso: any[];
+  displayedColumnsO: string[] = ['dish.name', 'orderLine.comment', 'extras', 'orderLine.amount', 'dish.price'];
 
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
 
   constructor(
-    private _dataTableService: TdDataTableService,
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService
   ) {
-    this.data = dialogData.row;
-    this.pageSizes = this.configService.getValues().pageSizes;
+    this.data = dialogData;
+    this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
   ngOnInit(): void {
@@ -85,20 +81,16 @@ export class OrderDialogComponent implements OnInit {
     });
   }
 
-  page(pagingEvent: IPageChangeEvent): void {
-    this.fromRow = pagingEvent.fromRow;
-    this.currentPage = pagingEvent.page;
+  page(pagingEvent: PageEvent): void {
+    this.currentPage = pagingEvent.pageIndex + 1;
     this.pageSize = pagingEvent.pageSize;
+    this.fromRow = pagingEvent.pageSize * pagingEvent.pageIndex;
     this.filter();
   }
 
   filter(): void {
     let newData: any[] = this.datao;
-    newData = this._dataTableService.pageData(
-      newData,
-      this.fromRow,
-      this.currentPage * this.pageSize,
-    );
+    newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }
 }

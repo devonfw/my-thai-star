@@ -1,0 +1,20 @@
+.totalRow {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  text-transform: uppercase;
+}
+
+th {
+  width: 20%;
+  font-weight: bold;
+}
+
+@media (max-width: 599px) {
+  td,
+  th {
+    min-width: 100px;
+  }
+}
