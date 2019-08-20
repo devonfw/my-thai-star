@@ -1,22 +1,45 @@
-nav {
-    border-bottom: none;
-    margin-right: 20px;
+.header-container {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  max-width: 100%;
+  justify-content: center;
 }
 
-nav a{
-    min-width: 100px !important;
-    color: white;
+[flex] {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.logged-in {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav {
+  border-bottom: none;
+  margin-right: 20px;
+}
+
+nav a {
+  min-width: 100px !important;
+  color: white;
 }
 
 .navBottomBorder {
-    border-bottom: 3px solid white;
+  border-bottom: 3px solid white;
 }
 
 mat-sidenav {
   width: 400px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   .forDesktop {
     display: none;
   }

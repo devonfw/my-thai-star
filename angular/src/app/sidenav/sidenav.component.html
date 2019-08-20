@@ -1,35 +1,28 @@
 <div
   data-name="orderDiv"
-  layout="column"
-  class="justify-space-between"
-  style="height: 100%"
+  class="orderDiv"
 >
-  <div layout="column" flex>
+  <div class="orderContent">
     <mat-toolbar>
-      <div layout="row" style="align-items:center" flex>
+      <div class="sidenavTitle">
         <button class="forMobile" mat-icon-button (click)="closeSidenav()">
           <mat-icon>clear</mat-icon>
         </button>
-        <mat-icon class="forDesktop push-right-sm">shopping_basket</mat-icon>
-        <span class="text-upper" style="font-weight: bold; font-size: 0.7em">{{
-          'sidenav.title' | translate
+        <mat-icon class="forDesktop" style="margin-right:8px;">shopping_basket</mat-icon>
+        <span style="font-weight: bold; font-size: 0.7em">{{
+          'sidenav.title' | translate | uppercase
         }}</span>
       </div>
     </mat-toolbar>
 
-    <div layout="column" class="pull-top pad-sm">
-      <h4
-        class="pad-bottom-sm text-upper"
-        style="border-bottom: 1px solid lightgrey"
-      >
+    <div class="orderDetails">
+      <h4 class="sidenavHeader">
         {{ 'sidenav.header' | translate }}
       </h4>
     
       <div
-        layout="row"
-        *ngIf="orders.length < 1"
-        style="align-items:center"
-        class="justify-space-between push-bottom-lg"
+        *ngIf="orders.length < 1; else sidenavOrder"
+        class="noOrders"
       >
       
       <span>{{ 'sidenav.noSelection' | translate }}</span>
@@ -43,39 +36,33 @@
         {{ 'buttons.viewMenu' | translate }}
       </button>
       
-      <div>
-        <div class="pull-top" [class.scrollOrders]="orders.length > 3">
-          <public-sidenav-order
-            *ngFor="let order of orders"
-            [order]="order"
-          ></public-sidenav-order>
-        </div>
-      </div>
     </div>
+    <ng-template #sidenavOrder>
+      <div style="margin-top: -16px;" [class.scrollOrders]="orders.length > 3">
+        <public-sidenav-order
+          *ngFor="let order of orders"
+          [order]="order"
+        ></public-sidenav-order>
+      </div>
+    </ng-template>
     <div
       *ngIf="orders.length > 0"
-      layout="row"
-      class="justify-space-between pad-sm"
+      class="orderTotal"
     >
       <h3>{{ 'formFields.total' | translate }}</h3>
       <h3>{{ calculateTotal() | number: '1.2-2' }} €</h3>
     </div>
-    <div layout="column" class="pad-sm">
+    <div class="orderTable">
       <div>
         <mat-card
           *ngIf="!bookingId.value"
-          class="pad-sm"
-          style="background-color:bisque"
         >
           <div
-            layout="row"
-            class="justify-space-around"
-            style="align-items:center"
-            flex
+            class="orderTableNotice"
           >
-            <mat-icon class="mat-18 pad-right-sm">report_problem</mat-icon>
+            <mat-icon>report_problem</mat-icon>
             
-            <span flex="65" class="invitationAlert"
+            <span class="invitationAlert"
               >{{ 'alerts.orderID' | translate }}
             </span>
           
@@ -92,7 +79,7 @@
       </div>
     
       <div>
-        <mat-form-field class="push-left push-right" color="accent" flex>
+        <mat-form-field class="orderBookingID" color="accent">
           <input
             name="orderBookingID"
             matInput
@@ -103,7 +90,7 @@
       </div>
       
       <div>
-        <mat-checkbox data-name="orderTerms" #terms class="push-left">{{
+        <mat-checkbox data-name="orderTerms" #terms style="margin-left: 16px;">{{
           'formFields.terms' | translate
         }}</mat-checkbox>
       </div>
@@ -115,9 +102,8 @@
       name="orderCancel"
       mat-button
       (click)="closeSidenav()"
-      class="text-upper property-text-bold"
     >
-      {{ 'buttons.cancel' | translate }}
+      {{ 'buttons.cancel' | translate | uppercase }}
     </button>
     <button
       name="orderSubmit"
@@ -125,9 +111,8 @@
       color="accent"
       (click)="sendOrders(bookingId.value)"
       [disabled]="!(bookingId.value.length > 0 && terms.checked)"
-      class="text-upper property-text-bold"
     >
-      {{ 'buttons.send' | translate }}
+      {{ 'buttons.send' | translate | uppercase }}
     </button>
   </div>
 </div>

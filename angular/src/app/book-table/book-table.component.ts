@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatCheckbox } from '@angular/material';
+import { MatDialog, MatCheckbox, MatChipInputEvent } from '@angular/material';
 import { BookTableDialogComponent } from './book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from './invitation-dialog/invitation-dialog.component';
 import { WindowService } from '../core/window/window.service';
@@ -120,7 +120,9 @@ export class BookTableComponent implements OnInit {
       });
   }
 
-  validateEmail(): void {
+  validateEmail(event: MatChipInputEvent): void {
+    this.invitationModel.push(event.value);
+    event.input.value = '';
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
       this.translate
@@ -128,6 +130,13 @@ export class BookTableComponent implements OnInit {
         .subscribe((text: string) => {
           this.snackBarService.openSnack(text, 1000, 'red');
         });
+    }
+  }
+
+  removeInvite(invite: string): void {
+    const index = this.invitationModel.indexOf(invite);
+    if (index >= 0) {
+      this.invitationModel.splice(index, 1);
     }
   }
 
