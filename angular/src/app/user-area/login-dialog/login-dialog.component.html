@@ -15,7 +15,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div style="text-align: right">
+      <div class="align-right">
         <button name="cancelLogin" mat-button mat-dialog-close>{{'buttons.cancel' | translate | uppercase}}</button>
         <button name="submitLogin" mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent">{{'buttons.login' | translate | uppercase}}</button>
       </div>
@@ -25,7 +25,7 @@
   
   <mat-tab [label]="'userArea.signupTitle' | translate" class="registerTab">
     <form (ngSubmit)="signInSubmit(signForm.form.value)" #signForm="ngForm">
-      <div style="margin-bottom:8px;">
+      <div class="formFields">
         <div>
           <mat-form-field color="accent">
             <input matInput [placeholder]="'formFields.email' | translate" ngModel name="email" required validateEmail>

@@ -21,6 +21,15 @@
   align-items: center;
 }
 
+.orderIcon {
+  margin-right: 8px;
+}
+
+.sidenavTitleSpan {
+  font-weight: bold;
+  font-size: 0.7em;
+}
+
 .orderDetails {
   box-sizing: border-box;
   display: flex;
@@ -95,6 +104,10 @@
   justify-content: space-between;
 }
 
+.sidenavOrderContainer {
+  margin-top: -16px;
+}
+
 .scrollOrders {
   overflow-y: auto;
 }
@@ -105,6 +118,10 @@
   max-width: 65%;
   max-height: 100%;
   box-sizing: border-box;
+}
+
+.orderTermsCheckbox {
+  margin-left: 16px;
 }
 
 @media (max-width: 599px) {

@@ -102,10 +102,8 @@
 
           <div class="inviteFriendsFormContainer">
             <form [formGroup]="invitationForm">
-              <div style="margin-bottom: 16px;">
-                <div>
-                  <span class="title-card">{{'bookTable.reservationTitle' | translate}}</span>
-                </div>
+              <div class="invitationFormTitle">
+                <span class="title-card">{{'bookTable.reservationTitle' | translate}}</span>
               </div>
 
               <div>
@@ -150,7 +148,7 @@
               <h4>{{'formFields.guests' | translate}}</h4>
 
               <div>
-                <mat-form-field style="width:100%; padding-bottom:8px;">
+                <mat-form-field class="chipListField">
                   <mat-chip-list #chipList aria-label="'formFields.guestsPH' | translate">
                     <mat-chip *ngFor="let invite of invitationModel" [selectable]="true"
                               [removable]="true" (removed)="removeInvite(invite)">

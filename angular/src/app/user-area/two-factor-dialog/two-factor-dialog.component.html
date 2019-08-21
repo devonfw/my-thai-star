@@ -1,11 +1,11 @@
 <form (ngSubmit)="verifySubmit(verifyForm.form.value)"  #verifyForm="ngForm">
   <div>
     <mat-form-field>
-      <input matInput style="text-align: center" [placeholder]="'formFields.token' | translate" ngModel name="token"
+      <input matInput class="tokenInput" [placeholder]="'formFields.token' | translate" ngModel name="token"
              maxlength="6" required>
     </mat-form-field>
   </div>
-  <div style="text-align: center">
+  <div class="actionButtons">
     <button name="cancelVerify" mat-button mat-dialog-close>{{'buttons.cancel' | translate | uppercase}}</button>
     <button name="submitVerify" mat-button type="submit" [disabled]="!verifyForm.form.valid" color="accent"
           >{{'buttons.apply' | translate | uppercase}}</button>

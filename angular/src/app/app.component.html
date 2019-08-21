@@ -11,7 +11,7 @@
           <public-sidenav></public-sidenav>
         </mat-sidenav>
 
-        <mat-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
+        <mat-sidenav class="mobileSidenav" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
           <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
             <a mat-list-item (click)="navigateTo('restaurant')">
               <mat-icon>home</mat-icon>
