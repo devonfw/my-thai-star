@@ -1,6 +1,6 @@
 <span mat-dialog-title>{{'bookTable.dialog.title' | translate }}</span>
 <mat-dialog-content>
-  <div style="margin-bottom:8px;">
+  <div class="dataRows">
 
     <div>
       <div class="dataRow">
@@ -13,7 +13,7 @@
       <mat-divider></mat-divider>
       <div class="dataRow">
         <span>{{'formFields.name' | translate}}</span>
-        <span style="width:65%; word-break:break-word; text-align:right">{{data.name}}</span>
+        <span class="nameValue">{{data.name}}</span>
       </div>
     </div>  
 
@@ -21,7 +21,7 @@
       <mat-divider></mat-divider>
       <div class="dataRow">
         <span>{{'formFields.email' | translate}}</span>
-        <span style="width:65%; word-break:break-word; text-align:right">{{data.email}}</span>
+        <span class="emailValue">{{data.email}}</span>
       </div>
     </div>
 

@@ -41,6 +41,10 @@
   width: 100%;
 }
 
+.invitationFormTitle {
+  margin-bottom: 16px;
+}
+
 .invite-image {
   width: 50%;
   background-size: cover;
@@ -64,6 +68,11 @@ form {
   text-transform: uppercase;
 }
 
+.chipListField {
+  width: 100%;
+  padding-bottom: 8px;
+}
+
 @media (max-width: 599px) {
   .forDesktop {
     display: none;
@@ -71,14 +80,18 @@ form {
 }
 
 @media (min-width: 600px) {
-  .bookTableTabRow, .inviteFriendsTabRow {
+  .bookTableTabRow,
+  .inviteFriendsTabRow {
     box-sizing: border-box;
     display: flex;
     flex: 1;
     flex-direction: row;
   }
 
-  .menu-image, .bookTableFormContainer, .invite-image, .inviteFriendsFormContainer {
+  .menu-image,
+  .bookTableFormContainer,
+  .invite-image,
+  .inviteFriendsFormContainer {
     flex: 1 1 50%;
     max-width: 50%;
     max-height: 100%;
