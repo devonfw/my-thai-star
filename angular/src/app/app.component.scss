@@ -91,6 +91,10 @@
     width: 400px;
   }
 
+  .mobileSidenav {
+    width: 75%;
+  }
+
   @media (max-width: 599px) {
     .forDesktop {
       display: none;

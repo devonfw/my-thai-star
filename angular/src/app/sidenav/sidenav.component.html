@@ -8,8 +8,8 @@
         <button class="forMobile" mat-icon-button (click)="closeSidenav()">
           <mat-icon>clear</mat-icon>
         </button>
-        <mat-icon class="forDesktop" style="margin-right:8px;">shopping_basket</mat-icon>
-        <span style="font-weight: bold; font-size: 0.7em">{{
+        <mat-icon class="forDesktop orderIcon">shopping_basket</mat-icon>
+        <span class="sidenavTitleSpan">{{
           'sidenav.title' | translate | uppercase
         }}</span>
       </div>
@@ -38,7 +38,7 @@
       
     </div>
     <ng-template #sidenavOrder>
-      <div style="margin-top: -16px;" [class.scrollOrders]="orders.length > 3">
+      <div class="sidenavOrderContainer" [class.scrollOrders]="orders.length > 3">
         <public-sidenav-order
           *ngFor="let order of orders"
           [order]="order"
@@ -90,14 +90,14 @@
       </div>
       
       <div>
-        <mat-checkbox data-name="orderTerms" #terms style="margin-left: 16px;">{{
+        <mat-checkbox class="orderTermsCheckbox" data-name="orderTerms" #terms>{{
           'formFields.terms' | translate
         }}</mat-checkbox>
       </div>
     </div>
   </div>
   </div>
-  <div style="text-align: right">
+  <div class="align-right">
     <button
       name="orderCancel"
       mat-button

@@ -1,6 +1,6 @@
 <h4 mat-dialog-title>{{'userArea.twitterDialog.title' | translate | uppercase}}</h4>
 <form  (ngSubmit)="twitterSubmit(twitterForm.form.value)" #twitterForm="ngForm">
-  <div style="margin-bottom: 8px;">
+  <div class="formFields">
     <mat-form-field color="accent">
       <input matInput [placeholder]="'userArea.twitterDialog.twitterUsernamePH' | translate" ngModel name="username" required>
     </mat-form-field>
