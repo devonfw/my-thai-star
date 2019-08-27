@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material';
 import { CommentAlertComponent } from './comment-alert.component';
 
 describe('CommentAlertComponent', () => {
@@ -8,9 +12,15 @@ describe('CommentAlertComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentAlertComponent ]
-    })
-    .compileComponents();
+      declarations: [CommentAlertComponent],
+      imports: [MatButtonModule, MatDialogModule],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {},
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
