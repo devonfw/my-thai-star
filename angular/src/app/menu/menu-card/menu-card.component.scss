@@ -17,6 +17,7 @@
 .details-card {
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
 .menu-image {
@@ -33,6 +34,9 @@
   height: 50%;
 }
 
+own-menu-card-details {
+  padding: 16px;
+}
 
 @media (min-width: $tablet-min-width) {
   .details-card {
