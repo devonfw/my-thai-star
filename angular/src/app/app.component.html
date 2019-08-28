@@ -1,56 +1,57 @@
-<td-layout-nav>
-  <public-header (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened" td-toolbar-content flex></public-header>
+<div class="containerOuter">
+  <div class="containerInner">
+    <mat-toolbar color="primary" class="headerContainer">
+      <public-header (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened"></public-header>
+    </mat-toolbar>
 
-  <td-layout-footer class="forDesktop">
-    <div layout="column">
-      <div layout="row" layout-align="center center" flex>
-        <span>MY THAI STAR {{ year }} - {{ version}}</span>
-        <span flex></span>
-        <span>Devonfw</span>
-      </div>
+    <div class="sidenavContainerOuter">
+      <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(o)">
+
+        <mat-sidenav class="sidenavMobile" [opened]="sidenav.opened" position="end" (openedChange)="sidenavStatus($event)">
+          <public-sidenav></public-sidenav>
+        </mat-sidenav>
+
+        <mat-sidenav class="mobileSidenav" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
+          <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
+            <a mat-list-item (click)="navigateTo('restaurant')">
+              <mat-icon>home</mat-icon>
+              HOME
+            </a>
+            <a mat-list-item (click)="navigateTo('menu')">
+              <mat-icon>restaurant_menu</mat-icon>
+              MENU
+            </a>
+            <a mat-list-item (click)="navigateTo('bookTable')">
+              <mat-icon>bookmark</mat-icon>
+              BOOK TABLE
+            </a>
+          </mat-nav-list>
+          <mat-nav-list menu-items *ngIf="auth.isPermited('MANAGER')">
+            <a mat-list-item (click)="navigateTo('prediction')">
+              <mat-icon>show_chart</mat-icon>
+              PREDICTION
+            </a>
+          </mat-nav-list>
+          <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
+            <a mat-list-item (click)="navigateTo('orders')">
+              <mat-icon>home</mat-icon>
+              ORDERS
+            </a>
+            <a mat-list-item (click)="navigateTo('reservations')">
+              <mat-icon>restaurant_menu</mat-icon>
+              RESERVATIONS
+            </a>
+          </mat-nav-list>
+        </mat-sidenav>
+
+        <router-outlet #o="outlet"></router-outlet>
+
+      </mat-sidenav-container>
     </div>
-  </td-layout-footer>
 
-  <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(o)">
-
-    <mat-sidenav class="sidenavMobile" [opened]="sidenav.opened" position="end" (openedChange)="sidenavStatus($event)">
-      <public-sidenav></public-sidenav>
-    </mat-sidenav>
-
-    <mat-sidenav style="width:75%" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
-        <a mat-list-item (click)="navigateTo('restaurant')">
-          <mat-icon>home</mat-icon>
-          HOME
-        </a>
-        <a mat-list-item (click)="navigateTo('menu')">
-          <mat-icon>restaurant_menu</mat-icon>
-          MENU
-        </a>
-        <a mat-list-item (click)="navigateTo('bookTable')">
-          <mat-icon>bookmark</mat-icon>
-          BOOK TABLE
-        </a>
-      </mat-nav-list>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('MANAGER')">
-        <a mat-list-item (click)="navigateTo('prediction')">
-          <mat-icon>show_chart</mat-icon>
-          PREDICTION
-        </a>
-      </mat-nav-list>
-      <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
-        <a mat-list-item (click)="navigateTo('orders')">
-          <mat-icon>home</mat-icon>
-          ORDERS
-        </a>
-        <a mat-list-item (click)="navigateTo('reservations')">
-          <mat-icon>restaurant_menu</mat-icon>
-          RESERVATIONS
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <router-outlet #o="outlet"></router-outlet>
-
-  </mat-sidenav-container>
-</td-layout-nav>
+    <mat-toolbar class="appFooter forDesktop">
+      <span>MY THAI STAR {{ year }} - {{ version}}</span>
+      <span>Devonfw</span>
+    </mat-toolbar>
+  </div>
+</div>

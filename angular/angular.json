@@ -32,7 +32,6 @@
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/@covalent/core/common/platform.css",
               "node_modules/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
@@ -171,8 +170,7 @@
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
-              "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/@covalent/core/common/platform.css"
+              "node_modules/flag-icon-css/css/flag-icon.min.css"
             ],
             "assets": [
               "src/assets",
