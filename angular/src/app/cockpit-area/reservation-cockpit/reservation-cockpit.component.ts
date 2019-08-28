@@ -1,17 +1,10 @@
 import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
 import { ReservationView } from '../../shared/view-models/interfaces';
-import { Component, OnInit } from '@angular/core';
-import {
-  ITdDataTableSelectAllEvent,
-  IPageChangeEvent,
-  ITdDataTableColumn,
-  ITdDataTableSortChangeEvent,
-} from '@covalent/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, Sort, PageEvent, MatPaginator } from '@angular/material';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import {
   FilterCockpit,
-  Sort,
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,7 +18,7 @@ import { ConfigService } from '../../core/config/config.service';
   styleUrls: ['./reservation-cockpit.component.scss'],
 })
 export class ReservationCockpitComponent implements OnInit {
-  private sorting: Sort[] = [];
+  private sorting: any[] = [];
 
   pageable: Pageable = {
     pageSize: 8,
@@ -33,10 +26,13 @@ export class ReservationCockpitComponent implements OnInit {
     // total: 1,
   };
 
-  reservations: ReservationView[];
+  @ViewChild('pagingBar') pagingBar: MatPaginator;
+
+  reservations: ReservationView[] = [];
   totalReservations: number;
 
-  columns: ITdDataTableColumn[];
+  columns: any[];
+  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
 
   pageSizes: number[];
 
@@ -95,28 +91,31 @@ export class ReservationCockpitComponent implements OnInit {
   clearFilters(filters: any): void {
     filters.reset();
     this.applyFilters();
+    this.pagingBar.firstPage();
   }
 
-  page(pagingEvent: IPageChangeEvent): void {
+  page(pagingEvent: PageEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
-      pageNumber: pagingEvent.page - 1,
+      pageNumber: pagingEvent.pageIndex,
       sort: this.pageable.sort,
       // total: 1,
     };
     this.applyFilters();
   }
 
-  sort(sortEvent: ITdDataTableSortChangeEvent): void {
+  sort(sortEvent: Sort): void {
     this.sorting = [];
-    this.sorting.push({
-      property: sortEvent.name.split('.').pop(),
-      direction: '' + sortEvent.order,
-    });
+    if (sortEvent.direction) {
+      this.sorting.push({
+        property: sortEvent.active,
+        direction: '' + sortEvent.direction,
+      });
+    }
     this.applyFilters();
   }
 
-  selected(selection: ITdDataTableSelectAllEvent): void {
+  selected(selection: ReservationView): void {
     this.dialog.open(ReservationDialogComponent, {
       width: '80%',
       data: selection,

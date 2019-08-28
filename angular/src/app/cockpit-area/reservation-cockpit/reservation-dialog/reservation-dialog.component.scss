@@ -1,0 +1,56 @@
+[mat-dialog-title] {
+  word-break: break-word;
+}
+
+.tableContainer {
+  width: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 600px;
+}
+
+th {
+  width: 20%;
+  font-weight: bold;
+}
+
+.guestTable th {
+  width: 50%;
+}
+
+.bookingDateData,
+.guestEmailData {
+  word-break: break-word;
+}
+
+.creationDateHeader,
+.nameHeader,
+.emailHeader {
+  padding: 0 3%;
+}
+
+.creationDateData,
+.nameData,
+.emailData {
+  padding: 0 3%;
+  word-break: break-word;
+}
+
+.assistantsHeader,
+.assistantsData {
+  text-align: right;
+}
+
+.actionButtons {
+  padding-top: 16px;
+}
+
+@media (max-width: 599px) {
+  td,
+  th {
+    min-width: 100px;
+  }
+}

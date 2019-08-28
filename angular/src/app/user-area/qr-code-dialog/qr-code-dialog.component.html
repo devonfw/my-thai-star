@@ -1,7 +1,7 @@
 <mat-card>
   <h2 mat-dialog-title class="title">{{'userArea.qrcodeDialog.twofactorTitle' | translate}}</h2>
   <img mat-card-image *ngIf="qrcode && qrSecret" src="{{qrcode}}">
-  <mat-card-content style="text-align: center">
+  <mat-card-content>
       <h2 *ngIf="qrcode && !qrSecret" class="secret">{{secret}}</h2>
     <mat-card-subtitle
       *ngIf="!twoFactorStatus">{{'userArea.qrcodeDialog.twofactorNotFound' | translate}}</mat-card-subtitle>
@@ -17,7 +17,7 @@
       <span *ngIf="!qrSecret">{{'userArea.qrcodeDialog.secretSwitchText' | translate}}</span>
     </mat-slide-toggle>
   </mat-card-content>
-  <mat-card-actions style="text-align: center">
+  <mat-card-actions>
     <button name="cancelPairing" mat-raised-button
             mat-dialog-close>
       <span *ngIf=qrSecret>{{'userArea.qrcodeDialog.twofactorclose' | translate}}</span>

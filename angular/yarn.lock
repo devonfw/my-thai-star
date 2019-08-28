@@ -252,49 +252,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@covalent/core@2.0.1", "@covalent/core@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@covalent/core/-/core-2.0.1.tgz#1ab727711d136dbc37be5a7cc6ca905d82c3629e"
-  integrity sha512-AZ+sWLoYs1IvKFrVJCA98irtbsAgU4c4dIfsHhiXt9qzRri4u/B2S6T3GvITWp3U83MCIfCAdPAVBIX0aKIgTA==
-  dependencies:
-    tslib "^1.9.0"
-
-"@covalent/data@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@covalent/data/-/data-0.7.1.tgz#c5105d299784b8adc6fbb2688697714eedd387a8"
-  integrity sha1-xRBdKZeEuK3G+7JohpdxTu3Th6g=
-
-"@covalent/dynamic-forms@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@covalent/dynamic-forms/-/dynamic-forms-2.0.1.tgz#5be4702d47b9567475f5d47120e7047776aee9ea"
-  integrity sha512-GBGVOyo+JB507tVcwBiHOXHyGRwiqHbxNNl5ML2elNzHj5wwGcLxQIXIK/10MT1UfpQrhATSoihgkMP9FPSmxA==
-  dependencies:
-    "@covalent/core" "^2.0.1"
-    tslib "^1.9.0"
-
-"@covalent/highlight@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@covalent/highlight/-/highlight-2.0.1.tgz#59cf16b177509755c7c1d5ac3f05746c980694a1"
-  integrity sha512-1dxtlNYUhp27m62LMPJXLt/4lo9qoaH4ya2+LUYkqpgl9t7Ye8poST+d8SsLTxM0dbA1YqlxNpvjpOtjFRDUaA==
-  dependencies:
-    highlight.js "9.11.0"
-    tslib "^1.9.0"
-
-"@covalent/http@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@covalent/http/-/http-2.0.1.tgz#e77942a487df07a971b35dc6099e227f75e8a6c3"
-  integrity sha512-yATessVQNtqwoegAiGjOCszwjcbgSx3wpGjqlNjAr8LZNNi+zp0bmI186jAIBmF65m6WLfSN+VzfY8DXV3+tqg==
-  dependencies:
-    tslib "^1.9.0"
-
-"@covalent/markdown@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@covalent/markdown/-/markdown-2.0.1.tgz#9baa2c47780373504e39ef1468c50701905756cd"
-  integrity sha512-LbCqcdQrbEH+qmf2PIv3IEJgyi3kJyulQ35BMGG0+99/mi476gMdEZyZ4kj1Sb1jIBf187CG1Gf91z2ktJWhxQ==
-  dependencies:
-    showdown "1.6.4"
-    tslib "^1.9.0"
-
 "@ngtools/webpack@7.3.9":
   version "7.3.9"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.3.9.tgz#db115dba8cc0886d8d822723be4119d3849fb4e3"
