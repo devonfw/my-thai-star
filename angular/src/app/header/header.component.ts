@@ -12,7 +12,7 @@ import { PasswordDialogComponent } from '../user-area/password-dialog/password-d
 import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
 import { QrCodeDialogComponent } from '../user-area/qr-code-dialog/qr-code-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { DateTimeAdapter } from 'ng-pick-datetime';
+import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
 import { ConfigService } from '../core/config/config.service';
 
 

@@ -32,7 +32,7 @@
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "node_modules/@busacca/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
