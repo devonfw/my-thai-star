@@ -37,8 +37,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import { OwlDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
-import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+import { OwlDateTimeModule, OwlDateTimeIntl, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MomentModule } from 'ngx-moment';
 
@@ -75,7 +74,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     MatIconModule,
     CdkTableModule,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   exports: [
     CommonModule,
@@ -116,7 +115,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     NotSupportedComponent,
     MomentModule,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule,
+    OwlNativeDateTimeModule,
     HttpClientModule,
   ],
   declarations: [

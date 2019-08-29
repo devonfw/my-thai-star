@@ -48,7 +48,7 @@ body {
   padding-top: 0;
 }
 
-/deep/ .mat-input-infix.mat-form-field-infix {
+::ng-deep .mat-input-infix.mat-form-field-infix {
   width: 100%;
 }
 
