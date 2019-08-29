@@ -22,6 +22,9 @@ toc::[]
 - link:angular-design.asciidoc[Angular design]
 - link:xamarin-design.asciidoc[Xamarin design]
 
+=== SAP HANA Integration
+- link:sap-hana-guide.asciidoc[SAP HANA]
+
 == Security
 - link:twofactor.asciidoc[Two-Factor Authentication]
 

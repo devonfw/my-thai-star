@@ -179,16 +179,6 @@ The dishes group of functionalities manages the calls to get and filter dishes.
 === Login
 Login manages the userArea logic: login, register and change password.
 
-== SAP Hana
-
-=== Setting up MTSJ angular
-
-update the following property in config file in my-thai-star\angular\src\app\core\config
-
-[source, properties]
-----
-enablePrediction: true,
-----
 == Security
 
 My Thai Star security is composed by two main security services:
