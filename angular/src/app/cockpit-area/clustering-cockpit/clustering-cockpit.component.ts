@@ -14,7 +14,7 @@ import * as L from 'leaflet';
   styleUrls: ['./clustering-cockpit.component.scss']
 })
 export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
-  @ViewChild('mapContainer') mapContainer;
+  @ViewChild('mapContainer', { static: true }) mapContainer;
 
   // Open Street Map
   map: L.Map = null;
