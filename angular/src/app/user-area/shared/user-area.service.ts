@@ -8,7 +8,7 @@ import { ConfigService } from '../../core/config/config.service';
 import { WindowService } from '../../core/window/window.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { TwoFactorDialogComponent } from '../two-factor-dialog/two-factor-dialog.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 
 @Injectable()
