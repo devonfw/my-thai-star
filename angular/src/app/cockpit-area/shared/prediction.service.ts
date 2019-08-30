@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FilterOrdersCockpit, PredictionCriteria } from 'app/shared/backend-models/interfaces';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
 import { OrdersData } from '../../shared/view-models/interfaces';

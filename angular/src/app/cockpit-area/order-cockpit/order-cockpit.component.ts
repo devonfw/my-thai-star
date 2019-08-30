@@ -26,7 +26,7 @@ export class OrderCockpitComponent implements OnInit {
 
   pageSize = 8;
 
-  @ViewChild('pagingBar') pagingBar: MatPaginator;
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
   orders: OrderListView[] = [];
   totalOrders: number;

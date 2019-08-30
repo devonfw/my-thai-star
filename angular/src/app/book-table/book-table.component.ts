@@ -8,7 +8,7 @@ import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { emailValidator } from '../shared/directives/email-validator.directive';
 import { last } from 'lodash';
 import { BookingInfo } from 'app/shared/backend-models/interfaces';
-import { AbstractControl } from '@angular/forms/src/model';
+import { AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 
