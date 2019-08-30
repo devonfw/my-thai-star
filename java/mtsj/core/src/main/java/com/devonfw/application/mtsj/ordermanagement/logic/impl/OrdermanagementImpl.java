@@ -32,7 +32,7 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
@@ -130,7 +130,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  @RolesAllowed({ Roles.WAITER, Roles.MANAGER })
+  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_FIND_ORDER })
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);

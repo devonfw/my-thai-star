@@ -15,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -30,15 +32,17 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
      */
     private static final Logger LOG = LoggerFactory.getLogger(JWTLoginFilter.class);
 
+    private UserDetailsService userDetailsService;
     /**
      * The constructor.
      *
      * @param url         the login url
      * @param authManager the {@link AuthenticationManager}
      */
-    public JWTLoginFilter(String url, AuthenticationManager authManager) {
+    public JWTLoginFilter(String url, AuthenticationManager authManager, UserDetailsService userDetailsService) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -46,14 +50,15 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
 
         BasicAccountCredentials creds = new ObjectMapper().readValue(req.getInputStream(), BasicAccountCredentials.class);
-        ValidationService.validateCredentials(creds);
+        UserDetails user = this.userDetailsService.loadUserByUsername(creds.getUsername());
+	    ValidationService.validateCredentials(creds);
         return getAuthenticationManager()
-                .authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(), user.getAuthorities()));
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) {
+                                            Authentication auth) throws IOException, ServletException {
 
         if (auth.getDetails() != SecondFactor.NONE) {
             TokenAuthenticationService.addAllowedHeader(res);

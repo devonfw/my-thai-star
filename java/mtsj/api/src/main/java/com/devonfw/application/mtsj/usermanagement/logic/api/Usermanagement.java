@@ -21,6 +21,14 @@ public interface Usermanagement {
   UserEto findUser(Long id);
 
   /**
+   * Returns a User by its userName 'userName'.
+   *
+   * @param userName The userName 'userName' of the User.
+   * @return The {@link UserEto} with userName 'userName'
+   */
+  UserEto findUserbyName(String userName);
+
+  /**
    * Returns a paginated list of Users matching the search criteria.
    *
    * @param criteria the {@link UserSearchCriteriaTo}.
