@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { FilterOrdersCockpit, PredictionCriteria } from '../../shared/backend-models/interfaces';
 import { Chart } from 'chart.js';
 import { Moment } from 'moment';
-import { OwlDateTimeComponent } from 'ng-pick-datetime';
+import { OwlDateTimeComponent } from '@busacca/ng-pick-datetime';
 import { PredictionService } from '../shared/prediction.service';
 
 @Component({
@@ -13,9 +13,9 @@ import { PredictionService } from '../shared/prediction.service';
 })
 
 export class PredictionCockpitComponent implements OnInit {
-  @ViewChild('dailyChart') dailyChart: ElementRef;
-  @ViewChild('monthlyChart') monthlyChart: ElementRef;
-  @ViewChild('predictionChart') predictionChart: ElementRef;
+  @ViewChild('dailyChart', { static: true }) dailyChart: ElementRef;
+  @ViewChild('monthlyChart', { static: true }) monthlyChart: ElementRef;
+  @ViewChild('predictionChart', { static: true }) predictionChart: ElementRef;
 
   triggerPredictionId;
 
