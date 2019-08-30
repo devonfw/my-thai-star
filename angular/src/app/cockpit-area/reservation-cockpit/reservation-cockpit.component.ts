@@ -26,7 +26,7 @@ export class ReservationCockpitComponent implements OnInit {
     // total: 1,
   };
 
-  @ViewChild('pagingBar') pagingBar: MatPaginator;
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
   reservations: ReservationView[] = [];
   totalReservations: number;
