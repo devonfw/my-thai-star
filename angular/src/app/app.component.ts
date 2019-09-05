@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { SidenavService } from './sidenav/shared/sidenav.service';
+import { SidenavService } from './sidenav/services/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
 import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import * as moment from 'moment';
-import { fadeAnimation } from './animations/fade.animation';
+import * as fromApp from 'app/store/reducers/';
+import * as fromAuth from 'app/user-area/store/selectors/';
+import { fadeAnimation } from './core/animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
 import { ConfigService } from './core/config/config.service';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 
 @Component({
   selector: 'public-main',
@@ -17,7 +21,10 @@ import { ConfigService } from './core/config/config.service';
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation], // register the animation
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  logged$: Observable<boolean>;
+  role$: Observable<string>;
+  userName$: Observable<string>;
   mobileSidenavOpened = false;
   year: string = moment().format('YYYY');
   version: string;
@@ -29,6 +36,7 @@ export class AppComponent {
     public auth: AuthService,
     public electronService: ElectronService,
     public configService: ConfigService,
+    private store: Store<fromApp.State>
   ) {
     this.version = configService.getValues().version;
     translate.addLangs(
@@ -81,6 +89,12 @@ export class AppComponent {
       // Web stuff
     }
     */
+  }
+
+  ngOnInit(): void {
+    this.role$ = this.store.pipe(select(fromAuth.getRole));
+    this.userName$ = this.store.pipe(select(fromAuth.getUserName));
+    this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
 
   sidenavStatus(opened: boolean): boolean {

@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { CoreModule } from '../core/core.module';
 
-import { WaiterCockpitService } from './shared/waiter-cockpit.service';
+import { WaiterCockpitService } from './services/waiter-cockpit.service';
 import { WindowService } from '../core/window/window.service';
-import { PredictionService } from './shared/prediction.service';
-import { ClusteringService } from './shared/clustering.service';
+import { PredictionService } from './services/prediction.service';
+import { ClusteringService } from './services/clustering.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';

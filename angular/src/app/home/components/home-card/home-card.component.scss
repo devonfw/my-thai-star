@@ -1,0 +1,23 @@
+@import "../../../../variables";
+
+.tile-content {
+  padding: 5px;
+  text-align: center;
+
+  h3 {
+    text-transform: uppercase;
+  }
+}
+.tile-action {
+  display: flex;
+  justify-content: center;
+  button {
+    text-transform: uppercase;
+  }
+}
+
+@media (min-width: $tablet-min-width) {
+  .tile-content {
+    padding: 16px;
+  }
+}

@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 
 import { SnackBarService } from './core/snack-bar/snack-bar.service';
 import { WindowService } from './core/window/window.service';
-import { UserAreaService } from './user-area/shared/user-area.service';
+import { UserAreaService } from './user-area/services/user-area.service';
 import { AuthService } from './core/authentication/auth.service';
 import { NgxElectronModule } from 'ngx-electron';
 
