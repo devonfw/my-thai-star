@@ -1,0 +1,32 @@
+[mat-dialog-title] {
+    text-transform: uppercase;
+  }
+  
+  .dataRow {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .invitedGuests {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    width: 70%;
+    word-break: break-word;
+  }
+  
+  mat-divider {
+    margin: 8px 0;
+  }
+  
+  mat-dialog-actions {
+    justify-content: flex-end;
+  }
+  
+  mat-dialog-actions button {
+    text-transform: uppercase;
+  }
+  

@@ -1,0 +1,124 @@
+<div
+  data-name="orderDiv"
+  class="orderDiv"
+>
+  <div class="orderContent">
+    <mat-toolbar>
+      <div class="sidenavTitle">
+        <button class="forMobile" mat-icon-button (click)="closeSidenav()">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <mat-icon class="forDesktop orderIcon">shopping_basket</mat-icon>
+        <span class="sidenavTitleSpan">{{
+          'sidenav.title' | translate | uppercase
+        }}</span>
+      </div>
+    </mat-toolbar>
+
+    <div class="orderDetails">
+      <h4 class="sidenavHeader">
+        {{ 'sidenav.header' | translate }}
+      </h4>
+    
+      <div
+        *ngIf="(orders$ | async).length < 1; else sidenavOrder"
+        class="noOrders"
+      >
+      
+      <span>{{ 'sidenav.noSelection' | translate }}</span>
+  
+      <button
+        name="viewMenu"
+        mat-button
+        color="accent"
+        (click)="navigateTo('menu')"
+      >
+        {{ 'buttons.viewMenu' | translate }}
+      </button>
+      
+    </div>
+    <ng-template #sidenavOrder>
+      <div class="sidenavOrderContainer" [class.scrollOrders]="(orders$ | async).length > 3">
+        <public-sidenav-order
+          *ngFor="let order of orders$ | async"
+          [order]="order"
+          [price]="price$"
+          (orderIncreased)="onOrderIncreased($event)"
+          (orderDecreased)="onOrderDecreased($event)"
+          (orderRemoved)="onOrderRemoved($event)"
+          (commentAdded)="onCommentAdded($event)"
+          (commentRemoved)="onCommentRemoved($event)"
+        ></public-sidenav-order>
+      </div>
+    </ng-template>
+    <div
+      *ngIf="(orders$ | async).length > 0"
+      class="orderTotal"
+    >
+      <h3>{{ 'formFields.total' | translate }}</h3>
+      <h3>{{ totalPrice$ | async | number: '1.2-2' }} €</h3>
+    </div>
+    <div class="orderTable">
+      <div>
+        <mat-card
+          *ngIf="!bookingId.value"
+        >
+          <div
+            class="orderTableNotice"
+          >
+            <mat-icon>report_problem</mat-icon>
+            
+            <span class="invitationAlert"
+              >{{ 'alerts.orderID' | translate }}
+            </span>
+          
+            <button
+              name="bookTable"
+              mat-button
+              color="accent"
+              (click)="navigateTo('bookTable')"
+            >
+              {{ 'buttons.bookTable' | translate }}
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    
+      <div>
+        <mat-form-field class="orderBookingID" color="accent">
+          <input
+            name="orderBookingID"
+            matInput
+            #bookingId
+            [placeholder]="'sidenav.bookingId' | translate"
+          />
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-checkbox class="orderTermsCheckbox" data-name="orderTerms" #terms>{{
+          'formFields.terms' | translate
+        }}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="align-right">
+    <button
+      name="orderCancel"
+      mat-button
+      (click)="closeSidenav()"
+    >
+      {{ 'buttons.cancel' | translate | uppercase }}
+    </button>
+    <button
+      name="orderSubmit"
+      mat-button
+      color="accent"
+      (click)="sendOrders(bookingId.value)"
+      [disabled]="!(bookingId.value.length > 0 && terms.checked)"
+    >
+      {{ 'buttons.send' | translate | uppercase }}
+    </button>
+  </div>
+</div>
