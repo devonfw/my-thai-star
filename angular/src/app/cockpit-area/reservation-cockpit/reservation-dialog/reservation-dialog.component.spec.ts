@@ -6,8 +6,8 @@ import { MatDialog } from '@angular/material';
 import { WaiterCockpitModule } from '../../cockpit.module';
 import { CoreModule } from '../../../core/core.module';
 
-import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
+import { PriceCalculatorService } from '../../../sidenav/services/price-calculator.service';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 
 import { ReservationDialogComponent } from './reservation-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';

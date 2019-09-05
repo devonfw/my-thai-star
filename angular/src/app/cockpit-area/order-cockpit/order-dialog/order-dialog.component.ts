@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { OrderView, BookingView } from '../../../shared/view-models/interfaces';
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';

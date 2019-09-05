@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { ClusteringCockpitComponent } from './clustering-cockpit.component';
-import { ClusteringService } from '../shared/clustering.service';
-import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { ClusteringService } from '../services/clustering.service';
 import { ConfigService } from '../../core/config/config.service';
-import { MenuService } from '../../menu/shared/menu.service';
+import { MenuService } from '../../menu/services/menu.service';
 
 describe('ClusteringCockpitComponent', () => {
   let component: ClusteringCockpitComponent;

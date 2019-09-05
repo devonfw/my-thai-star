@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { MenuComponent } from './menu/menu.component';
-import { BookTableComponent } from './book-table/book-table.component';
+import { HomeComponent } from './home/container/home/home.component';
+import { MenuComponent } from './menu/container/menu.component';
+import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
-import { EmailConfirmationsComponent } from './email-confirmations/email-confirmations.component';
+import { EmailConfirmationsComponent } from './email-confirmations/container/email-confirmations/email-confirmations.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { NotSupportedComponent } from './core/not-supported/not-supported.component';
 
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   {
     path: 'clustering',
     component: NotSupportedComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

@@ -6,15 +6,19 @@ import { CoreModule } from '../core/core.module';
 
 import { AuthService } from '../core/authentication/auth.service';
 import { AuthGuardService } from '../core/authentication/auth-guard.service';
-import { UserAreaService } from './shared/user-area.service';
+import { UserAreaService } from './services/user-area.service';
 
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
-import { TwitterDialogComponent } from './twitter-dialog/twitter-dialog.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { PasswordDialogComponent } from './components/password-dialog/password-dialog.component';
+import { TwitterDialogComponent } from './components/twitter-dialog/twitter-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { TwoFactorDialogComponent } from './two-factor-dialog/two-factor-dialog.component';
 import { QrCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromAuth from './store/reducers/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
 
 @NgModule({
   imports: [
@@ -23,12 +27,10 @@ import { QrCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component
     TranslateModule,
     HttpClientModule,
     CoreModule,
+    StoreModule.forFeature('auth', fromAuth.reducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
-  providers: [
-    UserAreaService,
-    AuthGuardService,
-    AuthService,
-  ],
+  providers: [UserAreaService, AuthGuardService, AuthService],
 
   declarations: [
     LoginDialogComponent,
@@ -50,4 +52,4 @@ import { QrCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component
     TwitterDialogComponent,
   ],
 })
-export class UserAreaModule { }
+export class UserAreaModule {}

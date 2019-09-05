@@ -4,7 +4,7 @@ import { FilterOrdersCockpit, PredictionCriteria } from '../../shared/backend-mo
 import { Chart } from 'chart.js';
 import { Moment } from 'moment';
 import { OwlDateTimeComponent } from '@busacca/ng-pick-datetime';
-import { PredictionService } from '../shared/prediction.service';
+import { PredictionService } from '../services/prediction.service';
 
 @Component({
   selector: 'cockpit-prediction-cockpit',

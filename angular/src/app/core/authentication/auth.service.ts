@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { find } from 'lodash';
-import { Role } from '../../shared/view-models/interfaces';
 import { ConfigService } from '../config/config.service';
+import * as fromApp from 'app/store/reducers/';
+import * as fromAuth from 'app/user-area/store/selectors/';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 
 @Injectable()
 export class AuthService {
-  private logged = false;
   private twoFactorStatus = false;
-  private user = '';
-  private currentRole = 'CUSTOMER';
-  private token: string;
 
-  constructor(private configService: ConfigService) {}
+  logged$: Observable<boolean>;
+  role$: Observable<string>;
+  userName$: Observable<string>;
 
-  public isLogged(): boolean {
-    return this.logged;
-  }
-
-  public setLogged(login: boolean): void {
-    this.logged = login;
+  constructor(
+    private store: Store<fromApp.State>,
+    private configService: ConfigService,
+  ) {
+    this.role$ = this.store.pipe(select(fromAuth.getRole));
+    this.userName$ = this.store.pipe(select(fromAuth.getUserName));
+    this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
 
   public getTwoFactorStatus(): boolean {
@@ -29,36 +30,15 @@ export class AuthService {
     this.twoFactorStatus = status;
   }
 
-  public getUser(): string {
-    return this.user;
+  public isLogged(): Observable<boolean> {
+    return this.logged$;
   }
 
-  public setUser(username: string): void {
-    this.user = username;
+  public getUser(): Observable<string> {
+    return this.userName$;
   }
 
-  public getToken(): string {
-    return this.token;
-  }
-
-  public setToken(token: string): void {
-    this.token = token;
-  }
-
-  public setRole(role: string): void {
-    this.currentRole = role;
-  }
-
-  public getPermission(roleName: string): number {
-    const role: Role = <Role>(
-      find(this.configService.getValues().roles, { name: roleName })
-    );
-    return role.permission;
-  }
-
-  public isPermited(userRole: string): boolean {
-    return (
-      this.getPermission(this.currentRole) === this.getPermission(userRole)
-    );
+  public getRole(): Observable<string> {
+    return this.role$;
   }
 }
