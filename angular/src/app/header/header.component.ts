@@ -5,7 +5,7 @@ import {SidenavService} from '../sidenav/services/sidenav.service';
 import {WindowService} from '../core/window/window.service';
 import {PasswordDialogComponent} from '../user-area/components/password-dialog/password-dialog.component';
 import {TwitterDialogComponent} from '../user-area/components/twitter-dialog/twitter-dialog.component';
-import { QrCodeDialogComponent } from '../user-area/qr-code-dialog/qr-code-dialog.component';
+import { QrCodeDialogComponent } from '../user-area/components/qr-code-dialog/qr-code-dialog.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DateTimeAdapter} from '@busacca/ng-pick-datetime';
 import {ConfigService} from '../core/config/config.service';
