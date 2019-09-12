@@ -23,7 +23,7 @@ export function reducer(state = initialState, action: SendOrderActions): State {
       return {...state, orderSent: true};
 
     case SendOrderActionTypes.SendOrdersFail:
-      return {...state, error: 'Error: Couldn\'t send order'};
+      return {...state, error: action.payload.error['error']['message']};
 
     default:
       return state;

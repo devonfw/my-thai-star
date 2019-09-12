@@ -11,7 +11,7 @@ import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommentAlertComponent } from './comment-alert/comment-alert.component';
+import { CommentAlertComponent } from './components/comment-alert/comment-alert.component';
 import { StoreModule } from '@ngrx/store';
 import * as fromOrder from './store/reducers/order.reducer';
 import * as fromSendOrder from './store/reducers/send-order.reducer';

@@ -10,6 +10,7 @@ export enum AuthActionTypes {
   LOGOUT = '[Auth] Logout ',
   LOGOUT_FAIL = '[Auth] LogoutFail',
   TOKEN = '[Auth] Token',
+  VERIFY_TWO_FACTOR = '[Auth] VerifyTwoFactor',
 }
 
 export class OpenDialog implements Action {
@@ -49,6 +50,10 @@ export class LogoutFail implements Action {
   constructor(public payload: { error: Error }) {}
 }
 
+export class VerifyTwoFactor implements Action {
+  readonly type = AuthActionTypes.VERIFY_TWO_FACTOR;
+  constructor(public payload: {username: string, password: string}) {}
+}
 
 
 export type AuthActions =
@@ -59,4 +64,5 @@ export type AuthActions =
   | LoginFail
   | Logout
   | LogoutFail
-  | Token;
+  | Token
+  | VerifyTwoFactor;
