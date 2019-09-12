@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
-import { TranslateService } from '@ngx-translate/core';
-import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import { BookTableService } from 'app/book-table/services/book-table.service';
+import * as fromApp from 'app/store/reducers';
+import { Store } from '@ngrx/store';
+import { InviteFriends } from 'app/book-table/store/actions/book-table.actions';
 
 @Component({
   selector: 'public-invitation-dialog',
@@ -15,9 +16,8 @@ export class InvitationDialogComponent implements OnInit {
   date: string;
 
   constructor(
-    private snackBar: SnackBarService,
     private invitationService: BookTableService,
-    private translateService: TranslateService,
+    private store: Store<fromApp.State>,
     private dialog: MatDialogRef<InvitationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
@@ -29,24 +29,9 @@ export class InvitationDialogComponent implements OnInit {
   }
 
   sendInvitation(): void {
-    this.invitationService
-      .postBooking(this.invitationService.composeBooking(this.data, 1))
-      .subscribe(
-        () => {
-          this.translateService
-            .get('bookTable.dialog.bookingSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
-        },
-        (error: any) => {
-          this.translateService
-            .get('bookTable.dialog.bookingError')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'red');
-            });
-        },
-      );
+    this.store.dispatch(
+      new InviteFriends(this.invitationService.composeBooking(this.data, 1)),
+    );
     this.dialog.close(true);
   }
 }

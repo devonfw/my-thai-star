@@ -10,37 +10,37 @@
   <span flex></span>
   <div *ngIf="(auth.getRole() | async) === 'CUSTOMER'" class="forDesktop">
     <nav mat-tab-nav-bar>
-      <a mat-tab-link routerLink="/restaurant" routerLinkActive #restaurant="routerLinkActive" [class.navBottomBorder]="restaurant.isActive">
+      <a mat-tab-link routerLink="/restaurant" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         {{'main.home' | translate | uppercase}}
       </a>
-      <a mat-tab-link routerLink="/menu" routerLinkActive #menu="routerLinkActive" [class.navBottomBorder]="menu.isActive">
+      <a mat-tab-link routerLink="/menu" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         {{'main.menu' | translate | uppercase}}
       </a>
-      <a mat-tab-link routerLink="/bookTable" routerLinkActive #bookTable="routerLinkActive" [class.navBottomBorder]="bookTable.isActive">
+      <a mat-tab-link routerLink="/bookTable" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         {{'main.book' | translate | uppercase}}
       </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
-      <a mat-tab-link routerLink="/orders" routerLinkActive #orders="routerLinkActive" [class.navBottomBorder]="orders.isActive">
+      <a mat-tab-link routerLink="/orders" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         {{'main.orders' | translate | uppercase}}
       </a>
-      <a mat-tab-link routerLink="/reservations" routerLinkActive #reservations="routerLinkActive" [class.navBottomBorder]="reservations.isActive">
+      <a mat-tab-link routerLink="/reservations" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         {{'main.reservations' | translate | uppercase}}
       </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'MANAGER'" class="forDesktop">
     <nav mat-tab-nav-bar>
-      <a mat-tab-link routerLink="/prediction" routerLinkActive #prediction="routerLinkActive" [class.navBottomBorder]="prediction.isActive">
+      <a mat-tab-link routerLink="/prediction" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         PREDICTION
       </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'MANAGER'" class="forDesktop">
     <nav mat-tab-nav-bar>
-      <a mat-tab-link routerLink="/clustering" routerLinkActive #clustering="routerLinkActive" [class.navBottomBorder]="clustering.isActive">
+      <a mat-tab-link routerLink="/clustering" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
         CLUSTERING
       </a>
     </nav>
@@ -53,7 +53,7 @@
     <button name="account" mat-icon-button [matMenuTriggerFor]="toolbarMenu1">
       <mat-icon>account_circle</mat-icon>
     </button>
-    <span data-name="userNameLogged" class="forDesktop">{{ userName$ | async }}</span>
+    <span data-name="userNameLogged" class="forDesktop">{{ auth.userName$ | async }}</span>
     <button class="forDesktop" *ngIf="!(auth.isLogged() | async)" mat-icon-button (click)="logout()"
       [matTooltip]="'main.userActions.logout' | translate">
       <mat-icon>exit_to_app</mat-icon>
@@ -79,8 +79,8 @@
       </button>
     </mat-menu>
   </div>
-  <button name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
-    <mat-icon *ngIf="(auth.getRole() | async) === 'CUSTOMER'" [matBadge]="sidenav.getNumberOrders()" matBadgeColor="accent" [matBadgeHidden]="sidenav.getNumberOrders() < 1">shopping_basket</mat-icon>
+  <button *ngIf="(auth.getRole() | async) === 'CUSTOMER'" name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
+    <mat-icon [matBadge]="(sidenav.getNumberOrders() | async).length" [matBadgeHidden]="(sidenav.getNumberOrders() | async).length < 1" matBadgeColor="accent">shopping_basket</mat-icon>
   </button>
   <button name="language" mat-icon-button [matMenuTriggerFor]="menu"
     matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">

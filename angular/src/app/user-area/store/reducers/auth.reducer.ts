@@ -33,7 +33,7 @@ export function reducer(
     case AuthActionTypes.TOKEN:
       return { ...state, token: action.payload.token };
     case AuthActionTypes.LOGIN_FAIL:
-      return { ...state, error: 'Incorrect username and/or password.' };
+      return { ...state, error: action.payload.error.message };
     case AuthActionTypes.LOGOUT:
       return initialState;
     case AuthActionTypes.LOGOUT_FAIL:

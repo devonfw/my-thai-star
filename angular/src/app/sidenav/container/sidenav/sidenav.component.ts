@@ -7,7 +7,8 @@ import * as fromApp from 'app/store/reducers';
 import * as fromOrder from 'app/sidenav/store/selectors';
 import {SidenavService} from '../../services/sidenav.service';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
-import {ClearOrders, DeleteOrder, UpdateOrder} from '../../store/actions/order.actions';
+import {DeleteOrder, UpdateOrder} from '../../store/actions/order.actions';
+import {SendOrders} from '../../store/actions/send-order.actions';
 
 @Component({
   selector: 'public-sidenav',
@@ -42,14 +43,7 @@ export class SidenavComponent implements OnInit {
   }
 
   sendOrders(bookingId: string): void {
-    this.sidenav.sendOrders(bookingId)
-      .subscribe(() => {
-          this.store.dispatch(new ClearOrders());
-          this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-        },
-        (error: any) => {
-          this.snackBar.openSnack('Please book a table first', 4000, 'red');
-        });
+    this.store.dispatch(new SendOrders({token: bookingId}));
   }
 
   onOrderIncreased(order: Order): void {
