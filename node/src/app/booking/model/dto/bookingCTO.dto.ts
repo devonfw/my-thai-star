@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import { ValidateNested } from 'class-validator';
-import { OrderLineCTO } from '../../../order/model/dto/order-lineCTO.dto';
 import { OrderLine } from '../../../order/model/entities/order-line.entity';
 import { Order } from '../../../order/model/entities/order.entity';
 import { User } from '../../../user/model/entity/user.entity';
@@ -33,7 +32,7 @@ export class BookingCTO {
 
   @Type(() => OrderLine)
   @ValidateNested()
-  readonly orders?: OrderLineCTO[];
+  readonly orders?: Order[];
 
   @Type(() => User)
   @ValidateNested()
