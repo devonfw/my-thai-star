@@ -18,8 +18,8 @@ import { User } from '../user/model/entity/user.entity';
 export class BookingService {
   // Make this with arrow function in order to bind the logger in the correct moment
   // prettier-ignore
-  private logMailError = (reject: any) => {
-    this.logger.error(reject.message, reject);
+  private logMailError = (reject: Error) => {
+    this.logger.error(reject.message, JSON.stringify(reject));
   }
 
   constructor(

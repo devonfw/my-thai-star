@@ -6,8 +6,9 @@ import {
   IsNotEmpty,
   IsOptional,
   ValidateNested,
+  Matches,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
 export class Pageable implements IPageable {
   @ApiModelProperty()
@@ -36,5 +37,7 @@ export class Sort implements ISort {
   @ApiModelProperty()
   @IsString()
   @IsNotEmpty()
+  @Matches(/ASC|DESC/)
+  @Transform((value?: string) => value && value.toUpperCase())
   readonly direction!: 'ASC' | 'DESC';
 }

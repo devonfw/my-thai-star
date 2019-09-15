@@ -71,8 +71,6 @@ export class OrderService {
       },
     });
 
-    console.log(this.getTotalPrice(newOrder!));
-
     if (this.mailer) {
       this.mailer.sendTemplateMail(
         {
@@ -156,6 +154,8 @@ export class OrderService {
       .createQueryBuilder()
       .leftJoinAndSelect('Order.booking', 'booking')
       .leftJoinAndSelect('Order.orderLines', 'orderLines')
+      .leftJoinAndSelect('orderLines.dish', 'dish')
+      .leftJoinAndSelect('orderLines.ingredients', 'ingredients')
       .leftJoinAndSelect('booking.table', 'table')
       .leftJoinAndSelect('booking.invitedGuests', 'invitedGuests')
       .leftJoinAndSelect('booking.user', 'user')
@@ -164,7 +164,7 @@ export class OrderService {
     if (token) {
       if (token.startsWith('GB')) {
         queryBuilder = queryBuilder.andWhere(
-          'invitedGuests.bookingToken = :token',
+          'invitedGuests.guestToken = :token',
           {
             token,
           },
@@ -191,10 +191,7 @@ export class OrderService {
     if (pageable) {
       if (pageable.sort) {
         pageable.sort.forEach(elem => {
-          queryBuilder = queryBuilder.addOrderBy(
-            'booking.' + elem.property,
-            elem.direction,
-          );
+          queryBuilder = queryBuilder.addOrderBy(elem.property, elem.direction);
         });
       }
 
