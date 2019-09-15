@@ -25,7 +25,7 @@ export class OrderLineCTO {
       orderLine:
         orderLine && classToPlain(orderLine, { excludeExtraneousValues: true }),
       dish: orderLine.dish && classToPlain(orderLine.dish),
-      extras: orderLine.ingredients && classToPlain(orderLine.ingredients),
+      extras: orderLine.ingredients ? classToPlain(orderLine.ingredients) : [],
     };
   }
 }

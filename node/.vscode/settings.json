@@ -17,5 +17,6 @@
         "statusBar.foreground": "#e7e7e7"
     },
     "peacock.color": "#215732",
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "deepcode.review.results.hideInformationIssues": false
 }

@@ -11,12 +11,12 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { BookingSearch } from '../booking/model/dto/booking-search.dto';
-import { NewOrder } from './model/dto/new-order.dto';
-import { Order } from './model/entities/order.entity';
-import { OrderService } from './order.service';
 import { Roles } from '../core/auth/decorators/roles.decorator';
 import { RolesGuard } from '../core/auth/guards/roles.guard';
-import { BookingPage } from '../booking/model/dto/booking-page.dto';
+import { NewOrder } from './model/dto/new-order.dto';
+import { OrderPage } from './model/dto/order-page.dto';
+import { Order } from './model/entities/order.entity';
+import { OrderService } from './order.service';
 
 @Controller('services/rest/ordermanagement/v1/order')
 @ApiUseTags('Order')
@@ -53,7 +53,7 @@ export class OrderController {
         search.email,
         search.bookingToken,
       );
-      return BookingPage.fromOrders(total, search.pageable, orders);
+      return OrderPage.fromOrders(total, search.pageable, orders);
     } catch (error) {
       throw new BadRequestException(error.message, error);
     }
