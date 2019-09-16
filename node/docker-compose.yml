@@ -1,0 +1,48 @@
+version: "3"
+services:
+  mariadb:
+    image: "mariadb:10.1.16"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_USER: "test"
+      MYSQL_PASSWORD: "test"
+      MYSQL_DATABASE: "test"
+    networks:
+      - my-thai-star-node
+  maildev:
+    image: "djfarrelly/maildev"
+    ports:
+      - "1025:25"
+      - "8092:80"
+    networks:
+      - my-thai-star-node
+  reverse-proxy:
+    build: "../reverse-proxy/"
+    restart: always
+    container_name: "mts_reverse_proxy_node"
+    image: my-thai-star/reverse-proxy:latest
+    networks:
+      - my-thai-star-node
+    ports:
+      - "8091:80"
+  angular:
+    build: "../angular/"
+    restart: always
+    container_name: "mts_angular_node"
+    image: my-thai-star/angular:latest
+    networks:
+      - my-thai-star-node
+  java:
+    build: "."
+    restart: always
+    container_name: "mts_node"
+    image: my-thai-star/node:latest
+    networks:
+      - my-thai-star-node
+    environment:
+      - NODE_ENV=production
+networks:
+  my-thai-star-node:
+    driver: bridge
