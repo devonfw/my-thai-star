@@ -1,5 +1,5 @@
-
-import { MenuActions, MenuActionTypes } from '../actions/menu.actions';
+import { createReducer, on, Action } from '@ngrx/store';
+import * as loadMenusActions from '../actions/menu.actions';
 import {DishView} from '../../../shared/view-models/interfaces';
 
 export interface MenuState {
@@ -16,35 +16,13 @@ export const initialState: MenuState = {
   errorMessage: '',
 };
 
-export function reducer(state = initialState, action: MenuActions): MenuState {
+const loadMenusReducer = createReducer(
+  initialState,
+  on(loadMenusActions.loadMenus, state => ({...state, loading: true, loaded: false, dishes: [] })),
+  on(loadMenusActions.loadMenusSuccess, (state, {content}) => ({...state, loading: false, loaded: true, dishes: content})),
+  on(loadMenusActions.loadMenuFail, (state, {error}) => ({...state, errorMessage: error.message}))
+);
 
-  switch (action.type) {
-    case MenuActionTypes.LOAD_MENUS: {
-      return {
-        ...state,
-        loading: true,
-        loaded: false,
-        dishes: []
-      };
-    }
-
-    case MenuActionTypes.LOAD_MENUS_SUCCESS: {
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        dishes: action.payload.content
-      };
-    }
-
-    case MenuActionTypes.LOAD_MENUS_FAIL: {
-      return {
-        ...state,
-        errorMessage: action.payload
-      };
-    }
-
-    default:
-      return state;
-  }
+export function reducer(state: MenuState | undefined, action: Action) {
+  return loadMenusReducer(state, action);
 }

@@ -1,5 +1,6 @@
-import {BookTableActions, BookTableActionTypes} from '../actions/book-table.actions';
-import {BookingResponse} from 'app/book-table/models/booking-response.model';
+import { createReducer, on, Action } from '@ngrx/store';
+import * as bookTableActions from '../actions/book-table.actions';
+import {BookingResponse} from '../../models/booking-response.model';
 import {Booking} from '../../models/booking.model';
 
 
@@ -27,31 +28,16 @@ export const initialState: State = {
   }
 };
 
-export function reducer(
-  state = initialState,
-  action: BookTableActions
-): State {
-  switch (action.type) {
-    case BookTableActionTypes.BOOK_TABLE:
-      return {...state, pending: true, booking: action.payload};
+const bookTableReducer = createReducer(
+  initialState,
+  on(bookTableActions.bookTable, (state, {booking}) => ({...state, pending: true, booking: booking})),
+  on(bookTableActions.bookTableSuccess, (state, {bookingResponse}) => ({...state, pending: false, bookingResponse: bookingResponse})),
+  on(bookTableActions.bookTableFail, (state, {error}) => ({...state, pending: false, errorMessage: error.message})),
+  on(bookTableActions.inviteFriends, (state, {booking}) => ({...state, pending: true, booking: booking})),
+  on(bookTableActions.inviteFriendsSuccess, (state, {bookingResponse}) => ({...state, pending: false, bookingResponse: bookingResponse})),
+  on(bookTableActions.inviteFriendsFail, (state, {error}) => ({...state, pending: false, errorMessage: error.message})),
+);
 
-    case BookTableActionTypes.BOOK_TABLE_SUCCESS:
-      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
-
-    case BookTableActionTypes.BOOK_TABLE_FAIL:
-      return {...state, pending: false, errorMessage: action.payload};
-
-    case BookTableActionTypes.INVITE_FRIENDS:
-      return {...state, pending: true, booking: action.payload};
-
-    case BookTableActionTypes.INVITE_FRIENDS_SUCCESS:
-      return {...state, pending: false, bookingResponse: action.payload.bookingResponse};
-
-    case BookTableActionTypes.INVITE_FRIENDS_FAIL:
-      return {...state, pending: false, errorMessage: action.payload};
-
-    default: {
-      return state;
-    }
-  }
+export function reducer(state: State | undefined, action: Action) {
+  return bookTableReducer(state, action);
 }

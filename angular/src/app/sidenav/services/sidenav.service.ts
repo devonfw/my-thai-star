@@ -38,30 +38,14 @@ export class SidenavService {
     this.opened = false;
   }
 
-  public getNumberOrders(): any {
+  public getNumberOrders(): Observable<number> {
     this.orders$ = this.store.select(fromOrder.selectAll);
-    return this.orders$;
+    return this.orders$.pipe(
+      map(orders => orders.length)
+    );
   }
 
   public sendOrders(token: string): Observable<SaveOrderResponse> {
-    /* this.orders$ = this.store.select(fromOrder.selectAll);
-    let orderList: OrderListInfo = {
-      booking: { bookingToken: token },
-      orderLines: [],
-    };
-    this.orders$.subscribe((orderData) => {
-      orderList = {
-        booking: { bookingToken: token },
-        orderLines: this.composeOrders(orderData),
-      };
-    });
-
-    console.log('url called');
-    this.closeSideNav();
-    return this.http.post<SaveOrderResponse>(
-      `${this.restServiceRoot}${this.saveOrdersPath}`,
-      orderList,
-    ); */
     this.orders$ = this.store.select(fromOrder.selectAll);
     return this.orders$.pipe(
       map((orderData) => {
@@ -72,7 +56,6 @@ export class SidenavService {
         return orderList;
       }),
       exhaustMap((orderList) => {
-        console.log('url called');
         this.closeSideNav();
         return this.http.post<SaveOrderResponse>(
           `${this.restServiceRoot}${this.saveOrdersPath}`,

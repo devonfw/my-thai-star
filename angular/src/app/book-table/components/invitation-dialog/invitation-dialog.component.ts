@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { BookTableService } from 'app/book-table/services/book-table.service';
 import * as fromApp from 'app/store/reducers';
 import { Store } from '@ngrx/store';
-import { InviteFriends } from 'app/book-table/store/actions/book-table.actions';
+import * as bookTableActions from 'app/book-table/store/actions/book-table.actions';
 
 @Component({
   selector: 'public-invitation-dialog',
@@ -29,8 +29,9 @@ export class InvitationDialogComponent implements OnInit {
   }
 
   sendInvitation(): void {
+    const bookingPayload = this.invitationService.composeBooking(this.data, 1);
     this.store.dispatch(
-      new InviteFriends(this.invitationService.composeBooking(this.data, 1)),
+      bookTableActions.inviteFriends({booking: bookingPayload}),
     );
     this.dialog.close(true);
   }
