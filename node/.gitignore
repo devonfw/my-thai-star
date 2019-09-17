@@ -1,11 +1,8 @@
 
-# Created by https://www.gitignore.io/api/node,visualstudio
-# Edit at https://www.gitignore.io/?templates=node,visualstudio
+# Created by https://www.gitignore.io/api/node,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=node,visualstudiocode
 
 ### Node ###
-# compiled files
-dist/
-
 # Logs
 logs
 *.log
@@ -43,6 +40,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+dist/
+output/
 
 # TypeScript v1 declaration files
 typings/
@@ -64,6 +63,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -78,18 +78,25 @@ typings/
 .vuepress/dist
 
 # Serverless directories
-.serverless
+.serverless/
 
 # FuseBox cache
 .fusebox/
 
+# DynamoDB Local files
+.dynamodb/
+
 ### VisualStudioCode ###
 .vscode/*
-
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 
+# End of https://www.gitignore.io/api/node,visualstudiocode
 
-# End of https://www.gitignore.io/api/node,visualstudio
+documentation/
