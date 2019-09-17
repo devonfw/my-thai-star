@@ -30,7 +30,6 @@ export class MenuCardComponent {
 
   receiveExtra($event) {
     this.extras = $event;
-    console.log('card details ' , this.extras);
     this.extraSelected.emit(this.extras);
   }
 

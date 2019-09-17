@@ -10,7 +10,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 import { Store } from '@ngrx/store';
 import * as fromAuth from '../store/reducers/';
-import { Logout, OpenDialog } from '../store/actions/auth.actions';
+import * as authActions from '../store/actions/auth.actions';
 
 @Injectable()
 export class UserAreaService {
@@ -122,10 +122,10 @@ export class UserAreaService {
   }
 
   openLoginDialog(): void {
-    this.store.dispatch(new OpenDialog());
+    this.store.dispatch(authActions.openDialog());
   }
 
   logout(): void {
-    this.store.dispatch(new Logout());
+    this.store.dispatch(authActions.logout());
   }
 }

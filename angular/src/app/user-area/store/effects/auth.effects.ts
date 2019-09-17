@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 
 import {
   catchError,
@@ -11,18 +11,7 @@ import {
 } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import 'rxjs/add/observable/from';
-import {
-  AuthActions,
-  AuthActionTypes,
-  CloseDialog,
-  Login,
-  LoginFail,
-  LoginSuccess,
-  LogoutFail,
-  Token,
-  Logout,
-  VerifyTwoFactor,
-} from '../actions/auth.actions';
+import * as authActions from '../actions/auth.actions';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
 import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
@@ -45,173 +34,186 @@ export class AuthEffects {
   authAlerts: any;
 
   // Open Login Dialog and dispatch Login
-  @Effect()
-  openDialog$ = this.actions$.pipe(
-    ofType(AuthActionTypes.OPEN_DIALOG),
-    exhaustMap(() => {
-      const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
-        LoginDialogComponent,
-        {
-          width: this.window.responsiveWidth(),
-        },
-      );
-      return dialogRef.afterClosed();
-    }),
-    map((result: any) => {
-      if (result === undefined) {
-        return new CloseDialog();
-      }
-      return new Login({
-        username: result.username,
-        password: result.password,
-      });
-    }),
+  openDialog$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.openDialog),
+      exhaustMap(() => {
+        const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
+          LoginDialogComponent,
+          {
+            width: this.window.responsiveWidth(),
+          },
+        );
+        return dialogRef.afterClosed();
+      }),
+      map((result: any) => {
+        if (result === undefined) {
+          return authActions.closeDialog();
+        }
+        return authActions.login({
+          username: result.username,
+          password: result.password,
+        });
+      }),
+    ),
   );
 
   // Close Login Dialog
-  @Effect({ dispatch: false })
-  closeDialog$ = this.actions$.pipe(
-    ofType(AuthActionTypes.CLOSE_DIALOG),
-    map(() => {
-      const dialogRef = this.dialog.open(LoginDialogComponent);
-      return dialogRef.close();
-    }),
+  closeDialog$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.closeDialog),
+        map(() => {
+          const dialogRef = this.dialog.open(LoginDialogComponent);
+          return dialogRef.close();
+        }),
+      ),
+    { dispatch: false },
   );
 
   // Communicate with Server (this.userService.login),
   // check whether user has opted for two-factor authentication,
   // if yes then dispatch VerifyTwoFactor with user details
   // else dispatch Token to get the payload username and role
-  @Effect()
-  login$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LOGIN),
-    map((userData) => userData.payload),
-    exhaustMap((user: any) => {
-      return this.userService.login(user.username, user.password).pipe(
-        map((res) => {
-          if (res.headers.get('X-Mythaistar-Otp') === 'NONE') {
-            return new Token({
-              token: { token: res.headers.get('Authorization') },
-            });
-          } else if (res.headers.get('X-Mythaistar-Otp') === 'OTP') {
-            return new VerifyTwoFactor({
-              username: user.username,
-              password: user.password,
-            });
-          }
-        }),
-        catchError((error) => of(new LoginFail({ error: error }))),
-      );
-    }),
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.login),
+      exhaustMap((user: any) => {
+        return this.userService.login(user.username, user.password).pipe(
+          map((res) => {
+            if (res.headers.get('X-Mythaistar-Otp') === 'NONE') {
+              return authActions.token({
+                token: { token: res.headers.get('Authorization') },
+              });
+            } else if (res.headers.get('X-Mythaistar-Otp') === 'OTP') {
+              return authActions.verifyTwoFactor({
+                username: user.username,
+                password: user.password,
+              });
+            }
+          }),
+          catchError((error) => of(authActions.loginFail({ error: error }))),
+        );
+      }),
+    ),
   );
 
   // Open two-factor dialog for OTP,
   // verify user with payload user details and OTP
   // dispatch Token to get the payload username and role
-  @Effect()
-  verifyTwoFactor$ = this.actions$.pipe(
-    ofType(AuthActionTypes.VERIFY_TWO_FACTOR),
-    map((userData) => userData.payload),
-    mergeMap((user) => {
-      const dialogRef: MatDialogRef<
-        TwoFactorDialogComponent
-      > = this.dialog.open(TwoFactorDialogComponent, {
-        width: this.window.responsiveWidth(),
-      });
-      return dialogRef.afterClosed().pipe(
-        map((result) => {
-          return this.http.post(
-            `${this.restPathRoot}${this.verifyRestPath}`,
-            {
-              username: user.username,
-              password: user.password,
-              token: result.token,
-            },
-            { responseType: 'text', observe: 'response' },
-          );
-        }),
-      );
-    }),
-    switchMap((token) => {
-      return token.pipe(
-        map((res) => {
-          return new Token({
-            token: { token: res.headers.get('Authorization') },
-          });
-        }),
-        catchError((error) => of(new LoginFail({ error: error }))),
-      );
-    }),
+  verifyTwoFactor$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.verifyTwoFactor),
+      mergeMap((user) => {
+        const dialogRef: MatDialogRef<
+          TwoFactorDialogComponent
+        > = this.dialog.open(TwoFactorDialogComponent, {
+          width: this.window.responsiveWidth(),
+        });
+        return dialogRef.afterClosed().pipe(
+          map((result) => {
+            return this.http.post(
+              `${this.restPathRoot}${this.verifyRestPath}`,
+              {
+                username: user.username,
+                password: user.password,
+                token: result.token,
+              },
+              { responseType: 'text', observe: 'response' },
+            );
+          }),
+        );
+      }),
+      switchMap((token) => {
+        return token.pipe(
+          map((res) => {
+            return authActions.token({
+              token: { token: res.headers.get('Authorization') },
+            });
+          }),
+          catchError((error) => of(authActions.loginFail({ error: error }))),
+        );
+      }),
+    ),
   );
 
   // make an http call to get the payload username and role
-  @Effect()
-  token$ = this.actions$.pipe(
-    ofType(AuthActionTypes.TOKEN),
-    exhaustMap((token) => {
-      return this.http
-        .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-        .pipe(
-          map((loginInfo: any) => {
-            return new LoginSuccess({
-              user: {
-                user: loginInfo.name,
-                role: loginInfo.role,
-                logged: true,
-              },
-            });
-          }),
-        );
-    }),
+  token$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.token),
+      exhaustMap((token) => {
+        return this.http
+          .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
+          .pipe(
+            map((loginInfo: any) => {
+              return authActions.loginSuccess({
+                user: {
+                  user: loginInfo.name,
+                  role: loginInfo.role,
+                  logged: true,
+                },
+              });
+            }),
+          );
+      }),
+    ),
   );
 
   // navigate on successfull login
-  @Effect({ dispatch: false })
-  loginSuccess$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LOGIN_SUCCESS),
-    map((user) => user.payload.user.role),
-    exhaustMap((role: string) => {
-      this.translate
-        .get('alerts.authAlerts.loginSuccess')
-        .subscribe((text: string) => {
-          this.snackBar.openSnack(text, 4000, 'green');
-        });
-      if (role === 'CUSTOMER') {
-        return this.router.navigate(['restaurant']);
-      } else if (role === 'WAITER') {
-        return this.router.navigate(['orders']);
-      } else if (role === 'MANAGER') {
-        return this.router.navigate(['prediction']);
-      }
-    }),
+  loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.loginSuccess),
+        map((user) => user.user.role),
+        exhaustMap((role: string) => {
+          this.translate
+            .get('alerts.authAlerts.loginSuccess')
+            .subscribe((text: string) => {
+              this.snackBar.openSnack(text, 4000, 'green');
+            });
+          if (role === 'CUSTOMER') {
+            return this.router.navigate(['restaurant']);
+          } else if (role === 'WAITER') {
+            return this.router.navigate(['orders']);
+          } else if (role === 'MANAGER') {
+            return this.router.navigate(['prediction']);
+          }
+        }),
+      ),
+    { dispatch: false },
   );
 
   // Close Login Dialog
-  @Effect({ dispatch: false })
-  loginFail$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LOGIN_FAIL),
-    map((errorData) => errorData.payload.error),
-    tap((error) => {
-      this.snackBar.openSnack(error.message, 4000, 'red');
-    }),
+  loginFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.loginFail),
+        map((errorData) => errorData.error),
+        tap((error) => {
+          this.snackBar.openSnack(error.message, 4000, 'red');
+        }),
+      ),
+    { dispatch: false },
   );
 
-  @Effect({ dispatch: false })
-  logOut$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LOGOUT),
-    tap(() => {
-      this.router.navigateByUrl('/restaurant');
-      this.translate
-        .get('alerts.authAlerts.logoutSuccess')
-        .subscribe((text: string) => {
-          this.snackBar.openSnack(text, 4000, 'black');
-        });
-    }),
-    catchError((error) => of(new LogoutFail({ error: error }))),
+  logOut$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.logout),
+      tap(() => {
+        this.router.navigateByUrl('/restaurant');
+        this.translate
+          .get('alerts.authAlerts.logoutSuccess')
+          .subscribe((text: string) => {
+            this.snackBar.openSnack(text, 4000, 'black');
+          });
+      }),
+      catchError((error) => of(authActions.logoutFail({ error: error }))),
+    ),
+    { dispatch: false }
   );
 
   constructor(
-    private actions$: Actions<AuthActions>,
+    private actions$: Actions,
     private dialog: MatDialog,
     public window: WindowService,
     public userService: UserAreaService,

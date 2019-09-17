@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
+import {
+  DishView,
+  ExtraView,
+  OrderView,
+} from 'app/shared/view-models/interfaces';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromOrder from 'app/sidenav/store/selectors';
 import * as fromMenu from 'app/menu/store/selectors';
 import * as fromApp from 'app/store/reducers';
@@ -10,11 +14,8 @@ import { Order } from '../../sidenav/models/order.model';
 import { MenuService } from '../services/menu.service';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
 import { FilterFormData } from '../components/menu-filters/menu-filters.component';
-import { LoadMenus } from '../store/actions/menu.actions';
-import {
-  AddOrder,
-  UpdateOrder,
-} from '../../sidenav/store/actions/order.actions';
+import * as loadMenusActions from '../store/actions/menu.actions';
+import * as orderActions from '../../sidenav/store/actions/order.actions';
 import * as fromAuth from '../../user-area/store/selectors';
 
 export interface Filters {
@@ -69,41 +70,27 @@ export class MenuComponent implements OnInit {
       filters,
     );
 
-    this.store.dispatch(new LoadMenus(composedFilters));
+    this.store.dispatch(loadMenusActions.loadMenus({ filter: composedFilters }));
   }
 
-  idExist(id: number): any {
-    return !!this.orders.find(orderId => orderId.order.dish.id === id);
+  findOrder(orderToFind: OrderView): Order {
+    return this.orders.find((order) => '' + order.id === orderToFind.dish.id + this.extras.map((e) => e.id).join(''));
   }
 
   onExtraSelected(extra: ExtraView): void {
     this.extras.push(extra);
-    console.log('extrass: ', this.extras);
   }
 
   onOrderAdded(order: any) {
     const orderView = this.menuService.menuToOrder(order);
-    if (this.idExist(orderView.dish.id) === false) {
+    this.extras = orderView.extras.filter((e) => e.selected);
+    const orderId = orderView.dish.id + this.extras.map((e) => e.id).join('');
+    if (this.findOrder(orderView)) {
+      const orderDish: Order = this.findOrder(orderView);
       this.store.dispatch(
-        new AddOrder({
+        orderActions.updateOrder({
           order: {
-            id: orderView.dish.id,
-            order: {
-              ...orderView,
-              extras: this.extras,
-            },
-          },
-        }),
-      );
-      this.extras = [];
-    } else {
-      const orderDish: Order = this.orders.find(
-        (orderId) => orderId.id === orderView.dish.id,
-      );
-      this.store.dispatch(
-        new UpdateOrder({
-          order: {
-            id: orderView.dish.id,
+            id: orderId,
             changes: {
               order: {
                 ...orderDish.order,
@@ -117,7 +104,21 @@ export class MenuComponent implements OnInit {
           },
         }),
       );
+    } else {
+      this.store.dispatch(
+        orderActions.addOrder({
+          order: {
+            id: orderId,
+            order: {
+              ...orderView,
+              extras: this.extras,
+            },
+          },
+        }),
+      );
+      this.extras = [];
     }
     this.sidenav.openSideNav();
+    this.menuService.clearSelectedExtras(order);
   }
 }

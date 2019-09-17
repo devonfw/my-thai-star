@@ -14,7 +14,12 @@ export class MenuCardDetailsComponent {
   >();
 
   onSelectExtra(extra: ExtraView): void {
-    this.selectExtra.emit(extra);
+    const modifiedExtraIndex: number = this.menuInfo.extras.indexOf(extra);
+    const oldExtra: ExtraView = this.menuInfo.extras[modifiedExtraIndex];
+    this.menuInfo.extras[modifiedExtraIndex] = {
+      ...oldExtra,
+      ...{ selected: !oldExtra.selected },
+    };
   }
 
   onClickOrder(): void {

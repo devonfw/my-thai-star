@@ -1,78 +1,19 @@
-import { Action } from '@ngrx/store';
+import { props, createAction } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Order } from '../../models/order.model';
 
-export enum OrderActionTypes {
-  SendOrders = '[Order] Send Orders',
-  LoadOrders = '[Order] Load Orders',
-  AddOrder = '[Order] Add Order',
-  AddOrders = '[Order] Add Orders',
-  UpdateOrder = '[Order] Update Order',
-  UpdateOrders = '[Order] Update Orders',
-  DeleteOrder = '[Order] Delete Order',
-  DeleteOrders = '[Order] Delete Orders',
-  ClearOrders = '[Order] Clear Orders',
-}
+export const loadOrders = createAction('[Order] Load Orders', props<{ orders: Order[] }>());
 
-export class SendOrders implements Action {
-  readonly type = OrderActionTypes.SendOrders;
+export const addOrder = createAction('[Order] Add Order', props<{ order: Order }>());
 
-  constructor(public payload: { token: string }) {}
-}
+export const addOrders = createAction('[Order] Add Orders', props<{ orders: Order[] }>());
 
-export class LoadOrders implements Action {
-  readonly type = OrderActionTypes.LoadOrders;
+export const updateOrder = createAction('[Order] Update Order', props<{ order: Update<Order> }>());
 
-  constructor(public payload: { orders: Order[] }) {}
-}
+export const updateOrders = createAction('[Order] Update Orders', props<{ orders: Update<Order>[] }>());
 
-export class AddOrder implements Action {
-  readonly type = OrderActionTypes.AddOrder;
+export const deleteOrder = createAction('[Order] Delete Order', props<{ id: string }>());
 
-  constructor(public payload: { order: Order }) {}
-}
+export const deleteOrders = createAction('[Order] Delete Orders', props<{ ids: string[] }>());
 
-export class AddOrders implements Action {
-  readonly type = OrderActionTypes.AddOrders;
-
-  constructor(public payload: { orders: Order[] }) {}
-}
-
-export class UpdateOrder implements Action {
-  readonly type = OrderActionTypes.UpdateOrder;
-
-  constructor(public payload: { order: Update<Order> }) {}
-}
-
-export class UpdateOrders implements Action {
-  readonly type = OrderActionTypes.UpdateOrders;
-
-  constructor(public payload: { orders: Update<Order>[] }) {}
-}
-
-export class DeleteOrder implements Action {
-  readonly type = OrderActionTypes.DeleteOrder;
-
-  constructor(public payload: { id: number }) {}
-}
-
-export class DeleteOrders implements Action {
-  readonly type = OrderActionTypes.DeleteOrders;
-
-  constructor(public payload: { ids: number[] }) {}
-}
-
-export class ClearOrders implements Action {
-  readonly type = OrderActionTypes.ClearOrders;
-}
-
-export type OrderActions =
- LoadOrders
-  | SendOrders
- | AddOrder
- | AddOrders
- | UpdateOrder
- | UpdateOrders
- | DeleteOrder
- | DeleteOrders
- | ClearOrders;
+export const clearOrders = createAction('[Order] Clear Orders');
