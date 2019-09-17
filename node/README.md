@@ -1,14 +1,24 @@
+NOTE:
+
+The application is deployed at http://de-mucdevondepl01:8091
+To read the emails sended by the application you can go to http://de-mucdevondepl01:8092
+
+IMPORTANT: The application is working but there is something peding:
+
+- Test: all test are missing
+- JSDoc: all classes/methods do not have a proper JSDoc.
+- Better exception handling: layer service shouldn't know anything about the HTTP response to the client. Thats why we throw a normal Error in the service layer and then we catch them at controller layer and send to the client the proper HTTP error. This mechanism is OK, but we can improve it by creating errors and then adding an error handling which is the responsible to send the correct HTTP error to the client. This feature will arrive soon.
+
+---
+
 ## Installation
 
 ### Dependencies
 
 The first command required for the installation is:
+\$ yarn
 
-    $ npm install
-
-or
-
-    $ yarn
+NOTE: to be sure that you install the same package as us, please avoid the usage of npm for install dependencies.
 
 ## Configuration
 
@@ -16,47 +26,73 @@ The configuration files are in the following path: src/config/\*.ts
 
 Each file contains the following parameters to be retrieved by the configuration service depending on the execution environment:
 
-- HOST: Host url .
-- PORT: Port number on where the requests are to be listened.
-- DB_URI: String of the database connection if needed. (Sqlite does not need it).
-- JWT_KEY: JWT secret to encrypt tokens.
-- SWAGGER_TITLE: Your App title for Swagger
-- SWAGGER_DESCRIPTION: Your App description for Swagger
-- SWAGGER_VERSION: Your App Version for Swagger
-- SWAGGER_BASEPATH: Your App BasePath for Swagger.
+- isDev: True if you are using a development environment.
+- host: Host url .
+- port: Port number on where the requests are to be listened.
+- globalPrefix: The global prefix of the application
+- jwtConfig: Auth JWT module configuration
+- swaggerConfig: Swagger module configuration
+- clientUrl: Client url.
+- mailerConfig: Mailer module configuration.
+- database: Database configuration.
 
 ### Database
 
-In this implementation Sqlite3 is used as persistence system with TypeOrm, no url nor further configuration needed.
+In this implementation mariadb is used as persistence system with TypeOrm.
 
-Database configuration parameters are in ormconfig.json in root folder.
+For testing, a in memory sqlite database is used.
 
-## Build
+## Running the app
 
-To compile all typescript sources you should run:
+```bash
+# development
+$ npm run start
 
-    $ npm run build
+# watch mode
+$ npm run start:dev
 
-or
+# incremental rebuild (webpack)
+$ npm run webpack
+$ npm run start:hmr
 
-    $ yarn build
+# production mode
+$ npm run start:prod
+```
 
-## Execution
+## Test
 
-### Start
+```bash
+# unit tests
+$ npm run test
 
-To switch on the server run the command:
+# e2e tests
+$ npm run test:e2e
 
-    $ npm run start
+<<<<<<< HEAD
+# test coverage
+$ npm run test:cov
+```
 
-or
+=======
+\$ npm run start:prod
 
-    $ yarn start
+> > > > > > > 44c07486... Big refactoring to node implementation
 
-## Testing
+## Support
 
-    $ npm test
+<<<<<<< HEAD
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+=======
+\$ yarn start:prod
 
-or
+> > > > > > > 44c07486... Big refactoring to node implementation
 
-    $ yarn test
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
