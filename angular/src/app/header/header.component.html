@@ -80,7 +80,7 @@
     </mat-menu>
   </div>
   <button *ngIf="(auth.getRole() | async) === 'CUSTOMER'" name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
-    <mat-icon [matBadge]="(sidenav.getNumberOrders() | async).length" [matBadgeHidden]="(sidenav.getNumberOrders() | async).length < 1" matBadgeColor="accent">shopping_basket</mat-icon>
+    <mat-icon [matBadge]="(sidenav.getNumberOrders() | async)" [matBadgeHidden]="(sidenav.getNumberOrders() | async) < 1" matBadgeColor="accent">shopping_basket</mat-icon>
   </button>
   <button name="language" mat-icon-button [matMenuTriggerFor]="menu"
     matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">

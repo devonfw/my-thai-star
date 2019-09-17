@@ -1,54 +1,59 @@
-import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {exhaustMap, tap, map, catchError} from 'rxjs/operators';
-import {SendOrderActions, SendOrderActionTypes, SendOrdersSuccess, SendOrdersFail} from '../actions/send-order.actions';
-import {SidenavService} from '../../services/sidenav.service';
-import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import { Injectable } from '@angular/core';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { exhaustMap, tap, map, catchError } from 'rxjs/operators';
+import * as sendOrderActions from '../actions/send-order.actions';
+import { SidenavService } from '../../services/sidenav.service';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import * as fromApp from 'app/store/reducers';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { ClearOrders } from '../actions/order.actions';
+import * as orderActions from '../actions/order.actions';
 
 @Injectable()
 export class SendOrderEffects {
-  @Effect()
-  sendOrders$ = this.actions$.pipe(
-    ofType(SendOrderActionTypes.SendOrders),
-    map(tokenData => tokenData.payload.token),
-    exhaustMap((token: any) => {
-      return this.sidenavService.sendOrders(token)
-      .pipe(
-        map((res: any) => { console.log('calling success'); return new SendOrdersSuccess(); } ),
-        catchError(error => { console.log('calling fail'); return of(new SendOrdersFail({error: error})); })
-      );
-    }),
+  sendOrders$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(sendOrderActions.sendOrders),
+      map(tokenData => tokenData.token),
+      exhaustMap((token: any) => {
+        return this.sidenavService.sendOrders(token).pipe(
+          map((res: any) => {
+            return sendOrderActions.sendOrdersSuccess();
+          }),
+          catchError((error) => {
+            return of(sendOrderActions.sendOrdersFail({ error: error }));
+          }),
+        );
+      }),
+    ),
   );
 
-  @Effect()
-  sendOrdersSuccess = this.actions$.pipe(
-    ofType(SendOrderActionTypes.SendOrdersSuccess),
-    map(() => {
-      console.log('calling clear');
-      this.snackBar.openSnack('Order correctly noted', 4000, 'green');
-      return new ClearOrders();
-    })
+  sendOrdersSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(sendOrderActions.sendOrdersSuccess),
+      map(() => {
+        this.snackBar.openSnack('Order correctly noted', 4000, 'green');
+        return orderActions.clearOrders();
+      }),
+    ),
   );
 
-  @Effect({dispatch: false})
-  sendOrdersFail = this.actions$.pipe(
-    ofType(SendOrderActionTypes.SendOrdersFail),
-    map(errorData => errorData.payload.error['error']['message']),
-    tap((error) => {
-      console.log('fail called');
-      this.snackBar.openSnack(error, 4000, 'red');
-    })
+  sendOrdersFail = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(sendOrderActions.sendOrdersFail),
+        map((errorData) => errorData['error']['message']),
+        tap((error) => {
+          this.snackBar.openSnack(error, 4000, 'red');
+        }),
+      ),
+    { dispatch: false },
   );
 
   constructor(
     private store: Store<fromApp.State>,
-    private actions$: Actions<SendOrderActions>,
+    private actions$: Actions,
     private sidenavService: SidenavService,
     private snackBar: SnackBarService,
   ) {}
-
 }

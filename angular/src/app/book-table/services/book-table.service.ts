@@ -4,6 +4,7 @@ import { map } from 'lodash';
 import { BookingInfo } from 'app/shared/backend-models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../core/config/config.service';
+import { Booking } from '../models/booking.model';
 
 @Injectable()
 export class BookTableService {
@@ -20,8 +21,8 @@ export class BookTableService {
     return this.http.post(`${this.restServiceRoot}${this.booktableRestPath}`, bookInfo);
   }
 
-  composeBooking(invitationData: any, type: number): BookingInfo {
-    const composedBooking: BookingInfo = {
+  composeBooking(invitationData: any, type: number): Booking {
+    const composedBooking: Booking = {
       booking: {
         bookingDate: invitationData.bookingDate,
         name: invitationData.name,

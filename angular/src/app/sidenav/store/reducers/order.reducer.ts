@@ -1,13 +1,14 @@
+import { Action, createReducer, on } from '@ngrx/store';
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {Order} from '../../models/order.model';
-import {OrderActions, OrderActionTypes} from '../actions/order.actions';
+import * as orderActions from '../actions/order.actions';
 
 export interface State extends EntityState<Order> {
   selectedOrderId: number | null;
 }
 
 export const adapter: EntityAdapter<Order> = createEntityAdapter<Order>({
-  selectId: (order: Order) => order.order.dish.id,
+  selectId: (order: Order) => '' + order.order.dish.id + (order.order.extras.map((e) => e.selected ? e.id : '')).join(''),
   sortComparer: false,
 });
 
@@ -15,45 +16,18 @@ export const initialState: State = adapter.getInitialState({
   selectedOrderId: null,
 });
 
-export function reducer(
-  state = initialState,
-  action: OrderActions
-): State {
-  switch (action.type) {
-    case OrderActionTypes.AddOrder: {
-      return adapter.addOne(action.payload.order, state);
-    }
+ const orderReducer = createReducer(
+   initialState,
+   on(orderActions.addOrder, (state, { order }) => adapter.addOne(order, state) ),
+   on(orderActions.addOrders, (state, { orders }) => adapter.addMany(orders, state) ),
+   on(orderActions.updateOrder, (state, { order }) => adapter.updateOne(order, state) ),
+   on(orderActions.updateOrders, (state, { orders }) => adapter.updateMany(orders, state) ),
+   on(orderActions.deleteOrder, (state, { id }) => adapter.removeOne(id, state) ),
+   on(orderActions.deleteOrders, (state, { ids }) => adapter.removeMany(ids, state) ),
+   on(orderActions.loadOrders, (state, { orders }) => adapter.addAll(orders, state) ),
+   on(orderActions.clearOrders, state => adapter.removeAll(state) ),
+ );
 
-    case OrderActionTypes.AddOrders: {
-      return adapter.addMany(action.payload.orders, state);
-    }
-
-    case OrderActionTypes.UpdateOrder: {
-      return adapter.updateOne(action.payload.order, state);
-    }
-
-    case OrderActionTypes.UpdateOrders: {
-      return adapter.updateMany(action.payload.orders, state);
-    }
-
-    case OrderActionTypes.DeleteOrder: {
-      return adapter.removeOne(action.payload.id, state);
-    }
-
-    case OrderActionTypes.DeleteOrders: {
-      return adapter.removeMany(action.payload.ids, state);
-    }
-
-    case OrderActionTypes.LoadOrders: {
-      return adapter.addAll(action.payload.orders, state);
-    }
-
-    case OrderActionTypes.ClearOrders: {
-      return adapter.removeAll(state);
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+ export function reducer(state: State | undefined, action: Action) {
+   return orderReducer(state, action);
+ }

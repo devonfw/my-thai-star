@@ -31,7 +31,7 @@ export class SidenavOrderComponent implements OnInit {
   }
 
   calculateOrderPrice(): number {
-    return (this.order.order.orderLine.amount * this.order.order.dish.price);
+    return (this.order.order.orderLine.amount * (this.order.order.dish.price + this.order.order.extras.reduce((t, e) => t + e.price, 0 )));
   }
 
   increaseOrder(): void {
@@ -63,7 +63,7 @@ export class SidenavOrderComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((content: string) => {
       const order = {
-        id: this.order.order.dish.id,
+        id: this.order.order.dish.id + (this.order.order.extras.map((e) => e.id)).join(''),
         order: {
           dish: this.order.order.dish,
           orderLine: {

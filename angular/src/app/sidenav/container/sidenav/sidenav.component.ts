@@ -7,8 +7,8 @@ import * as fromApp from 'app/store/reducers';
 import * as fromOrder from 'app/sidenav/store/selectors';
 import {SidenavService} from '../../services/sidenav.service';
 import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
-import {DeleteOrder, UpdateOrder} from '../../store/actions/order.actions';
-import {SendOrders} from '../../store/actions/send-order.actions';
+import * as orderActions from '../../store/actions/order.actions';
+import * as sendOrderActions from '../../store/actions/send-order.actions';
 
 @Component({
   selector: 'public-sidenav',
@@ -19,6 +19,7 @@ import {SendOrders} from '../../store/actions/send-order.actions';
 export class SidenavComponent implements OnInit {
   bookingId: string;
   orders$: Observable<Order[]>;
+  orders: Order[];
   totalPrice$: Observable<number>;
 
   constructor(
@@ -30,6 +31,9 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.orders$ = this.store.select(fromOrder.selectAll);
+    this.store
+      .select(fromOrder.selectAll)
+      .subscribe((orders) => (this.orders = orders));
     this.totalPrice$ = this.store.select(fromOrder.getTotalPrice);
   }
 
@@ -43,21 +47,24 @@ export class SidenavComponent implements OnInit {
   }
 
   sendOrders(bookingId: string): void {
-    this.store.dispatch(new SendOrders({token: bookingId}));
+    this.store.dispatch(sendOrderActions.sendOrders({token: bookingId}));
   }
 
   onOrderIncreased(order: Order): void {
-    this.store.dispatch(new UpdateOrder({
+    const orderUpdate = this.orders.find(
+      (o) => '' + o.id === order.order.dish.id + order.order.extras.map((e) => e.id).join(''),
+    );
+    this.store.dispatch(orderActions.updateOrder({
       order: {
-        id: order.order.dish.id,
+        id: orderUpdate.id,
         changes: {
           order: {
-            dish: order.order.dish,
+            ...orderUpdate.order,
+            extras: orderUpdate.order.extras,
             orderLine: {
-              amount: order.order.orderLine.amount + 1,
-              comment: order.order.orderLine.comment,
+              ...orderUpdate.order.orderLine,
+              amount: orderUpdate.order.orderLine.amount + 1
             },
-            extras: order.order.extras
           }
         }
       }
@@ -65,9 +72,9 @@ export class SidenavComponent implements OnInit {
   }
 
   onOrderDecreased(order: Order): void {
-    this.store.dispatch(new UpdateOrder({
+    this.store.dispatch(orderActions.updateOrder({
       order: {
-        id: order.order.dish.id,
+        id: order.id,
         changes: {
           order: {
             dish: order.order.dish,
@@ -83,13 +90,13 @@ export class SidenavComponent implements OnInit {
   }
 
   onOrderRemoved(order: Order): void {
-    this.store.dispatch(new DeleteOrder({id: order.id}));
+    this.store.dispatch(orderActions.deleteOrder({id: order.id}));
   }
 
   onCommentRemoved(order: Order): void {
-    this.store.dispatch(new UpdateOrder({
+    this.store.dispatch(orderActions.updateOrder({
       order: {
-        id: order.order.dish.id,
+        id: order.id,
         changes: {
           order: {
             dish: order.order.dish,
@@ -105,9 +112,9 @@ export class SidenavComponent implements OnInit {
   }
 
   onCommentAdded(order: Order): void {
-    this.store.dispatch(new UpdateOrder({
+    this.store.dispatch(orderActions.updateOrder({
       order: {
-        id: order.order.dish.id,
+        id: order.id,
         changes: {
           order: {
             dish: order.order.dish,

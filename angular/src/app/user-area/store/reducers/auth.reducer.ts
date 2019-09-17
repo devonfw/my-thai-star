@@ -1,4 +1,5 @@
-import {AuthActions, AuthActionTypes} from '../actions/auth.actions';
+import { Action, createReducer, on } from '@ngrx/store';
+import * as authActions from '../actions/auth.actions';
 import {TokenString, UserDataResponse} from '../../models/user';
 
 export interface AuthState {
@@ -21,24 +22,16 @@ export const initialState: AuthState = {
   },
 };
 
-export function reducer(
-  state: AuthState = initialState,
-  action: AuthActions,
-): AuthState {
-  switch (action.type) {
-    case AuthActionTypes.LOGIN:
-      return { ...state};
-    case AuthActionTypes.LOGIN_SUCCESS:
-      return { ...state, user: action.payload.user };
-    case AuthActionTypes.TOKEN:
-      return { ...state, token: action.payload.token };
-    case AuthActionTypes.LOGIN_FAIL:
-      return { ...state, error: action.payload.error.message };
-    case AuthActionTypes.LOGOUT:
-      return initialState;
-    case AuthActionTypes.LOGOUT_FAIL:
-      return { ...state, error: 'Something went wrong !!!!.'};
-    default:
-      return state;
-  }
+const authReducer = createReducer(
+  initialState,
+  on(authActions.login, state => ({...state})),
+  on(authActions.loginSuccess, (state, { user }) => ({...state, user: user})),
+  on(authActions.token, (state, { token }) => ({...state, token: token})),
+  on(authActions.loginFail, (state, { error }) => ({...state, error: error.message})),
+  on(authActions.logout, state => ({...initialState})),
+  on(authActions.logoutFail, state => ({...state, error: 'Something went wrong !!!!.'})),
+);
+
+export function reducer(state: AuthState | undefined, action: Action) {
+  return authReducer(state, action);
 }

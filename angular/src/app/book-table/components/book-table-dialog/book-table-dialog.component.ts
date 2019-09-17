@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import * as fromApp from 'app/store/reducers';
 import { Store } from '@ngrx/store';
-import { BookTable } from 'app/book-table/store/actions/book-table.actions';
+import * as bookTableActions from 'app/book-table/store/actions/book-table.actions';
 
 @Component({
   selector: 'public-book-table-dialog',
@@ -27,7 +27,7 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking(): void {
-    this.store.dispatch(new BookTable({ booking: this.data }));
+    this.store.dispatch(bookTableActions.bookTable({ booking: this.data }));
     this.dialog.close(true);
   }
 }
