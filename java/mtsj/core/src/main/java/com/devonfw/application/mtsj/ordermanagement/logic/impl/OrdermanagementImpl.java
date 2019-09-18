@@ -130,7 +130,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_FIND_ORDER })
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);

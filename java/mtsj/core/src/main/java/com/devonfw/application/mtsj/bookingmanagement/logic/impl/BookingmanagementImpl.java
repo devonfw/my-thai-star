@@ -41,7 +41,6 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.Bookin
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.InvitedGuestRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
 import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
@@ -141,7 +140,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING })
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING)
   public Page<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
 
     return findBookingCtos(criteria);

@@ -20,10 +20,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
-import com.devonfw.application.mtsj.general.common.api.Usermanagement;
 import com.devonfw.application.mtsj.general.common.api.security.UserData;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
+import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;

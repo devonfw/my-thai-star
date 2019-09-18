@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.general.common.api.UserProfile;
+import com.devonfw.application.mtsj.general.common.api.datatype.Role;
+import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.application.mtsj.general.common.base.QrCodeService;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
@@ -31,20 +34,11 @@ import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 @Transactional
 public class UsermanagementImpl extends AbstractComponentFacade implements Usermanagement {
 
-  /**
-   * Logger instance.
-   */
   private static final Logger LOG = LoggerFactory.getLogger(UsermanagementImpl.class);
 
-  /**
-   * @see #getUserDao()
-   */
   @Inject
   private UserRepository userDao;
 
-  /**
-   * @see #getUserRoleDao()
-   */
   @Inject
   private UserRoleRepository userRoleDao;
 
@@ -199,6 +193,16 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserRoleRepository getUserRoleDao() {
 
     return this.userRoleDao;
+  }
+
+  @Override
+  public UserProfile findUserProfileByLogin(String login) {
+
+    UserEto userEto = findUserbyName(login);
+    UserDetailsClientTo profile = new UserDetailsClientTo();
+    profile.setId(userEto.getId());
+    profile.setRole(Role.getRoleById(userEto.getUserRoleId()));
+    return profile;
   }
 
 }

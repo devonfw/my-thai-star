@@ -60,7 +60,7 @@ public class DishmanagementTest extends ApplicationComponentTest {
 
     assertThat(result).isNotNull();
     assertThat(result.getContent().size()).isGreaterThan(0);
-    assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(0L);
+    assertThat(result.getContent().get(0).getDish().getName()).isEqualTo("Thai Spicy Basil Fried Rice");
   }
 
 }

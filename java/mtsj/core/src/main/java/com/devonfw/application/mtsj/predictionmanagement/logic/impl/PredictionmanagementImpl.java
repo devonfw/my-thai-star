@@ -61,7 +61,7 @@ public class PredictionmanagementImpl extends AbstractComponentFacade implements
   }
 
   @Override
-  @RolesAllowed({ ApplicationAccessControlConfig.PERMISSION_GET_NEXT_WEEK_PREDICTION })
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_NEXT_WEEK_PREDICTION)
   public PredictionDataTo getNextWeekPrediction(PredictionSearchCriteriaTo criteria) {
 
     LOG.debug("Generate predictions for next week.");

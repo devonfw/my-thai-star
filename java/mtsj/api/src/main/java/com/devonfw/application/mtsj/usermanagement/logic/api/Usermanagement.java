@@ -1,11 +1,13 @@
 package com.devonfw.application.mtsj.usermanagement.logic.api;
 
+import org.springframework.data.domain.Page;
+
+import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
-import org.springframework.data.domain.Page;
 
 /**
  * Interface for Usermanagement component.
@@ -106,5 +108,11 @@ public interface Usermanagement {
    * @return the new {@link UserRoleEto} that has been saved with ID and version.
    */
   UserRoleEto saveUserRole(UserRoleEto userRole);
+
+  /**
+   * @param login The login of the requested user.
+   * @return The {@link UserProfile} with the given <code>login</code> or {@code null} if no such object exists.
+   */
+  UserProfile findUserProfileByLogin(String login);
 
 }

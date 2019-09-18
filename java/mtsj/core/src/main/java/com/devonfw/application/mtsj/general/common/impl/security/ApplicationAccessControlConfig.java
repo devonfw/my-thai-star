@@ -83,9 +83,9 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
   public static final String PERMISSION_SAVE_USER_ROLE = PREFIX + "SaveUserRole";
 
-  public static final String PERMISSION_GET_GEO_CLUSTER = PREFIX + "GetGeoCluster";
+  public static final String PERMISSION_FIND_GEO_CLUSTER = PREFIX + "GetGeoCluster";
 
-  public static final String PERMISSION_GET_NEXT_WEEK_PREDICTION = PREFIX + "GetNextWeekPrediction";
+  public static final String PERMISSION_FIND_NEXT_WEEK_PREDICTION = PREFIX + "GetNextWeekPrediction";
 
   public static final String GROUP_READ_MASTER_DATA = PREFIX + "ReadMasterData";
 
@@ -107,7 +107,7 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
     AccessControlGroup waiter = group(GROUP_WAITER, PERMISSION_FIND_ORDER, PERMISSION_FIND_BOOKING);
 
     AccessControlGroup manager = group(GROUP_MANAGER, PERMISSION_FIND_BOOKING, PERMISSION_FIND_ORDER,
-        PERMISSION_GET_NEXT_WEEK_PREDICTION, PERMISSION_GET_GEO_CLUSTER);
+        PERMISSION_FIND_NEXT_WEEK_PREDICTION, PERMISSION_FIND_GEO_CLUSTER);
 
   }
 
