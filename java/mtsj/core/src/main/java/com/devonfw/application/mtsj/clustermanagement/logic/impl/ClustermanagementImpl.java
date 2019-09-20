@@ -17,7 +17,7 @@ import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClusterDataE
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClustersDataCto;
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClustersDataEto;
 import com.devonfw.application.mtsj.clustermanagement.logic.api.Clustermanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 
 /**
@@ -27,10 +27,7 @@ import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 @Transactional
 public class ClustermanagementImpl extends AbstractComponentFacade implements Clustermanagement {
 
-  /**
-   * Logger instance.
-   */
-  private static final Logger LOG = LoggerFactory.getLogger( ClustermanagementImpl.class );
+  private static final Logger LOG = LoggerFactory.getLogger(ClustermanagementImpl.class);
 
   @PersistenceContext
   private EntityManager entityManager;
@@ -44,25 +41,26 @@ public class ClustermanagementImpl extends AbstractComponentFacade implements Cl
   }
 
   @Override
-  @RolesAllowed(Roles.MANAGER)
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_GEO_CLUSTER)
   public ClustersDataCto getGeoClusters(ClusterCriteriaEto criteria) {
-    LOG.debug( "Clustering geo data." );
+
+    LOG.debug("Clustering geo data.");
 
     ClustersDataCto result = new ClustersDataCto();
     ClustersDataEto data = new ClustersDataEto();
 
-    TypedQuery<ClusterDataEto> query = this.entityManager.createNamedQuery( "getClusters", ClusterDataEto.class );
+    TypedQuery<ClusterDataEto> query = this.entityManager.createNamedQuery("getClusters", ClusterDataEto.class);
 
-    query.setParameter( "idDish", criteria.getDishId() );
-    query.setParameter( "startBookingDate", criteria.getStartBookingdate() );
-    query.setParameter( "endBookingDate", criteria.getEndBookingdate() );
-    query.setParameter( "numberOfClusters", criteria.getClusters() );
+    query.setParameter("idDish", criteria.getDishId());
+    query.setParameter("startBookingDate", criteria.getStartBookingdate());
+    query.setParameter("endBookingDate", criteria.getEndBookingdate());
+    query.setParameter("numberOfClusters", criteria.getClusters());
 
     List<ClusterDataEto> res = query.getResultList();
 
-    data.setData( res );
+    data.setData(res);
 
-    result.setClustersData( data );
+    result.setClustersData(data);
 
     return result;
   }
