@@ -58,7 +58,8 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_ROLES = "roles";
 
-  static void addAllowedHeader(HttpServletResponse res){
+  static void addAllowedHeader(HttpServletResponse res) {
+
     res.addHeader(EXPOSE_HEADERS, HEADER_STRING + ", " + HEADER_OTP);
   }
 
@@ -71,6 +72,7 @@ public class TokenAuthenticationService {
   static void addAuthentication(HttpServletResponse res, Authentication auth) {
 
     String token = generateToken(auth);
+    res.addHeader(EXPOSE_HEADERS, HEADER_STRING);
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
   }
 
@@ -98,8 +100,8 @@ public class TokenAuthenticationService {
     if (token != null) {
 
       // The JWT parser will throw an exception if the token is not well formed or the token has expired
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
       return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token)) : null;
 
     }
@@ -158,8 +160,8 @@ public class TokenAuthenticationService {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
     try {
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
 
       List<String> roles = getRolesFromToken(token);
       if (user != null) {
@@ -190,15 +192,7 @@ public class TokenAuthenticationService {
    */
   public static List<GrantedAuthority> getRolesFromName(Authentication auth) {
 
-    List<GrantedAuthority> roles = new ArrayList<>();
-
-    if (auth.getName().equalsIgnoreCase(Role.WAITER.getRole())) {
-      roles.add(new SimpleGrantedAuthority(Role.WAITER.getName()));
-    } else if (auth.getName().equalsIgnoreCase(Role.CUSTOMER.getRole())) {
-      roles.add(new SimpleGrantedAuthority(Role.CUSTOMER.getName()));
-    } else if (auth.getName().equalsIgnoreCase(Role.MANAGER.getRole())) {
-      roles.add(new SimpleGrantedAuthority(Role.MANAGER.getName()));
-    }
+    List<GrantedAuthority> roles = (List<GrantedAuthority>) auth.getAuthorities();
 
     return roles;
   }
