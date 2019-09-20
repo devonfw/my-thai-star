@@ -2,10 +2,6 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 
 import javax.inject.Inject;
 
-import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
-import com.devonfw.application.mtsj.general.common.impl.security.BaseUserDetailsService;
-import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
-import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -20,8 +16,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
 import com.devonfw.application.mtsj.general.common.base.JWTAuthenticationFilter;
 import com.devonfw.application.mtsj.general.common.base.JWTLoginFilter;
+import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
+import com.devonfw.application.mtsj.general.common.impl.security.BaseUserDetailsService;
+import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
 
 /**
  * This type serves as a base class for extensions of the {@code WebSecurityConfigurerAdapter} and provides a default
@@ -43,8 +43,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Bean
   public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
 
-    AdvancedDaoAuthenticationProvider authProvider
-            = new AdvancedDaoAuthenticationProvider();
+    AdvancedDaoAuthenticationProvider authProvider = new AdvancedDaoAuthenticationProvider();
     authProvider.setPasswordEncoder(this.passwordEncoder);
     authProvider.setUserDetailsService(this.userDetailsService);
     return authProvider;
@@ -52,8 +51,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Bean
   public TwoFactorAuthenticationProvider twoFactorAuthenticationProvider() {
-    TwoFactorAuthenticationProvider authProvider
-            = new TwoFactorAuthenticationProvider();
+
+    TwoFactorAuthenticationProvider authProvider = new TwoFactorAuthenticationProvider();
     authProvider.setPasswordEncoder(this.passwordEncoder);
     return authProvider;
   }
@@ -101,10 +100,10 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
         // verification with OTP are filtered with the TwoFactorFilter
-        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager()),
+        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
             UsernamePasswordAuthenticationFilter.class)
         // the api/login requests are filtered with the JWTLoginFilter
-        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), this.userDetailsService),
             UsernamePasswordAuthenticationFilter.class)
         // other requests are filtered to check the presence of JWT in header
         .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -119,8 +118,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth
-            .authenticationProvider(this.advancedDaoAuthenticationProvider)
-            .authenticationProvider(this.twoFactorAuthenticationProvider);
+    auth.authenticationProvider(this.advancedDaoAuthenticationProvider)
+        .authenticationProvider(this.twoFactorAuthenticationProvider);
   }
 }

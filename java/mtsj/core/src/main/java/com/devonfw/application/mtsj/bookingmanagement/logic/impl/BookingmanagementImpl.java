@@ -41,7 +41,7 @@ import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.Bookin
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.InvitedGuestRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
@@ -140,7 +140,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
-  @RolesAllowed({ Roles.WAITER, Roles.MANAGER })
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_BOOKING)
   public Page<BookingCto> findBookingsByPost(BookingSearchCriteriaTo criteria) {
 
     return findBookingCtos(criteria);
@@ -190,7 +190,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public BookingEto saveBooking(BookingCto booking) {
 
     Objects.requireNonNull(booking, "booking");
-
     BookingEntity bookingEntity = getBeanMapper().map(booking.getBooking(), BookingEntity.class);
     bookingEntity.setCanceled(false);
     List<InvitedGuestEntity> invited = getBeanMapper().mapList(booking.getInvitedGuests(), InvitedGuestEntity.class);
