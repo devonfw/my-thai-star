@@ -1,12 +1,14 @@
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { DishView, ExtraView, OrderView } from '../../shared/view-models/interfaces';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
-import { FilterFormData } from '../components/menu-filters/menu-filters.component';
+import { Observable } from 'rxjs';
+import * as uuid from 'uuid';
 import { ConfigService } from '../../core/config/config.service';
+import { DishView, ExtraView } from '../../shared/view-models/interfaces';
+import { FilterFormData } from '../components/menu-filters/menu-filters.component';
+import { Order } from '../models/order.model';
 
-const categoryNameToServerId: {[key: string]: number} = Object.freeze({
+const categoryNameToServerId: { [key: string]: number } = Object.freeze({
   mainDishes: 0,
   starters: 1,
   desserts: 2,
@@ -20,50 +22,58 @@ const categoryNameToServerId: {[key: string]: number} = Object.freeze({
 
 @Injectable()
 export class MenuService {
-
   private readonly restServiceRoot: string;
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.restServiceRoot = this.configService.getValues().restServiceRoot;
-   }
+  }
 
-  menuToOrder(menu: DishView): OrderView {
+  menuToOrder(menu: DishView): Order {
     return {
-      dish: menu.dish,
-      extras: menu.extras,
-      orderLine: {
-        amount: 1,
-        comment: '',
+      id: uuid.v4(),
+      details: {
+        dish: menu.dish,
+        extras: menu.extras,
+        orderLine: {
+          amount: 1,
+          comment: '',
+        },
       },
     };
   }
 
   composeFilters(pageable: Pageable, filters: FilterFormData): Filter {
     const categories: { id: string }[] = Object.keys(filters.categories)
-        .filter((categoryKey: string) => filters.categories[categoryKey])
-        .map((categoryKey: string) => ({id: categoryNameToServerId[categoryKey].toString()}));
+      .filter((categoryKey: string) => filters.categories[categoryKey])
+      .map((categoryKey: string) => ({
+        id: categoryNameToServerId[categoryKey].toString(),
+      }));
     if (!filters.sort.property) {
       filters.sort = undefined;
       pageable.sort = undefined;
-   }
+    }
 
     return {
-        categories,
-        searchBy: filters.searchBy,
-        pageable,
-        maxPrice: filters.maxPrice,
-        minLikes: filters.minLikes,
-        isFav: undefined, // TODO: what is this field? It was present in interface but setting it will cause errors ...
-      };
+      categories,
+      searchBy: filters.searchBy,
+      pageable,
+      maxPrice: filters.maxPrice,
+      minLikes: filters.minLikes,
+      isFav: undefined, // TODO: what is this field? It was present in interface but setting it will cause errors ...
+    };
   }
 
   clearSelectedExtras(menuInfo: DishView): void {
-    menuInfo.extras.map((extra: ExtraView) => { extra.selected = false; });
+    menuInfo.extras.map((extra: ExtraView) => {
+      extra.selected = false;
+    });
   }
 
-  getDishes(filters: Filter): Observable<{ pageable: Pageable, content: DishView[]}> {
-    return this.http.post<{ pageable: Pageable, content: DishView[]}>(
+  getDishes(
+    filters: Filter,
+  ): Observable<{ pageable: Pageable; content: DishView[] }> {
+    return this.http.post<{ pageable: Pageable; content: DishView[] }>(
       `${this.restServiceRoot}${this.filtersRestPath}`,
       filters,
     );

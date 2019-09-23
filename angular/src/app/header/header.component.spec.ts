@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { SidenavService } from '../sidenav/services/sidenav.service';
-import { WindowService } from '../core/window/window.service';
-import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
-import { ConfigService } from '../core/config/config.service';
-import { HeaderComponent } from './header.component';
 import { Action, Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
+import { TranslateService } from '@ngx-translate/core';
 import * as fromStore from 'app/store/reducers';
+import { Subject } from 'rxjs/Subject';
+import { ConfigService } from '../core/config/config.service';
+import { WindowService } from '../core/window/window.service';
+import { SidenavService } from '../sidenav/services/sidenav.service';
+import { HeaderComponent } from './header.component';
 
 export function mockStore<T>({
   actions = new Subject<Action>(),
@@ -77,7 +77,7 @@ describe('HeaderComponent', () => {
   describe('ngOnInit', () => {
     it('makes expected calls', () => {
       spyOn(store, 'pipe').and.callThrough();
-      component.ngOnInit();
+      fixture.detectChanges();
       expect(store.pipe).toHaveBeenCalled();
     });
   });

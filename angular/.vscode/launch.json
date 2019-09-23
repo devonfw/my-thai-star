@@ -15,7 +15,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "C:\\Projects\\my-thai-star-fork\\angular"
         }
     ]
 }

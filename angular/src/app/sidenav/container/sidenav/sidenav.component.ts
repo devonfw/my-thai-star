@@ -1,12 +1,11 @@
-import {Router} from '@angular/router';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
-import {Order} from 'app/sidenav/models/order.model';
-import * as fromApp from 'app/store/reducers';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Order } from 'app/sidenav/models/order.model';
 import * as fromOrder from 'app/sidenav/store/selectors';
-import {SidenavService} from '../../services/sidenav.service';
-import {SnackBarService} from '../../../core/snack-bar/snack-bar.service';
+import * as fromApp from 'app/store/reducers';
+import { Observable } from 'rxjs';
+import { SidenavService } from '../../services/sidenav.service';
 import * as orderActions from '../../store/actions/order.actions';
 import * as sendOrderActions from '../../store/actions/send-order.actions';
 
@@ -25,7 +24,6 @@ export class SidenavComponent implements OnInit {
   constructor(
     private router: Router,
     private sidenav: SidenavService,
-    private snackBar: SnackBarService,
     private store: Store<fromApp.State>,
   ) {}
 
@@ -47,85 +45,105 @@ export class SidenavComponent implements OnInit {
   }
 
   sendOrders(bookingId: string): void {
-    this.store.dispatch(sendOrderActions.sendOrders({token: bookingId}));
+    this.store.dispatch(sendOrderActions.sendOrders({ token: bookingId }));
+  }
+
+  findOrder(id: string) {
+    return this.orders.find((order) => order.id === id);
   }
 
   onOrderIncreased(order: Order): void {
-    const orderUpdate = this.orders.find(
-      (o) => '' + o.id === order.order.dish.id + order.order.extras.map((e) => e.id).join(''),
-    );
-    this.store.dispatch(orderActions.updateOrder({
-      order: {
-        id: orderUpdate.id,
-        changes: {
+    const orderToUpdate = this.findOrder(order.id);
+    if (orderToUpdate) {
+      this.store.dispatch(
+        orderActions.updateOrder({
           order: {
-            ...orderUpdate.order,
-            extras: orderUpdate.order.extras,
-            orderLine: {
-              ...orderUpdate.order.orderLine,
-              amount: orderUpdate.order.orderLine.amount + 1
+            id: order.id,
+            changes: {
+              details: {
+                ...orderToUpdate.details,
+                extras: orderToUpdate.details.extras,
+                orderLine: {
+                  ...orderToUpdate.details.orderLine,
+                  amount: ++orderToUpdate.details.orderLine.amount,
+                },
+              },
             },
-          }
-        }
-      }
-    }));
+          },
+        }),
+      );
+    }
   }
 
   onOrderDecreased(order: Order): void {
-    this.store.dispatch(orderActions.updateOrder({
-      order: {
-        id: order.id,
-        changes: {
-          order: {
-            dish: order.order.dish,
-            orderLine: {
-              amount: order.order.orderLine.amount - 1,
-              comment: order.order.orderLine.comment,
+    const orderToUpdate = this.findOrder(order.id);
+    if (orderToUpdate) {
+      if (orderToUpdate.details.orderLine.amount > 1) {
+        this.store.dispatch(
+          orderActions.updateOrder({
+            order: {
+              id: order.id,
+              changes: {
+                details: {
+                  ...orderToUpdate.details,
+                  extras: orderToUpdate.details.extras,
+                  orderLine: {
+                    ...orderToUpdate.details.orderLine,
+                    amount: --orderToUpdate.details.orderLine.amount,
+                  },
+                },
+              },
             },
-            extras: order.order.extras
-          }
-        }
+          }),
+        );
+      } else {
+        // Since the amount is 0 we remove it from the store
+        this.store.dispatch(orderActions.deleteOrder({ id: order.id }));
       }
-    }));
+    }
   }
 
   onOrderRemoved(order: Order): void {
-    this.store.dispatch(orderActions.deleteOrder({id: order.id}));
+    this.store.dispatch(orderActions.deleteOrder({ id: order.id }));
   }
 
   onCommentRemoved(order: Order): void {
-    this.store.dispatch(orderActions.updateOrder({
-      order: {
-        id: order.id,
-        changes: {
-          order: {
-            dish: order.order.dish,
-            orderLine: {
-              amount: order.order.orderLine.amount,
-              comment: null,
+    this.store.dispatch(
+      orderActions.updateOrder({
+        order: {
+          id: order.id,
+          changes: {
+            details: {
+              dish: order.details.dish,
+              orderLine: {
+                amount: order.details.orderLine.amount,
+                comment: null,
+              },
+              extras: order.details.extras,
             },
-            extras: order.order.extras
-          }
-        }
-      }
-    }));
+          },
+        },
+      }),
+    );
   }
 
   onCommentAdded(order: Order): void {
-    this.store.dispatch(orderActions.updateOrder({
-      order: {
-        id: order.id,
-        changes: {
-          order: {
-            dish: order.order.dish,
-            orderLine: {
-              amount: order.order.orderLine.amount,
-              comment: order.order.orderLine.comment,
+    this.store.dispatch(
+      orderActions.updateOrder({
+        order: {
+          id: order.id,
+          changes: {
+            details: {
+              dish: order.details.dish,
+              orderLine: {
+                amount: order.details.orderLine.amount,
+                comment: order.details.orderLine.comment,
+              },
+              extras: order.details.extras,
             },
-            extras: order.order.extras
-          }
-        }
-      }
-    }));
+          },
+        },
+      }),
+    );
   }
 }

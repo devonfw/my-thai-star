@@ -1,28 +1,24 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { adapter, State } from '../reducers/order.reducer';
 
-export const getOrderState = createFeatureSelector<State>('order');
+export const selectOrderState = createFeatureSelector<State>('order');
 
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors(getOrderState);
-
-export const selectEntity = createSelector(
-  getOrderState,
-  selectIds,
-);
+} = adapter.getSelectors(selectOrderState);
 
 export const getTotalPrice = createSelector(
   selectAll,
   (state) => {
     let totalPrice = 0;
     state.map(
-      (price) =>
+      (order) =>
         (totalPrice =
-          totalPrice + price.order.dish.price * price.order.orderLine.amount),
+          totalPrice +
+          order.details.dish.price * order.details.orderLine.amount),
     );
     return totalPrice;
   },
