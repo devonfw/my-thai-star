@@ -1,16 +1,16 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { SnackService } from './snack-bar.service';
-import { AuthService } from '../../core/authentication/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService } from '../../core/config/config.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { AuthService } from '../../core/authentication/auth.service';
+import { ConfigService } from '../../core/config/config.service';
 import { TwoFactorResponse } from '../../shared/view-models/interfaces';
-import { Store } from '@ngrx/store';
-import * as fromAuth from '../store/reducers/';
 import * as authActions from '../store/actions/auth.actions';
+import * as fromAuth from '../store/reducers/';
+import { SnackService } from './snack-bar.service';
 
 @Injectable()
 export class UserAreaService {

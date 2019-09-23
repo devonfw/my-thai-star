@@ -1,22 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-  DishView,
-  ExtraView,
-  OrderView,
-} from 'app/shared/view-models/interfaces';
-import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
 import { select, Store } from '@ngrx/store';
-import * as fromOrder from 'app/sidenav/store/selectors';
-import * as fromMenu from 'app/menu/store/selectors';
-import * as fromApp from 'app/store/reducers';
+import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
+import { isEqual } from 'lodash';
+import { Observable } from 'rxjs';
+import { DishView, ExtraView } from '../../shared/view-models/interfaces';
 import { Order } from '../../sidenav/models/order.model';
-import { MenuService } from '../services/menu.service';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
-import { FilterFormData } from '../components/menu-filters/menu-filters.component';
-import * as loadMenusActions from '../store/actions/menu.actions';
 import * as orderActions from '../../sidenav/store/actions/order.actions';
+import * as fromOrder from '../../sidenav/store/selectors';
+import * as fromApp from '../../store/reducers';
 import * as fromAuth from '../../user-area/store/selectors';
+import { FilterFormData } from '../components/menu-filters/menu-filters.component';
+import { MenuService } from '../services/menu.service';
+import * as loadMenusActions from '../store/actions/menu.actions';
+import * as fromMenu from '../store/selectors';
 
 export interface Filters {
   searchBy: string;
@@ -70,50 +67,55 @@ export class MenuComponent implements OnInit {
       filters,
     );
 
-    this.store.dispatch(loadMenusActions.loadMenus({ filter: composedFilters }));
-  }
-
-  findOrder(orderToFind: OrderView): Order {
-    return this.orders.find((order) => '' + order.id === orderToFind.dish.id + this.extras.map((e) => e.id).join(''));
+    this.store.dispatch(
+      loadMenusActions.loadMenus({ filter: composedFilters }),
+    );
   }
 
   onExtraSelected(extra: ExtraView): void {
     this.extras.push(extra);
   }
 
-  onOrderAdded(order: any) {
-    const orderView = this.menuService.menuToOrder(order);
-    this.extras = orderView.extras.filter((e) => e.selected);
-    const orderId = orderView.dish.id + this.extras.map((e) => e.id).join('');
-    if (this.findOrder(orderView)) {
-      const orderDish: Order = this.findOrder(orderView);
-      this.store.dispatch(
-        orderActions.updateOrder({
-          order: {
-            id: orderId,
-            changes: {
-              order: {
-                ...orderDish.order,
-                extras: this.extras,
-                orderLine: {
-                  ...orderDish.order.orderLine,
-                  amount: orderDish.order.orderLine.amount + 1,
-                },
+  findOrder(orderToStore: Order) {
+    return this.orders.find((order) => {
+      const orderIds = {
+        dishId: order.details.dish.id,
+        extrasIds: order.details.extras.map((e) => e.id),
+      };
+      const orderToStoreIds = {
+        dishId: orderToStore.details.dish.id,
+        extrasIds: orderToStore.details.extras.map((e) => e.id),
+      };
+      return isEqual(orderIds, orderToStoreIds);
+    });
+  }
+
+  onOrderAdded(order: DishView) {
+    const orderToStore = this.menuService.menuToOrder(order);
+    orderToStore.details.extras = orderToStore.details.extras.filter(
+      (e) => e.selected,
+    );
+    const orderToUpdate = this.findOrder(orderToStore);
+    if (orderToUpdate) {
+      const update = {
+        order: {
+          id: orderToUpdate.id,
+          changes: {
+            details: {
+              ...orderToUpdate.details,
+              orderLine: {
+                ...orderToUpdate.details.orderLine,
+                amount: ++orderToUpdate.details.orderLine.amount,
               },
             },
           },
-        }),
-      );
+        },
+      };
+      this.store.dispatch(orderActions.updateOrder(update));
     } else {
       this.store.dispatch(
         orderActions.addOrder({
-          order: {
-            id: orderId,
-            order: {
-              ...orderView,
-              extras: this.extras,
-            },
-          },
+          order: { ...orderToStore },
         }),
       );
       this.extras = [];

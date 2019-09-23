@@ -1,13 +1,14 @@
-import { UserAreaModule } from '../user-area.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterModule, Routes } from '@angular/router';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
-
-import { CoreModule } from '../../core/core.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../../core/core.module';
+import * as fromRoot from '../../store/reducers';
+import { UserAreaModule } from '../../user-area.module';
 import { QrCodeDialogComponent } from './qr-code-dialog.component';
+import { EffectsModule } from '@ngrx/effects';
 
 describe('QrCodeDialogComponent', () => {
   let component: QrCodeDialogComponent;
@@ -19,11 +20,12 @@ describe('QrCodeDialogComponent', () => {
         CoreModule,
         TranslateModule.forRoot(),
         BrowserAnimationsModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule,
         UserAreaModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromRoot.reducers),
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

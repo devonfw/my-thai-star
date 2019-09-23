@@ -1,10 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { CommentAlertComponent } from '../comment-alert/comment-alert.component';
 import { WindowService } from '../../../core/window/window.service';
 import { map } from 'lodash';
-import {Order} from 'app/sidenav/models/order.model';
+import { Order } from 'app/sidenav/models/order.model';
 
 @Component({
   selector: 'public-sidenav-order',
@@ -21,17 +21,18 @@ export class SidenavOrderComponent implements OnInit {
   @Output() commentRemoved = new EventEmitter<Order>();
   @Output() commentAdded = new EventEmitter<Order>();
 
-  constructor(
-    public dialog: MatDialog,
-    public window: WindowService,
-  ) {}
+  constructor(public dialog: MatDialog, public window: WindowService) {}
 
   ngOnInit(): void {
-    this.extras = map(this.order.order.extras, 'name').join(', ');
+    this.extras = map(this.order.details.extras, 'name').join(', ');
   }
 
   calculateOrderPrice(): number {
-    return (this.order.order.orderLine.amount * (this.order.order.dish.price + this.order.order.extras.reduce((t, e) => t + e.price, 0 )));
+    return (
+      this.order.details.orderLine.amount *
+      (this.order.details.dish.price +
+        this.order.details.extras.reduce((t, e) => t + e.price, 0))
+    );
   }
 
   increaseOrder(): void {
@@ -53,7 +54,7 @@ export class SidenavOrderComponent implements OnInit {
   openCommentDialog(): void {
     this.dialog.open(CommentAlertComponent, {
       width: this.window.responsiveWidth(),
-      data: this.order.order.orderLine.comment,
+      data: this.order.details.orderLine.comment,
     });
   }
 
@@ -62,16 +63,16 @@ export class SidenavOrderComponent implements OnInit {
       CommentDialogComponent,
     );
     dialogRef.afterClosed().subscribe((content: string) => {
-      const order = {
-        id: this.order.order.dish.id + (this.order.order.extras.map((e) => e.id)).join(''),
-        order: {
-          dish: this.order.order.dish,
+      const order: Order = {
+        id: this.order.id,
+        details: {
+          dish: this.order.details.dish,
           orderLine: {
-            amount: this.order.order.orderLine.amount,
+            amount: this.order.details.orderLine.amount,
             comment: content,
           },
-          extras: this.order.order.extras
-        }
+          extras: this.order.details.extras,
+        },
       };
       this.commentAdded.emit(order);
     });
