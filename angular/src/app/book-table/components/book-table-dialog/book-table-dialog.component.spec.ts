@@ -1,13 +1,11 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+import * as fromStore from '../../../store/reducers';
 import { BookTableDialogComponent } from './book-table-dialog.component';
-import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
-import { BookTableService } from 'app/book-table/services/book-table.service';
-import { BookTableModule } from 'app/book-table/book-table.module';
-import { CoreModule } from 'app/core/core.module';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
@@ -15,16 +13,20 @@ describe('BookTableDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [SnackBarService, BookTableService, HttpClient],
+      declarations: [BookTableDialogComponent],
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }],
       imports: [
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
-        BookTableModule,
-        HttpClientModule,
-        CoreModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromStore.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

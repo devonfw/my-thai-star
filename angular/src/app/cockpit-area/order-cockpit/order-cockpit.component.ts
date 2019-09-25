@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, Sort, PageEvent, MatPaginator } from '@angular/material';
-import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { OrderListView } from '../../shared/view-models/interfaces';
-import {
-  Pageable,
-  FilterCockpit,
-} from '../../shared/backend-models/interfaces';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { MatDialog, MatPaginator, PageEvent, Sort } from '@angular/material';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
+import {
+  FilterCockpit,
+  Pageable,
+} from '../../shared/backend-models/interfaces';
+import { OrderListView } from '../../shared/view-models/interfaces';
+import { WaiterCockpitService } from '../services/waiter-cockpit.service';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -33,7 +33,11 @@ export class OrderCockpitComponent implements OnInit {
 
   columns: any[];
 
-  displayedColumns: string[] = ['booking.bookingDate', 'booking.email', 'booking.bookingToken'];
+  displayedColumns: string[] = [
+    'booking.bookingDate',
+    'booking.email',
+    'booking.bookingToken',
+  ];
 
   pageSizes: number[];
 

@@ -23,7 +23,12 @@ describe('TwoFactorDialogComponent', () => {
         UserAreaModule,
         RouterTestingModule,
         EffectsModule.forRoot([]),
-        StoreModule.forRoot(fromRoot.reducers),
+        StoreModule.forRoot(fromRoot.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
     }).compileComponents();
   }));

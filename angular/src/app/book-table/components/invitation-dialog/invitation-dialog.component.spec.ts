@@ -1,12 +1,16 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { BookTableModule } from '../../book-table.module';
+import { BookTableService } from '../../services/book-table.service';
+import * as fromRoot from '../../store/reducers';
 import { InvitationDialogComponent } from './invitation-dialog.component';
-import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
-import { BookTableService } from 'app/book-table/services/book-table.service';
-import { BookTableModule } from 'app/book-table/book-table.module';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
@@ -20,9 +24,16 @@ describe('InvitationDialogComponent', () => {
         TranslateModule.forRoot(),
         BookTableModule,
         HttpClientModule,
+        RouterTestingModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromRoot.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

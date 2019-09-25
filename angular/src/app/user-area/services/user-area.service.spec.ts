@@ -19,7 +19,12 @@ describe('UserAreaService', () => {
         HttpClientModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        StoreModule.forRoot(fromRoot.reducers),
+        StoreModule.forRoot(fromRoot.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
     });
   });

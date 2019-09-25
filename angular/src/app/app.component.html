@@ -5,7 +5,7 @@
     </mat-toolbar>
 
     <div class="sidenavContainerOuter">
-      <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(o)">
+      <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(fade)">
 
         <mat-sidenav class="sidenavMobile" [opened]="sidenav.opened" position="end" (openedChange)="sidenavStatus($event)">
           <public-sidenav></public-sidenav>
@@ -48,7 +48,7 @@
           </mat-nav-list>
         </mat-sidenav>
 
-        <router-outlet #o="outlet"></router-outlet>
+        <router-outlet #fade="outlet"></router-outlet>
 
       </mat-sidenav-container>
     </div>

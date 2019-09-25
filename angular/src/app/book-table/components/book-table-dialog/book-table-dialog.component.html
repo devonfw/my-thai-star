@@ -1,50 +1,57 @@
-<span mat-dialog-title>{{'bookTable.dialog.title' | translate }}</span>
+<span mat-dialog-title>{{ 'bookTable.dialog.title' | translate }}</span>
 <mat-dialog-content>
   <div class="dataRows">
-
     <div>
       <div class="dataRow">
-        <span>{{'formFields.date' | translate}}</span>
-        <span>{{date}}</span>
+        <span>{{ 'formFields.date' | translate }}</span>
+        <span>{{ date }}</span>
       </div>
     </div>
 
     <div>
       <mat-divider></mat-divider>
       <div class="dataRow">
-        <span>{{'formFields.name' | translate}}</span>
-        <span class="nameValue">{{data.name}}</span>
+        <span>{{ 'formFields.name' | translate }}</span>
+        <span class="nameValue">{{ data.name }}</span>
       </div>
-    </div>  
+    </div>
 
     <div>
       <mat-divider></mat-divider>
       <div class="dataRow">
-        <span>{{'formFields.email' | translate}}</span>
-        <span class="emailValue">{{data.email}}</span>
+        <span>{{ 'formFields.email' | translate }}</span>
+        <span class="emailValue">{{ data.email }}</span>
       </div>
     </div>
 
     <div>
       <mat-divider></mat-divider>
     </div>
-    
+
     <div>
       <div class="dataRow">
-        <span>{{'formFields.assistants' | translate}}</span>
-        <span>{{data.assistants}}</span>
+        <span>{{ 'formFields.assistants' | translate }}</span>
+        <span>{{ data.assistants }}</span>
       </div>
     </div>
-    
+
     <div>
       <mat-divider></mat-divider>
     </div>
-
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="align-right">
-    <button name="bookTableCancel" mat-button mat-dialog-close>{{'buttons.cancel' | translate}}</button>
-    <button name="bookTableConfirm" mat-button (click)="sendBooking()" color="accent">{{'buttons.send' | translate}}</button>
+    <button name="bookTableCancel" mat-button mat-dialog-close>
+      {{ 'buttons.cancel' | translate }}
+    </button>
+    <button
+      name="bookTableConfirm"
+      mat-button
+      (click)="sendBooking()"
+      color="accent"
+    >
+      {{ 'buttons.send' | translate }}
+    </button>
   </div>
 </mat-dialog-actions>

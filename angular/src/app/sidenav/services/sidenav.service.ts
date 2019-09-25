@@ -66,9 +66,9 @@ export class SidenavService {
     const composedOrders: OrderInfo[] = [];
     orders.forEach((order: Order) => {
       const extras: any[] = [];
-      order.details.extras
-        .filter((extra: ExtraView) => extra.selected)
-        .forEach((extra: ExtraView) => extras.push({ id: extra.id }));
+      order.details.extras.forEach((extra: ExtraView) =>
+        extras.push({ id: extra.id }),
+      );
       composedOrders.push({
         orderLine: {
           dishId: order.details.dish.id,
