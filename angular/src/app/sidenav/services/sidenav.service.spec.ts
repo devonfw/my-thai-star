@@ -1,17 +1,23 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { SidenavService } from './sidenav.service';
-
+import { inject, TestBed } from '@angular/core/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { CoreModule } from '../../core/core.module';
+import * as fromRoot from '../../store/reducers';
+import { SidenavService } from './sidenav.service';
 
 describe('SidenavSharedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        SidenavService,
-      ],
+      providers: [SidenavService],
       imports: [
         CoreModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromRoot.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
     });
   });

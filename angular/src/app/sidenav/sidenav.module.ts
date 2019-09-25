@@ -28,23 +28,14 @@ import { SendOrderEffects } from './store/effects/send-order.effects';
     StoreModule.forFeature('sendOrder', fromSendOrder.reducer),
     EffectsModule.forFeature([SendOrderEffects]),
   ],
-  providers: [
-    SidenavService,
-    PriceCalculatorService,
-    WindowService,
-  ],
+  providers: [SidenavService, WindowService],
   declarations: [
     SidenavComponent,
     SidenavOrderComponent,
     CommentDialogComponent,
     CommentAlertComponent,
   ],
-  exports: [
-    SidenavComponent,
-  ],
-  entryComponents: [
-    CommentDialogComponent,
-    CommentAlertComponent,
-  ],
+  exports: [SidenavComponent],
+  entryComponents: [CommentDialogComponent, CommentAlertComponent],
 })
-export class SidenavModule { }
+export class SidenavModule {}

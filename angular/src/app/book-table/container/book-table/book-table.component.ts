@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatCheckbox, MatChipInputEvent } from '@angular/material';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatCheckbox, MatChipInputEvent, MatDialog } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { BookingInfo } from '../../../shared/backend-models/interfaces';
+import { last } from 'lodash';
+import * as moment from 'moment';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { WindowService } from '../../../core/window/window.service';
+import { emailValidator } from '../../../shared/directives/email-validator.directive';
 import { BookTableDialogComponent } from '../../components/book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from '../../components/invitation-dialog/invitation-dialog.component';
-import { WindowService } from '../../../core/window/window.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { emailValidator } from '../../../shared/directives/email-validator.directive';
-import { last } from 'lodash';
-import { BookingInfo } from 'app/shared/backend-models/interfaces';
-import { AbstractControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
 
 @Component({
   selector: 'public-book-table',

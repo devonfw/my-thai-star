@@ -1,20 +1,21 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-
-import { SidenavModule } from './sidenav/sidenav.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import * as fromStore from './store/reducers';
+import { NgxElectronModule } from 'ngx-electron';
+import { AppComponent } from './app.component';
+import { AuthService } from './core/authentication/auth.service';
+import { ConfigService } from './core/config/config.service';
 import { CoreModule } from './core/core.module';
-
 import { SnackBarService } from './core/snack-bar/snack-bar.service';
 import { WindowService } from './core/window/window.service';
-import { UserAreaService } from './user-area/services/user-area.service';
-import { AuthService } from './core/authentication/auth.service';
-import { NgxElectronModule } from 'ngx-electron';
-
-import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { SidenavModule } from './sidenav/sidenav.module';
+import { UserAreaService } from './user-area/services/user-area.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -28,6 +29,7 @@ describe('AppComponent', () => {
         AuthService,
         UserAreaService,
         SnackBarService,
+        ConfigService,
       ],
       imports: [
         RouterTestingModule,
@@ -37,6 +39,13 @@ describe('AppComponent', () => {
         TranslateModule.forRoot(),
         SidenavModule,
         HttpClientModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromStore.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
       ],
     });
     TestBed.compileComponents();

@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { OrderView, BookingView } from '../../../shared/view-models/interfaces';
-import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
+import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -20,11 +19,23 @@ export class OrderDialogComponent implements OnInit {
   data: any;
   datat: BookingView[] = [];
   columnst: any[];
-  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name', 'email', 'tableId'];
+  displayedColumnsT: string[] = [
+    'bookingDate',
+    'creationDate',
+    'name',
+    'email',
+    'tableId',
+  ];
 
   datao: OrderView[] = [];
   columnso: any[];
-  displayedColumnsO: string[] = ['dish.name', 'orderLine.comment', 'extras', 'orderLine.amount', 'dish.price'];
+  displayedColumnsO: string[] = [
+    'dish.name',
+    'orderLine.comment',
+    'extras',
+    'orderLine.amount',
+    'dish.price',
+  ];
 
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
@@ -34,7 +45,7 @@ export class OrderDialogComponent implements OnInit {
     private waiterCockpitService: WaiterCockpitService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
