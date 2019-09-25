@@ -18,7 +18,7 @@
       </h4>
 
       <div
-        *ngIf="(orders$ | async).length < 1; else sidenavOrder"
+        *ngIf="(orders$ | async)?.length < 1; else sidenavOrder"
         class="noOrders"
       >
         <span>{{ 'sidenav.noSelection' | translate }}</span>
@@ -35,7 +35,7 @@
       <ng-template #sidenavOrder>
         <div
           class="sidenavOrderContainer"
-          [class.scrollOrders]="(orders$ | async).length > 3"
+          [class.scrollOrders]="(orders$ | async)?.length > 3"
         >
           <public-sidenav-order
             *ngFor="let order of orders$ | async"
@@ -49,7 +49,7 @@
           ></public-sidenav-order>
         </div>
       </ng-template>
-      <div *ngIf="(orders$ | async).length > 0" class="orderTotal">
+      <div *ngIf="(orders$ | async)?.length > 0" class="orderTotal">
         <h3>{{ 'formFields.total' | translate }}</h3>
         <h3>{{ totalPrice$ | async | number: '1.2-2' }} €</h3>
       </div>
@@ -106,7 +106,7 @@
       mat-button
       color="accent"
       (click)="sendOrders(bookingId.value)"
-      [disabled]="!(bookingId.value.length > 0 && terms.checked)"
+      [disabled]="!(bookingId?.value?.length > 0 && terms.checked)"
     >
       {{ 'buttons.send' | translate | uppercase }}
     </button>

@@ -1,33 +1,31 @@
-import { environment } from '../environments/environment';
-import { ConfigModule } from './core/config/config.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { SidenavModule } from './sidenav/sidenav.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { storageSync } from '@larscom/ngrx-store-storagesync';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ActionReducer, StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxElectronModule } from 'ngx-electron';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { BookTableModule } from './book-table/book-table.module';
 import { WaiterCockpitModule } from './cockpit-area/cockpit.module';
-import { UserAreaModule } from './user-area/user-area.module';
+import { ConfigModule } from './core/config/config.module';
+import { CoreModule } from './core/core.module';
 import { EmailConfirmationModule } from './email-confirmations/email-confirmations.module';
 import { HeaderModule } from './header/header.module';
 import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
-import { CoreModule } from './core/core.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClient } from '@angular/common/http';
-
-import { NgxElectronModule } from 'ngx-electron';
 import { WebviewDirective } from './shared/directives/webview.directive';
-import { ActionReducer, StoreModule } from '@ngrx/store';
+import { SidenavModule } from './sidenav/sidenav.module';
+import * as RootState from './store/reducers';
 import { reducers } from './store/reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { storageSync } from '@larscom/ngrx-store-storagesync';
-import * as RootState from 'app/store/reducers';
+import { UserAreaModule } from './user-area/user-area.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {

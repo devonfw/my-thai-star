@@ -1,6 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../../core/core.module';
+import * as fromRoot from '../../../store/reducers';
 import { SidenavOrderComponent } from './sidenav-order.component';
 
 describe('SidenavOrderComponent', () => {
@@ -13,6 +20,19 @@ describe('SidenavOrderComponent', () => {
       }),
     };
     TestBed.configureTestingModule({
+      imports: [
+        BrowserAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        CoreModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromRoot.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [SidenavOrderComponent],
       providers: [{ provide: MatDialog, useValue: matDialogStub }],

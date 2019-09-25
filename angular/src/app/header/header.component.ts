@@ -1,23 +1,27 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
-import {Router} from '@angular/router';
-import {SidenavService} from '../sidenav/services/sidenav.service';
-import {WindowService} from '../core/window/window.service';
-import {PasswordDialogComponent} from '../user-area/components/password-dialog/password-dialog.component';
-import {TwitterDialogComponent} from '../user-area/components/twitter-dialog/twitter-dialog.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../core/authentication/auth.service';
+import { ConfigService } from '../core/config/config.service';
+import { WindowService } from '../core/window/window.service';
+import { SidenavService } from '../sidenav/services/sidenav.service';
+import { PasswordDialogComponent } from '../user-area/components/password-dialog/password-dialog.component';
 import { QrCodeDialogComponent } from '../user-area/components/qr-code-dialog/qr-code-dialog.component';
-import {TranslateService} from '@ngx-translate/core';
-import {DateTimeAdapter} from '@busacca/ng-pick-datetime';
-import {ConfigService} from '../core/config/config.service';
-import {UserAreaService} from '../user-area/services/user-area.service';
-import {AuthService} from '../core/authentication/auth.service';
-
+import { TwitterDialogComponent } from '../user-area/components/twitter-dialog/twitter-dialog.component';
+import { UserAreaService } from '../user-area/services/user-area.service';
 
 @Component({
   selector: 'public-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   selectableLangs: any[];
@@ -28,7 +32,6 @@ export class HeaderComponent {
   constructor(
     public window: WindowService,
     public translate: TranslateService,
-    public authService: AuthService,
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
