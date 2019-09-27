@@ -1,17 +1,19 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { ClusteringService } from './clustering.service';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('ClusteringService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ClusteringService],
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
     });
   });
 
-  it('should create', inject([ClusteringService], (service: ClusteringService) => {
-    expect(service).toBeTruthy();
-  }));
-
+  it('should create', inject(
+    [ClusteringService],
+    (service: ClusteringService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

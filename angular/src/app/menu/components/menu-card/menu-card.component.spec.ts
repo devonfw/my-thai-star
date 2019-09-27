@@ -1,15 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../../core/authentication/auth.service';
 import { CoreModule } from '../../../core/core.module';
-
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { SidenavService } from '../../../sidenav/services/sidenav.service';
 import { MenuService } from '../../services/menu.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { AuthService } from '../../../core/authentication/auth.service';
-
 import { MenuCardComponent } from './menu-card.component';
-import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from './menu-card-details/menu-card-details.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;
@@ -17,13 +16,14 @@ describe('MenuCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
       declarations: [
         MenuCardComponent,
         MenuCardCommentsComponent,
         MenuCardDetailsComponent,
       ],
       providers: [MenuService, SidenavService, AuthService, SnackBarService],
-      imports: [TranslateModule.forRoot(), CoreModule],
+      imports: [CoreModule, TranslateModule.forRoot()],
     }).compileComponents();
   }));
 

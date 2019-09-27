@@ -1,4 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +27,7 @@ describe('PasswordDialogComponent', () => {
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
         UserAreaModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromRoot.reducers, {
           runtimeChecks: {

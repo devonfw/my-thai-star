@@ -1,10 +1,14 @@
 import {
+  ActivatedRouteSnapshot,
+  Params,
+  RouterStateSnapshot,
+} from '@angular/router';
+import * as fromRouter from '@ngrx/router-store';
+import {
   ActionReducerMap,
   createFeatureSelector,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
-import {ActivatedRouteSnapshot, Params, RouterStateSnapshot} from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 /* @export
@@ -29,7 +33,7 @@ export const reducers: ActionReducerMap<State> = {
 
 export const getRouterState: any = createFeatureSelector<
   fromRouter.RouterReducerState<RouterStateUrl>
-  >('routerReducer');
+>('routerReducer');
 
 /* @export
  * @class CustomSerializer
@@ -49,4 +53,6 @@ export class CustomSerializer
   }
 }
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? []
+  : [];
