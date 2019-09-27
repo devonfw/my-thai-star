@@ -23,7 +23,7 @@ describe('SidenavComponent', () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [SidenavComponent, SidenavOrderComponent],
-      providers: [PriceCalculatorService, SidenavService, SnackBarService , { provide: fromOrder., useValue: } ],
+      providers: [PriceCalculatorService, SidenavService, SnackBarService],
       imports: [
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
