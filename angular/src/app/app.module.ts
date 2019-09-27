@@ -56,6 +56,7 @@ const metaReducers = environment.production
     HeaderModule,
     HomeModule,
     MenuModule,
+    HeaderModule,
     BookTableModule,
     SidenavModule,
     WaiterCockpitModule,

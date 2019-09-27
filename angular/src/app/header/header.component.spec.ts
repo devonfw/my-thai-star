@@ -81,14 +81,9 @@ describe('HeaderComponent', () => {
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
-  describe('constructor', () => {
-    it('makes expected calls', () => {
-      expect(HeaderComponent.prototype.getFlag).toHaveBeenCalled();
-    });
-  });
   describe('openLoginDialog', () => {
     inject([TranslateService], (_injectService: TranslateService) => {
-      it('makes expected calls', () => {
+      it('makes expected calls', async () => {
         spyOn(store, 'dispatch').and.callThrough();
         component.openLoginDialog();
         expect(store.dispatch).toHaveBeenCalled();
@@ -96,7 +91,7 @@ describe('HeaderComponent', () => {
     });
   });
   describe('openResetDialog', () => {
-    it('makes expected calls', () => {
+    it('makes expected calls', async () => {
       inject([TranslateService], (_injectService: TranslateService) => {
         const matDialogStub: MatDialog = fixture.debugElement.injector.get(
           MatDialog,

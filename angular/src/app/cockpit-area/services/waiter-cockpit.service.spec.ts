@@ -1,29 +1,28 @@
-import { TestBed, inject } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { OrderView } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { WaiterCockpitService } from './waiter-cockpit.service';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('WaiterCockpitService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [WaiterCockpitService, PriceCalculatorService],
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
     });
   });
 
-  it(
-    'should create',
-    inject([WaiterCockpitService], (service: WaiterCockpitService) => {
+  it('should create', inject(
+    [WaiterCockpitService],
+    (service: WaiterCockpitService) => {
       expect(service).toBeTruthy();
-    }),
-  );
+    },
+  ));
 
   describe('Form composer', () => {
-    it(
-      'should compose correctly order info',
-      inject([WaiterCockpitService], (service: WaiterCockpitService) => {
+    it('should compose correctly order info', inject(
+      [WaiterCockpitService],
+      (service: WaiterCockpitService) => {
         const orderData: OrderView[] = [
           {
             dish: {
@@ -68,7 +67,7 @@ describe('WaiterCockpitService', () => {
         ]; // 2 dishes + 1 extra curry + 2 extra pork // 1 extra curry
 
         expect(service.orderComposer(orderData)).toEqual(orderResult);
-      }),
-    );
+      },
+    ));
   });
 });
