@@ -1,4 +1,4 @@
-import { props, createAction } from '@ngrx/store';
+import { props, createAction, union } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Order } from '../../models/order.model';
 
@@ -38,3 +38,16 @@ export const deleteOrders = createAction(
 );
 
 export const clearOrders = createAction('[Order] Clear Orders');
+
+// action types
+const all = union({
+  loadOrders,
+  addOrder,
+  addOrders,
+  updateOrder,
+  updateOrders,
+  deleteOrder,
+  deleteOrders,
+  clearOrders,
+});
+export type OrdersAction = typeof all;
