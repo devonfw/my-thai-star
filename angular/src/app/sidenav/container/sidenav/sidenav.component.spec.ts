@@ -22,7 +22,7 @@ describe('SidenavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [SidenavComponent, SidenavOrderComponent],
+      declarations: [SidenavComponent],
       providers: [PriceCalculatorService, SidenavService, SnackBarService],
       imports: [
         BrowserAnimationsModule,
@@ -35,8 +35,8 @@ describe('SidenavComponent', () => {
             strictActionImmutability: true,
           },
         }),
-        EffectsModule.forFeature([SendOrderEffects]),
         StoreModule.forFeature('order', fromOrder.reducer),
+        EffectsModule.forFeature([SendOrderEffects]),
       ],
     }).compileComponents();
   }));
