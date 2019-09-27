@@ -1,4 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,7 +24,7 @@ describe('InvitationDialogComponent', () => {
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
         BookTableModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterTestingModule,
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromRoot.reducers, {
