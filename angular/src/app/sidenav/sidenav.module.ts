@@ -1,22 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '../core/core.module';
-
-import { SidenavService } from './services/sidenav.service';
-import { PriceCalculatorService } from './services/price-calculator.service';
-import { WindowService } from '../core/window/window.service';
-
-import { SidenavComponent } from './container/sidenav/sidenav.component';
-import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.component';
-import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommentAlertComponent } from './components/comment-alert/comment-alert.component';
-import { StoreModule } from '@ngrx/store';
-import * as fromOrder from './store/reducers/order.reducer';
-import * as fromSendOrder from './store/reducers/send-order.reducer';
+import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../core/core.module';
+import { WindowService } from '../core/window/window.service';
+import { CommentAlertComponent } from './components/comment-alert/comment-alert.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.component';
+import { SidenavComponent } from './container/sidenav/sidenav.component';
+import { SidenavService } from './services/sidenav.service';
 import { SendOrderEffects } from './store/effects/send-order.effects';
+import * as fromSideNav from './store/reducers';
 
 @NgModule({
   imports: [
@@ -24,8 +20,7 @@ import { SendOrderEffects } from './store/effects/send-order.effects';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-    StoreModule.forFeature('order', fromOrder.reducer),
-    StoreModule.forFeature('sendOrder', fromSendOrder.reducer),
+    StoreModule.forFeature('sidenav', fromSideNav.reducers),
     EffectsModule.forFeature([SendOrderEffects]),
   ],
   providers: [SidenavService, WindowService],

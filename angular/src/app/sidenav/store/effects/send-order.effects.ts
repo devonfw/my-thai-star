@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { exhaustMap, tap, map, catchError } from 'rxjs/operators';
-import * as sendOrderActions from '../actions/send-order.actions';
-import { SidenavService } from '../../services/sidenav.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import * as fromApp from 'app/store/reducers';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { SidenavService } from '../../services/sidenav.service';
+import * as fromApp from '../../store';
 import * as orderActions from '../actions/order.actions';
+import * as sendOrderActions from '../actions/send-order.actions';
 
 @Injectable()
 export class SendOrderEffects {
   sendOrders$ = createEffect(() =>
     this.actions$.pipe(
       ofType(sendOrderActions.sendOrders),
-      map(tokenData => tokenData.token),
+      map((tokenData) => tokenData.token),
       exhaustMap((token: any) => {
         return this.sidenavService.sendOrders(token).pipe(
           map((res: any) => {
@@ -51,7 +51,7 @@ export class SendOrderEffects {
   );
 
   constructor(
-    private store: Store<fromApp.State>,
+    private store: Store<fromApp.SideNavState>,
     private actions$: Actions,
     private sidenavService: SidenavService,
     private snackBar: SnackBarService,

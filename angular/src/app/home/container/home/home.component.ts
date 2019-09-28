@@ -1,6 +1,9 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Tile } from '../../components/home-card/home-card.component';
+import * as fromRoot from '../../../store';
+import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'public-home',
   templateUrl: './home.component.html',
@@ -24,10 +27,10 @@ export class HomeComponent {
     },
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<fromRoot.State>) {}
 
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
+  navigateTo(route: string) {
+    this.store.dispatch(fromRoot.go({ path: [route] }));
   }
 
   getTiles(): TileWithNavigation[] {

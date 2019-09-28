@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { storageSync } from '@larscom/ngrx-store-storagesync';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { ActionReducer, StoreModule } from '@ngrx/store';
+import {
+  RouterStateSerializer,
+  StoreRouterConnectingModule,
+} from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -23,8 +26,7 @@ import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
 import { WebviewDirective } from './shared/directives/webview.directive';
 import { SidenavModule } from './sidenav/sidenav.module';
-import * as RootState from './store/reducers';
-import { reducers } from './store/reducers';
+import { CustomSerializer, effects, reducers } from './store';
 import { UserAreaModule } from './user-area/user-area.module';
 
 // AoT requires an exported function for factories
@@ -32,26 +34,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function storageSyncReducer(
-  reducer: ActionReducer<RootState.State>,
-): ActionReducer<RootState.State> {
-  return storageSync<RootState.State>({
-    version: 1,
-    features: [{ stateKey: 'auth', storageForFeature: window.sessionStorage }],
-    storageError: console.error,
-    storage: window.localStorage,
-  })(reducer);
-}
-
-const metaReducers = environment.production
-  ? [storageSyncReducer]
-  : [storageSyncReducer];
-
 @NgModule({
-  declarations: [AppComponent, WebviewDirective],
   imports: [
-    ConfigModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    ConfigModule,
     NgxElectronModule,
     HeaderModule,
     HomeModule,
@@ -63,7 +50,6 @@ const metaReducers = environment.production
     UserAreaModule,
     CoreModule,
     EmailConfirmationModule,
-    AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,16 +60,19 @@ const metaReducers = environment.production
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
     }),
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
+    AppRoutingModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
     }),
+    EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  declarations: [AppComponent, WebviewDirective],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
