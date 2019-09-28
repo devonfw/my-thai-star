@@ -1,10 +1,11 @@
-import { InvitationResponse } from '../../../shared/view-models/interfaces';
-import { EmailConfirmationsService } from '../../services/email-confirmations.service';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { InvitationResponse } from '../../../shared/view-models/interfaces';
+import * as fromRoot from '../../../store';
+import { EmailConfirmationsService } from '../../services/email-confirmations.service';
 
 @Component({
   selector: 'public-email-confirmations',
@@ -103,6 +104,6 @@ export class EmailConfirmationsComponent implements OnInit {
       }
     });
     // Navigate to home
-    this.router.navigate(['restaurant']);
+    fromRoot.go({ path: ['/restaurant'] });
   }
 }

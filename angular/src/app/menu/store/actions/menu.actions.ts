@@ -1,4 +1,4 @@
-import { props, createAction } from '@ngrx/store';
+import { props, createAction, union } from '@ngrx/store';
 import { Filter, Pageable } from '../../../shared/backend-models/interfaces';
 import { DishView } from '../../../shared/view-models/interfaces';
 
@@ -16,3 +16,11 @@ export const loadMenuFail = createAction(
   '[Menu] Load Menus Fail',
   props<{ error: Error }>(),
 );
+
+// action types
+const all = union({
+  loadMenus,
+  loadMenusSuccess,
+  loadMenuFail,
+});
+export type MenuActions = typeof all;

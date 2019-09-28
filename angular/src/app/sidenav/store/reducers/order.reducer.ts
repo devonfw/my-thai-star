@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { Order } from '../../models/order.model';
 import * as orderActions from '../actions/order.actions';
 
-export interface State extends EntityState<Order> {
+export interface OrderState extends EntityState<Order> {
   selectedOrderId: string | null;
 }
 
@@ -11,7 +11,7 @@ export const adapter: EntityAdapter<Order> = createEntityAdapter<Order>({
   sortComparer: false,
 });
 
-export const initialState: State = adapter.getInitialState({
+export const initialState: OrderState = adapter.getInitialState({
   selectedOrderId: null,
 });
 
@@ -37,6 +37,6 @@ const orderReducer = createReducer(
   on(orderActions.clearOrders, (state) => adapter.removeAll(state)),
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: OrderState | undefined, action: Action) {
   return orderReducer(state, action);
 }

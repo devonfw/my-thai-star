@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../config/config.service';
+import { select, Store } from '@ngrx/store';
 import * as fromApp from 'app/store/reducers/';
-import * as fromAuth from 'app/user-area/store/selectors/';
-import {Observable} from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import * as fromAuth from 'app/user-area/store/selectors/auth.selectors';
+import { Observable } from 'rxjs';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class AuthService {

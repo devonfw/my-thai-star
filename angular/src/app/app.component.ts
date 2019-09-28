@@ -6,8 +6,8 @@ import { ElectronService } from 'ngx-electron';
 import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import * as moment from 'moment';
-import * as fromApp from './store/reducers/';
-import * as fromAuth from './user-area/store/selectors/';
+import * as fromRoot from './store';
+import * as fromAuth from './user-area/store';
 import { fadeAnimation } from './core/animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     public auth: AuthService,
     public electronService: ElectronService,
     public configService: ConfigService,
-    private store: Store<fromApp.State>,
+    private store: Store<fromRoot.State>,
   ) {
     this.version = configService.getValues().version;
     translate.addLangs(
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    this.store.dispatch(fromRoot.go({ path: [route] }));
     this.mobileSidenavOpened = false;
   }
 

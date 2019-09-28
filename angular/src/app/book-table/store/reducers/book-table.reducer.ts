@@ -1,8 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as bookTableActions from '../actions/book-table.actions';
-import {BookingResponse} from '../../models/booking-response.model';
-import {Booking} from '../../models/booking.model';
-
+import { BookingResponse } from '../../models/booking-response.model';
+import { Booking } from '../../models/booking.model';
 
 export interface State {
   pending: boolean;
@@ -24,18 +23,42 @@ export const initialState: State = {
     bookingDate: '',
     bookingToken: '',
     tableId: undefined,
-    email: ''
-  }
+    email: '',
+  },
 };
 
 const bookTableReducer = createReducer(
   initialState,
-  on(bookTableActions.bookTable, (state, {booking}) => ({...state, pending: true, booking: booking})),
-  on(bookTableActions.bookTableSuccess, (state, {bookingResponse}) => ({...state, pending: false, bookingResponse: bookingResponse})),
-  on(bookTableActions.bookTableFail, (state, {error}) => ({...state, pending: false, errorMessage: error.message})),
-  on(bookTableActions.inviteFriends, (state, {booking}) => ({...state, pending: true, booking: booking})),
-  on(bookTableActions.inviteFriendsSuccess, (state, {bookingResponse}) => ({...state, pending: false, bookingResponse: bookingResponse})),
-  on(bookTableActions.inviteFriendsFail, (state, {error}) => ({...state, pending: false, errorMessage: error.message})),
+  on(bookTableActions.bookTable, (state, { booking }) => ({
+    ...state,
+    pending: true,
+    booking: booking,
+  })),
+  on(bookTableActions.bookTableSuccess, (state, { bookingResponse }) => ({
+    ...state,
+    pending: false,
+    bookingResponse: bookingResponse,
+  })),
+  on(bookTableActions.bookTableFail, (state, { error }) => ({
+    ...state,
+    pending: false,
+    errorMessage: error.message,
+  })),
+  on(bookTableActions.inviteFriends, (state, { booking }) => ({
+    ...state,
+    pending: true,
+    booking: booking,
+  })),
+  on(bookTableActions.inviteFriendsSuccess, (state, { bookingResponse }) => ({
+    ...state,
+    pending: false,
+    bookingResponse: bookingResponse,
+  })),
+  on(bookTableActions.inviteFriendsFail, (state, { error }) => ({
+    ...state,
+    pending: false,
+    errorMessage: error.message,
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {
