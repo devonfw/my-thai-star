@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
-import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
-import * as bookTableActions from '../actions/book-table.actions';
-import { BookTableService } from '../../services/book-table.service';
-import { Router } from '@angular/router';
-import { Booking } from '../../models/booking.model';
 import { of } from 'rxjs';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import * as fromRoot from '../../../store';
+import { Booking } from '../../models/booking.model';
+import { BookTableService } from '../../services/book-table.service';
+import * as bookTableActions from '../actions/book-table.actions';
 
 @Injectable()
 export class BookTableEffects {
@@ -16,7 +16,7 @@ export class BookTableEffects {
       ofType(bookTableActions.bookTable),
       map((booking) => booking.booking),
       exhaustMap((booking: any) => {
-        return this.bookTableService.postBooking({booking: booking}).pipe(
+        return this.bookTableService.postBooking({ booking: booking }).pipe(
           map((res: any) =>
             bookTableActions.bookTableSuccess({
               bookingResponse: {
@@ -46,7 +46,7 @@ export class BookTableEffects {
             .subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
-          this.router.navigateByUrl('/menu');
+          fromRoot.go({ path: ['/menu'] });
         }),
       ),
     { dispatch: false },
@@ -72,8 +72,7 @@ export class BookTableEffects {
       ofType(bookTableActions.inviteFriends),
       map((booking) => booking.booking),
       exhaustMap((booking: Booking) =>
-        this.bookTableService.postBooking(booking)
-        .pipe(
+        this.bookTableService.postBooking(booking).pipe(
           map((res: any) => bookTableActions.inviteFriendsSuccess(res)),
           catchError((error) =>
             of(
@@ -82,7 +81,7 @@ export class BookTableEffects {
               }),
             ),
           ),
-        )
+        ),
       ),
     ),
   );
@@ -97,7 +96,7 @@ export class BookTableEffects {
             .subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
-          this.router.navigateByUrl('/bookTable');
+          fromRoot.go({ path: ['/bookTable'] });
         }),
       ),
     { dispatch: false },
@@ -123,6 +122,5 @@ export class BookTableEffects {
     public translateService: TranslateService,
     private bookTableService: BookTableService,
     public snackBar: SnackBarService,
-    private router: Router,
   ) {}
 }

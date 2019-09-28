@@ -2,12 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Order } from 'app/sidenav/models/order.model';
-import * as fromOrder from 'app/sidenav/store/selectors';
-import * as fromApp from 'app/store/reducers';
 import { Observable } from 'rxjs';
+import * as fromRoot from '../../../store';
 import { SidenavService } from '../../services/sidenav.service';
-import * as orderActions from '../../store/actions/order.actions';
-import * as sendOrderActions from '../../store/actions/send-order.actions';
+import * as fromOrder from '../../store';
 
 @Component({
   selector: 'public-sidenav',
@@ -24,13 +22,13 @@ export class SidenavComponent implements OnInit {
   constructor(
     private router: Router,
     private sidenav: SidenavService,
-    private store: Store<fromApp.State>,
+    private store: Store<fromOrder.SideNavState>,
   ) {}
 
   ngOnInit(): void {
-    this.orders$ = this.store.select(fromOrder.selectAll);
+    this.orders$ = this.store.select(fromOrder.getAllOrders);
     this.store
-      .select(fromOrder.selectAll)
+      .select(fromOrder.getAllOrders)
       .subscribe((orders) => (this.orders = orders));
     this.totalPrice$ = this.store.select(fromOrder.getTotalPrice);
   }
@@ -40,12 +38,12 @@ export class SidenavComponent implements OnInit {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    this.store.dispatch(fromRoot.go({ path: [route] }));
     this.closeSidenav();
   }
 
   sendOrders(bookingId: string): void {
-    this.store.dispatch(sendOrderActions.sendOrders({ token: bookingId }));
+    this.store.dispatch(fromOrder.sendOrders({ token: bookingId }));
   }
 
   findOrder(id: string) {
@@ -56,7 +54,7 @@ export class SidenavComponent implements OnInit {
     const orderToUpdate = this.findOrder(order.id);
     if (orderToUpdate) {
       this.store.dispatch(
-        orderActions.updateOrder({
+        fromOrder.updateOrder({
           order: {
             id: order.id,
             changes: {
@@ -80,7 +78,7 @@ export class SidenavComponent implements OnInit {
     if (orderToUpdate) {
       if (orderToUpdate.details.orderLine.amount > 1) {
         this.store.dispatch(
-          orderActions.updateOrder({
+          fromOrder.updateOrder({
             order: {
               id: order.id,
               changes: {
@@ -98,18 +96,18 @@ export class SidenavComponent implements OnInit {
         );
       } else {
         // Since the amount is 0 we remove it from the store
-        this.store.dispatch(orderActions.deleteOrder({ id: order.id }));
+        this.store.dispatch(fromOrder.deleteOrder({ id: order.id }));
       }
     }
   }
 
   onOrderRemoved(order: Order): void {
-    this.store.dispatch(orderActions.deleteOrder({ id: order.id }));
+    this.store.dispatch(fromOrder.deleteOrder({ id: order.id }));
   }
 
   onCommentRemoved(order: Order): void {
     this.store.dispatch(
-      orderActions.updateOrder({
+      fromOrder.updateOrder({
         order: {
           id: order.id,
           changes: {
@@ -129,7 +127,7 @@ export class SidenavComponent implements OnInit {
 
   onCommentAdded(order: Order): void {
     this.store.dispatch(
-      orderActions.updateOrder({
+      fromOrder.updateOrder({
         order: {
           id: order.id,
           changes: {

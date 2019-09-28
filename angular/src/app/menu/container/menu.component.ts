@@ -7,13 +7,12 @@ import { DishView, ExtraView } from '../../shared/view-models/interfaces';
 import { Order } from '../../sidenav/models/order.model';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
 import * as orderActions from '../../sidenav/store/actions/order.actions';
-import * as fromOrder from '../../sidenav/store/selectors';
-import * as fromApp from '../../store/reducers';
-import * as fromAuth from '../../user-area/store/selectors';
+import * as fromOrder from '../../sidenav/store';
+import * as fromApp from '../../store';
+import * as fromAuth from '../../user-area/store';
 import { FilterFormData } from '../components/menu-filters/menu-filters.component';
 import { MenuService } from '../services/menu.service';
-import * as loadMenusActions from '../store/actions/menu.actions';
-import * as fromMenu from '../store/selectors';
+import * as fromMenu from '../store';
 
 export interface Filters {
   searchBy: string;
@@ -44,9 +43,9 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.orders$ = this.store.select(fromOrder.selectAll);
+    this.orders$ = this.store.select(fromOrder.getAllOrders);
     this.store
-      .select(fromOrder.selectAll)
+      .select(fromOrder.getAllOrders)
       .subscribe((orders) => (this.orders = orders));
     this.logged$ = this.store.pipe(select(fromAuth.getLogged));
   }
@@ -67,9 +66,7 @@ export class MenuComponent implements OnInit {
       filters,
     );
 
-    this.store.dispatch(
-      loadMenusActions.loadMenus({ filter: composedFilters }),
-    );
+    this.store.dispatch(fromMenu.loadMenus({ filter: composedFilters }));
   }
 
   onExtraSelected(extra: ExtraView): void {

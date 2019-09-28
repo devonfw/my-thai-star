@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OrderInfo, OrderListInfo } from 'app/shared/backend-models/interfaces';
-import * as fromOrder from 'app/sidenav/store/selectors';
+import * as fromOrder from 'app/sidenav/store/selectors/order.selectors';
 import * as fromApp from 'app/store/reducers';
 import { Observable } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
@@ -38,12 +38,12 @@ export class SidenavService {
   }
 
   public getNumberOrders(): Observable<number> {
-    this.orders$ = this.store.select(fromOrder.selectAll);
+    this.orders$ = this.store.select(fromOrder.getAllOrders);
     return this.orders$.pipe(map((orders) => orders.length));
   }
 
   public sendOrders(token: string): Observable<SaveOrderResponse> {
-    this.orders$ = this.store.select(fromOrder.selectAll);
+    this.orders$ = this.store.select(fromOrder.getAllOrders);
     return this.orders$.pipe(
       map((orderData) => {
         const orderList: OrderListInfo = {

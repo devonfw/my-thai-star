@@ -12,10 +12,12 @@ import { AuthService } from '../core/authentication/auth.service';
 import { ConfigService } from '../core/config/config.service';
 import { WindowService } from '../core/window/window.service';
 import { SidenavService } from '../sidenav/services/sidenav.service';
+import * as fromRoot from '../store';
 import { PasswordDialogComponent } from '../user-area/components/password-dialog/password-dialog.component';
 import { QrCodeDialogComponent } from '../user-area/components/qr-code-dialog/qr-code-dialog.component';
 import { TwitterDialogComponent } from '../user-area/components/twitter-dialog/twitter-dialog.component';
 import { UserAreaService } from '../user-area/services/user-area.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'public-header',
@@ -39,6 +41,7 @@ export class HeaderComponent {
     public userAreaService: UserAreaService,
     public auth: AuthService,
     private configService: ConfigService,
+    private store: Store<fromRoot.State>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
@@ -54,7 +57,7 @@ export class HeaderComponent {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    this.store.dispatch(fromRoot.go({ path: [route] }));
     this.openCloseSidenavMobile.emit();
   }
 
