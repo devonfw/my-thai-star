@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EmailConfirmationsComponent } from './email-confirmations.component';
+import { EmailConfirmationsComponent } from './container/email-confirmations/email-confirmations.component';
 
 const emailConfirmationsRoutes: Routes = [
   {

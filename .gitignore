@@ -4,14 +4,15 @@ target
 eclipse-target
 NestJS/node_modules/
 NestJS/.vscode/
+idea/
 
 *.log
 *.bat
 *.class
 *.classpath
+*.project
 *.idea
 *.iml
-*.project
 *.settings
 .*!travis.yml
 java/samples/server/target/

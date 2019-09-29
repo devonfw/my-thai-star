@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../../core/config/config.service';
-import { PredictionService } from '../shared/prediction.service';
+import { PredictionService } from '../services/prediction.service';
 import { PredictionCockpitComponent } from './prediction-cockpit.component';
 import { TestBed } from '@angular/core/testing';
 
