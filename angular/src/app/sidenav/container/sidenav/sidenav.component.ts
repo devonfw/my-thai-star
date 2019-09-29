@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Order } from 'app/sidenav/models/order.model';
 import { Observable } from 'rxjs';
@@ -20,7 +19,6 @@ export class SidenavComponent implements OnInit {
   totalPrice$: Observable<number>;
 
   constructor(
-    private router: Router,
     private sidenav: SidenavService,
     private store: Store<fromOrder.SideNavState>,
   ) {}
