@@ -1,4 +1,4 @@
-import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { ReservationView } from '../../shared/view-models/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, Sort, PageEvent, MatPaginator } from '@angular/material';
