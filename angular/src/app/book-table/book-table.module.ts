@@ -13,8 +13,7 @@ import { BookTableDialogComponent } from './components/book-table-dialog/book-ta
 import { InvitationDialogComponent } from './components/invitation-dialog/invitation-dialog.component';
 import { BookTableComponent } from './container/book-table/book-table.component';
 import { BookTableService } from './services/book-table.service';
-import { BookTableEffects } from './store/effects/book-table.effects';
-import * as fromBookTable from './store/reducers/book-table.reducer';
+import { reducers, effects } from './store';
 
 @NgModule({
   imports: [
@@ -24,8 +23,8 @@ import * as fromBookTable from './store/reducers/book-table.reducer';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-    StoreModule.forFeature('bookTable', fromBookTable.reducer),
-    EffectsModule.forFeature([BookTableEffects]),
+    StoreModule.forFeature('bookTable', reducers),
+    EffectsModule.forFeature(effects),
   ],
   providers: [BookTableService, WindowService, SnackBarService],
   declarations: [

@@ -12,7 +12,7 @@ import { SidenavOrderComponent } from './components/sidenav-order/sidenav-order.
 import { SidenavComponent } from './container/sidenav/sidenav.component';
 import { SidenavService } from './services/sidenav.service';
 import { SendOrderEffects } from './store/effects/send-order.effects';
-import * as fromSideNav from './store/reducers';
+import { reducers, effects } from './store';
 
 @NgModule({
   imports: [
@@ -20,8 +20,8 @@ import * as fromSideNav from './store/reducers';
     HttpClientModule,
     TranslateModule,
     CoreModule,
-    StoreModule.forFeature('sidenav', fromSideNav.reducers),
-    EffectsModule.forFeature([SendOrderEffects]),
+    StoreModule.forFeature('sidenav', reducers),
+    EffectsModule.forFeature(effects),
   ],
   providers: [SidenavService, WindowService],
   declarations: [
