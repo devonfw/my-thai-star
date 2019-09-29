@@ -1,25 +1,29 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
-
-import { AuthService } from '../core/authentication/auth.service';
-import { SidenavService } from '../sidenav/shared/sidenav.service';
-import { UserAreaService } from '../user-area/shared/user-area.service';
-import { WindowService } from '../core/window/window.service';
-
-import { LoginDialogComponent } from '../user-area/login-dialog/login-dialog.component';
-import { PasswordDialogComponent } from '../user-area/password-dialog/password-dialog.component';
-import { TwitterDialogComponent } from '../user-area/twitter-dialog/twitter-dialog.component';
-import { QrCodeDialogComponent } from '../user-area/qr-code-dialog/qr-code-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../core/authentication/auth.service';
 import { ConfigService } from '../core/config/config.service';
-
+import { WindowService } from '../core/window/window.service';
+import { SidenavService } from '../sidenav/services/sidenav.service';
+import * as fromRoot from '../store';
+import { PasswordDialogComponent } from '../user-area/components/password-dialog/password-dialog.component';
+import { QrCodeDialogComponent } from '../user-area/components/qr-code-dialog/qr-code-dialog.component';
+import { TwitterDialogComponent } from '../user-area/components/twitter-dialog/twitter-dialog.component';
+import { UserAreaService } from '../user-area/services/user-area.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'public-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   selectableLangs: any[];
@@ -30,14 +34,14 @@ export class HeaderComponent {
   constructor(
     public window: WindowService,
     public translate: TranslateService,
-    public authService: AuthService,
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
-    public auth: AuthService,
-    public userService: UserAreaService,
     public dateTimeAdapter: DateTimeAdapter<any>,
-    private configService: ConfigService
+    public userAreaService: UserAreaService,
+    public auth: AuthService,
+    private configService: ConfigService,
+    private store: Store<fromRoot.State>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
     this.getFlag(this.translate.currentLang);
@@ -53,7 +57,7 @@ export class HeaderComponent {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    this.store.dispatch(fromRoot.go({ path: [route] }));
     this.openCloseSidenavMobile.emit();
   }
 
@@ -82,21 +86,7 @@ export class HeaderComponent {
   }
 
   openLoginDialog(): void {
-    const dialogRef: MatDialogRef<LoginDialogComponent> = this.dialog.open(
-      LoginDialogComponent,
-      {
-        width: this.window.responsiveWidth(),
-      },
-    );
-    dialogRef.afterClosed().subscribe((content: any) => {
-      if (content) {
-        if (content.email) {
-          this.userService.register(content.email, content.password);
-        } else {
-          this.userService.login(content.username, content.password);
-        }
-      }
-    });
+    this.userAreaService.openLoginDialog();
   }
 
   openResetDialog(): void {
@@ -124,8 +114,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this.userService.logout();
-    this.router.navigate(['restaurant']);
+    this.userAreaService.logout();
   }
 
   getQRCode(): void {

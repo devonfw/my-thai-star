@@ -1,16 +1,14 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
-
-import { WaiterCockpitModule } from '../../cockpit.module';
-import { CoreModule } from '../../../core/core.module';
-
-import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-
-import { ReservationDialogComponent } from './reservation-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../../core/core.module';
+import { PriceCalculatorService } from '../../../sidenav/services/price-calculator.service';
+import { WaiterCockpitModule } from '../../cockpit.module';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
+import { ReservationDialogComponent } from './reservation-dialog.component';
 
 describe('ReservationDialogComponent', () => {
   let component: ReservationDialogComponent;
@@ -24,15 +22,16 @@ describe('ReservationDialogComponent', () => {
         WaiterCockpitModule,
         TranslateModule.forRoot(),
         CoreModule,
-        HttpClientModule,
+        HttpClientTestingModule,
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     dialog = TestBed.get(MatDialog);
-    component = dialog.open(ReservationDialogComponent, { data: { dialogData: { row: undefined } } }).componentInstance;
+    component = dialog.open(ReservationDialogComponent, {
+      data: { dialogData: { row: undefined } },
+    }).componentInstance;
   });
 
   it('should create', () => {

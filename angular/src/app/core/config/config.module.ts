@@ -1,6 +1,5 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { ConfigService } from './config.service';
 
 @NgModule({

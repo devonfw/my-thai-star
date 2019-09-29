@@ -1,16 +1,14 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
-
-import { CoreModule } from '../../../core/core.module';
-import { WaiterCockpitModule } from '../../cockpit.module';
-
-import { WaiterCockpitService } from '../../shared/waiter-cockpit.service';
-import { PriceCalculatorService } from '../../../sidenav/shared/price-calculator.service';
-
-import { OrderDialogComponent } from './order-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../../core/core.module';
+import { PriceCalculatorService } from '../../../sidenav/services/price-calculator.service';
+import { WaiterCockpitModule } from '../../cockpit.module';
+import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
+import { OrderDialogComponent } from './order-dialog.component';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
@@ -24,15 +22,16 @@ describe('OrderDialogComponent', () => {
         WaiterCockpitModule,
         TranslateModule.forRoot(),
         CoreModule,
-        HttpClientModule,
+        HttpClientTestingModule,
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     dialog = TestBed.get(MatDialog);
-    component = dialog.open(OrderDialogComponent, { data: { dialogData: { row: undefined } } }).componentInstance;
+    component = dialog.open(OrderDialogComponent, {
+      data: { dialogData: { row: undefined } },
+    }).componentInstance;
   });
 
   it('should create', () => {

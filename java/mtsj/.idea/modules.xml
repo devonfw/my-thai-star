@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mtsj.iml" filepath="$PROJECT_DIR$/mtsj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mtsj.iml" filepath="$PROJECT_DIR$/mtsj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/mtsj-api.iml" filepath="$PROJECT_DIR$/api/mtsj-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/mtsj-api.iml" filepath="$PROJECT_DIR$/api/mtsj-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/batch/mtsj-batch.iml" filepath="$PROJECT_DIR$/batch/mtsj-batch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/batch/mtsj-batch.iml" filepath="$PROJECT_DIR$/batch/mtsj-batch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/mtsj-core.iml" filepath="$PROJECT_DIR$/core/mtsj-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/mtsj-core.iml" filepath="$PROJECT_DIR$/core/mtsj-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/mtsj-server.iml" filepath="$PROJECT_DIR$/server/mtsj-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/mtsj-server.iml" filepath="$PROJECT_DIR$/server/mtsj-server.iml" />
+    </modules>
+  </component>
+</project>

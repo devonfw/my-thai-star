@@ -5,14 +5,14 @@
     </mat-toolbar>
 
     <div class="sidenavContainerOuter">
-      <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(o)">
+      <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(fade)">
 
         <mat-sidenav class="sidenavMobile" [opened]="sidenav.opened" position="end" (openedChange)="sidenavStatus($event)">
           <public-sidenav></public-sidenav>
         </mat-sidenav>
 
         <mat-sidenav class="mobileSidenav" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
-          <mat-nav-list menu-items *ngIf="auth.isPermited('CUSTOMER')">
+          <mat-nav-list menu-items *ngIf="(role$ | async) === 'CUSTOMER'">
             <a mat-list-item (click)="navigateTo('restaurant')">
               <mat-icon>home</mat-icon>
               HOME
@@ -26,13 +26,17 @@
               BOOK TABLE
             </a>
           </mat-nav-list>
-          <mat-nav-list menu-items *ngIf="auth.isPermited('MANAGER')">
+          <mat-nav-list menu-items *ngIf="(role$ | async) === 'MANAGER'">
             <a mat-list-item (click)="navigateTo('prediction')">
               <mat-icon>show_chart</mat-icon>
               PREDICTION
             </a>
+            <a mat-list-item (click)="navigateTo('clustering')">
+              <mat-icon>drag_indicator</mat-icon>
+              CLUSTERING
+            </a>
           </mat-nav-list>
-          <mat-nav-list menu-items *ngIf="auth.isPermited('WAITER')">
+          <mat-nav-list menu-items *ngIf="(role$ | async) === 'WAITER'">
             <a mat-list-item (click)="navigateTo('orders')">
               <mat-icon>home</mat-icon>
               ORDERS
@@ -44,7 +48,7 @@
           </mat-nav-list>
         </mat-sidenav>
 
-        <router-outlet #o="outlet"></router-outlet>
+        <router-outlet #fade="outlet"></router-outlet>
 
       </mat-sidenav-container>
     </div>
