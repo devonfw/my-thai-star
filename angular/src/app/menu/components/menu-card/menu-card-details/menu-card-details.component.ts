@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
+import { MatCheckboxChange } from '@angular/material';
 
 @Component({
   selector: 'own-menu-card-details',
@@ -13,13 +14,13 @@ export class MenuCardDetailsComponent {
     ExtraView
   >();
 
-  onSelectExtra(extra: ExtraView): void {
-    const modifiedExtraIndex: number = this.menuInfo.extras.indexOf(extra);
-    const oldExtra: ExtraView = this.menuInfo.extras[modifiedExtraIndex];
-    this.menuInfo.extras[modifiedExtraIndex] = {
-      ...oldExtra,
-      ...{ selected: !oldExtra.selected },
-    };
+  onToggleExtra(extra: ExtraView, event: MatCheckboxChange): void {
+    const modifiedExtra = this.menuInfo.extras.find((e) => e.id === extra.id);
+    const item = Object.assign({
+      ...modifiedExtra,
+      selected: event.checked,
+    });
+    this.selectExtra.emit(item);
   }
 
   onClickOrder(): void {

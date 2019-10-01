@@ -1,4 +1,4 @@
-import { props, createAction, union } from '@ngrx/store';
+import { createAction, props, union } from '@ngrx/store';
 import { Filter, Pageable } from '../../../shared/backend-models/interfaces';
 import { DishView } from '../../../shared/view-models/interfaces';
 
@@ -12,15 +12,21 @@ export const loadMenusSuccess = createAction(
   props<{ pageable?: Pageable; content?: DishView[] }>(),
 );
 
-export const loadMenuFail = createAction(
+export const loadMenusFail = createAction(
   '[Menu] Load Menus Fail',
   props<{ error: Error }>(),
+);
+
+export const updateDishExtras = createAction(
+  '[Menu] Select Dish Extras',
+  props<{ dish: DishView }>(),
 );
 
 // action types
 const all = union({
   loadMenus,
   loadMenusSuccess,
-  loadMenuFail,
+  loadMenusFail,
+  updateDishExtras,
 });
 export type MenuActions = typeof all;

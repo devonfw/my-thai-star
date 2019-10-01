@@ -1,6 +1,6 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromOrders from '../reducers/order.reducer';
+import { createSelector } from '@ngrx/store';
 import * as fromFeature from '../reducers';
+import * as fromOrders from '../reducers/order.reducer';
 
 export const {
   selectIds,
