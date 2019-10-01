@@ -61,7 +61,7 @@ export class SidenavComponent implements OnInit {
                 extras: orderToUpdate.details.extras,
                 orderLine: {
                   ...orderToUpdate.details.orderLine,
-                  amount: ++orderToUpdate.details.orderLine.amount,
+                  amount: orderToUpdate.details.orderLine.amount + 1,
                 },
               },
             },
@@ -85,7 +85,7 @@ export class SidenavComponent implements OnInit {
                   extras: orderToUpdate.details.extras,
                   orderLine: {
                     ...orderToUpdate.details.orderLine,
-                    amount: --orderToUpdate.details.orderLine.amount,
+                    amount: orderToUpdate.details.orderLine.amount - 1,
                   },
                 },
               },

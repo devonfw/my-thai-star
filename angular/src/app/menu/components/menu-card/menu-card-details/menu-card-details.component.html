@@ -14,8 +14,8 @@
 <div class="extras">
   <mat-checkbox
     *ngFor="let extra of menuInfo.extras"
-    [checked]="extra.selected"
-    (change)="onSelectExtra(extra)"
+    [ngModel]="extra.selected"
+    (change)="onToggleExtra(extra, $event)"
   >
     {{ extra.name }} +{{ extra.price }}€
   </mat-checkbox>
