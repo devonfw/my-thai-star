@@ -12,10 +12,10 @@ Example of labels:
 [source,yaml]
 ----
 labels:
-    - "traefik.frontend.rule=PathPrefixStrip:/api/;AddPrefix:/mythaistar"
-    - "traefik.backend.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
-    - "traefik.backend.healthcheck.interval=10s"
-    - "traefik.backend.healthcheck.scheme=http"
+    - "traefik.http.routers.angular.rule=PathPrefix(`/`)"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.path=/health"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.interval=10s"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.scheme=http"
 ----
 
 === How to use it
