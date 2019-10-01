@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DishView, ExtraView } from '../../../shared/view-models/interfaces';
 
 @Component({
   selector: 'public-menu-card',
@@ -13,27 +13,18 @@ export class MenuCardComponent {
   @Output() orderAdded = new EventEmitter<any>();
   @Output() extraSelected = new EventEmitter<any>();
 
-  constructor(
-  ) {}
+  constructor() {}
 
-  changeFavouriteState(): void {
+  changeFavouriteState() {
     this.menuInfo.isfav = !this.menuInfo.isfav;
   }
 
-  selectedOption(extra: ExtraView): void {
-    extra.selected = !extra.selected;
+  selectedOption(extra: ExtraView) {
+    const dish = this.menuInfo;
+    this.extraSelected.emit({ dish, extra });
   }
 
-  addOrderMenu(): void {
+  addOrderMenu() {
     this.orderAdded.emit(this.menuInfo);
-  }
-
-  receiveExtra($event) {
-    this.extras = $event;
-    this.extraSelected.emit(this.extras);
-  }
-
-  addSelectExtra(): void {
-    this.extraSelected.emit(this.extras);
   }
 }

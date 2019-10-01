@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { DishView, ExtraView } from '../../shared/view-models/interfaces';
 import { Order } from '../../sidenav/models/order.model';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
-import * as orderActions from '../../sidenav/store/actions/order.actions';
 import * as fromOrder from '../../sidenav/store';
 import * as fromApp from '../../store';
 import * as fromAuth from '../../user-area/store';
@@ -33,7 +32,6 @@ export class MenuComponent implements OnInit {
   logged$: Observable<boolean>;
   orders$: Observable<Order[]>;
   orders: Order[];
-  menuInfo: DishView;
   extras: ExtraView[] = [];
 
   constructor(
@@ -69,8 +67,21 @@ export class MenuComponent implements OnInit {
     this.store.dispatch(fromMenu.loadMenus({ filter: composedFilters }));
   }
 
-  onExtraSelected(extra: ExtraView): void {
-    this.extras.push(extra);
+  onExtraSelected(info: { dish: DishView; extra: ExtraView }): void {
+    const extras: ExtraView[] = info.dish.extras.map((e) => {
+      if (e.id === info.extra.id) {
+        return {
+          ...e,
+          selected: info.extra.selected,
+        };
+      } else {
+        return {
+          ...e,
+        };
+      }
+    });
+    const dish = { ...info.dish, extras };
+    this.store.dispatch(fromMenu.updateDishExtras({ dish }));
   }
 
   findOrder(orderToStore: Order) {
@@ -90,7 +101,7 @@ export class MenuComponent implements OnInit {
   onOrderAdded(order: DishView) {
     const orderToStore = this.menuService.menuToOrder(order);
     orderToStore.details.extras = orderToStore.details.extras.filter(
-      (e) => e.selected,
+      (e) => e.selected === true,
     );
     const orderToUpdate = this.findOrder(orderToStore);
     if (orderToUpdate) {
@@ -102,22 +113,21 @@ export class MenuComponent implements OnInit {
               ...orderToUpdate.details,
               orderLine: {
                 ...orderToUpdate.details.orderLine,
-                amount: ++orderToUpdate.details.orderLine.amount,
+                amount: orderToUpdate.details.orderLine.amount + 1,
               },
             },
           },
         },
       };
-      this.store.dispatch(orderActions.updateOrder(update));
+      this.store.dispatch(fromOrder.updateOrder(update));
     } else {
       this.store.dispatch(
-        orderActions.addOrder({
+        fromOrder.addOrder({
           order: { ...orderToStore },
         }),
       );
       this.extras = [];
     }
     this.sidenav.openSideNav();
-    this.menuService.clearSelectedExtras(order);
   }
 }

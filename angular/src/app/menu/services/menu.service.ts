@@ -7,6 +7,7 @@ import { ConfigService } from '../../core/config/config.service';
 import { DishView, ExtraView } from '../../shared/view-models/interfaces';
 import { FilterFormData } from '../components/menu-filters/menu-filters.component';
 import { Order } from '../models/order.model';
+import * as fromMenu from '../store';
 
 const categoryNameToServerId: { [key: string]: number } = Object.freeze({
   mainDishes: 0,
@@ -62,12 +63,6 @@ export class MenuService {
       minLikes: filters.minLikes,
       isFav: undefined, // TODO: what is this field? It was present in interface but setting it will cause errors ...
     };
-  }
-
-  clearSelectedExtras(menuInfo: DishView): void {
-    menuInfo.extras.map((extra: ExtraView) => {
-      extra.selected = false;
-    });
   }
 
   getDishes(
