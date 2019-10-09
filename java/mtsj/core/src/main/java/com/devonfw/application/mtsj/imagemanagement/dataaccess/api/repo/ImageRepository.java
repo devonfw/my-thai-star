@@ -2,7 +2,7 @@ package com.devonfw.application.mtsj.imagemanagement.dataaccess.api.repo;
 
 import static com.querydsl.core.alias.Alias.$;
 
-import java.sql.Clob;
+import java.sql.Blob;
 
 import org.springframework.data.domain.Page;
 
@@ -32,7 +32,7 @@ public interface ImageRepository extends DefaultRepository<ImageEntity> {
     if ((name != null) && !name.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getName()), name, criteria.getNameOption());
     }
-    Clob content = criteria.getContent();
+    Blob content = criteria.getContent();
     if (content != null) {
       query.where($(alias.getContent()).eq(content));
     }
