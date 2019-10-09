@@ -99,7 +99,7 @@ CREATE TABLE Image (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
-  content clob,
+  content blob,
   contentType INTEGER,
   mimeType VARCHAR(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)

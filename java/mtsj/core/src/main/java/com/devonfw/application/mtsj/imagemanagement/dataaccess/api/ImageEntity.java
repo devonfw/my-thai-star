@@ -1,6 +1,6 @@
 package com.devonfw.application.mtsj.imagemanagement.dataaccess.api;
 
-import java.sql.Clob;
+import java.sql.Blob;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,7 +20,7 @@ public class ImageEntity extends ApplicationPersistenceEntity implements Image {
 
   private String name;
 
-  private Clob content;
+  private Blob content;
 
   private ContentType contentType;
 
@@ -45,7 +45,7 @@ public class ImageEntity extends ApplicationPersistenceEntity implements Image {
   /**
    * @return content
    */
-  public Clob getContent() {
+  public Blob getContent() {
 
     return this.content;
   }
@@ -53,7 +53,7 @@ public class ImageEntity extends ApplicationPersistenceEntity implements Image {
   /**
    * @param content new value of {@link #getContent}.
    */
-  public void setContent(Clob content) {
+  public void setContent(Blob content) {
 
     this.content = content;
   }
