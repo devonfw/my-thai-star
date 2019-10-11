@@ -1,3 +1,6 @@
+:toc:
+toc::[]
+
 = .NET testing
 
 TODO
