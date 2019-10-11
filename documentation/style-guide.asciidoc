@@ -1,3 +1,6 @@
+:toc:
+toc::[]
+
 = Style guide
 
 image::images/mts_styleguide.png[, link="images/mts_styleguide.png"]
