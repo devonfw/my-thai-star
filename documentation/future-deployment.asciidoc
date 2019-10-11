@@ -1,3 +1,6 @@
+:toc:
+toc::[]
+
 = Future Deployment
 
 The *My Thai Star* project is going to be built in many technologies. Thus, let's think about one deployment schema that allow the Angular client to communicate to all three backends: *Java*, *Node* and *.NET*.
