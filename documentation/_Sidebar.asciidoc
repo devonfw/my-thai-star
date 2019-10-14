@@ -1,40 +1,63 @@
-* link:Home.asciidoc[Wiki Home]
-** link:agile.asciidoc[Agile]
-** link:user-stories.asciidoc[User Stories]
-** Technical design
-*** Data model
-**** link:my-thai-star-data-model.asciidoc[Data model]
-**** link:my-thai-star-nosql-data-model.asciidoc[NoSQL data model]
-*** Server Side
-**** link:java-design.asciidoc[Java design]
-**** link:net-design.asciidoc[.NET design]
-**** link:nodejs-design.asciidoc[Node.js design]
-**** link:serverless-design.asciidoc[Serverless design]
-**** link:graphql-design.asciidoc[GraphQL design]
-*** Client Side
-**** link:angular-design.asciidoc[Angular design]
-**** link:xamarin-design.asciidoc[Xamarin design]
-** Security
-*** link:twofactor.asciidoc[Two-Factor Authentication]
-** Testing
-*** Server Side
-**** link:java-testing.asciidoc[Java testing]
-**** link:net-testing.asciidoc[.NET testing]
-**** link:nodejs-testing.asciidoc[Node.js testing]
-**** link:graphql-testing.asciidoc[GraphQL testing]
-*** Client Side
-**** link:angular-testing.asciidoc[Angular testing]
-**** link:xamarin-testing.asciidoc[Xamarin testing]
-*** End to end
-**** link:mrchecker.asciidoc[Mr.Checker testing]
-** UI design
-*** link:style-guide.asciidoc[Style guide]
-** CI/CD
-*** link:production-line-ci.asciidoc[Production Line CI]
-**** link:angular-ci.asciidoc[Angular CI]
-**** link:java-ci.asciidoc[Java CI]
-*** link:deployment.asciidoc[Deployment]
-**** link:deployment-pipelines.asciidoc[Deployment pipelines]
-**** link:deployment-strategies.asciidoc[Deployment Strategies]
-**** link:future-deployment.asciidoc[Future Deployment]
-**** link:traefik-reverse-proxy.asciidoc[Traefik as reverse proxy]
+
+= Home 
+
+* link:Home[Wiki Home]
+** link:agile[Agile]
+** link:user-stories[User Stories]
+
+== Technical design
+
+=== Data model
+
+* link:my-thai-star-data-model[Data model]
+* link:my-thai-star-nosql-data-model[NoSQL data model]
+
+=== Server Side
+
+* link:java-design[Java design]
+* link:net-design[.NET design]
+* link:nodejs-design[Node.js design]
+* link:serverless-design[Serverless design]
+* link:graphql-design[GraphQL design]
+
+=== Client Side
+
+* link:angular-design[Angular design]
+* link:xamarin-design[Xamarin design]
+
+== Security
+
+* link:twofactor[Two-Factor Authentication]
+
+== Testing
+
+=== Server Side
+
+* link:java-testing[Java testing]
+* link:net-testing[.NET testing]
+* link:nodejs-testing[Node.js testing]
+* link:graphql-testing[GraphQL testing]
+
+=== Client Side
+
+* link:angular-testing[Angular testing]
+* link:xamarin-testing[Xamarin testing]
+
+=== End to end
+
+* link:mrchecker[Mr.Checker testing]
+
+== UI design
+
+* link:style-guide[Style guide]
+
+== CI/CD
+
+* link:production-line-ci[Production Line CI]
+** link:angular-ci[Angular CI]
+** link:java-ci[Java CI]
+* link:deployment[Deployment]
+** link:deployment-pipelines[Deployment pipelines]
+** link:deployment-strategies[Deployment Strategies]
+** link:future-deployment[Future Deployment]
+** link:traefik-reverse-proxy[Traefik as reverse proxy]
