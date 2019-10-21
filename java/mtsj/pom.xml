@@ -12,12 +12,12 @@
 
   <properties>
     <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-    <devon4j.version>3.1.0</devon4j.version>
+    <devon4j.version>3.2.0</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <devon.http.port>${devon.port.range}81</devon.http.port>
     <devon.db.port>${devon.port.range}43</devon.db.port>
-    <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySubsystemTest,com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
+    <devon.test.excluded.groups>subsystem,system</devon.test.excluded.groups>
   </properties>
 
   <modules>
@@ -164,7 +164,7 @@
     <profile>
       <id>subsystemtest</id>
       <properties>
-        <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
+        <devon.test.excluded.groups>system</devon.test.excluded.groups>
       </properties>
     </profile>
     <profile>
