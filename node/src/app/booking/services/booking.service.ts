@@ -5,14 +5,14 @@ import { plainToClass } from 'class-transformer';
 import * as md5 from 'md5';
 import * as moment from 'moment';
 import { EntityManager, Repository } from 'typeorm';
-import { ConfigurationService } from '../core/configuration/configuration.service';
-import { WinstonLogger } from '../shared/logger/winston.logger';
-import { BookingTypes } from './model/booking-types';
-import { BookingSearch } from './model/dto/booking-search.dto';
-import { Booking } from './model/entities/booking.entity';
-import { InvitedGuest } from './model/entities/invited-guest.entity';
-import { Table } from './model/entities/table.entity';
-import { User } from '../user/model/entity/user.entity';
+import { ConfigurationService } from '../../core/configuration/services/configuration.service';
+import { WinstonLogger } from '../../shared/logger/winston.logger';
+import { BookingTypes } from '../model/booking-types';
+import { BookingSearch } from '../model/dto/booking-search.dto';
+import { Booking } from '../model/entities/booking.entity';
+import { InvitedGuest } from '../model/entities/invited-guest.entity';
+import { Table } from '../model/entities/table.entity';
+import { User } from '../../user/model/entity/user.entity';
 
 @Injectable()
 export class BookingService {

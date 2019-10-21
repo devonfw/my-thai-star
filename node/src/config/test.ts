@@ -1,7 +1,7 @@
-import { IConfig } from '../app/core/configuration/types';
+import { IConfig } from '../app/core/configuration/model/types';
 
 const test: IConfig = {
-  isDev: false,
+  isDev: true,
   host: 'localhost',
   port: 8080,
   jwtConfig: {
@@ -23,7 +23,7 @@ const test: IConfig = {
     database: ':memory:',
     synchronize: false,
     migrationsRun: true,
-    logging: true,
+    logging: false,
     entities: ['./dist/**/*.entity{.js,.ts}'],
     migrations: ['dist/migrations/test/**/*.js'],
     subscribers: ['dist/subscriber/**/*.js'],

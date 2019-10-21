@@ -1,4 +1,4 @@
-import { IConfig } from '../app/core/configuration/types';
+import { IConfig } from '../app/core/configuration/model/types';
 import { join } from 'path';
 
 const def: IConfig = {

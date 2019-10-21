@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brackets, Repository } from 'typeorm';
-import { DishSearch } from './model/dto/dish-search.dto';
-import { Dish } from './model/entities/dish.entity';
+import { DishSearch } from '../model/dto/dish-search.dto';
+import { Dish } from '../model/entities/dish.entity';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
 @Injectable()
