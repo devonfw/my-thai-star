@@ -7,10 +7,10 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { DishService } from './dish.service';
-import { DishPage } from './model/dto/dish-page.dto';
-import { DishSearch } from './model/dto/dish-search.dto';
-import { Dish } from './model/entities/dish.entity';
+import { DishService } from '../services/dish.service';
+import { DishPage } from '../model/dto/dish-page.dto';
+import { DishSearch } from '../model/dto/dish-search.dto';
+import { Dish } from '../model/entities/dish.entity';
 
 @Controller('services/rest/dishmanagement/v1/dish')
 @ApiUseTags('Dish')
