@@ -3,7 +3,7 @@ version: "3"
 services:
   reverse-proxy:
     restart: always
-    image: traefik:2.0.0
+    image: traefik:2.0
     command:
       - "--api.dashboard=true"
       - "--api.insecure=true"
