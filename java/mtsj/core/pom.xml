@@ -168,13 +168,12 @@
 
     <!-- hibernate -->
     <dependency>
-      <groupId>org.hibernate.javax.persistence</groupId>
-      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <groupId>javax.persistence</groupId>
+      <artifactId>javax.persistence-api</artifactId>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
-      <version>3.2.4</version>
     </dependency>
 
 
@@ -189,25 +188,32 @@
         </exclusion>
       </exclusions>
     </dependency>
-
+    
+     <!-- Only required if you want to call external REST services within your Java application -->
     <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-cxf-client-rest</artifactId>
+    </dependency>
+    <!-- Only required if you want to call external SOAP services within your Java application -->
+    <dependency>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-cxf-client-ws</artifactId>
     </dependency>
 
+    <!-- Only required if you want to provide REST services within your Java application -->
     <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-client</artifactId>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-cxf-server-rest</artifactId>
+    </dependency>
+    <!-- Only required if you want to provide SOAP services within your Java application -->
+    <dependency>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-cxf-server-ws</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-service-description</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-http</artifactId>
     </dependency>
 
     <dependency>

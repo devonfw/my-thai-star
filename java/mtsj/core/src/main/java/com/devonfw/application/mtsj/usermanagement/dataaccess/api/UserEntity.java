@@ -96,7 +96,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
    */
   public String getSecret() {
 
-    return secret;
+    return this.secret;
   }
 
   /**
