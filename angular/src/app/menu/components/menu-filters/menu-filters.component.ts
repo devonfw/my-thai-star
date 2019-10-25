@@ -11,7 +11,7 @@ export class MenuFiltersComponent implements OnInit {
   private formDefaults: FilterFormData = {
     searchBy: '',
     sort: {
-      property: undefined,
+      property: 'price',
       direction: SortDirection.DESC,
     },
     maxPrice: undefined,
