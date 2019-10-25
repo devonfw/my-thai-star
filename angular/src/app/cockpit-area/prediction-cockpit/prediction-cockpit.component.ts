@@ -28,7 +28,13 @@ export class PredictionCockpitComponent implements OnInit {
   predictionFilter: PredictionCriteria = {
     pageable: {
       pageSize: 10000,
-      pageNumber: 0
+      pageNumber: 0,
+      sort: [
+        {
+          property: 'timestamp',
+          direction: 'ASC',
+        }
+      ],
     },
     type: 'prediction',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
@@ -40,7 +46,13 @@ export class PredictionCockpitComponent implements OnInit {
   dailyFilter: FilterOrdersCockpit = {
   pageable : {
       pageSize : 10000,
-      pageNumber : 0
+      pageNumber : 0,
+      sort: [
+        {
+          property: 'bookingdate',
+          direction: 'ASC',
+        }
+      ],
   },
     type: 'daily',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
@@ -53,7 +65,13 @@ export class PredictionCockpitComponent implements OnInit {
   monthlyFilter: FilterOrdersCockpit = {
   pageable : {
       pageSize : 10000,
-      pageNumber : 0
+      pageNumber : 0,
+      sort: [
+        {
+          property: 'bookingdate',
+          direction: 'ASC',
+        }
+      ],
   },
     type: 'monthly',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(), this.currentStartDate.value.getMonth() - 12, 1).toISOString(),

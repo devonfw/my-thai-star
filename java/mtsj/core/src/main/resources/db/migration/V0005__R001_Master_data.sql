@@ -6,15 +6,17 @@ INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, e
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (1, 1, 'waiter', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', false, 'waiter@mail.com', 1);
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', false, 'manager@mail.com', 2);
 
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (4, 1, 6);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (5, 1, 6);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (6, 1, 6);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (7, 1, 8);
-INSERT INTO Table(id, modificationCounter, seatsNumber) VALUES (8, 1, 8);
+
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (4, 1, 6);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (5, 1, 6);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (6, 1, 6);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (7, 1, 8);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (8, 1, 8);
+
 
 
 -- Common Booking with already created orders
