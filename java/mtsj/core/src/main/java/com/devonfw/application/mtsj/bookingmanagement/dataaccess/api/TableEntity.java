@@ -6,7 +6,7 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.Table;
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 
 @Entity
-@javax.persistence.Table(name = "Table")
+@javax.persistence.Table(name = "\"Table\"")
 public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private Integer seatsNumber;
@@ -16,6 +16,7 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
   /**
    * @return seatsNumber
    */
+  @Override
   public Integer getSeatsNumber() {
 
     return this.seatsNumber;
@@ -24,6 +25,7 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
   /**
    * @param seatsNumber new value of {@link #getseatsNumber}.
    */
+  @Override
   public void setSeatsNumber(Integer seatsNumber) {
 
     this.seatsNumber = seatsNumber;
