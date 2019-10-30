@@ -10,13 +10,13 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { BookingSearch } from '../booking/model/dto/booking-search.dto';
-import { Roles } from '../core/auth/decorators/roles.decorator';
-import { RolesGuard } from '../core/auth/guards/roles.guard';
-import { NewOrder } from './model/dto/new-order.dto';
-import { OrderPage } from './model/dto/order-page.dto';
-import { Order } from './model/entities/order.entity';
-import { OrderService } from './order.service';
+import { BookingSearch } from '../../booking/model/dto/booking-search.dto';
+import { Roles } from '../../core/auth/decorators/roles.decorator';
+import { RolesGuard } from '../../core/auth/guards/roles.guard';
+import { NewOrder } from '../model/dto/new-order.dto';
+import { OrderPage } from '../model/dto/order-page.dto';
+import { Order } from '../model/entities/order.entity';
+import { OrderService } from '../services/order.service';
 
 @Controller('services/rest/ordermanagement/v1/order')
 @ApiUseTags('Order')

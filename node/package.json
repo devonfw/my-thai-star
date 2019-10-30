@@ -20,6 +20,7 @@
         "doc": "compodoc -p tsconfig.json -s"
     },
     "dependencies": {
+        "@devon4node/common": "^1.0.0",
         "@devon4node/mailer": "^0.0.1-beta.4",
         "@godaddy/terminus": "^4.1.2",
         "@nestjs/common": "^6.5.3",

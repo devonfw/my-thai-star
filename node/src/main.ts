@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as helmet from 'helmet';
 import { AppModule } from './app/app.module';
 import { ConfigurationModule } from './app/core/configuration/configuration.module';
-import { ConfigurationService } from './app/core/configuration/configuration.service';
+import { ConfigurationService } from './app/core/configuration/services/configuration.service';
 import { WinstonLogger } from './app/shared/logger/winston.logger';
 import { ValidationPipe } from '@nestjs/common';
 import { CoreModule } from './app/core/core.module';
