@@ -1,23 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { IConfig, ISwaggerConfig } from './types';
+import { IConfig, ISwaggerConfig } from '../model/types';
 import { join } from 'path';
 import { MailerModuleOptions } from '@devon4node/mailer';
 import { ConnectionOptions } from 'typeorm';
-import { classToPlain } from 'class-transformer';
 
 // Put the correct value of config dir before load the config package
-process.env.NODE_CONFIG_DIR = join(__dirname, '../../../config/');
-import { get } from 'config';
+process.env.NODE_CONFIG_DIR = join(__dirname, '../../../../config/');
+import { getConfigProperty } from '@devon4node/common';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
 @Injectable()
 export class ConfigurationService implements IConfig {
   get(name: string): any {
-    try {
-      return process.env[name] || get(name);
-    } catch (e) {
-      return (get('default') as any)[name];
-    }
+    return getConfigProperty(name);
   }
 
   get isDev(): boolean {
@@ -37,7 +32,7 @@ export class ConfigurationService implements IConfig {
   }
 
   get jwtConfig(): JwtModuleOptions {
-    return this.get('jwtConfig')!;
+    return { ...this.get('jwtConfig')! };
   }
 
   get clientUrl(): string {
@@ -45,15 +40,15 @@ export class ConfigurationService implements IConfig {
   }
 
   get swaggerConfig(): ISwaggerConfig {
-    return this.get('swaggerConfig')!;
+    return { ...this.get('swaggerConfig')! };
   }
 
   get mailerConfig(): MailerModuleOptions {
-    return this.get('mailerConfig');
+    return { ...this.get('mailerConfig') };
   }
 
   get database(): ConnectionOptions {
     // return a plain object in order to be modificable by typeorm
-    return classToPlain(this.get('database')) as ConnectionOptions;
+    return { ...this.get('database')! };
   }
 }

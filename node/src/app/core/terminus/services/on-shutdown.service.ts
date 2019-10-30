@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { Connection } from 'typeorm';
-import { WinstonLogger } from '../../shared/logger/winston.logger';
+import { WinstonLogger } from '../../../shared/logger/winston.logger';
 
 @Injectable()
 export class OnShutdownService implements OnApplicationShutdown {

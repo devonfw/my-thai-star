@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response as eResponse } from 'express';
-import { AuthService } from './auth.service';
-import { UserRequest } from './model/user-request.interface';
+import { AuthService } from '../services/auth.service';
+import { UserRequest } from '../model/user-request.interface';
 
 @Controller()
 export class AuthController {

@@ -8,8 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { ImageService } from './image.service';
-import { Image } from './model/entities/image.entity';
+import { ImageService } from '../services/image.service';
+import { Image } from '../model/entities/image.entity';
 
 @Controller('services/rest/imagemanagement/v1')
 export class ImageController {
