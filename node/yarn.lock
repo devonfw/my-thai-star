@@ -199,6 +199,13 @@
     fs-extra "^4.0.1"
     viz.js "^1.8.0"
 
+"@devon4node/common@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@devon4node/common/-/common-1.0.0.tgz#9f449f7308f447715901daed912329e4face5ed7"
+  integrity sha512-nRut5+afk/j4CD7MPFvS3kKBznjOWU8/X/nBcqcs2L2B0HLsxPFmJyQFNOCV7rsK48Cj0mYjKlYKco6sBVdmfQ==
+  dependencies:
+    lodash "^4.17.15"
+
 "@devon4node/mailer@^0.0.1-beta.4":
   version "0.0.1-beta.4"
   resolved "https://registry.yarnpkg.com/@devon4node/mailer/-/mailer-0.0.1-beta.4.tgz#14043a796aca89de01b11d5bd4062d6c7239a52e"
@@ -4650,7 +4657,7 @@ lodash@4.17.14:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
   integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
 
-lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14:
+lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==

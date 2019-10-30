@@ -12,13 +12,13 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { Roles } from '../core/auth/decorators/roles.decorator';
-import { RolesGuard } from '../core/auth/guards/roles.guard';
-import { UserRequest } from '../core/auth/model/user-request.interface';
-import { BookingService } from './booking.service';
-import { BookingPage } from './model/dto/booking-page.dto';
-import { BookingSearch } from './model/dto/booking-search.dto';
-import { Booking } from './model/entities/booking.entity';
+import { Roles } from '../../core/auth/decorators/roles.decorator';
+import { RolesGuard } from '../../core/auth/guards/roles.guard';
+import { UserRequest } from '../../core/auth/model/user-request.interface';
+import { BookingService } from '../services/booking.service';
+import { BookingPage } from '../model/dto/booking-page.dto';
+import { BookingSearch } from '../model/dto/booking-search.dto';
+import { Booking } from '../model/entities/booking.entity';
 
 @Controller('services/rest/bookingmanagement/v1')
 @ApiUseTags('Booking')

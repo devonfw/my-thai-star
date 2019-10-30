@@ -4,10 +4,12 @@ import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonLogger } from '../shared/logger/winston.logger';
 import { ConfigurationModule } from './configuration/configuration.module';
-import { ConfigurationService } from './configuration/configuration.service';
-import { OnShutdownService } from './terminus/on-shutdown.service';
-import { TerminusOptionsService } from './terminus/terminus.service';
+import { ConfigurationService } from './configuration/services/configuration.service';
+import { OnShutdownService } from './terminus/services/on-shutdown.service';
+import { TerminusOptionsService } from './terminus/services/terminus.service';
 import { AuthModule } from './auth/auth.module';
+import { ClassSerializerInterceptor } from '@devon4node/common/serializer';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Global()
 @Module({
@@ -33,7 +35,12 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [],
-  providers: [TerminusOptionsService, OnShutdownService, WinstonLogger],
+  providers: [
+    TerminusOptionsService,
+    OnShutdownService,
+    WinstonLogger,
+    { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
+  ],
   exports: [
     OnShutdownService,
     ConfigurationModule,
