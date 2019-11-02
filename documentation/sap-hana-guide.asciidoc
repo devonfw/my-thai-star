@@ -95,7 +95,7 @@ GRANT MODELING TO hanauser1
 ----
 == Setting up MTSJ Java backend
 
-- Update applicaion.properties file
+- Update application.properties file
 
 [source, properties]
 ----
@@ -113,7 +113,7 @@ spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 spring.profiles.active=hana
 ----
 
-- Update config/applicaion.properties file
+- Update config/application.properties file
 
 [source, properties]
 ----
