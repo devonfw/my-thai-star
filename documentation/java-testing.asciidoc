@@ -7,13 +7,13 @@ toc::[]
 
 We are going to test our components as a unit using _Spring Test_ and _Devon4j-test_ modules.
 
-In order to test a basic component of the app first we will create a test class in the `src/test/java` folder and inside the main package of the test module. We will name the class following the convetion
+In order to test a basic component of the app first we will create a test class in the `src/test/java` folder and inside the main package of the test module. We will name the class following the convention.
 
 ----
 [Component]Test
 ----
 
-Then, in the declaration of the test class we will use the `@SpringBootTest` annotation to run the application context. In addition, we will extend the `ComponentTest` from `Devon4j-test` module to have access to the main functionalities of the module, https://github.com/devonfw/devon4j/wiki/guide-testing[see more details here].
+Then, in the declaration of the test class, we will use the `@SpringBootTest` annotation to run the application context. In addition, we will extend the `ComponentTest` from `Devon4j-test` module to have access to the main functionalities of the module, https://github.com/devonfw/devon4j/wiki/guide-testing[see more details here].
 
 _Spring Test_ allows us to use _Dependency Injection_ so we can inject our component directly using the `@Inject` annotation.
 
