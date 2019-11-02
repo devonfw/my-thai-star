@@ -28,7 +28,7 @@ mvn clean test
 +
 . *SonarQube analysis*
 +
-The code is evaluated using the integrated PL instance's SonarQube. Also, it will wait for the quality gate status. If the status is failing, the pipeline execution will be stoped.
+The code is evaluated using the integrated PL instance's SonarQube. Also, it will wait for the quality gate status. If the status is failing, the pipeline execution will be stopped.
 +
 [source, groovy]
 ----
