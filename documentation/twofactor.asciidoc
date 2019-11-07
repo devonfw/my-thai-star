@@ -22,7 +22,7 @@ Here you can observe which filter will be used.
 
 image::images/security/filters_png.png[, ]
 
-NOTE: Whenever the secret or qr code gets transfered between two parties, one must enforce link:https://tools.ietf.org/html/rfc5246[SSL/TLS] or link:https://tools.ietf.org/html/rfc4301[IPsec] to be comply with https://tools.ietf.org/html/rfc6238#page-5[RFC 6238].
+NOTE: Whenever the secret or qr code gets transferred between two parties, one must enforce link:https://tools.ietf.org/html/rfc5246[SSL/TLS] or link:https://tools.ietf.org/html/rfc4301[IPsec] to be comply with https://tools.ietf.org/html/rfc6238#page-5[RFC 6238].
 
 
 === Activating Two-Factor Authentication

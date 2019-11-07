@@ -28,7 +28,7 @@ Besides the deployment itself using **nginx** and **tomcat**, both client and se
 
 image::https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png[, link="https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png"]
 
-This orchestration of all 3 containers will be done by using a `docker-compose.yml` file. To redirect traffic from one container to another (i.e. rever-proxy to angular client or angular client to java server) will be done by using, as hostnames, the service name `docker-compose` defines for each of them, followed by the internal exposed port:
+This orchestration of all 3 containers will be done by using a `docker-compose.yml` file. To redirect traffic from one container to another (i.e. reverse-proxy to angular client or angular client to java server) will be done by using, as host names, the service name `docker-compose` defines for each of them, followed by the internally exposed port:
 
 - `http://reverse-proxy:80`
 - `http://angular:80`

@@ -5,9 +5,9 @@ toc::[]
 
 In this chapter different way of deploying My Thai Star are explained. Everything will be based in Docker.
 
-== Independendent Docker containers
+== Independent Docker containers
 
-The first way of deployment will use isolated Docker containers. That means that if the client-side container is deployed, it does not affect the server-side container's lifecycle and viceversa.
+The first way of deployment will use isolated Docker containers. That means that if the client-side container is deployed, it does not affect the server-side container's life cycle and vice versa.
 
 Let's show how the containers will behave during their life cycle.
 
@@ -20,7 +20,7 @@ image::images/ci/angular/container1.png[, link="container1.png"]
 +
 image::images/ci/angular/container2.png[, link="container2.png"]
 +
-- 3) Add the artifact `/dist` to the "depoyable" folder of the Docker container (`/usr/share/nginx/html/`)
+- 3) Add the artifact `/dist` to the "deployable" folder of the Docker container (`/usr/share/nginx/html/`)
 +
 image::images/ci/angular/container3.png[, link="container3.png"]
 +
@@ -47,7 +47,7 @@ For every operation performed in the external Deployment Server, it is necessary
 
 == Docker Compose
 
-The second way of deployment will be by orchestrating both elements of the application: The Angular client-side and the Java server-side. Both elements will be running in Docker containers as well, but in this case they won't be independendent anymore. *Docker Compose* will be in charge of keeping both containers up, or to put them down.
+The second way of deployment will be by orchestrating both elements of the application: The Angular client-side and the Java server-side. Both elements will be running in Docker containers as well, but in this case they won't be independent anymore. *Docker Compose* will be in charge of keeping both containers up, or to put them down.
 
 
 === Project adjustment
@@ -63,7 +63,7 @@ image::images/ci/deployment/dockerfile-java.PNG[, link="dockerfile-java.PNG"]
 Finally, as long as the *docker-compose* is being used, a file containing its configuration will be necessary as well. A new folder one the main My That Star's directory is created, and it's called `/docker`. Inside there is just a `docker-compose.yml` file. It contains all the information needed to orchestrate the deployment process. For example, which port both containers are going to be published on, and so on. This way of deployment will allow the application to be published or not just with one action.
 
     docker-compose rm -f            # down
-    docker-compsoe up --build -d    # up fresh containers
+    docker-compose up --build -d    # up fresh containers
     
 
 image::images/ci/deployment/docker-compose.PNG[, link="docker-compose.PNG"]
