@@ -171,7 +171,7 @@ List of _unsecured resources_:
 - _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
 - _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
 
-To configure the _login_ we will create a handler called login and then we will use the methond _code_ for verify the user and generate the token.
+To configure the _login_ we will create a handler called login and then we will use the method _code_ to verify the user and generate the token.
 
 [source, javascript]
 ----
@@ -233,7 +233,7 @@ We need to secure three services, that only should be accessible for users with 
 
 - (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter`.
 
-To ensure this, we must decode the _Autorization token_ and check the result. As the role is included in the token, once validated we will have this information and can guarantee access or return a 403 error.
+To ensure this, we must decode the _Authorization token_ and check the result. As the role is included in the token, once validated we will have this information and can guarantee access or return a 403 error.
 
 [source, javascript]
 ----

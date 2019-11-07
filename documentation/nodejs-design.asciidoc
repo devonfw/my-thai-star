@@ -161,7 +161,7 @@ List of _unsecured resources_:
 - _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
 - _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
 
-To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the methond _auth_ for handle the requests to the /login endpoint.
+To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method _auth_ for handle the requests to the /login endpoint.
 
 [source, javascript]
 ----

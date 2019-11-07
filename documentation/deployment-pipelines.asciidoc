@@ -17,7 +17,7 @@ The MyThaiStar_DEPLOY-Together pipeline will deploy all parts of My Thai Star ap
 
 === Parameters
 
-- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *sshAgentCredentials*: The SSH private key for connection to remote server. The public key must be included in the remote server's authorized_keys.
 - *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
 - *nexusCredentialsId*: The nexus credentials.
 - *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
@@ -40,7 +40,7 @@ NOTE: You need to run the MyThaiStar_DEPLOY-Together pipeline at least once befo
 
 === Parameters
 
-- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *sshAgentCredentials*: The SSH private key for connection to remote server. The public key must be included in the remote server's authorized_keys.
 - *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
 - *nexusCredentialsId*: The nexus credentials.
 - *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
@@ -61,7 +61,7 @@ NOTE: You need to run the MyThaiStar_DEPLOY-Together pipeline at least once befo
 
 === Parameters
 
-- *sshAgentCredentials*: The SSH private key to connecto to remote server. The public key must be included in the remote server as a authorized_keys.
+- *sshAgentCredentials*: The SSH private key for connection to remote server. The public key must be included in the remote server's authorized_keys.
 - *nexusApiUrl*: The url to the nexus api. http://nexus3-core:8081/nexus3 is the default url for PL.
 - *nexusCredentialsId*: The nexus credentials.
 - *repository*: Name of the repository where the artifacts are stored. maven-snapshots is the default value for PL.
