@@ -991,10 +991,12 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@busacca/ng-pick-datetime@~8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@busacca/ng-pick-datetime/-/ng-pick-datetime-8.0.2.tgz#6eb6ae8c09945ecb44a748a0ac1e97a1477f3bbf"
-  integrity sha512-KtEvpfdGcWbfYowkuaYbnr/2mwJWS8mPTatsN97nFhDK4nnedcTljfSVqLUIaMDJrNLJGQLIFpzQeVy1TLAoig==
+"@busacca/ng-pick-datetime@~8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@busacca/ng-pick-datetime/-/ng-pick-datetime-8.1.0.tgz#24415807b5fcd837a24f45d471ec187f12547759"
+  integrity sha512-h8ActGGiWjrYbUAN18+7vdA2zEAFJpaW7xQkleXQG/otDbt3+wjTSGt8FSxlX/IsXa2DdTEy1RZoo9nmnO53Yg==
+  dependencies:
+    tslib "^1.9.0"
 
 "@larscom/ngrx-store-storagesync@^5.6.0":
   version "5.6.0"
