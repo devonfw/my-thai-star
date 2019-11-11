@@ -14,8 +14,9 @@ import net.sf.mmm.util.reflect.api.ReflectionUtil;
 import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.AccessDeniedException;
@@ -101,7 +102,7 @@ public class PermissionCheckTest extends ComponentTest {
   /**
    * Check if access to a {@link RolesAllowed} annotated method will be denied to an unauthorized user.
    */
-  @Test(expected = AccessDeniedException.class)
+  @Test
   public void permissionAccessDenied() {
 
     TestUtil.login("user", ApplicationAccessControlConfig.PERMISSION_FIND_ORDER);
@@ -112,7 +113,9 @@ public class PermissionCheckTest extends ComponentTest {
     criteria.setExpirationDate(timestamp.toInstant());
     criteria.setCreationDate(timestamp.toInstant());
     criteria.setPageable(pageable);
-    this.bookingmanagementImpl.findBookingsByPost(criteria);
+    Assertions.assertThrows(AccessDeniedException.class, () -> {
+      this.bookingmanagementImpl.findBookingsByPost(criteria);
+    });
   }
 
   // ================================================================================
@@ -150,7 +153,7 @@ public class PermissionCheckTest extends ComponentTest {
   /**
    * It logs out after every test method.
    */
-  @After
+  @AfterEach
   public void logout() {
 
     TestUtil.logout();
