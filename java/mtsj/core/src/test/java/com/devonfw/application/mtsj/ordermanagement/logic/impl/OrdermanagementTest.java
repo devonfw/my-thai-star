@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devonfw.application.mtsj.SpringBootApp;

@@ -12,12 +12,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -55,10 +54,8 @@ ReactorContextTestExecutionListener.class })
 
 @SpringBootTest(classes = SpringBootApp.class)
 // @RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PredictionmanagementTest extends ComponentTest {
-
-  @Rule
-  public MockitoRule rule = MockitoJUnit.rule();
 
   @InjectMocks
   private Predictionmanagement predictionManagement = new PredictionmanagementImpl();
