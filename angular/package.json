@@ -53,7 +53,7 @@
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/platform-server": "~8.2.13",
-    "@angular/pwa": "^0.13.6",
+    "@angular/pwa": "^0.803.18",
     "@angular/router": "~8.2.13",
     "@angular/service-worker": "~8.2.13",
     "@busacca/ng-pick-datetime": "~8.0.2",
