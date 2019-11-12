@@ -12,9 +12,11 @@
 
   <properties>
     <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
-    <devon4j.version>3.2.0</devon4j.version>
+    
+    <devon4j.version>3.2.1</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
+    <junit.version>5.5.2</junit.version>
     <devon.http.port>${devon.port.range}81</devon.http.port>
     <devon.db.port>${devon.port.range}43</devon.db.port>
     <devon.test.excluded.groups>subsystem,system</devon.test.excluded.groups>
@@ -28,6 +30,14 @@
 
   <dependencyManagement>
     <dependencies>
+     <!-- overriding junit version from spring-boot by importing BOM before -->
+    <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>    
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
