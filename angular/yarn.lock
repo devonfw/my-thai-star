@@ -998,13 +998,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@larscom/ngrx-store-storagesync@^5.6.0":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@larscom/ngrx-store-storagesync/-/ngrx-store-storagesync-5.6.0.tgz#62670ee9410d1eb410c1ba877631b3ee0211aab9"
-  integrity sha512-J/5tCHdYJbIi6RGZwGmNjtJbqYlRwW/KqbdpQMQcFU+k1gC61shOTwAg78h6K9A2HOKAfbw1ZEIMNABmBEUhpA==
-  dependencies:
-    lodash "^4.17.11"
-
 "@ngrx/effects@^8.3.0":
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-8.3.0.tgz#d99a777ab352d4efdf456a7dec307514187ba496"
