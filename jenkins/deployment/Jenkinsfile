@@ -8,64 +8,78 @@ pipeline{
     }
 
     environment {
-        // Java Deploy Pipeline name
-        javaDeployPipeline = 'MyThaiStar_SERVER_DEPLOY'
-        // Angular Deploy Pipeline name
-        angularDeployPipeline = 'MyThaiStar_FRONTEND_DEPLOY'
+        dockerTool = 'docker-global'
+        dockerImage = 'my-thai-star/reverse-proxy'
+        containerNetworkAlias = 'reverse-proxy'
     }
 
     parameters {
-        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
-        string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
-        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
-        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
-
-        string(name: 'JAVA_VERSION', defaultValue: '3.2.0-SNAPSHOT', description: 'Java Version number') 
-        string(name: 'ANGULAR_VERSION', defaultValue: '3.2.0-SNAPSHOT', description: 'Angular Version number') 
-        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
-        string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
-
+        string(name: 'registryUrl', defaultValue: "https://docker-registry-devon.s2-eu.capgemini.com", description: 'docker registry url')
+        credentials(name: 'registryCredentialsId', defaultValue: "nexus-api", description: 'registry credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+        booleanParam(name: 'buildReverseProxy', defaultValue: false, description: 'Build again the reverse proxy image?')
+        string(name: 'port', defaultValue: '8081', description: 'Reverse proxy exposed port', trim: true)
+        string(name: 'dockerNetwork', defaultValue: 'my-thai-star', description: 'The docker network for the deployed container') 
     }
 
-
     stages {
-        stage ('Copy files to remote server') {
+        stage ('Load custom tools'){
             steps {
-                sshagent (credentials: [sshAgentCredentials]) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} mkdir -p ${params.APPLICATION_DIR}
-                        scp -o StrictHostKeyChecking=no -r reverse-proxy/* root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}
-                    """
+                tool 'docker-global'
+            }
+        }
+        stage ('Create docker network') {
+            steps {
+                script {
+                    tool dockerTool
+
+                    def network = sh returnStdout: true, script: """docker network ls -f name="^${params.dockerNetwork}\$" | sed '2q;d' """
+                    if (network?.trim() == '') {
+                        sh "docker network create ${params.dockerNetwork}"
+                    } else {
+                        println "${params.dockerNetwork} network already exists"
+                    }
                 }
             }
         }
 
-        stage ('Deploy java application') {
+        stage ('Create the Docker image') {
+            when {
+                equals expected: true, actual: params.buildReverseProxy
+            }
             steps {
-                build job: javaDeployPipeline, parameters: [
-                    credentials(name: 'sshAgentCredentials',value: sshAgentCredentials),
-                    string(name: 'nexusApiUrl',value: nexusApiUrl),
-                    credentials(name: 'nexusCredentialsId',value: nexusCredentialsId),
-                    string(name: 'repository',value: repository),
-                    string(name: 'VERSION', value: params.JAVA_VERSION),
-                    string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
-                    string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)
-                ]
+                script {
+                    dir('reverse-proxy') {
+                        docker.withRegistry("""${params.registryUrl}""", params.registryCredentialsId) {
+                            def customImage = docker.build("${dockerImage}:latest")
+                            customImage.push()
+                        }
+                    }
+                }
             }
         }
         
-        stage ('Deploy angular application') {
+        stage('Deploy new image') {
             steps {
-                build job: angularDeployPipeline, parameters: [
-                    credentials(name: 'sshAgentCredentials',value: sshAgentCredentials),
-                    string(name: 'nexusApiUrl',value: nexusApiUrl),
-                    credentials(name: 'nexusCredentialsId',value: nexusCredentialsId),
-                    string(name: 'repository',value: repository),
-                    string(name: 'VERSION', value: params.ANGULAR_VERSION),
-                    string(name: 'EXTERNAL_SERVER_IP', value: params.EXTERNAL_SERVER_IP),
-                    string(name: 'APPLICATION_DIR', value: params.APPLICATION_DIR)
-                ]
+                script {
+                    // TODO: Change this with the pipeline docker syntax
+                    docker.withRegistry("""${params.registryUrl}""", params.registryCredentialsId) {
+                        docker.image("${dockerImage}:latest").pull()
+
+                        def containerId = sh returnStdout: true, script: """docker ps -aqf network=${params.dockerNetwork} -f "ancestor=${params.registryUrl.replace("https://", "")}/${dockerImage}:${params.VERSION}" """
+                        if (containerId?.trim()) {
+                            sh "docker rm -f ${containerId.trim()}"
+                        }
+
+                        sh """docker run -d -p ${params.port}:80 --network=${params.dockerNetwork} --network-alias="${containerNetworkAlias}" ${params.registryUrl.replace("https://", "")}/${dockerImage}:latest"""
+                    }
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
