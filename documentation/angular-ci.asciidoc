@@ -21,7 +21,7 @@ image::images/ci/angular/pipeline-config.png[, link="pipeline_config.PNG"]
 
 . *Declarative: Tool Install*
 +
-The Pipeline needs some Tools to perform some operations with the Angular project. These tool is a correct version of *NodeJS* (10.14.0 LTS) with *Yarn* installed as global package.
+The Pipeline needs some Tools to perform some operations with the Angular project. These tool is a correct version of *NodeJS* (10.17.0 LTS) with *Yarn* installed as global package.
 +
 [source, groovy]
 ----
@@ -51,6 +51,14 @@ The CI testing of the Angular client is different than the standard local testin
 [source, groovy]
 ----
 ng test --browsers ChromeHeadless --watch=false
+----
+. *Check dependencies*
++
+Before continue, we print the result of `yarn audit`. It shows the vulnerabilities in the dependencies. It do not process the reponse. The purpose is only to track the result of the command.
++
+[source, groovy]
+----
+yarn audit
 ----
 . *SonarQube code analysis*
 +
