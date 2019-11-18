@@ -3,11 +3,21 @@ import { inject, TestBed } from '@angular/core/testing';
 import { OrderView } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { WaiterCockpitService } from './waiter-cockpit.service';
+import { ConfigService } from '../../core/config/config.service';
+import { config } from '../../core/config/config';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('WaiterCockpitService', () => {
+  let initialState;
   beforeEach(() => {
+    initialState = { config };
     TestBed.configureTestingModule({
-      providers: [WaiterCockpitService, PriceCalculatorService],
+      providers: [
+        provideMockStore({ initialState }),
+        WaiterCockpitService,
+        PriceCalculatorService,
+        ConfigService,
+      ],
       imports: [HttpClientTestingModule],
     });
   });
