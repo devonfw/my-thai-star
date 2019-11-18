@@ -1,20 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+  FilterCockpit,
+  Pageable,
+  Sort,
+} from 'app/shared/backend-models/interfaces';
+import { cloneDeep, map } from 'lodash';
 import { Observable } from 'rxjs';
-import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
+import { exhaustMap } from 'rxjs/operators';
+import { ConfigService } from '../../core/config/config.service';
 import {
   BookingResponse,
   OrderResponse,
   OrderView,
   OrderViewResult,
 } from '../../shared/view-models/interfaces';
-import { map, cloneDeep } from 'lodash';
-import {
-  Pageable,
-  Sort,
-  FilterCockpit,
-} from 'app/shared/backend-models/interfaces';
-import { HttpClient } from '@angular/common/http';
-import { ConfigService } from '../../core/config/config.service';
+import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 
 @Injectable()
 export class WaiterCockpitService {
@@ -25,16 +26,15 @@ export class WaiterCockpitService {
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
 
-  private readonly restServiceRoot: string;
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
 
   constructor(
     private http: HttpClient,
     private priceCalculator: PriceCalculatorService,
-    private configService: ConfigService
-  ) {
-
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
-  }
+    private config: ConfigService,
+  ) {}
 
   getOrders(
     pageable: Pageable,
@@ -51,9 +51,10 @@ export class WaiterCockpitService {
       delete filters.bookingToken;
       path = this.getOrdersRestPath;
     }
-    return this.http.post<OrderResponse[]>(
-      `${this.restServiceRoot}${path}`,
-      filters,
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderResponse[]>(`${restServiceRoot}${path}`, filters),
+      ),
     );
   }
 
@@ -64,9 +65,13 @@ export class WaiterCockpitService {
   ): Observable<BookingResponse[]> {
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
-    return this.http.post<BookingResponse[]>(
-      `${this.restServiceRoot}${this.getReservationsRestPath}`,
-      filters,
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<BookingResponse[]>(
+          `${restServiceRoot}${this.getReservationsRestPath}`,
+          filters,
+        ),
+      ),
     );
   }
 

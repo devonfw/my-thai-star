@@ -6,16 +6,18 @@ import * as fromOrder from 'app/sidenav/store/selectors/order.selectors';
 import * as fromApp from 'app/store/reducers';
 import { Observable } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
-import { ConfigService } from '../../core/config/config.service';
 import {
   ExtraView,
   SaveOrderResponse,
 } from '../../shared/view-models/interfaces';
 import { Order } from '../models/order.model';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class SidenavService {
-  private readonly restServiceRoot: string;
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
   orders$: Observable<Order[]>;
 
@@ -23,11 +25,9 @@ export class SidenavService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
     private store: Store<fromApp.State>,
-  ) {
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
-  }
+    private config: ConfigService,
+  ) {}
 
   public openSideNav(): void {
     this.opened = true;
@@ -54,9 +54,13 @@ export class SidenavService {
       }),
       exhaustMap((orderList) => {
         this.closeSideNav();
-        return this.http.post<SaveOrderResponse>(
-          `${this.restServiceRoot}${this.saveOrdersPath}`,
-          orderList,
+        return this.restServiceRoot$.pipe(
+          exhaustMap((restServiceRoot) =>
+            this.http.post<SaveOrderResponse>(
+              `${restServiceRoot}${this.saveOrdersPath}`,
+              orderList,
+            ),
+          ),
         );
       }),
     );

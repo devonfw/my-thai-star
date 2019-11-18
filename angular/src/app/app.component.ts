@@ -8,6 +8,7 @@ import { find } from 'lodash';
 import * as moment from 'moment';
 import * as fromRoot from './store';
 import * as fromAuth from './user-area/store';
+import * as fromConfig from './core/config/store';
 import { fadeAnimation } from './core/animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
   userName$: Observable<string>;
   mobileSidenavOpened = false;
   year: string = moment().format('YYYY');
-  version: string;
+  version$: Observable<string>;
 
   constructor(
     public router: Router,
@@ -38,55 +39,6 @@ export class AppComponent implements OnInit {
     public configService: ConfigService,
     private store: Store<fromRoot.State>,
   ) {
-    this.version = configService.getValues().version;
-    translate.addLangs(
-      configService.getValues().langs.map((value: any) => value.value),
-    );
-    translate.setDefaultLang('en');
-    if (
-      find(
-        translate.getLangs(),
-        (lang: string) => lang === translate.getBrowserLang(),
-      )
-    ) {
-      translate.use(translate.getBrowserLang());
-    }
-    moment.locale(this.translate.currentLang);
-
-    if (
-      configService.getValues().enablePrediction ||
-      configService.getValues().enableClustering
-    ) {
-      const currentRoutes = router.config;
-      const newRoutes = currentRoutes.reduce((accum, current) => {
-        if (
-          current.path === 'prediction' &&
-          configService.getValues().enablePrediction
-        ) {
-          // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
-          accum.push({
-            path: current.path,
-            component: PredictionCockpitComponent,
-            canActivate: current.canActivate,
-          });
-        } else if (
-          current.path === 'clustering' &&
-          configService.getValues().enableClustering
-        ) {
-          // change clustering route component from NotSupportedComponent to ClusteringCockpitComponent
-          accum.push({
-            path: current.path,
-            component: ClusteringCockpitComponent,
-            canActivate: current.canActivate,
-          });
-        } else {
-          accum.push(current);
-        }
-        return accum;
-      }, []);
-      router.resetConfig(newRoutes);
-    }
-
     /* TODO: if electronService
     if (electronService.isElectronApp) {
       // Elecron stuff
@@ -100,6 +52,55 @@ export class AppComponent implements OnInit {
     this.role$ = this.store.pipe(select(fromAuth.getRole));
     this.userName$ = this.store.pipe(select(fromAuth.getUserName));
     this.logged$ = this.store.pipe(select(fromAuth.getLogged));
+    this.version$ = this.store.pipe(select(fromConfig.getConfigVersion));
+
+    this.translate.addLangs(
+      this.configService.getValues().langs.map((value: any) => value.value),
+    );
+    this.translate.setDefaultLang('en');
+    if (
+      find(
+        this.translate.getLangs(),
+        (lang: string) => lang === this.translate.getBrowserLang(),
+      )
+    ) {
+      this.translate.use(this.translate.getBrowserLang());
+    }
+    moment.locale(this.translate.currentLang);
+
+    if (
+      this.configService.getValues().enablePrediction ||
+      this.configService.getValues().enableClustering
+    ) {
+      const currentRoutes = this.router.config;
+      const newRoutes = currentRoutes.reduce((accum, current) => {
+        if (
+          current.path === 'prediction' &&
+          this.configService.getValues().enablePrediction
+        ) {
+          // change prediction route component from NotSupportedComponent to PredictionCockpitComponent
+          accum.push({
+            path: current.path,
+            component: PredictionCockpitComponent,
+            canActivate: current.canActivate,
+          });
+        } else if (
+          current.path === 'clustering' &&
+          this.configService.getValues().enableClustering
+        ) {
+          // change clustering route component from NotSupportedComponent to ClusteringCockpitComponent
+          accum.push({
+            path: current.path,
+            component: ClusteringCockpitComponent,
+            canActivate: current.canActivate,
+          });
+        } else {
+          accum.push(current);
+        }
+        return accum;
+      }, []);
+      this.router.resetConfig(newRoutes);
+    }
   }
 
   sidenavStatus(opened: boolean): boolean {
