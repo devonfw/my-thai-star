@@ -1,5 +1,8 @@
-import { Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
-import { ClusteringCriteria, Pageable } from '../../shared/backend-models/interfaces';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import {
+  ClusteringCriteria,
+  Pageable,
+} from '../../shared/backend-models/interfaces';
 import { ClusteringService } from '../services/clustering.service';
 import { ClustersData } from '../../shared/view-models/interfaces';
 import { MenuService } from '../../menu/services/menu.service';
@@ -11,7 +14,7 @@ import * as L from 'leaflet';
 @Component({
   selector: 'map-component',
   templateUrl: './clustering-cockpit.component.html',
-  styleUrls: ['./clustering-cockpit.component.scss']
+  styleUrls: ['./clustering-cockpit.component.scss'],
 })
 export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   @ViewChild('mapContainer', { static: true }) mapContainer;
@@ -20,7 +23,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   map: L.Map = null;
   jsonLayer = null;
 
-  mapLatitude = 49.401780;
+  mapLatitude = 49.40178;
   mapLongitude = 8.684582;
   defaultZoom = 13;
   clustersfeatureLayer;
@@ -34,19 +37,30 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
 
   currentDate = new Date();
   clusteringFilter: ClusteringCriteria = {
-    startBookingdate: new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 12, 1).toISOString(),
+    startBookingdate: new Date(
+      this.currentDate.getFullYear(),
+      this.currentDate.getMonth() - 12,
+      1,
+    ).toISOString(),
     endBookingdate: new Date().toISOString(),
     dishId: 0,
-    clusters: 8
+    clusters: 8,
   };
 
-  constructor(private clusteringService: ClusteringService, private menuService: MenuService) { }
+  constructor(
+    private clusteringService: ClusteringService,
+    private menuService: MenuService,
+  ) {}
 
   ngOnInit() {
-    this.map = L.map(this.mapContainer.nativeElement).setView([this.mapLatitude, this.mapLongitude], this.defaultZoom);
+    this.map = L.map(this.mapContainer.nativeElement).setView(
+      [this.mapLatitude, this.mapLongitude],
+      this.defaultZoom,
+    );
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
     this.getMenu({
@@ -69,8 +83,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     this.drawClusters();
   }
 
-  onZoomChanged(zoomLevel) {
-  }
+  onZoomChanged(zoomLevel) {}
 
   ngAfterViewInit() {
     // the map doesn't load completelty in the begining,
@@ -90,11 +103,14 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
         },
       ],
     };
-    this.menuService.getDishes(this.menuService.composeFilters(pageable, filters))
-      .pipe(map((res: any) => {
-        return res.content.map(item => item.dish);
-      }))
-      .subscribe(menu => {
+    this.menuService
+      .getDishes(this.menuService.composeFilters(pageable, filters))
+      .pipe(
+        map((res: any) => {
+          return res.content.map((item) => item.dish);
+        }),
+      )
+      .subscribe((menu) => {
         this.menu = menu;
       });
   }
@@ -116,12 +132,14 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
 
     const steps = 10;
     // Blue hue over purple hue to red hue
-    const hs = Array(steps).fill(0).map((_, i) => 2 / 3 + i / (steps - 1) * 1 / 3);
+    const hs = Array(steps)
+      .fill(0)
+      .map((_, i) => 2 / 3 + ((i / (steps - 1)) * 1) / 3);
     const s = 1;
-    const v = .8;
+    const v = 0.8;
     const p = v * (1 - s);
 
-    const gradientStops = hs.map(h => {
+    const gradientStops = hs.map((h) => {
       let r, g, b;
       const i = Math.floor(h * 6);
       const f = h * 6 - i;
@@ -129,29 +147,55 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
       const t = v * (1 - (1 - f) * s);
 
       switch (i % 6) {
-        case 0: r = v, g = t, b = p; break;
-        case 1: r = q, g = v, b = p; break;
-        case 2: r = p, g = v, b = t; break;
-        case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
-        case 5: r = v, g = p, b = q; break;
+        case 0:
+          (r = v), (g = t), (b = p);
+          break;
+        case 1:
+          (r = q), (g = v), (b = p);
+          break;
+        case 2:
+          (r = p), (g = v), (b = t);
+          break;
+        case 3:
+          (r = p), (g = q), (b = v);
+          break;
+        case 4:
+          (r = t), (g = p), (b = v);
+          break;
+        case 5:
+          (r = v), (g = p), (b = q);
+          break;
       }
 
       return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
     });
 
-    return sizes.map(size => {
+    return sizes.map((size) => {
       const percentage = Math.min((size - min) / (max - min), 1);
-      const gradientPercentages = gradientStops.map((_, i) => i / (gradientStops.length - 1));
-      const gradientIndex1 = gradientPercentages.findIndex((gp, i, a) => gp <= percentage && (a[i + 1] == null || a[i + 1] > percentage));
-      const gradientIndex2 = gradientPercentages.findIndex((gp, i, a) => gp > percentage || a[i + 1] == null);
-      const gradientPercentage = gradientIndex2 !== gradientIndex1
-        ? (percentage - gradientPercentages[gradientIndex1]) / (gradientPercentages[gradientIndex2] - gradientPercentages[gradientIndex1])
-        : 0;
+      const gradientPercentages = gradientStops.map(
+        (_, i) => i / (gradientStops.length - 1),
+      );
+      const gradientIndex1 = gradientPercentages.findIndex(
+        (gp, i, a) =>
+          gp <= percentage && (a[i + 1] == null || a[i + 1] > percentage),
+      );
+      const gradientIndex2 = gradientPercentages.findIndex(
+        (gp, i, a) => gp > percentage || a[i + 1] == null,
+      );
+      const gradientPercentage =
+        gradientIndex2 !== gradientIndex1
+          ? (percentage - gradientPercentages[gradientIndex1]) /
+            (gradientPercentages[gradientIndex2] -
+              gradientPercentages[gradientIndex1])
+          : 0;
 
       const color1 = gradientStops[gradientIndex1];
       const color2 = gradientStops[gradientIndex2];
-      const color = color1.map((x, i) => Math.round(x * (1 - gradientPercentage) + color2[i] * gradientPercentage));
+      const color = color1.map((x, i) =>
+        Math.round(
+          x * (1 - gradientPercentage) + color2[i] * gradientPercentage,
+        ),
+      );
 
       return `rgb(${color.join(',')})`;
     });
@@ -163,18 +207,22 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
 
   drawClusters(): void {
     this.showProgressBar(true);
-    this.clusteringService.getClusters(this.clusteringFilter)
+    this.clusteringService
+      .getClusters(this.clusteringFilter)
       .subscribe((clustersData: ClustersData) => {
         const features = [];
         this.clustersfeatureLayer = {
           type: 'FeatureCollection',
-          features: []
+          features: [],
         };
         if (clustersData.data.length > 0) {
-          const colors = this.getClusterColor(clustersData.data.map(cluster => cluster.amount));
+          const colors = this.getClusterColor(
+            clustersData.data.map((cluster) => cluster.amount),
+          );
 
           clustersData.data.forEach((cluster, i) => {
-            if (cluster.id !== 0) { // cluster with id=0 represents noise, don't visualize it
+            if (cluster.id !== 0) {
+              // cluster with id=0 represents noise, don't visualize it
               const color = colors[i];
               if (cluster.polygon !== null) {
                 const feature = {
@@ -186,9 +234,9 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
                     amount: cluster.amount,
                     averageX: parseFloat(cluster.x),
                     averageY: parseFloat(cluster.y),
-                    color: color
+                    color: color,
                   },
-                  geometry: JSON.parse(cluster.polygon.toString())
+                  geometry: JSON.parse(cluster.polygon.toString()),
                 };
 
                 this.clustersfeatureLayer.features.push(feature);
@@ -196,14 +244,15 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
             }
           });
           // Add feature layer to the map , and define the style of the features
-          this.jsonLayer = L.geoJSON(this.clustersfeatureLayer,
-            {
-              style: this.getFeatureStyle,
-              onEachFeature: this.onFeatureClicked
-            });
+          this.jsonLayer = L.geoJSON(this.clustersfeatureLayer, {
+            style: this.getFeatureStyle,
+            onEachFeature: this.onFeatureClicked,
+          });
           this.jsonLayer.addTo(this.map);
           // ------------------------------------------------------------------
-          this.clustersResultsDataSource = new MatTableDataSource(this.clustersfeatureLayer.features);
+          this.clustersResultsDataSource = new MatTableDataSource(
+            this.clustersfeatureLayer.features,
+          );
         }
         this.showProgressBar(false);
       });
@@ -211,13 +260,13 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
 
   // noinspection JSMethodCanBeStatic
   getFeatureStyle(feature) {
-    return ({
+    return {
       clickable: true,
       fillColor: feature.properties.color,
       weight: 1.3,
       color: feature.properties.color,
-      fillOpacity: 0.3
-    });
+      fillOpacity: 0.3,
+    };
   }
 
   onFeatureClicked(feature, layer) {
@@ -225,10 +274,10 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
       let lon = 'E';
       let lat = 'N';
       if (feature.properties.averageX < 0) {
-          lon = 'W';
+        lon = 'W';
       }
       if (feature.properties.averageY < 0) {
-          lat = 'S';
+        lat = 'S';
       }
       layer.bindPopup(`<strong>Dish:</strong>  ${feature.properties.dishName}<br/><br/>
         <strong>Size:</strong> ${feature.properties.amount}<br/><br/>
@@ -240,5 +289,4 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   getSelectedRow(row) {
     // console.log(row);
   }
-
 }

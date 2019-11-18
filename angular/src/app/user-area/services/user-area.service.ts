@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { exhaustMap, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../core/authentication/auth.service';
 import { ConfigService } from '../../core/config/config.service';
 import { TwoFactorResponse } from '../../shared/view-models/interfaces';
@@ -14,8 +14,12 @@ import { SnackService } from './snack-bar.service';
 
 @Injectable()
 export class UserAreaService {
-  private readonly restPathRoot: string;
-  private readonly restServiceRoot: string;
+  private readonly restPathRoot$: Observable<
+    string
+  > = this.config.getRestPathRoot();
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
   private readonly loginRestPath: string = 'login';
   private readonly usermanagementRestPath: string = 'usermanagement/v1/user/';
   private readonly pairingRestPath: string = 'pairing/';
@@ -30,30 +34,36 @@ export class UserAreaService {
     public translate: TranslateService,
     private http: HttpClient,
     public authService: AuthService,
-    private configService: ConfigService,
     private store: Store<fromAuth.AppState>,
+    private config: ConfigService,
   ) {
-    this.restPathRoot = this.configService.getValues().restPathRoot;
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
     this.translate.get('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }
 
   login(username: string, password: string) {
-    return this.http.post(
-      `${this.restPathRoot}${this.loginRestPath}`,
-      { username: username, password: password },
-      { responseType: 'text', observe: 'response' },
+    return this.restPathRoot$.pipe(
+      exhaustMap((restPathRoot) =>
+        this.http.post(
+          `${restPathRoot}${this.loginRestPath}`,
+          { username: username, password: password },
+          { responseType: 'text', observe: 'response' },
+        ),
+      ),
     );
   }
 
   register(email: string, password: string): void {
-    this.http
-      .post(`${this.restServiceRoot}${this.registerRestPath}`, {
-        email: email,
-        password: password,
-      })
+    this.restServiceRoot$
+      .pipe(
+        exhaustMap((restServiceRoot) =>
+          this.http.post(`${restServiceRoot}${this.registerRestPath}`, {
+            email: email,
+            password: password,
+          }),
+        ),
+      )
       // .map((res: LoginInfo) => res)
       .subscribe(
         () => {
@@ -68,36 +78,48 @@ export class UserAreaService {
   pairing(): Observable<any> {
     return this.authService.getUser().pipe(
       switchMap((user: string) => {
-        return this.http.get<TwoFactorResponse>(
-          `${this.restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${user}`,
-          { headers: { 'Content-Type': 'text' } },
+        return this.restServiceRoot$.pipe(
+          exhaustMap((restServiceRoot) =>
+            this.http.get<TwoFactorResponse>(
+              `${restServiceRoot}${this.usermanagementRestPath}${this.pairingRestPath}${user}`,
+              { headers: { 'Content-Type': 'text' } },
+            ),
+          ),
         );
       }),
     );
   }
 
   twoFactorStatus(): Observable<any> {
-    return this.authService.getUser().pipe(
-      map((user: string) => {
-        return `${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${user}`;
-      }),
-      switchMap((url: string) => {
-        return this.http.get<TwoFactorResponse>(url, {
-          headers: { 'Content-Type': 'text' },
-        });
-      }),
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.authService.getUser().pipe(
+          map((user: string) => {
+            return `${restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}${user}`;
+          }),
+          switchMap((url: string) => {
+            return this.http.get<TwoFactorResponse>(url, {
+              headers: { 'Content-Type': 'text' },
+            });
+          }),
+        ),
+      ),
     );
   }
 
   changeTwoFactor(status: boolean): Observable<any> {
     return this.authService.getUser().pipe(
       switchMap((user: string) => {
-        return this.http.post(
-          `${this.restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}`,
-          {
-            username: user,
-            twoFactorStatus: status,
-          },
+        return this.restServiceRoot$.pipe(
+          exhaustMap((restServiceRoot) =>
+            this.http.post(
+              `${restServiceRoot}${this.usermanagementRestPath}${this.twofactorRestPath}`,
+              {
+                username: user,
+                twoFactorStatus: status,
+              },
+            ),
+          ),
         );
       }),
     );
@@ -105,12 +127,16 @@ export class UserAreaService {
 
   changePassword(data: any): void {
     data.username = this.authService.getUser();
-    this.http
-      .post(`${this.restServiceRoot}${this.changePasswordRestPath}`, {
-        username: data.username,
-        oldPassword: data.oldPassword,
-        newPassword: data.newPassword,
-      })
+    this.restServiceRoot$
+      .pipe(
+        exhaustMap((restServiceRoot) =>
+          this.http.post(`${restServiceRoot}${this.changePasswordRestPath}`, {
+            username: data.username,
+            oldPassword: data.oldPassword,
+            newPassword: data.newPassword,
+          }),
+        ),
+      )
       .subscribe(
         (res: any) => {
           this.snackBar.success(res.message);

@@ -1,33 +1,39 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ClustersData } from '../../shared/view-models/interfaces';
-import { ClusteringCriteria } from '../../shared/backend-models/interfaces';
+import { exhaustMap, map } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
+import { ClusteringCriteria } from '../../shared/backend-models/interfaces';
+import { ClustersData } from '../../shared/view-models/interfaces';
 
 @Injectable()
 export class ClusteringService {
+  private readonly clusteringRestPath: string =
+    'clustermanagement/v1/geoclusters';
 
-  private readonly clusteringRestPath: string = 'clustermanagement/v1/geoclusters';
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
 
-  private readonly restServiceRoot: string;
+  constructor(private http: HttpClient, private config: ConfigService) {}
 
-  constructor(
-    private http: HttpClient,
-    private configService: ConfigService
-    ) {
-        this.restServiceRoot = this.configService.getValues().restServiceRoot;
-    }
-
-  getClusters(clusteringCriteria: ClusteringCriteria): Observable<ClustersData> {
-
-    return this.http.post(`${this.restServiceRoot}${this.clusteringRestPath}`, clusteringCriteria)
-                        .pipe(map((res: any) => {
-                          return res.clustersData;
-                        }));
+  getClusters(
+    clusteringCriteria: ClusteringCriteria,
+  ): Observable<ClustersData> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http
+          .post(
+            `${restServiceRoot}${this.clusteringRestPath}`,
+            clusteringCriteria,
+          )
+          .pipe(
+            map((res: any) => {
+              return res.clustersData;
+            }),
+          ),
+      ),
+    );
     // map the results later
-
   }
-
 }
