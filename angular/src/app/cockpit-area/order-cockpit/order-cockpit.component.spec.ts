@@ -13,6 +13,9 @@ import { ConfigService } from '../../core/config/config.service';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderCockpitComponent } from './order-cockpit.component';
+import { config } from '../../core/config/config';
+import { TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -28,6 +31,7 @@ describe('OrderCockpitComponent', () => {
   let dialog: MatDialog;
   // tslint:disable-next-line:prefer-const
   let store: Store<State>;
+  let initialState;
 
   // beforeEach(async(() => {
   //   TestBed.configureTestingModule({
@@ -56,6 +60,11 @@ describe('OrderCockpitComponent', () => {
     // fixture = TestBed.createComponent(OrderCockpitComponent);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
+    initialState = { config };
+    TestBed.configureTestingModule({
+      providers: [provideMockStore({ initialState })],
+    });
+    store = TestBed.get(Store);
     priceCalculator = new PriceCalculatorService();
     configService = new ConfigService(store);
     waiterCockpitService = new WaiterCockpitService(

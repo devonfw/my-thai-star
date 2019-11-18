@@ -23,12 +23,17 @@ import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import { EmailConfirmationsService } from 'app/email-confirmations/services/email-confirmations.service';
 import { AppRoutingModule } from 'app/app-routing.module';
 import { CoreModule } from 'app/core/core.module';
+import { config } from '../../../core/config/config';
+import { provideMockStore } from '@ngrx/store/testing';
+import { ConfigService } from '../../../core/config/config.service';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
   let fixture: ComponentFixture<EmailConfirmationsComponent>;
+  let initialState;
 
   beforeEach(async(() => {
+    initialState = { config };
     TestBed.configureTestingModule({
       declarations: [
         EmailConfirmationsComponent,
@@ -48,7 +53,12 @@ describe('EmailConfirmationsComponent', () => {
         FilterCheckboxesComponent,
         FilterSortComponent,
       ],
-      providers: [SnackBarService, EmailConfirmationsService],
+      providers: [
+        SnackBarService,
+        EmailConfirmationsService,
+        provideMockStore({ initialState }),
+        ConfigService,
+      ],
       imports: [
         AppRoutingModule,
         RouterTestingModule,
