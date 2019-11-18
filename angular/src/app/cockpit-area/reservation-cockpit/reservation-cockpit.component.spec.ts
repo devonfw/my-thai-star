@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material';
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
 // import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
+import { State } from 'app/store';
+import { Store } from '@ngrx/store';
 
 describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
@@ -27,6 +29,8 @@ describe('ReservationCockpitComponent', () => {
   let translate: TranslateService;
   // tslint:disable-next-line:prefer-const
   let dialog: MatDialog;
+  // tslint:disable-next-line: prefer-const
+  let store: Store<State>;
 
   // beforeEach(async(() => {
   //   TestBed.configureTestingModule({
@@ -56,7 +60,7 @@ describe('ReservationCockpitComponent', () => {
     // component = fixture.componentInstance;
     // fixture.detectChanges();
     priceCalculator = new PriceCalculatorService();
-    configService = new ConfigService(http);
+    configService = new ConfigService(store);
     waiterCockpitService = new WaiterCockpitService(
       http,
       priceCalculator,
