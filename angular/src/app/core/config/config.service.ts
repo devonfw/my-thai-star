@@ -47,7 +47,11 @@ export class ConfigService implements OnInit, OnDestroy {
       this.store
         .pipe(
           select(getConfig),
-          skipWhile((newConfig) => !newConfig.loaded),
+          skipWhile(
+            (newConfig) =>
+              !newConfig.loaded ||
+              (!newConfig.pending && newConfig.errorMessage !== undefined),
+          ),
         )
         .subscribe((value) => {
           this.config = value;
