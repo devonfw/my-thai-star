@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
 import { Observable } from 'rxjs';
+import { exhaustMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { ConfigService } from '../../core/config/config.service';
-import { DishView, ExtraView } from '../../shared/view-models/interfaces';
+import { DishView } from '../../shared/view-models/interfaces';
 import { FilterFormData } from '../components/menu-filters/menu-filters.component';
 import { Order } from '../models/order.model';
-import * as fromMenu from '../store';
 
 const categoryNameToServerId: { [key: string]: number } = Object.freeze({
   mainDishes: 0,
@@ -23,12 +23,12 @@ const categoryNameToServerId: { [key: string]: number } = Object.freeze({
 
 @Injectable()
 export class MenuService {
-  private readonly restServiceRoot: string;
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
   private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
-  }
+  constructor(private http: HttpClient, private config: ConfigService) {}
 
   menuToOrder(menu: DishView): Order {
     return {
@@ -68,9 +68,13 @@ export class MenuService {
   getDishes(
     filters: Filter,
   ): Observable<{ pageable: Pageable; content: DishView[] }> {
-    return this.http.post<{ pageable: Pageable; content: DishView[] }>(
-      `${this.restServiceRoot}${this.filtersRestPath}`,
-      filters,
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<{ pageable: Pageable; content: DishView[] }>(
+          `${restServiceRoot}${this.filtersRestPath}`,
+          filters,
+        ),
+      ),
     );
   }
 }

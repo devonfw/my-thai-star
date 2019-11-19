@@ -14,6 +14,11 @@ import { MatDialog } from '@angular/material';
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
 // import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
+import { State } from 'app/store';
+import { Store } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { config } from '../../core/config/config';
 
 describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
@@ -27,6 +32,8 @@ describe('ReservationCockpitComponent', () => {
   let translate: TranslateService;
   // tslint:disable-next-line:prefer-const
   let dialog: MatDialog;
+  // tslint:disable-next-line: prefer-const
+  let store: Store<State>;
 
   // beforeEach(async(() => {
   //   TestBed.configureTestingModule({
@@ -52,11 +59,17 @@ describe('ReservationCockpitComponent', () => {
   // }));
 
   beforeEach(() => {
+    const initialState = { config };
     // fixture = TestBed.createComponent(ReservationCockpitComponent);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
+    TestBed.configureTestingModule({
+      providers: [provideMockStore({ initialState })],
+      imports: [],
+    });
+    store = TestBed.get(Store);
     priceCalculator = new PriceCalculatorService();
-    configService = new ConfigService(http);
+    configService = new ConfigService(store);
     waiterCockpitService = new WaiterCockpitService(
       http,
       priceCalculator,

@@ -1,35 +1,36 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Actions, ofType, createEffect } from '@ngrx/effects';
-
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { TranslateService } from '@ngx-translate/core';
+import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
+import { Observable, of } from 'rxjs';
+import 'rxjs/add/observable/from';
 import {
   catchError,
   exhaustMap,
   map,
+  mergeMap,
   switchMap,
   tap,
-  mergeMap,
 } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import 'rxjs/add/observable/from';
-import * as authActions from '../actions/auth.actions';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
-import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
-import { WindowService } from '../../../core/window/window.service';
-import { UserAreaService } from '../../services/user-area.service';
-import { TranslateService } from '@ngx-translate/core';
-import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { Router } from '@angular/router';
 import { ConfigService } from '../../../core/config/config.service';
-import { HttpClient } from '@angular/common/http';
-import { Store } from '@ngrx/store';
-import * as fromAuth from '../reducers';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { WindowService } from '../../../core/window/window.service';
+import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
+import { UserAreaService } from '../../services/user-area.service';
+import * as authActions from '../actions/auth.actions';
 
 @Injectable()
 export class AuthEffects {
-  private readonly restPathRoot: string;
+  private readonly restPathRoot$: Observable<
+    string
+  > = this.config.getRestPathRoot();
   private readonly verifyRestPath: string = 'verify';
-  private readonly restServiceRoot: string;
+  private restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
   private readonly currentUserRestPath: string = 'security/v1/currentuser/';
   authAlerts: any;
 
@@ -105,21 +106,26 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(authActions.verifyTwoFactor),
       mergeMap((user) => {
-        const dialogRef: MatDialogRef<
-          TwoFactorDialogComponent
-        > = this.dialog.open(TwoFactorDialogComponent, {
-          width: this.window.responsiveWidth(),
-        });
+        const dialogRef: MatDialogRef<TwoFactorDialogComponent> = this.dialog.open(
+          TwoFactorDialogComponent,
+          {
+            width: this.window.responsiveWidth(),
+          },
+        );
         return dialogRef.afterClosed().pipe(
           map((result) => {
-            return this.http.post(
-              `${this.restPathRoot}${this.verifyRestPath}`,
-              {
-                username: user.username,
-                password: user.password,
-                token: result.token,
-              },
-              { responseType: 'text', observe: 'response' },
+            return this.restPathRoot$.pipe(
+              exhaustMap((restPathRoot) =>
+                this.http.post(
+                  `${restPathRoot}${this.verifyRestPath}`,
+                  {
+                    username: user.username,
+                    password: user.password,
+                    token: result.token,
+                  },
+                  { responseType: 'text', observe: 'response' },
+                ),
+              ),
             );
           }),
         );
@@ -142,19 +148,21 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(authActions.token),
       exhaustMap((token) => {
-        return this.http
-          .get(`${this.restServiceRoot}${this.currentUserRestPath}`)
-          .pipe(
-            map((loginInfo: any) => {
-              return authActions.loginSuccess({
-                user: {
-                  user: loginInfo.name,
-                  role: loginInfo.role,
-                  logged: true,
-                },
-              });
-            }),
-          );
+        return this.restServiceRoot$.pipe(
+          exhaustMap((restServiceRoot) =>
+            this.http.get(`${restServiceRoot}${this.currentUserRestPath}`).pipe(
+              map((loginInfo: any) => {
+                return authActions.loginSuccess({
+                  user: {
+                    user: loginInfo.name,
+                    role: loginInfo.role,
+                    logged: true,
+                  },
+                });
+              }),
+            ),
+          ),
+        );
       }),
     ),
   );
@@ -196,20 +204,21 @@ export class AuthEffects {
     { dispatch: false },
   );
 
-  logOut$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(authActions.logout),
-      tap(() => {
-        this.router.navigateByUrl('/restaurant');
-        this.translate
-          .get('alerts.authAlerts.logoutSuccess')
-          .subscribe((text: string) => {
-            this.snackBar.openSnack(text, 4000, 'black');
-          });
-      }),
-      catchError((error) => of(authActions.logoutFail({ error: error }))),
-    ),
-    { dispatch: false }
+  logOut$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.logout),
+        tap(() => {
+          this.router.navigateByUrl('/restaurant');
+          this.translate
+            .get('alerts.authAlerts.logoutSuccess')
+            .subscribe((text: string) => {
+              this.snackBar.openSnack(text, 4000, 'black');
+            });
+        }),
+        catchError((error) => of(authActions.logoutFail({ error: error }))),
+      ),
+    { dispatch: false },
   );
 
   constructor(
@@ -220,12 +229,9 @@ export class AuthEffects {
     public translate: TranslateService,
     private router: Router,
     public snackBar: SnackBarService,
-    private configService: ConfigService,
+    private config: ConfigService,
     private http: HttpClient,
-    private store: Store<fromAuth.AppState>,
   ) {
-    this.restPathRoot = this.configService.getValues().restPathRoot;
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
     this.translate.get('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });

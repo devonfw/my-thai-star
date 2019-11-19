@@ -1,17 +1,28 @@
 <div class="containerOuter">
   <div class="containerInner">
     <mat-toolbar color="primary" class="headerContainer">
-      <public-header (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened"></public-header>
+      <public-header
+        (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened"
+      ></public-header>
     </mat-toolbar>
 
     <div class="sidenavContainerOuter">
       <mat-sidenav-container [@fadeAnimation]="getRouterOutletState(fade)">
-
-        <mat-sidenav class="sidenavMobile" [opened]="sidenav.opened" position="end" (openedChange)="sidenavStatus($event)">
+        <mat-sidenav
+          class="sidenavMobile"
+          [opened]="sidenav.opened"
+          position="end"
+          (openedChange)="sidenavStatus($event)"
+        >
           <public-sidenav></public-sidenav>
         </mat-sidenav>
 
-        <mat-sidenav class="mobileSidenav" (close)="mobileSidenavOpened=false" [opened]="mobileSidenavOpened" #mobilesidenav>
+        <mat-sidenav
+          class="mobileSidenav"
+          (close)="mobileSidenavOpened = false"
+          [opened]="mobileSidenavOpened"
+          #mobilesidenav
+        >
           <mat-nav-list menu-items *ngIf="(role$ | async) === 'CUSTOMER'">
             <a mat-list-item (click)="navigateTo('restaurant')">
               <mat-icon>home</mat-icon>
@@ -49,12 +60,11 @@
         </mat-sidenav>
 
         <router-outlet #fade="outlet"></router-outlet>
-
       </mat-sidenav-container>
     </div>
 
     <mat-toolbar class="appFooter forDesktop">
-      <span>MY THAI STAR {{ year }} - {{ version}}</span>
+      <span>MY THAI STAR {{ year }} - {{ version$ | async }}</span>
       <span>Devonfw</span>
     </mat-toolbar>
   </div>
