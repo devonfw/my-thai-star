@@ -1,41 +1,78 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Config, config } from './config';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { State } from 'app/store';
+import { Observable, Subscription } from 'rxjs';
+import { map, skipWhile } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Config, config } from './config';
+import * as configActions from './store/actions/config.actions';
+import { getConfig } from './store/selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConfigService {
-  constructor(private httpClient: HttpClient) {}
+export class ConfigService implements OnInit, OnDestroy {
+  private config: Config | undefined = config;
+  private subscription: Subscription;
+
+  constructor(private store: Store<State>) {}
 
   static factory(appLoadService: ConfigService) {
     return () => appLoadService.loadExternalConfig();
   }
 
-  // this method gets external configuration calling /config endpoint and merges into config object
-  loadExternalConfig(): Promise<any> {
-    if (!environment.loadExternalConfig) {
-      return Promise.resolve({});
-    }
-
-    const promise = this.httpClient
-      .get('/config')
-      .toPromise()
-      .then((settings) => {
-        Object.keys(settings || {}).forEach((k) => {
-          config[k] = settings[k];
-        });
-        return settings;
-      })
-      .catch(() => {
-        return 'ok, no external configuration';
+  ngOnInit() {
+    this.subscription = this.store
+      .pipe(select(getConfig))
+      .subscribe((newConfig) => {
+        if (newConfig.loaded) {
+          this.config = newConfig;
+        }
       });
-
-    return promise;
   }
 
-  getValues(): Config {
-    return config;
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  loadExternalConfig(): Promise<any> {
+    if (!environment.loadExternalConfig) {
+      return;
+    }
+
+    this.store.dispatch(configActions.loadConfig());
+    return new Promise((resolve) =>
+      this.store
+        .pipe(
+          select(getConfig),
+          skipWhile((newConfig) => !newConfig.loaded),
+        )
+        .subscribe((value) => {
+          this.config = value;
+          resolve(value);
+        }),
+    );
+  }
+
+  getRestServiceRoot(): Observable<string> {
+    return this.store.pipe(
+      select(getConfig),
+      skipWhile((newConfig) => !newConfig.loaded),
+      map((newConfig) => newConfig.restServiceRoot),
+    );
+  }
+
+  getRestPathRoot(): Observable<string> {
+    return this.store.pipe(
+      select(getConfig),
+      skipWhile((newConfig) => !newConfig.loaded),
+      map((newConfig) => newConfig.restPathRoot),
+    );
+  }
+
+  getValues(): Config | undefined {
+    return this.config;
   }
 }

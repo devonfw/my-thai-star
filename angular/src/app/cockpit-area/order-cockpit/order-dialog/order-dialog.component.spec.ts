@@ -9,14 +9,25 @@ import { PriceCalculatorService } from '../../../sidenav/services/price-calculat
 import { WaiterCockpitModule } from '../../cockpit.module';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog.component';
+import { ConfigService } from '../../../core/config/config.service';
+import { provideMockStore } from '@ngrx/store/testing';
+import { config } from '../../../core/config/config';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
   let dialog: MatDialog;
+  let initialState;
 
   beforeEach(async(() => {
+    initialState = { config };
     TestBed.configureTestingModule({
-      providers: [WaiterCockpitService, PriceCalculatorService, HttpClient],
+      providers: [
+        WaiterCockpitService,
+        PriceCalculatorService,
+        provideMockStore({ initialState }),
+        ConfigService,
+        HttpClient,
+      ],
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,

@@ -1,35 +1,63 @@
-import { InvitationResponse } from '../../shared/view-models/interfaces';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { exhaustMap } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
+import { InvitationResponse } from '../../shared/view-models/interfaces';
 
 @Injectable()
 export class EmailConfirmationsService {
+  private readonly restServiceRoot$: Observable<
+    string
+  > = this.config.getRestServiceRoot();
+  private readonly acceptReserveRestPath: string =
+    'bookingmanagement/v1/invitedguest/accept/';
+  private readonly rejectReserveRestPath: string =
+    'bookingmanagement/v1/invitedguest/decline/';
+  private readonly cancelReserveRestPath: string =
+    'bookingmanagement/v1/booking/cancel/';
+  private readonly cancelOrderRestPath: string =
+    'ordermanagement/v1/order/cancelorder/';
 
-  private readonly restServiceRoot: string;
-  private readonly acceptReserveRestPath: string = 'bookingmanagement/v1/invitedguest/accept/';
-  private readonly rejectReserveRestPath: string = 'bookingmanagement/v1/invitedguest/decline/';
-  private readonly cancelReserveRestPath: string = 'bookingmanagement/v1/booking/cancel/';
-  private readonly cancelOrderRestPath: string = 'ordermanagement/v1/order/cancelorder/';
-
-  constructor(private http: HttpClient, private configService: ConfigService) {
-    this.restServiceRoot = this.configService.getValues().restServiceRoot;
-   }
+  constructor(private http: HttpClient, private config: ConfigService) {}
 
   sendAcceptInvitation(token: string): Observable<InvitationResponse> {
-    return this.http.get<InvitationResponse>(`${this.restServiceRoot}${this.acceptReserveRestPath}` + token);
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get<InvitationResponse>(
+          `${restServiceRoot}${this.acceptReserveRestPath}` + token,
+        ),
+      ),
+    );
   }
 
   sendRejectInvitation(token: string): Observable<InvitationResponse> {
-    return this.http.get<InvitationResponse>(`${this.restServiceRoot}${this.rejectReserveRestPath}` + token);
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get<InvitationResponse>(
+          `${restServiceRoot}${this.rejectReserveRestPath}` + token,
+        ),
+      ),
+    );
   }
 
   sendCancelBooking(token: string): Observable<InvitationResponse> {
-    return this.http.get<InvitationResponse>(`${this.restServiceRoot}${this.cancelReserveRestPath}` + token);
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get<InvitationResponse>(
+          `${restServiceRoot}${this.cancelReserveRestPath}` + token,
+        ),
+      ),
+    );
   }
 
   sendCancelOrder(token: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.restServiceRoot}${this.cancelOrderRestPath}` + token);
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get<boolean>(
+          `${restServiceRoot}${this.cancelOrderRestPath}` + token,
+        ),
+      ),
+    );
   }
 }
