@@ -1,12 +1,20 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { BookingInfo } from 'app/shared/backend-models/interfaces';
+import { config } from '../../core/config/config';
+import { ConfigService } from '../../core/config/config.service';
 import { BookTableService } from './book-table.service';
 
 describe('BookTableService', () => {
+  const initialState = { config };
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BookTableService],
+      providers: [
+        BookTableService,
+        provideMockStore({ initialState }),
+        ConfigService,
+      ],
       imports: [HttpClientTestingModule],
     });
   });
