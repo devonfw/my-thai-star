@@ -7,6 +7,10 @@ pipeline{
         disableConcurrentBuilds()
     }
 
+    tools {
+      jdk 'OpenJDK11'
+    }
+
     environment {
         // Directory with java project
         javaDir = 'java/mtsj'
@@ -20,9 +24,30 @@ pipeline{
         globalSettingsId = 'MavenSettings'
         // Maven tool id
         mavenInstallation = 'Maven3'
+
+        // Docker
+        dockerRegistryCredentials = 'nexus-api'
+        dockerRegistryProtocol = 'https://'
+        dockerTool = 'docker-global'
     }
 
     stages {
+        stage ('Loading Custom Tools') {
+            steps {
+                tool dockerTool
+            }
+        }
+
+        stage ('Install dependencies') {
+            steps {
+                dir(javaDir) {
+                    withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
+                        sh "mvn clean install -Dmaven.test.skip=true"
+                    }
+                }
+            }
+        }
+
         stage ('Unit Tests') {
             steps {
                 dir(javaDir) {
@@ -33,13 +58,20 @@ pipeline{
             }
         }
 
+        stage ('Dependeny Checker') {
+            steps {
+                dependencyCheck additionalArguments: '--project "mtsj" --scan java/mtsj --format XML', odcInstallation: 'dependency-check'
+                dependencyCheckPublisher pattern: ''
+            }
+        }
+
         stage ('SonarQube code analysis') {
             steps {
                 script {
                     dir(javaDir) {
                         withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             withSonarQubeEnv(sonarEnv) {
-                                sh "mvn sonar:sonar"
+                                sh "mvn sonar:sonar -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                             }
                         }
                         timeout(time: 1, unit: 'HOURS') {
@@ -58,6 +90,27 @@ pipeline{
                 dir(javaDir) {
                     withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                         sh "mvn deploy -Dmaven.test.skip=true"
+                    }
+                }
+            }
+        }
+
+        stage ('Create the Docker image') {
+            steps {
+                script {
+                    def props
+                    // Get the Pl Url
+                    def PL_URL = JENKINS_URL.replace("https://", "").split("/")[0]
+                    dir(javaDir) {
+                        props = readMavenPom file: 'pom.xml'
+                        sh "cp server/target/mythaistar-bootified.war ../../reverse-proxy/java/mythaistar.war"
+                    }
+                    dir('reverse-proxy/java') {
+                        docker.withRegistry("""${dockerRegistryProtocol}docker-registry-${PL_URL}""", dockerRegistryCredentials) {
+                            def customImage = docker.build("""my-thai-star/java:${props.version.replace("-SNAPSHOT", "")}""")
+                            customImage.push()
+                            customImage.push("latest");
+                        }
                     }
                 }
             }
