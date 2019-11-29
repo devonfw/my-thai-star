@@ -8,71 +8,52 @@ pipeline{
     }
 
     environment {
-        // Maven artifact classifier
-        classifier = 'bootified'
-        // Repository format
-        format = 'maven2'
-        // Artifact group
-        group = 'com.devonfw.java.mtsj'
-        // Application name
-        name = 'mtsj-server'
-        // Artifact extension
-        extension = 'war'
+        dockerTool = 'docker-global'
+        dockerImage = 'my-thai-star/java'
+        containerNetworkAlias = 'java'
     }
 
     parameters {
-        credentials(name: 'sshAgentCredentials', defaultValue: 'CHANGE-ME', description: 'ssh credentials', credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey') 
-        string(name: 'nexusApiUrl', defaultValue: "http://nexus3-core:8081/nexus3", description: 'nexus url')
-        credentials(name: 'nexusCredentialsId', defaultValue: "nexus-technical-api", description: 'nexus credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
-        string(name: 'repository', defaultValue: 'maven-snapshots', description: 'maven repository')
-        string(name: 'VERSION', defaultValue: '3.2.0-SNAPSHOT', description: 'Version number') 
-        string(name: 'EXTERNAL_SERVER_IP', defaultValue: 'CHANGE-ME', description: 'Server IP') 
-        string(name: 'APPLICATION_DIR', defaultValue: '/root/mythaistar/reverse-proxy/', description: 'My Thai Star application directory')
+        string(name: 'registryUrl', defaultValue: "https://docker-registry-devon.s2-eu.capgemini.com", description: 'docker registry url')
+        credentials(name: 'registryCredentialsId', defaultValue: "nexus-api", description: 'registry credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+        string(name: 'VERSION', defaultValue: '3.2.0', description: 'Version number') 
+        string(name: 'dockerNetwork', defaultValue: 'my-thai-star', description: 'The docker network for the deployed container') 
     }
 
     stages {
-        stage ('Download artifact from Nexus') {
+        stage ('Load custom tools'){
+            steps {
+                tool 'docker-global'
+            }
+        }
+        stage ('Create docker network') {
             steps {
                 script {
-                    // Download artifact from nexus3 using the nexus3 beta api
-                    // Search the list of artifacts
-                    def response = ''
-                    try {
-                        response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """${nexusApiUrl}/service/rest/v1/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.classifier=${classifier}&maven.extension=${extension}"""
-                    }catch (e) {
-                        response = httpRequest authentication: nexusCredentialsId, consoleLogResponseBody: true, ignoreSslErrors: true, responseHandle: 'NONE', url: """${nexusApiUrl}/service/rest/beta/search/assets?repository=${repository}&format=${format}&group=${group}&name=${name}&maven.groupId=${group}&maven.artifactId=${name}&maven.baseVersion=${params.VERSION}&maven.classifier=${classifier}&maven.extension=${extension}"""
+                    tool dockerTool
+
+                    def network = sh returnStdout: true, script: """docker network ls -f name="^${params.dockerNetwork}\$" | sed '2q;d' """
+                    if (network?.trim() == '') {
+                        sh "docker network create ${params.dockerNetwork}"
+                    } else {
+                        println "${params.dockerNetwork} network already exists"
                     }
-                    def props = readJSON text: response.content
-
-                    // Get the last snapshot download url
-                    def num = -1
-                    def url = ''
-                    props.items.each { 
-                        def n = (it.downloadUrl =~ /.*-(\d*)-bootified\.war/)[0][1]
-                        println n
-                        if (n > num) {
-                            num = n
-                            url = it.downloadUrl
-                        }
-                    }
-
-
-                    // Download the snapshot
-                    httpRequest authentication: nexusCredentialsId, ignoreSslErrors: true, outputFile: 'mythaistar.war', responseHandle: 'NONE', url: url
                 }
             }
         }
         
-        stage('Deployment') {
+        stage('Deploy new image') {
             steps {
-                sshagent (credentials: [sshAgentCredentials]) {
-                    sh """
-                        # Copy resulting ".war" file from workspace to deployment server
-                        scp -o StrictHostKeyChecking=no mythaistar.war root@${params.EXTERNAL_SERVER_IP}:${params.APPLICATION_DIR}java/mythaistar.war
-                        
-                        # Launch application in Docker container
-                        ssh -o StrictHostKeyChecking=no root@${params.EXTERNAL_SERVER_IP} docker-compose -f ${params.APPLICATION_DIR}docker-compose.yml up -d --build java
-                    """
+                script {
+                    docker.withRegistry("""${params.registryUrl}""", params.registryCredentialsId) {
+                        docker.image("${dockerImage}:${params.VERSION}").pull()
+
+                        def containerId = sh returnStdout: true, script: """docker ps -aqf network=${params.dockerNetwork} -f "ancestor=${params.registryUrl.replace("https://", "")}/${dockerImage}:${params.VERSION}" """
+                        if (containerId?.trim()) {
+                            sh "docker rm -f ${containerId.trim()}"
+                        }
+
+                        sh """docker run -d --network=${params.dockerNetwork} --network-alias="${containerNetworkAlias}" ${params.registryUrl.replace("https://", "")}/${dockerImage}:${params.VERSION}"""
+                    }
                 }
             }
         }
