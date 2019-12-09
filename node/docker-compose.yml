@@ -23,6 +23,9 @@ services:
     restart: always
     container_name: "mts_reverse_proxy_node"
     image: my-thai-star/reverse-proxy:latest
+    depends_on: 
+      - angular
+      - java
     networks:
       - my-thai-star-node
     ports:
@@ -37,6 +40,9 @@ services:
   java:
     build: "."
     restart: always
+    depends_on: 
+      - mariadb
+      - maildev
     container_name: "mts_node"
     image: my-thai-star/node:latest
     networks:
