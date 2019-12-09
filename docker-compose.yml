@@ -3,7 +3,6 @@ version: '3'
 services:
   reverse-proxy:
     build: 'reverse-proxy/'
-    restart: always
     container_name: 'mts_reverse_proxy'
     image: my-thai-star/reverse-proxy:latest
     networks:
@@ -12,18 +11,18 @@ services:
       - '8081:80'
   angular:
     build: 'angular/'
-    restart: always
     container_name: 'mts_angular'
     image: my-thai-star/angular:latest
     networks:
       - my-thai-star
   java:
     build: 'java/'
-    restart: always
     container_name: 'mts_java'
     image: my-thai-star/java:latest
     networks:
-      - my-thai-star
+      - my-thai-star    
+    ports:
+      - '8082:8081'
 networks:
   my-thai-star:
     driver: bridge
