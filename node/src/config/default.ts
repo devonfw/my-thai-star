@@ -19,16 +19,16 @@ const def: IConfig = {
   clientUrl: 'localhost:4200',
   mailerConfig: {
     mailOptions: {
-      host: 'localhost',
-      port: 1025,
-      secure: false,
-      tls: {
-        rejectUnauthorized: false,
+        streamTransport: true,
+        newline: 'windows',
       },
-    },
-    // {
-    //   streamTransport: true,
-    //   newline: 'windows',
+      // {
+      // host: 'localhost',
+      // port: 1025,
+      // secure: false,
+      // tls: {
+      //   rejectUnauthorized: false,
+      // },
     // },
     emailFrom: 'noreply@capgemini.com',
     hbsOptions: {
@@ -51,18 +51,13 @@ const def: IConfig = {
     },
   },
   database: {
-    type: 'mariadb',
-    host: 'localhost',
-    port: 3306,
-    username: 'test',
-    password: 'test',
-    database: 'test',
+    type: 'sqlite',
+    database: ':memory:',
     synchronize: false,
     migrationsRun: true,
-    supportBigNumbers: true,
     logging: true,
     entities: ['./dist/**/*.entity{.js,.ts}'],
-    migrations: ['dist/migrations/production/**/*.js'],
+    migrations: ['dist/migrations/default/**/*.js'],
     subscribers: ['dist/subscriber/**/*.js'],
   },
 };
