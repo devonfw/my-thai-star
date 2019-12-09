@@ -16,7 +16,12 @@ IMPORTANT: The application is working but there is something peding:
 ### Dependencies
 
 The first command required for the installation is:
-\$ yarn
+
+```bash
+yarn
+```
+
+WARNING: some libraries used in this implementation needs to be compiled. In order to be able to do that in windows, you need the **windows-build-tools** package globally installed (_npm install --global windows-build-tools_).
 
 NOTE: to be sure that you install the same package as us, please avoid the usage of npm for install dependencies.
 
@@ -40,59 +45,30 @@ Each file contains the following parameters to be retrieved by the configuration
 
 In this implementation mariadb is used as persistence system with TypeOrm.
 
-For testing, a in memory sqlite database is used.
+For develop and testing, a in memory sqlite database is used.
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
-
-# incremental rebuild (webpack)
-$ npm run webpack
-$ npm run start:hmr
+npm run start:dev
 
 # production mode
-$ npm run start:prod
+npm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
-<<<<<<< HEAD
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
-
-=======
-\$ npm run start:prod
-
-> > > > > > > 44c07486... Big refactoring to node implementation
-
-## Support
-
-<<<<<<< HEAD
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-=======
-\$ yarn start:prod
-
-> > > > > > > 44c07486... Big refactoring to node implementation
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

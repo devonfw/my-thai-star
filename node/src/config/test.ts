@@ -25,7 +25,7 @@ const test: IConfig = {
     migrationsRun: true,
     logging: false,
     entities: ['./dist/**/*.entity{.js,.ts}'],
-    migrations: ['dist/migrations/test/**/*.js'],
+    migrations: ['dist/migrations/default/**/*.js'],
     subscribers: ['dist/subscriber/**/*.js'],
     cli: {
       migrationsDir: 'src/migrations',

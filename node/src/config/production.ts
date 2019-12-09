@@ -47,7 +47,7 @@ const def: IConfig = {
   },
   database: {
     type: 'mariadb',
-    host: 'de-mucdevondepl01',
+    host: 'mariadb',
     port: 3306,
     username: 'test',
     password: 'test',
