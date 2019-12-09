@@ -21,10 +21,10 @@ import { User } from '../../../user/model/entity/user.entity';
 import * as moment from 'moment';
 
 let DATE_COLUMN: WithPrecisionColumnType;
-if (process.env.NODE_ENV === 'test') {
-  DATE_COLUMN = 'datetime';
-} else {
+if (process.env.NODE_ENV === 'production') {
   DATE_COLUMN = 'timestamp';
+} else {
+  DATE_COLUMN = 'datetime';
 }
 
 @Entity({ name: 'Booking' })

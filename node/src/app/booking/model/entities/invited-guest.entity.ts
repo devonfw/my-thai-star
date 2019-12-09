@@ -16,10 +16,10 @@ import { Order } from '../../../order/model/entities/order.entity';
 import { WithPrecisionColumnType } from 'typeorm/driver/types/ColumnTypes';
 
 let DATE_COLUMN: WithPrecisionColumnType;
-if (process.env.NODE_ENV === 'test') {
-  DATE_COLUMN = 'datetime';
-} else {
+if (process.env.NODE_ENV === 'production') {
   DATE_COLUMN = 'timestamp';
+} else {
+  DATE_COLUMN = 'datetime';
 }
 
 @Entity({ name: 'InvitedGuest' })
