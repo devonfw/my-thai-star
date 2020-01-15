@@ -10,7 +10,7 @@
   <artifactId>mtsj-batch</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>Batches of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (devon4j).</description>
+  <description>Batches of the server for the mtsj application - a simple example using the devon4j-batch module.</description>
 
   <properties>
     <java.version>1.8</java.version>
@@ -29,36 +29,13 @@
       <artifactId>devon4j-batch</artifactId>
     </dependency>
 
-    <!--
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    -->
-
     <!-- Tests -->
     <dependency>
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    -->
 
-    <!--
-    <dependency>
-      <groupId>org.skyscreamer</groupId>
-      <artifactId>jsonassert</artifactId>
-      <version>1.3.0</version>
-      <scope>test</scope>
-    </dependency>
-    -->
   </dependencies>
 
   <build>
@@ -78,6 +55,9 @@
           </excludes>
         </configuration>
       </plugin>
+      <!-- Create bootified jar for batch execution via commmand line.
+           DevonFWs SpringBootBatchCommandLine-launcher is used as main-class.
+       -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

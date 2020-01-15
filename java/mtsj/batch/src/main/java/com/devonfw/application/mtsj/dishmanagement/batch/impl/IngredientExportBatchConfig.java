@@ -7,28 +7,36 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
+import com.devonfw.module.batch.common.base.SpringBootBatchCommandLine;
 
 /**
- * @author simon
+ * Example for devon4j-batch module. This class configures a spring-batch witch exports all ingredients from mts to a
+ * file. The batch is executed via {@link SpringBootBatchCommandLine}-Launcher from devon4j-batch. It requires one
+ * additional command line parameter for the output file:<br/>
+ * {@code ava -jar mtsj-batch-3.2.0-SNAPSHOT-bootified-batch.jar com.devonfw.application.mtsj.SpringBootApp com.devonfw.application.mtsj.dishmanagement.batch.impl.IngredientExportBatchConfig ingredientExportJob pathToFile=example.csv}
  *
  */
 @Configuration
 @EnableBatchProcessing
 public class IngredientExportBatchConfig {
 
-  @Inject
-  public JobBuilderFactory jobBuilderFactory;
+  // Pattern for simplifying DI with bean methods containing expressions.
+  private static final String OVERRIDDEN_BY_EXPRESSION = null;
 
   @Inject
-  public StepBuilderFactory stepBuilderFactory;
+  private JobBuilderFactory jobBuilderFactory;
+
+  @Inject
+  private StepBuilderFactory stepBuilderFactory;
 
   @Bean
   public IngredientEntityItemReader ingredientExportReader() {
@@ -40,7 +48,7 @@ public class IngredientExportBatchConfig {
   public Step ingredientExportStep1() {
 
     return this.stepBuilderFactory.get("ingredientExportStep1").<IngredientEntity, IngredientEntity> chunk(10)
-        .reader(ingredientExportReader()).writer(ingredientExportWriter()).build();
+        .reader(ingredientExportReader()).writer(ingredientExportWriter(OVERRIDDEN_BY_EXPRESSION)).build();
   }
 
   /*
@@ -53,15 +61,16 @@ public class IngredientExportBatchConfig {
   @Bean
   public Job ingredientExportJob() {
 
-    return this.jobBuilderFactory.get("ingredientExportJob").incrementer(new RunIdIncrementer())
-        .start(ingredientExportStep1()).build();
+    return this.jobBuilderFactory.get("ingredientExportJob").start(ingredientExportStep1()).build();
   }
 
   @Bean
-  public FlatFileItemWriter<IngredientEntity> ingredientExportWriter() {
+  @StepScope // Step scope is required for the @Value-annotation for querying job parameters.
+  public FlatFileItemWriter<IngredientEntity> ingredientExportWriter(
+      @Value("#{jobParameters[pathToFile]}") String pathToFile) {
 
     return new FlatFileItemWriterBuilder<IngredientEntity>().name("dishWriter")
-        .resource(new FileSystemResource("test.csv")).delimited().delimiter(";")
+        .resource(new FileSystemResource(pathToFile)).delimited().delimiter(";")
         .names(new String[] { "name", "description", "price" }).build();
   }
 
