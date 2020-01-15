@@ -31,19 +31,6 @@
 
   <profiles>
     <profile>
-      <id>batch</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>mtsj-batch</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
       <!-- REVIEW (JH): IMHO this is dead stuff that can be removed (AFAIK MTS frontend and backend are separate apps)
         otherwise should use frontend-maven-plugin -->
       <id>jsclient</id>

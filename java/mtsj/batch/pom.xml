@@ -23,7 +23,7 @@
       <artifactId>mtsj-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-
+ 
     <dependency>
       <groupId>com.devonfw.java.modules</groupId>
       <artifactId>devon4j-batch</artifactId>
@@ -77,6 +77,21 @@
             <exclude>config/application.properties</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.devonfw.module.batch.common.base.SpringBootBatchCommandLine</mainClass>
+          <classifier>bootified</classifier>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
