@@ -16,13 +16,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
-import com.devonfw.module.batch.common.base.SpringBootBatchCommandLine;
 
 /**
  * Example for devon4j-batch module. This class configures a spring-batch witch exports all ingredients from mts to a
- * file. The batch is executed via {@link SpringBootBatchCommandLine}-Launcher from devon4j-batch. It requires one
- * additional command line parameter for the output file:<br/>
- * {@code ava -jar mtsj-batch-3.2.0-SNAPSHOT-bootified-batch.jar com.devonfw.application.mtsj.SpringBootApp com.devonfw.application.mtsj.dishmanagement.batch.impl.IngredientExportBatchConfig ingredientExportJob pathToFile=example.csv}
+ * file. It requires one additional command line parameter "pathToFile" for the output file:<br/>
+ * {@code java -jar mtsj-batch-3.2.0-SNAPSHOT-bootified.jar --spring.main.web-application-type=none --spring.batch.job.enabled=true --spring.batch.job.names=ingredientExportJob pathToFile=example.csv}
  *
  */
 @Configuration

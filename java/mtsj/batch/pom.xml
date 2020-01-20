@@ -15,7 +15,7 @@
   <properties>
     <java.version>1.8</java.version>
   </properties>
-
+  
   <dependencies>
 
     <dependency>
@@ -23,21 +23,14 @@
       <artifactId>mtsj-core</artifactId>
       <version>${project.version}</version>
     </dependency>
- 
-    <dependency>
-      <groupId>com.devonfw.java.modules</groupId>
-      <artifactId>devon4j-batch</artifactId>
-    </dependency>
 
-    <!-- Tests -->
     <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-test</artifactId>
-      <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-batch</artifactId>
     </dependency>
 
   </dependencies>
-
+  
   <build>
     <resources>
       <resource>
@@ -62,7 +55,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.devonfw.module.batch.common.base.SpringBootBatchCommandLine</mainClass>
+          <mainClass>com.devonfw.application.mtsj.SpringBootApp</mainClass>
           <classifier>bootified</classifier>
         </configuration>
         <executions>
