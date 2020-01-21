@@ -21,8 +21,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * This is an example batch which shows how to recover from failed batch runs. In fact all runs of the batch will fail.
- * Probably the most interesting class is {@link CountItemReader} which implements the {@link ItemStream} interface.
- *
+ * Probably the most interesting class is {@link CountItemReader} which implements the {@link ItemStream} interface. To
+ * make this demonstration useful it is required that we use a "persistent" H2 database. This can be achieved by using
+ * H2s auto-Server-mode when running this batch: <br/>
+ * {@code java -jar mtsj-batch-version>-SNAPSHOT-bootified.jar --spring.datasource.url="jdbc:h2:~/mts;AUTO_SERVER=TRUE" --spring.main.web-application-type=none --spring.batch.job.names=countJob}
  */
 @Configuration
 @EnableBatchProcessing
