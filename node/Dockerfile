@@ -3,8 +3,6 @@ FROM node:lts AS builder
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN npm install -g yarn
-
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn
