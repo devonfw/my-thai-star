@@ -1,7 +1,7 @@
 # 1. Build
 FROM node:lts AS build
 WORKDIR /app
-RUN npm i -g yarn
+
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
 RUN yarn
