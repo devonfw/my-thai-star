@@ -17,7 +17,7 @@ To know more details about the above technologies please visit the following doc
 
 - https://github.com/devonfw/devon/wiki[Devonfw]
 
-- https://github.com/devonfw/tools-cobigen/wiki[Cobigen]
+- https://github.com/devonfw/cobigen/wiki[Cobigen]
 
 == Basic architecture details
 
