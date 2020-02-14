@@ -1,6 +1,4 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-
-export interface IOrder extends IBaseEntity {
+export interface IOrder {
   bookingId: number;
   invitedGuestId?: number;
   hostId?: number;

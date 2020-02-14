@@ -1,6 +1,37 @@
 
-# Created by https://www.gitignore.io/api/node,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=node,visualstudiocode
+# Created by https://www.gitignore.io/api/node,angular,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=node,angular,visualstudiocode
+
+### Angular ###
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
+
+# dependencies
+node_modules/
+bower_components/
+
+# IDEs and editors
+.idea/
+
+# misc
+.sass-cache/
+connect.lock/
+coverage/
+libpeerconnection.log/
+npm-debug.log
+testem.log
+typings/
+
+# e2e
+e2e/*.js
+e2e/*.map
+
+#System Files
+.DS_Store/
 
 ### Node ###
 # Logs
@@ -9,6 +40,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
@@ -21,6 +56,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+*.lcov
 
 # nyc test coverage
 .nyc_output
@@ -38,13 +74,12 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
-dist/
-output/
 
 # TypeScript v1 declaration files
-typings/
+
+# TypeScript cache
+*.tsbuildinfo
 
 # Optional npm cache directory
 .npm
@@ -74,6 +109,17 @@ typings/
 # nuxt.js build output
 .nuxt
 
+# rollup.js default build output
+
+# Uncomment the public line if your project uses Gatsby
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# https://create-react-app.dev/docs/using-the-public-folder/#docsNav
+# public
+
+# Storybook build outputs
+.out
+.storybook-out
+
 # vuepress build output
 .vuepress/dist
 
@@ -86,6 +132,9 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Temporary folders
+temp/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -97,6 +146,6 @@ typings/
 # Ignore all local history of files
 .history
 
-# End of https://www.gitignore.io/api/node,visualstudiocode
+# End of https://www.gitignore.io/api/node,angular,visualstudiocode
 
 documentation/

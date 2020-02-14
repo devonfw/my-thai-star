@@ -1,35 +1,31 @@
-import { IConfig } from '../app/core/configuration/model/types';
 import { join } from 'path';
+import { Config } from '../app/shared/model/config/config.model';
 
-const def: IConfig = {
+const def: Config = {
   isDev: true,
   host: 'localhost',
   port: 8081,
-  jwtConfig: {
-    secret: '1q5cYpNHmjIwwfXBxnce3vAi1bfwy4KeM1dzpdSGvjuGkGDfjw9mml11aOkzC',
-    signOptions: { expiresIn: '24h' },
-  },
-  globalPrefix: 'mythaistar',
-  swaggerConfig: {
-    swaggerTitle: 'My Thai Star',
-    swaggerDescription: 'API Documentation',
-    swaggerVersion: '0.0.1',
-    swaggerBasepath: 'mythaistar/services/rest',
-  },
   clientUrl: 'localhost:4200',
+  globalPrefix: 'mythaistar',
+  loggerConfig: {
+    console: true,
+    errorLogFile: './logs/error.log',
+    generalLogFile: './logs/general.log',
+    loggerLevel: 'info',
+  },
+  database: require(join(__dirname, '../../ormconfig.json')),
   mailerConfig: {
     mailOptions: {
-        streamTransport: true,
-        newline: 'windows',
-      },
-      // {
-      // host: 'localhost',
-      // port: 1025,
-      // secure: false,
-      // tls: {
-      //   rejectUnauthorized: false,
+      //   streamTransport: true,
+      //   newline: 'windows',
       // },
-    // },
+      host: 'localhost',
+      port: 1025,
+      secure: false,
+      tls: {
+        rejectUnauthorized: false,
+      },
+    },
     emailFrom: 'noreply@capgemini.com',
     hbsOptions: {
       templatesDir: join(__dirname, '../..', 'templates/views'),
@@ -37,29 +33,25 @@ const def: IConfig = {
       helpers: [
         {
           name: 'bool2word',
-          func: (value: boolean) => (value ? 'accepted' : 'declined'),
+          func: (value: boolean): string => (value ? 'accepted' : 'declined'),
         },
         {
           name: 'formatDate',
-          func: (value: Date) => value.toLocaleString(),
+          func: (value: Date): string => value.toLocaleString(),
         },
         {
           name: 'toNumber',
-          func: (value: any) => Number(value),
+          func: (value: any): number => Number(value),
         },
       ],
     },
   },
-  database: {
-    type: 'sqlite',
-    database: ':memory:',
-    synchronize: false,
-    migrationsRun: true,
-    logging: true,
-    entities: ['./dist/**/*.entity{.js,.ts}'],
-    migrations: ['dist/migrations/default/**/*.js'],
-    subscribers: ['dist/subscriber/**/*.js'],
+  swaggerConfig: {
+    swaggerTitle: 'My Thai Star',
+    swaggerDescription: 'API Documentation',
+    swaggerVersion: '0.0.1',
   },
+  jwtConfig: { secret: 'SECRET', signOptions: { expiresIn: '24h' } },
 };
 
 export default def;

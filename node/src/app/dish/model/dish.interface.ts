@@ -1,6 +1,4 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-
-export interface IDish extends IBaseEntity {
+export interface IDish {
   name?: string;
   description?: string;
   price?: number;
