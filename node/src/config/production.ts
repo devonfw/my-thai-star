@@ -1,21 +1,33 @@
-import { IConfig } from '../app/core/configuration/model/types';
 import { join } from 'path';
+import { Config } from '../app/shared/model/config/config.model';
 
-const def: IConfig = {
-  isDev: true,
+const def: Config = {
+  isDev: false,
   host: 'de-mucdevondepl01',
   port: 8081,
-  jwtConfig: {
-    secret: '1q5cYpNHmjIwwfXBxnce3vAi1bfwy4KeM1dzpdSGvjuGkGDfjw9mml11aOkzC',
-    signOptions: { expiresIn: '24h' },
+  clientUrl: 'localhost:4200',
+  globalPrefix: 'mythaistar',
+  loggerConfig: {
+    console: true,
+    errorLogFile: './logs/error.log',
+    generalLogFile: './logs/general.log',
+    loggerLevel: 'warn',
   },
-  swaggerConfig: {
-    swaggerTitle: 'My Thai Star',
-    swaggerDescription: 'API Documentation',
-    swaggerVersion: '0.0.1',
-    swaggerBasepath: 'mythaistar/services/rest',
+  database: {
+    type: 'sqlite',
+    database: ':memory:',
+    synchronize: false,
+    migrationsRun: true,
+    logging: false,
+    entities: ['dist/**/*.entity.js'],
+    migrations: ['dist/migration/**/*.js'],
+    subscribers: ['dist/subscriber/**/*.js'],
+    cli: {
+      entitiesDir: 'src/entity',
+      migrationsDir: 'src/migration',
+      subscribersDir: 'src/subscriber',
+    },
   },
-  clientUrl: 'http://de-mucdevondepl01:8091',
   mailerConfig: {
     mailOptions: {
       host: 'maildev',
@@ -25,41 +37,32 @@ const def: IConfig = {
         rejectUnauthorized: false,
       },
     },
-    emailFrom: 'noreply@capgemini.com',
+    emailFrom: 'noreply@example.com',
     hbsOptions: {
       templatesDir: join(__dirname, '../..', 'templates/views'),
       partialsDir: join(__dirname, '../..', 'templates/partials'),
       helpers: [
         {
           name: 'bool2word',
-          func: (value: boolean) => (value ? 'accepted' : 'declined'),
+          func: (value: boolean): string => (value ? 'accepted' : 'declined'),
         },
         {
           name: 'formatDate',
-          func: (value: Date) => value.toLocaleString(),
+          func: (value: Date): string => value.toLocaleString(),
         },
         {
           name: 'toNumber',
-          func: (value: any) => Number(value),
+          func: (value: any): number => Number(value),
         },
       ],
     },
   },
-  database: {
-    type: 'mariadb',
-    host: 'mariadb',
-    port: 3306,
-    username: 'test',
-    password: 'test',
-    database: 'test',
-    synchronize: false,
-    migrationsRun: true,
-    supportBigNumbers: true,
-    logging: false,
-    entities: ['./dist/**/*.entity{.js,.ts}'],
-    migrations: ['dist/migrations/production/**/*.js'],
-    subscribers: ['dist/subscriber/**/*.js'],
+  swaggerConfig: {
+    swaggerTitle: 'My Thai Star',
+    swaggerDescription: 'API Documentation',
+    swaggerVersion: '0.0.1',
   },
+  jwtConfig: { secret: 'SECRET', signOptions: { expiresIn: '24h' } },
 };
 
 export default def;
