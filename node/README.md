@@ -1,74 +1,95 @@
-NOTE:
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+</p>
 
-The application is deployed at http://de-mucdevondepl01:8091
-To read the emails sended by the application you can go to http://de-mucdevondepl01:8092
+[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
+[travis-url]: https://travis-ci.org/nestjs/nest
+[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
+[linux-url]: https://travis-ci.org/nestjs/nest
 
-IMPORTANT: The application is working but there is something peding:
+  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
+<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
+<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
+  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-- Test: all test are missing
-- JSDoc: all classes/methods do not have a proper JSDoc.
-- Better exception handling: layer service shouldn't know anything about the HTTP response to the client. Thats why we throw a normal Error in the service layer and then we catch them at controller layer and send to the client the proper HTTP error. This mechanism is OK, but we can improve it by creating errors and then adding an error handling which is the responsible to send the correct HTTP error to the client. This feature will arrive soon.
+## Description
 
----
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
-### Dependencies
-
-The first command required for the installation is:
-
 ```bash
-yarn
+$ npm install
 ```
 
-WARNING: some libraries used in this implementation needs to be compiled. In order to be able to do that in windows, you need the **windows-build-tools** package globally installed (_npm install --global windows-build-tools_).
+## Prerequisites
 
-NOTE: to be sure that you install the same package as us, please avoid the usage of npm for install dependencies.
+As prerequisite, the application needs a maildev container running on port 1025. You can deploy it using docker:
 
-## Configuration
+```bash
+$ docker-compose up -d maildev
+```
 
-The configuration files are in the following path: src/config/\*.ts
-
-Each file contains the following parameters to be retrieved by the configuration service depending on the execution environment:
-
-- isDev: True if you are using a development environment.
-- host: Host url .
-- port: Port number on where the requests are to be listened.
-- globalPrefix: The global prefix of the application
-- jwtConfig: Auth JWT module configuration
-- swaggerConfig: Swagger module configuration
-- clientUrl: Client url.
-- mailerConfig: Mailer module configuration.
-- database: Database configuration.
-
-### Database
-
-In this implementation mariadb is used as persistence system with TypeOrm.
-
-For develop and testing, a in memory sqlite database is used.
+After that you will see all emails sended by the application at http://localhost:8092
 
 ## Running the app
 
 ```bash
 # development
-npm run start
+$ yarn start
 
 # watch mode
-npm run start:dev
+$ yarn start:dev
 
 # production mode
-npm run start:prod
+$ yarn start:prod
+```
+
+## Running the using docker
+
+```bash
+# Build all images
+$ docker-compose up -d --build
+
+# Use existing images
+docker-compose up -d
 ```
 
 ## Test
 
 ```bash
 # unit tests
-npm run test
+$ yarn test
 
 # e2e tests
-npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-npm run test:cov
+$ yarn test:cov
 ```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).

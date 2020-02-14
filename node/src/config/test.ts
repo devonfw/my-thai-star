@@ -1,22 +1,15 @@
-import { IConfig } from '../app/core/configuration/model/types';
+import { join } from 'path';
+import { Config } from '../app/shared/model/config/config.model';
 
-const test: IConfig = {
+const def: Config = {
   isDev: true,
   host: 'localhost',
   port: 8080,
-  jwtConfig: {
-    secret: 'key',
-    signOptions: { expiresIn: '24h' },
-  },
-  clientUrl: '',
-  swaggerConfig: {
-    swaggerTitle: 'Your App Title',
-    swaggerDescription: 'API Documentation',
-    swaggerVersion: '0.0.1',
-    swaggerBasepath: 'api',
-  },
-  mailerConfig: {
-    emailFrom: 'noreply@capgemini.com',
+  clientUrl: 'localhost:4200',
+  globalPrefix: 'v1',
+  loggerConfig: {
+    console: false,
+    loggerLevel: 'info',
   },
   database: {
     type: 'sqlite',
@@ -24,13 +17,46 @@ const test: IConfig = {
     synchronize: false,
     migrationsRun: true,
     logging: false,
-    entities: ['./dist/**/*.entity{.js,.ts}'],
-    migrations: ['dist/migrations/default/**/*.js'],
-    subscribers: ['dist/subscriber/**/*.js'],
+    entities: ['src/**/*.entity.ts'],
+    migrations: ['src/migration/*.ts'],
+    subscribers: ['src/subscriber/**/*.ts'],
     cli: {
-      migrationsDir: 'src/migrations',
+      entitiesDir: 'src/entity',
+      migrationsDir: 'src/migration',
+      subscribersDir: 'src/subscriber',
     },
   },
+  mailerConfig: {
+    mailOptions: {
+      streamTransport: true,
+      newline: 'windows',
+    },
+    emailFrom: 'noreply@example.com',
+    hbsOptions: {
+      templatesDir: join(__dirname, '../..', 'templates/views'),
+      partialsDir: join(__dirname, '../..', 'templates/partials'),
+      helpers: [
+        {
+          name: 'bool2word',
+          func: (value: boolean): string => (value ? 'accepted' : 'declined'),
+        },
+        {
+          name: 'formatDate',
+          func: (value: Date): string => value.toLocaleString(),
+        },
+        {
+          name: 'toNumber',
+          func: (value: any): number => Number(value),
+        },
+      ],
+    },
+  },
+  swaggerConfig: {
+    swaggerTitle: 'My Thai Star',
+    swaggerDescription: 'API Documentation',
+    swaggerVersion: '0.0.1',
+  },
+  jwtConfig: { secret: 'SECRET', signOptions: { expiresIn: '24h' } },
 };
 
-export default test;
+export default def;

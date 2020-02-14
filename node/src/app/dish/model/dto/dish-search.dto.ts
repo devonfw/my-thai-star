@@ -1,29 +1,38 @@
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Pageable } from '../../../shared/model/dto/pageable.dto';
-import { Type } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArrayOfIds } from '../../../shared/validators/is-array-of-ids';
+
 export class DishSearch {
-  @ApiModelPropertyOptional()
   @IsOptional()
+  @ApiPropertyOptional({
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'number',
+        },
+      },
+    },
+  })
+  @IsArrayOfIds()
   readonly categories?: Array<{ id: number }>;
 
-  @ApiModelPropertyOptional()
   @IsString()
   @IsOptional()
   readonly searchBy?: string;
 
-  @ApiModelProperty()
   @ValidateNested()
   @Type(() => Pageable)
   readonly pageable!: Pageable;
 
-  @ApiModelPropertyOptional({ type: 'number' })
   @IsInt()
   @IsOptional()
-  readonly maxPrice?: number | null;
+  readonly maxPrice?: number;
 
-  @ApiModelPropertyOptional({ type: 'number' })
   @IsInt()
   @IsOptional()
-  readonly minLikes?: number | null;
+  readonly minLikes?: number;
 }

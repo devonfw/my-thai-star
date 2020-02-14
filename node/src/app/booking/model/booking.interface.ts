@@ -1,5 +1,4 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-export interface IBooking extends IBaseEntity {
+export interface IBooking {
   userId?: number;
   name: string;
   bookingToken?: string;

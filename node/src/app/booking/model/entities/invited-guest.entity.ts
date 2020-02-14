@@ -1,76 +1,69 @@
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import {
-  IsBoolean,
-  IsDate,
-  IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { plainToClass, Transform } from 'class-transformer';
+import { IsBoolean, IsDate, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import * as md5 from 'md5';
+import * as moment from 'moment';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Order } from '../../../order/model/entities/order.entity';
 import { BaseEntity } from '../../../shared/model/entities/base-entity.entity';
 import { IInvitedGuest } from '../invited-guest.interface';
 import { Booking } from './booking.entity';
-import { Order } from '../../../order/model/entities/order.entity';
-import { WithPrecisionColumnType } from 'typeorm/driver/types/ColumnTypes';
-
-let DATE_COLUMN: WithPrecisionColumnType;
-if (process.env.NODE_ENV === 'production') {
-  DATE_COLUMN = 'timestamp';
-} else {
-  DATE_COLUMN = 'datetime';
-}
 
 @Entity({ name: 'InvitedGuest' })
 export class InvitedGuest extends BaseEntity implements IInvitedGuest {
   @Column('bigint', { name: 'idBooking', nullable: false })
-  @ApiModelProperty()
   @IsInt()
   @IsOptional()
   bookingId!: number;
 
   @Column('varchar', { length: 60, nullable: true })
-  @ApiModelPropertyOptional()
   @IsString()
   @MaxLength(60)
   @IsOptional()
   guestToken?: string;
 
   @Column('varchar', { length: 60, nullable: true })
-  @ApiModelPropertyOptional()
   @IsString()
   @MaxLength(60)
   @IsOptional()
   email?: string;
 
   @Column('boolean', { nullable: true })
-  @ApiModelPropertyOptional()
   @Transform(value => Boolean(value))
   @IsBoolean()
   @IsOptional()
   accepted?: boolean;
 
-  @Column(DATE_COLUMN, { nullable: true })
-  @ApiModelPropertyOptional()
+  @Column('datetime', { nullable: true })
   @Transform(value => new Date(value))
   @IsDate()
   @IsOptional()
   modificationDate?: Date;
 
   @Column('bigint', { name: 'idOrder', nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   orderId?: number;
 
-  @ManyToOne(_type => Booking, booking => booking.invitedGuests)
+  @ManyToOne(() => Booking, booking => booking.invitedGuests)
   @JoinColumn({ name: 'idBooking' })
+  @ApiHideProperty()
   booking?: Booking;
 
-  @ManyToOne(_type => Order, order => order.invitedGuestId, {
+  @ManyToOne(() => Order, order => order.invitedGuestId, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'idOrder' })
-  order?: Booking;
+  @ApiHideProperty()
+  order?: Order;
+
+  static create(invitedGuest: Partial<InvitedGuest>): InvitedGuest {
+    const now = moment();
+    return plainToClass(InvitedGuest, {
+      bookingId: invitedGuest.bookingId,
+      guestToken: 'GB_' + now.format('YYYYMMDD') + '_' + md5(invitedGuest.email + now.format('YYYYMMDDHHmmss')),
+      modificationDate: now.toDate(),
+      email: invitedGuest.email,
+    });
+  }
 }

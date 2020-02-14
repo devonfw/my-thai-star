@@ -1,52 +1,52 @@
+import { ClassSerializerInterceptor } from '@devon4node/common/serializer';
+import { ConfigModule, ConfigService } from '@devon4node/config';
 import { MailerModule } from '@devon4node/mailer';
 import { Global, Module } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
+import { BusinessLogicFilter } from '../shared/filters/business-logic.filter';
 import { WinstonLogger } from '../shared/logger/winston.logger';
-import { ConfigurationModule } from './configuration/configuration.module';
-import { ConfigurationService } from './configuration/services/configuration.service';
-import { OnShutdownService } from './terminus/services/on-shutdown.service';
-import { TerminusOptionsService } from './terminus/services/terminus.service';
+import { Config } from '../shared/model/config/config.model';
 import { AuthModule } from './auth/auth.module';
-import { ClassSerializerInterceptor } from '@devon4node/common/serializer';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { HealthController } from './health/controllers/health.controller';
+import { OnShutdownService } from './health/services/on-shutdown.service';
+import { UserModule } from './user/user.module';
 
 @Global()
 @Module({
   imports: [
-    ConfigurationModule,
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigurationModule],
-      useFactory: (config: ConfigurationService) => {
-        return config.database;
-      },
-      inject: [ConfigurationService],
+    ConfigModule.forRoot({
+      configPrefix: 'mts',
+      configDir: join(__dirname, '../../config'),
+      configType: Config,
     }),
-    TerminusModule.forRootAsync({
-      useClass: TerminusOptionsService,
-    }),
+    UserModule,
+    AuthModule,
     MailerModule.forRootAsync({
-      imports: [ConfigurationModule],
-      useFactory: (config: ConfigurationService) => {
-        return config.mailerConfig;
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService<Config>) => {
+        return config.values.mailerConfig;
       },
-      inject: [ConfigurationService],
+      inject: [ConfigService],
     }),
-    AuthModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService<Config>) => {
+        return config.values.database;
+      },
+      inject: [ConfigService],
+    }),
+    TerminusModule,
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [
-    TerminusOptionsService,
-    OnShutdownService,
-    WinstonLogger,
+    { provide: APP_FILTER, useClass: BusinessLogicFilter },
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
-  ],
-  exports: [
     OnShutdownService,
-    ConfigurationModule,
-    MailerModule,
     WinstonLogger,
-    AuthModule,
   ],
+  exports: [UserModule, AuthModule, MailerModule, ConfigModule, WinstonLogger],
 })
 export class CoreModule {}

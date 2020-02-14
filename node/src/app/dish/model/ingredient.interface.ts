@@ -1,6 +1,4 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-
-export interface IIngredient extends IBaseEntity {
+export interface IIngredient {
   name?: string;
   description?: string;
   price?: number;
