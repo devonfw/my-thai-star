@@ -14,7 +14,7 @@ pipeline{
     }
 
     parameters {
-        string(name: 'registryUrl', defaultValue: "https://docker-registry-devon.s2-eu.capgemini.com", description: 'docker registry url')
+        string(name: 'registryUrl', defaultValue: "REPLACE_ME", description: 'docker registry url')
         credentials(name: 'registryCredentialsId', defaultValue: "nexus-api", description: 'registry credentials', credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
         string(name: 'VERSION', defaultValue: '3.2.0', description: 'Version number') 
         string(name: 'dockerNetwork', defaultValue: 'my-thai-star', description: 'The docker network for the deployed container') 
