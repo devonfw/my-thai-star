@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +88,7 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
     this.flyway.importTestData(ALL_TESTS_DB_SETUP_DIR);
 
     LOG.debug("Delete tmp directory");
-    FileUtils.deleteDirectory(new File(TMP_DIR));
+    File file = new File(TMP_DIR);
+    file.delete();
   }
 }
