@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: java
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /mythaistar/$2
+    kubernetes.io/ingress.class: ingress-public
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: my-thai-star.demo.xpaas.io
+    http:
+      paths:
+      - path: /api(/)(.*)
+        backend:
+          serviceName: java
+          servicePort: 8081
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: angular
+  annotations:
+    kubernetes.io/ingress.class: ingress-public
+spec:
+  rules:
+  - host: my-thai-star.demo.xpaas.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: angular
+          servicePort: 8080
