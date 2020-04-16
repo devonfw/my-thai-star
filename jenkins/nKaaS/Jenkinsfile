@@ -1,0 +1,51 @@
+pipeline {
+	agent any
+
+	options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+    	angularDir = 'angular'
+    	javaDir = 'java'
+    }
+
+    stages {
+    	stage ('Checkout BitBucket') {
+    		steps {
+    			script {
+    				checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/devonfw/my-thai-star.git']]])
+    			}
+    		}
+    	}
+    	
+    	stage ('Build Angular image') {
+    	    steps {
+    	        script {
+    	            docker.build("harbor.demo.xpaas.io/my-thai-star/mts-angular:latest", "-f angular/Dockerfile.k8s angular")
+    	        }
+    	    }
+    	}
+    	
+    	stage ('Build Java image') {
+    	    steps {
+    	        script {
+    	            docker.build("harbor.demo.xpaas.io/my-thai-star/mts-java:latest", "-f java/Dockerfile.k8s java")
+    	        }
+    	    }
+    	}
+    	
+    	stage ('Push Docker images') {
+    	    steps {
+    	        script {
+    	            docker.withRegistry('https://harbor.demo.xpaas.io/', 'c9595f9a-62a3-4c87-8f18-428e41b51bf5') {
+    	                sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-angular:latest'
+    	                sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-java:latest'
+    	            }
+    	        }
+    	    }
+    	}
+    }
+}

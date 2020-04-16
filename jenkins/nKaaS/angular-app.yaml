@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular
+  labels:
+    app: mts
+    tier: angular
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: mts
+    tier: angular
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular
+  labels:
+    app: mts
+spec:
+  selector:
+    matchLabels:
+      app: mts
+      tier: angular
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mts
+        tier: angular
+    spec:
+      securityContext:
+        runAsUser: 1000
+      hostname: angular
+      containers:
+      - name: angular
+        image: harbor.demo.xpaas.io/my-thai-star/mts-angular:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
