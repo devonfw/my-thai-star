@@ -13,13 +13,6 @@ pipeline {
     }
 
     stages {
-    	stage ('Checkout BitBucket') {
-    		steps {
-    			script {
-    				checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/devonfw/my-thai-star.git']]])
-    			}
-    		}
-    	}
     	
     	stage ('Build Angular image') {
     	    steps {
