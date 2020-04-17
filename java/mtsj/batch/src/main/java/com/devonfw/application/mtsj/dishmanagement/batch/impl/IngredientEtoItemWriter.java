@@ -10,7 +10,8 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 
 /**
- * @author simon
+ * This class implements an {@link ItemWriter} which writes {@link IngredientEto} using the 'Save Ingredient' use case
+ * of {@link Dishmanagement}.
  *
  */
 public class IngredientEtoItemWriter implements ItemWriter<IngredientEto> {

@@ -14,7 +14,8 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEnti
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.IngredientRepository;
 
 /**
- * @author simon
+ * This class implements an {@link ItemReader} for {@link IngredientEntity} which uses {@link IngredientRepository} to
+ * actually read the items.
  *
  */
 @Named
