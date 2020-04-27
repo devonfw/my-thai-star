@@ -64,16 +64,8 @@
       </dependency> -->
 
     <dependency>
-       <groupId>com.devonfw.java.modules</groupId>
-        <artifactId>devon4j-security-jwt</artifactId>
-    </dependency> 
-     <dependency>
-      <groupId>com.devonfw.java.modules</groupId>
-      <artifactId>devon4j-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.devonfw.java.modules</groupId>
-      <artifactId>devon4j-security-keystore</artifactId>
+	     <groupId>com.devonfw.java.starters</groupId>
+        <artifactId>devon4j-starter-security-jwt</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

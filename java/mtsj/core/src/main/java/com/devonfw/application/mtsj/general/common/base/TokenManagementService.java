@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.devonfw.application.mtsj.general.common.api.datatype.Role;
 import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.module.security.jwt.common.api.JwtAuthenticator;
+import com.devonfw.module.security.jwt.common.base.JwtConstants;
 
 /**
  * Retrieves principal and authorities from token
@@ -32,7 +33,8 @@ public class TokenManagementService {
   public UserDetailsClientTo getUserdetailsFromTokenJwt(String jwt) {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
-    Authentication auth = this.jwtAuthenticator.authenticate(jwt);
+
+    Authentication auth = this.jwtAuthenticator.authenticate(jwt.replace(JwtConstants.TOKEN_PREFIX, ""));
     userDetails.setName(auth.getPrincipal().toString());
     List<GrantedAuthority> listRoles = (List<GrantedAuthority>) auth.getAuthorities();
     for (GrantedAuthority grantedAuth : listRoles) {

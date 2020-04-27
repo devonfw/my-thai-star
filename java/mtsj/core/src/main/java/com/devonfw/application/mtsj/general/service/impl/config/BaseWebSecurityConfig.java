@@ -107,7 +107,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
             UsernamePasswordAuthenticationFilter.class)
         // the api/login requests are filtered with the JWTLoginFilter
-        .addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(getJwtLoginFilter(), UsernamePasswordAuthenticationFilter.class)
         // other requests are filtered to check the presence of JWT in header
         .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -117,8 +117,12 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   }
 
+  /**
+   * @return
+   * @throws Exception
+   */
   @Bean
-  public JwtLoginFilter jwtLoginFilter() throws Exception {
+  public JwtLoginFilter getJwtLoginFilter() throws Exception {
 
     JwtLoginFilter jwtLoginFilter = new JwtLoginFilter("/login");
     jwtLoginFilter.setAuthenticationManager(authenticationManager());
