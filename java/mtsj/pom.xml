@@ -11,9 +11,8 @@
   <description>Application based on the Devonfw framework for Java (devon4j).</description>
 
   <properties>
-    <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
-    
-    <devon4j.version>3.3.0-SNAPSHOT</devon4j.version>
+    <spring.boot.version>2.1.9.RELEASE</spring.boot.version>   
+    <devon4j.version>2020.04.001</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <junit.version>5.5.2</junit.version>
