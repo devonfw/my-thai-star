@@ -91,7 +91,7 @@ CREATE TABLE Category (
   name VARCHAR (255),
   description VARCHAR (4000),
   showOrder INTEGER,
-  CONSTRAINT PK_Category PRIMARY KEY(id),
+  CONSTRAINT PK_Category PRIMARY KEY(id)
 );
 
 -- *** Image ***
@@ -114,7 +114,7 @@ CREATE TABLE Dish (
   price DECIMAL (16,10),
   idImage BIGINT UNIQUE NOT NULL,
   CONSTRAINT PK_Dish PRIMARY KEY(id),
-  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
+  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK
 );
 
 -- *** DishCategory ***
