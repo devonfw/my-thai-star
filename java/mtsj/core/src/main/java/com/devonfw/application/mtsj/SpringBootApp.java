@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj;
 
+import java.util.Arrays;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -22,6 +24,12 @@ public class SpringBootApp {
    */
   public static void main(String[] args) {
 
-    SpringApplication.run(SpringBootApp.class, args);
+    if (Arrays.stream(args).anyMatch((String e) -> e.contains("--spring.batch.job.names"))) {
+      // if executing batch job, explicitly exit jvm to report error code from batch
+      System.exit(SpringApplication.exit(SpringApplication.run(SpringBootApp.class, args)));
+    } else {
+      // normal web application start
+      SpringApplication.run(SpringBootApp.class, args);
+    }
   }
 }
