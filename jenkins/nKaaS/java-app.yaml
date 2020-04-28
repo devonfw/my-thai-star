@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java
+  labels:
+    app: mts
+    tier: java
+spec:
+  ports:
+  - port: 8081
+    targetPort: 8081
+  selector:
+    app: mts
+    tier: java
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+  labels:
+    app: mts
+spec:
+  selector:
+    matchLabels:
+      app: mts
+      tier: java
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mts
+        tier: java
+    spec:
+      securityContext:
+        runAsUser: 1000
+      hostname: java
+      containers:
+      - name: java
+        image: harbor.demo.xpaas.io/my-thai-star/mts-java:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
