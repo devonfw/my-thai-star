@@ -34,13 +34,9 @@ public class DatabaseMigrator {
   public void migrate() {
 
     if (this.enabled) {
-      final Flyway flyway = new Flyway();
-      flyway.setDataSource(this.dataSource);
-      if (this.testdata) {
-        flyway.setLocations(masterDataPath, testDataPath);
-      } else {
-        flyway.setLocations(masterDataPath);
-      }
+      final Flyway flyway = Flyway.configure().dataSource(this.dataSource).locations(masterDataPath, testDataPath)
+          .load();
+
       if (this.clean) {
         flyway.clean();
       }
@@ -55,9 +51,7 @@ public class DatabaseMigrator {
    */
   public void importTestData(String importTestDataPath) {
 
-    final Flyway flyway = new Flyway();
-    flyway.setDataSource(this.dataSource);
-    flyway.setLocations(importTestDataPath);
+    final Flyway flyway = Flyway.configure().dataSource(this.dataSource).locations(importTestDataPath).load();
     flyway.migrate();
   }
 
