@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
-import com.devonfw.application.mtsj.general.common.base.TokenManagementService;
+import com.devonfw.application.mtsj.general.common.base.TokenAuthenticationService;
 
 /**
  * The security REST service provides access to the csrf token, the authenticated user's meta-data. Furthermore, it
@@ -30,7 +30,7 @@ public class SecurityRestServiceImpl {
   private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
 
   @Inject
-  private TokenManagementService tokenManagementService;
+  private TokenAuthenticationService tokenAuthenticationService;
 
   /**
    * Returns the user details from the jwt token included in the 'Authorization' header
@@ -43,7 +43,7 @@ public class SecurityRestServiceImpl {
   @Path("/currentuser/")
   public UserDetailsClientTo getCurrentUserDetails(@Context HttpServletRequest request) {
 
-    return this.tokenManagementService.getUserdetailsFromTokenJwt(request.getHeader("Authorization"));
+    return this.tokenAuthenticationService.getUserdetailsFromToken(request.getHeader("Authorization"));
   }
 
 }

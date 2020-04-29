@@ -66,10 +66,11 @@
       <artifactId>devon4j-jpa</artifactId>
       </dependency> -->
 
-    <dependency>
-	     <groupId>com.devonfw.java.starters</groupId>
-        <artifactId>devon4j-starter-security-jwt</artifactId>
-    </dependency>
+		<dependency>
+			<groupId>com.devonfw.java.starters</groupId>
+			<artifactId>devon4j-starter-security-jwt</artifactId>
+		</dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
@@ -132,12 +133,6 @@
       </dependency>
     -->
 
-    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-    </dependency>
-    
     <dependency>
       <groupId>org.apache.commons</groupId>
        <artifactId>commons-lang3</artifactId>
