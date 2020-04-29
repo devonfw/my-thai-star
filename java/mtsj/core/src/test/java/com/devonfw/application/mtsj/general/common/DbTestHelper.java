@@ -19,6 +19,7 @@ public class DbTestHelper {
    * @param flyway an instance of type {@link Flyway}.
    */
   public DbTestHelper(Flyway flyway) {
+
     super();
     this.flyway = flyway;
   }
@@ -39,7 +40,8 @@ public class DbTestHelper {
 
     dropDatabase();
     if (this.migrationVersion != null) {
-      this.flyway.setTarget(this.migrationVersion);
+      this.flyway.getConfiguration().getTarget();
+      MigrationVersion.fromVersion(this.migrationVersion.getVersion());
     }
     this.flyway.migrate();
   }

@@ -38,7 +38,7 @@ public class DishmanagementTest extends ApplicationComponentTest {
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
+    PageRequest pageable = PageRequest.of(0, 100, Sort.by(Direction.DESC, "price"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
     assertThat(result).isNotNull();
@@ -54,7 +54,7 @@ public class DishmanagementTest extends ApplicationComponentTest {
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
     criteria.setSearchBy("Thai Spicy Basil Fried Rice");
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "id"));
+    PageRequest pageable = PageRequest.of(0, 100, Sort.by(Direction.DESC, "id"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
