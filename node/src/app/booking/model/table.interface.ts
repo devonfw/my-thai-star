@@ -1,5 +1,3 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-
-export interface ITable extends IBaseEntity {
+export interface ITable {
   seatsNumber: number;
 }
