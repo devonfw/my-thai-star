@@ -1,6 +1,4 @@
-import { IBaseEntity } from '../../shared/model/base-entity.interface';
-
-export interface IOrderLine extends IBaseEntity {
+export interface IOrderLine {
   dishId: number;
   amount?: number;
   comment?: string;

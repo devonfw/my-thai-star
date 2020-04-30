@@ -1,36 +1,21 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
-import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { DishService } from '../services/dish.service';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DishPage } from '../model/dto/dish-page.dto';
 import { DishSearch } from '../model/dto/dish-search.dto';
 import { Dish } from '../model/entities/dish.entity';
+import { DishService } from '../services/dish.service';
 
 @Controller('services/rest/dishmanagement/v1/dish')
-@ApiUseTags('Dish')
+@ApiTags('Dish')
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
   @Post('search')
-  @ApiResponse({ status: HttpStatus.OK })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: BadRequestException })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
   @HttpCode(200)
   async searchDishes(@Body() search: DishSearch): Promise<DishPage> {
-    try {
-      const [dishes, count]: [
-        Dish[],
-        number
-      ] = await this.dishService.searchDishes(search);
+    const [dishes, count]: [Dish[], number] = await this.dishService.searchDishes(search);
 
-      return DishPage.fromDishes(count, search.pageable, dishes);
-    } catch (e) {
-      throw new BadRequestException(e.message, e);
-    }
+    return DishPage.fromDishes(count, search.pageable, dishes);
   }
 }
