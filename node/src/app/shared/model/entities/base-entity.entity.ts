@@ -1,13 +1,12 @@
-import { PrimaryGeneratedColumn, Column, VersionColumn } from 'typeorm';
-import { IBaseEntity } from '../base-entity.interface';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import { PrimaryGeneratedColumn, VersionColumn } from 'typeorm';
 
-export abstract class BaseEntity implements IBaseEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+export abstract class BaseEntity {
+  @PrimaryGeneratedColumn('increment')
   @Expose()
   id!: number;
 
-  @Column('integer', { nullable: false })
-  @VersionColumn()
+  @VersionColumn({ default: 1 })
+  @Exclude({ toPlainOnly: true })
   modificationCounter!: number;
 }

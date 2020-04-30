@@ -1,21 +1,19 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from '../../user/user.module';
-import { ConfigurationModule } from '../configuration/configuration.module';
-import { ConfigurationService } from '../configuration/services/configuration.service';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { ConfigModule, ConfigService } from '@devon4node/config';
+import { Config } from '../../shared/model/config/config.model';
 
 @Module({
   imports: [
-    UserModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
-      imports: [ConfigurationModule],
-      useFactory: (config: ConfigurationService) => config.jwtConfig,
-      inject: [ConfigurationService],
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService<Config>) => config.values.jwtConfig,
+      inject: [ConfigService],
     }),
   ],
   providers: [AuthService, JwtStrategy],

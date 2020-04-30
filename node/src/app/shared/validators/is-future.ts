@@ -6,25 +6,9 @@ import {
   ValidationArguments,
 } from 'class-validator';
 
-export function IsFuture(
-  addHours?: number,
-  validationOptions?: ValidationOptions,
-) {
-  // tslint:disable-next-line: only-arrow-functions
-  return function(object: object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName,
-      options: validationOptions,
-      constraints: [addHours],
-      validator: IsFutureConstraint,
-    });
-  };
-}
-
 @ValidatorConstraint({ name: 'isFuture' })
 export class IsFutureConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments) {
+  validate(value: any, args: ValidationArguments): boolean {
     const [addHours] = args.constraints;
     const now = new Date();
 
@@ -38,4 +22,16 @@ export class IsFutureConstraint implements ValidatorConstraintInterface {
   defaultMessage(validationArguments?: ValidationArguments): string {
     return validationArguments!.property + ' must be future';
   }
+}
+
+export function IsFuture(addHours?: number, validationOptions?: ValidationOptions) {
+  return function(object: object, propertyName: string): void {
+    registerDecorator({
+      target: object.constructor,
+      propertyName,
+      options: validationOptions,
+      constraints: [addHours],
+      validator: IsFutureConstraint,
+    });
+  };
 }

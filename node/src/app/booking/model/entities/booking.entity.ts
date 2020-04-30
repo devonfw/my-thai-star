@@ -1,51 +1,35 @@
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { Transform, Exclude, Expose } from 'class-transformer';
-import {
-  IsBoolean,
-  IsDate,
-  IsEmail,
-  IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
-import { Column, Entity, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude, Expose, plainToClass, Transform } from 'class-transformer';
+import { TransformationType } from 'class-transformer/TransformOperationExecutor';
+import { IsBoolean, IsDate, IsEmail, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import * as md5 from 'md5';
+import * as moment from 'moment';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { User } from '../../../core/user/model/entities/user.entity';
+import { Order } from '../../../order/model/entities/order.entity';
 import { BaseEntity } from '../../../shared/model/entities/base-entity.entity';
-import { IsFuture } from '../../../shared/validators';
+import { IsFuture } from '../../../shared/validators/is-future';
+import { BookingTypes } from '../booking-types';
 import { IBooking } from '../booking.interface';
 import { InvitedGuest } from './invited-guest.entity';
 import { Table } from './table.entity';
-import { Order } from '../../../order/model/entities/order.entity';
-import { WithPrecisionColumnType } from 'typeorm/driver/types/ColumnTypes';
-import { User } from '../../../user/model/entity/user.entity';
-import * as moment from 'moment';
-
-let DATE_COLUMN: WithPrecisionColumnType;
-if (process.env.NODE_ENV === 'production') {
-  DATE_COLUMN = 'timestamp';
-} else {
-  DATE_COLUMN = 'datetime';
-}
 
 @Entity({ name: 'Booking' })
 @Exclude()
 export class Booking extends BaseEntity implements IBooking {
   @Column('bigint', { name: 'idUser', nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   @Expose()
   userId?: number;
 
   @Column('varchar', { length: 255, nullable: false })
-  @ApiModelProperty()
   @IsString()
   @MaxLength(255)
   @Expose()
   name!: string;
 
   @Column('varchar', { length: 60, nullable: true })
-  @ApiModelPropertyOptional()
   @IsString()
   @MaxLength(60)
   @IsOptional()
@@ -53,7 +37,6 @@ export class Booking extends BaseEntity implements IBooking {
   bookingToken?: string;
 
   @Column('varchar', { length: 4000, nullable: true })
-  @ApiModelPropertyOptional()
   @IsString()
   @MaxLength(4000)
   @IsOptional()
@@ -61,31 +44,42 @@ export class Booking extends BaseEntity implements IBooking {
   comment?: string;
 
   @Column('varchar', { length: 255, nullable: false })
-  @ApiModelProperty()
   @IsString()
   @MaxLength(255)
   @IsEmail()
   @Expose()
   email!: string;
 
-  @Column(DATE_COLUMN, { nullable: false })
-  @ApiModelProperty()
+  @Column('datetime', { nullable: false })
   @IsDate()
   @IsFuture(1)
   @Expose()
-  @Transform((value: Date) => moment(value).unix(), { toPlainOnly: true })
+  @Transform(
+    (value: Date, _obj: any, transformationType: TransformationType) => {
+      if (transformationType === TransformationType.CLASS_TO_CLASS) {
+        return value;
+      }
+
+      if (transformationType === TransformationType.PLAIN_TO_CLASS) {
+        return new Date(value);
+      }
+
+      return moment(value).unix();
+    },
+    // {
+    //   toPlainOnly: true,
+    // },
+  )
   bookingDate!: Date;
 
-  @Column(DATE_COLUMN, { nullable: true })
-  @ApiModelPropertyOptional()
+  @Column('datetime', { nullable: true })
   @IsDate()
   @IsOptional()
   @Expose()
   @Transform((value: Date) => moment(value).unix(), { toPlainOnly: true })
   expirationDate?: Date;
 
-  @Column(DATE_COLUMN, { nullable: false })
-  @ApiModelPropertyOptional()
+  @Column('datetime', { nullable: false })
   @IsDate()
   @IsOptional()
   @Expose()
@@ -93,58 +87,77 @@ export class Booking extends BaseEntity implements IBooking {
   creationDate?: Date;
 
   @Column('boolean', { nullable: false })
-  @ApiModelProperty()
   @IsBoolean()
   @IsOptional()
   @Expose()
   canceled?: boolean = false;
 
   @Column('integer', { nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   @Expose()
   bookingType?: number;
 
   @Column('bigint', { name: 'idTable', nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   @Expose()
   tableId?: number;
 
   @Column('bigint', { name: 'idOrder', nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   @Expose()
   orderId?: number;
 
   @Column('integer', { nullable: true })
-  @ApiModelPropertyOptional()
   @IsInt()
   @IsOptional()
   @Expose()
   assistants?: number;
 
-  @OneToMany(_type => InvitedGuest, invited => invited.booking, {
+  @OneToMany(() => InvitedGuest, invited => invited.booking, {
     cascade: true,
     onDelete: 'CASCADE',
   })
+  @ApiHideProperty()
   invitedGuests?: InvitedGuest[];
 
-  @ManyToOne(_type => Table)
+  @ManyToOne(() => Table)
   @JoinColumn({ name: 'idTable' })
+  @ApiHideProperty()
   table?: Table;
 
-  @ManyToOne(_type => Order, order => order.id, {
+  @ManyToOne(() => Order, order => order.id, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'idOrder' })
+  @ApiHideProperty()
   order?: Order;
 
-  @ManyToOne(_type => User, user => user.id)
+  @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'idUser' })
+  // @ApiPropertyOptional({ type: () => User })
+  @ApiHideProperty()
   user?: User;
+
+  static create(booking: Partial<Booking>): Booking {
+    const newBooking = plainToClass(Booking, booking);
+    const bookingDate = moment(booking.bookingDate);
+    const now = moment();
+
+    newBooking.bookingType = newBooking.bookingType ?? BookingTypes.COMMON;
+
+    const calculatedValues: Partial<Booking> = {
+      bookingToken: 'CB_' + now.format('YYYYMMDD') + '_' + md5(newBooking.email + now.format('YYYYMMDDHHmmss')),
+      expirationDate: bookingDate.subtract(1, 'hour').toDate(),
+      canceled: false,
+      creationDate: now.toDate(),
+    };
+
+    Object.assign(newBooking, calculatedValues);
+
+    return newBooking;
+  }
 }
