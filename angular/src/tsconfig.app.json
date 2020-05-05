@@ -3,7 +3,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "es2015",
     "outDir": "../dist/out-tsc",
     "target": "es5",
     "types": [
@@ -14,8 +13,11 @@
     "allowUnreachableCode": false,
     "pretty": true
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.*"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ]
 }
