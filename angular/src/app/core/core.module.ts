@@ -1,7 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
@@ -62,6 +62,7 @@ import { SnackBarService } from './snack-bar/snack-bar.service';
 import { WindowService } from './window/window.service';
 
 // Default text strings for OwlDateTime
+@Injectable()
 export class DefaultIntl extends OwlDateTimeIntl {
   cancelBtnLabel = '\u{2716}';
   setBtnLabel = '\u{2714}';
