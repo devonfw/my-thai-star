@@ -1,6 +1,6 @@
 import { HttpClient /* , HttpClientModule */ } from '@angular/common/http';
 // import { WindowService } from '../../core/window/window.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 // import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';

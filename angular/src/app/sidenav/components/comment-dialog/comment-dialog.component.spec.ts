@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CommentDialogComponent } from './comment-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from 'app/core/core.module';
