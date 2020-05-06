@@ -57,6 +57,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { NotSupportedComponent } from './not-supported/not-supported.component';
 import { SnackBarService } from './snack-bar/snack-bar.service';
 import { WindowService } from './window/window.service';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 // Default text strings for OwlDateTime
 @Injectable()
@@ -75,6 +76,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     CdkTableModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    TranslocoRootModule
   ],
   exports: [
     CommonModule,
@@ -118,6 +120,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     HttpClientModule,
+    TranslocoRootModule
   ],
   declarations: [NotFoundComponent, NotSupportedComponent],
   providers: [

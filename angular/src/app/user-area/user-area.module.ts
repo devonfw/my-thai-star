@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuardService } from '../core/authentication/auth-guard.service';
 import { AuthService } from '../core/authentication/auth.service';
 import { CoreModule } from '../core/core.module';
@@ -15,12 +14,13 @@ import { TwitterDialogComponent } from './components/twitter-dialog/twitter-dial
 import { TwoFactorDialogComponent } from './components/two-factor-dialog/two-factor-dialog.component';
 import { UserAreaService } from './services/user-area.service';
 import { effects, reducers } from './store';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    TranslateModule,
+    TranslocoModule,
     HttpClientModule,
     CoreModule,
     StoreModule.forFeature('auth', reducers),

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { exhaustMap, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../core/authentication/auth.service';
@@ -11,6 +10,7 @@ import { TwoFactorResponse } from '../../shared/view-models/interfaces';
 import * as authActions from '../store/actions/auth.actions';
 import * as fromAuth from '../store/reducers/';
 import { SnackService } from './snack-bar.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class UserAreaService {
@@ -31,13 +31,13 @@ export class UserAreaService {
   constructor(
     public snackBar: SnackService,
     public router: Router,
-    public translate: TranslateService,
+    public transloco: TranslocoService,
     private http: HttpClient,
     public authService: AuthService,
     private store: Store<fromAuth.AppState>,
     private config: ConfigService,
   ) {
-    this.translate.get('alerts.authAlerts').subscribe((content: any) => {
+    this.transloco.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

@@ -6,12 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { BookTableModule } from '../../book-table.module';
 import { BookTableService } from '../../services/book-table.service';
 import * as fromRoot from '../../store/reducers';
 import { InvitationDialogComponent } from './invitation-dialog.component';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
@@ -22,7 +22,7 @@ describe('InvitationDialogComponent', () => {
       providers: [SnackBarService, BookTableService, HttpClient],
       imports: [
         BrowserAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         BookTableModule,
         HttpClientTestingModule,
         RouterTestingModule,

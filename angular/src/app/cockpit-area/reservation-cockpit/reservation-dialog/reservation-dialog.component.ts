@@ -5,9 +5,8 @@ import {
 } from '../../../shared/view-models/interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { TranslateService } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -34,7 +33,7 @@ export class ReservationDialogComponent implements OnInit {
   filteredData: any[] = this.datao;
 
   constructor(
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService
   ) {
@@ -44,7 +43,7 @@ export class ReservationDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders();
     });
 
@@ -54,7 +53,7 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+    this.translocoService.selectTranslate('cockpit.table').subscribe((res: any) => {
       this.columnst = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
         { name: 'booking.creationDate', label: res.creationDateH },
@@ -64,8 +63,8 @@ export class ReservationDialogComponent implements OnInit {
       ];
     });
 
-    this.translate
-      .get('cockpit.reservations.dialogTable')
+    this.translocoService
+      .selectTranslate('cockpit.reservations.dialogTable')
       .subscribe((res: any) => {
         this.columnso = [
           { name: 'email', label: res.guestEmailH },

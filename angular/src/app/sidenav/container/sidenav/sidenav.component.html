@@ -7,21 +7,21 @@
         </button>
         <mat-icon class="forDesktop orderIcon">shopping_basket</mat-icon>
         <span class="sidenavTitleSpan">{{
-          'sidenav.title' | translate | uppercase
+          'sidenav.title' | transloco | uppercase
         }}</span>
       </div>
     </mat-toolbar>
 
     <div class="orderDetails">
       <h4 class="sidenavHeader">
-        {{ 'sidenav.header' | translate }}
+        {{ 'sidenav.header' | transloco }}
       </h4>
 
       <div
         *ngIf="(orders$ | async)?.length < 1; else sidenavOrder"
         class="noOrders"
       >
-        <span>{{ 'sidenav.noSelection' | translate }}</span>
+        <span>{{ 'sidenav.noSelection' | transloco }}</span>
 
         <button
           name="viewMenu"
@@ -29,7 +29,7 @@
           color="accent"
           (click)="navigateTo('menu')"
         >
-          {{ 'buttons.viewMenu' | translate }}
+          {{ 'buttons.viewMenu' | transloco }}
         </button>
       </div>
       <ng-template #sidenavOrder>
@@ -50,7 +50,7 @@
         </div>
       </ng-template>
       <div *ngIf="(orders$ | async)?.length > 0" class="orderTotal">
-        <h3>{{ 'formFields.total' | translate }}</h3>
+        <h3>{{ 'formFields.total' | transloco }}</h3>
         <h3>{{ totalPrice$ | async | number: '1.2-2' }} €</h3>
       </div>
       <div class="orderTable">
@@ -60,7 +60,7 @@
               <mat-icon>report_problem</mat-icon>
 
               <span class="invitationAlert"
-                >{{ 'alerts.orderID' | translate }}
+                >{{ 'alerts.orderID' | transloco }}
               </span>
 
               <button
@@ -69,7 +69,7 @@
                 color="accent"
                 (click)="navigateTo('bookTable')"
               >
-                {{ 'buttons.bookTable' | translate }}
+                {{ 'buttons.bookTable' | transloco }}
               </button>
             </div>
           </mat-card>
@@ -81,7 +81,7 @@
               name="orderBookingID"
               matInput
               #bookingId
-              [placeholder]="'sidenav.bookingId' | translate"
+              [placeholder]="'sidenav.bookingId' | transloco"
             />
           </mat-form-field>
         </div>
@@ -91,7 +91,7 @@
             class="orderTermsCheckbox"
             data-name="orderTerms"
             #terms
-            >{{ 'formFields.terms' | translate }}</mat-checkbox
+            >{{ 'formFields.terms' | transloco }}</mat-checkbox
           >
         </div>
       </div>
@@ -99,7 +99,7 @@
   </div>
   <div class="align-right">
     <button name="orderCancel" mat-button (click)="closeSidenav()">
-      {{ 'buttons.cancel' | translate | uppercase }}
+      {{ 'buttons.cancel' | transloco | uppercase }}
     </button>
     <button
       name="orderSubmit"
@@ -108,7 +108,7 @@
       (click)="sendOrders(bookingId.value)"
       [disabled]="!(bookingId?.value?.length > 0 && terms.checked)"
     >
-      {{ 'buttons.send' | translate | uppercase }}
+      {{ 'buttons.send' | transloco | uppercase }}
     </button>
   </div>
 </div>

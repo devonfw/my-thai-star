@@ -1,10 +1,10 @@
 <div class="property-text-center bookTableTitle">
-  <h3>{{'bookTable.title' | translate}}</h3>
+  <h3>{{'bookTable.title' | transloco}}</h3>
 </div>
 <mat-card class="bookTableTabContainer">
   <mat-tab-group mat-stretch-tabs>
 
-    <mat-tab [label]="'bookTable.bookingTab' | translate" class="bookTableTab">
+    <mat-tab [label]="'bookTable.bookingTab' | transloco" class="bookTableTab">
       <div class="bookTableTabRow">
 
         <div class="menu-image forDesktop">
@@ -17,10 +17,10 @@
 
             <div>
               <div>
-                <span class="title-card">{{'bookTable.bookingTitle' | translate}}</span>
+                <span class="title-card">{{'bookTable.bookingTitle' | transloco}}</span>
               </div>
               <div>
-                <span class="subtitle-card">{{'bookTable.bookingSubtitle' | translate}}</span>
+                <span class="subtitle-card">{{'bookTable.bookingSubtitle' | transloco}}</span>
               </div>
             </div>
     
@@ -28,7 +28,7 @@
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking1"
+                  <input matInput [placeholder]="'formFields.dateTime' | transloco" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking1"
                     [owlDateTime]="booking1">
                   <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]="getFirstDayWeek()" #booking1></owl-date-time>
                 </mat-form-field>
@@ -36,10 +36,10 @@
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
+                  <input matInput [placeholder]="'formFields.name' | transloco" formControlName="name">
                   <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
                     <div *ngIf="name.errors.required">
-                      {{'bookTable.formErrors.nameRequired' | translate}}
+                      {{'bookTable.formErrors.nameRequired' | transloco}}
                     </div>
                   </mat-error>
                 </mat-form-field>
@@ -47,13 +47,13 @@
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.email' | translate" formControlName="email">
+                  <input matInput [placeholder]="'formFields.email' | transloco" formControlName="email">
                   <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div *ngIf="email.errors.required">
-                      {{'bookTable.formErrors.emailRequired' | translate}}
+                      {{'bookTable.formErrors.emailRequired' | transloco}}
                     </div>
                     <div *ngIf="email.errors.pattern">
-                      {{'bookTable.formErrors.emailPattern' | translate}}
+                      {{'bookTable.formErrors.emailPattern' | transloco}}
                     </div>
                   </mat-error>
                 </mat-form-field>
@@ -61,30 +61,30 @@
 
               <div>
                 <mat-form-field class="guestsField full-width-field" color="accent">
-                  <input matInput [placeholder]="'formFields.assistants' | translate" formControlName="assistants" type="number">
+                  <input matInput [placeholder]="'formFields.assistants' | transloco" formControlName="assistants" type="number">
                   <mat-error *ngIf="assistants.invalid && (assistants.dirty || assistants.touched)">
                     <div *ngIf="assistants.errors.required">
-                      {{'bookTable.formErrors.assistantsRequired' | translate}}
+                      {{'bookTable.formErrors.assistantsRequired' | transloco}}
                     </div>
                     <div *ngIf="assistants.errors.max">
-                      {{'bookTable.formErrors.assistantsMax' | translate}}
+                      {{'bookTable.formErrors.assistantsMax' | transloco}}
                     </div>
                     <div *ngIf="assistants.errors.min">
-                      {{'bookTable.formErrors.assistantsMin' | translate}}
+                      {{'bookTable.formErrors.assistantsMin' | transloco}}
                     </div>
                   </mat-error>
                 </mat-form-field>
               </div>
 
               <div>
-                <mat-checkbox data-name="bookTableTerms" class="bookTableTnc" #termsd>{{'formFields.terms' | translate}}</mat-checkbox>
+                <mat-checkbox data-name="bookTableTerms" class="bookTableTnc" #termsd>{{'formFields.terms' | transloco}}</mat-checkbox>
               </div>
 
             </div>
 
             <div class="align-right">
               <button name="bookTableSubmit" mat-button type="button" (click)="showBookTableDialog(termsd)" [disabled]="!(bookForm.valid && termsd.checked)" color="accent"
-                class="bookTableSubmit">{{'buttons.bookTable' | translate}}</button>
+                class="bookTableSubmit">{{'buttons.bookTable' | transloco}}</button>
             </div>
 
           </form>
@@ -92,7 +92,7 @@
       </div>
     </mat-tab>
 
-    <mat-tab [label]="'bookTable.reservationTab' | translate" class="inviteFriendsTab">
+    <mat-tab [label]="'bookTable.reservationTab' | transloco" class="inviteFriendsTab">
       <div class="inviteFriendsTabRow">
 
         <div class="invite-image forDesktop">
@@ -103,14 +103,14 @@
         <div class="inviteFriendsFormContainer">
           <form [formGroup]="invitationForm">
             <div class="invitationFormTitle">
-              <span class="title-card">{{'bookTable.reservationTitle' | translate}}</span>
+              <span class="title-card">{{'bookTable.reservationTitle' | transloco}}</span>
             </div>
 
             <div>
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.dateTime' | translate" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking2"
+                  <input matInput [placeholder]="'formFields.dateTime' | transloco" formControlName="bookingDate" [min]="minDate" [owlDateTimeTrigger]="booking2"
                     [owlDateTime]="booking2">
                 </mat-form-field>
               </div>
@@ -121,10 +121,10 @@
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.name' | translate" formControlName="name">
+                  <input matInput [placeholder]="'formFields.name' | transloco" formControlName="name">
                   <mat-error *ngIf="invName.invalid && (invName.dirty || invName.touched)">
                     <div *ngIf="invName.errors.required">
-                      {{'bookTable.formErrors.nameRequired' | translate}}
+                      {{'bookTable.formErrors.nameRequired' | transloco}}
                     </div>
                   </mat-error>
                 </mat-form-field>
@@ -132,30 +132,30 @@
 
               <div>
                 <mat-form-field color="accent" class="full-width-field">
-                  <input matInput [placeholder]="'formFields.email' |  translate" formControlName="email">
+                  <input matInput [placeholder]="'formFields.email' |  transloco" formControlName="email">
                   <mat-error *ngIf="invEmail.invalid && (invEmail.dirty || invEmail.touched)">
                     <div *ngIf="invEmail.errors.required">
-                      {{'bookTable.formErrors.emailRequired' | translate}}
+                      {{'bookTable.formErrors.emailRequired' | transloco}}
                     </div>
                     <div *ngIf="invEmail.errors.pattern">
-                      {{'bookTable.formErrors.emailPattern' | translate}}
+                      {{'bookTable.formErrors.emailPattern' | transloco}}
                     </div>
                   </mat-error>
                 </mat-form-field>
               </div>
             </div>
 
-            <h4>{{'formFields.guests' | translate}}</h4>
+            <h4>{{'formFields.guests' | transloco}}</h4>
 
             <div>
               <mat-form-field class="chipListField full-width-field">
-                <mat-chip-list #chipList aria-label="'formFields.guestsPH' | translate">
+                <mat-chip-list #chipList aria-label="'formFields.guestsPH' | transloco">
                   <mat-chip *ngFor="let invite of invitationModel" [selectable]="true"
                             [removable]="true" (removed)="removeInvite(invite)">
                     {{invite}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
-                  <input [placeholder]="'formFields.guestsPH' | translate"
+                  <input [placeholder]="'formFields.guestsPH' | transloco"
                           [matChipInputFor]="chipList"
                           [matChipInputAddOnBlur]="false"
                           (matChipInputTokenEnd)="validateEmail($event)">
@@ -163,10 +163,10 @@
               </mat-form-field>
             </div>
 
-            <mat-checkbox data-name="inviteFriendsTerms" #termsi>{{'formFields.terms' | translate}}</mat-checkbox>
+            <mat-checkbox data-name="inviteFriendsTerms" #termsi>{{'formFields.terms' | transloco}}</mat-checkbox>
             <div class="align-right">
               <button name="inviteFriendsSubmit" mat-button type="button" (click)="showInviteDialog(termsi)" [disabled]="!(invitationForm.valid && invitationModel.length > 0 && termsi.checked)"
-                color="accent">{{'buttons.inviteFriends' | translate | uppercase}}</button>
+                color="accent">{{'buttons.inviteFriends' | transloco | uppercase}}</button>
             </div>
           </form>
         </div>

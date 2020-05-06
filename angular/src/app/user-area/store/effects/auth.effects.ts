@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TranslateService } from '@ngx-translate/core';
 import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/observable/from';
@@ -21,6 +20,7 @@ import { WindowService } from '../../../core/window/window.service';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
 import { UserAreaService } from '../../services/user-area.service';
 import * as authActions from '../actions/auth.actions';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class AuthEffects {
@@ -174,8 +174,8 @@ export class AuthEffects {
         ofType(authActions.loginSuccess),
         map((user) => user.user.role),
         exhaustMap((role: string) => {
-          this.translate
-            .get('alerts.authAlerts.loginSuccess')
+          this.transloco
+            .selectTranslate('alerts.authAlerts.loginSuccess')
             .subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'green');
             });
@@ -210,8 +210,8 @@ export class AuthEffects {
         ofType(authActions.logout),
         tap(() => {
           this.router.navigateByUrl('/restaurant');
-          this.translate
-            .get('alerts.authAlerts.logoutSuccess')
+          this.transloco
+            .selectTranslate('alerts.authAlerts.logoutSuccess')
             .subscribe((text: string) => {
               this.snackBar.openSnack(text, 4000, 'black');
             });
@@ -226,13 +226,13 @@ export class AuthEffects {
     private dialog: MatDialog,
     public window: WindowService,
     public userService: UserAreaService,
-    public translate: TranslateService,
+    public transloco: TranslocoService,
     private router: Router,
     public snackBar: SnackBarService,
     private config: ConfigService,
     private http: HttpClient,
   ) {
-    this.translate.get('alerts.authAlerts').subscribe((content: any) => {
+    this.transloco.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

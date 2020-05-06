@@ -11,23 +11,23 @@
   <div *ngIf="(auth.getRole() | async) === 'CUSTOMER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link routerLink="/restaurant" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
-        {{'main.home' | translate | uppercase}}
+        {{'main.home' | transloco | uppercase}}
       </a>
       <a mat-tab-link routerLink="/menu" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
-        {{'main.menu' | translate | uppercase}}
+        {{'main.menu' | transloco | uppercase}}
       </a>
       <a mat-tab-link routerLink="/bookTable" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
-        {{'main.book' | translate | uppercase}}
+        {{'main.book' | transloco | uppercase}}
       </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a mat-tab-link routerLink="/orders" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
-        {{'main.orders' | translate | uppercase}}
+        {{'main.orders' | transloco | uppercase}}
       </a>
       <a mat-tab-link routerLink="/reservations" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{exact: true}">
-        {{'main.reservations' | translate | uppercase}}
+        {{'main.reservations' | transloco | uppercase}}
       </a>
     </nav>
   </div>
@@ -46,7 +46,7 @@
     </nav>
   </div>
   <button name="login" *ngIf="!(auth.isLogged() | async)" mat-icon-button (click)="openLoginDialog()"
-    [matTooltip]="'main.userActions.user' | translate">
+    [matTooltip]="'main.userActions.user' | transloco">
     <mat-icon>person_outline</mat-icon>
   </button>
   <div *ngIf="(auth.logged$ | async)" class="logged-in">
@@ -55,39 +55,39 @@
     </button>
     <span data-name="userNameLogged" class="forDesktop">{{ auth.userName$ | async }}</span>
     <button class="forDesktop" *ngIf="!(auth.isLogged() | async)" mat-icon-button (click)="logout()"
-      [matTooltip]="'main.userActions.logout' | translate">
+      [matTooltip]="'main.userActions.logout' | transloco">
       <mat-icon>exit_to_app</mat-icon>
     </button>
     <mat-menu #toolbarMenu1="matMenu">
       <button name="changePassword" mat-menu-item type="button" (click)="openResetDialog()"
         *ngIf="(auth.getRole() | async) === 'CUSTOMER'">
         <mat-icon>settings</mat-icon>
-        <span>{{'main.userActions.changePassword' | translate}}</span>
+        <span>{{'main.userActions.changePassword' | transloco}}</span>
       </button>
       <button name="setting" *ngIf="(auth.logged$ | async)" mat-menu-item type="button" (click)="getQRCode()">
         <mat-icon>important_devices</mat-icon>
-        <span>{{'main.userActions.pairing' | translate}}</span>
+        <span>{{'main.userActions.pairing' | transloco}}</span>
       </button>
       <button name="twitterAccount" mat-menu-item type="button" (click)="openTwitterDialog()" *ngIf="(auth.getRole() | async) === 'CUSTOMER'">
         <mat-icon>send</mat-icon>
-        <span>{{'main.userActions.twitterAccount' | translate}}</span>
+        <span>{{'main.userActions.twitterAccount' | transloco}}</span>
       </button>
       <mat-divider></mat-divider>
       <button name="logout" mat-menu-item type="button" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
-        <span>{{'main.userActions.signOut' | translate}}</span>
+        <span>{{'main.userActions.signOut' | transloco}}</span>
       </button>
     </mat-menu>
   </div>
-  <button *ngIf="(auth.getRole() | async) === 'CUSTOMER'" name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | translate">
+  <button *ngIf="(auth.getRole() | async) === 'CUSTOMER'" name="order" mat-icon-button (click)="openCloseSideNav(sidenav.opened)" [matTooltip]="'main.userActions.orders' | transloco">
     <mat-icon [matBadge]="(sidenav.getNumberOrders() | async)" [matBadgeHidden]="(sidenav.getNumberOrders() | async) < 1" matBadgeColor="accent">shopping_basket</mat-icon>
   </button>
   <button name="language" mat-icon-button [matMenuTriggerFor]="menu"
-    matTooltip="{{ translate.currentLang | uppercase }}" matTooltipHideDelay="1000">
+    matTooltip="{{ transloco.getActiveLang() | uppercase }}" matTooltipHideDelay="1000">
     <span class="flag-icon flag-icon-{{ flag }}"></span>
   </button>
   <mat-menu #menu="matMenu">
-    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="translate.currentLang === lang.value"
+    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="transloco.getActiveLang() === lang.value"
       (click)="changeLanguage(lang.value)" mat-menu-item>
       <span>{{lang.label}}</span>
     </button>

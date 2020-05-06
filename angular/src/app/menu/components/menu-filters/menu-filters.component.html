@@ -13,14 +13,14 @@
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>{{ 'menu.filterTitle' | translate }}</mat-panel-title>
+          <mat-panel-title>{{ 'menu.filterTitle' | transloco }}</mat-panel-title>
         </mat-expansion-panel-header>
         <div class ="menu-filters">
           <own-filter-checkboxes formControlName="categories"></own-filter-checkboxes>
 
           <div class="filter-sliders">
             <div class="slider">
-              <span>{{'menu.filter.price' | translate}}</span>
+              <span>{{'menu.filter.price' | transloco}}</span>
               <mat-slider
                 formControlName="maxPrice"
                 max="50"
@@ -30,7 +30,7 @@
               ></mat-slider>
             </div>
             <div class="slider">
-              <span>{{'menu.filter.likes' | translate}}</span>
+              <span>{{'menu.filter.likes' | transloco}}</span>
               <mat-slider
                 formControlName="minLikes"
                 max="500"
@@ -43,7 +43,7 @@
         </div>
       </mat-expansion-panel>
       <div class="filter-actions">
-        <button mat-button (click)="clearFilters($event, filtersForm)">{{'buttons.clearFilters' | translate}}</button>
-        <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | translate}}</button>
+        <button mat-button (click)="clearFilters($event, filtersForm)">{{'buttons.clearFilters' | transloco}}</button>
+        <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | transloco}}</button>
       </div>
   </form>

@@ -4,11 +4,11 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from 'app/core/core.module';
 import * as fromStore from '../../../store/reducers';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
@@ -22,7 +22,7 @@ describe('BookTableDialogComponent', () => {
       imports: [
         CoreModule,
         BrowserAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {
           runtimeChecks: {
