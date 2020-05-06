@@ -1,7 +1,9 @@
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { ReservationView } from '../../shared/view-models/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, Sort, PageEvent, MatPaginator } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import {
   FilterCockpit,

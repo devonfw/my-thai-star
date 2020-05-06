@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
 import { BookingView, OrderView } from '../../../shared/view-models/interfaces';

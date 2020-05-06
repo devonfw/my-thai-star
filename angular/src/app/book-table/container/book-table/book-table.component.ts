@@ -5,7 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatCheckbox, MatChipInputEvent, MatDialog } from '@angular/material';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { BookingInfo } from '../../../shared/backend-models/interfaces';
 import { last } from 'lodash';
