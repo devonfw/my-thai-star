@@ -6,7 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
 import {
   RouterStateSerializer,
-  StoreRouterConnectingModule,
+  StoreRouterConnectingModule, DefaultRouterStateSerializer,
 } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -68,7 +68,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       },
     }),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
