@@ -207,7 +207,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/hammerjs/hammer.min.js",
               "node_modules/showdown/dist/showdown.js"
             ],
             "styles": [
