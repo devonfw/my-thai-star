@@ -5,7 +5,7 @@
   <input matInput
     [value]="inputValue"
     (input)="onChange($event)"
-    [placeholder]="'menu.filter.search' | translate"
+    [placeholder]="'menu.filter.search' | transloco"
   >
   <button *ngIf="isSearchFieldNotEmpty()" type="button" (click)="clearSearchField()" mat-icon-button matSuffix>
     <mat-icon>close</mat-icon>

@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>{{'cockpit.reservations.dialogTitle' | translate}}: {{data.booking.bookingToken}} </h3>
+<h3 mat-dialog-title>{{'cockpit.reservations.dialogTitle' | transloco}}: {{data.booking.bookingToken}} </h3>
 <mat-divider></mat-divider>
 
 <div class="tableContainer">
@@ -60,5 +60,5 @@
 <mat-paginator *ngIf="filteredData.length > 0" #pagingBar [length]="datao.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="false" (page)="page($event)">
 </mat-paginator>
 <div class="align-right actionButtons">
-  <button mat-button mat-dialog-close color="accent">{{'buttons.close' | translate | uppercase}}</button>
+  <button mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
 </div>

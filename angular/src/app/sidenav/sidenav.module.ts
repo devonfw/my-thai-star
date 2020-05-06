@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { WindowService } from '../core/window/window.service';
 import { CommentAlertComponent } from './components/comment-alert/comment-alert.component';
@@ -13,12 +12,13 @@ import { SidenavComponent } from './container/sidenav/sidenav.component';
 import { SidenavService } from './services/sidenav.service';
 import { SendOrderEffects } from './store/effects/send-order.effects';
 import { reducers, effects } from './store';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    TranslateModule,
+    TranslocoModule,
     CoreModule,
     StoreModule.forFeature('sidenav', reducers),
     EffectsModule.forFeature(effects),

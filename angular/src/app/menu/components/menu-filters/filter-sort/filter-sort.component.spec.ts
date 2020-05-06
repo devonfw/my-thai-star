@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FilterSortComponent, SortDirection } from './filter-sort.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../../core/core.module';
+import { TranslocoRootModule } from '../../../../transloco-root.module';
 
 describe('FilterSortComponent', () => {
   let component: FilterSortComponent;
@@ -15,7 +15,7 @@ describe('FilterSortComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         CoreModule,
       ],
     }).compileComponents();

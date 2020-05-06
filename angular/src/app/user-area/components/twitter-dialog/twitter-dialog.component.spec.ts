@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../core/core.module';
 import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { TwitterDialogComponent } from './twitter-dialog.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('TwitterDialogComponent', () => {
   let component: TwitterDialogComponent;
@@ -19,7 +19,7 @@ describe('TwitterDialogComponent', () => {
       imports: [
         RouterTestingModule,
         CoreModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         BrowserAnimationsModule,
         UserAreaModule,
         EffectsModule.forRoot([]),

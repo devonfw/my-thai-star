@@ -9,10 +9,9 @@ import {
   FilterCockpit,
   Pageable,
 } from '../../shared/backend-models/interfaces';
-import { TranslateService } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-reservation-cockpit',
@@ -46,7 +45,7 @@ export class ReservationCockpitComponent implements OnInit {
 
   constructor(
     private waiterCockpitService: WaiterCockpitService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
   ) {
@@ -55,15 +54,15 @@ export class ReservationCockpitComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders();
-      moment.locale(this.translate.currentLang);
+      moment.locale(this.translocoService.getActiveLang());
     });
     this.applyFilters();
   }
 
   setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+    this.translocoService.selectTranslate('cockpit.table').subscribe((res: any) => {
       this.columns = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
         { name: 'booking.email', label: res.emailH },

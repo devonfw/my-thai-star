@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../core/core.module';
 import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { QrCodeDialogComponent } from './qr-code-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('QrCodeDialogComponent', () => {
   let component: QrCodeDialogComponent;
@@ -18,7 +18,7 @@ describe('QrCodeDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         BrowserAnimationsModule,
         RouterTestingModule,
         UserAreaModule,

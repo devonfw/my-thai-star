@@ -6,7 +6,6 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import * as fromApp from 'app/store/reducers';
 import * as fromAuth from 'app/user-area/store/selectors/auth.selectors';
 import { Observable } from 'rxjs';
@@ -15,13 +14,14 @@ import { map } from 'rxjs/operators';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { AuthService } from './auth.service';
 import * as fromRoot from '../../store';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor(
     public snackBar: SnackBarService,
     private authService: AuthService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private router: Router,
     private store: Store<fromApp.State>,
   ) {}
@@ -52,7 +52,7 @@ export class AuthGuardService implements CanActivate {
         }
 
         if (!logged) {
-          this.translate.get('alerts.accessError').subscribe((text: string) => {
+          this.translocoService.selectTranslate('alerts.accessError').subscribe((text: string) => {
             this.snackBar.openSnack(text, 4000, 'red');
           });
         }
