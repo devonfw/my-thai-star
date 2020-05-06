@@ -3,7 +3,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { SidenavService } from './sidenav/services/sidenav.service';
 import { AuthService } from './core/authentication/auth.service';
 import { ElectronService } from 'ngx-electron';
-import { TranslateService } from '@ngx-translate/core';
 import { find } from 'lodash';
 import * as moment from 'moment';
 import * as fromRoot from './store';
@@ -15,6 +14,7 @@ import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/cl
 import { ConfigService } from './core/config/config.service';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'public-main',
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   constructor(
     public router: Router,
     public sidenav: SidenavService,
-    public translate: TranslateService,
+    public transloco: TranslocoService,
     public auth: AuthService,
     public electronService: ElectronService,
     public configService: ConfigService,
@@ -54,19 +54,19 @@ export class AppComponent implements OnInit {
     this.logged$ = this.store.pipe(select(fromAuth.getLogged));
     this.version$ = this.store.pipe(select(fromConfig.getConfigVersion));
 
-    this.translate.addLangs(
+    this.transloco.setAvailableLangs(
       this.configService.getValues().langs.map((value: any) => value.value),
     );
-    this.translate.setDefaultLang('en');
+    // this.transloco.setDefaultLang('es');
     if (
       find(
-        this.translate.getLangs(),
-        (lang: string) => lang === this.translate.getBrowserLang(),
+        this.transloco.getAvailableLangs(),
+        (lang: string) => lang === this.getBrowserLanguage(),
       )
     ) {
-      this.translate.use(this.translate.getBrowserLang());
+      this.transloco.setActiveLang(this.getBrowserLanguage());
     }
-    moment.locale(this.translate.currentLang);
+    moment.locale(this.transloco.getActiveLang());
 
     if (
       this.configService.getValues().enablePrediction ||
@@ -101,6 +101,10 @@ export class AppComponent implements OnInit {
       }, []);
       this.router.resetConfig(newRoutes);
     }
+  }
+
+  private getBrowserLanguage(): string {
+    return navigator.language.split('-')[0];
   }
 
   sidenavStatus(opened: boolean): boolean {

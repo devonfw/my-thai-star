@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';
 import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -44,7 +44,7 @@ export class OrderDialogComponent implements OnInit {
 
   constructor(
     private waiterCockpitService: WaiterCockpitService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
   ) {
@@ -54,7 +54,7 @@ export class OrderDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders();
     });
 
@@ -67,7 +67,7 @@ export class OrderDialogComponent implements OnInit {
   }
 
   setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+    this.translocoService.selectTranslate('cockpit.table').subscribe((res: any) => {
       this.columnst = [
         { name: 'bookingDate', label: res.reservationDateH },
         { name: 'creationDate', label: res.creationDateH },
@@ -77,7 +77,7 @@ export class OrderDialogComponent implements OnInit {
       ];
     });
 
-    this.translate.get('cockpit.orders.dialogTable').subscribe((res: any) => {
+    this.translocoService.selectTranslate('cockpit.orders.dialogTable').subscribe((res: any) => {
       this.columnso = [
         { name: 'dish.name', label: res.dishH },
         { name: 'orderLine.comment', label: res.commentsH },

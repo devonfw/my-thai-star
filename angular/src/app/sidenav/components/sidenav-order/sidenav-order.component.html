@@ -13,19 +13,19 @@
       (click)="removeComment()"
       class="removeOrderComment"
       *ngIf="order.details.orderLine.comment"
-      >{{ 'buttons.removeComment' | translate }}</label
+      >{{ 'buttons.removeComment' | transloco }}</label
     >
     <label
       (click)="addComment()"
       class="addOrderComment"
       *ngIf="!order.details.orderLine.comment"
-      >{{ 'buttons.addComment' | translate }}</label
+      >{{ 'buttons.addComment' | transloco }}</label
     >
   </div>
 
   <button
     mat-icon-button
-    [matTooltip]="'formFields.comment' | translate"
+    [matTooltip]="'formFields.comment' | transloco"
     (click)="openCommentDialog()"
     [class.hideButton]="!order.details.orderLine.comment"
     matTooltipPosition="above"

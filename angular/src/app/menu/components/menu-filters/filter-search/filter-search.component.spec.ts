@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterSearchComponent } from './filter-search.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../../core/core.module';
+import { TranslocoRootModule } from '../../../../transloco-root.module';
 
 describe('FilterSearchComponent', () => {
   let component: FilterSearchComponent;
@@ -11,7 +11,7 @@ describe('FilterSearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FilterSearchComponent],
-      imports: [CoreModule, TranslateModule.forRoot()],
+      imports: [CoreModule, TranslocoRootModule],
     }).compileComponents();
   }));
 

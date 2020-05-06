@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuCardCommentsComponent } from './menu-card-comments.component';
 import { CoreModule } from '../../../../core/core.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslocoRootModule } from '../../../../transloco-root.module';
 
 describe('MenuCardCommentsComponent', () => {
   let component: MenuCardCommentsComponent;
@@ -11,7 +11,7 @@ describe('MenuCardCommentsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MenuCardCommentsComponent],
-      imports: [CoreModule, TranslateModule.forRoot()],
+      imports: [CoreModule, TranslocoRootModule],
     }).compileComponents();
   }));
 

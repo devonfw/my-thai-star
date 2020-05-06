@@ -1,23 +1,23 @@
-<span mat-dialog-title>{{'bookTable.dialog.title' | translate }}</span>
+<span mat-dialog-title>{{'bookTable.dialog.title' | transloco }}</span>
 <mat-dialog-content>
   <div>
     <div class="dataRow">
-      <span>{{'formFields.date' | translate}}</span>
+      <span>{{'formFields.date' | transloco}}</span>
       <span>{{date}}</span>
     </div>
     <mat-divider></mat-divider>
     <div class="dataRow">
-      <span>{{'formFields.name' | translate}}</span>
+      <span>{{'formFields.name' | transloco}}</span>
       <span>{{data.name}}</span>
     </div>
     <mat-divider></mat-divider>
     <div class="dataRow">
-      <span>{{'formFields.email' | translate}}</span>
+      <span>{{'formFields.email' | transloco}}</span>
       <span>{{data.email}}</span>
     </div>
     <mat-divider></mat-divider>
     <div class="dataRow">
-      <span>{{'formFields.friends' | translate}}</span>
+      <span>{{'formFields.friends' | transloco}}</span>
       <div class="invitedGuests">
         <span *ngFor="let inv of data.invitedGuests">{{inv}}</span>
       </div>
@@ -27,7 +27,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="align-right">
-    <button name="inviteFriendsCancel" mat-button mat-dialog-close>{{'buttons.cancel' | translate}}</button>
-    <button name="inviteFriendsConfirm" mat-button (click)="sendInvitation()" color="accent">{{'buttons.send' | translate}}</button>
+    <button name="inviteFriendsCancel" mat-button mat-dialog-close>{{'buttons.cancel' | transloco}}</button>
+    <button name="inviteFriendsConfirm" mat-button (click)="sendInvitation()" color="accent">{{'buttons.send' | transloco}}</button>
   </div>
 </mat-dialog-actions>

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeLayoutComponent } from './home-layout.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../core/core.module';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('HomeLayoutComponent', () => {
   let component: HomeLayoutComponent;
@@ -11,7 +11,7 @@ describe('HomeLayoutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeLayoutComponent],
-      imports: [CoreModule, TranslateModule.forRoot()],
+      imports: [CoreModule, TranslocoRootModule],
     }).compileComponents();
   }));
 

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import {
@@ -12,6 +11,7 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -51,7 +51,7 @@ export class OrderCockpitComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
   ) {
@@ -61,14 +61,14 @@ export class OrderCockpitComponent implements OnInit {
   ngOnInit(): void {
     this.applyFilters();
     this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders();
-      moment.locale(this.translate.currentLang);
+      moment.locale(this.translocoService.getActiveLang());
     });
   }
 
   setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+    this.translocoService.selectTranslate('cockpit.table').subscribe((res: any) => {
       this.columns = [
         { name: 'booking.bookingDate', label: res.reservationDateH },
         { name: 'booking.email', label: res.emailH },

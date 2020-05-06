@@ -2,7 +2,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { EmailConfirmationsComponent } from './email-confirmations.component';
 import { HomeComponent } from '../../../home/container/home/home.component';
 import { MenuComponent } from 'app/menu/container/menu.component';
@@ -26,6 +25,7 @@ import { CoreModule } from 'app/core/core.module';
 import { config } from '../../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../../core/config/config.service';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -62,7 +62,7 @@ describe('EmailConfirmationsComponent', () => {
       imports: [
         AppRoutingModule,
         RouterTestingModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         CoreModule,

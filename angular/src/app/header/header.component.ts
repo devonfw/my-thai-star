@@ -7,7 +7,6 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../core/authentication/auth.service';
 import { ConfigService } from '../core/config/config.service';
 import { WindowService } from '../core/window/window.service';
@@ -18,6 +17,7 @@ import { QrCodeDialogComponent } from '../user-area/components/qr-code-dialog/qr
 import { TwitterDialogComponent } from '../user-area/components/twitter-dialog/twitter-dialog.component';
 import { UserAreaService } from '../user-area/services/user-area.service';
 import { Store } from '@ngrx/store';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'public-header',
@@ -33,7 +33,7 @@ export class HeaderComponent {
 
   constructor(
     public window: WindowService,
-    public translate: TranslateService,
+    public transloco: TranslocoService,
     public router: Router,
     public sidenav: SidenavService,
     public dialog: MatDialog,
@@ -44,8 +44,8 @@ export class HeaderComponent {
     private store: Store<fromRoot.State>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
-    this.getFlag(this.translate.currentLang);
-    this.dateTimeAdapter.setLocale(this.translate.currentLang);
+    this.getFlag(this.transloco.getActiveLang());
+    this.dateTimeAdapter.setLocale(this.transloco.getActiveLang());
   }
 
   openCloseSideNav(sidenavOpened: boolean): void {
@@ -62,7 +62,7 @@ export class HeaderComponent {
   }
 
   changeLanguage(lang: string): void {
-    this.translate.use(lang);
+    this.transloco.setActiveLang(lang);
     this.dateTimeAdapter.setLocale(lang);
     this.getFlag(lang);
   }

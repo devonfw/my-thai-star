@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoreModule } from '../../../../core/core.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { MenuCardDetailsComponent } from './menu-card-details.component';
+import { TranslocoRootModule } from '../../../../transloco-root.module';
 
 describe('MenuCardDetailsComponent', () => {
   let component: MenuCardDetailsComponent;
@@ -11,7 +11,7 @@ describe('MenuCardDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MenuCardDetailsComponent],
-      imports: [CoreModule, TranslateModule.forRoot()],
+      imports: [CoreModule, TranslocoRootModule],
     }).compileComponents();
   }));
 

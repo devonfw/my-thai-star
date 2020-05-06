@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { AppComponent } from './app.component';
 import { AuthGuardService } from './core/authentication/auth-guard.service';
@@ -18,6 +17,7 @@ import { WindowService } from './core/window/window.service';
 import { SidenavService } from './sidenav/services/sidenav.service';
 import { UserAreaService } from './user-area/services/user-area.service';
 import * as fromUser from './user-area/store';
+import { TranslocoRootModule } from './transloco-root.module';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -58,7 +58,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         CoreModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         NgxElectronModule,
       ],
     }).compileComponents();
