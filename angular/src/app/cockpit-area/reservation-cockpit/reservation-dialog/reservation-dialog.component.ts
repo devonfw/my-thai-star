@@ -3,7 +3,8 @@ import {
   FriendsInvite,
   ReservationView,
 } from '../../../shared/view-models/interfaces';
-import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 import { LangChangeEvent } from '@ngx-translate/core';
 import { ConfigService } from '../../../core/config/config.service';

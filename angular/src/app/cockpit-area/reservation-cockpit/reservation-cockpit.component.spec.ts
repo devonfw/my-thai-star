@@ -9,7 +9,7 @@ import { PriceCalculatorService } from '../../sidenav/services/price-calculator.
 import { ConfigService } from '../../core/config/config.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 // import { WindowService } from '../../core/window/window.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
 // import { TranslateModule } from '@ngx-translate/core';
