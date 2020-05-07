@@ -52,9 +52,7 @@ export class AuthGuardService implements CanActivate {
         }
 
         if (!logged) {
-          this.translocoService.selectTranslate('alerts.accessError').subscribe((text: string) => {
-            this.snackBar.openSnack(text, 4000, 'red');
-          });
+          this.snackBar.openSnack(this.translocoService.translate('alerts.accessError'), 4000, 'red');
         }
 
         if (this.router.url === '/') {
