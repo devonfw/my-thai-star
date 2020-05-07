@@ -29,9 +29,9 @@ export class EmailConfirmationsComponent implements OnInit {
     let errorUrlString: string;
     let emailConfirmationStrings: any;
     forkJoin([
-      this.translocoService.selectTranslate('alerts.genericError'),
-      this.translocoService.selectTranslate('alerts.urlError'),
-      this.translocoService.selectTranslate('alerts.email confirmations'),
+      this.translocoService.translate('alerts.genericError'),
+      this.translocoService.translate('alerts.urlError'),
+      this.translocoService.translate('alerts.email confirmations'),
     ]).subscribe((translation: any) => {
       errorString = translation[0];
       errorUrlString = translation[1];

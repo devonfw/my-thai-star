@@ -174,11 +174,7 @@ export class AuthEffects {
         ofType(authActions.loginSuccess),
         map((user) => user.user.role),
         exhaustMap((role: string) => {
-          this.transloco
-            .selectTranslate('alerts.authAlerts.loginSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.loginSuccess'), 4000, 'green');
           if (role === 'CUSTOMER') {
             return this.router.navigate(['restaurant']);
           } else if (role === 'WAITER') {
@@ -210,11 +206,7 @@ export class AuthEffects {
         ofType(authActions.logout),
         tap(() => {
           this.router.navigateByUrl('/restaurant');
-          this.transloco
-            .selectTranslate('alerts.authAlerts.logoutSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'black');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.logoutSuccess'), 4000, 'black');
         }),
         catchError((error) => of(authActions.logoutFail({ error: error }))),
       ),
@@ -226,13 +218,13 @@ export class AuthEffects {
     private dialog: MatDialog,
     public window: WindowService,
     public userService: UserAreaService,
-    public transloco: TranslocoService,
+    public translocoService: TranslocoService,
     private router: Router,
     public snackBar: SnackBarService,
     private config: ConfigService,
     private http: HttpClient,
   ) {
-    this.transloco.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
+    this.translocoService.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

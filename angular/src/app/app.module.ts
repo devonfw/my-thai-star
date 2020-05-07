@@ -27,12 +27,6 @@ import { SidenavModule } from './sidenav/sidenav.module';
 import { CustomSerializer, effects, reducers } from './store';
 import { UserAreaModule } from './user-area/user-area.module';
 
-// AoT requires an exported function for factories
-/* Datta : To Do
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-} */
-
 @NgModule({
   imports: [
     BrowserModule,
