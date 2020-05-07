@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     this.transloco.setAvailableLangs(
       this.configService.getValues().langs.map((value: any) => value.value),
     );
-    // this.transloco.setDefaultLang('es');
+    this.transloco.setDefaultLang('en');
     if (
       find(
         this.transloco.getAvailableLangs(),

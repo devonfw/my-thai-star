@@ -46,7 +46,7 @@ export class BookTableComponent implements OnInit {
     private translocoService: TranslocoService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const booking = this.reservationInfo.booking;
@@ -131,11 +131,7 @@ export class BookTableComponent implements OnInit {
     event.input.value = '';
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.translocoService
-        .selectTranslate('bookTable.formErrors.emailFormat')
-        .subscribe((text: string) => {
-          this.snackBarService.openSnack(text, 1000, 'red');
-        });
+      this.snackBarService.openSnack(this.translocoService.translate('bookTable.formErrors.emailFormat'), 1000, 'red');
     }
   }
 

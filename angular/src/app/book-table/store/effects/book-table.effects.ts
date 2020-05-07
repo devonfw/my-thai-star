@@ -41,11 +41,7 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.bookTableSuccess),
         tap(() => {
-          this.translocoService
-            .selectTranslate('bookTable.dialog.bookingSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingSuccess'), 4000, 'green');
           fromRoot.go({ path: ['/menu'] });
         }),
       ),
@@ -57,11 +53,7 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.bookTableFail),
         tap(() => {
-          this.translocoService
-            .selectTranslate('bookTable.dialog.bookingError')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'red');
-            });
+            this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingError'), 4000, 'red');
         }),
       ),
     { dispatch: false },
@@ -91,11 +83,7 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.inviteFriendsSuccess),
         tap(() => {
-          this.translocoService
-            .selectTranslate('bookTable.dialog.bookingSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
+            this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingSuccess'), 4000, 'green');
           fromRoot.go({ path: ['/bookTable'] });
         }),
       ),
@@ -107,11 +95,7 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.inviteFriendsFail),
         tap(() => {
-          this.translocoService
-            .selectTranslate('bookTable.dialog.bookingError')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'red');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingError'), 4000, 'red');
         }),
       ),
     { dispatch: false },
