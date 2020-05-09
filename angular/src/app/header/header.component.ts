@@ -28,6 +28,7 @@ import { TranslocoService } from '@ngneat/transloco';
 export class HeaderComponent {
   selectableLangs: any[];
   flag: string;
+  currentLang: string;
 
   @Output() openCloseSidenavMobile = new EventEmitter<any>();
 
@@ -68,6 +69,7 @@ export class HeaderComponent {
   }
 
   getFlag(lang: string): void {
+    this.currentLang = lang;
     switch (lang) {
       case 'ca':
         this.flag = 'es';
