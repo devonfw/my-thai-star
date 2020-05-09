@@ -224,7 +224,7 @@ export class AuthEffects {
     private config: ConfigService,
     private http: HttpClient,
   ) {
-    this.translocoService.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
+    this.translocoService.selectTranslateObject('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

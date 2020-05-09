@@ -83,11 +83,11 @@
     <mat-icon [matBadge]="(sidenav.getNumberOrders() | async)" [matBadgeHidden]="(sidenav.getNumberOrders() | async) < 1" matBadgeColor="accent">shopping_basket</mat-icon>
   </button>
   <button name="language" mat-icon-button [matMenuTriggerFor]="menu"
-    matTooltip="{{ transloco.getActiveLang() | uppercase }}" matTooltipHideDelay="1000">
+    matTooltip="{{ currentLang | uppercase }}" matTooltipHideDelay="1000">
     <span class="flag-icon flag-icon-{{ flag }}"></span>
   </button>
   <mat-menu #menu="matMenu">
-    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="transloco.getActiveLang() === lang.value"
+    <button name="lang.value" *ngFor="let lang of selectableLangs" [disabled]="currentLang === lang.value"
       (click)="changeLanguage(lang.value)" mat-menu-item>
       <span>{{lang.label}}</span>
     </button>
