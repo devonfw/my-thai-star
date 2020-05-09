@@ -37,7 +37,7 @@ export class UserAreaService {
     private store: Store<fromAuth.AppState>,
     private config: ConfigService,
   ) {
-    this.transloco.selectTranslate('alerts.authAlerts').subscribe((content: any) => {
+    this.transloco.selectTranslateObject('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

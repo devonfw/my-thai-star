@@ -42,9 +42,8 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setTableHeaders();
     this.translocoService.langChanges$.subscribe((event: any) => {
-      this.setTableHeaders();
+      this.setTableHeaders(event);
     });
 
     this.datat.push(this.data);
@@ -52,33 +51,33 @@ export class ReservationDialogComponent implements OnInit {
     this.filter();
   }
 
-  setTableHeaders(): void {
-    this.translocoService.selectTranslate('cockpit.table').subscribe((res: any) => {
+  setTableHeaders(lang: string): void {
+
+    this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitReservationTable => {
       this.columnst = [
-        { name: 'booking.bookingDate', label: res.reservationDateH },
-        { name: 'booking.creationDate', label: res.creationDateH },
-        { name: 'booking.name', label: res.ownerH },
-        { name: 'booking.email', label: res.emailH },
-        { name: 'booking.tableId', label: res.tableH },
+        { name: 'booking.bookingDate', label: cockpitReservationTable.reservationDateH },
+        { name: 'booking.creationDate', label: cockpitReservationTable.creationDateH },
+        { name: 'booking.name', label: cockpitReservationTable.ownerH },
+        { name: 'booking.email', label: cockpitReservationTable.emailH },
+        { name: 'booking.tableId', label: cockpitReservationTable.tableH },
       ];
     });
 
-    this.translocoService
-      .selectTranslate('cockpit.reservations.dialogTable')
-      .subscribe((res: any) => {
+    this.translocoService.selectTranslateObject('cockpit.reservations.dialogTable', {}, lang)
+      .subscribe(cockpitReservationDialogTable => {
         this.columnso = [
-          { name: 'email', label: res.guestEmailH },
-          { name: 'accepted', label: res.acceptanceH },
+          { name: 'email', label: cockpitReservationDialogTable.guestEmailH },
+          { name: 'accepted', label: cockpitReservationDialogTable.acceptanceH },
         ];
 
         if (this.data.booking.assistants) {
           this.columnst.push({
             name: 'booking.assistants',
-            label: res.assistantsH,
+            label: cockpitReservationDialogTable.assistantsH,
           });
           this.displayedColumnsT.push('assistants');
         }
-      });
+    });
   }
 
   page(pagingEvent: PageEvent): void {
