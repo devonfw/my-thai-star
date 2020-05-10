@@ -91,7 +91,7 @@ export class AuthEffects {
                 username: user.username,
                 password: user.password,
               });
-            }else{
+            } else {
               return authActions.token({
                 token: { token: res.headers.get('Authorization') },
               });
