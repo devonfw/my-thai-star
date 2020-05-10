@@ -17,11 +17,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
+import com.devonfw.application.mtsj.general.common.base.PreLoginFilter;
 import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
 import com.devonfw.application.mtsj.general.common.impl.security.BaseUserDetailsService;
 import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
 import com.devonfw.module.security.jwt.common.base.JwtAuthenticationFilter;
-import com.devonfw.module.security.jwt.common.base.JwtLoginFilter;
 import com.devonfw.module.security.jwt.common.impl.JwtCreatorImpl;
 
 /**
@@ -40,9 +40,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Inject
   private PasswordEncoder passwordEncoder;
-
-  @Inject
-  private JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
   public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
@@ -104,12 +101,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
         // verification with OTP are filtered with the TwoFactorFilter
-        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
-            UsernamePasswordAuthenticationFilter.class)
-        // the api/login requests are filtered with the JWTLoginFilter
-        .addFilterBefore(getJwtLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(getTwoFactorFilter(), UsernamePasswordAuthenticationFilter.class)
+
+        .addFilterBefore(getPreLoginFilter(), UsernamePasswordAuthenticationFilter.class)
         // other requests are filtered to check the presence of JWT in header
-        .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     if (this.corsEnabled) {
       http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
@@ -122,13 +118,33 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    * @throws Exception
    */
   @Bean
-  public JwtLoginFilter getJwtLoginFilter() throws Exception {
+  public TwoFactorFilter getTwoFactorFilter() throws Exception {
 
-    JwtLoginFilter jwtLoginFilter = new JwtLoginFilter("/login");
-    jwtLoginFilter.setAuthenticationManager(authenticationManager());
-    jwtLoginFilter.setUserDetailsService(this.userDetailsService); //
-    jwtLoginFilter.setJwtCreator(new JwtCreatorImpl());
-    return jwtLoginFilter;
+    TwoFactorFilter twoFactorFilter = new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService);
+    twoFactorFilter.setJwtCreator(new JwtCreatorImpl());
+    return twoFactorFilter;
+  }
+
+  /**
+   * @return
+   * @throws Exception
+   */
+  @Bean
+  public JwtAuthenticationFilter getAuthenticationFilter() throws Exception {
+
+    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
+    return jwtAuthenticationFilter;
+  }
+
+  @Bean
+  public PreLoginFilter getPreLoginFilter() throws Exception {
+
+    PreLoginFilter preLoginFilter = new PreLoginFilter("/login");
+    preLoginFilter.setJwtCreator(new JwtCreatorImpl());
+    preLoginFilter.setAuthenticationManager(authenticationManager());
+    preLoginFilter.setUserDetailsService(this.userDetailsService); //
+
+    return preLoginFilter;
   }
 
   @Override

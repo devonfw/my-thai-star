@@ -72,6 +72,8 @@ public class TokenAuthenticationService {
 
   static final String CLAIM_ROLES = "roles";
 
+  static final String OTP = "OTP";
+
   static void addAllowedHeader(HttpServletResponse res) {
 
     res.addHeader(EXPOSE_HEADERS, HEADER_STRING + ", " + HEADER_OTP);
@@ -96,10 +98,10 @@ public class TokenAuthenticationService {
    * @param res the {@HttpServletResponse}
    * @param auth the {@Authentication} object with the user credentials
    */
-  static void addRequiredAuthentication(HttpServletResponse res, Authentication auth) {
+  static void addRequiredAuthentication(HttpServletResponse res) {
 
     // Add possible required authentication factors into the header
-    res.addHeader(HEADER_OTP, auth.getDetails().toString());
+    res.addHeader(HEADER_OTP, "OTP");
   }
 
   /**
