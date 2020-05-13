@@ -18,6 +18,7 @@ import { TwitterDialogComponent } from '../user-area/components/twitter-dialog/t
 import { UserAreaService } from '../user-area/services/user-area.service';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
+import { find } from 'lodash';
 
 @Component({
   selector: 'public-header',
@@ -45,7 +46,15 @@ export class HeaderComponent {
     private store: Store<fromRoot.State>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
-    this.getFlag(this.transloco.getActiveLang());
+    if (find(
+      this.transloco.getAvailableLangs(),
+      (lang: string) => lang === this.getBrowserLanguage(),
+    )) {
+      this.getFlag(this.getBrowserLanguage());
+    } else {
+      this.getFlag(this.transloco.getActiveLang());
+    }
+
     this.dateTimeAdapter.setLocale(this.transloco.getActiveLang());
   }
 
@@ -124,5 +133,9 @@ export class HeaderComponent {
       QrCodeDialogComponent,
       {},
     );
+  }
+
+  private getBrowserLanguage(): string {
+    return navigator.language.split('-')[0];
   }
 }
