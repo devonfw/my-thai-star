@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeLayoutComponent } from './home-layout.component';
 import { CoreModule } from '../../../core/core.module';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('HomeLayoutComponent', () => {
   let component: HomeLayoutComponent;
@@ -11,7 +12,7 @@ describe('HomeLayoutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeLayoutComponent],
-      imports: [CoreModule, TranslocoRootModule],
+      imports: [CoreModule, getTranslocoModule()],
     }).compileComponents();
   }));
 

@@ -14,6 +14,7 @@ import { HeaderComponent } from './header.component';
 import { SidenavModule } from 'app/sidenav/sidenav.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 export function mockStore<T>({
   actions = new Subject<Action>(),
@@ -43,7 +44,7 @@ describe('HeaderComponent', () => {
         BrowserAnimationsModule,
         CoreModule,
         SidenavModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {
           runtimeChecks: {

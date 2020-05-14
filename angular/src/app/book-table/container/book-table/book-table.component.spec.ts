@@ -15,6 +15,7 @@ import {
   EmailValidatorDirective,
 } from '../../../shared/directives/email-validator.directive';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('BookTableComponent', () => {
   let component: BookTableComponent;
@@ -32,7 +33,7 @@ describe('BookTableComponent', () => {
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
       ],
     }).compileComponents();
