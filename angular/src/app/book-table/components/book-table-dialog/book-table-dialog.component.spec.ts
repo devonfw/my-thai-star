@@ -9,6 +9,7 @@ import * as fromStore from '../../../store/reducers';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('BookTableDialogComponent', () => {
   let component: BookTableDialogComponent;
@@ -22,7 +23,7 @@ describe('BookTableDialogComponent', () => {
       imports: [
         CoreModule,
         BrowserAnimationsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {
           runtimeChecks: {

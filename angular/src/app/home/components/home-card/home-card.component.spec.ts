@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeCardComponent } from './home-card.component';
 import { CoreModule } from '../../../core/core.module';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('HomeCardComponent', () => {
   let component: HomeCardComponent;
@@ -11,7 +12,7 @@ describe('HomeCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeCardComponent],
-      imports: [CoreModule, TranslocoRootModule],
+      imports: [CoreModule, getTranslocoModule()],
     }).compileComponents();
   }));
 

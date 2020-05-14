@@ -7,6 +7,7 @@ import { FilterSearchComponent } from './filter-search/filter-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../../../core/core.module';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('MenuFiltersComponent', () => {
   let component: MenuFiltersComponent;
@@ -23,7 +24,7 @@ describe('MenuFiltersComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
       ],
     }).compileComponents();
