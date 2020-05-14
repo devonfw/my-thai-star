@@ -1,4 +1,4 @@
-export const EN = {
+export const DefaultENTest = {
     'buttons': {
         'cancel': 'Cancel',
         'apply': 'Apply',
@@ -103,10 +103,16 @@ export const EN = {
         'subtitle': 'More than just delicious food',
         'restaurantTitle': 'Our restaurant',
         'restaurantContent':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.',
+            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta.
+            Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis.
+            Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci.
+            Nam vitae felis ac nisi accumsan faucibus.`,
         'menuTitle': 'Our menu',
         'menuContent':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.'
+            `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis.
+            Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci.
+            Nam vitae felis ac nisi accumsan faucibus.`
     },
     'menu': {
         'filterTitle': 'FILTERS',

@@ -1,9 +1,9 @@
 import { TranslocoTestingModule, TranslocoConfig } from '@ngneat/transloco';
-import { EN } from 'assets/en';
+import { DefaultENTest } from 'assets/default.en.test';
 
 export function getTranslocoModule(config: Partial<TranslocoConfig> = {}) {
   return TranslocoTestingModule.withLangs(
-    { EN },
+    { DefaultENTest },
     {
       availableLangs: ['en'],
       defaultLang: 'en',
