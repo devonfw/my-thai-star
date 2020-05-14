@@ -18,6 +18,7 @@ import { SidenavService } from './sidenav/services/sidenav.service';
 import { UserAreaService } from './user-area/services/user-area.service';
 import * as fromUser from './user-area/store';
 import { TranslocoRootModule } from './transloco-root.module';
+import { getTranslocoModule } from './transloco-testing.module';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -58,7 +59,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         CoreModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         NgxElectronModule,
       ],
     }).compileComponents();

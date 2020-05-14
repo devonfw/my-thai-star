@@ -8,6 +8,7 @@ import { HomeCardComponent } from '../../components/home-card/home-card.componen
 import { HomeLayoutComponent } from '../../components/home-layout/home-layout.component';
 import { HomeComponent } from './home.component';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -17,7 +18,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, HomeCardComponent, HomeLayoutComponent],
       imports: [
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
         RouterTestingModule,
         StoreModule.forRoot(fromStore.reducers, {

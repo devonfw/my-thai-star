@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FilterSortComponent, SortDirection } from './filter-sort.component';
 import { CoreModule } from '../../../../core/core.module';
 import { TranslocoRootModule } from '../../../../transloco-root.module';
+import { getTranslocoModule } from '../../../../transloco-testing.module';
 
 describe('FilterSortComponent', () => {
   let component: FilterSortComponent;
@@ -15,7 +16,7 @@ describe('FilterSortComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
       ],
     }).compileComponents();

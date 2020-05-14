@@ -9,6 +9,7 @@ import { MenuCardDetailsComponent } from './menu-card-details/menu-card-details.
 import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('MenuCardComponent', () => {
   let component: MenuCardComponent;
@@ -23,7 +24,7 @@ describe('MenuCardComponent', () => {
         MenuCardDetailsComponent,
       ],
       providers: [MenuService, SidenavService, AuthService, SnackBarService],
-      imports: [CoreModule, TranslocoRootModule],
+      imports: [CoreModule, getTranslocoModule()],
     }).compileComponents();
   }));
 
