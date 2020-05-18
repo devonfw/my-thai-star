@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, PageEvent, Sort } from '@angular/material';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import {
@@ -10,13 +11,16 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { TranslocoService } from '@ngneat/transloco';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'cockpit-order-cockpit',
   templateUrl: './order-cockpit.component.html',
   styleUrls: ['./order-cockpit.component.scss'],
 })
-export class OrderCockpitComponent implements OnInit {
+export class OrderCockpitComponent implements OnInit, OnDestroy {
+  private translocoSubscription = Subscription.EMPTY;
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -49,7 +53,7 @@ export class OrderCockpitComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
   ) {
@@ -58,19 +62,18 @@ export class OrderCockpitComponent implements OnInit {
 
   ngOnInit(): void {
     this.applyFilters();
-    this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.setTableHeaders();
-      moment.locale(this.translate.currentLang);
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      this.setTableHeaders(event);
+      moment.locale(this.translocoService.getActiveLang());
     });
   }
 
-  setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+  setTableHeaders(lang: string): void {
+    this.translocoSubscription = this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitTable => {
       this.columns = [
-        { name: 'booking.bookingDate', label: res.reservationDateH },
-        { name: 'booking.email', label: res.emailH },
-        { name: 'booking.bookingToken', label: res.bookingTokenH },
+        { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+        { name: 'booking.email', label: cockpitTable.emailH },
+        { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
       ];
     });
   }
@@ -119,5 +122,9 @@ export class OrderCockpitComponent implements OnInit {
       width: '80%',
       data: selection,
     });
+  }
+
+  ngOnDestroy(): void {
+    this.translocoSubscription.unsubscribe();
   }
 }

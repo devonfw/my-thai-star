@@ -4,13 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { PriceCalculatorService } from 'app/sidenav/services/price-calculator.service';
 import { SidenavService } from 'app/sidenav/services/sidenav.service';
 import { CoreModule } from '../../../core/core.module';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import * as fromOrder from '../../store';
 import { SidenavComponent } from './sidenav.component';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -39,7 +39,7 @@ describe('SidenavComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         RouterTestingModule,
         CoreModule,
       ],

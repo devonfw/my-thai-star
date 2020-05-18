@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../../core/authentication/auth.service';
 import { CoreModule } from '../../../core/core.module';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { PasswordDialogComponent } from './password-dialog.component';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
@@ -25,7 +25,7 @@ describe('PasswordDialogComponent', () => {
         CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         UserAreaModule,
         HttpClientTestingModule,
         EffectsModule.forRoot([]),
