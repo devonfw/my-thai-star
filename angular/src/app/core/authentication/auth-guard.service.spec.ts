@@ -2,17 +2,17 @@ import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuardService } from 'app/core/authentication/auth-guard.service';
 import * as fromStore from 'app/store/reducers';
 import { CoreModule } from '../../core/core.module';
+import { TranslocoRootModule } from '../../transloco-root.module';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         RouterTestingModule,
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {

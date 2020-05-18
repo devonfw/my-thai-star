@@ -1,17 +1,17 @@
 <div [class.disabled]="disabled">
   <mat-form-field color="accent">
-    <mat-select [placeholder]="'menu.filter.sort' | translate"
+    <mat-select [placeholder]="'menu.filter.sort' | transloco"
       (selectionChange)="onSelectChange($event)"
       [value]="sortValue.property"
       >
       <mat-option value="price">
-        {{'menu.filter.price' | translate}}
+        {{'menu.filter.price' | transloco}}
       </mat-option>
       <mat-option value="description"><!--TODO This is purposly made for likes as we dont have corresponding field in db-->
-        {{'menu.filter.likes' | translate}}
+        {{'menu.filter.likes' | transloco}}
       </mat-option>
       <mat-option value="name">
-        {{'menu.filter.name' | translate}}
+        {{'menu.filter.name' | transloco}}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -6,22 +6,23 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import * as fromApp from 'app/store/reducers';
 import * as fromAuth from 'app/user-area/store/selectors/auth.selectors';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { map } from 'rxjs/operators';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { AuthService } from './auth.service';
 import * as fromRoot from '../../store';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, OnDestroy {
+  private translocoSubscription = Subscription.EMPTY;
   constructor(
     public snackBar: SnackBarService,
     private authService: AuthService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private router: Router,
     private store: Store<fromApp.State>,
   ) {}
@@ -52,9 +53,10 @@ export class AuthGuardService implements CanActivate {
         }
 
         if (!logged) {
-          this.translate.get('alerts.accessError').subscribe((text: string) => {
-            this.snackBar.openSnack(text, 4000, 'red');
-          });
+          this.translocoSubscription = this.translocoService
+              .selectTranslate('alerts.accessError').subscribe(alert =>
+                this.snackBar.openSnack(alert, 4000, 'red')
+              );
         }
 
         if (this.router.url === '/') {
@@ -64,5 +66,9 @@ export class AuthGuardService implements CanActivate {
         return false;
       }),
     );
+  }
+
+  ngOnDestroy(): void {
+    this.translocoSubscription.unsubscribe();
   }
 }

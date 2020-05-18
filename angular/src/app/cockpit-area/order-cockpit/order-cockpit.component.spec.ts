@@ -1,9 +1,7 @@
 import { HttpClient /* , HttpClientModule */ } from '@angular/common/http';
 // import { WindowService } from '../../core/window/window.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-// import { TranslateModule } from '@ngx-translate/core';
-import { TranslateService } from '@ngx-translate/core';
 import { State } from 'app/store';
 import { ConfigService } from '../../core/config/config.service';
 // import { ComponentFixture, TestBed, async } from '@angular/core/testing';
@@ -16,6 +14,7 @@ import { OrderCockpitComponent } from './order-cockpit.component';
 import { config } from '../../core/config/config';
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { TranslocoService } from '@ngneat/transloco';
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
@@ -26,7 +25,7 @@ describe('OrderCockpitComponent', () => {
   let configService: ConfigService;
   let waiterCockpitService: WaiterCockpitService;
   // tslint:disable-next-line:prefer-const
-  let translate: TranslateService;
+  let transloco: TranslocoService;
   // tslint:disable-next-line:prefer-const
   let dialog: MatDialog;
   // tslint:disable-next-line:prefer-const
@@ -74,7 +73,7 @@ describe('OrderCockpitComponent', () => {
     );
     component = new OrderCockpitComponent(
       dialog,
-      translate,
+      transloco,
       waiterCockpitService,
       configService,
     );
