@@ -5,8 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatCheckbox, MatChipInputEvent, MatDialog } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { BookingInfo } from '../../../shared/backend-models/interfaces';
 import { last } from 'lodash';
 import * as moment from 'moment';
@@ -15,6 +16,7 @@ import { WindowService } from '../../../core/window/window.service';
 import { emailValidator } from '../../../shared/directives/email-validator.directive';
 import { BookTableDialogComponent } from '../../components/book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from '../../components/invitation-dialog/invitation-dialog.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'public-book-table',
@@ -41,10 +43,10 @@ export class BookTableComponent implements OnInit {
 
   constructor(
     private window: WindowService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const booking = this.reservationInfo.booking;
@@ -129,11 +131,7 @@ export class BookTableComponent implements OnInit {
     event.input.value = '';
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.translate
-        .get('bookTable.formErrors.emailFormat')
-        .subscribe((text: string) => {
-          this.snackBarService.openSnack(text, 1000, 'red');
-        });
+      this.snackBarService.openSnack(this.translocoService.translate('bookTable.formErrors.emailFormat'), 1000, 'red');
     }
   }
 
@@ -145,7 +143,7 @@ export class BookTableComponent implements OnInit {
   }
 
   getFirstDayWeek(): string {
-    moment.locale(this.translate.currentLang);
+    moment.locale(this.translocoService.getActiveLang());
     const firstDay: string = moment(moment().weekday(0)).format('d');
     return firstDay;
   }

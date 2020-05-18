@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { InvitationResponse } from '../../../shared/view-models/interfaces';
 import * as fromRoot from '../../../store';
 import { EmailConfirmationsService } from '../../services/email-confirmations.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'public-email-confirmations',
@@ -19,7 +19,7 @@ export class EmailConfirmationsComponent implements OnInit {
   constructor(
     private snackBarService: SnackBarService,
     private emailService: EmailConfirmationsService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -29,9 +29,9 @@ export class EmailConfirmationsComponent implements OnInit {
     let errorUrlString: string;
     let emailConfirmationStrings: any;
     forkJoin([
-      this.translate.get('alerts.genericError'),
-      this.translate.get('alerts.urlError'),
-      this.translate.get('alerts.email confirmations'),
+      this.translocoService.translate('alerts.genericError'),
+      this.translocoService.translate('alerts.urlError'),
+      this.translocoService.translate('alerts.email confirmations'),
     ]).subscribe((translation: any) => {
       errorString = translation[0];
       errorUrlString = translation[1];

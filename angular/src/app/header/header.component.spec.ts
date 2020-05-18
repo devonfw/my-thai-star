@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { Action, Store, StoreModule } from '@ngrx/store';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 import { AuthService } from '../core/authentication/auth.service';
 import { ConfigService } from '../core/config/config.service';
@@ -13,6 +12,9 @@ import * as fromStore from '../store/reducers';
 import { UserAreaService } from '../user-area/services/user-area.service';
 import { HeaderComponent } from './header.component';
 import { SidenavModule } from 'app/sidenav/sidenav.module';
+import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoRootModule } from '../transloco-root.module';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 export function mockStore<T>({
   actions = new Subject<Action>(),
@@ -29,7 +31,7 @@ export function mockStore<T>({
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let translateService: TranslateService;
+  let translocoService: TranslocoService;
   const actions = new Subject<Action>();
   const states = new Subject<fromStore.State>();
   const store = mockStore<fromStore.State>({ actions, states });
@@ -42,7 +44,7 @@ describe('HeaderComponent', () => {
         BrowserAnimationsModule,
         CoreModule,
         SidenavModule,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {
           runtimeChecks: {
@@ -56,11 +58,11 @@ describe('HeaderComponent', () => {
         AuthService,
         UserAreaService,
         ConfigService,
-        TranslateService,
+        TranslocoService,
       ],
     });
     spyOn(HeaderComponent.prototype, 'getFlag');
-    translateService = TestBed.get(TranslateService);
+    translocoService = TestBed.get(TranslocoService);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
   });
@@ -68,7 +70,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
   describe('openLoginDialog', () => {
-    inject([TranslateService], (_injectService: TranslateService) => {
+    inject([TranslocoService], (_injectService: TranslocoService) => {
       it('makes expected calls', async () => {
         spyOn(store, 'dispatch').and.callThrough();
         component.openLoginDialog();

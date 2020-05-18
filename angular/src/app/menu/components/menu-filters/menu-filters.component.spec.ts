@@ -5,8 +5,9 @@ import { FilterSortComponent } from './filter-sort/filter-sort.component';
 import { FilterCheckboxesComponent } from './filter-checkboxes/filter-checkboxes.component';
 import { FilterSearchComponent } from './filter-search/filter-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../core/core.module';
+import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('MenuFiltersComponent', () => {
   let component: MenuFiltersComponent;
@@ -23,7 +24,7 @@ describe('MenuFiltersComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         CoreModule,
       ],
     }).compileComponents();

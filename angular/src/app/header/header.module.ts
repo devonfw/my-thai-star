@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
-    TranslateModule,
+    TranslocoRootModule,
     AppRoutingModule,
   ],
   providers: [

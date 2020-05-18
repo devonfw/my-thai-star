@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../core/core.module';
 import { PriceCalculatorService } from '../../../sidenav/services/price-calculator.service';
 import { WaiterCockpitModule } from '../../cockpit.module';
@@ -12,6 +11,7 @@ import { OrderDialogComponent } from './order-dialog.component';
 import { ConfigService } from '../../../core/config/config.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { config } from '../../../core/config/config';
+import { TranslocoRootModule } from '../../../transloco-root.module';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
@@ -31,7 +31,7 @@ describe('OrderDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
-        TranslateModule.forRoot(),
+        TranslocoRootModule,
         CoreModule,
         HttpClientTestingModule,
       ],

@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TranslateService } from '@ngx-translate/core';
 import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/observable/from';
@@ -21,6 +20,7 @@ import { WindowService } from '../../../core/window/window.service';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
 import { UserAreaService } from '../../services/user-area.service';
 import * as authActions from '../actions/auth.actions';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class AuthEffects {
@@ -174,11 +174,7 @@ export class AuthEffects {
         ofType(authActions.loginSuccess),
         map((user) => user.user.role),
         exhaustMap((role: string) => {
-          this.translate
-            .get('alerts.authAlerts.loginSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'green');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.loginSuccess'), 4000, 'green');
           if (role === 'CUSTOMER') {
             return this.router.navigate(['restaurant']);
           } else if (role === 'WAITER') {
@@ -210,11 +206,7 @@ export class AuthEffects {
         ofType(authActions.logout),
         tap(() => {
           this.router.navigateByUrl('/restaurant');
-          this.translate
-            .get('alerts.authAlerts.logoutSuccess')
-            .subscribe((text: string) => {
-              this.snackBar.openSnack(text, 4000, 'black');
-            });
+          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.logoutSuccess'), 4000, 'black');
         }),
         catchError((error) => of(authActions.logoutFail({ error: error }))),
       ),
@@ -226,13 +218,13 @@ export class AuthEffects {
     private dialog: MatDialog,
     public window: WindowService,
     public userService: UserAreaService,
-    public translate: TranslateService,
+    public translocoService: TranslocoService,
     private router: Router,
     public snackBar: SnackBarService,
     private config: ConfigService,
     private http: HttpClient,
   ) {
-    this.translate.get('alerts.authAlerts').subscribe((content: any) => {
+    this.translocoService.selectTranslateObject('alerts.authAlerts').subscribe((content: any) => {
       this.authAlerts = content;
     });
   }

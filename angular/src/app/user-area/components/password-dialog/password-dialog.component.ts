@@ -1,7 +1,7 @@
 import { UserAreaService } from '../../services/user-area.service';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'public-password-dialog',

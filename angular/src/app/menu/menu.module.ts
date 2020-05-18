@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { MenuCardCommentsComponent } from './components/menu-card/menu-card-comments/menu-card-comments.component';
 import { MenuCardDetailsComponent } from './components/menu-card/menu-card-details/menu-card-details.component';
@@ -16,12 +15,13 @@ import { MenuFiltersComponent } from './components/menu-filters/menu-filters.com
 import { MenuComponent } from './container/menu.component';
 import { MenuService } from './services/menu.service';
 import { effects, reducers } from './store';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
-    TranslateModule,
+    TranslocoModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

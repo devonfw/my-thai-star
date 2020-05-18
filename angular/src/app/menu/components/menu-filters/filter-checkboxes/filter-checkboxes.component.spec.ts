@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterCheckboxesComponent } from './filter-checkboxes.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../../../../core/core.module';
+import { TranslocoRootModule } from '../../../../transloco-root.module';
+import { getTranslocoModule } from '../../../../transloco-testing.module';
 
 describe('FilterCheckboxesComponent', () => {
   let component: FilterCheckboxesComponent;
@@ -11,7 +12,7 @@ describe('FilterCheckboxesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FilterCheckboxesComponent],
-      imports: [CoreModule, TranslateModule.forRoot()],
+      imports: [CoreModule, getTranslocoModule()],
     }).compileComponents();
   }));
 

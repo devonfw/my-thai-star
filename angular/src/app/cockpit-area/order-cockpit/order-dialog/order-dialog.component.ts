@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, PageEvent } from '@angular/material';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
 import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-order-dialog',
@@ -43,7 +44,7 @@ export class OrderDialogComponent implements OnInit {
 
   constructor(
     private waiterCockpitService: WaiterCockpitService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
   ) {
@@ -52,9 +53,8 @@ export class OrderDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.setTableHeaders();
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      this.setTableHeaders(event);
     });
 
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
@@ -65,26 +65,26 @@ export class OrderDialogComponent implements OnInit {
     this.filter();
   }
 
-  setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+  setTableHeaders(lang: string): void {
+    this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitTable => {
       this.columnst = [
-        { name: 'bookingDate', label: res.reservationDateH },
-        { name: 'creationDate', label: res.creationDateH },
-        { name: 'name', label: res.ownerH },
-        { name: 'email', label: res.emailH },
-        { name: 'tableId', label: res.tableH },
+        { name: 'bookingDate', label: cockpitTable.reservationDateH },
+        { name: 'creationDate', label: cockpitTable.creationDateH },
+        { name: 'name', label: cockpitTable.ownerH },
+        { name: 'email', label: cockpitTable.emailH },
+        { name: 'tableId', label: cockpitTable.tableH },
       ];
     });
 
-    this.translate.get('cockpit.orders.dialogTable').subscribe((res: any) => {
+    this.translocoService.selectTranslateObject('cockpit.orders.dialogTable', {}, lang).subscribe(cockpitDialogTable => {
       this.columnso = [
-        { name: 'dish.name', label: res.dishH },
-        { name: 'orderLine.comment', label: res.commentsH },
-        { name: 'extras', label: res.extrasH },
-        { name: 'orderLine.amount', label: res.quantityH },
+        { name: 'dish.name', label: cockpitDialogTable.dishH },
+        { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
+        { name: 'extras', label: cockpitDialogTable.extrasH },
+        { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
         {
           name: 'dish.price',
-          label: res.priceH,
+          label: cockpitDialogTable.priceH,
           numeric: true,
           format: (v: number) => v.toFixed(2),
         },

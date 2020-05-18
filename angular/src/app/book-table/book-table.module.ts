@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { SnackBarService } from '../core/snack-bar/snack-bar.service';
 import { WindowService } from '../core/window/window.service';
@@ -14,6 +13,7 @@ import { InvitationDialogComponent } from './components/invitation-dialog/invita
 import { BookTableComponent } from './container/book-table/book-table.component';
 import { BookTableService } from './services/book-table.service';
 import { reducers, effects } from './store';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { reducers, effects } from './store';
     ReactiveFormsModule,
     SharedModule,
     HttpClientModule,
-    TranslateModule,
+    TranslocoRootModule,
     CoreModule,
     StoreModule.forFeature('bookTable', reducers),
     EffectsModule.forFeature(effects),
