@@ -53,6 +53,7 @@ Under "Credentials" choose the credentials that contain your Bitbucket private k
 == Deploying MTS
 
 After setting up the Jenkins Pipeline, you can simply run it by clicking on the "Build" button. This will trigger the pipeline, Jenkins will:
+
 1. Check out the MTS project
 2. Build the docker images
 3. Push the docker images to the Harbor registry
