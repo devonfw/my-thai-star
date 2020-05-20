@@ -37,7 +37,7 @@ Jenkins will build the MyThaiStar Docker images and push them to the nKaaS link:
 As MyThaiStar includes all required Jenkinsfiles for nKaaS, almost no configurations have to be performed by the user.
 Create a new Pipeline on link:http://jenkins.demo.xpaas.io[Jenkins] and configure its definition to be a "Pipeline script from SCM". The SCM used is "Git" and the repository URL is the MyThaiStar repository https://github.com/devonfw/my-thai-star.git or your fork of it.
 
-The Branch Specifier should point to `\*/develop`, the Script Path is `jenkins/nKaaS/Jenkinsfile` as that's where the Jenkinsfile is located at the MyThaiStar repository.
+The Branch Specifier should point to `*/develop`, the Script Path is `jenkins/nKaaS/Jenkinsfile` as that's where the Jenkinsfile is located at the MyThaiStar repository.
 Checking the "Lightweight checkout" could speed up the Pipeline.
 
 *Note:* If you're using the nKaaS link:http://bitbucket.demo.xpaas.io[Bitbucket] as repository for your MyThaiStar clone you have to perform some additional configurations. First you'll have to create a new SSH keypair, for example with `ssh-keygen`. Add the public key to the Bitbucket authentication methods and the private key in Jenkins to a new pair of credentials. This step is required for Jenkins to be able to authenticate against Bitbucket.
@@ -50,34 +50,12 @@ ssh://git@bitbucket.demo.xpaas.io:7999/YOUR-PROJECT/YOUR-MTS-REPO.git
 
 Under "Credentials" choose the credentials that contain your Bitbucket private key you've created earlier.
 
-== Building the MyThaiStar images
+== Deploying MTS
 
-After configuring the Jenkins Pipeline it can be started with the "Build now" button. The pipeline will checkout the MyThaiStar repository, build an image for the Angular frontend, an image  for the Java backend and push both onto the Harbor registry. If every step was executed successfully, you should be able to see the images on Harbor.
+After setting up the Jenkins Pipeline, you can simply run it by clicking on the "Build" button. This will trigger the pipeline, Jenkins will:
+1. Check out the MTS project
+2. Build the docker images
+3. Push the docker images to the Harbor registry
+4. Deploy the MTS application onto Kubernetes
 
-== Deploying MyThaiStar on Kubernetes
-
-Currently, the deployment is done manually and not yet included in the Jenkins pipeline. `kubectl` will be used for this step.
-First, change directory to your local clone of your MyThaiStar project.
-
-[source]
-----
-cd YOUR-MTS-REPO/nKaaS
-----
-
-There are three Kubernetes resource files that have to be deployed onto your Kubernetes namespace:
-- angular-app.yaml: This file includes a Deployment and a Service for the Angular frontend
-- java-app.yaml: This file includes a Deployment and a Service for the Java backend
-- ingress.yaml: This file includes two Ingress services, one for Angular, one for Java
-
-The Ingress ressource specifies the *host* on which your MyThaiStar application will be accessible. Open `ingress.yaml` in your preferred editor and change *both* `host` values to your preferred hostname in the pattern `YOUR-HOSTNAME.demo.xpaas.io`.
-
-These files can be applied onto Kubernetes with the following commands:
-
-[source]
-----
-kubectl apply -f angular-app.yaml
-kubectl apply -f java-app.yaml
-kubectl apply -f ingress.yaml
-----
-
-Finally, after waiting a few moments, you should be able to access your MyThaiStar application within your browser by navigating to your previously specified `host`.
+Finally, the applications should be available at my-thai-star.demo.xpaas.io. The `my-thai-star` ist specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nKaaS/ingress.yaml[ingress] configuration at `host`. The `demo.xpaas.io` is the address of the nKaaS you're working on.
