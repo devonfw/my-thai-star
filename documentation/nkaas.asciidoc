@@ -59,4 +59,6 @@ After setting up the Jenkins Pipeline, you can simply run it by clicking on the 
 3. Push the docker images to the Harbor registry
 4. Deploy the MTS application onto Kubernetes
 
-Finally, the applications should be available at my-thai-star.demo.xpaas.io. The `my-thai-star` ist specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nKaaS/ingress.yaml[ingress] configuration at `host`. The `demo.xpaas.io` is the address of the nKaaS you're working on.
+Finally, the applications should be available at http://my-thai-star.demo.xpaas.io. 
+
+The first part, `my-thai-star`, ist specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nKaaS/ingress.yaml[ingress] configuration at `host`. The second part, `demo.xpaas.io`, is the host of the nKaaS you're working on.
