@@ -179,7 +179,7 @@ $ ./create-pipelines.sh <jenkinsUrl> <username> <password>
 example:
 
 ```bash
-$ ./create-pipelines.sh devon.s2-eu.capgemini.com/jenkins devonfw capgemini
+$ ./create-pipelines.sh devonfw.com/jenkins devonfw devonfw-password
 ```
 
 **Important:** you need a bash shell in order to execute the command. If you are using windows, you can open a new bash shell in the devonfw console:

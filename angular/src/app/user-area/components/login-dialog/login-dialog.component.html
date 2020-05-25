@@ -1,0 +1,58 @@
+<mat-tab-group mat-stretch-tabs>
+
+  <mat-tab [label]="'userArea.loginTitle' | transloco" class="loginTab">
+    <form (ngSubmit)="logInSubmit(loginForm.form.value)" #loginForm="ngForm">
+      <div>
+        <div>
+          <mat-form-field color="accent">
+            <input matInput [placeholder]="'formFields.username' | transloco" ngModel name="username" required>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field color="accent">
+            <input matInput [placeholder]="'formFields.password' | transloco" ngModel name="password" type="password" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="align-right">
+        <button name="cancelLogin" mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+        <button name="submitLogin" mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent">{{'buttons.login' | transloco | uppercase}}</button>
+      </div>
+    </form>
+  </mat-tab>
+
+
+  <mat-tab [label]="'userArea.signupTitle' | transloco" class="registerTab">
+    <form (ngSubmit)="signInSubmit(signForm.form.value)" #signForm="ngForm">
+      <div class="formFields">
+        <div>
+          <mat-form-field color="accent">
+            <input matInput [placeholder]="'formFields.email' | transloco" ngModel name="email" required validateEmail>
+            <mat-error>{{'userArea.emailError' | transloco}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field color="accent">
+            <input matInput type="password" name="password" [placeholder]="'formFields.password' | transloco" ngModel required validateEqual="confirmPassword" reverse="true" #password="ngModel">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field color="accent">
+            <input matInput type="password" name="confirmPassword" [placeholder]="'formFields.confirmPassword' | transloco" ngModel required validateEqual="password" reverse="false" #confirmPassword="ngModel">
+            <mat-error>{{'alerts.passwordError' | transloco}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-checkbox #termsd name="registerTerms">{{'formFields.terms' | transloco}}</mat-checkbox>
+
+      <div class="align-right">
+        <button name="cancelSignUp" mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+        <button name="registerSubmit" mat-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent">{{'buttons.register' | transloco | uppercase}}</button>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

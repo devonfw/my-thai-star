@@ -1,0 +1,44 @@
+version: "3"
+services:
+  maildev:
+    image: "maildev/maildev"
+    ports:
+      - "1025:25"
+      - "8092:80"
+    networks:
+      - my-thai-star-node
+  reverse-proxy:
+    image: "devonfwforge/reverse-proxy:latest"
+    restart: always
+    environment:
+      - FRONTEND_ENV=http://angular:80
+      - BACKEND_ENV=http://node:8081/mythaistar
+    container_name: "mts_reverse_proxy_node"
+    depends_on:
+      - angular
+      - node
+    networks:
+      - my-thai-star-node
+    ports:
+      - "8091:80"
+  angular:
+    build: "../angular/"
+    restart: always
+    container_name: "mts_angular_node"
+    image: my-thai-star/angular:latest
+    networks:
+      - my-thai-star-node
+  node:
+    build: "."
+    restart: always
+    depends_on:
+      - maildev
+    container_name: "mts_node"
+    image: my-thai-star/node:latest
+    networks:
+      - my-thai-star-node
+    environment:
+      - NODE_ENV=production
+networks:
+  my-thai-star-node:
+    driver: bridge

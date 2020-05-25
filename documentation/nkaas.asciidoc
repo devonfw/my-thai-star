@@ -1,0 +1,64 @@
+:toc: macro
+toc::[]
+
+= MyThaiStar on Native Kubernetes as a Service (nKaaS)
+
+The MyThaiStar sample application can be deployed on a nKaaS environment. The required Kubernetes configuration files can be found in the MyThaiStar repository. There are no additional changes required in order to deploy the application.
+
+== Setting up the environment
+
+=== Following the nKaaS guide
+
+After requesting access to the nKaaS platform you'll be greeted with a welcome mail which contains your personal credentials. Make sure to change the given password to a personal one within the 24 hour time period, otherwise the  credentials will expire.
+
+After successfully following the link:https://portal.capgemini-ips.com/native-kubernetes/getting-started[guide] mentioned in the welcome mail you should be able to establish a connection to the nKaaS VPN and have access to all their services (Jenkins, BitBucket, etc.). You should also be able to communicate with Kubernetes using kubectl.
+
+*Known issues:* The nKaaS guide provides a download link for *OpenVPN Connect*. However, some users experienced connection issues with this client. If you're having issues connecting to the VPN with OpenVPN Connect, you may try out the client by link:https://www.ovpn.com/en/guides/windows-openvpn-gui[OVPN].
+
+=== Requesting a namespace
+
+Initially, you won't be able to edit anything on Kubernetes, as you don't have any privileges on any namespace. To request your own namespace you should raise a ticket at the link:https://servicedesk.capgemini-ips.com/servicedesk/customer/portal/143[Customer Support Portal] containing your desired name for the namespace.
+
+As soon as the namespace was created you can change your kubectl context:
+
+[source]
+----
+kubectl config set-context --current -namespace=YOUR-NAMESPACE
+----
+
+On your own namespace you should have permissions to create/delete deployments/services etc. and perform other actions.
+
+== Setting up Harbor
+
+Jenkins will build the MyThaiStar Docker images and push them to the nKaaS link:http://harbor.demo.xpaas.io[Harbor registry]. The Jenkinsfile defaults to a Harbor project called "my-thai-star". If there's no such project on Harbor, simply create a new one.
+
+== Setting up Jenkins
+
+As MyThaiStar includes all required Jenkinsfiles for nKaaS, almost no configurations have to be performed by the user.
+Create a new Pipeline on link:http://jenkins.demo.xpaas.io[Jenkins] and configure its definition to be a "Pipeline script from SCM". The SCM used is "Git" and the repository URL is the MyThaiStar repository https://github.com/devonfw/my-thai-star.git or your fork of it.
+
+The Branch Specifier should point to `*/develop`, the Script Path is `jenkins/nKaaS/Jenkinsfile` as that's where the Jenkinsfile is located at the MyThaiStar repository.
+Checking the "Lightweight checkout" could speed up the Pipeline.
+
+*Note:* If you're using the nKaaS link:http://bitbucket.demo.xpaas.io[Bitbucket] as repository for your MyThaiStar clone you have to perform some additional configurations. First you'll have to create a new SSH keypair, for example with `ssh-keygen`. Add the public key to the Bitbucket authentication methods and the private key in Jenkins to a new pair of credentials. This step is required for Jenkins to be able to authenticate against Bitbucket.
+Afterwards, instead of the official MyThaiStar repository, specify your Bitbucket repository:
+
+[source]
+----
+ssh://git@bitbucket.demo.xpaas.io:7999/YOUR-PROJECT/YOUR-MTS-REPO.git
+----
+
+Under "Credentials" choose the credentials that contain your Bitbucket private key you've created earlier.
+
+== Deploying MTS
+
+After setting up the Jenkins Pipeline, you can simply run it by clicking on the "Build" button. This will trigger the pipeline, Jenkins will:
+
+1. Check out the MTS project
+2. Build the docker images
+3. Push the docker images to the Harbor registry
+4. Deploy the MTS application onto Kubernetes
+
+Finally, the applications should be available at http://my-thai-star.demo.xpaas.io. 
+
+The first part, `my-thai-star`, ist specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nKaaS/ingress.yaml[ingress] configuration at `host`. The second part, `demo.xpaas.io`, is the host of the nKaaS you're working on.

@@ -1,39 +1,64 @@
-<h3 mat-dialog-title>{{'cockpit.reservations.dialogTitle' | translate}}: {{data.booking.bookingToken}} </h3>
+<h3 mat-dialog-title>{{'cockpit.reservations.dialogTitle' | transloco}}: {{data.booking.bookingToken}} </h3>
 <mat-divider></mat-divider>
-<td-data-table
-  #dataTable
-  [data]="datat"
-  [columns]="columnst">
-  <ng-template tdDataTableTemplate="booking.bookingDate" let-value="value" let-row="row" let-column="column">
-    <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
-    </div>
-  </ng-template>
-  <ng-template tdDataTableTemplate="booking.creationDate" let-value="value" let-row="row" let-column="column">
-    <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
-    </div>
-  </ng-template>
-</td-data-table>
-<td-data-table
-  *ngIf="filteredData.length > 0"
-  #dataOrders
-  [data]="filteredData"
-  [columns]="columnso">
-  <ng-template tdDataTableTemplate="accepted" let-value="value" let-row="row" let-column="column">
-    <mat-icon color="accent" *ngIf="value">check</mat-icon>
-    <mat-icon color="warn" *ngIf="!value">clear</mat-icon>
-  </ng-template>
-</td-data-table>
-<td-paging-bar *ngIf="filteredData.length > 0" #pagingBar [firstLast]="false" [pageSize]="pageSize" [total]="datao.length" (change)="page($event)">
-  <span hide-xs>{{'table.rowsPage' | translate}}:</span>
-  <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-    <mat-option *ngFor="let size of pageSizes" [value]="size">
-      {{ size }}
-    </mat-option>
-  </mat-select>
-  <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>{{'table.of' | translate}} {{pagingBar.total}}</span></span>
-</td-paging-bar>
-<div class="align-right pad-top" flex>
-  <button mat-button mat-dialog-close color="accent" class="text-upper">{{'buttons.close' | translate}}</button>
+
+<div class="tableContainer">
+  <table mat-table [dataSource]="datat">
+    <!-- Reservation Date Column -->
+    <ng-container matColumnDef="bookingDate">
+      <th mat-header-cell *matHeaderCellDef> {{columnst[0].label}} </th>
+      <td mat-cell *matCellDef="let element" class="bookingDateData"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
+    </ng-container>
+    <!-- Creation Date Column -->
+    <ng-container matColumnDef="creationDate">
+      <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[1].label}} </th>
+      <td mat-cell *matCellDef="let element" class="creationDateData"> {{element.booking.creationDate|amFromUnix|amDateFormat:'lll'}} </td>
+    </ng-container>
+    <!-- Owner Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="nameHeader"> {{columnst[2].label}} </th>
+      <td mat-cell *matCellDef="let element" class="nameData"> {{element.booking.name}} </td>
+    </ng-container>
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="emailHeader"> {{columnst[3].label}} </th>
+      <td mat-cell *matCellDef="let element" class="emailData"> {{element.booking.email}} </td>
+    </ng-container>
+    <!-- Table Column -->
+    <ng-container matColumnDef="tableId">
+      <th mat-header-cell *matHeaderCellDef> {{columnst[4].label}} </th>
+      <td mat-cell *matCellDef="let element"> {{element.booking.tableId}} </td>
+    </ng-container>
+    <!-- Assistants Column -->
+    <ng-container matColumnDef="assistants" *ngIf="data.booking.assistants">
+      <th mat-header-cell *matHeaderCellDef class="assistantsHeader"> {{columnst[5].label}} </th>
+      <td mat-cell *matCellDef="let element" class="assistantsData"> {{element.booking.assistants}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
+  </table>
+</div>
+
+<div class="tableContainer" *ngIf="filteredData.length > 0">
+  <table class="guestTable" mat-table [dataSource]="filteredData">
+    <!-- Guest Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef style="width:50%;"> {{columnso[0].label}} </th>
+      <td mat-cell *matCellDef="let element" class="guestEmailData"> {{element.email}} </td>
+    </ng-container>
+    <!-- Acceptances Column -->
+    <ng-container matColumnDef="accepted">
+      <th mat-header-cell *matHeaderCellDef style="width:50%;"> {{columnso[1].label}} </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon [color]="element.accepted ? 'accent' : 'warn'">{{element.accepted ? 'check' : 'clear'}}</mat-icon>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsO"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsO;"></tr>
+  </table>
+</div>
+
+<mat-paginator *ngIf="filteredData.length > 0" #pagingBar [length]="datao.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="false" (page)="page($event)">
+</mat-paginator>
+<div class="align-right actionButtons">
+  <button mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
 </div>

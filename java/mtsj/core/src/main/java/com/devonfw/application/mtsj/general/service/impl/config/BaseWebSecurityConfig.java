@@ -3,12 +3,12 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -16,8 +16,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.devonfw.application.mtsj.general.common.base.AdvancedDaoAuthenticationProvider;
 import com.devonfw.application.mtsj.general.common.base.JWTAuthenticationFilter;
 import com.devonfw.application.mtsj.general.common.base.JWTLoginFilter;
+import com.devonfw.application.mtsj.general.common.base.TwoFactorFilter;
+import com.devonfw.application.mtsj.general.common.impl.security.BaseUserDetailsService;
+import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFactorAuthenticationProvider;
 
 /**
  * This type serves as a base class for extensions of the {@code WebSecurityConfigurerAdapter} and provides a default
@@ -31,10 +35,33 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   boolean corsEnabled = true;
 
   @Inject
-  private UserDetailsService userDetailsService;
+  private BaseUserDetailsService userDetailsService;
 
   @Inject
   private PasswordEncoder passwordEncoder;
+
+  @Bean
+  public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
+
+    AdvancedDaoAuthenticationProvider authProvider = new AdvancedDaoAuthenticationProvider();
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    authProvider.setUserDetailsService(this.userDetailsService);
+    return authProvider;
+  }
+
+  @Bean
+  public TwoFactorAuthenticationProvider twoFactorAuthenticationProvider() {
+
+    TwoFactorAuthenticationProvider authProvider = new TwoFactorAuthenticationProvider();
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    return authProvider;
+  }
+
+  @Inject
+  private AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
+
+  @Inject
+  private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
 
   private CorsFilter getCorsFilter() {
 
@@ -72,8 +99,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
         .authenticated().and()
+        // verification with OTP are filtered with the TwoFactorFilter
+        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
+            UsernamePasswordAuthenticationFilter.class)
         // the api/login requests are filtered with the JWTLoginFilter
-        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), this.userDetailsService),
             UsernamePasswordAuthenticationFilter.class)
         // other requests are filtered to check the presence of JWT in header
         .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -88,11 +118,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @SuppressWarnings("javadoc")
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
-        .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
-        .password(this.passwordEncoder.encode("barkeeper")).roles("Barkeeper").and().withUser("chief")
-        .password(this.passwordEncoder.encode("chief")).roles("Chief").and()
-        .withUser("manager").password(this.passwordEncoder.encode("manager")).roles("Manager");
+    auth.authenticationProvider(this.advancedDaoAuthenticationProvider)
+        .authenticationProvider(this.twoFactorAuthenticationProvider);
   }
-
 }

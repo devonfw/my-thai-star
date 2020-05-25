@@ -29,7 +29,7 @@ It is a platform for continuous inspection of the code. It is going to be used f
 
 They are located under the *MTS* folder of the PL instance:
 
-image::images/jenkins/mts-pipelines.png[, link="iamges/jenkins/mts-pipelines.png"]
+image::images/jenkins/mts-pipelines.png[, link="images/jenkins/mts-pipelines.png"]
 
 Those Jenkins Pipelines will not have any code to execute. They're just pointing to all *Jenkinsfiles* under the `/jenkins` folder of the repository. They can be found link:https://github.com/devonfw/my-thai-star/tree/develop/jenkins[here].
 
@@ -46,4 +46,4 @@ Those Jenkins Pipelines will not have any code to execute. They're just pointing
 
 == How to configure everything out of the box
 
-Production Line currently has a template to integrate My Thai Star. All information can be found at link:https://github.com/devonfw-forge/devon-production-line[devon production line repository]
+Production Line currently has a template to integrate My Thai Star. All information can be found at link:https://github.com/devonfw/production-line[devonfw production line repository]

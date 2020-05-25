@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,14 +17,14 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.module.test.common.base.ComponentTest;
+import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 
 /**
  * Tests for {@link Dishmanagement} component.
  *
  */
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ComponentTest {
+public class DishmanagementTest extends ApplicationComponentTest {
 
   @Inject
   private Dishmanagement dishmanagement;
@@ -38,7 +38,7 @@ public class DishmanagementTest extends ComponentTest {
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
+    PageRequest pageable = PageRequest.of(0, 100, Sort.by(Direction.DESC, "price"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
     assertThat(result).isNotNull();
@@ -53,14 +53,14 @@ public class DishmanagementTest extends ComponentTest {
     DishSearchCriteriaTo criteria = new DishSearchCriteriaTo();
     List<CategoryEto> categories = new ArrayList<>();
     criteria.setCategories(categories);
-    criteria.setSearchBy("Garlic Paradise");
-    PageRequest pageable = PageRequest.of(0, 100, new Sort(Direction.DESC, "price"));
+    criteria.setSearchBy("Thai Spicy Basil Fried Rice");
+    PageRequest pageable = PageRequest.of(0, 100, Sort.by(Direction.DESC, "id"));
     criteria.setPageable(pageable);
     Page<DishCto> result = this.dishmanagement.findDishCtos(criteria);
 
     assertThat(result).isNotNull();
     assertThat(result.getContent().size()).isGreaterThan(0);
-    assertThat(result.getContent().get(0).getDish().getId()).isEqualTo(1L);
+    assertThat(result.getContent().get(0).getDish().getName()).isEqualTo("Thai Spicy Basil Fried Rice");
   }
 
 }

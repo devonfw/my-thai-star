@@ -21,7 +21,7 @@ image::images/ci/angular/pipeline-config.png[, link="pipeline_config.PNG"]
 
 . *Declarative: Tool Install*
 +
-The Pipeline needs some Tools to perform some operations with the Angular project. These tool is a correct version of *NodeJS* (10.14.0 LTS) with *Yarn* installed as global package.
+The Pipeline needs some Tools to perform some operations with the Angular project. These tool is a correct version of *NodeJS* (10.17.0 LTS) with *Yarn* installed as global package.
 +
 [source, groovy]
 ----
@@ -46,18 +46,26 @@ This script executes a linting process of TypeScript. Rules can be defined in th
 +
 . *Execute Angular tests*
 +
-The CI testing of the Angular client is different than the standard local testing (addapted to CI environments, as specified in the *Addaptation* section of document). This script just executes the following commands:
+The CI testing of the Angular client is different than the standard local testing (adapted to CI environments, as specified in the *Adaptation* section of document). This script just executes the following commands:
 +
 [source, groovy]
 ----
 ng test --browsers ChromeHeadless --watch=false
+----
+. *Check dependencies*
++
+Before continue, we print the result of `yarn audit`. It shows the vulnerabilities in the dependencies. It do not process the reponse. The purpose is only to track the result of the command.
++
+[source, groovy]
+----
+yarn audit
 ----
 . *SonarQube code analysis*
 +
 The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to sonarQube and wait until sonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
 . *Build Application*
 +
-The building process of the Angular client would result in a folder called `/dist` in the main Angular's directory. That folder is the one that is going to be served afterwards as an artifact. This process has also been addapted to some Deployment needs. This building script executes the following:
+The building process of the Angular client would result in a folder called `/dist` in the main Angular's directory. That folder is the one that is going to be served afterwards as an artifact. This process has also been adapted to some Deployment needs. This building script executes the following:
 +
 [source, groovy]
 ----
@@ -124,7 +132,7 @@ environment {
 ----
 
 ==== Description
-- *buildScript*: script for build the applicaction. It must be defined at package.json.
+- *buildScript*: script for build the application. It must be defined at package.json.
 +
 Example (package.json):
 +
@@ -199,7 +207,7 @@ sh """yarn ${testScript}"""
 - *angularDir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
 +
 image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
-- *srcDir*: Directory where you store the soruce code. For angular applications the default value is `src`
+- *srcDir*: Directory where you store the source code. For angular applications the default value is `src`
 +
 image::images/ci/angular/src_directory.png[, link="src_directory.PNG"]
 - *chrome*: Since you need a browser to run your tests, we must provide one. This variable contains the name of the custom tool for google chrome.

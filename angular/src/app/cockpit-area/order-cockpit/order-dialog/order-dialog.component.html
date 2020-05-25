@@ -1,39 +1,74 @@
-<h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | translate}} : {{data.booking.bookingToken}} </h3>
+<h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
 <mat-divider></mat-divider>
-<td-data-table
-  #dataTable
-  [data]="datat"
-  [columns]="columnst">
-  <ng-template tdDataTableTemplate="bookingDate" let-value="value" let-row="row" let-column="column">
-    <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
-    </div>
-  </ng-template>
-  <ng-template tdDataTableTemplate="creationDate" let-value="value" let-row="row" let-column="column">
-    <div layout="row">
-      <span flex>{{ value | amParse:'x' | amDateFormat:'lll' }}</span>
-    </div>
-  </ng-template>
-</td-data-table>
-<td-data-table
-  #dataOrders
-  [data]="filteredData"
-  [columns]="columnso">
-</td-data-table>
-<div layout="row" class="justify-space-between pad-right pad-left">
-  <h4 class="text-upper">{{'formFields.total' | translate}}</h4>
+<div class="tableContainer">
+   <table mat-table [dataSource]="datat">
+    <!-- Reservation Date Column -->
+    <ng-container matColumnDef="bookingDate">
+      <th mat-header-cell *matHeaderCellDef> {{columnst[0].label}} </th>
+      <td mat-cell *matCellDef="let element" class="bookingDateData"> {{element.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
+    </ng-container>
+    <!-- Creation Date Column -->
+    <ng-container matColumnDef="creationDate">
+      <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[1].label}} </th>
+      <td mat-cell *matCellDef="let element" class="creationDateData"> {{element.creationDate|amFromUnix|amDateFormat:'lll'}} </td>
+    </ng-container>
+    <!-- Owner Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="nameHeader"> {{columnst[2].label}} </th>
+      <td mat-cell *matCellDef="let element" class="nameData"> {{element.name}} </td>
+    </ng-container>
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="emailHeader"> {{columnst[3].label}} </th>
+      <td mat-cell *matCellDef="let element" class="emailData"> {{element.email}} </td>
+    </ng-container>
+    <!-- Table Column -->
+    <ng-container matColumnDef="tableId">
+      <th mat-header-cell *matHeaderCellDef class="tableIdHeader"> {{columnst[4].label}} </th>
+      <td mat-cell *matCellDef="let element" class="tableIdData"> {{element.tableId}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
+  </table>
+</div>
+<div class="tableContainer">
+  <table mat-table [dataSource]="filteredData">
+    <!-- Dish Column -->
+    <ng-container matColumnDef="dish.name">
+      <th mat-header-cell *matHeaderCellDef> {{columnso[0].label}} </th>
+      <td mat-cell *matCellDef="let element" class="dishNameData"> {{element.dish.name}} </td>
+    </ng-container>
+    <!-- Comments Column -->
+    <ng-container matColumnDef="orderLine.comment">
+      <th mat-header-cell *matHeaderCellDef class="commentHeader"> {{columnso[1].label}} </th>
+      <td mat-cell *matCellDef="let element" class="commentData"> {{element.orderLine.comment}} </td>
+    </ng-container>
+    <!-- Extra Column -->
+    <ng-container matColumnDef="extras">
+      <th mat-header-cell *matHeaderCellDef class="extrasHeader"> {{columnso[2].label}} </th>
+      <td mat-cell *matCellDef="let element" class="extrasData"> {{element.extras}} </td>
+    </ng-container>
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="orderLine.amount">
+      <th mat-header-cell *matHeaderCellDef class="amountHeader"> {{columnso[3].label}} </th>
+      <td mat-cell *matCellDef="let element" class="amountData"> {{element.orderLine.amount}} </td>
+    </ng-container>
+    <!-- Price Column -->
+    <ng-container matColumnDef="dish.price">
+      <th mat-header-cell *matHeaderCellDef class="priceHeader"> {{columnso[4].label}} </th>
+      <td mat-cell *matCellDef="let element" class="priceData"> {{element.dish.price | number:'1.2-2'}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsO"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsO;"></tr>
+  </table>
+</div>
+<div class="totalRow">
+  <h4>{{'formFields.total' | transloco}}</h4>
   <h4>{{totalPrice | number : '2.2-2'}}</h4>
 </div>
 <mat-divider></mat-divider>
-<td-paging-bar #pagingBar [firstLast]="false" [pageSize]="pageSize" [total]="datao.length" (change)="page($event)">
-  <span hide-xs>{{'table.rowsPage' | translate}}:</span>
-  <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-    <mat-option *ngFor="let size of pageSizes" [value]="size">
-      {{ size }}
-    </mat-option>
-  </mat-select>
-  <span>{{pagingBar.range}} <span hide-xs hide-sm hide-md>{{'table.of' | translate}} {{pagingBar.total}}</span></span>
-</td-paging-bar>
-<div class="align-right pad-top" flex>
-  <button mat-button mat-dialog-close color="accent" class="text-upper">{{'buttons.close' | translate}}</button>
+<mat-paginator [length]="datao.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="false" (page)="page($event)">
+</mat-paginator>
+<div class="align-right actionButtons">
+  <button mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
 </div>

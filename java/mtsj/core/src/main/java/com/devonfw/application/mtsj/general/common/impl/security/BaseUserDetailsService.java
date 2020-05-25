@@ -20,8 +20,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
-import com.devonfw.application.mtsj.general.common.api.Usermanagement;
 import com.devonfw.application.mtsj.general.common.api.security.UserData;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
+import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControl;
 import com.devonfw.module.security.common.api.accesscontrol.AccessControlProvider;
 import com.devonfw.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -72,20 +74,23 @@ public class BaseUserDetailsService implements UserDetailsService {
 
   private PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider;
 
+  private UserEntity user;
+
+  @Inject
+  private UserRepository userRepository;
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
     UserProfile principal = retrievePrincipal(username);
     Set<GrantedAuthority> authorities = getAuthorities(principal);
-    UserDetails user;
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
-      user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
-      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
+      // Retrieve user from H2 in memory database instead from AuthenticationManagerBuilder
+      this.user = this.userRepository.findByUsername(username);
+      UserData userData = new UserData(this.user.getUsername(), this.user.getPassword(), authorities);
       userData.setUserProfile(principal);
       return userData;
     } catch (Exception e) {
-      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;
@@ -158,7 +163,6 @@ public class BaseUserDetailsService implements UserDetailsService {
     try {
       return this.usermanagement.findUserProfileByLogin(username);
     } catch (RuntimeException e) {
-      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;

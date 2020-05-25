@@ -42,6 +42,8 @@ public class TokenAuthenticationService {
 
   static final String HEADER_STRING = "Authorization";
 
+  static final String HEADER_OTP = "X-Mythaistar-Otp";
+
   static final String EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
   static final String CLAIM_SUBJECT = "sub";
@@ -55,6 +57,11 @@ public class TokenAuthenticationService {
   static final String CLAIM_SCOPE = "scope";
 
   static final String CLAIM_ROLES = "roles";
+
+  static void addAllowedHeader(HttpServletResponse res) {
+
+    res.addHeader(EXPOSE_HEADERS, HEADER_STRING + ", " + HEADER_OTP);
+  }
 
   /**
    * This method returns the token once the Authentication has been successful
@@ -70,6 +77,18 @@ public class TokenAuthenticationService {
   }
 
   /**
+   * This method sets a header field in order to notify the user for further authentication requirements
+   *
+   * @param res the {@HttpServletResponse}
+   * @param auth the {@Authentication} object with the user credentials
+   */
+  static void addRequiredAuthentication(HttpServletResponse res, Authentication auth) {
+
+    // Add possible required authentication factors into the header
+    res.addHeader(HEADER_OTP, auth.getDetails().toString());
+  }
+
+  /**
    * This method validates the token and returns a {@link UsernamePasswordAuthenticationToken}
    *
    * @param request the {@link HttpServletRequest}
@@ -81,8 +100,8 @@ public class TokenAuthenticationService {
     if (token != null) {
 
       // The JWT parser will throw an exception if the token is not well formed or the token has expired
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
       return user != null ? new UsernamePasswordAuthenticationToken(user, null, getAuthorities(token)) : null;
 
     }
@@ -141,8 +160,8 @@ public class TokenAuthenticationService {
 
     UserDetailsClientTo userDetails = new UserDetailsClientTo();
     try {
-      String user =
-          Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody().getSubject();
+      String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
+          .getSubject();
 
       List<String> roles = getRolesFromToken(token);
       if (user != null) {
@@ -165,10 +184,22 @@ public class TokenAuthenticationService {
     return userDetails;
   }
 
+  /**
+   * Converts the name(s) to their respective user roles for an {@link Authentication} object
+   *
+   * @param auth
+   * @return A {@link List<GrantedAuthority>} List
+   */
+  public static List<GrantedAuthority> getRolesFromName(Authentication auth) {
+
+    List<GrantedAuthority> roles = (List<GrantedAuthority>) auth.getAuthorities();
+
+    return roles;
+  }
+
   static List<String> getRolesFromToken(String token) {
 
     return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
         .get(CLAIM_SCOPE, List.class);
   }
-
 }

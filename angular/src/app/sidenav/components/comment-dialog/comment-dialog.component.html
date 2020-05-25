@@ -1,0 +1,11 @@
+<span mat-dialog-title>{{'sidenav.dialog.title' | transloco | uppercase}}</span>
+<mat-dialog-content>
+  <span class="dialogContent">{{'sidenav.dialog.content' | transloco}}</span>
+  <mat-form-field color="accent">
+    <textarea matInput [placeholder]="'formFields.comment' | transloco" #comment></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+  <button mat-button [disabled]="!comment.value.length" (click)="sendComment(comment.value)" color="accent">{{'buttons.send' | transloco | uppercase}}</button>
+</mat-dialog-actions>

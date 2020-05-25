@@ -1,0 +1,20 @@
+<h4 mat-dialog-title>{{'userArea.twitterDialog.title' | transloco | uppercase}}</h4>
+<form  (ngSubmit)="twitterSubmit(twitterForm.form.value)" #twitterForm="ngForm">
+  <div class="formFields">
+    <mat-form-field color="accent">
+      <input matInput [placeholder]="'userArea.twitterDialog.twitterUsernamePH' | transloco" ngModel name="username" required>
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <input matInput [placeholder]="'userArea.twitterDialog.twitterPasswordPH' | transloco" ngModel name="password" type="password" required>
+    </mat-form-field>
+  </div>
+
+  <div class="align-right">  
+    <button name="twitterAccountCancel" mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+    <button name="twitterAccountSubmit" mat-raised-button type="submit" [disabled]="!twitterForm.form.valid" color="accent">
+      <mat-icon svgIcon="twitter"></mat-icon>
+      <span>{{'userArea.twitterDialog.loginbutton' | transloco | uppercase}}</span>
+    </button>
+  </div>
+</form>

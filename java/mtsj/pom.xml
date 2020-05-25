@@ -5,19 +5,20 @@
 
   <artifactId>mtsj</artifactId>
   <groupId>com.devonfw.java.mtsj</groupId>
-  <version>1.12.3-SNAPSHOT</version>
+  <version>3.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Application based on the Devonfw framework for Java (devon4j).</description>
 
   <properties>
-    <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-    <devon4j.version>3.0.0</devon4j.version>
+    <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+    <devon4j.version>2020.04.001</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
+    <junit.version>5.5.2</junit.version>
     <devon.http.port>${devon.port.range}81</devon.http.port>
     <devon.db.port>${devon.port.range}43</devon.db.port>
-    <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySubsystemTest,com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
+    <devon.test.excluded.groups>subsystem,system</devon.test.excluded.groups>
   </properties>
 
   <modules>
@@ -28,11 +29,14 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-core</artifactId>
-        <version>5.0.7</version>
-      </dependency>
+     <!-- overriding junit version from spring-boot by importing BOM before -->
+    <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>    
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -153,8 +157,8 @@
         <version>2.22.0</version>
         <configuration>
           <excludedGroups>${devon.test.excluded.groups}</excludedGroups>
-              <forkCount>0</forkCount>
-              <reuseForks>true</reuseForks>
+          <forkCount>0</forkCount>
+          <reuseForks>true</reuseForks>
         </configuration>
       </plugin>
     </plugins>
@@ -164,7 +168,7 @@
     <profile>
       <id>subsystemtest</id>
       <properties>
-        <devon.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySystemTest</devon.test.excluded.groups>
+        <devon.test.excluded.groups>system</devon.test.excluded.groups>
       </properties>
     </profile>
     <profile>
@@ -223,7 +227,7 @@
     <repository>
       <id>pl-nexus</id>
       <name>PL Releases</name>
-      <url>http://nexus3-core:8081/nexus/content/repositories/maven-releases/</url>
+      <url>http://nexus3-core:8081/nexus3/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
       <id>pl-nexus</id>

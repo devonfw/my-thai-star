@@ -1,0 +1,84 @@
+:toc: macro
+toc::[]
+
+= MyThaiStar
+
+include::agile[leveloffset=1]
+
+include::User-Stories[leveloffset=1]
+
+== Technical design
+
+=== Data Model
+
+include::My-Thai-Star-data-model[leveloffset=3]
+
+include::my-thai-star-nosql-data-model[leveloffset=3]
+
+=== Server Side
+
+include::java-design[leveloffset=3]
+
+include::net-design[leveloffset=3]
+
+include::nodejs-design[leveloffset=3]
+
+include::serverless-design[leveloffset=3]
+
+include::graphql-design[leveloffset=3]
+
+=== Client Side
+
+include::angular-design[leveloffset=3]
+
+include::xamarin-design[leveloffset=3]
+
+== Security
+
+include::twofactor[leveloffset=2]
+
+== Testing
+
+=== Server Side
+
+include::java-testing[leveloffset=3]
+
+include::net-testing[leveloffset=3]
+
+include::nodejs-testing[leveloffset=3]
+
+include::graphql-testing[leveloffset=3]
+
+=== Client Side
+
+include::angular-testing[leveloffset=3]
+
+include::xamarin-testing[leveloffset=3]
+
+=== End to end
+
+include::mrchecker[leveloffset=3]
+
+== UI design
+
+include::style-guide[leveloffset=2]
+
+== CI/CD
+
+include::production-line-ci[leveloffset=2]
+
+include::angular-ci[leveloffset=3]
+
+include::java-ci[leveloffset=3]
+
+include::deployment[leveloffset=2]
+
+include::deployment-pipelines[leveloffset=3]
+
+include::deployment-strategies[leveloffset=3]
+
+include::future-deployment[leveloffset=3]
+
+include::traefik-reverse-proxy[leveloffset=3]
+
+include::nkaas.asciidoc[leveloffset=2]

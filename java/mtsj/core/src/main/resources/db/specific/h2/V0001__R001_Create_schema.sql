@@ -6,7 +6,7 @@
 CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
 
 -- *** Table ***
-CREATE TABLE Table (
+CREATE TABLE "Table" (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
@@ -28,6 +28,8 @@ CREATE TABLE User (
   modificationCounter INTEGER NOT NULL,
   username VARCHAR (255) NULL,
   password VARCHAR (255) NULL,
+  secret VARCHAR (255) NULL,
+  twoFactorStatus BOOLEAN NULL DEFAULT ((0)),
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),
@@ -40,7 +42,7 @@ CREATE TABLE Booking (
   modificationCounter INTEGER NOT NULL,
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
-  bookingToken VARCHAR (60),
+  bookingToken VARCHAR (255),
   comment VARCHAR (4000),
   email VARCHAR(255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
@@ -53,7 +55,7 @@ CREATE TABLE Booking (
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES Table(id) NOCHECK
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK
 );
 
 -- *** InvitedGuest ***
@@ -61,7 +63,7 @@ CREATE TABLE InvitedGuest (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   idBooking BIGINT NOT NULL,
-  guestToken VARCHAR (60),
+  guestToken VARCHAR (255),
   email VARCHAR (60),
   accepted BOOLEAN,
   modificationDate TIMESTAMP,
@@ -89,7 +91,7 @@ CREATE TABLE Category (
   name VARCHAR (255),
   description VARCHAR (4000),
   showOrder INTEGER,
-  CONSTRAINT PK_Category PRIMARY KEY(id),
+  CONSTRAINT PK_Category PRIMARY KEY(id)
 );
 
 -- *** Image ***
@@ -97,7 +99,7 @@ CREATE TABLE Image (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   name VARCHAR(255),
-  content clob,
+  content blob,
   contentType INTEGER,
   mimeType VARCHAR(255),
   CONSTRAINT PK_Image PRIMARY KEY(id)
@@ -112,7 +114,7 @@ CREATE TABLE Dish (
   price DECIMAL (16,10),
   idImage BIGINT UNIQUE NOT NULL,
   CONSTRAINT PK_Dish PRIMARY KEY(id),
-  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK,
+  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK
 );
 
 -- *** DishCategory ***

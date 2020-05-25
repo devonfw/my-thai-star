@@ -1,0 +1,46 @@
+:toc: macro
+toc::[]
+
+== Reverse proxy strategy using Traefik
+
+This implementation is the same as described at link:deployment.asciidoc[My Thai Star deployment wiki page]. The only thing that changes is that Traefik is used instead of NGINX. 
+
+Using Traefik as reverse proxy, we can define the routes using labels in the docker containers instead of using a nginx.conf file. With this, it is not necessary to modify the reverse proxy container for each application. In addition, as Traefik is listening to the docker daemon, it can detect new containers and create routes for them without rebooting.
+
+Example of labels:
+
+[source,yaml]
+----
+labels:
+    - "traefik.http.routers.angular.rule=PathPrefix(`/`)"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.path=/health"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.interval=10s"
+    - "traefik.http.services.angular.loadBalancer.healthcheck.scheme=http"
+----
+
+=== How to use it
+
+If you want to build the images from code, change to My Thai Star root folder and execute:
+
+[source,bash]
+----
+$ docker-compose -f docker-compose.traefik.yml up -d --build
+----
+
+If you want to build the images from artifacts, change to traefik folder (reverse-proxy/traefik) and execute:
+
+[source,bash]
+----
+$ docker-compose up -d --build
+----
+
+After a seconds, when the healthcheck detects that containers are running, your application will be available at http://localhost:8090. Also, the Traefik dashboard is available at http://localhost:8080.
+
+If you want to check the behaviour of the application when you scale up the backend, you can execute:
+
+[source,bash]
+----
+$ docker-compose scale java=5
+----
+
+With this, the access to the java backend will be using the load balacing method: Weighted Round Robin.

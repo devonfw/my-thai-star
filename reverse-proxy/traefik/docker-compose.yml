@@ -3,8 +3,12 @@ version: "3"
 services:
   reverse-proxy:
     restart: always
-    image: traefik
-    command: --api --docker
+    image: traefik:2.0
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
     networks:
       - my-thai-star
     ports:
@@ -21,10 +25,14 @@ services:
     networks:
       - my-thai-star
     labels:
-      - "traefik.frontend.rule=PathPrefixStrip:/api/;AddPrefix:/mythaistar"
-      - "traefik.backend.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
-      - "traefik.backend.healthcheck.interval=10s"
-      - "traefik.backend.healthcheck.scheme=http"
+      - "traefik.http.routers.java.rule=PathPrefix(`/api/`)"
+      - "traefik.http.routers.java.middlewares=fixpath"
+      - "traefik.http.middlewares.fixpath.chain.middlewares=remove-api,add-mythaistar"
+      - "traefik.http.middlewares.remove-api.stripprefix.prefixes=/api"
+      - "traefik.http.middlewares.add-mythaistar.addprefix.prefix=/mythaistar"
+      - "traefik.http.services.java.loadBalancer.healthcheck.path=/mythaistar/services/rest/dishmanagement/v1/category/0/"
+      - "traefik.http.services.java.loadBalancer.healthcheck.interval=10s"
+      - "traefik.http.services.java.loadBalancer.healthcheck.scheme=http"
   angular:
     build: "../angular/"
     restart: always
@@ -32,10 +40,10 @@ services:
     networks:
       - my-thai-star
     labels:
-      - "traefik.frontend.rule=PathPrefix:/"
-      - "traefik.backend.healthcheck.path=/health"
-      - "traefik.backend.healthcheck.interval=10s"
-      - "traefik.backend.healthcheck.scheme=http"
+      - "traefik.http.routers.angular.rule=PathPrefix(`/`)"
+      - "traefik.http.services.angular.loadBalancer.healthcheck.path=/health"
+      - "traefik.http.services.angular.loadBalancer.healthcheck.interval=10s"
+      - "traefik.http.services.angular.loadBalancer.healthcheck.scheme=http"
 networks:
   my-thai-star:
     driver: bridge

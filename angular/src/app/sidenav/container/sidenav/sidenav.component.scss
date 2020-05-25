@@ -1,0 +1,137 @@
+.orderDiv {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.orderContent {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.sidenavTitle {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+}
+
+.orderIcon {
+  margin-right: 8px;
+}
+
+.sidenavTitleSpan {
+  font-weight: bold;
+  font-size: 0.7em;
+}
+
+.orderDetails {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  margin-top: -16px;
+}
+
+.sidenavHeader {
+  padding-bottom: 8px;
+  text-transform: uppercase;
+  border-bottom: 1px solid lightgrey;
+}
+
+.noOrders {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.orderTotal {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.orderTable {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  mat-card {
+    background-color: bisque;
+    padding: 8px;
+    margin: 8px;
+  }
+}
+
+.orderTableNotice {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  mat-icon {
+    font-size: 18px;
+    height: 1em;
+    width: 1em;
+    padding-right: 8px;
+  }
+}
+
+.orderBookingID {
+  margin-left: 16px;
+  margin-right: 16px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.sidenav-info-text {
+  color: lightslategrey;
+}
+
+.sidenav-info {
+  font-size: 0.8em;
+  justify-content: space-between;
+}
+
+.sidenavOrderContainer {
+  margin-top: -16px;
+}
+
+.scrollOrders {
+  overflow-y: auto;
+}
+
+.invitationAlert {
+  font-size: 0.8em;
+  flex: 1 1 65%;
+  max-width: 65%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+
+.orderTermsCheckbox {
+  margin-left: 16px;
+}
+
+@media (max-width: 599px) {
+  .forDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .forMobile {
+    display: none;
+  }
+}

@@ -1,46 +1,25 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { HttpExceptionFilter } from 'shared/filters/http-exception.filter';
+import { NextFunction, Request } from 'express';
 import * as helmet from 'helmet';
+import { AppModule } from './app/app.module';
+import { CoreModule } from './app/core/core.module';
+import { WinstonLogger } from './app/shared/logger/winston.logger';
+import { ConfigService } from '@devon4node/config';
 
-declare const module: any;
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const hostDomain = AppModule.isDev
-    ? `${AppModule.host}:${AppModule.port}`
-    : AppModule.host;
-
-  if (hostDomain) {
-    const swaggerOptions = new DocumentBuilder()
-      .setTitle(AppModule.appName)
-      .setDescription(AppModule.appDescription)
-      .setVersion(AppModule.appVersion)
-      .setHost(hostDomain.split('//')[1])
-      .setSchemes(AppModule.isDev ? 'http' : 'https')
-      .setBasePath(AppModule.appBasePath)
-      .addBearerAuth('Authorization', 'header')
-      .build();
-
-    const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
-
-    app.use(`${AppModule.appBasePath}/docs/swagger.json`, (req, res) => {
-      res.send(swaggerDoc);
-    });
-
-    SwaggerModule.setup('/api/docs', app, swaggerDoc, {
-      swaggerUrl: `${hostDomain}${AppModule.appBasePath}/docs/swagger.json`,
-      explorer: true,
-      swaggerOptions: {
-        docExpansion: 'list',
-        filter: true,
-        showRequestDuration: true,
-      },
-    });
-  }
-
-  app.setGlobalPrefix(AppModule.appBasePath);
-  app.useGlobalFilters(new HttpExceptionFilter());
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create(AppModule, {
+    logger: new WinstonLogger(),
+  });
+  const configModule = app.get(ConfigService);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      forbidUnknownValues: true,
+    }),
+  );
+  app.setGlobalPrefix(configModule.values.globalPrefix);
   app.use(helmet());
   app.enableCors({
     origin: '*',
@@ -48,6 +27,25 @@ async function bootstrap() {
     exposedHeaders: 'Authorization',
     allowedHeaders: 'authorization, content-type',
   });
-  await app.listen(AppModule.port);
+  if (configModule.values.isDev) {
+    const options = new DocumentBuilder()
+      .setTitle(configModule.values.swaggerConfig.swaggerTitle)
+      .setDescription(configModule.values.swaggerConfig.swaggerDescription)
+      .setVersion(configModule.values.swaggerConfig.swaggerVersion)
+      .addBearerAuth()
+      .build();
+
+    const swaggerDoc = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup((configModule.values.globalPrefix || '') + '/api', app, swaggerDoc);
+  }
+  const logger: WinstonLogger = app.select(CoreModule).get(WinstonLogger);
+  // Logger middleware
+  app.use(function (this: any, req: Request, _res: Response, next: NextFunction) {
+    logger.log(req.path, req.ip);
+    next();
+  });
+
+  app.enableShutdownHooks();
+  await app.listen(configModule.values.port);
 }
 bootstrap();

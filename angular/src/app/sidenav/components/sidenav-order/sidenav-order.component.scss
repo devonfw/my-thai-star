@@ -1,0 +1,63 @@
+.orderContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-right: 8px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.removeOrderBtn {
+  margin-bottom: 4px;
+  mat-icon {
+    color: lightgray;
+  }
+}
+
+.orderNameContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: -4px;
+}
+
+.orderAmountContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 4px;
+}
+
+.orderName {
+  font-weight: bold;
+}
+
+.removeOrderComment {
+  font-size: 0.75em;
+  cursor: pointer;
+  color: orangered;
+  width: 90%;
+}
+
+.addOrderComment {
+  font-size: 0.75em;
+  cursor: pointer;
+  color: seagreen;
+  width: 70%;
+}
+
+.orderIngredients {
+  font-size: 0.75em;
+  color: gray;
+}
+
+.hideButton {
+  visibility: hidden;
+}
+
+.orderAmount, .orderPrice {
+  margin-top: 8px;
+}

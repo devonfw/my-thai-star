@@ -2,8 +2,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotSupportedComponent } from './not-supported.component';
-import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
-import { CovalentMediaModule, CovalentLayoutModule } from '@covalent/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CdkTableModule } from '@angular/cdk/table';
 
 describe('NotSupportedComponent', () => {
@@ -17,8 +18,6 @@ describe('NotSupportedComponent', () => {
         MatCardModule,
         MatButtonModule,
         MatIconModule,
-        CovalentMediaModule,
-        CovalentLayoutModule,
         CdkTableModule,
         RouterTestingModule,
       ],

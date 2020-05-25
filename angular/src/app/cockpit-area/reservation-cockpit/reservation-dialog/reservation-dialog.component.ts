@@ -1,17 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  IPageChangeEvent,
-  ITdDataTableColumn,
-  TdDataTableService,
-} from '@covalent/core';
-import {
   FriendsInvite,
   ReservationView,
 } from '../../../shared/view-models/interfaces';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'cockpit-reservation-dialog',
@@ -20,35 +15,35 @@ import { ConfigService } from '../../../core/config/config.service';
 })
 export class ReservationDialogComponent implements OnInit {
   datao: FriendsInvite[] = [];
-  fromRow = 1;
+  fromRow = 0;
   currentPage = 1;
   pageSize = 4;
 
   data: any;
-  columnso: ITdDataTableColumn[] = [
+  columnso: any[] = [
     { name: 'email', label: 'Guest email' },
     { name: 'accepted', label: 'Acceptances and declines' },
   ];
+  displayedColumnsO: string[] = ['email', 'accepted'];
   pageSizes: number[];
   datat: ReservationView[] = [];
-  columnst: ITdDataTableColumn[];
+  columnst: any[];
+  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name', 'email', 'tableId'];
 
   filteredData: any[] = this.datao;
 
   constructor(
-    private _dataTableService: TdDataTableService,
-    private translate: TranslateService,
+    private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService
   ) {
-    this.data = dialogData.row;
+    this.data = dialogData;
     this.pageSizes = configService.getValues().pageSizesDialog;
   }
 
   ngOnInit(): void {
-    this.setTableHeaders();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.setTableHeaders();
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      this.setTableHeaders(event);
     });
 
     this.datat.push(this.data);
@@ -56,48 +51,45 @@ export class ReservationDialogComponent implements OnInit {
     this.filter();
   }
 
-  setTableHeaders(): void {
-    this.translate.get('cockpit.table').subscribe((res: any) => {
+  setTableHeaders(lang: string): void {
+
+    this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitReservationTable => {
       this.columnst = [
-        { name: 'booking.bookingDate', label: res.reservationDateH },
-        { name: 'booking.creationDate', label: res.creationDateH },
-        { name: 'booking.name', label: res.ownerH },
-        { name: 'booking.email', label: res.emailH },
-        { name: 'booking.tableId', label: res.tableH },
+        { name: 'booking.bookingDate', label: cockpitReservationTable.reservationDateH },
+        { name: 'booking.creationDate', label: cockpitReservationTable.creationDateH },
+        { name: 'booking.name', label: cockpitReservationTable.ownerH },
+        { name: 'booking.email', label: cockpitReservationTable.emailH },
+        { name: 'booking.tableId', label: cockpitReservationTable.tableH },
       ];
     });
 
-    this.translate
-      .get('cockpit.reservations.dialogTable')
-      .subscribe((res: any) => {
+    this.translocoService.selectTranslateObject('cockpit.reservations.dialogTable', {}, lang)
+      .subscribe(cockpitReservationDialogTable => {
         this.columnso = [
-          { name: 'email', label: res.guestEmailH },
-          { name: 'accepted', label: res.acceptanceH },
+          { name: 'email', label: cockpitReservationDialogTable.guestEmailH },
+          { name: 'accepted', label: cockpitReservationDialogTable.acceptanceH },
         ];
 
         if (this.data.booking.assistants) {
           this.columnst.push({
             name: 'booking.assistants',
-            label: res.assistantsH,
+            label: cockpitReservationDialogTable.assistantsH,
           });
+          this.displayedColumnsT.push('assistants');
         }
-      });
+    });
   }
 
-  page(pagingEvent: IPageChangeEvent): void {
-    this.fromRow = pagingEvent.fromRow;
-    this.currentPage = pagingEvent.page;
+  page(pagingEvent: PageEvent): void {
+    this.fromRow = pagingEvent.pageSize * pagingEvent.pageIndex;
+    this.currentPage = pagingEvent.pageIndex + 1;
     this.pageSize = pagingEvent.pageSize;
     this.filter();
   }
 
   filter(): void {
     let newData: any[] = this.datao;
-    newData = this._dataTableService.pageData(
-      newData,
-      this.fromRow,
-      this.currentPage * this.pageSize,
-    );
+    newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }
 }

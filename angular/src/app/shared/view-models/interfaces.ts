@@ -50,11 +50,11 @@ export interface FriendsInvite {
   accepted: boolean;
 }
 export interface OrderDishView {
-    dish: {
-        id: number;
-        name: string;
-        price: number;
-    };
+  dish: {
+    id: number;
+    name: string;
+    price: number;
+  };
 }
 
 export interface OrderView {
@@ -89,8 +89,8 @@ export interface OrderListView {
 }
 
 export interface OrderDishListView {
-    orderLines: OrderDishView[];
-    booking: BookingView;
+  orderLines: OrderDishView[];
+  booking: BookingView;
 }
 
 // Interface to recieve responeses from the server using httpclient for getReservations
@@ -107,8 +107,8 @@ export interface OrderResponse {
 
 // Interface to recieve responeses from the server using httpclient for get OrderDishResponse
 export interface OrderDishResponse {
-    pageable: Pageable;
-    result: OrderDishListView;
+  pageable: Pageable;
+  result: OrderDishListView;
 }
 
 // Interface to recieve responeses from the server using httpclient for email invitations
@@ -153,34 +153,40 @@ export interface Role {
 
 // Interface for prediction data for a dish
 export interface OrdersData {
-    dates?: Date[];
-    holidays?: string[];
-    weather?: number[];
-    dishes: DishOrdersData[];
+  dates?: Date[];
+  holidays?: string[];
+  weather?: number[];
+  dishes: DishOrdersData[];
 }
 
 // Interface for order of a dish
 export interface DishOrdersData {
-    id: number;
-    // name of the dish
-    name: string;
-    // count of orders of the dish, that have been ordered in certain period
-    orders: number[];
+  id: number;
+  // name of the dish
+  name: string;
+  // count of orders of the dish, that have been ordered in certain period
+  orders: number[];
 }
 
 // Interface for Cluster
 export interface Cluster {
-    id: number;
-    dishId: number;
-    dishName: String;
-    amount: number;
-    polygon: {};
-    x: string;
-    y: string;
-
+  id: number;
+  dishId: number;
+  dishName: String;
+  amount: number;
+  polygon: {};
+  x: string;
+  y: string;
 }
 export interface ClustersData {
-    data: Cluster[];
-    id: number;
-    modificationCounter: number;
+  data: Cluster[];
+  id: number;
+  modificationCounter: number;
+}
+
+// Interface for Two-Factor Authentication
+export interface TwoFactorResponse {
+  twoFactorStatus?: boolean;
+  base64QrCode?: string;
+  secret?: string;
 }

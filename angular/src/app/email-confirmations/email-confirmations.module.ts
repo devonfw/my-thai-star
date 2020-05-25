@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
-
-import { EmailConfirmationsComponent } from './email-confirmations.component';
-
-import { EmailConfirmationsService } from './shared/email-confirmations.service';
-
+import { EmailConfirmationsComponent } from './container/email-confirmations/email-confirmations.component';
 import { EmailConfirmationsRoutingModule } from './email-confirmations-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { EmailConfirmationsService } from './services/email-confirmations.service';
 
 @NgModule({
   imports: [
@@ -16,14 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     EmailConfirmationsRoutingModule,
   ],
-  providers: [
-    EmailConfirmationsService,
-  ],
-  declarations: [
-    EmailConfirmationsComponent,
-  ],
-  exports: [
-    EmailConfirmationsComponent,
-  ],
+  providers: [EmailConfirmationsService],
+  declarations: [EmailConfirmationsComponent],
+  exports: [EmailConfirmationsComponent],
 })
-export class EmailConfirmationModule { }
+export class EmailConfirmationModule {}

@@ -1,0 +1,139 @@
+:toc: macro
+toc::[]
+
+= SAP HAHA
+
+== Download/Install Vmware/SAP hana
+
+- Download VMware Workstation Player to run SAP Hana database https://www.vmware.com/in/products/workstation-player/workstation-player-evaluation.html  
+- Install VMware and open. Using VMware browse check if you can find hxe.ova file. This file is not visible through windows explorer. This is the SAP Hana Express Edition image to be run inside VMware. If available open it in VMware. Otherwise, download Download Manager for SAP Hana from the link below. It may ask to register which is a simple process.
+https://www.sap.com/cmp/ft/crm-xu16-dat-hddedft/typ.html
+- Run the download manager and on the screen use the defaults and click download.
+
+== Run SAP Hana Database Server
+
+- Once the .ova file has been opened inside VMware workstation. Click on the image and go to Edit Virtual Machine Settings. Set the memory allocation to 5GB. And Network Connection to NAT . NAT shows the IP for the virtual machine which will be used to establish JDBC connection
+- Click Play Virtual Machine. When first time the virtual machine runs it display following. Copy the IP address which will be used for JDBC connection
+- Type hxeadm, which is the username and hit Enter. Next it will ask for password which is HXEHana1. Once successfully logged in it will ask to set a new password. Choose a new password and remember.
+- You need to set Master password for SAP Hana database. Set it as you like and remember.
+- For “proceed with configuration” type y and hit Enter. Hana database has started in the background.
+- Try connecting with following command, replace the password with the master password
+[source, text]
+----
+hxehost:hxeadm>hdbsql
+   \c -d SYSTEMDB -n localhost:39013 -u SYSTEM -p <>
+----
+
+== Setting up Database for MTSJ
+
+Once you have install SAP hana with VMware , you need to setup the DB.
+
+== Connect to DB
+
+- After you start Vmware, login with hxeadm as login and the password.
+At the prompt  - hxehost:hxeadm>hdbsql
+Please note the IP address, that need to be put in mtsj java backend
+
+- On prompt hdbsql> type below to connect to the DB
+[source, sql]
+----
+\c -d SYSTEMDB -n localhost:39013 -u SYSTEM -p <password>
+----
+
+- Type below query to see, if you have access to tenant database i.e. HXE
+[source, sql]
+----
+SELECT DATABASE_NAME,  ACTIVE_STATUS FROM SYS.M_DATABASES ORDER BY 1;
+----
+
+== Enabling the script server
+Run the below for enabling the script server
+[source, sql]
+----
+ALTER DATABASE HXE ADD 'scriptserver'
+----
+To check if the script server is enable, execute below statement
+[source, sql]
+----
+SELECT SERVICE_NAME, PORT, ACTIVE_STATUS FROM SYS.M_SERVICES ORDER BY 1;
+----
+It should see the scriptserver in it.
+
+== Creating a User on HXE
+
+- Connect using the below
+[source, sql]
+----
+\c -d hxe -n localhost:39013 -u system -p <password>
+----
+- To create a user
+[source, sql]
+----
+Create user hanauser1 password <password> no force_first_password_change
+----
+- Grant below permission to the user
+[source, sql]
+----
+GRANT AFLPM_CREATOR_ERASER_EXECUTE TO hanauser1
+GRANT AFL__SYS_AFL_AFLPAL_EXECUTE TO hanauser1 – here we have 2 underscore
+grant AFL__SYS_AFL_AFLPAL_EXECUTE_WITH_GRANT_OPTION to hanauser1
+grant AFLPM_CREATOR_ERASER_EXECUTE to hanauser
+GRANT DATA ADMIN TO hanauser1
+GRANT IMPORT TO hanauser1
+
+GRANT EXECUTE on _SYS_REPO.GRANT_ACTIVATED_ROLE TO hanauser1
+GRANT EXECUTE ON system.afl_wrapper_generator to hanauser1
+
+GRANT EXECUTE ON system.afl_wrapper_eraser to hanauser1
+GRANT MODELING TO hanauser1
+----
+
+- Now connect to HXE tenant using below
+[source, sql]
+----
+\c -d hxe -n localhost:39013 -u hanauser1 -p <password>
+----
+== Setting up MTSJ Java backend
+
+- Update application.properties file
+
+[source, properties]
+----
+# update the below
+spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana
+# Add the below
+spring.jpa.database=default
+spring.jpa.database-platform=org.hibernate.dialect.HANAColumnStoreDialect
+spring.datasource.driver-class-name=com.sap.db.jdbc.Driver
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+
+#Comment the below
+#spring.profiles.active=h2mem
+
+spring.profiles.active=hana
+----
+
+- Update config/application.properties file
+
+[source, properties]
+----
+# update the below
+spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana
+spring.datasource.url=jdbc:sap://ip:port/?databaseName=hxe
+spring.datasource.username=username
+spring.datasource.password=password
+----
+
+== Enabling prediction usecase in MTSJ
+
+=== Setting up MTSJ angular
+
+update the following property in config file in my-thai-star\angular\src\app\core\config
+
+[source, properties]
+----
+enablePrediction: true,
+----
+
+- Setting up data for Predictive use case, please refer to https://github.com/SAP/hana-my-thai-star-data-generator 
+

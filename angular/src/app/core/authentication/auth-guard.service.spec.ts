@@ -1,20 +1,35 @@
-import { CoreModule } from '../../core/core.module';
-import { TestBed, inject } from '@angular/core/testing';
-import { AuthGuardService } from 'app/core/authentication/auth-guard.service';
+import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AuthGuardService } from 'app/core/authentication/auth-guard.service';
+import * as fromStore from 'app/store/reducers';
+import { CoreModule } from '../../core/core.module';
+import { TranslocoRootModule } from '../../transloco-root.module';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [CoreModule,
-                  TranslateModule.forRoot(),
-                  RouterTestingModule],
-        providers: [AuthGuardService],
+      imports: [
+        CoreModule,
+        TranslocoRootModule,
+        RouterTestingModule,
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromStore.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
+      ],
+      providers: [AuthGuardService],
     });
   });
 
-  it('should create', inject([AuthGuardService], (service: AuthGuardService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should create', inject(
+    [AuthGuardService],
+    (service: AuthGuardService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

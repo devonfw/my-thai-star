@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { FilterOrdersCockpit, PredictionCriteria } from '../../shared/backend-models/interfaces';
 import { Chart } from 'chart.js';
 import { Moment } from 'moment';
-import { OwlDateTimeComponent } from 'ng-pick-datetime';
-import { PredictionService } from '../shared/prediction.service';
+import { OwlDateTimeComponent } from '@busacca/ng-pick-datetime';
+import { PredictionService } from '../services/prediction.service';
 
 @Component({
   selector: 'cockpit-prediction-cockpit',
@@ -13,9 +13,9 @@ import { PredictionService } from '../shared/prediction.service';
 })
 
 export class PredictionCockpitComponent implements OnInit {
-  @ViewChild('dailyChart') dailyChart: ElementRef;
-  @ViewChild('monthlyChart') monthlyChart: ElementRef;
-  @ViewChild('predictionChart') predictionChart: ElementRef;
+  @ViewChild('dailyChart', { static: true }) dailyChart: ElementRef;
+  @ViewChild('monthlyChart', { static: true }) monthlyChart: ElementRef;
+  @ViewChild('predictionChart', { static: true }) predictionChart: ElementRef;
 
   triggerPredictionId;
 
@@ -28,7 +28,13 @@ export class PredictionCockpitComponent implements OnInit {
   predictionFilter: PredictionCriteria = {
     pageable: {
       pageSize: 10000,
-      pageNumber: 0
+      pageNumber: 0,
+      sort: [
+        {
+          property: 'timestamp',
+          direction: 'ASC',
+        }
+      ],
     },
     type: 'prediction',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
@@ -40,7 +46,13 @@ export class PredictionCockpitComponent implements OnInit {
   dailyFilter: FilterOrdersCockpit = {
   pageable : {
       pageSize : 10000,
-      pageNumber : 0
+      pageNumber : 0,
+      sort: [
+        {
+          property: 'bookingdate',
+          direction: 'ASC',
+        }
+      ],
   },
     type: 'daily',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
@@ -53,7 +65,13 @@ export class PredictionCockpitComponent implements OnInit {
   monthlyFilter: FilterOrdersCockpit = {
   pageable : {
       pageSize : 10000,
-      pageNumber : 0
+      pageNumber : 0,
+      sort: [
+        {
+          property: 'bookingdate',
+          direction: 'ASC',
+        }
+      ],
   },
     type: 'monthly',
     startBookingdate: new Date(this.currentStartDate.value.getFullYear(), this.currentStartDate.value.getMonth() - 12, 1).toISOString(),
@@ -148,7 +166,6 @@ export class PredictionCockpitComponent implements OnInit {
       const colors = this.colorGenerator(orders.dishes.length);
       data.forEach((record, index) => {
         const color = colors[index];
-        record.backgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
         record.backgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
         record.borderColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
         record.pointBackgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';

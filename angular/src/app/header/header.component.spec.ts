@@ -1,48 +1,81 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DateTimeAdapter } from 'ng-pick-datetime';
-
-import { CoreModule } from '../core/core.module';
-
-import { WindowService } from '../core/window/window.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { Action, Store, StoreModule } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
 import { AuthService } from '../core/authentication/auth.service';
-import { SnackBarService } from '../core/snack-bar/snack-bar.service';
-import { UserAreaService } from '../user-area/shared/user-area.service';
-
-import { SidenavModule } from '../sidenav/sidenav.module';
+import { ConfigService } from '../core/config/config.service';
+import { CoreModule } from '../core/core.module';
+import * as fromStore from '../store/reducers';
+import { UserAreaService } from '../user-area/services/user-area.service';
 import { HeaderComponent } from './header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { SidenavModule } from 'app/sidenav/sidenav.module';
+import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoRootModule } from '../transloco-root.module';
+import { getTranslocoModule } from '../transloco-testing.module';
+
+export function mockStore<T>({
+  actions = new Subject<Action>(),
+  states = new Subject<T>(),
+}: {
+  actions?: Subject<Action>;
+  states?: Subject<T>;
+}): Store<T> {
+  const result = states as any;
+  result.dispatch = (action: Action) => actions.next(action);
+  return result;
+}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let translocoService: TranslocoService;
+  const actions = new Subject<Action>();
+  const states = new Subject<fromStore.State>();
+  const store = mockStore<fromStore.State>({ actions, states });
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
-      providers: [WindowService, AuthService, UserAreaService, SnackBarService, HttpClient, DateTimeAdapter],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
-        TranslateModule.forRoot(),
         CoreModule,
         SidenavModule,
-        HttpClientModule,
+        getTranslocoModule(),
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot(fromStore.reducers, {
+          runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+          },
+        }),
+      ],
+      declarations: [HeaderComponent],
+      providers: [
+        AuthService,
+        UserAreaService,
+        ConfigService,
+        TranslocoService,
       ],
     });
-    TestBed.compileComponents();
-  }));
-
-  beforeEach(() => {
+    spyOn(HeaderComponent.prototype, 'getFlag');
+    translocoService = TestBed.get(TranslocoService);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
-
-  it('should create', () => {
+  it('can load instance', () => {
     expect(component).toBeTruthy();
+  });
+  describe('openLoginDialog', () => {
+    inject([TranslocoService], (_injectService: TranslocoService) => {
+      it('makes expected calls', async () => {
+        spyOn(store, 'dispatch').and.callThrough();
+        component.openLoginDialog();
+        expect(store.dispatch).toHaveBeenCalled();
+      });
+    });
   });
 });

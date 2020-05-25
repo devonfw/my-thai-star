@@ -1,0 +1,30 @@
+<div>
+  <span class="price"> {{ menuInfo.dish.price | number: '1.2-2' }} € </span>
+</div>
+<div>
+  <h3>
+    {{ menuInfo.dish.name | uppercase }}
+  </h3>
+</div>
+<div>
+  <p class="description">
+    {{ menuInfo.dish.description }}
+  </p>
+</div>
+<div class="extras">
+  <mat-checkbox
+    *ngFor="let extra of menuInfo.extras"
+    [ngModel]="extra.selected"
+    (change)="onToggleExtra(extra, $event)"
+  >
+    {{ extra.name }} +{{ extra.price }}€
+  </mat-checkbox>
+</div>
+
+<div>
+  <button mat-button color="accent" (click)="onClickOrder()">
+    <span class="order">
+      {{ 'buttons.addToOrder' | transloco | uppercase }}
+    </span>
+  </button>
+</div>

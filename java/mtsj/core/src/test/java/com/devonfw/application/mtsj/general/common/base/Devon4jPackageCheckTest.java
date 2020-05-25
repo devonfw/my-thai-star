@@ -7,8 +7,8 @@ import net.sf.mmm.util.reflect.api.ReflectionUtil;
 import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.devonfw.module.basic.common.api.reflect.Devon4jPackage;
 import com.devonfw.module.test.common.base.ModuleTest;
@@ -17,7 +17,7 @@ import com.devonfw.module.test.common.base.ModuleTest;
  * This test verifies that the entire code of your code-base is located in {@link Devon4jPackage#isValid() valid Devon4j
  * packages}.
  */
-@Ignore("Currently fails, see #498")
+@Disabled("Currently fails, see #498")
 public class Devon4jPackageCheckTest extends ModuleTest {
 
   /**

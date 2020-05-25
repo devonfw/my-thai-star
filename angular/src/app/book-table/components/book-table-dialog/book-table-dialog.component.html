@@ -1,0 +1,57 @@
+<span mat-dialog-title>{{ 'bookTable.dialog.title' | transloco }}</span>
+<mat-dialog-content>
+  <div class="dataRows">
+    <div>
+      <div class="dataRow">
+        <span>{{ 'formFields.date' | transloco }}</span>
+        <span>{{ date }}</span>
+      </div>
+    </div>
+
+    <div>
+      <mat-divider></mat-divider>
+      <div class="dataRow">
+        <span>{{ 'formFields.name' | transloco }}</span>
+        <span class="nameValue">{{ data.name }}</span>
+      </div>
+    </div>
+
+    <div>
+      <mat-divider></mat-divider>
+      <div class="dataRow">
+        <span>{{ 'formFields.email' | transloco }}</span>
+        <span class="emailValue">{{ data.email }}</span>
+      </div>
+    </div>
+
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div>
+      <div class="dataRow">
+        <span>{{ 'formFields.assistants' | transloco }}</span>
+        <span>{{ data.assistants }}</span>
+      </div>
+    </div>
+
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="align-right">
+    <button name="bookTableCancel" mat-button mat-dialog-close>
+      {{ 'buttons.cancel' | transloco }}
+    </button>
+    <button
+      name="bookTableConfirm"
+      mat-button
+      (click)="sendBooking()"
+      color="accent"
+    >
+      {{ 'buttons.send' | transloco }}
+    </button>
+  </div>
+</mat-dialog-actions>

@@ -1,3 +1,5 @@
 {
-    "version": "external-config"
+  "version": "external-config",
+  "restPathRoot": "api/",
+  "restServiceRoot": "api/services/rest/"
 }

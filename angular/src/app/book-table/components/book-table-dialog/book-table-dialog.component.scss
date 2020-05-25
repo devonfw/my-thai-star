@@ -1,0 +1,34 @@
+[mat-dialog-title] {
+    text-transform: uppercase;
+  }
+  
+  .dataRows {
+    margin-bottom: 8px;
+  }
+  
+  .dataRow {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .nameValue, .emailValue {
+    width: 65%;
+    word-break: break-word;
+    text-align: right;
+  }
+  
+  mat-divider {
+    margin: 8px 0;
+  }
+  
+  mat-dialog-actions {
+    justify-content: flex-end;
+  }
+  
+  mat-dialog-actions button {
+    text-transform: uppercase;
+  }
+  

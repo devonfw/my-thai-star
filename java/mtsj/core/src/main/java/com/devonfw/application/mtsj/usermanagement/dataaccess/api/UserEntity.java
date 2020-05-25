@@ -27,6 +27,10 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
 
   private String email;
 
+  private String secret;
+
+  private boolean twoFactorStatus;
+
   private UserRoleEntity userRole;
 
   private List<BookingEntity> bookings;
@@ -45,7 +49,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param username new value of {@link #getusername}.
+   * @param username new value of {@link #getUsername()}.
    */
   @Override
   public void setUsername(String username) {
@@ -56,16 +60,14 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   /**
    * @return password
    */
-  @Override
   public String getPassword() {
 
     return this.password;
   }
 
   /**
-   * @param password new value of {@link #getpassword}.
+   * @param password new value of {@link #getPassword()}.
    */
-  @Override
   public void setPassword(String password) {
 
     this.password = password;
@@ -81,12 +83,47 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param email new value of {@link #getemail}.
+   * @param email new value of {@link #getEmail()}.
    */
   @Override
   public void setEmail(String email) {
 
     this.email = email;
+  }
+
+  /**
+   * @return secret
+   */
+  public String getSecret() {
+
+    return this.secret;
+  }
+
+  /**
+   * @param secret new value of {@link #getSecret()}.
+   */
+  public void setSecret(String secret) {
+
+    this.secret = secret;
+  }
+
+  /**
+   * @return twoFactorStatus
+   */
+  @Override
+  public boolean getTwoFactorStatus() {
+
+    return this.twoFactorStatus;
+  }
+
+  /**
+   *
+   * @param twoFactorStatus new value of {@link #getTwoFactorStatus()}
+   */
+  @Override
+  public void setTwoFactorStatus(boolean twoFactorStatus) {
+
+    this.twoFactorStatus = twoFactorStatus;
   }
 
   /**
@@ -100,7 +137,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param userRole new value of {@link #getuserRole}.
+   * @param userRole new value of {@link #getUserRole()}.
    */
   public void setUserRole(UserRoleEntity userRole) {
 
@@ -119,7 +156,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param favourites new value of {@link #getfavourites}.
+   * @param favourites new value of {@link #getFavourites()}.
    */
   public void setFavourites(List<DishEntity> favourites) {
 
@@ -136,7 +173,7 @@ public class UserEntity extends ApplicationPersistenceEntity implements User {
   }
 
   /**
-   * @param bookings new value of {@link #getbookings}.
+   * @param bookings new value of {@link #getBookings()}.
    */
   public void setBookings(List<BookingEntity> bookings) {
 

@@ -1,0 +1,38 @@
+mat-card {
+  text-align: center;
+  max-width: 400px;
+}
+
+img.mat-card-image {
+  max-width: 200px;
+}
+
+mat-card-content,
+mat-card-actions {
+  text-align: center;
+}
+
+.secret {
+  word-break: break-all;
+}
+
+mat-slide-toggle {
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .secret {
+    margin-top: 0.83em;
+  }
+
+  h2.mat-dialog-title {
+    margin-bottom: 0;
+  }
+
+  mat-card mat-card-content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

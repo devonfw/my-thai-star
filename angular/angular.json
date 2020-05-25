@@ -11,6 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -32,17 +33,29 @@
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/@covalent/core/common/platform.css",
-              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "node_modules/@busacca/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
-              "node_modules/hammerjs/hammer.min.js",
               "node_modules/showdown/dist/showdown.js"
             ]
           },
           "configurations": {
+            "dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+},
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -61,6 +74,12 @@
               ]
             },
             "prodcompose": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -69,6 +88,12 @@
               ]
             },
             "pwa": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -87,6 +112,12 @@
               ]
             },
             "node": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -95,6 +126,12 @@
               ]
             },
             "net": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -103,6 +140,12 @@
               ]
             },
             "docker": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -164,14 +207,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/hammerjs/hammer.min.js",
               "node_modules/showdown/dist/showdown.js"
             ],
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
-              "node_modules/flag-icon-css/css/flag-icon.min.css",
-              "node_modules/@covalent/core/common/platform.css"
+              "node_modules/flag-icon-css/css/flag-icon.min.css"
             ],
             "assets": [
               "src/assets",
@@ -222,10 +263,13 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
   }
 }

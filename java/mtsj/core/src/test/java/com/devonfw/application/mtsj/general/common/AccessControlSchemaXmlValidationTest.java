@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.general.common;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +15,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -51,6 +53,7 @@ public class AccessControlSchemaXmlValidationTest extends ModuleTest {
     // create a Validator instance, which can be used to validate an instance document
     Validator validator = schema.newValidator();
 
+    assertNotNull(document);
     // validate the DOM tree
     validator.validate(new DOMSource(document));
   }

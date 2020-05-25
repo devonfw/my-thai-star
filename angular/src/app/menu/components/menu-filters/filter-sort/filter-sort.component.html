@@ -1,0 +1,26 @@
+<div [class.disabled]="disabled">
+  <mat-form-field color="accent">
+    <mat-select [placeholder]="'menu.filter.sort' | transloco"
+      (selectionChange)="onSelectChange($event)"
+      [value]="sortValue.property"
+      >
+      <mat-option value="price">
+        {{'menu.filter.price' | transloco}}
+      </mat-option>
+      <mat-option value="description"><!--TODO This is purposly made for likes as we dont have corresponding field in db-->
+        {{'menu.filter.likes' | transloco}}
+      </mat-option>
+      <mat-option value="name">
+        {{'menu.filter.name' | transloco}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-icon-button
+    color="accent"
+    (click)="changeSortDir($event)"
+    [matTooltip]="sortValue.direction"
+    class="button-sort"
+  >
+    <mat-icon>{{sortDirIcon}}</mat-icon>
+  </button>
+</div>

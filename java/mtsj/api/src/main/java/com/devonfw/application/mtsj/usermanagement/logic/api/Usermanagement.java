@@ -2,7 +2,9 @@ package com.devonfw.application.mtsj.usermanagement.logic.api;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
@@ -19,6 +21,14 @@ public interface Usermanagement {
    * @return The {@link UserEto} with id 'id'
    */
   UserEto findUser(Long id);
+
+  /**
+   * Returns a User by its userName 'userName'.
+   *
+   * @param userName The userName 'userName' of the User.
+   * @return The {@link UserEto} with userName 'userName'
+   */
+  UserEto findUserbyName(String userName);
 
   /**
    * Returns a paginated list of Users matching the search criteria.
@@ -43,6 +53,29 @@ public interface Usermanagement {
    * @return the new {@link UserEto} that has been saved with ID and version.
    */
   UserEto saveUser(UserEto user);
+
+  /**
+   * Pick the boolean and persist it for the user.
+   *
+   * @param user the {@link UserEto} to create.
+   * @return the new {@link UserEto} that has been saved with ID and version.
+   */
+  UserEto saveUserTwoFactor(UserEto user);
+
+  /**
+   * Only returns the necessary info.
+   *
+   * @param username the {@link String} to create.
+   * @return the new {@link UserEto} that has been saved with ID and version.
+   */
+  UserEto getUserStatus(String username);
+
+  /**
+   * Create an QR Code to the belonging user
+   *
+   * @param username the {@link UserQrCodeTo} to create.
+   */
+  UserQrCodeTo generateUserQrCode(String username);
 
   /**
    * Returns a UserRole by its id 'id'.
@@ -75,5 +108,11 @@ public interface Usermanagement {
    * @return the new {@link UserRoleEto} that has been saved with ID and version.
    */
   UserRoleEto saveUserRole(UserRoleEto userRole);
+
+  /**
+   * @param login The login of the requested user.
+   * @return The {@link UserProfile} with the given <code>login</code> or {@code null} if no such object exists.
+   */
+  UserProfile findUserProfileByLogin(String login);
 
 }

@@ -5,15 +5,19 @@ import { HttpClient /*, HttpClientModule */ } from '@angular/common/http';
 // import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { PriceCalculatorService } from '../../sidenav/shared/price-calculator.service';
+import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { ConfigService } from '../../core/config/config.service';
-import { WaiterCockpitService } from '../shared/waiter-cockpit.service';
+import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 // import { WindowService } from '../../core/window/window.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
-// import { TranslateModule } from '@ngx-translate/core';
-import { TranslateService } from '@ngx-translate/core';
+import { State } from 'app/store';
+import { Store } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { config } from '../../core/config/config';
+import { TranslocoService } from '@ngneat/transloco';
 
 describe('ReservationCockpitComponent', () => {
   let component: ReservationCockpitComponent;
@@ -24,9 +28,11 @@ describe('ReservationCockpitComponent', () => {
   let configService: ConfigService;
   let waiterCockpitService: WaiterCockpitService;
   // tslint:disable-next-line:prefer-const
-  let translate: TranslateService;
+  let translate: TranslocoService;
   // tslint:disable-next-line:prefer-const
   let dialog: MatDialog;
+  // tslint:disable-next-line: prefer-const
+  let store: Store<State>;
 
   // beforeEach(async(() => {
   //   TestBed.configureTestingModule({
@@ -52,11 +58,17 @@ describe('ReservationCockpitComponent', () => {
   // }));
 
   beforeEach(() => {
+    const initialState = { config };
     // fixture = TestBed.createComponent(ReservationCockpitComponent);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
+    TestBed.configureTestingModule({
+      providers: [provideMockStore({ initialState })],
+      imports: [],
+    });
+    store = TestBed.get(Store);
     priceCalculator = new PriceCalculatorService();
-    configService = new ConfigService(http);
+    configService = new ConfigService(store);
     waiterCockpitService = new WaiterCockpitService(
       http,
       priceCalculator,

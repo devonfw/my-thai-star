@@ -1,0 +1,83 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name:'APP_MANAGEMENT', choices: ['Deploy', 'Terminate'], description: 'Deploy or terminate the application?')
+    }
+    options {
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '1', artifactNumToKeepStr: '1', daysToKeepStr: '5', numToKeepStr: '50'))
+        // Disable concurrent builds. It will wait until the pipeline finish before start a new one
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        angularDir = 'angular'
+        javaDir = 'java'
+        KUBECONFIG= "/tmp/${env.JOB_NAME}/config"
+    }
+
+    stages {
+        
+        stage ('Build Angular image') {
+            steps {
+                script {
+                    docker.build("harbor.demo.xpaas.io/my-thai-star/mts-angular:latest", "-f angular/Dockerfile.k8s angular")
+                }
+            }
+        }
+        
+        stage ('Build Java image') {
+            steps {
+                script {
+                    docker.build("harbor.demo.xpaas.io/my-thai-star/mts-java:latest", "-f java/Dockerfile.k8s java")
+                }
+            }
+        }
+        
+        stage ('Push Docker images to Harbor') {
+            steps {
+                script {
+                    docker.withRegistry('https://harbor.demo.xpaas.io/', 'c9595f9a-62a3-4c87-8f18-428e41b51bf5') {
+                        sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-angular:latest'
+                        sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-java:latest'
+                    }
+                }
+            }
+        }
+        
+        stage ('Kubernetes Authentication') {
+            steps {
+                script {
+                    sh "mkdir -p /tmp/${env.JOB_NAME}"
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "k8-cluster", usernameVariable: 'KUBE_HOST', passwordVariable: 'CERT_CA']]) {
+                        sh "echo \"${CERT_CA}\" | base64 -d > /tmp/${env.JOB_NAME}/kube_ca.pem"
+                        sh "kubectl config set-cluster jenkins --server=${KUBE_HOST} --certificate-authority=/tmp/${env.JOB_NAME}/kube_ca.pem --embed-certs=true"
+                    }
+                    sh "rm /tmp/${env.JOB_NAME}/kube_ca.pem"
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "kube-my-thai-star", usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
+                        sh "kubectl config set-credentials jenkins --token=${TOKEN}"
+                    }
+                    sh "kubectl config set-context jenkins --cluster=jenkins --user=jenkins"
+                    sh "kubectl config use-context jenkins"
+                    sh "kubectl config set-context --current --namespace=my-thai-star"
+                }
+            }
+        }
+
+        stage ('Deploy/Terminate Kubernetes Application') {
+            steps {
+                script {
+                    def command;
+
+                    if (params.APP_MANAGEMENT == 'Deploy') {
+                        command = "cd jenkins/nKaaS && kubectl apply -f angular-app.yaml -f java-app.yaml -f ingress.yaml"
+                    }
+
+                    if (params.APP_MANAGEMENT == "Terminate") {
+                        command = "kubectl delete deployment,svc,ingress java angular"
+                    }
+                    sh "${command}"
+                }
+            }
+        }
+    }
+}

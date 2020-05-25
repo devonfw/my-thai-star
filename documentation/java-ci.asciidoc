@@ -17,6 +17,33 @@ Check those Pipeline stages with more detail:
 +
 Gets the code from https://github.com/devonfw/my-thai-star . This step is not defined directly in our pipeline, but as it is loaded from the repository this step should always be done at the beginning.
 +
+. *Declarative: Tool Install*
++
+The My Thai Star application works with JDK11. In this step, if JDK11 is not installed, we install it and then put the JDK folder into PATH.
++
+[source, groovy]
+----
+tools {
+  jdk 'OpenJDK11'
+}
+----
+. *Loading Custom Tools*
++
+In this step we load the tools that can not be loaded in the previous step. As My Thai Star is delivered as docker container, in this step we load docker as custom tool.
++
+[source, groovy]
+----
+tool dockerTool
+----
+. *Install dependencies*
++
+This step will download all project dependencies.
++
+[source, groovy]
+----
+mvn clean install -Dmaven.test.skip=true
+----
++
 . *Unit Tests*
 +
 This step will execute the project unit test with maven.
@@ -26,9 +53,19 @@ This step will execute the project unit test with maven.
 mvn clean test
 ----
 +
+. *Dependeny Checker*
++
+Execute the OWASP Dependency Checker in order to validate the project dependencies. It will generate a report that can be used in SonarQube
++
+[source, groovy]
+----
+dependencyCheck additionalArguments: '--project "mtsj" --scan java/mtsj --format XML', odcInstallation: 'dependency-check'
+dependencyCheckPublisher pattern: ''
+----
++
 . *SonarQube analysis*
 +
-The code is evaluated using the integrated PL instance's SonarQube. Also, it will wait for the quality gate status. If the status is failing, the pipeline execution will be stoped.
+The code is evaluated using the integrated PL instance's SonarQube. Also, it will wait for the quality gate status. If the status is failing, the pipeline execution will be stopped.
 +
 [source, groovy]
 ----
@@ -50,6 +87,9 @@ Store all artifacts into nexus.
 ----
 mvn deploy -Dmaven.test.skip=true
 ----
+. *Create the Docker image*
++
+Create the docker image and then publish the image into a docker registry.
 
 
 == Adjustments
@@ -73,6 +113,11 @@ environment {
     globalSettingsId = 'MavenSettings'
     // Maven tool id
     mavenInstallation = 'Maven3'
+
+    // Docker
+    dockerRegistryCredentials = 'nexus-api'
+    dockerRegistryProtocol = 'https://'
+    dockerTool = 'docker-global
 }
 ----
 

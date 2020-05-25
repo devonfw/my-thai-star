@@ -1,7 +1,6 @@
 package com.devonfw.application.mtsj.ordermanagement.logic.impl;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +32,7 @@ import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
-import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.CancelNotAllowedException;
@@ -131,7 +130,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  @RolesAllowed({Roles.WAITER, Roles.MANAGER})
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
     return findOrderCtos(criteria);
@@ -498,10 +497,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   private boolean cancellationAllowed(OrderEntity order) {
 
     BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
-    Timestamp bookingTime = booking.getBooking().getBookingDate();
-    long bookingTimeMillis = bookingTime.getTime();
+    Instant bookingTime = booking.getBooking().getBookingDate();
+    long bookingTimeMillis = bookingTime.toEpochMilli();
     long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-    long now = Timestamp.from(Instant.now()).getTime();
+    long now = Instant.now().toEpochMilli();
 
     return (now > cancellationLimit) ? false : true;
   }
@@ -518,17 +517,18 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
         orderedDishesCtos.add(orderedDishesCto);
       }
-	  Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
       return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
     } else {
-      Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao().findOrderedDishesPerMonth(criteria);
+      Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao()
+          .findOrderedDishesPerMonth(criteria);
       for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getContent()) {
         OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
         orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
         orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
         orderedDishesCtos.add(orderedDishesCto);
       }
-	  Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
       return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
     }
   }

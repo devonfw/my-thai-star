@@ -8,7 +8,7 @@ pipeline{
     }
 
     tools {
-        nodejs "NodeJS 10.14.0"
+        nodejs "NodeJS 12.16.1"
     }
 
     environment {
@@ -42,18 +42,25 @@ pipeline{
         globalSettingsId = 'MavenSettings'
         // Maven tool id
         mavenInstallation = 'Maven3'
+
+        // Docker
+        dockerRegistryCredentials = 'nexus-api'
+        dockerRegistryProtocol = 'https://'
+        dockerTool = 'docker-global'
     }
 
     stages {
         stage ('Loading Custom Tools') {
             steps {
                 tool chrome
+                tool dockerTool
             }
         }
 
         stage ('Fresh Dependency Installation') {
             steps {
                 dir(angularDir){
+                    sh "sed -i s_https://registry.yarnpkg.com_http://nexus3-core:8081/nexus3/repository/npm_g yarn.lock"
                     sh "yarn"
                 }
             }
@@ -71,6 +78,20 @@ pipeline{
             steps {
                 dir(angularDir) {
                     sh """yarn ${testScript}"""
+                }
+            }
+        }
+
+        stage ('Check dependencies') {
+            steps {
+                script {
+                    dir(angularDir) {
+                        try {
+                            sh "yarn audit"
+                        } catch(e) {
+                            println "There are vulnerabilities, please update your dependencies."
+                        }
+                    }
                 }
             }
         }
@@ -114,6 +135,7 @@ pipeline{
                 script {
                     dir(angularDir) {
                         def props = readJSON file: 'package.json'
+                        sh """rm -f ${props.name}.zip"""
                         zip dir: 'dist/', zipFile: """${props.name}.zip"""
                         withMaven(globalMavenSettingsConfig: globalSettingsId, maven: mavenInstallation) {
                             sh """
@@ -126,6 +148,27 @@ pipeline{
                                     -DrepositoryId=${repositoryId} \
                                     -Durl=${repositoryUrl}
                             """
+                        }
+                    }
+                }
+            }
+        }
+
+        stage ('Create the Docker image') {
+            steps {
+                script {
+                    def props
+                    // Get the Pl Url
+                    def PL_URL = JENKINS_URL.replace("https://", "").split("/")[0]
+                    dir(angularDir) {
+                        props = readJSON file: 'package.json'
+                        sh "cp -r dist ../reverse-proxy/angular/dist"
+                    }
+                    dir('reverse-proxy/angular') {
+                        docker.withRegistry("""${dockerRegistryProtocol}docker-registry-${PL_URL}""", dockerRegistryCredentials) {
+                            def customImage = docker.build("my-thai-star/angular:${props.version}")
+                            customImage.push()
+                            customImage.push("latest");
                         }
                     }
                 }
