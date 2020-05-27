@@ -36,7 +36,7 @@ pipeline {
         stage ('Push Docker images to Harbor') {
             steps {
                 script {
-                    docker.withRegistry('https://harbor.demo.xpaas.io/') {
+                    docker.withRegistry('https://harbor.demo.xpaas.io/', 'mts-harbor-robot') {
                         sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-angular:latest'
                         sh 'docker push harbor.demo.xpaas.io/my-thai-star/mts-java:latest'
                     }
