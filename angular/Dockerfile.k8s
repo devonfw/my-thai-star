@@ -11,7 +11,7 @@ RUN yarn build --configuration=docker
 # 2. Deploy
 FROM bitnami/nginx:latest
 USER root
-RUN sudo apt-get update \
+RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   apache2-utils curl \
   && rm -rf /var/lib/apt/lists/*
