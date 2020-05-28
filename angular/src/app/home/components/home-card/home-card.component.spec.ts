@@ -1,13 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { HomeCardComponent } from './home-card.component';
 import { CoreModule } from '../../../core/core.module';
-import { TranslocoRootModule } from '../../../transloco-root.module';
 import { getTranslocoModule } from '../../../transloco-testing.module';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { click } from '../../../shared/common/test-utils';
 
 describe('HomeCardComponent', () => {
   let component: HomeCardComponent;
   let fixture: ComponentFixture<HomeCardComponent>;
+  let el: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +22,7 @@ describe('HomeCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeCardComponent);
     component = fixture.componentInstance;
+    el = fixture.debugElement;
     component.tile = {
       titleKey: 'test',
       contentKey: 'test',
@@ -28,7 +32,18 @@ describe('HomeCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create and verify title', () => {
+    const title = el.query(By.css('.tile-content h3'));
+    expect(title.nativeElement.textContent).toBe('test');
     expect(component).toBeTruthy();
   });
+
+  it('should verify whether button event emits button click event', () => {
+    component.buttonClick.subscribe(event => {
+      expect(event).toBeTruthy();
+    });
+    const action = el.query(By.css('.action'));
+    click(action);
+  });
+
 });

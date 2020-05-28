@@ -8,7 +8,7 @@ import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { TwoFactorDialogComponent } from './two-factor-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('TwoFactorDialogComponent', () => {
   let component: TwoFactorDialogComponent;
@@ -18,7 +18,7 @@ describe('TwoFactorDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         BrowserAnimationsModule,
         UserAreaModule,
         RouterTestingModule,
