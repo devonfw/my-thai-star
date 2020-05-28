@@ -8,7 +8,7 @@ import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { LoginDialogComponent } from './login-dialog.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('LoginDialogComponent', () => {
   let component: LoginDialogComponent;
@@ -19,7 +19,7 @@ describe('LoginDialogComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         BrowserAnimationsModule,
         UserAreaModule,
         EffectsModule.forRoot([]),

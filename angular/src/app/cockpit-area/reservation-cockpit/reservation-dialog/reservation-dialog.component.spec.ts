@@ -11,7 +11,7 @@ import { ReservationDialogComponent } from './reservation-dialog.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../../core/config/config.service';
 import { config } from '../../../core/config/config';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('ReservationDialogComponent', () => {
   let component: ReservationDialogComponent;
@@ -31,7 +31,7 @@ describe('ReservationDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
         HttpClientTestingModule,
       ],

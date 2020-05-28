@@ -43,7 +43,7 @@
         </div>
       </mat-expansion-panel>
       <div class="filter-actions">
-        <button mat-button (click)="clearFilters($event, filtersForm)">{{'buttons.clearFilters' | transloco}}</button>
-        <button mat-button type="submit" color="accent">{{'buttons.applyFilters' | transloco}}</button>
+        <button mat-button (click)="clearFilters($event, filtersForm)" class="clearFilter">{{'buttons.clearFilters' | transloco}}</button>
+        <button mat-button type="submit" color="accent" class="apply-filter">{{'buttons.applyFilters' | transloco}}</button>
       </div>
   </form>

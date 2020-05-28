@@ -1,23 +1,8 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmailConfirmationsComponent } from './email-confirmations.component';
-import { HomeComponent } from '../../../home/container/home/home.component';
-import { MenuComponent } from 'app/menu/container/menu.component';
-import { BookTableComponent } from 'app/book-table/container/book-table/book-table.component';
-import { OrderCockpitComponent } from 'app/cockpit-area/order-cockpit/order-cockpit.component';
-import { PredictionCockpitComponent } from 'app/cockpit-area/prediction-cockpit/prediction-cockpit.component';
-import { ReservationCockpitComponent } from 'app/cockpit-area/reservation-cockpit/reservation-cockpit.component';
-import { MenuCardComponent } from 'app/menu/components/menu-card/menu-card.component';
-import { HomeCardComponent } from '../../../home/components/home-card/home-card.component';
-import { HomeLayoutComponent } from '../../../home/components/home-layout/home-layout.component';
-import { MenuFiltersComponent } from 'app/menu/components/menu-filters/menu-filters.component';
-import { MenuCardCommentsComponent } from 'app/menu/components/menu-card/menu-card-comments/menu-card-comments.component';
-import { MenuCardDetailsComponent } from 'app/menu/components/menu-card/menu-card-details/menu-card-details.component';
-import { FilterSearchComponent } from 'app/menu/components/menu-filters/filter-search/filter-search.component';
-import { FilterCheckboxesComponent } from 'app/menu/components/menu-filters/filter-checkboxes/filter-checkboxes.component';
-import { FilterSortComponent } from 'app/menu/components/menu-filters/filter-sort/filter-sort.component';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import { EmailConfirmationsService } from 'app/email-confirmations/services/email-confirmations.service';
 import { AppRoutingModule } from 'app/app-routing.module';
@@ -25,58 +10,176 @@ import { CoreModule } from 'app/core/core.module';
 import { config } from '../../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../../core/config/config.service';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
+import { ActivatedRoute, ParamMap, convertToParamMap, Router } from '@angular/router';
+import { of, observable, throwError } from 'rxjs';
+import { Component } from '@angular/core';
+import { emailConfirmationsStub } from 'in-memory-test-data/db-email-confirmation-data';
+import { TranslocoService } from '@ngneat/transloco';
+
+const ERRORMESSAGE = 'An error has ocurred, please try again later';
+
+class ActivatedMockStubs {
+  static acceptInvitationStub = {
+    paramMap: of(convertToParamMap({
+      token: '1234',
+      action: 'acceptInvite'
+    }))
+  };
+
+  static rejectInvitationStub = {
+    paramMap: of(convertToParamMap({
+      token: '1234',
+      action: 'rejectInvite'
+    }))
+  };
+
+  static cancelBookingStub = {
+    paramMap: of(convertToParamMap({
+      token: '1234',
+      action: 'cancel'
+    }))
+  };
+
+  static cancelOrderStub = {
+    paramMap: of(convertToParamMap({
+      token: '1234',
+      action: 'cancelOrder'
+    }))
+  };
+}
+
+const snackBarServiceStub = {
+  openSnack: jasmine.createSpy('openSnack')
+};
+
+const translocoServiceStub = {
+  translate: jasmine.createSpy('translate').and.returnValue({
+    'accessError': 'Access denied, please log in first',
+    'genericError': 'An error has ocurred, please try again later',
+    'urlError': 'Url not found, please try again',
+  })
+};
+
+const emailConfirmationsServiceSuccessStub = jasmine.createSpyObj<EmailConfirmationsService>(
+  'EmailConfirmationsService', {
+    sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
+    sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
+    sendCancelBooking: of(emailConfirmationsStub.booking),
+    sendCancelOrder: of(true)
+  }
+);
+
+const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<EmailConfirmationsService>(
+  'EmailConfirmationsService', {
+    sendAcceptInvitation: throwError(ERRORMESSAGE),
+    sendRejectInvitation: throwError(ERRORMESSAGE),
+    sendCancelBooking: throwError(ERRORMESSAGE),
+    sendCancelOrder: throwError(ERRORMESSAGE)
+  }
+);
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
   let fixture: ComponentFixture<EmailConfirmationsComponent>;
   let initialState;
+  let snackBarService: SnackBarService;
+
+  const compileTestBed = () => {
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(EmailConfirmationsComponent);
+    component = fixture.componentInstance;
+    snackBarService = TestBed.get(SnackBarService);
+    fixture.detectChanges();
+  };
+
+  function testBedOverrideProvider(service: any, provider: any) {
+    TestBed.overrideProvider(
+      service, { useValue: provider }
+    );
+  }
 
   beforeEach(async(() => {
     initialState = { config };
     TestBed.configureTestingModule({
       declarations: [
         EmailConfirmationsComponent,
-        HomeComponent,
-        MenuComponent,
-        BookTableComponent,
-        OrderCockpitComponent,
-        PredictionCockpitComponent,
-        ReservationCockpitComponent,
-        MenuCardComponent,
-        HomeCardComponent,
-        HomeLayoutComponent,
-        MenuFiltersComponent,
-        MenuCardCommentsComponent,
-        MenuCardDetailsComponent,
-        FilterSearchComponent,
-        FilterCheckboxesComponent,
-        FilterSortComponent,
       ],
       providers: [
-        SnackBarService,
-        EmailConfirmationsService,
+        { provide: SnackBarService, useValue: snackBarServiceStub },
+        { provide: EmailConfirmationsService, useValue: emailConfirmationsServiceSuccessStub },
         provideMockStore({ initialState }),
         ConfigService,
+        { provide: ActivatedRoute, useValue: ActivatedMockStubs.acceptInvitationStub },
       ],
       imports: [
-        AppRoutingModule,
-        RouterTestingModule,
-        TranslocoRootModule,
+        RouterTestingModule.withRoutes([]),
+        getTranslocoModule(),
         BrowserAnimationsModule,
         ReactiveFormsModule,
         CoreModule,
-      ],
-    }).compileComponents();
+      ]
+    });
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EmailConfirmationsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('should be created and verify email confirmation service call for Accept invitation ', () => {
+    compileTestBed();
+    expect(component).toBeTruthy();
+    expect(snackBarService.openSnack).toHaveBeenCalled();
   });
 
-  it('should be created', () => {
+  it('verify email confirmation service call for Reject invitation', () => {
+    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.rejectInvitationStub);
+    compileTestBed();
     expect(component).toBeTruthy();
+    expect(snackBarService.openSnack).toHaveBeenCalled();
   });
+
+  it('verify email confirmation service call for Cancel Booking', () => {
+    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelBookingStub);
+    compileTestBed();
+    expect(component).toBeTruthy();
+    expect(snackBarService.openSnack).toHaveBeenCalled();
+  });
+
+  it('verify email confirmation service call for Cancel Order', () => {
+    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelOrderStub);
+    compileTestBed();
+    expect(component).toBeTruthy();
+    expect(snackBarService.openSnack).toHaveBeenCalled();
+  });
+
+  describe('Email Confirmations for the failed senario', () => {
+    beforeEach(() => {
+      testBedOverrideProvider(EmailConfirmationsService, emailConfirmationsServiceErrorStub);
+    });
+
+    it('Verify email confirmation incase Accept invitation service failed ', () => {
+      compileTestBed();
+      expect(component).toBeTruthy();
+      expect(snackBarService.openSnack).toHaveBeenCalled();
+    });
+
+    it('Verify email confirmation incase Reject invitation service failed ', () => {
+      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.rejectInvitationStub);
+      compileTestBed();
+      expect(component).toBeTruthy();
+      expect(snackBarService.openSnack).toHaveBeenCalled();
+    });
+
+    it('Verify email confirmation incase Cancel Booking service failed ', () => {
+      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelBookingStub);
+      compileTestBed();
+      expect(component).toBeTruthy();
+      expect(snackBarService.openSnack).toHaveBeenCalled();
+    });
+
+    it('Verify email confirmation incase Cancel Order service failed ', () => {
+      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelOrderStub);
+      compileTestBed();
+      expect(component).toBeTruthy();
+      expect(snackBarService.openSnack).toHaveBeenCalled();
+    });
+  });
+
 });
