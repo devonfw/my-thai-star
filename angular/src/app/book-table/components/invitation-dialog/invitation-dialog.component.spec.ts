@@ -15,19 +15,20 @@ import { getTranslocoModule } from '../../../transloco-testing.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { MockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { InvitationDialogComponentStub } from 'in-memory-test-data/db-invitation';
 
 const mockDialogRef = {
   close: jasmine.createSpy('close')
 };
 
-describe('InvitationDialogComponent', () => {
+fdescribe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
   let dialog: MatDialog;
   let fixture: ComponentFixture<InvitationDialogComponent>;
   let el: DebugElement;
   let bookTableService: any;
+  let mockStore: MockStore;
   const initialState = { booking: undefined };
 
   beforeEach(async(() => {
@@ -36,7 +37,8 @@ describe('InvitationDialogComponent', () => {
       providers: [
         { provide: BookTableService, useValue: bookTableServiceSpy },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: mockDialogRef }
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        provideMockStore()
       ],
       imports: [
         BrowserAnimationsModule,
@@ -45,18 +47,14 @@ describe('InvitationDialogComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         EffectsModule.forRoot([]),
-        StoreModule.forRoot(fromRoot.reducers, {
-          runtimeChecks: {
-            strictStateImmutability: true,
-            strictActionImmutability: true,
-          },
-        }),
+        StoreModule.forRoot({}),
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(InvitationDialogComponent);
       component = fixture.componentInstance;
       el = fixture.debugElement;
       bookTableService = TestBed.get(BookTableService);
+      mockStore = TestBed.inject(MockStore);
     });
   }));
 
@@ -79,15 +77,14 @@ describe('InvitationDialogComponent', () => {
   });
 
   it('Should send invitation', () => {
+    spyOn(mockStore, 'dispatch').and.callThrough();
     const dialogRef = TestBed.get(MatDialogRef);
     component.data = InvitationDialogComponentStub.data;
     bookTableService.composeBooking.and.returnValue(component.data);
     bookTableService.postBooking.and.returnValue(of(InvitationDialogComponentStub.invite));
     component.sendInvitation();
     expect(dialogRef.close).toHaveBeenCalled();
-    component.store.subscribe(data => {
-      expect(data['bookTable'].bookings.booking).toEqual(InvitationDialogComponentStub.data);
-    });
+    expect(mockStore.dispatch).toHaveBeenCalled();
   });
 
 });
