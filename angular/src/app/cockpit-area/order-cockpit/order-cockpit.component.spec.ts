@@ -1,85 +1,175 @@
-import { HttpClient /* , HttpClientModule */ } from '@angular/common/http';
-// import { WindowService } from '../../core/window/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { State } from 'app/store';
 import { ConfigService } from '../../core/config/config.service';
-// import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MomentModule } from 'angular2-moment';
-// import { CoreModule } from '../../core/core.module';
-import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderCockpitComponent } from './order-cockpit.component';
 import { config } from '../../core/config/config';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslocoService } from '@ngneat/transloco';
+import { of } from 'rxjs/internal/observable/of';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { getTranslocoModule } from '../../transloco-testing.module';
+import { CoreModule } from '../../core/core.module';
+import { PageEvent } from '@angular/material/paginator';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { click } from '../../shared/common/test-utils';
+import { ascSortOrder } from 'in-memory-test-data/db-order-asc-sort';
+import { orderData } from 'in-memory-test-data/db-order';
+
+const mockDialog = {
+  open: jasmine.createSpy('open').and.returnValue({
+    afterClosed: () => of(true)
+  })
+};
+
+const translocoServiceStub = {
+  selectTranslateObject: of({
+    'reservationDateH': 'Reservation Date',
+    'emailH': 'Email',
+    'bookingTokenH': 'Reference Number',
+    'ownerH': 'Owner',
+    'tableH': 'Table',
+    'creationDateH': 'Creation date'
+  } as any)
+};
+
+const waiterCockpitServiceStub = {
+  'getOrders': jasmine.createSpy('getOrders').and.returnValue(of(orderData))
+};
+
+const waiterCockpitServiceSortStub = {
+  'getOrders': jasmine.createSpy('getOrders').and.returnValue(of(ascSortOrder))
+};
+
+class TestBedSetUp {
+  static loadWaiterCockpitServiceStud(waiterCockpitStub: any): any {
+    const initialState = { config };
+    return TestBed.configureTestingModule({
+      declarations: [OrderCockpitComponent],
+      providers: [
+        { provide: MatDialog, useValue: mockDialog },
+        { provide: WaiterCockpitService, useValue: waiterCockpitStub },
+        TranslocoService,
+        ConfigService,
+        provideMockStore({ initialState })
+      ],
+      imports: [
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        getTranslocoModule(),
+        CoreModule,
+      ],
+    });
+  }
+}
 
 describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
-  // let fixture: ComponentFixture<OrderCockpitComponent>;
-  // tslint:disable-next-line:prefer-const
-  let http: HttpClient;
-  let priceCalculator: PriceCalculatorService;
-  let configService: ConfigService;
-  let waiterCockpitService: WaiterCockpitService;
-  // tslint:disable-next-line:prefer-const
-  let transloco: TranslocoService;
-  // tslint:disable-next-line:prefer-const
-  let dialog: MatDialog;
-  // tslint:disable-next-line:prefer-const
+  let fixture: ComponentFixture<OrderCockpitComponent>;
   let store: Store<State>;
   let initialState;
+  let waiterCockpitService: WaiterCockpitService;
+  let dialog: MatDialog;
+  let translocoService: TranslocoService;
+  let configService: ConfigService;
+  let el: DebugElement;
 
-  // beforeEach(async(() => {
-  //   TestBed.configureTestingModule({
-  //     declarations: [
-  //       OrderCockpitComponent,
-  //     ],
-  //     providers: [
-  //       HttpClient,
-  //       WindowService,
-  //       WaiterCockpitService,
-  //       PriceCalculatorService,
-  //       MatDialog,
-  //     ],
-  //     imports: [
-  //       BrowserAnimationsModule,
-  //       HttpClientModule,
-  //       TranslateModule.forRoot(),
-  //       CoreModule,
-  //       MomentModule,
-  //     ],
-  //   })
-  //     .compileComponents();
-  // }));
-
-  beforeEach(() => {
-    // fixture = TestBed.createComponent(OrderCockpitComponent);
-    // component = fixture.componentInstance;
-    // fixture.detectChanges();
+  beforeEach(async(() => {
     initialState = { config };
-    TestBed.configureTestingModule({
-      providers: [provideMockStore({ initialState })],
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub).compileComponents().then(() => {
+      fixture = TestBed.createComponent(OrderCockpitComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+      store = TestBed.get(Store);
+      configService = new ConfigService(store);
+      waiterCockpitService = TestBed.get(WaiterCockpitService);
+      dialog = TestBed.get(MatDialog);
+      translocoService = TestBed.get(TranslocoService);
     });
-    store = TestBed.get(Store);
-    priceCalculator = new PriceCalculatorService();
-    configService = new ConfigService(store);
-    waiterCockpitService = new WaiterCockpitService(
-      http,
-      priceCalculator,
-      configService,
-    );
-    component = new OrderCockpitComponent(
-      dialog,
-      transloco,
-      waiterCockpitService,
-      configService,
-    );
+  }));
+
+  it('should create component and verify content and total records of orders', fakeAsync(() => {
+    spyOn(translocoService, 'selectTranslateObject').and.returnValue(translocoServiceStub.selectTranslateObject);
+    fixture.detectChanges();
+    tick();
+    expect(component).toBeTruthy();
+    expect(component.orders).toEqual(orderData.content);
+    expect(component.totalOrders).toBe(8);
+  }));
+
+  it('should go to next page of orders', () => {
+    component.page({
+      pageSize: 100,
+      pageIndex: 2,
+      length: 50
+    });
+    expect(component.orders).toEqual(orderData.content);
+    expect(component.totalOrders).toBe(8);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should clear form and reset', fakeAsync(() => {
+    const clearFilter = el.query(By.css('.orderClearFilters'));
+    click(clearFilter);
+    fixture.detectChanges();
+    tick();
+    expect(component.orders).toEqual(orderData.content);
+    expect(component.totalOrders).toBe(8);
+  }));
+
+  it('should open OrderDialogComponent dialog on click of row', fakeAsync(() => {
+    fixture.detectChanges();
+    const clearFilter = el.queryAll(By.css('.mat-row'));
+    click(clearFilter[0]);
+    tick();
+    expect(dialog.open).toHaveBeenCalled();
+  }));
+
+  it('should filter the order table on click of submit', fakeAsync(() => {
+    fixture.detectChanges();
+    const submit = el.query(By.css('.orderApplyFilters'));
+    click(submit);
+    tick();
+    expect(component.orders).toEqual(orderData.content);
+    expect(component.totalOrders).toBe(8);
+  }));
+
+});
+
+describe('TestingOrderCockpitComponentWithSortOrderData', () => {
+  let component: OrderCockpitComponent;
+  let fixture: ComponentFixture<OrderCockpitComponent>;
+  let store: Store<State>;
+  let initialState;
+  let waiterCockpitService: WaiterCockpitService;
+  let dialog: MatDialog;
+  let translocoService: TranslocoService;
+  let configService: ConfigService;
+  let el: DebugElement;
+
+  beforeEach(async(() => {
+    initialState = { config };
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub).compileComponents().then(() => {
+      fixture = TestBed.createComponent(OrderCockpitComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+      store = TestBed.get(Store);
+      configService = new ConfigService(store);
+      waiterCockpitService = TestBed.get(WaiterCockpitService);
+      dialog = TestBed.get(MatDialog);
+      translocoService = TestBed.get(TranslocoService);
+    });
+  }));
+
+  it('should sort records of orders', () => {
+    component.sort({
+      active: 'Reservation Date',
+      direction: 'asc'
+    });
+    expect(component.orders).toEqual(ascSortOrder.content);
+    expect(component.totalOrders).toBe(8);
   });
 });

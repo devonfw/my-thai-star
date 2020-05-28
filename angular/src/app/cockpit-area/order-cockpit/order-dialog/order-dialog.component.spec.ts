@@ -11,7 +11,7 @@ import { OrderDialogComponent } from './order-dialog.component';
 import { ConfigService } from '../../../core/config/config.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { config } from '../../../core/config/config';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
@@ -31,7 +31,7 @@ describe('OrderDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         CoreModule,
         HttpClientTestingModule,
       ],

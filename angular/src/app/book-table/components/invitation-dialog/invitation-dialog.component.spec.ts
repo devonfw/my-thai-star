@@ -1,28 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { BookTableModule } from '../../book-table.module';
 import { BookTableService } from '../../services/book-table.service';
 import * as fromRoot from '../../store/reducers';
 import { InvitationDialogComponent } from './invitation-dialog.component';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { MockStore } from '@ngrx/store/testing';
+import { InvitationDialogComponentStub } from 'in-memory-test-data/db-invitation';
+
+const mockDialogRef = {
+  close: jasmine.createSpy('close')
+};
 
 describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
   let dialog: MatDialog;
+  let fixture: ComponentFixture<InvitationDialogComponent>;
+  let el: DebugElement;
+  let bookTableService: any;
+  const initialState = { booking: undefined };
 
   beforeEach(async(() => {
+    const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', ['composeBooking', 'postBooking']);
     TestBed.configureTestingModule({
-      providers: [SnackBarService, BookTableService, HttpClient],
+      providers: [
+        { provide: BookTableService, useValue: bookTableServiceSpy },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: mockDialogRef }
+      ],
       imports: [
         BrowserAnimationsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         BookTableModule,
         HttpClientTestingModule,
         RouterTestingModule,
@@ -34,15 +52,42 @@ describe('InvitationDialogComponent', () => {
           },
         }),
       ],
-    }).compileComponents();
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(InvitationDialogComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+      bookTableService = TestBed.get(BookTableService);
+    });
   }));
 
-  beforeEach(() => {
+  it('should create', () => {
     dialog = TestBed.get(MatDialog);
     component = dialog.open(InvitationDialogComponent).componentInstance;
-  });
-
-  it('should create', () => {
+    component.data = InvitationDialogComponentStub.data;
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
+
+  it('should verify dialog name property value', () => {
+    component.data = InvitationDialogComponentStub.data;
+    fixture.detectChanges();
+    expect(component).toBeTruthy();
+    const name = el.queryAll(By.css('.nameValue'));
+    const email = el.queryAll(By.css('.emailValue'));
+    expect(name[0].nativeElement.textContent).toBe('test');
+    expect(email[0].nativeElement.textContent).toBe('test@gmail.com');
+  });
+
+  it('Should send invitation', () => {
+    const dialogRef = TestBed.get(MatDialogRef);
+    component.data = InvitationDialogComponentStub.data;
+    bookTableService.composeBooking.and.returnValue(component.data);
+    bookTableService.postBooking.and.returnValue(of(InvitationDialogComponentStub.invite));
+    component.sendInvitation();
+    expect(dialogRef.close).toHaveBeenCalled();
+    component.store.subscribe(data => {
+      expect(data['bookTable'].bookings.booking).toEqual(InvitationDialogComponentStub.data);
+    });
+  });
+
 });

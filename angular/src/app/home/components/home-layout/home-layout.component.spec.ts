@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeLayoutComponent } from './home-layout.component';
 import { CoreModule } from '../../../core/core.module';
-import { TranslocoRootModule } from '../../../transloco-root.module';
 import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('HomeLayoutComponent', () => {

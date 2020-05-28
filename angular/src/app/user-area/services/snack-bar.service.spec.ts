@@ -5,7 +5,7 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { CoreModule } from '../../core/core.module';
 import { SnackService } from './snack-bar.service';
 import { UserAreaService } from './user-area.service';
-import { TranslocoRootModule } from '../../transloco-root.module';
+import { getTranslocoModule } from '../../transloco-testing.module';
 
 describe('SnackService', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('SnackService', () => {
       imports: [
         CoreModule,
         HttpClientTestingModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         RouterTestingModule,
       ],
     });

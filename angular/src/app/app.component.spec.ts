@@ -17,7 +17,6 @@ import { WindowService } from './core/window/window.service';
 import { SidenavService } from './sidenav/services/sidenav.service';
 import { UserAreaService } from './user-area/services/user-area.service';
 import * as fromUser from './user-area/store';
-import { TranslocoRootModule } from './transloco-root.module';
 import { getTranslocoModule } from './transloco-testing.module';
 
 describe('AppComponent', () => {
