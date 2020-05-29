@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../../../core/core.module';
 import { PriceCalculatorService } from '../../../sidenav/services/price-calculator.service';
@@ -12,40 +10,46 @@ import { ConfigService } from '../../../core/config/config.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { config } from '../../../core/config/config';
 import { getTranslocoModule } from '../../../transloco-testing.module';
+import { dialogOrderDetails } from 'in-memory-test-data/db-order-dialog-data';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
-  let dialog: MatDialog;
+  let fixture: ComponentFixture<OrderDialogComponent>;
   let initialState;
+  let el: DebugElement;
 
   beforeEach(async(() => {
     initialState = { config };
     TestBed.configureTestingModule({
       providers: [
+        { provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails },
         WaiterCockpitService,
         PriceCalculatorService,
         provideMockStore({ initialState }),
-        ConfigService,
-        HttpClient,
+        ConfigService
       ],
       imports: [
         BrowserAnimationsModule,
         WaiterCockpitModule,
         getTranslocoModule(),
-        CoreModule,
-        HttpClientTestingModule,
+        CoreModule
       ],
-    }).compileComponents();
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(OrderDialogComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+      fixture.detectChanges();
+    });
   }));
 
-  beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
-    component = dialog.open(OrderDialogComponent, {
-      data: { dialogData: { row: undefined } },
-    }).componentInstance;
-  });
-
   it('should create', () => {
-    expect(component).toBeTruthy();
+      const name = el.query(By.css('.nameData'));
+      const email = el.query(By.css('.emailData'));
+      expect(email.nativeElement.textContent.trim()).toBe('user0@mail.com');
+      expect(name.nativeElement.textContent.trim()).toBe('user0');
+      expect(component).toBeTruthy();
+      expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
   });
 });
