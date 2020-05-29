@@ -22,7 +22,7 @@ const mockDialogRef = {
   close: jasmine.createSpy('close')
 };
 
-fdescribe('InvitationDialogComponent', () => {
+describe('InvitationDialogComponent', () => {
   let component: InvitationDialogComponent;
   let dialog: MatDialog;
   let fixture: ComponentFixture<InvitationDialogComponent>;
