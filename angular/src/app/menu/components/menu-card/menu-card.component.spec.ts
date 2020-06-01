@@ -8,7 +8,6 @@ import { MenuCardComponent } from './menu-card.component';
 import { MenuCardDetailsComponent } from './menu-card-details/menu-card-details.component';
 import { MenuCardCommentsComponent } from './menu-card-comments/menu-card-comments.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TranslocoRootModule } from '../../../transloco-root.module';
 import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('MenuCardComponent', () => {

@@ -5,14 +5,14 @@ import { StoreModule } from '@ngrx/store';
 import { AuthGuardService } from 'app/core/authentication/auth-guard.service';
 import * as fromStore from 'app/store/reducers';
 import { CoreModule } from '../../core/core.module';
-import { TranslocoRootModule } from '../../transloco-root.module';
+import { getTranslocoModule } from '../../transloco-testing.module';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         RouterTestingModule,
         EffectsModule.forRoot([]),
         StoreModule.forRoot(fromStore.reducers, {

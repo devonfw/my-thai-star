@@ -13,7 +13,6 @@ import { UserAreaService } from '../user-area/services/user-area.service';
 import { HeaderComponent } from './header.component';
 import { SidenavModule } from 'app/sidenav/sidenav.module';
 import { TranslocoService } from '@ngneat/transloco';
-import { TranslocoRootModule } from '../transloco-root.module';
 import { getTranslocoModule } from '../transloco-testing.module';
 
 export function mockStore<T>({

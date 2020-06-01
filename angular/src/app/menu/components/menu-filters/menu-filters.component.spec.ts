@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { MenuFiltersComponent } from './menu-filters.component';
 import { FilterSortComponent } from './filter-sort/filter-sort.component';
@@ -6,12 +6,15 @@ import { FilterCheckboxesComponent } from './filter-checkboxes/filter-checkboxes
 import { FilterSearchComponent } from './filter-search/filter-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../../../core/core.module';
-import { TranslocoRootModule } from '../../../transloco-root.module';
 import { getTranslocoModule } from '../../../transloco-testing.module';
+import { click } from '../../../shared/common/test-utils';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('MenuFiltersComponent', () => {
   let component: MenuFiltersComponent;
   let fixture: ComponentFixture<MenuFiltersComponent>;
+  let el: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,10 +36,26 @@ describe('MenuFiltersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MenuFiltersComponent);
     component = fixture.componentInstance;
+    el = fixture.debugElement;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call filter data by applying filter', () => {
+    component.applyForm.subscribe(form => {
+      expect(form).toBeTruthy();
+    });
+    component.applyFilters();
+  });
+
+  it('should call clear filter', () => {
+    component.applyForm.subscribe(form => {
+      expect(form).toBeTruthy();
+    });
+    const clearButton = el.query(By.css('.clearFilter'));
+    clearButton.nativeElement.click();
   });
 });
