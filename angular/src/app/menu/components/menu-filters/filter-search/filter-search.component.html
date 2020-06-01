@@ -7,7 +7,7 @@
     (input)="onChange($event)"
     [placeholder]="'menu.filter.search' | transloco"
   >
-  <button *ngIf="isSearchFieldNotEmpty()" type="button" (click)="clearSearchField()" mat-icon-button matSuffix>
+  <button *ngIf="isSearchFieldNotEmpty()" type="button" class="clearSearchField" (click)="clearSearchField()" mat-icon-button matSuffix>
     <mat-icon>close</mat-icon>
   </button>
 </mat-form-field>

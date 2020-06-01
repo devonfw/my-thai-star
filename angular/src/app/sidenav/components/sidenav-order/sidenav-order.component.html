@@ -33,17 +33,18 @@
     <mat-icon color="accent">speaker_notes</mat-icon>
   </button>
 
-  <div lass="orderAmountContainer">
+  <div class="orderAmountContainer">
     <button
       mat-icon-button
       [disabled]="order.details.orderLine.amount == 1"
       color="accent"
       (click)="decreaseOrder()"
+      class="decreaseOrder"
     >
       <mat-icon>remove</mat-icon>
     </button>
     <span class="orderAmount">{{ order.details.orderLine.amount }}</span>
-    <button mat-icon-button (click)="increaseOrder()" color="accent">
+    <button mat-icon-button (click)="increaseOrder()" color="accent" class="increaseOrder">
       <mat-icon>add</mat-icon>
     </button>
   </div>

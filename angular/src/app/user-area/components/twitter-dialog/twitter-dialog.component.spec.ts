@@ -8,7 +8,7 @@ import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { TwitterDialogComponent } from './twitter-dialog.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('TwitterDialogComponent', () => {
   let component: TwitterDialogComponent;
@@ -19,7 +19,7 @@ describe('TwitterDialogComponent', () => {
       imports: [
         RouterTestingModule,
         CoreModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         BrowserAnimationsModule,
         UserAreaModule,
         EffectsModule.forRoot([]),
