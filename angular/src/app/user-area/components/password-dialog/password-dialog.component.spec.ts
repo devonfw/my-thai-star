@@ -12,39 +12,56 @@ import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import * as fromRoot from '../../store/reducers';
 import { UserAreaModule } from '../../user-area.module';
 import { PasswordDialogComponent } from './password-dialog.component';
-import { TranslocoRootModule } from '../../../transloco-root.module';
+import { getTranslocoModule } from '../../../transloco-testing.module';
+import { UserAreaService } from '../../services/user-area.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 describe('PasswordDialogComponent', () => {
   let component: PasswordDialogComponent;
   let dialog: MatDialog;
+  let userAreaService: UserAreaService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [SnackBarService, AuthService, HttpClient],
+      providers: [
+        SnackBarService, AuthService, HttpClient,
+        {
+          provide: UserAreaService, useValue: {
+            changePassword: jasmine.createSpy('changePassword')
+          }
+        }
+      ],
       imports: [
         CoreModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        TranslocoRootModule,
+        getTranslocoModule(),
         UserAreaModule,
         HttpClientTestingModule,
         EffectsModule.forRoot([]),
-        StoreModule.forRoot(fromRoot.reducers, {
-          runtimeChecks: {
-            strictStateImmutability: true,
-            strictActionImmutability: true,
-          },
-        }),
+        StoreModule.forRoot({}),
       ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     dialog = TestBed.get(MatDialog);
+    userAreaService = TestBed.get(UserAreaService);
     component = dialog.open(PasswordDialogComponent).componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Should comfirm', () => {
+    const form = new FormGroup({
+      oldPassword: new FormControl('capgemini'),
+      newPassword: new FormControl('newCapgemini'),
+      verifyPassword: new FormControl('newCapgemini')
+    });
+    component.passwordSubmit(form);
+    expect(userAreaService.changePassword).toHaveBeenCalled();
+
   });
 });
