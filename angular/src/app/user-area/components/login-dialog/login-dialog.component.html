@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="align-right">
-        <button name="cancelLogin" mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+        <button name="cancelLogin" mat-button type="button" (click)="closeLoginDialog()">{{'buttons.cancel' | transloco | uppercase}}</button>
         <button name="submitLogin" mat-button type="submit" [disabled]="!loginForm.form.valid" color="accent">{{'buttons.login' | transloco | uppercase}}</button>
       </div>
     </form>
@@ -50,7 +50,7 @@
       <mat-checkbox #termsd name="registerTerms">{{'formFields.terms' | transloco}}</mat-checkbox>
 
       <div class="align-right">
-        <button name="cancelSignUp" mat-button mat-dialog-close>{{'buttons.cancel' | transloco | uppercase}}</button>
+        <button name="cancelSignUp" mat-button (click)="closeLoginDialog()">{{'buttons.cancel' | transloco | uppercase}}</button>
         <button name="registerSubmit" mat-button type="submit" [disabled]="!(signForm.form.valid && termsd.checked)" color="accent">{{'buttons.register' | transloco | uppercase}}</button>
       </div>
     </form>

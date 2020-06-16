@@ -16,6 +16,14 @@ export class LoginDialogComponent {
   }
 
   signInSubmit(formValue: FormGroup): void {
-    this.dialog.close(formValue);
+	  
+	  //Since there is no backend implementation for the signup below code is used to close dialog box after submission. 
+	  //Once the implementationis done uncomment the below code and remove the existing one.
+	  // this.dialog.close(formValue);
+    this.dialog.close();
   }
+  
+  closeLoginDialog() {
+	this.dialog.close();
+ }
 }
