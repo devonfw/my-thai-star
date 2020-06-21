@@ -13,6 +13,7 @@ Cypress.Commands.add('loginWaiter', () => {
       cy.get('input[name="username"]').type(user.username, { force: true });
       cy.get('input[name="password"]').type(user.password);
       cy.get('button[name="submitLogin"]').click();
+      cy.get('snack-bar-container.bgc-green-600').should('exist');
     },
   );
 });
