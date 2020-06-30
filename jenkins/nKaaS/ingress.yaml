@@ -8,6 +8,9 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
+  tls:
+  - hosts:
+    - my-thai-star.demo.xpaas.io
   rules:
   - host: my-thai-star.demo.xpaas.io
     http:
@@ -24,6 +27,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: ingress-public
 spec:
+  tls:
+  - hosts:
+    - my-thai-star.demo.xpaas.io
   rules:
   - host: my-thai-star.demo.xpaas.io
     http:
