@@ -36,8 +36,19 @@
               "node_modules/@busacca/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": [
-              "node_modules/showdown/dist/showdown.js"
+            "scripts": ["node_modules/showdown/dist/showdown.js"],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "flat",
+              "chart.js",
+              "uuid",
+              "moment/locale/ca",
+              "moment/locale/de",
+              "moment/locale/es",
+              "moment/locale/fr",
+              "moment/locale/hi",
+              "moment/locale/nl",
+              "moment/locale/pl"
             ]
           },
           "configurations": {
@@ -48,7 +59,7 @@
                   "maximumWarning": "6kb"
                 }
               ]
-},
+            },
             "production": {
               "budgets": [
                 {
@@ -206,9 +217,7 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/showdown/dist/showdown.js"
-            ],
+            "scripts": ["node_modules/showdown/dist/showdown.js"],
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
@@ -226,10 +235,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
             "exclude": []
           }
         }
@@ -250,9 +256,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
             "exclude": []
           }
         }
