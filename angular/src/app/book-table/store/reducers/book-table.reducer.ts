@@ -32,12 +32,12 @@ const bookTableReducer = createReducer(
   on(bookTableActions.bookTable, (state, { booking }) => ({
     ...state,
     pending: true,
-    booking: booking,
+    booking,
   })),
   on(bookTableActions.bookTableSuccess, (state, { bookingResponse }) => ({
     ...state,
     pending: false,
-    bookingResponse: bookingResponse,
+    bookingResponse,
   })),
   on(bookTableActions.bookTableFail, (state, { error }) => ({
     ...state,
@@ -47,12 +47,12 @@ const bookTableReducer = createReducer(
   on(bookTableActions.inviteFriends, (state, { booking }) => ({
     ...state,
     pending: true,
-    booking: booking,
+    booking,
   })),
   on(bookTableActions.inviteFriendsSuccess, (state, { bookingResponse }) => ({
     ...state,
     pending: false,
-    bookingResponse: bookingResponse,
+    bookingResponse,
   })),
   on(bookTableActions.inviteFriendsFail, (state, { error }) => ({
     ...state,
@@ -61,6 +61,6 @@ const bookTableReducer = createReducer(
   })),
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: State | undefined, action: Action): State {
   return bookTableReducer(state, action);
 }
