@@ -92,7 +92,7 @@ export class AuthEffects {
               });
             }
           }),
-          catchError((error) => of(authActions.loginFail({ error: error }))),
+          catchError((error) => of(authActions.loginFail({ error }))),
         );
       }),
     ),
@@ -136,7 +136,7 @@ export class AuthEffects {
               token: { token: res.headers.get('Authorization') },
             });
           }),
-          catchError((error) => of(authActions.loginFail({ error: error }))),
+          catchError((error) => of(authActions.loginFail({ error }))),
         );
       }),
     ),
@@ -215,7 +215,7 @@ export class AuthEffects {
             'black',
           );
         }),
-        catchError((error) => of(authActions.logoutFail({ error: error }))),
+        catchError((error) => of(authActions.logoutFail({ error }))),
       ),
     { dispatch: false },
   );
