@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { TranslocoService } from '@ngneat/transloco';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 import { ConfigService } from '../../core/config/config.service';
 import {
   FilterCockpit,
@@ -11,8 +13,6 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { TranslocoService } from '@ngneat/transloco';
-import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'cockpit-order-cockpit',
@@ -69,13 +69,15 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   setTableHeaders(lang: string): void {
-    this.translocoSubscription = this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitTable => {
-      this.columns = [
-        { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-        { name: 'booking.email', label: cockpitTable.emailH },
-        { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-      ];
-    });
+    this.translocoSubscription = this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.columns = [
+          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'booking.email', label: cockpitTable.emailH },
+          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+        ];
+      });
   }
 
   applyFilters(): void {
