@@ -17,7 +17,7 @@ const sendOrderReducer = createReducer(
   initialState,
   on(sendOrderActions.sendOrders, (state, { token }) => ({
     ...state,
-    token: token,
+    token,
   })),
   on(sendOrderActions.sendOrdersSuccess, (state) => ({
     ...state,
@@ -25,10 +25,13 @@ const sendOrderReducer = createReducer(
   })),
   on(sendOrderActions.sendOrdersFail, (state, { error }) => ({
     ...state,
-    error: error['error']['message'],
+    error,
   })),
 );
 
-export function reducer(state: SendOrderState | undefined, action: Action) {
+export function reducer(
+  state: SendOrderState | undefined,
+  action: Action,
+): SendOrderState {
   return sendOrderReducer(state, action);
 }
