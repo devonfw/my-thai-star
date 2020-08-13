@@ -1,6 +1,10 @@
 import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -15,7 +19,7 @@ import { of } from 'rxjs/internal/observable/of';
 import { BookTableDialogComponentStub } from 'in-memory-test-data/db-book';
 
 const mockDialogRef = {
-  close: jasmine.createSpy('close')
+  close: jasmine.createSpy('close'),
 };
 
 describe('BookTableDialogComponent', () => {
@@ -26,14 +30,17 @@ describe('BookTableDialogComponent', () => {
   let bookTableService: any;
 
   beforeEach(async(() => {
-    const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', ['composeBooking', 'postBooking']);
+    const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', [
+      'composeBooking',
+      'postBooking',
+    ]);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [BookTableDialogComponent],
       providers: [
         { provide: BookTableService, useValue: bookTableServiceSpy },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: mockDialogRef }
+        { provide: MatDialogRef, useValue: mockDialogRef },
       ],
       imports: [
         CoreModule,
@@ -52,16 +59,16 @@ describe('BookTableDialogComponent', () => {
         set: { entryComponents: [BookTableDialogComponent] },
       })
       .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(BookTableDialogComponent);
-          component = fixture.componentInstance;
-          el = fixture.debugElement;
-          bookTableService = TestBed.get(BookTableService);
-        });
+      .then(() => {
+        fixture = TestBed.createComponent(BookTableDialogComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+        bookTableService = TestBed.inject(BookTableService);
+      });
   }));
 
   it('should create', () => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(BookTableDialogComponent).componentInstance;
     component.data = BookTableDialogComponentStub.data;
     fixture.detectChanges();
@@ -79,10 +86,11 @@ describe('BookTableDialogComponent', () => {
   });
 
   it('Should send booking invitation', () => {
-    const dialogRef = TestBed.get(MatDialogRef);
-    bookTableService.postBooking.and.returnValue(of(BookTableDialogComponentStub.invite));
+    const dialogRef = TestBed.inject(MatDialogRef);
+    bookTableService.postBooking.and.returnValue(
+      of(BookTableDialogComponentStub.invite),
+    );
     component.sendBooking();
     expect(dialogRef.close).toHaveBeenCalled();
   });
-
 });

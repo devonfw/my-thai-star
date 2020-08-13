@@ -7,7 +7,7 @@ import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'cockpit-order-dialog',
+  selector: 'app-cockpit-order-dialog',
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.scss'],
 })
@@ -66,30 +66,34 @@ export class OrderDialogComponent implements OnInit {
   }
 
   setTableHeaders(lang: string): void {
-    this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitTable => {
-      this.columnst = [
-        { name: 'bookingDate', label: cockpitTable.reservationDateH },
-        { name: 'creationDate', label: cockpitTable.creationDateH },
-        { name: 'name', label: cockpitTable.ownerH },
-        { name: 'email', label: cockpitTable.emailH },
-        { name: 'tableId', label: cockpitTable.tableH },
-      ];
-    });
+    this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.columnst = [
+          { name: 'bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'creationDate', label: cockpitTable.creationDateH },
+          { name: 'name', label: cockpitTable.ownerH },
+          { name: 'email', label: cockpitTable.emailH },
+          { name: 'tableId', label: cockpitTable.tableH },
+        ];
+      });
 
-    this.translocoService.selectTranslateObject('cockpit.orders.dialogTable', {}, lang).subscribe(cockpitDialogTable => {
-      this.columnso = [
-        { name: 'dish.name', label: cockpitDialogTable.dishH },
-        { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
-        { name: 'extras', label: cockpitDialogTable.extrasH },
-        { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
-        {
-          name: 'dish.price',
-          label: cockpitDialogTable.priceH,
-          numeric: true,
-          format: (v: number) => v.toFixed(2),
-        },
-      ];
-    });
+    this.translocoService
+      .selectTranslateObject('cockpit.orders.dialogTable', {}, lang)
+      .subscribe((cockpitDialogTable) => {
+        this.columnso = [
+          { name: 'dish.name', label: cockpitDialogTable.dishH },
+          { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
+          { name: 'extras', label: cockpitDialogTable.extrasH },
+          { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
+          {
+            name: 'dish.price',
+            label: cockpitDialogTable.priceH,
+            numeric: true,
+            format: (v: number) => v.toFixed(2),
+          },
+        ];
+      });
   }
 
   page(pagingEvent: PageEvent): void {

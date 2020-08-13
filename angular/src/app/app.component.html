@@ -1,9 +1,9 @@
 <div class="containerOuter">
   <div class="containerInner">
     <mat-toolbar color="primary" class="headerContainer">
-      <public-header
+      <app-public-header
         (openCloseSidenavMobile)="mobileSidenavOpened = !mobileSidenavOpened"
-      ></public-header>
+      ></app-public-header>
     </mat-toolbar>
 
     <div class="sidenavContainerOuter">
@@ -14,7 +14,7 @@
           position="end"
           (openedChange)="sidenavStatus($event)"
         >
-          <public-sidenav></public-sidenav>
+          <app-public-sidenav></app-public-sidenav>
         </mat-sidenav>
 
         <mat-sidenav

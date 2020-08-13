@@ -1,49 +1,65 @@
 <form
-    [formGroup]="filtersForm"
-    (ngSubmit)="applyFilters($event)"
-    class="menu"
-    novalidate
-  >
-      <div class="search">
-        <own-filter-search formControlName="searchBy" class="searchBy"></own-filter-search>
-        <own-filter-sort formControlName="sort" class="sortingBy"></own-filter-sort>
-      </div>
+  [formGroup]="filtersForm"
+  (ngSubmit)="applyFilters($event)"
+  class="menu"
+  novalidate
+>
+  <div class="search">
+    <app-own-filter-search
+      formControlName="searchBy"
+      class="searchBy"
+    ></app-own-filter-search>
+    <app-own-filter-sort
+      formControlName="sort"
+      class="sortingBy"
+    ></app-own-filter-sort>
+  </div>
 
-      <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ 'menu.filterTitle' | transloco }}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class ="menu-filters">
-          <own-filter-checkboxes formControlName="categories"></own-filter-checkboxes>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ 'menu.filterTitle' | transloco }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="menu-filters">
+      <app-own-filter-checkboxes
+        formControlName="categories"
+      ></app-own-filter-checkboxes>
 
-          <div class="filter-sliders">
-            <div class="slider">
-              <span>{{'menu.filter.price' | transloco}}</span>
-              <mat-slider
-                formControlName="maxPrice"
-                max="50"
-                min="1"
-                step="1"
-                thumbLabel
-              ></mat-slider>
-            </div>
-            <div class="slider">
-              <span>{{'menu.filter.likes' | transloco}}</span>
-              <mat-slider
-                formControlName="minLikes"
-                max="500"
-                min="0"
-                step="5"
-                thumbLabel
-              ></mat-slider>
-            </div>
-          </div>
+      <div class="filter-sliders">
+        <div class="slider">
+          <span>{{ 'menu.filter.price' | transloco }}</span>
+          <mat-slider
+            formControlName="maxPrice"
+            max="50"
+            min="1"
+            step="1"
+            thumbLabel
+          ></mat-slider>
         </div>
-      </mat-expansion-panel>
-      <div class="filter-actions">
-        <button mat-button (click)="clearFilters($event, filtersForm)" class="clearFilter">{{'buttons.clearFilters' | transloco}}</button>
-        <button mat-button type="submit" color="accent" class="apply-filter">{{'buttons.applyFilters' | transloco}}</button>
+        <div class="slider">
+          <span>{{ 'menu.filter.likes' | transloco }}</span>
+          <mat-slider
+            formControlName="minLikes"
+            max="500"
+            min="0"
+            step="5"
+            thumbLabel
+          ></mat-slider>
+        </div>
       </div>
-  </form>
+    </div>
+  </mat-expansion-panel>
+  <div class="filter-actions">
+    <button
+      mat-button
+      (click)="clearFilters($event, filtersForm)"
+      class="clearFilter"
+    >
+      {{ 'buttons.clearFilters' | transloco }}
+    </button>
+    <button mat-button type="submit" color="accent" class="apply-filter">
+      {{ 'buttons.applyFilters' | transloco }}
+    </button>
+  </div>
+</form>

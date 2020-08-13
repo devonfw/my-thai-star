@@ -19,26 +19,19 @@ export const getSendOrderState = createSelector(
   (state: fromFeature.SideNavState) => state.orderSend,
 );
 
-export const getOrderEntities = createSelector(
-  getOrderState,
-  selectEntities,
-);
+export const getOrderEntities = createSelector(getOrderState, selectEntities);
 
-export const getAllOrders = createSelector(
-  getOrderState,
-  selectAll,
-);
+export const getAllOrders = createSelector(getOrderState, selectAll);
 
-export const getTotalPrice = createSelector(
-  getAllOrders,
-  (state) => {
-    let totalPrice = 0;
-    state.map(
-      (order) =>
-        (totalPrice =
-          totalPrice +
-          order.details.dish.price * order.details.orderLine.amount),
-    );
-    return totalPrice;
-  },
-);
+export const getTotalPrice = createSelector(getAllOrders, (state) => {
+  let totalPrice = 0;
+  state.map(
+    (order) =>
+      (totalPrice =
+        totalPrice +
+        order.details.orderLine.amount *
+          (order.details.dish.price +
+            order.details.extras.reduce((t, e) => t + e.price, 0))),
+  );
+  return totalPrice;
+});

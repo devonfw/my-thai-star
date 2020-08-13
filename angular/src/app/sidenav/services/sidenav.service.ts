@@ -79,7 +79,7 @@ export class SidenavService {
           amount: order.details.orderLine.amount,
           comment: order.details.orderLine.comment,
         },
-        extras: extras,
+        extras,
       });
     });
     return composedOrders;

@@ -15,7 +15,7 @@ import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
-  selector: 'cockpit-order-cockpit',
+  selector: 'app-cockpit-order-cockpit',
   templateUrl: './order-cockpit.component.html',
   styleUrls: ['./order-cockpit.component.scss'],
 })

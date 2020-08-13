@@ -1,13 +1,15 @@
-<own-menu-filters (applyForm)="onFilterChange($event)"></own-menu-filters>
+<app-own-menu-filters
+  (applyForm)="onFilterChange($event)"
+></app-own-menu-filters>
 
 <div *ngIf="dishes$ | async as dishes; else loading" class="card-container">
-  <public-menu-card
+  <app-public-menu-card
     *ngFor="let dish of dishes"
     [menuInfo]="dish"
-    [auth]="logged$ === true"
+    [auth]="(logged$ | async) === true"
     (orderAdded)="onOrderAdded($event)"
     (extraSelected)="onExtraSelected($event)"
-  ></public-menu-card>
+  ></app-public-menu-card>
 </div>
 
 <ng-template #loading>

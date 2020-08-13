@@ -112,7 +112,7 @@ export class PredictionService {
 
               const metadata = orders.dates.reduce((accum, date, index) => {
                 accum.push({
-                  date: date,
+                  date,
                   weather: orders.weather[index],
                   holiday: orders.holidays[index],
                 });

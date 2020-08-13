@@ -17,7 +17,7 @@ import { select, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'public-main',
+  selector: 'app-public-main',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation], // register the animation

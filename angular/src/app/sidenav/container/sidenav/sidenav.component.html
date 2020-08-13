@@ -37,16 +37,15 @@
           class="sidenavOrderContainer"
           [class.scrollOrders]="(orders$ | async)?.length > 3"
         >
-          <public-sidenav-order
+          <app-public-sidenav-order
             *ngFor="let order of orders$ | async"
             [order]="order"
-            [price]="price$"
             (orderIncreased)="onOrderIncreased($event)"
             (orderDecreased)="onOrderDecreased($event)"
             (orderRemoved)="onOrderRemoved($event)"
             (commentAdded)="onCommentAdded($event)"
             (commentRemoved)="onCommentRemoved($event)"
-          ></public-sidenav-order>
+          ></app-public-sidenav-order>
         </div>
       </ng-template>
       <div *ngIf="(orders$ | async)?.length > 0" class="orderTotal">
@@ -98,7 +97,12 @@
     </div>
   </div>
   <div class="align-right">
-    <button class="orderCancel" name="orderCancel" mat-button (click)="closeSidenav()">
+    <button
+      class="orderCancel"
+      name="orderCancel"
+      mat-button
+      (click)="closeSidenav()"
+    >
       {{ 'buttons.cancel' | transloco | uppercase }}
     </button>
     <button
