@@ -37,17 +37,19 @@ export class UserAreaService {
     private store: Store<fromAuth.AppState>,
     private config: ConfigService,
   ) {
-    this.transloco.selectTranslateObject('alerts.authAlerts').subscribe((content: any) => {
-      this.authAlerts = content;
-    });
+    this.transloco
+      .selectTranslateObject('alerts.authAlerts')
+      .subscribe((content: any) => {
+        this.authAlerts = content;
+      });
   }
 
-  login(username: string, password: string) {
+  login(username: string, password: string): Observable<any> {
     return this.restPathRoot$.pipe(
       exhaustMap((restPathRoot) =>
         this.http.post(
           `${restPathRoot}${this.loginRestPath}`,
-          { username: username, password: password },
+          { username, password },
           { responseType: 'text', observe: 'response' },
         ),
       ),
@@ -59,8 +61,8 @@ export class UserAreaService {
       .pipe(
         exhaustMap((restServiceRoot) =>
           this.http.post(`${restServiceRoot}${this.registerRestPath}`, {
-            email: email,
-            password: password,
+            email,
+            password,
           }),
         ),
       )

@@ -1,6 +1,7 @@
-<own-home-layout>
-  <own-home-card *ngFor="let tile of getTiles()"
+<app-own-home-layout>
+  <app-own-home-card
+    *ngFor="let tile of getTiles()"
     [tile]="tile"
     (buttonClick)="tile.navigate()"
-  ></own-home-card>
-</own-home-layout>
+  ></app-own-home-card>
+</app-own-home-layout>

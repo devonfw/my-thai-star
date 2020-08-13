@@ -34,7 +34,7 @@ describe('LoginDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(LoginDialogComponent).componentInstance;
   });
 

@@ -1,5 +1,12 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  inject,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmailConfirmationsComponent } from './email-confirmations.component';
@@ -11,7 +18,12 @@ import { config } from '../../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../../core/config/config.service';
 import { getTranslocoModule } from '../../../transloco-testing.module';
-import { ActivatedRoute, ParamMap, convertToParamMap, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  ParamMap,
+  convertToParamMap,
+  Router,
+} from '@angular/router';
 import { of, observable, throwError } from 'rxjs';
 import { Component } from '@angular/core';
 import { emailConfirmationsStub } from 'in-memory-test-data/db-email-confirmation-data';
@@ -21,63 +33,71 @@ const ERRORMESSAGE = 'An error has ocurred, please try again later';
 
 class ActivatedMockStubs {
   static acceptInvitationStub = {
-    paramMap: of(convertToParamMap({
-      token: '1234',
-      action: 'acceptInvite'
-    }))
+    paramMap: of(
+      convertToParamMap({
+        token: '1234',
+        action: 'acceptInvite',
+      }),
+    ),
   };
 
   static rejectInvitationStub = {
-    paramMap: of(convertToParamMap({
-      token: '1234',
-      action: 'rejectInvite'
-    }))
+    paramMap: of(
+      convertToParamMap({
+        token: '1234',
+        action: 'rejectInvite',
+      }),
+    ),
   };
 
   static cancelBookingStub = {
-    paramMap: of(convertToParamMap({
-      token: '1234',
-      action: 'cancel'
-    }))
+    paramMap: of(
+      convertToParamMap({
+        token: '1234',
+        action: 'cancel',
+      }),
+    ),
   };
 
   static cancelOrderStub = {
-    paramMap: of(convertToParamMap({
-      token: '1234',
-      action: 'cancelOrder'
-    }))
+    paramMap: of(
+      convertToParamMap({
+        token: '1234',
+        action: 'cancelOrder',
+      }),
+    ),
   };
 }
 
 const snackBarServiceStub = {
-  openSnack: jasmine.createSpy('openSnack')
+  openSnack: jasmine.createSpy('openSnack'),
 };
 
 const translocoServiceStub = {
   translate: jasmine.createSpy('translate').and.returnValue({
-    'accessError': 'Access denied, please log in first',
-    'genericError': 'An error has ocurred, please try again later',
-    'urlError': 'Url not found, please try again',
-  })
+    accessError: 'Access denied, please log in first',
+    genericError: 'An error has ocurred, please try again later',
+    urlError: 'Url not found, please try again',
+  }),
 };
 
-const emailConfirmationsServiceSuccessStub = jasmine.createSpyObj<EmailConfirmationsService>(
-  'EmailConfirmationsService', {
-    sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
-    sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
-    sendCancelBooking: of(emailConfirmationsStub.booking),
-    sendCancelOrder: of(true)
-  }
-);
+const emailConfirmationsServiceSuccessStub = jasmine.createSpyObj<
+  EmailConfirmationsService
+>('EmailConfirmationsService', {
+  sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
+  sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
+  sendCancelBooking: of(emailConfirmationsStub.booking),
+  sendCancelOrder: of(true),
+});
 
-const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<EmailConfirmationsService>(
-  'EmailConfirmationsService', {
-    sendAcceptInvitation: throwError(ERRORMESSAGE),
-    sendRejectInvitation: throwError(ERRORMESSAGE),
-    sendCancelBooking: throwError(ERRORMESSAGE),
-    sendCancelOrder: throwError(ERRORMESSAGE)
-  }
-);
+const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<
+  EmailConfirmationsService
+>('EmailConfirmationsService', {
+  sendAcceptInvitation: throwError(ERRORMESSAGE),
+  sendRejectInvitation: throwError(ERRORMESSAGE),
+  sendCancelBooking: throwError(ERRORMESSAGE),
+  sendCancelOrder: throwError(ERRORMESSAGE),
+});
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;
@@ -89,28 +109,30 @@ describe('EmailConfirmationsComponent', () => {
     TestBed.compileComponents();
     fixture = TestBed.createComponent(EmailConfirmationsComponent);
     component = fixture.componentInstance;
-    snackBarService = TestBed.get(SnackBarService);
+    snackBarService = TestBed.inject(SnackBarService);
     fixture.detectChanges();
   };
 
-  function testBedOverrideProvider(service: any, provider: any) {
-    TestBed.overrideProvider(
-      service, { useValue: provider }
-    );
+  function testBedOverrideProvider(service: any, provider: any): void {
+    TestBed.overrideProvider(service, { useValue: provider });
   }
 
   beforeEach(async(() => {
     initialState = { config };
     TestBed.configureTestingModule({
-      declarations: [
-        EmailConfirmationsComponent,
-      ],
+      declarations: [EmailConfirmationsComponent],
       providers: [
         { provide: SnackBarService, useValue: snackBarServiceStub },
-        { provide: EmailConfirmationsService, useValue: emailConfirmationsServiceSuccessStub },
+        {
+          provide: EmailConfirmationsService,
+          useValue: emailConfirmationsServiceSuccessStub,
+        },
         provideMockStore({ initialState }),
         ConfigService,
-        { provide: ActivatedRoute, useValue: ActivatedMockStubs.acceptInvitationStub },
+        {
+          provide: ActivatedRoute,
+          useValue: ActivatedMockStubs.acceptInvitationStub,
+        },
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
@@ -118,7 +140,7 @@ describe('EmailConfirmationsComponent', () => {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         CoreModule,
-      ]
+      ],
     });
   }));
 
@@ -129,14 +151,20 @@ describe('EmailConfirmationsComponent', () => {
   });
 
   it('verify email confirmation service call for Reject invitation', () => {
-    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.rejectInvitationStub);
+    testBedOverrideProvider(
+      ActivatedRoute,
+      ActivatedMockStubs.rejectInvitationStub,
+    );
     compileTestBed();
     expect(component).toBeTruthy();
     expect(snackBarService.openSnack).toHaveBeenCalled();
   });
 
   it('verify email confirmation service call for Cancel Booking', () => {
-    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelBookingStub);
+    testBedOverrideProvider(
+      ActivatedRoute,
+      ActivatedMockStubs.cancelBookingStub,
+    );
     compileTestBed();
     expect(component).toBeTruthy();
     expect(snackBarService.openSnack).toHaveBeenCalled();
@@ -151,7 +179,10 @@ describe('EmailConfirmationsComponent', () => {
 
   describe('Email Confirmations for the failed senario', () => {
     beforeEach(() => {
-      testBedOverrideProvider(EmailConfirmationsService, emailConfirmationsServiceErrorStub);
+      testBedOverrideProvider(
+        EmailConfirmationsService,
+        emailConfirmationsServiceErrorStub,
+      );
     });
 
     it('Verify email confirmation incase Accept invitation service failed ', () => {
@@ -161,25 +192,33 @@ describe('EmailConfirmationsComponent', () => {
     });
 
     it('Verify email confirmation incase Reject invitation service failed ', () => {
-      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.rejectInvitationStub);
+      testBedOverrideProvider(
+        ActivatedRoute,
+        ActivatedMockStubs.rejectInvitationStub,
+      );
       compileTestBed();
       expect(component).toBeTruthy();
       expect(snackBarService.openSnack).toHaveBeenCalled();
     });
 
     it('Verify email confirmation incase Cancel Booking service failed ', () => {
-      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelBookingStub);
+      testBedOverrideProvider(
+        ActivatedRoute,
+        ActivatedMockStubs.cancelBookingStub,
+      );
       compileTestBed();
       expect(component).toBeTruthy();
       expect(snackBarService.openSnack).toHaveBeenCalled();
     });
 
     it('Verify email confirmation incase Cancel Order service failed ', () => {
-      testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelOrderStub);
+      testBedOverrideProvider(
+        ActivatedRoute,
+        ActivatedMockStubs.cancelOrderStub,
+      );
       compileTestBed();
       expect(component).toBeTruthy();
       expect(snackBarService.openSnack).toHaveBeenCalled();
     });
   });
-
 });

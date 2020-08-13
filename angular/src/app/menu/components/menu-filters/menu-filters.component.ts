@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'own-menu-filters',
+  selector: 'app-own-menu-filters',
   templateUrl: './menu-filters.component.html',
   styleUrls: ['./menu-filters.component.scss'],
 })

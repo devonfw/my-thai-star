@@ -7,7 +7,7 @@ import { SidenavService } from '../../services/sidenav.service';
 import * as fromOrder from '../../store';
 
 @Component({
-  selector: 'public-sidenav',
+  selector: 'app-public-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +44,7 @@ export class SidenavComponent implements OnInit {
     this.store.dispatch(fromOrder.sendOrders({ token: bookingId }));
   }
 
-  findOrder(id: string) {
+  findOrder(id: string): Order {
     return this.orders.find((order) => order.id === id);
   }
 

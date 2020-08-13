@@ -3,13 +3,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'public-login-dialog',
+  selector: 'app-public-login-dialog',
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.scss'],
 })
 export class LoginDialogComponent {
-
-  constructor(private dialog: MatDialogRef<LoginDialogComponent>) { }
+  constructor(private dialog: MatDialogRef<LoginDialogComponent>) {}
 
   logInSubmit(formValue: FormGroup): void {
     this.dialog.close(formValue);

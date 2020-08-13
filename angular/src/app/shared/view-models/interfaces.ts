@@ -172,7 +172,7 @@ export interface DishOrdersData {
 export interface Cluster {
   id: number;
   dishId: number;
-  dishName: String;
+  dishName: string;
   amount: number;
   polygon: {};
   x: string;

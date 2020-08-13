@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
@@ -19,7 +23,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { InvitationDialogComponentStub } from 'in-memory-test-data/db-invitation';
 
 const mockDialogRef = {
-  close: jasmine.createSpy('close')
+  close: jasmine.createSpy('close'),
 };
 
 describe('InvitationDialogComponent', () => {
@@ -32,13 +36,16 @@ describe('InvitationDialogComponent', () => {
   const initialState = { booking: undefined };
 
   beforeEach(async(() => {
-    const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', ['composeBooking', 'postBooking']);
+    const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', [
+      'composeBooking',
+      'postBooking',
+    ]);
     TestBed.configureTestingModule({
       providers: [
         { provide: BookTableService, useValue: bookTableServiceSpy },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        provideMockStore()
+        provideMockStore(),
       ],
       imports: [
         BrowserAnimationsModule,
@@ -49,17 +56,19 @@ describe('InvitationDialogComponent', () => {
         EffectsModule.forRoot([]),
         StoreModule.forRoot({}),
       ],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(InvitationDialogComponent);
-      component = fixture.componentInstance;
-      el = fixture.debugElement;
-      bookTableService = TestBed.get(BookTableService);
-      mockStore = TestBed.inject(MockStore);
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(InvitationDialogComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+        bookTableService = TestBed.inject(BookTableService);
+        mockStore = TestBed.inject(MockStore);
+      });
   }));
 
   it('should create', () => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(InvitationDialogComponent).componentInstance;
     component.data = InvitationDialogComponentStub.data;
     fixture.detectChanges();
@@ -78,13 +87,14 @@ describe('InvitationDialogComponent', () => {
 
   it('Should send invitation', () => {
     spyOn(mockStore, 'dispatch').and.callThrough();
-    const dialogRef = TestBed.get(MatDialogRef);
+    const dialogRef = TestBed.inject(MatDialogRef);
     component.data = InvitationDialogComponentStub.data;
     bookTableService.composeBooking.and.returnValue(component.data);
-    bookTableService.postBooking.and.returnValue(of(InvitationDialogComponentStub.invite));
+    bookTableService.postBooking.and.returnValue(
+      of(InvitationDialogComponentStub.invite),
+    );
     component.sendInvitation();
     expect(dialogRef.close).toHaveBeenCalled();
     expect(mockStore.dispatch).toHaveBeenCalled();
   });
-
 });

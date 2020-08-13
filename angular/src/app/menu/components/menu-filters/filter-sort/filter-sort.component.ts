@@ -15,7 +15,7 @@ enum SortIcon {
 }
 
 @Component({
-  selector: 'own-filter-sort',
+  selector: 'app-own-filter-sort',
   templateUrl: './filter-sort.component.html',
   styleUrls: ['./filter-sort.component.scss'],
   providers: [
@@ -27,9 +27,8 @@ enum SortIcon {
   ],
 })
 export class FilterSortComponent implements ControlValueAccessor {
-
   sortValue: SortControlModel;
-  updateForm: Function;
+  updateForm: (fn: any) => void;
   disabled: boolean;
 
   sortDirIcon: SortIcon = SortIcon.DESC;
@@ -54,15 +53,18 @@ export class FilterSortComponent implements ControlValueAccessor {
   // Binding Methods
 
   onSelectChange($event: any): void {
-    this.sortValue = { ...this.sortValue, ...{property: $event.value} };
+    this.sortValue = { ...this.sortValue, ...{ property: $event.value } };
     this.updateForm(this.sortValue);
   }
   changeSortDir(event: Event): void {
     event.preventDefault();
-    this.sortDirIcon =  this.sortDirIcon === SortIcon.ASC ? SortIcon.DESC : SortIcon.ASC;
-    const newDir: SortDirection = this.sortValue.direction === SortDirection.ASC
-      ? SortDirection.DESC : SortDirection.ASC;
-    this.sortValue = { ...this.sortValue, ...{direction: newDir} };
+    this.sortDirIcon =
+      this.sortDirIcon === SortIcon.ASC ? SortIcon.DESC : SortIcon.ASC;
+    const newDir: SortDirection =
+      this.sortValue.direction === SortDirection.ASC
+        ? SortDirection.DESC
+        : SortDirection.ASC;
+    this.sortValue = { ...this.sortValue, ...{ direction: newDir } };
     this.updateForm(this.sortValue);
   }
 }
