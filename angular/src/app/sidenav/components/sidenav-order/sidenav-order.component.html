@@ -44,7 +44,12 @@
       <mat-icon>remove</mat-icon>
     </button>
     <span class="orderAmount">{{ order.details.orderLine.amount }}</span>
-    <button mat-icon-button (click)="increaseOrder()" color="accent" class="increaseOrder">
+    <button
+      mat-icon-button
+      (click)="increaseOrder()"
+      color="accent"
+      class="increaseOrder"
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>

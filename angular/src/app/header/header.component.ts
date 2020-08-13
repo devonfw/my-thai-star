@@ -21,7 +21,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { find } from 'lodash';
 
 @Component({
-  selector: 'public-header',
+  selector: 'app-public-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,10 +46,12 @@ export class HeaderComponent {
     private store: Store<fromRoot.State>,
   ) {
     this.selectableLangs = this.configService.getValues().langs;
-    if (find(
-      this.transloco.getAvailableLangs(),
-      (lang: string) => lang === this.getBrowserLanguage(),
-    )) {
+    if (
+      find(
+        this.transloco.getAvailableLangs(),
+        (lang: string) => lang === this.getBrowserLanguage(),
+      )
+    ) {
       this.getFlag(this.getBrowserLanguage());
     } else {
       this.getFlag(this.transloco.getActiveLang());

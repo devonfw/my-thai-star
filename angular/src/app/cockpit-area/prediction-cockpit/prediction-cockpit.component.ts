@@ -1,17 +1,19 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FilterOrdersCockpit, PredictionCriteria } from '../../shared/backend-models/interfaces';
+import {
+  FilterOrdersCockpit,
+  PredictionCriteria,
+} from '../../shared/backend-models/interfaces';
 import { Chart } from 'chart.js';
 import { Moment } from 'moment';
 import { OwlDateTimeComponent } from '@busacca/ng-pick-datetime';
 import { PredictionService } from '../services/prediction.service';
 
 @Component({
-  selector: 'cockpit-prediction-cockpit',
+  selector: 'app-cockpit-prediction-cockpit',
   templateUrl: './prediction-cockpit.component.html',
   styleUrls: ['./prediction-cockpit.component.scss'],
 })
-
 export class PredictionCockpitComponent implements OnInit {
   @ViewChild('dailyChart', { static: true }) dailyChart: ElementRef;
   @ViewChild('monthlyChart', { static: true }) monthlyChart: ElementRef;
@@ -33,49 +35,61 @@ export class PredictionCockpitComponent implements OnInit {
         {
           property: 'timestamp',
           direction: 'ASC',
-        }
+        },
       ],
     },
     type: 'prediction',
-    startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
+    startBookingdate: new Date(
+      this.currentStartDate.value.getFullYear(),
       this.currentStartDate.value.getMonth(),
-      this.currentStartDate.value.getDate()).toISOString(),
+      this.currentStartDate.value.getDate(),
+    ).toISOString(),
     temperatures: [22.2, 24.8, 26.7, 22, 23.1, 23, 20.8],
-    holidays: Array(7).fill(null).map((x, i) => i !== 4 ? x : 'Holiday!')
+    holidays: Array(7)
+      .fill(null)
+      .map((x, i) => (i !== 4 ? x : 'Holiday!')),
   };
   dailyFilter: FilterOrdersCockpit = {
-  pageable : {
-      pageSize : 10000,
-      pageNumber : 0,
+    pageable: {
+      pageSize: 10000,
+      pageNumber: 0,
       sort: [
         {
           property: 'bookingdate',
           direction: 'ASC',
-        }
+        },
       ],
-  },
+    },
     type: 'daily',
-    startBookingdate: new Date(this.currentStartDate.value.getFullYear(),
+    startBookingdate: new Date(
+      this.currentStartDate.value.getFullYear(),
       this.currentStartDate.value.getMonth(),
-      this.currentStartDate.value.getDate() - 7).toISOString(),
-    endBookingdate: new Date(this.currentEndDate.value.getFullYear(),
+      this.currentStartDate.value.getDate() - 7,
+    ).toISOString(),
+    endBookingdate: new Date(
+      this.currentEndDate.value.getFullYear(),
       this.currentEndDate.value.getMonth(),
-      this.currentEndDate.value.getDate() - 1).toISOString()
+      this.currentEndDate.value.getDate() - 1,
+    ).toISOString(),
   };
   monthlyFilter: FilterOrdersCockpit = {
-  pageable : {
-      pageSize : 10000,
-      pageNumber : 0,
+    pageable: {
+      pageSize: 10000,
+      pageNumber: 0,
       sort: [
         {
           property: 'bookingdate',
           direction: 'ASC',
-        }
+        },
       ],
-  },
+    },
     type: 'monthly',
-    startBookingdate: new Date(this.currentStartDate.value.getFullYear(), this.currentStartDate.value.getMonth() - 12, 1).toISOString(),
-    endBookingdate: new Date().toISOString()
+    startBookingdate: new Date(
+      this.currentStartDate.value.getFullYear(),
+      this.currentStartDate.value.getMonth() - 12,
+      1,
+    ).toISOString(),
+    endBookingdate: new Date().toISOString(),
   };
 
   predictionBusy = false;
@@ -84,7 +98,7 @@ export class PredictionCockpitComponent implements OnInit {
 
   editPredictionDayIndex = 0;
 
-  constructor(private predictionService: PredictionService) { }
+  constructor(private predictionService: PredictionService) {}
 
   ngOnInit(): void {
     this.fetchOrders(this.predictionFilter);
@@ -92,45 +106,61 @@ export class PredictionCockpitComponent implements OnInit {
     this.fetchOrders(this.monthlyFilter);
   }
 
-  colorGenerator(size: number): { r: number, g: number, b: number }[] {
-    const hs = Array(size).fill(0).map((_, i) => i / size);
-    const s = .5;
-    const v = .9;
+  colorGenerator(size: number): { r: number; g: number; b: number }[] {
+    const hs = Array(size)
+      .fill(0)
+      .map((_, i) => i / size);
+    const s = 0.5;
+    const v = 0.9;
     const p = v * (1 - s);
 
-    return hs.map(h => {
-      let r, g, b;
+    return hs.map((h) => {
+      let r: number;
+      let g: number;
+      let b: number;
       const i = Math.floor(h * 6);
       const f = h * 6 - i;
       const q = v * (1 - f * s);
       const t = v * (1 - (1 - f) * s);
 
       switch (i % 6) {
-        case 0: r = v, g = t, b = p; break;
-        case 1: r = q, g = v, b = p; break;
-        case 2: r = p, g = v, b = t; break;
-        case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
-        case 5: r = v, g = p, b = q; break;
+        case 0:
+          (r = v), (g = t), (b = p);
+          break;
+        case 1:
+          (r = q), (g = v), (b = p);
+          break;
+        case 2:
+          (r = p), (g = v), (b = t);
+          break;
+        case 3:
+          (r = p), (g = q), (b = v);
+          break;
+        case 4:
+          (r = t), (g = p), (b = v);
+          break;
+        case 5:
+          (r = v), (g = p), (b = q);
+          break;
       }
 
       return {
         r: Math.round(r * 255),
         g: Math.round(g * 255),
-        b: Math.round(b * 255)
+        b: Math.round(b * 255),
       };
     });
   }
 
-  updateGraphClick(evt: any) {
+  updateGraphClick(evt: any): void {
     return this.fetchOrders(
       evt.currentTarget.dataset.type === 'daily'
         ? this.dailyFilter
-        : this.monthlyFilter
+        : this.monthlyFilter,
     );
   }
 
-  fetchOrders(filter: FilterOrdersCockpit | PredictionCriteria) {
+  fetchOrders(filter: FilterOrdersCockpit | PredictionCriteria): void {
     const data = [];
     let labels = [];
 
@@ -143,22 +173,23 @@ export class PredictionCockpitComponent implements OnInit {
     }
 
     const json = JSON.stringify(filter);
-    const observable = filter.type === 'prediction'
-      ? this.predictionService.getPrediction(filter as PredictionCriteria)
-      : this.predictionService.getOrders(filter as FilterOrdersCockpit);
+    const observable =
+      filter.type === 'prediction'
+        ? this.predictionService.getPrediction(filter as PredictionCriteria)
+        : this.predictionService.getOrders(filter as FilterOrdersCockpit);
 
     observable.subscribe((orders) => {
       if (json !== JSON.stringify(filter)) {
         return;
       }
 
-      orders.dishes.forEach(record => {
+      orders.dishes.forEach((record) => {
         data.push({
           type: 'line',
           fill: false,
           data: record.orders,
           label: record.name,
-          cubicInterpolationMode: 'monotone'
+          cubicInterpolationMode: 'monotone',
         });
       });
 
@@ -166,12 +197,16 @@ export class PredictionCockpitComponent implements OnInit {
       const colors = this.colorGenerator(orders.dishes.length);
       data.forEach((record, index) => {
         const color = colors[index];
-        record.backgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
-        record.borderColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
-        record.pointBackgroundColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
+        record.backgroundColor =
+          'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
+        record.borderColor =
+          'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
+        record.pointBackgroundColor =
+          'rgba(' + color.r + ',' + color.g + ',' + color.b + ',1)';
         record.pointBorderColor = '#fff';
         record.pointHoverBackgroundColor = '#fff';
-        record.pointHoverBorderColor = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.8)';
+        record.pointHoverBorderColor =
+          'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.8)';
       });
 
       switch (filter.type) {
@@ -184,8 +219,10 @@ export class PredictionCockpitComponent implements OnInit {
         case 'prediction':
           labels = orders.dates.map((date, index) => {
             return [
-              date.toLocaleDateString('en-GB', { weekday: 'short' }) + ' ' + date.toLocaleDateString('en-GB'),
-              orders.weather[index] + '°C'
+              date.toLocaleDateString('en-GB', { weekday: 'short' }) +
+                ' ' +
+                date.toLocaleDateString('en-GB'),
+              orders.weather[index] + '°C',
             ];
           });
           break;
@@ -193,7 +230,10 @@ export class PredictionCockpitComponent implements OnInit {
 
       if (filter.type === 'daily' || filter.type === 'prediction') {
         // get the max value of all orders to set it as value of holiday bar
-        const max = Math.ceil(Math.max(...data.map(record => Math.max(...record.data))) / 10) * 10;
+        const max =
+          Math.ceil(
+            Math.max(...data.map((record) => Math.max(...record.data))) / 10,
+          ) * 10;
         const weekHolidays = orders.holidays.map((record, index) => {
           return record ? max : 0;
         });
@@ -203,7 +243,7 @@ export class PredictionCockpitComponent implements OnInit {
           data: weekHolidays,
           label: 'holiday',
           designation: orders.holidays,
-          backgroundColor: 'rgba(0,100,0,0.1)'
+          backgroundColor: 'rgba(0,100,0,0.1)',
         });
       }
 
@@ -229,16 +269,16 @@ export class PredictionCockpitComponent implements OnInit {
         });
         chartCanvas.update();
       } else {
-        const config = chartCanvas = {
+        const config = (chartCanvas = {
           type: 'bar',
           data: {
-            labels: labels,
-            datasets: data
+            labels,
+            datasets: data,
           },
           options: {
             responsive: true,
             hover: {
-              animationDuration: 0
+              animationDuration: 0,
             },
             legend: {
               display: true,
@@ -248,30 +288,40 @@ export class PredictionCockpitComponent implements OnInit {
                     return dataLabel;
                   }
                 },
-              }
+              },
             },
             tooltips: {
               callbacks: {
                 label: (tooltipItem, dataTooltip) => {
-                  const ordersTooltip = dataTooltip.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                  const ordersLabel = Math.round(ordersTooltip * 10) / 10 + ' order' + (ordersTooltip !== 1 ? 's' : '');
+                  const ordersTooltip =
+                    dataTooltip.datasets[tooltipItem.datasetIndex].data[
+                      tooltipItem.index
+                    ];
+                  const ordersLabel =
+                    Math.round(ordersTooltip * 10) / 10 +
+                    ' order' +
+                    (ordersTooltip !== 1 ? 's' : '');
 
                   switch (filter.type) {
                     case 'monthly':
                       return ordersLabel;
                     case 'daily':
                     case 'prediction':
-                      if (dataTooltip.datasets[tooltipItem.datasetIndex].designation) {
-                        return dataTooltip.datasets[tooltipItem.datasetIndex].designation[tooltipItem.index];
+                      if (
+                        dataTooltip.datasets[tooltipItem.datasetIndex]
+                          .designation
+                      ) {
+                        return dataTooltip.datasets[tooltipItem.datasetIndex]
+                          .designation[tooltipItem.index];
                       }
 
                       return ordersLabel;
                   }
-                }
-              }
+                },
+              },
             },
-          }
-        };
+          },
+        });
         switch (filter.type) {
           case 'monthly':
             ctx = this.monthlyChart.nativeElement.getContext('2d');
@@ -298,7 +348,7 @@ export class PredictionCockpitComponent implements OnInit {
     });
   }
 
-  triggerPrediction() {
+  triggerPrediction(): void {
     clearTimeout(this.triggerPredictionId);
 
     this.triggerPredictionId = setTimeout(() => {
@@ -306,50 +356,71 @@ export class PredictionCockpitComponent implements OnInit {
     }, 500);
   }
 
-  getEditPredictionDayLabel() {
-    const date = new Date(this.currentStartDate.value.getFullYear(),
+  getEditPredictionDayLabel(): string {
+    const date = new Date(
+      this.currentStartDate.value.getFullYear(),
       this.currentStartDate.value.getMonth(),
-      this.currentStartDate.value.getDate() + this.editPredictionDayIndex);
+      this.currentStartDate.value.getDate() + this.editPredictionDayIndex,
+    );
 
-    return date.toLocaleDateString('en-GB', { weekday: 'short' }) + ' ' + date.toLocaleDateString('en-GB');
+    return (
+      date.toLocaleDateString('en-GB', { weekday: 'short' }) +
+      ' ' +
+      date.toLocaleDateString('en-GB')
+    );
   }
 
-  monthlyCalendarYearHandler( calendarDate: Moment, filterType: String ) {
+  monthlyCalendarYearHandler(calendarDate: Moment, filterType: string): void {
     if (filterType === 'start') {
       const dateValue = this.currentStartDate.value;
       dateValue.setFullYear(calendarDate.year());
       dateValue.setDate(1);
       this.currentStartDate.setValue(dateValue);
-      this.monthlyFilter.startBookingdate = new Date(this.currentStartDate.value.getFullYear(),
-        this.currentStartDate.value.getMonth(), 1).toISOString();
+      this.monthlyFilter.startBookingdate = new Date(
+        this.currentStartDate.value.getFullYear(),
+        this.currentStartDate.value.getMonth(),
+        1,
+      ).toISOString();
     } else if (filterType === 'end') {
       const dateValue = this.currentEndDate.value;
       dateValue.setFullYear(calendarDate.year());
       dateValue.setDate(1);
       this.currentEndDate.setValue(dateValue);
-      this.monthlyFilter.endBookingdate = new Date(this.currentEndDate.value.getFullYear(),
-        this.currentEndDate.value.getMonth(), 1).toISOString();
+      this.monthlyFilter.endBookingdate = new Date(
+        this.currentEndDate.value.getFullYear(),
+        this.currentEndDate.value.getMonth(),
+        1,
+      ).toISOString();
     }
   }
 
-  monthlyCalendarMonthHandler( calendarDate: Moment, filterType: String, datepicker: OwlDateTimeComponent<Moment> ) {
-
+  monthlyCalendarMonthHandler(
+    calendarDate: Moment,
+    filterType: string,
+    datepicker: OwlDateTimeComponent<Moment>,
+  ): void {
     if (filterType === 'start') {
       const dateValue = this.currentStartDate.value;
       dateValue.setFullYear(calendarDate.year());
       dateValue.setMonth(calendarDate.month());
       dateValue.setDate(1);
       this.currentStartDate.setValue(dateValue);
-      this.monthlyFilter.startBookingdate = new Date(this.currentStartDate.value.getFullYear(),
-        this.currentStartDate.value.getMonth(), 1).toISOString();
+      this.monthlyFilter.startBookingdate = new Date(
+        this.currentStartDate.value.getFullYear(),
+        this.currentStartDate.value.getMonth(),
+        1,
+      ).toISOString();
     } else if (filterType === 'end') {
       const dateValue = this.currentEndDate.value;
       dateValue.setFullYear(calendarDate.year());
       dateValue.setMonth(calendarDate.month());
       dateValue.setDate(1);
       this.currentEndDate.setValue(dateValue);
-      this.monthlyFilter.endBookingdate = new Date(this.currentEndDate.value.getFullYear(),
-        this.currentEndDate.value.getMonth(), 1).toISOString();
+      this.monthlyFilter.endBookingdate = new Date(
+        this.currentEndDate.value.getFullYear(),
+        this.currentEndDate.value.getMonth(),
+        1,
+      ).toISOString();
     }
     datepicker.close();
   }

@@ -45,7 +45,7 @@ describe('SidenavOrderComponent', () => {
       providers: [{ provide: MatDialog, useValue: matDialogStub }],
     });
     fixture = TestBed.createComponent(SidenavOrderComponent);
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = fixture.componentInstance;
     el = fixture.debugElement;
     component.order = getAllOrderData[0];
@@ -56,7 +56,7 @@ describe('SidenavOrderComponent', () => {
   });
 
   it('should emit order details to update order on click of increaseOrder button', () => {
-    component.orderIncreased.subscribe(order => {
+    component.orderIncreased.subscribe((order) => {
       expect(order).toEqual(getAllOrderData[0]);
     });
     const elem = el.query(By.css('.increaseOrder'));
@@ -64,7 +64,7 @@ describe('SidenavOrderComponent', () => {
   });
 
   it('should emit order details to cut down the orders on click of decreaseOrder button', () => {
-    component.orderDecreased.subscribe(order => {
+    component.orderDecreased.subscribe((order) => {
       expect(order).toEqual(getAllOrderData[0]);
     });
     const elem = el.query(By.css('.decreaseOrder'));
@@ -72,7 +72,7 @@ describe('SidenavOrderComponent', () => {
   });
 
   it('should clear order details on click of removeOrderBtn button', () => {
-    component.orderRemoved.subscribe(order => {
+    component.orderRemoved.subscribe((order) => {
       expect(order).toEqual(getAllOrderData[0]);
     });
     const elem = el.query(By.css('.removeOrderBtn'));
@@ -80,7 +80,7 @@ describe('SidenavOrderComponent', () => {
   });
 
   it('makes expected calls', () => {
-    component.orderIncreased.subscribe(order => {
+    component.orderIncreased.subscribe((order) => {
       expect(order).toEqual(getAllOrderData[0]);
     });
     const elem = el.query(By.css('.increaseOrder'));
@@ -88,7 +88,7 @@ describe('SidenavOrderComponent', () => {
   });
 
   it('should remove comment on click of removeOrderComment button', () => {
-    component.commentRemoved.subscribe(order => {
+    component.commentRemoved.subscribe((order) => {
       expect(order).toEqual(getAllOrderData[0]);
     });
     const elem = el.query(By.css('.removeOrderComment'));
@@ -99,7 +99,7 @@ describe('SidenavOrderComponent', () => {
     spyOn(dialog, 'open').and.callThrough();
     getAllOrderData[0].details.orderLine.comment = '';
     fixture.detectChanges();
-    component.commentAdded.subscribe(order => {
+    component.commentAdded.subscribe((order) => {
       expect(order).toBeTruthy();
       getAllOrderData[0].details.orderLine.comment = 'test';
     });

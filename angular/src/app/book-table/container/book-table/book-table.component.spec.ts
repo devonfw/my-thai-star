@@ -1,5 +1,13 @@
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { async, ComponentFixture, TestBed, fakeAsync, tick, flushMicrotasks, flush } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  flushMicrotasks,
+  flush,
+} from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from '../../../core/core.module';
@@ -17,18 +25,22 @@ import {
 import { getTranslocoModule } from '../../../transloco-testing.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog,
+} from '@angular/material/dialog';
 import { of } from 'rxjs/internal/observable/of';
 import { click } from '../../../shared/common/test-utils';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
-    afterClosed: () => of(true)
-  })
+    afterClosed: () => of(true),
+  }),
 };
 
 const mockDialogRef = {
-  afterClosed: () => of(true)
+  afterClosed: () => of(true),
 };
 
 describe('BookTableComponent', () => {
@@ -44,9 +56,9 @@ describe('BookTableComponent', () => {
       declarations: [BookTableComponent, EmailValidatorDirective],
       providers: [
         BookTableService,
-        { provide: SnackBarService, useValue: snackBarService},
+        { provide: SnackBarService, useValue: snackBarService },
         { provide: MatDialog, useValue: mockDialog },
-        { provide: MatDialogRef, useValue: mockDialogRef }
+        { provide: MatDialogRef, useValue: mockDialogRef },
       ],
       imports: [
         BrowserAnimationsModule,
@@ -54,13 +66,15 @@ describe('BookTableComponent', () => {
         getTranslocoModule(),
         CoreModule,
       ],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(BookTableComponent);
-      component = fixture.componentInstance;
-      el = fixture.debugElement;
-      dialog = TestBed.get(MatDialog);
-      fixture.detectChanges();
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(BookTableComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+        dialog = TestBed.inject(MatDialog);
+        fixture.detectChanges();
+      });
   }));
 
   it('should create', () => {
@@ -127,5 +141,4 @@ describe('BookTableComponent', () => {
     component.removeInvite('test1@gmail.com');
     expect(component.invitationModel.length).toBe(1);
   }));
-
 });

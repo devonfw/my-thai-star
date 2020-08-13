@@ -34,7 +34,7 @@ describe('TwoFactorDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(TwoFactorDialogComponent).componentInstance;
   });
 

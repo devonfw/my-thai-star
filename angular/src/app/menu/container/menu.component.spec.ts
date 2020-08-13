@@ -1,6 +1,12 @@
 import * as uuid from 'uuid';
 import { NO_ERRORS_SCHEMA, DebugElement, Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  flush,
+} from '@angular/core/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { Action, Store, StoreModule } from '@ngrx/store';
 import { Subject, of } from 'rxjs';
@@ -25,45 +31,46 @@ import { getTranslocoModule } from '../../transloco-testing.module';
 import { filteredMenuDishes } from 'in-memory-test-data/db-menu-dish.filter';
 
 const mockFilterValue = {
-  'searchBy': 'fried',
-  'sort': {
-    'property': 'price',
-    'direction': 'DESC'
+  searchBy: 'fried',
+  sort: {
+    property: 'price',
+    direction: 'DESC',
   },
-  'maxPrice': null,
-  'minLikes': null,
-  'categories': {
-    'mainDishes': false,
-    'starters': false,
-    'desserts': false,
-    'noodle': false,
-    'rice': true,
-    'curry': false,
-    'vegan': false,
-    'vegetarian': false,
-    'favourites': false
-  }
+  maxPrice: null,
+  minLikes: null,
+  categories: {
+    mainDishes: false,
+    starters: false,
+    desserts: false,
+    noodle: false,
+    rice: true,
+    curry: false,
+    vegan: false,
+    vegetarian: false,
+    favourites: false,
+  },
 };
 
 const menuServiceStub = {
   getDishes: jasmine.createSpy('getDishes').and.returnValue(menuDishes),
   menuToOrder: jasmine.createSpy('menuToOrder').and.returnValue({
     id: uuid.v4(),
-      details: {
-        dish: menuDishes.content[0].dish,
-        extras: menuDishes.content[0].extras,
-        orderLine: {
-          amount: 1,
-          comment: '',
-        },
+    details: {
+      dish: menuDishes.content[0].dish,
+      extras: menuDishes.content[0].extras,
+      orderLine: {
+        amount: 1,
+        comment: '',
       },
     },
-  ),
-  composeFilters: jasmine.createSpy('composeFilters').and.returnValue(filteredMenuDishes)
+  }),
+  composeFilters: jasmine
+    .createSpy('composeFilters')
+    .and.returnValue(filteredMenuDishes),
 };
 
 const sidenavServiceStub = {
-  openSideNav: jasmine.createSpy('openSideNav')
+  openSideNav: jasmine.createSpy('openSideNav'),
 };
 
 const STATE = {
@@ -71,9 +78,9 @@ const STATE = {
     menu: {
       loading: true,
       loaded: true,
-      dishes: menuDishes['content'] as any[],
-      errorMessage: ''
-    }
+      dishes: menuDishes.content as any[],
+      errorMessage: '',
+    },
   },
   sidenav: {
     order: {
@@ -84,9 +91,9 @@ const STATE = {
       orderSend: {
         token: '',
         orderSent: false,
-        error: ''
-      }
-    }
+        error: '',
+      },
+    },
   },
   auth: {
     error: null,
@@ -98,8 +105,8 @@ const STATE = {
     },
     token: {
       token: '',
-    }
-  }
+    },
+  },
 };
 
 describe('MenuComponent', () => {
@@ -113,12 +120,11 @@ describe('MenuComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        CoreModule,
-        getTranslocoModule()
-      ],
+      imports: [CoreModule, getTranslocoModule()],
       declarations: [
-        MenuComponent, MenuCardComponent, MenuCardDetailsComponent
+        MenuComponent,
+        MenuCardComponent,
+        MenuCardDetailsComponent,
       ],
       providers: [
         PriceCalculatorService,
@@ -128,9 +134,9 @@ describe('MenuComponent', () => {
       ],
     }).compileComponents();
 
-    mockStore = TestBed.get(Store);
-    priceCalculatorService = TestBed.get(PriceCalculatorService);
-    sidenavService = TestBed.get(SidenavService);
+    mockStore = TestBed.inject(MockStore);
+    priceCalculatorService = TestBed.inject(PriceCalculatorService);
+    sidenavService = TestBed.inject(SidenavService);
     fixture = TestBed.createComponent(MenuComponent);
     component = fixture.componentInstance;
     el = fixture.debugElement;
@@ -139,7 +145,7 @@ describe('MenuComponent', () => {
 
   it('can load instance and verify the dishes', () => {
     expect(component).toBeTruthy();
-    component.dishes$.subscribe(dishes => {
+    component.dishes$.subscribe((dishes) => {
       expect(dishes.length).toBe(7);
     });
   });

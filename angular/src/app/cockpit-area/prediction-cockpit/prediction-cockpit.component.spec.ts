@@ -24,8 +24,8 @@ describe('PredictionCockpitComponent', () => {
       providers: [provideMockStore({ initialState }), ConfigService],
       imports: [HttpClientTestingModule],
     });
-    http = TestBed.get(HttpClient);
-    store = TestBed.get(Store);
+    http = TestBed.inject(HttpClient);
+    store = TestBed.inject(Store);
 
     configService = new ConfigService(store);
     predictionService = new PredictionService(http, configService);

@@ -3,7 +3,7 @@ import { DishView, ExtraView } from 'app/shared/view-models/interfaces';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'own-menu-card-details',
+  selector: 'app-own-menu-card-details',
   templateUrl: './menu-card-details.component.html',
   styleUrls: ['./menu-card-details.component.scss'],
 })
