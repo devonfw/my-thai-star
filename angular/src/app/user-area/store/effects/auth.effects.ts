@@ -91,6 +91,10 @@ export class AuthEffects {
                 username: user.username,
                 password: user.password,
               });
+			  } else {
+              return authActions.token({
+                token: { token: res.headers.get('Authorization') },
+              });
             }
           }),
           catchError((error) => of(authActions.loginFail({ error: error }))),
