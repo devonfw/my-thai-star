@@ -36,7 +36,9 @@
               "node_modules/@busacca/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": ["node_modules/showdown/dist/showdown.js"],
+            "scripts": [
+              "node_modules/showdown/dist/showdown.js"
+            ],
             "allowedCommonJsDependencies": [
               "lodash",
               "flat",
@@ -217,7 +219,9 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": ["node_modules/showdown/dist/showdown.js"],
+            "scripts": [
+              "node_modules/showdown/dist/showdown.js"
+            ],
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
@@ -235,7 +239,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
             "exclude": []
           }
         }
@@ -256,7 +263,9 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
             "exclude": []
           }
         }
@@ -274,6 +283,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": false
   }
 }
