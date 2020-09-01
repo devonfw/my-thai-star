@@ -12,7 +12,7 @@
 
   <properties>
     <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-    <devon4j.version>2020.04.001</devon4j.version>
+    <devon4j.version>2020.08.001</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <junit.version>5.5.2</junit.version>
