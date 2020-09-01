@@ -1,34 +1,20 @@
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { menuDishes } from 'in-memory-test-data/db-menu-dish';
+import { filteredMenuDishes } from 'in-memory-test-data/db-menu-dish.filter';
 import * as uuid from 'uuid';
-import { NO_ERRORS_SCHEMA, DebugElement, Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  flush,
-} from '@angular/core/testing';
-import { EffectsModule } from '@ngrx/effects';
-import { Action, Store, StoreModule } from '@ngrx/store';
-import { Subject, of } from 'rxjs';
+import * as fromApp from '../../../app/store/reducers';
 import { CoreModule } from '../../core/core.module';
+import { click } from '../../shared/common/test-utils';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
-import * as fromStore from '../../store/reducers';
+import { getTranslocoModule } from '../../transloco-testing.module';
+import { MenuCardDetailsComponent } from '../components/menu-card/menu-card-details/menu-card-details.component';
+import { MenuCardComponent } from '../components/menu-card/menu-card.component';
 import { MenuService } from '../services/menu.service';
 import { MenuComponent } from './menu.component';
-import { By } from '@angular/platform-browser';
-import { click } from '../../shared/common/test-utils';
-import { menuDishes } from 'in-memory-test-data/db-menu-dish';
-import { DishView } from '../../shared/view-models/interfaces';
-import { MenuCardComponent } from '../components/menu-card/menu-card.component';
-import { MenuCardDetailsComponent } from '../components/menu-card/menu-card-details/menu-card-details.component';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { AuthState } from '../../user-area/store/reducers/auth.reducer';
-import * as fromSideNavState from '../../sidenav/store/reducers';
-import * as fromMenu from '../../menu/store/reducers';
-import * as fromApp from '../../../app/store/reducers';
-import { getTranslocoModule } from '../../transloco-testing.module';
-import { filteredMenuDishes } from 'in-memory-test-data/db-menu-dish.filter';
 
 const mockFilterValue = {
   searchBy: 'fried',
@@ -98,11 +84,7 @@ const STATE = {
   auth: {
     error: null,
     text: null,
-    user: {
-      user: '',
-      role: 'CUSTOMER',
-      logged: true,
-    },
+    user: null,
     token: {
       token: '',
     },
@@ -143,33 +125,7 @@ describe('MenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('can load instance and verify the dishes', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-    component.dishes$.subscribe((dishes) => {
-      expect(dishes.length).toBe(7);
-    });
-  });
-
-  it('extras defaults to: []', () => {
-    expect(component.extras).toEqual([]);
-  });
-
-  it('should update dish with extra curry', () => {
-    spyOn(mockStore, 'dispatch').and.callThrough();
-    const ele = el.queryAll(By.css('.extras .mat-checkbox label'));
-    click(ele[1].nativeElement);
-    expect(mockStore.dispatch).toHaveBeenCalled();
-  });
-
-  it('should dished', () => {
-    const ele = el.queryAll(By.css('.addOrder'));
-    click(ele[0]);
-    expect(sidenavService.openSideNav).toHaveBeenCalled();
-  });
-
-  it('should update dish by applying filter', () => {
-    spyOn(mockStore, 'dispatch').and.callThrough();
-    component.onFilterChange(mockFilterValue);
-    expect(mockStore.dispatch).toHaveBeenCalled();
   });
 });
