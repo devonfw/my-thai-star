@@ -46,13 +46,6 @@ public class PreLoginFilter extends JwtLoginFilter {
   }
 
   @Override
-  public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-
-    return super.attemptAuthentication(request, response);
-  }
-
-  @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
       Authentication authentication) throws IOException {
 
@@ -73,7 +66,7 @@ public class PreLoginFilter extends JwtLoginFilter {
     try {
       chain.doFilter(request, response);
     } catch (ServletException e) {
-      LOG.error("Error in filter chaining :" + e.getMessage());
+      LOG.error("Error in filter chaining :{}", e.getMessage());
     }
   }
 
