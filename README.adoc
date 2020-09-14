@@ -11,11 +11,11 @@ This project is intended to be an example for the usage of new technologies in w
 
 * **Angular**
 
-Client-side developed using the latest version of this framework: Angular 6.
+Client-side developed using the latest version of this framework: Angular 10.
 
 * **Java**
 
-Server-side developed using the 3.0 version of **devon4j**.
+Server-side developed using the 2020.08.001 version of **devon4j**.
 
 * **Node**
 
