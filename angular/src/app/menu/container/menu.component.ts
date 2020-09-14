@@ -23,7 +23,7 @@ export interface Filters {
 }
 
 @Component({
-  selector: 'public-menu',
+  selector: 'app-public-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
@@ -84,7 +84,7 @@ export class MenuComponent implements OnInit {
     this.store.dispatch(fromMenu.updateDishExtras({ dish }));
   }
 
-  findOrder(orderToStore: Order) {
+  findOrder(orderToStore: Order): Order {
     return this.orders.find((order) => {
       const orderIds = {
         dishId: order.details.dish.id,
@@ -98,7 +98,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  onOrderAdded(order: DishView) {
+  onOrderAdded(order: DishView): void {
     const orderToStore = this.menuService.menuToOrder(order);
     orderToStore.details.extras = orderToStore.details.extras.filter(
       (e) => e.selected === true,

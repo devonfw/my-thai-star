@@ -6,7 +6,7 @@ import * as fromApp from '../../../store/reducers';
 import * as bookTableActions from '../../store/actions/book-table.actions';
 
 @Component({
-  selector: 'public-book-table-dialog',
+  selector: 'app-public-book-table-dialog',
   templateUrl: './book-table-dialog.component.html',
   styleUrls: ['./book-table-dialog.component.scss'],
 })

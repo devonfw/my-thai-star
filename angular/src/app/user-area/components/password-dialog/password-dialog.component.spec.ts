@@ -24,12 +24,15 @@ describe('PasswordDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        SnackBarService, AuthService, HttpClient,
+        SnackBarService,
+        AuthService,
+        HttpClient,
         {
-          provide: UserAreaService, useValue: {
-            changePassword: jasmine.createSpy('changePassword')
-          }
-        }
+          provide: UserAreaService,
+          useValue: {
+            changePassword: jasmine.createSpy('changePassword'),
+          },
+        },
       ],
       imports: [
         CoreModule,
@@ -45,8 +48,8 @@ describe('PasswordDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
-    userAreaService = TestBed.get(UserAreaService);
+    dialog = TestBed.inject(MatDialog);
+    userAreaService = TestBed.inject(UserAreaService);
     component = dialog.open(PasswordDialogComponent).componentInstance;
   });
 
@@ -58,10 +61,9 @@ describe('PasswordDialogComponent', () => {
     const form = new FormGroup({
       oldPassword: new FormControl('capgemini'),
       newPassword: new FormControl('newCapgemini'),
-      verifyPassword: new FormControl('newCapgemini')
+      verifyPassword: new FormControl('newCapgemini'),
     });
     component.passwordSubmit(form);
     expect(userAreaService.changePassword).toHaveBeenCalled();
-
   });
 });

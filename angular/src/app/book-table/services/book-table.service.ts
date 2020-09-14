@@ -38,7 +38,7 @@ export class BookTableService {
     if (type) {
       composedBooking.invitedGuests = map(
         invitationData.invitedGuests,
-        (email: string) => ({ email: email }),
+        (email: string) => ({ email }),
       );
     } else {
       composedBooking.booking.assistants = invitationData.assistants;

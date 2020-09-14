@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { SidenavService } from '../../services/sidenav.service';
-import * as fromApp from '../../store';
 import * as orderActions from '../actions/order.actions';
 import * as sendOrderActions from '../actions/send-order.actions';
 
@@ -21,7 +19,7 @@ export class SendOrderEffects {
             return sendOrderActions.sendOrdersSuccess();
           }),
           catchError((error) => {
-            return of(sendOrderActions.sendOrdersFail({ error: error }));
+            return of(sendOrderActions.sendOrdersFail({ error }));
           }),
         );
       }),
@@ -42,7 +40,7 @@ export class SendOrderEffects {
     () =>
       this.actions$.pipe(
         ofType(sendOrderActions.sendOrdersFail),
-        map((errorData) => errorData['error']['message']),
+        map((errorData) => errorData.error),
         tap((error) => {
           this.snackBar.openSnack(error, 4000, 'red');
         }),
@@ -51,7 +49,6 @@ export class SendOrderEffects {
   );
 
   constructor(
-    private store: Store<fromApp.SideNavState>,
     private actions$: Actions,
     private sidenavService: SidenavService,
     private snackBar: SnackBarService,

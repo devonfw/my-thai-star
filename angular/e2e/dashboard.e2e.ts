@@ -7,11 +7,11 @@ import {
   ProtractorExpectedConditions,
 } from 'protractor';
 
-describe('basic e2e test with loading', function(): void {
+describe('basic e2e test with loading', () => {
   const EC: ProtractorExpectedConditions = protractor.ExpectedConditions;
-  describe('home', function(): void {
+  describe('home', () => {
     browser.get('/');
-    it('should load home page', function(): void {
+    it('should load home page', () => {
       expect(browser.getTitle()).toBe('My Thai Star');
       // Waits for the element 'td-loading' to not be present on the dom.
       browser.wait(EC.not(EC.presenceOf($('td-loading'))), 10000).then(() => {

@@ -61,7 +61,7 @@ describe('HeaderComponent', () => {
       ],
     });
     spyOn(HeaderComponent.prototype, 'getFlag');
-    translocoService = TestBed.get(TranslocoService);
+    translocoService = TestBed.inject(TranslocoService);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
   });
@@ -69,7 +69,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
   describe('openLoginDialog', () => {
-    inject([TranslocoService], (_injectService: TranslocoService) => {
+    inject([TranslocoService], (injectService: TranslocoService) => {
       it('makes expected calls', async () => {
         spyOn(store, 'dispatch').and.callThrough();
         component.openLoginDialog();

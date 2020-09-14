@@ -38,6 +38,19 @@
             ],
             "scripts": [
               "node_modules/showdown/dist/showdown.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "flat",
+              "chart.js",
+              "uuid",
+              "moment/locale/ca",
+              "moment/locale/de",
+              "moment/locale/es",
+              "moment/locale/fr",
+              "moment/locale/hi",
+              "moment/locale/nl",
+              "moment/locale/pl"
             ]
           },
           "configurations": {
@@ -48,7 +61,7 @@
                   "maximumWarning": "6kb"
                 }
               ]
-},
+            },
             "production": {
               "budgets": [
                 {
@@ -270,6 +283,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": false
   }
 }

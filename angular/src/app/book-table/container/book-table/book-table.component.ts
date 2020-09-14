@@ -19,7 +19,7 @@ import { InvitationDialogComponent } from '../../components/invitation-dialog/in
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'public-book-table',
+  selector: 'app-public-book-table',
   templateUrl: './book-table.component.html',
   styleUrls: ['./book-table.component.scss'],
 })
@@ -46,7 +46,7 @@ export class BookTableComponent implements OnInit {
     private translocoService: TranslocoService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const booking = this.reservationInfo.booking;
@@ -131,7 +131,11 @@ export class BookTableComponent implements OnInit {
     event.input.value = '';
     if (!emailValidator(last(this.invitationModel))) {
       this.invitationModel.pop();
-      this.snackBarService.openSnack(this.translocoService.translate('bookTable.formErrors.emailFormat'), 1000, 'red');
+      this.snackBarService.openSnack(
+        this.translocoService.translate('bookTable.formErrors.emailFormat'),
+        1000,
+        'red',
+      );
     }
   }
 
