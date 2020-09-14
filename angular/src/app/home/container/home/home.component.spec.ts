@@ -1,4 +1,9 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule, Store } from '@ngrx/store';
@@ -32,7 +37,7 @@ const homeData = (component) => {
 };
 
 const mockStore = {
-  dispatch: jasmine.createSpy('dispatch')
+  dispatch: jasmine.createSpy('dispatch'),
 };
 
 describe('HomeComponent', () => {
@@ -43,9 +48,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, HomeCardComponent, HomeLayoutComponent],
-      providers: [
-        { provide: Store, useValue: mockStore }
-      ],
+      providers: [{ provide: Store, useValue: mockStore }],
       imports: [
         getTranslocoModule(),
         CoreModule,
@@ -81,7 +84,7 @@ describe('HomeComponent', () => {
   });
 
   it('should verify whether button event generate event', fakeAsync(() => {
-    const store = TestBed.get(Store);
+    const store = TestBed.inject(Store);
     component.tiles = homeData(component);
     fixture.detectChanges();
     const action = el.query(By.css('.action'));

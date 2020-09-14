@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'own-home-card',
+  selector: 'app-own-home-card',
   templateUrl: './home-card.component.html',
   styleUrls: ['./home-card.component.scss'],
 })

@@ -5,7 +5,13 @@ import { ConfigService } from '../../core/config/config.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderCockpitComponent } from './order-cockpit.component';
 import { config } from '../../core/config/config';
-import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import {
+  TestBed,
+  ComponentFixture,
+  async,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslocoService } from '@ngneat/transloco';
 import { of } from 'rxjs/internal/observable/of';
@@ -22,27 +28,27 @@ import { orderData } from 'in-memory-test-data/db-order';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
-    afterClosed: () => of(true)
-  })
+    afterClosed: () => of(true),
+  }),
 };
 
 const translocoServiceStub = {
   selectTranslateObject: of({
-    'reservationDateH': 'Reservation Date',
-    'emailH': 'Email',
-    'bookingTokenH': 'Reference Number',
-    'ownerH': 'Owner',
-    'tableH': 'Table',
-    'creationDateH': 'Creation date'
-  } as any)
+    reservationDateH: 'Reservation Date',
+    emailH: 'Email',
+    bookingTokenH: 'Reference Number',
+    ownerH: 'Owner',
+    tableH: 'Table',
+    creationDateH: 'Creation date',
+  } as any),
 };
 
 const waiterCockpitServiceStub = {
-  'getOrders': jasmine.createSpy('getOrders').and.returnValue(of(orderData))
+  getOrders: jasmine.createSpy('getOrders').and.returnValue(of(orderData)),
 };
 
 const waiterCockpitServiceSortStub = {
-  'getOrders': jasmine.createSpy('getOrders').and.returnValue(of(ascSortOrder))
+  getOrders: jasmine.createSpy('getOrders').and.returnValue(of(ascSortOrder)),
 };
 
 class TestBedSetUp {
@@ -55,7 +61,7 @@ class TestBedSetUp {
         { provide: WaiterCockpitService, useValue: waiterCockpitStub },
         TranslocoService,
         ConfigService,
-        provideMockStore({ initialState })
+        provideMockStore({ initialState }),
       ],
       imports: [
         BrowserAnimationsModule,
@@ -80,20 +86,24 @@ describe('OrderCockpitComponent', () => {
 
   beforeEach(async(() => {
     initialState = { config };
-    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub).compileComponents().then(() => {
-      fixture = TestBed.createComponent(OrderCockpitComponent);
-      component = fixture.componentInstance;
-      el = fixture.debugElement;
-      store = TestBed.get(Store);
-      configService = new ConfigService(store);
-      waiterCockpitService = TestBed.get(WaiterCockpitService);
-      dialog = TestBed.get(MatDialog);
-      translocoService = TestBed.get(TranslocoService);
-    });
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(OrderCockpitComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+        store = TestBed.inject(Store);
+        configService = new ConfigService(store);
+        waiterCockpitService = TestBed.inject(WaiterCockpitService);
+        dialog = TestBed.inject(MatDialog);
+        translocoService = TestBed.inject(TranslocoService);
+      });
   }));
 
   it('should create component and verify content and total records of orders', fakeAsync(() => {
-    spyOn(translocoService, 'selectTranslateObject').and.returnValue(translocoServiceStub.selectTranslateObject);
+    spyOn(translocoService, 'selectTranslateObject').and.returnValue(
+      translocoServiceStub.selectTranslateObject,
+    );
     fixture.detectChanges();
     tick();
     expect(component).toBeTruthy();
@@ -105,7 +115,7 @@ describe('OrderCockpitComponent', () => {
     component.page({
       pageSize: 100,
       pageIndex: 2,
-      length: 50
+      length: 50,
     });
     expect(component.orders).toEqual(orderData.content);
     expect(component.totalOrders).toBe(8);
@@ -136,7 +146,6 @@ describe('OrderCockpitComponent', () => {
     expect(component.orders).toEqual(orderData.content);
     expect(component.totalOrders).toBe(8);
   }));
-
 });
 
 describe('TestingOrderCockpitComponentWithSortOrderData', () => {
@@ -152,22 +161,24 @@ describe('TestingOrderCockpitComponentWithSortOrderData', () => {
 
   beforeEach(async(() => {
     initialState = { config };
-    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub).compileComponents().then(() => {
-      fixture = TestBed.createComponent(OrderCockpitComponent);
-      component = fixture.componentInstance;
-      el = fixture.debugElement;
-      store = TestBed.get(Store);
-      configService = new ConfigService(store);
-      waiterCockpitService = TestBed.get(WaiterCockpitService);
-      dialog = TestBed.get(MatDialog);
-      translocoService = TestBed.get(TranslocoService);
-    });
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(OrderCockpitComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+        store = TestBed.inject(Store);
+        configService = new ConfigService(store);
+        waiterCockpitService = TestBed.inject(WaiterCockpitService);
+        dialog = TestBed.inject(MatDialog);
+        translocoService = TestBed.inject(TranslocoService);
+      });
   }));
 
   it('should sort records of orders', () => {
     component.sort({
       active: 'Reservation Date',
-      direction: 'asc'
+      direction: 'asc',
     });
     expect(component.orders).toEqual(ascSortOrder.content);
     expect(component.totalOrders).toBe(8);

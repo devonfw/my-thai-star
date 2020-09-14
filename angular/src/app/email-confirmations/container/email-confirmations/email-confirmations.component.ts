@@ -8,7 +8,7 @@ import { EmailConfirmationsService } from '../../services/email-confirmations.se
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'public-email-confirmations',
+  selector: 'app-public-email-confirmations',
   templateUrl: './email-confirmations.component.html',
   styleUrls: ['./email-confirmations.component.scss'],
 })

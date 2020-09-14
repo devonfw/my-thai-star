@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import * as bookTableActions from 'app/book-table/store/actions/book-table.actions';
 
 @Component({
-  selector: 'public-invitation-dialog',
+  selector: 'app-public-invitation-dialog',
   templateUrl: './invitation-dialog.component.html',
   styleUrls: ['./invitation-dialog.component.scss'],
 })
@@ -31,7 +31,7 @@ export class InvitationDialogComponent implements OnInit {
   sendInvitation(): void {
     const bookingPayload = this.invitationService.composeBooking(this.data, 1);
     this.store.dispatch(
-      bookTableActions.inviteFriends({booking: bookingPayload}),
+      bookTableActions.inviteFriends({ booking: bookingPayload }),
     );
     this.dialog.close(true);
   }

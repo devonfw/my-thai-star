@@ -5,16 +5,15 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import * as fromApp from 'app/store/reducers';
 import * as fromAuth from 'app/user-area/store/selectors/auth.selectors';
-import { Observable, Subscription } from 'rxjs';
-import { combineLatest } from 'rxjs/observable/combineLatest';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as fromRoot from '../../store';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { AuthService } from './auth.service';
-import * as fromRoot from '../../store';
-import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, OnDestroy {
@@ -31,10 +30,10 @@ export class AuthGuardService implements CanActivate, OnDestroy {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> {
-    return combineLatest(
+    return combineLatest([
       this.store.select(fromAuth.getRole),
       this.store.select(fromAuth.getLogged),
-    ).pipe(
+    ]).pipe(
       map(([role, logged]) => {
         if (
           (state.url === '/prediction' || state.url === '/clustering') &&
@@ -54,9 +53,8 @@ export class AuthGuardService implements CanActivate, OnDestroy {
 
         if (!logged) {
           this.translocoSubscription = this.translocoService
-              .selectTranslate('alerts.accessError').subscribe(alert =>
-                this.snackBar.openSnack(alert, 4000, 'red')
-              );
+            .selectTranslate('alerts.accessError')
+            .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'red'));
         }
 
         if (this.router.url === '/') {

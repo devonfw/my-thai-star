@@ -1,7 +1,9 @@
 <mat-card class="details-card">
   <div
     class="menu-image"
-    [style.background-image]="'url(data:image/jpeg;base64,' + menuInfo.image.content + ')'"
+    [style.background-image]="
+      'url(data:image/jpeg;base64,' + menuInfo.image.content + ')'
+    "
   >
     <button
       mat-fab
@@ -17,12 +19,12 @@
       </mat-icon>
     </button>
     <span *ngIf="!auth"></span>
-    <own-menu-card-comments class="reviews"></own-menu-card-comments>
+    <app-own-menu-card-comments class="reviews"></app-own-menu-card-comments>
   </div>
 
-  <own-menu-card-details
+  <app-own-menu-card-details
     [menuInfo]="menuInfo"
     (selectExtra)="selectedOption($event)"
     (clickOrder)="addOrderMenu()"
-  ></own-menu-card-details>
+  ></app-own-menu-card-details>
 </mat-card>

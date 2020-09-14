@@ -9,7 +9,7 @@ import { ConfigService } from '../../../core/config/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'cockpit-reservation-dialog',
+  selector: 'app-cockpit-reservation-dialog',
   templateUrl: './reservation-dialog.component.html',
   styleUrls: ['./reservation-dialog.component.scss'],
 })
@@ -28,14 +28,20 @@ export class ReservationDialogComponent implements OnInit {
   pageSizes: number[];
   datat: ReservationView[] = [];
   columnst: any[];
-  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name', 'email', 'tableId'];
+  displayedColumnsT: string[] = [
+    'bookingDate',
+    'creationDate',
+    'name',
+    'email',
+    'tableId',
+  ];
 
   filteredData: any[] = this.datao;
 
   constructor(
     private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {
     this.data = dialogData;
     this.pageSizes = configService.getValues().pageSizesDialog;
@@ -52,22 +58,33 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   setTableHeaders(lang: string): void {
+    this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitReservationTable) => {
+        this.columnst = [
+          {
+            name: 'booking.bookingDate',
+            label: cockpitReservationTable.reservationDateH,
+          },
+          {
+            name: 'booking.creationDate',
+            label: cockpitReservationTable.creationDateH,
+          },
+          { name: 'booking.name', label: cockpitReservationTable.ownerH },
+          { name: 'booking.email', label: cockpitReservationTable.emailH },
+          { name: 'booking.tableId', label: cockpitReservationTable.tableH },
+        ];
+      });
 
-    this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitReservationTable => {
-      this.columnst = [
-        { name: 'booking.bookingDate', label: cockpitReservationTable.reservationDateH },
-        { name: 'booking.creationDate', label: cockpitReservationTable.creationDateH },
-        { name: 'booking.name', label: cockpitReservationTable.ownerH },
-        { name: 'booking.email', label: cockpitReservationTable.emailH },
-        { name: 'booking.tableId', label: cockpitReservationTable.tableH },
-      ];
-    });
-
-    this.translocoService.selectTranslateObject('cockpit.reservations.dialogTable', {}, lang)
-      .subscribe(cockpitReservationDialogTable => {
+    this.translocoService
+      .selectTranslateObject('cockpit.reservations.dialogTable', {}, lang)
+      .subscribe((cockpitReservationDialogTable) => {
         this.columnso = [
           { name: 'email', label: cockpitReservationDialogTable.guestEmailH },
-          { name: 'accepted', label: cockpitReservationDialogTable.acceptanceH },
+          {
+            name: 'accepted',
+            label: cockpitReservationDialogTable.acceptanceH,
+          },
         ];
 
         if (this.data.booking.assistants) {
@@ -77,7 +94,7 @@ export class ReservationDialogComponent implements OnInit {
           });
           this.displayedColumnsT.push('assistants');
         }
-    });
+      });
   }
 
   page(pagingEvent: PageEvent): void {

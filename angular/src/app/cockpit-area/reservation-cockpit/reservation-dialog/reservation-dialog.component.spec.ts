@@ -39,7 +39,7 @@ describe('ReservationDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(ReservationDialogComponent, {
       data: { dialogData: { row: undefined } },
     }).componentInstance;
