@@ -32,11 +32,14 @@ const orderReducer = createReducer(
     adapter.removeMany(ids, state),
   ),
   on(orderActions.loadOrders, (state, { orders }) =>
-    adapter.addAll(orders, state),
+    adapter.setAll(orders, state),
   ),
   on(orderActions.clearOrders, (state) => adapter.removeAll(state)),
 );
 
-export function reducer(state: OrderState | undefined, action: Action) {
+export function reducer(
+  state: OrderState | undefined,
+  action: Action,
+): OrderState {
   return orderReducer(state, action);
 }

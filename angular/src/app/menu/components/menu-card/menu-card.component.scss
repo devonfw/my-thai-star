@@ -1,8 +1,7 @@
-@import "../../../../variables";
-
+@import '../../../../variables';
 
 .favourite-button {
-  align-self:flex-end;
+  align-self: flex-end;
   background-color: white;
   margin: 8px;
 }
@@ -35,7 +34,7 @@
   height: 50%;
 }
 
-own-menu-card-details {
+app-own-menu-card-details {
   padding: 16px;
 }
 

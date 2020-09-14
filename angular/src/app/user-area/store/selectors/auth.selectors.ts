@@ -8,17 +8,14 @@ export const getToken = createSelector(
   (state) => state.auth.token.token,
 );
 
-export const getRole = createSelector(
-  selectAuthState,
-  (state) => state.auth.user.role,
+export const getRole = createSelector(selectAuthState, (state) =>
+  state.auth ? state.auth.user.role : undefined,
 );
 
-export const getUserName = createSelector(
-  selectAuthState,
-  (state) => state.auth.user.user,
+export const getUserName = createSelector(selectAuthState, (state) =>
+  state.auth ? state.auth.user.user : '',
 );
 
-export const getLogged = createSelector(
-  selectAuthState,
-  (state) => state.auth.user.logged,
+export const getLogged = createSelector(selectAuthState, (state) =>
+  state.auth ? state.auth.user.logged : false,
 );

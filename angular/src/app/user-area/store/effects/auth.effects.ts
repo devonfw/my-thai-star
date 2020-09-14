@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TwoFactorDialogComponent } from 'app/user-area/components/two-factor-dialog/two-factor-dialog.component';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/observable/from';
 import {
   catchError,
   exhaustMap,
@@ -93,7 +92,7 @@ export class AuthEffects {
               });
             }
           }),
-          catchError((error) => of(authActions.loginFail({ error: error }))),
+          catchError((error) => of(authActions.loginFail({ error }))),
         );
       }),
     ),
@@ -137,7 +136,7 @@ export class AuthEffects {
               token: { token: res.headers.get('Authorization') },
             });
           }),
-          catchError((error) => of(authActions.loginFail({ error: error }))),
+          catchError((error) => of(authActions.loginFail({ error }))),
         );
       }),
     ),
@@ -174,7 +173,11 @@ export class AuthEffects {
         ofType(authActions.loginSuccess),
         map((user) => user.user.role),
         exhaustMap((role: string) => {
-          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.loginSuccess'), 4000, 'green');
+          this.snackBar.openSnack(
+            this.translocoService.translate('alerts.authAlerts.loginSuccess'),
+            4000,
+            'green',
+          );
           if (role === 'CUSTOMER') {
             return this.router.navigate(['restaurant']);
           } else if (role === 'WAITER') {
@@ -206,9 +209,13 @@ export class AuthEffects {
         ofType(authActions.logout),
         tap(() => {
           this.router.navigateByUrl('/restaurant');
-          this.snackBar.openSnack(this.translocoService.translate('alerts.authAlerts.logoutSuccess'), 4000, 'black');
+          this.snackBar.openSnack(
+            this.translocoService.translate('alerts.authAlerts.logoutSuccess'),
+            4000,
+            'black',
+          );
         }),
-        catchError((error) => of(authActions.logoutFail({ error: error }))),
+        catchError((error) => of(authActions.logoutFail({ error }))),
       ),
     { dispatch: false },
   );
@@ -224,8 +231,10 @@ export class AuthEffects {
     private config: ConfigService,
     private http: HttpClient,
   ) {
-    this.translocoService.selectTranslateObject('alerts.authAlerts').subscribe((content: any) => {
-      this.authAlerts = content;
-    });
+    this.translocoService
+      .selectTranslateObject('alerts.authAlerts')
+      .subscribe((content: any) => {
+        this.authAlerts = content;
+      });
   }
 }

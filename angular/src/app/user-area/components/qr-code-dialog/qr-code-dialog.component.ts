@@ -28,7 +28,7 @@ export class QrCodeDialogComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  private initialize() {
+  private initialize(): void {
     if (this.authService.getTwoFactorStatus()) {
       this.loadQrCode();
     }
@@ -87,7 +87,7 @@ export class QrCodeDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  private resetQrCode() {
+  private resetQrCode(): void {
     if (!this.twoFactorStatus) {
       this.qrcode = '';
     }

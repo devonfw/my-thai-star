@@ -1,7 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -50,6 +50,7 @@ import 'moment/locale/hi';
 import 'moment/locale/nl';
 import 'moment/locale/pl';
 import { MomentModule } from 'ngx-moment';
+import { TranslocoRootModule } from '../transloco-root.module';
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { AuthService } from './authentication/auth.service';
 import { HttpRequestInterceptorService } from './interceptor/http-request-interceptor.service';
@@ -57,7 +58,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { NotSupportedComponent } from './not-supported/not-supported.component';
 import { SnackBarService } from './snack-bar/snack-bar.service';
 import { WindowService } from './window/window.service';
-import { TranslocoRootModule } from '../transloco-root.module';
 
 // Default text strings for OwlDateTime
 @Injectable()
@@ -76,7 +76,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     CdkTableModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    TranslocoRootModule
+    TranslocoRootModule,
   ],
   exports: [
     CommonModule,
@@ -120,7 +120,7 @@ export class DefaultIntl extends OwlDateTimeIntl {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     HttpClientModule,
-    TranslocoRootModule
+    TranslocoRootModule,
   ],
   declarations: [NotFoundComponent, NotSupportedComponent],
   providers: [

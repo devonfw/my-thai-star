@@ -11,6 +11,7 @@ export function emailValidator(c: string): boolean {
 
 @Directive({
   selector:
+    // tslint:disable-next-line: directive-selector
     '[validateEmail][formControlName], [validateEmail][formControl],[validateEmail][ngModel]',
   providers: [
     {
@@ -22,7 +23,7 @@ export function emailValidator(c: string): boolean {
 })
 export class EmailValidatorDirective implements Validator {
   validate(c: AbstractControl): { [key: string]: any } {
-    return emailValidator(<string>c.value)
+    return emailValidator(c.value as string)
       ? undefined
       : {
           validateEmail: {

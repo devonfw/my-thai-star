@@ -3,6 +3,7 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
   selector:
+    // tslint:disable-next-line: directive-selector
     '[validateEqual][formControlName],[validateEqual][formControl],[validateEqual][ngModel]',
   providers: [
     {
