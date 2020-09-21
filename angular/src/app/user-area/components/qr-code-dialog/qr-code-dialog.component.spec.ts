@@ -23,7 +23,7 @@ import { click } from '../../../shared/common/test-utils';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { SnackService } from '../../services/snack-bar.service';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
-import { UserDetailsTestData } from 'in-memory-test-data/db-user-details-test-data';
+import { UserDetailsTestData } from '../../../../in-memory-test-data/db-user-details-test-data';
 
 const snackBarServiceStub = {
   openSnack: jasmine.createSpy('openSnack'),
@@ -110,19 +110,19 @@ describe('QrCodeDialogComponent', () => {
   describe('Negative Snerario - QrCodeDialogComponent', () => {
     const userAreaServiceTwoFactorErrorStub = jasmine.createSpyObj<
       UserAreaService
-    >('UserAreaService', {
-      twoFactorStatus: throwError(ERRORMESSAGE),
-      changeTwoFactor: of(UserDetailsTestData.twoFactorData),
-      pairing: of(UserDetailsTestData.loadQrCodeData),
-    });
+      >('UserAreaService', {
+        twoFactorStatus: throwError(ERRORMESSAGE),
+        changeTwoFactor: of(UserDetailsTestData.twoFactorData),
+        pairing: of(UserDetailsTestData.loadQrCodeData),
+      });
 
     const userAreaServicePairingErrorStub = jasmine.createSpyObj<
       UserAreaService
-    >('UserAreaService', {
-      twoFactorStatus: of(UserDetailsTestData.userAreaServiceData),
-      changeTwoFactor: of(UserDetailsTestData.twoFactorData),
-      pairing: throwError(ERRORMESSAGE),
-    });
+      >('UserAreaService', {
+        twoFactorStatus: of(UserDetailsTestData.userAreaServiceData),
+        changeTwoFactor: of(UserDetailsTestData.twoFactorData),
+        pairing: throwError(ERRORMESSAGE),
+      });
 
     it('should verify changeTwoFactor service fails for set up two factor authentication due to error ', () => {
       TestBed.overrideProvider(UserAreaService, {

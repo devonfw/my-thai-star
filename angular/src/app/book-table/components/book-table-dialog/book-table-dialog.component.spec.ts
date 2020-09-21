@@ -8,7 +8,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { CoreModule } from 'app/core/core.module';
+import {CoreModule} from '../../../core/core.module';
 import * as fromStore from '../../../store/reducers';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -16,7 +16,7 @@ import { getTranslocoModule } from '../../../transloco-testing.module';
 import { By } from '@angular/platform-browser';
 import { BookTableService } from '../../services/book-table.service';
 import { of } from 'rxjs/internal/observable/of';
-import { BookTableDialogComponentStub } from 'in-memory-test-data/db-book';
+import { BookTableDialogComponentStub } from '../../../../in-memory-test-data/db-book';
 
 const mockDialogRef = {
   close: jasmine.createSpy('close'),

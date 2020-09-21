@@ -8,7 +8,7 @@ import { config } from '../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../core/config/config.service';
 import { of } from 'rxjs/internal/observable/of';
-import { emailConfirmationsStub } from 'in-memory-test-data/db-email-confirmation-data';
+import { emailConfirmationsStub } from '../../../in-memory-test-data/db-email-confirmation-data';
 import { HttpErrorResponse } from '@angular/common/http';
 
 const configServiceStub = {
@@ -50,7 +50,7 @@ describe('EmailConfirmationsService', () => {
       });
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/invitedguest/accept/testingToken',
+      'bookingmanagement/v1/invitedguest/accept/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush(emailConfirmationsStub.acceptInvitation);
@@ -66,7 +66,7 @@ describe('EmailConfirmationsService', () => {
       });
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/invitedguest/decline/testingToken',
+      'bookingmanagement/v1/invitedguest/decline/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush(emailConfirmationsStub.rejectInvitation);
@@ -82,7 +82,7 @@ describe('EmailConfirmationsService', () => {
       });
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/booking/cancel/testingToken',
+      'bookingmanagement/v1/booking/cancel/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush(emailConfirmationsStub.booking);
@@ -96,7 +96,7 @@ describe('EmailConfirmationsService', () => {
       });
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'ordermanagement/v1/order/cancelorder/testingToken',
+      'ordermanagement/v1/order/cancelorder/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush(of(true));
@@ -113,7 +113,7 @@ describe('EmailConfirmationsService', () => {
     );
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/invitedguest/accept/testingToken',
+      'bookingmanagement/v1/invitedguest/accept/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush('Invitation not accepted due to internal error', {
@@ -131,7 +131,7 @@ describe('EmailConfirmationsService', () => {
     );
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/invitedguest/decline/testingToken',
+      'bookingmanagement/v1/invitedguest/decline/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush('Invitation rejected due to internal server error', {
@@ -149,7 +149,7 @@ describe('EmailConfirmationsService', () => {
     );
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'bookingmanagement/v1/booking/cancel/testingToken',
+      'bookingmanagement/v1/booking/cancel/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush('Booking cancelled', {
@@ -167,7 +167,7 @@ describe('EmailConfirmationsService', () => {
     );
     const req = httpTestingController.expectOne(
       config.restServiceRoot +
-        'ordermanagement/v1/order/cancelorder/testingToken',
+      'ordermanagement/v1/order/cancelorder/testingToken',
     );
     expect(req.request.method).toEqual('GET');
     req.flush('Order cancelled', {
