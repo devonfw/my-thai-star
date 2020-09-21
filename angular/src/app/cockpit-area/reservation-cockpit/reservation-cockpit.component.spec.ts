@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State } from '../../store';
 import { ConfigService } from '../../core/config/config.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { config } from '../../core/config/config';
@@ -23,8 +23,8 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { click } from '../../shared/common/test-utils';
 import { ReservationCockpitComponent } from './reservation-cockpit.component';
-import { reservation } from 'in-memory-test-data/db-reservation';
-import { ascSortReservation } from 'in-memory-test-data/db-reservation.-asc-sort';
+import { reservation } from '../../../in-memory-test-data/db-reservation';
+import { ascSortReservation } from '../../../in-memory-test-data/db-reservation.-asc-sort';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
