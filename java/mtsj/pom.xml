@@ -12,7 +12,7 @@
 
   <properties>
     <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-    <devon4j.version>2020.08.001</devon4j.version>
+    <devon4j.version>2020.04.001</devon4j.version>
     <java.version>1.8</java.version>
     <devon.port.range>81</devon.port.range>
     <junit.version>5.5.2</junit.version>
@@ -161,6 +161,36 @@
           <reuseForks>true</reuseForks>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+         <from>
+          <image>adoptopenjdk/openjdk11:jre-11.0.4_11-alpine</image>
+        </from>
+          <to>
+		   <image>${project.artifactId}:${project.version}</image>
+          </to>
+          <container>
+            <mainClass>com.devonfw.application.mtsj.SpringBootApp</mainClass>
+			<ports>
+				<port>8081</port>
+			</ports>
+          </container>
+        </configuration>
+		
+		 <executions>
+			<execution>
+			  <phase>package</phase>
+			  <goals>
+				<goal>dockerBuild</goal>
+			  </goals>
+			</execution>
+		</executions>
+		
+      </plugin>	  
+	  
     </plugins>
   </build>
 
