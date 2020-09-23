@@ -7,14 +7,13 @@ import { map } from 'lodash';
 import { Order } from 'app/sidenav/models/order.model';
 
 @Component({
-  selector: 'public-sidenav-order',
+  selector: 'app-public-sidenav-order',
   templateUrl: './sidenav-order.component.html',
   styleUrls: ['./sidenav-order.component.scss'],
 })
 export class SidenavOrderComponent implements OnInit {
   extras: string;
   @Input() order: Order;
-  @Input() price: number;
   @Output() orderIncreased = new EventEmitter<Order>();
   @Output() orderDecreased = new EventEmitter<Order>();
   @Output() orderRemoved = new EventEmitter<Order>();

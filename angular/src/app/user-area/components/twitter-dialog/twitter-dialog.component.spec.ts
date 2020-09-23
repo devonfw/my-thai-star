@@ -34,7 +34,7 @@ describe('TwitterDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     component = dialog.open(TwitterDialogComponent).componentInstance;
   });
 

@@ -26,9 +26,7 @@ export class MenuEffects {
             const resultAdapted = { pageable: result.pageable, content };
             return loadMenusActions.loadMenusSuccess(resultAdapted);
           }),
-          catchError((error) =>
-            of(loadMenusActions.loadMenusFail({ error: error })),
-          ),
+          catchError((error) => of(loadMenusActions.loadMenusFail({ error }))),
         ),
       ),
     ),

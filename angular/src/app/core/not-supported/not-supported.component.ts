@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'public-not-supported',
+  selector: 'app-public-not-supported',
   templateUrl: './not-supported.component.html',
   styleUrls: ['./not-supported.component.scss'],
 })

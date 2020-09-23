@@ -1,5 +1,11 @@
 import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
@@ -23,8 +29,8 @@ import { of } from 'rxjs/internal/observable/of';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
-    afterClosed: () => of('content')
-  })
+    afterClosed: () => of('content'),
+  }),
 };
 
 describe('SidenavComponent', () => {
@@ -39,8 +45,8 @@ describe('SidenavComponent', () => {
   const STATE = {
     sidenav: {
       order: getAllOrderData,
-      selectedOrderId: null
-    }
+      selectedOrderId: null,
+    },
   };
 
   beforeEach(async(() => {
@@ -49,10 +55,13 @@ describe('SidenavComponent', () => {
       declarations: [SidenavComponent, SidenavOrderComponent],
       providers: [
         PriceCalculatorService,
-        { provide: SidenavService, useValue: { closeSideNav: jasmine.createSpy('closeSideNav')} },
+        {
+          provide: SidenavService,
+          useValue: { closeSideNav: jasmine.createSpy('closeSideNav') },
+        },
         SnackBarService,
         provideMockStore(),
-        { provide: MatDialog, useValue: mockDialog }
+        { provide: MatDialog, useValue: mockDialog },
       ],
       imports: [
         BrowserAnimationsModule,
@@ -67,10 +76,13 @@ describe('SidenavComponent', () => {
     fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     mockStore = TestBed.inject(MockStore);
-    mockOrdersSelector = mockStore.overrideSelector(fromOrder.getAllOrders, getAllOrderData);
-    sidenavService = TestBed.get(SidenavService);
+    mockOrdersSelector = mockStore.overrideSelector(
+      fromOrder.getAllOrders,
+      getAllOrderData,
+    );
+    sidenavService = TestBed.inject(SidenavService);
     el = fixture.debugElement;
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     fixture.detectChanges();
   });
 

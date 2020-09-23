@@ -8,7 +8,7 @@ export class SnackBarService {
 
   openSnack(message: string, duration: number, color: string): void {
     this.snackBarConfig = {
-      duration: duration,
+      duration,
       panelClass: ['bgc-' + color + '-600'],
     };
 

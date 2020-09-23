@@ -1,7 +1,7 @@
-@import "../../../variables";
+@import '../../../variables';
 
-public-menu-card {
-  width: 100%
+app-public-menu-card {
+  width: 100%;
 }
 
 .card-container {
@@ -10,22 +10,20 @@ public-menu-card {
   justify-content: space-around;
 }
 
-@media (min-width: $tablet-min-width){
-  public-menu-card {
-    width: 90%
+@media (min-width: $tablet-min-width) {
+  app-public-menu-card {
+    width: 90%;
   }
 }
 
-@media (min-width: 900px){
-  public-menu-card {
-    width: 75%
+@media (min-width: 900px) {
+  app-public-menu-card {
+    width: 75%;
   }
 }
 
-@media (min-width: $desktop-min-width){
-  public-menu-card {
-    width: 50%
+@media (min-width: $desktop-min-width) {
+  app-public-menu-card {
+    width: 50%;
   }
 }
-
-

@@ -53,6 +53,9 @@ const loadMenusReducer = createReducer(
   }),
 );
 
-export function reducer(state: MenuState | undefined, action: Action) {
+export function reducer(
+  state: MenuState | undefined,
+  action: Action,
+): MenuState {
   return loadMenusReducer(state, action);
 }
