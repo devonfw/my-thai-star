@@ -25,8 +25,8 @@ export const initialState: AuthState = {
 const authReducer = createReducer(
   initialState,
   on(authActions.login, (state) => ({ ...state })),
-  on(authActions.loginSuccess, (state, { user }) => ({ ...state, user: user })),
-  on(authActions.token, (state, { token }) => ({ ...state, token: token })),
+  on(authActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+  on(authActions.token, (state, { token }) => ({ ...state, token })),
   on(authActions.loginFail, (state, { error }) => ({
     ...state,
     error: error.message,
@@ -38,6 +38,9 @@ const authReducer = createReducer(
   })),
 );
 
-export function reducer(state: AuthState | undefined, action: Action) {
+export function reducer(
+  state: AuthState | undefined,
+  action: Action,
+): AuthState {
   return authReducer(state, action);
 }

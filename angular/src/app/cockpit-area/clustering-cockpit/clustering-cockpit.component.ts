@@ -12,7 +12,7 @@ import { SortDirection } from 'app/menu/components/menu-filters/filter-sort/filt
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'map-component',
+  selector: 'app-map-component',
   templateUrl: './clustering-cockpit.component.html',
   styleUrls: ['./clustering-cockpit.component.scss'],
 })
@@ -29,6 +29,8 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   clustersfeatureLayer;
 
   menu;
+
+  row: any;
 
   // Clusters Statistics table
   displayedColumns = ['color', 'amount'];
@@ -52,7 +54,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     private menuService: MenuService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.map = L.map(this.mapContainer.nativeElement).setView(
       [this.mapLatitude, this.mapLongitude],
       this.defaultZoom,
@@ -83,9 +85,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     this.drawClusters();
   }
 
-  onZoomChanged(zoomLevel) {}
-
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // the map doesn't load completelty in the begining,
     // until the browser window is resized..
     // so the map's tiles have to be reloaded with the following method
@@ -115,18 +115,18 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
       });
   }
 
-  restClusters() {
+  restClusters(): void {
     this.clustersfeatureLayer = null;
     this.clustersResultsDataSource = null;
     this.map.removeLayer(this.jsonLayer);
   }
 
-  updateMap(event: any) {
+  updateMap(): void {
     this.restClusters();
     this.drawClusters();
   }
 
-  getClusterColor(sizes: number[]) {
+  getClusterColor(sizes: number[]): string[] {
     const max = Math.max(...sizes);
     const min = Math.min(...sizes);
 
@@ -140,7 +140,9 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     const p = v * (1 - s);
 
     const gradientStops = hs.map((h) => {
-      let r, g, b;
+      let r: number;
+      let g: number;
+      let b: number;
       const i = Math.floor(h * 6);
       const f = h * 6 - i;
       const q = v * (1 - f * s);
@@ -201,7 +203,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showProgressBar(show) {
+  showProgressBar(show: boolean): void {
     this.clustersResultsBusy = show;
   }
 
@@ -210,7 +212,6 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     this.clusteringService
       .getClusters(this.clusteringFilter)
       .subscribe((clustersData: ClustersData) => {
-        const features = [];
         this.clustersfeatureLayer = {
           type: 'FeatureCollection',
           features: [],
@@ -234,7 +235,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
                     amount: cluster.amount,
                     averageX: parseFloat(cluster.x),
                     averageY: parseFloat(cluster.y),
-                    color: color,
+                    color,
                   },
                   geometry: JSON.parse(cluster.polygon.toString()),
                 };
@@ -259,7 +260,15 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
   }
 
   // noinspection JSMethodCanBeStatic
-  getFeatureStyle(feature) {
+  getFeatureStyle(
+    feature,
+  ): {
+    clickable: boolean;
+    fillColor: any;
+    weight: number;
+    color: any;
+    fillOpacity: number;
+  } {
     return {
       clickable: true,
       fillColor: feature.properties.color,
@@ -269,7 +278,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     };
   }
 
-  onFeatureClicked(feature, layer) {
+  onFeatureClicked(feature, layer): void {
     if (feature.properties) {
       let lon = 'E';
       let lat = 'N';
@@ -286,7 +295,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getSelectedRow(row) {
-    // console.log(row);
+  getSelectedRow(row: any): void {
+    this.row = row;
   }
 }

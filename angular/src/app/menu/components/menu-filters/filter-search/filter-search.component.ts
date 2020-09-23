@@ -2,7 +2,7 @@ import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'own-filter-search',
+  selector: 'app-own-filter-search',
   templateUrl: './filter-search.component.html',
   styleUrls: ['./filter-search.component.scss'],
   providers: [
@@ -15,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class FilterSearchComponent implements ControlValueAccessor {
   inputValue: string;
-  updateForm: Function;
+  updateForm: (fn: any) => void;
   disabled: boolean;
 
   setInputValue(val: string): void {

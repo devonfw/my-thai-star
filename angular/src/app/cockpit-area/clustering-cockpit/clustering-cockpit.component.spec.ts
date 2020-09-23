@@ -25,7 +25,7 @@ describe('ClusteringCockpitComponent', () => {
     TestBed.configureTestingModule({
       providers: [provideMockStore({ initialState })],
     });
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     configService = new ConfigService(store);
     clusteringService = new ClusteringService(http, configService);
     menuService = new MenuService(http, configService);

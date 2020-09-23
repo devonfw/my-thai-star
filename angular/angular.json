@@ -36,7 +36,22 @@
               "node_modules/@busacca/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": ["node_modules/showdown/dist/showdown.js"]
+            "scripts": [
+              "node_modules/showdown/dist/showdown.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "flat",
+              "chart.js",
+              "uuid",
+              "moment/locale/ca",
+              "moment/locale/de",
+              "moment/locale/es",
+              "moment/locale/fr",
+              "moment/locale/hi",
+              "moment/locale/nl",
+              "moment/locale/pl"
+            ]
           },
           "configurations": {
             "dev": {
@@ -240,6 +255,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": false
   }
 }

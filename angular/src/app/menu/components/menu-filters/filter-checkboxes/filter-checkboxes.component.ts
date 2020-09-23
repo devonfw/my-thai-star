@@ -2,7 +2,7 @@ import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'own-filter-checkboxes',
+  selector: 'app-own-filter-checkboxes',
   templateUrl: './filter-checkboxes.component.html',
   styleUrls: ['./filter-checkboxes.component.scss'],
   providers: [
@@ -15,7 +15,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class FilterCheckboxesComponent {
   categoriesValue: CategoriesModel;
-  updateForm: Function;
+  updateForm: (fn: any) => void;
   disabled: boolean;
 
   // ControlValueAccessor
@@ -39,7 +39,10 @@ export class FilterCheckboxesComponent {
 
   onToggle(filterName: string): void {
     const toggledValue: boolean = !this.categoriesValue[filterName];
-    this.categoriesValue = { ...this.categoriesValue, ...{[filterName]: toggledValue}};
+    this.categoriesValue = {
+      ...this.categoriesValue,
+      ...{ [filterName]: toggledValue },
+    };
     this.updateForm(this.categoriesValue);
   }
 }

@@ -5,7 +5,7 @@ import * as fromRoot from '../../../store';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'public-home',
+  selector: 'app-public-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -29,7 +29,7 @@ export class HomeComponent {
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {}
 
-  navigateTo(route: string) {
+  navigateTo(route: string): void {
     this.store.dispatch(fromRoot.go({ path: [route] }));
   }
 
