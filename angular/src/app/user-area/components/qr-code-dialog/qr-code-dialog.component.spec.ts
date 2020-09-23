@@ -1,4 +1,10 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  TestBed,
+  ComponentFixture,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -20,17 +26,21 @@ import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import { UserDetailsTestData } from 'in-memory-test-data/db-user-details-test-data';
 
 const snackBarServiceStub = {
-  'openSnack': jasmine.createSpy('openSnack')
+  openSnack: jasmine.createSpy('openSnack'),
 };
 
-const snackServiceStub = jasmine.createSpyObj<SnackService>('SnackService', ['success', 'fail']);
+const snackServiceStub = jasmine.createSpyObj<SnackService>('SnackService', [
+  'success',
+  'fail',
+]);
 
 const userAreaServiceStub = jasmine.createSpyObj<UserAreaService>(
-  'UserAreaService', {
+  'UserAreaService',
+  {
     twoFactorStatus: of(UserDetailsTestData.userAreaServiceData),
     changeTwoFactor: of(UserDetailsTestData.twoFactorData),
-    pairing: of(UserDetailsTestData.loadQrCodeData)
-  }
+    pairing: of(UserDetailsTestData.loadQrCodeData),
+  },
 );
 
 const ERRORMESSAGE = 'An error has ocurred, please try again later';
@@ -44,10 +54,10 @@ describe('QrCodeDialogComponent', () => {
   let snackService: SnackService;
 
   const compileTestBed = () => {
-    userAreaService = TestBed.get(UserAreaService);
+    userAreaService = TestBed.inject(UserAreaService);
     fixture = TestBed.createComponent(QrCodeDialogComponent);
-    snackBarService = TestBed.get(SnackBarService);
-    snackService = TestBed.get(SnackService);
+    snackBarService = TestBed.inject(SnackBarService);
+    snackService = TestBed.inject(SnackService);
     component = fixture.componentInstance;
     el = fixture.debugElement;
     fixture.detectChanges();
@@ -72,8 +82,8 @@ describe('QrCodeDialogComponent', () => {
       providers: [
         { provide: UserAreaService, useValue: userAreaServiceStub },
         { provide: SnackService, useValue: snackServiceStub },
-        { provode: SnackBarService, useValue: snackBarServiceStub }
-      ]
+        { provode: SnackBarService, useValue: snackBarServiceStub },
+      ],
     }).compileComponents();
   }));
 
@@ -91,29 +101,33 @@ describe('QrCodeDialogComponent', () => {
       const slider = el.query(By.directive(MatSlideToggle));
       slider.triggerEventHandler('change', null);
       expect(component.secret).toBe(UserDetailsTestData.loadQrCodeData.secret);
-      expect(component.qrcode).toBe(UserDetailsTestData.loadQrCodeData.base64QrCode);
+      expect(component.qrcode).toBe(
+        UserDetailsTestData.loadQrCodeData.base64QrCode,
+      );
     });
   });
 
   describe('Negative Snerario - QrCodeDialogComponent', () => {
-    const userAreaServiceTwoFactorErrorStub = jasmine.createSpyObj<UserAreaService>(
-      'UserAreaService', {
-        twoFactorStatus: throwError(ERRORMESSAGE),
-        changeTwoFactor: of(UserDetailsTestData.twoFactorData),
-        pairing: of(UserDetailsTestData.loadQrCodeData)
-      }
-    );
+    const userAreaServiceTwoFactorErrorStub = jasmine.createSpyObj<
+      UserAreaService
+    >('UserAreaService', {
+      twoFactorStatus: throwError(ERRORMESSAGE),
+      changeTwoFactor: of(UserDetailsTestData.twoFactorData),
+      pairing: of(UserDetailsTestData.loadQrCodeData),
+    });
 
-    const userAreaServicePairingErrorStub = jasmine.createSpyObj<UserAreaService>(
-      'UserAreaService', {
-        twoFactorStatus: of(UserDetailsTestData.userAreaServiceData),
-        changeTwoFactor: of(UserDetailsTestData.twoFactorData),
-        pairing: throwError(ERRORMESSAGE)
-      }
-    );
+    const userAreaServicePairingErrorStub = jasmine.createSpyObj<
+      UserAreaService
+    >('UserAreaService', {
+      twoFactorStatus: of(UserDetailsTestData.userAreaServiceData),
+      changeTwoFactor: of(UserDetailsTestData.twoFactorData),
+      pairing: throwError(ERRORMESSAGE),
+    });
 
     it('should verify changeTwoFactor service fails for set up two factor authentication due to error ', () => {
-      TestBed.overrideProvider(UserAreaService, { useValue: userAreaServiceTwoFactorErrorStub } );
+      TestBed.overrideProvider(UserAreaService, {
+        useValue: userAreaServiceTwoFactorErrorStub,
+      });
       compileTestBed();
       const slider = el.query(By.directive(MatSlideToggle));
       slider.triggerEventHandler('change', null);
@@ -121,12 +135,13 @@ describe('QrCodeDialogComponent', () => {
     });
 
     it('should verify pairing service fails for set up two factor authentication due to error ', () => {
-      TestBed.overrideProvider(UserAreaService, { useValue: userAreaServicePairingErrorStub } );
+      TestBed.overrideProvider(UserAreaService, {
+        useValue: userAreaServicePairingErrorStub,
+      });
       compileTestBed();
       const slider = el.query(By.directive(MatSlideToggle));
       slider.triggerEventHandler('change', null);
       expect(snackService.fail).toHaveBeenCalled();
     });
   });
-
 });

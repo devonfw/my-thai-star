@@ -13,7 +13,7 @@ export class PriceCalculatorService {
   constructor() {}
 
   getPrice(order: OrderView | OrderViewResult): number {
-    const extrasPrice: number = chain(<ExtraView[]>order.extras)
+    const extrasPrice: number = chain(order.extras as ExtraView[])
       .reduce(
         (total: number, extra: ExtraView): number => total + extra.price,
         0,

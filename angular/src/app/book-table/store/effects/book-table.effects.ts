@@ -14,9 +14,9 @@ export class BookTableEffects {
   bookTable$ = createEffect(() =>
     this.actions$.pipe(
       ofType(bookTableActions.bookTable),
-      map((booking) => booking['booking']),
+      map((booking) => booking.booking),
       exhaustMap((booking: any) => {
-        return this.bookTableService.postBooking({ booking: booking }).pipe(
+        return this.bookTableService.postBooking({ booking }).pipe(
           map((res: any) =>
             bookTableActions.bookTableSuccess({
               bookingResponse: {
@@ -28,9 +28,7 @@ export class BookTableEffects {
               },
             }),
           ),
-          catchError((error) =>
-            of(bookTableActions.bookTableFail({ error: error })),
-          ),
+          catchError((error) => of(bookTableActions.bookTableFail({ error }))),
         );
       }),
     ),
@@ -41,7 +39,11 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.bookTableSuccess),
         tap(() => {
-          this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingSuccess'), 4000, 'green');
+          this.snackBar.openSnack(
+            this.translocoService.translate('bookTable.dialog.bookingSuccess'),
+            4000,
+            'green',
+          );
           fromRoot.go({ path: ['/menu'] });
         }),
       ),
@@ -53,7 +55,11 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.bookTableFail),
         tap(() => {
-            this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingError'), 4000, 'red');
+          this.snackBar.openSnack(
+            this.translocoService.translate('bookTable.dialog.bookingError'),
+            4000,
+            'red',
+          );
         }),
       ),
     { dispatch: false },
@@ -62,14 +68,14 @@ export class BookTableEffects {
   inviteFriends$ = createEffect(() =>
     this.actions$.pipe(
       ofType(bookTableActions.inviteFriends),
-      map((booking) => booking['booking']),
+      map((booking) => booking.booking),
       exhaustMap((booking: Booking) =>
         this.bookTableService.postBooking(booking).pipe(
           map((res: any) => bookTableActions.inviteFriendsSuccess(res)),
           catchError((error) =>
             of(
               bookTableActions.inviteFriendsFail({
-                error: error,
+                error,
               }),
             ),
           ),
@@ -83,7 +89,11 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.inviteFriendsSuccess),
         tap(() => {
-            this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingSuccess'), 4000, 'green');
+          this.snackBar.openSnack(
+            this.translocoService.translate('bookTable.dialog.bookingSuccess'),
+            4000,
+            'green',
+          );
           fromRoot.go({ path: ['/bookTable'] });
         }),
       ),
@@ -95,7 +105,11 @@ export class BookTableEffects {
       this.actions$.pipe(
         ofType(bookTableActions.inviteFriendsFail),
         tap(() => {
-          this.snackBar.openSnack(this.translocoService.translate('bookTable.dialog.bookingError'), 4000, 'red');
+          this.snackBar.openSnack(
+            this.translocoService.translate('bookTable.dialog.bookingError'),
+            4000,
+            'red',
+          );
         }),
       ),
     { dispatch: false },

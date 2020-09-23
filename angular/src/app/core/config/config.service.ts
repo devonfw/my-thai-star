@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { State } from 'app/store';
 import { Observable, Subscription } from 'rxjs';
@@ -11,30 +11,14 @@ import { getConfig } from './store/selectors';
 @Injectable({
   providedIn: 'root',
 })
-export class ConfigService implements OnInit, OnDestroy {
+export class ConfigService {
   private config: Config | undefined = config;
   private subscription: Subscription;
 
   constructor(private store: Store<State>) {}
 
-  static factory(appLoadService: ConfigService) {
+  static factory(appLoadService: ConfigService): () => Promise<any> {
     return () => appLoadService.loadExternalConfig();
-  }
-
-  ngOnInit() {
-    this.subscription = this.store
-      .pipe(select(getConfig))
-      .subscribe((newConfig) => {
-        if (newConfig.loaded) {
-          this.config = newConfig;
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   loadExternalConfig(): Promise<any> {

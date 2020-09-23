@@ -15,7 +15,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'cockpit-reservation-cockpit',
+  selector: 'app-cockpit-reservation-cockpit',
   templateUrl: './reservation-cockpit.component.html',
   styleUrls: ['./reservation-cockpit.component.scss'],
 })
@@ -62,13 +62,15 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   }
 
   setTableHeaders(lang: string): void {
-    this.translocoSubscription = this.translocoService.selectTranslateObject('cockpit.table', {}, lang).subscribe(cockpitTable => {
-      this.columns = [
-        { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-        { name: 'booking.email', label: cockpitTable.emailH },
-        { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-      ];
-    });
+    this.translocoSubscription = this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.columns = [
+          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'booking.email', label: cockpitTable.emailH },
+          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+        ];
+      });
   }
 
   filter(): void {
