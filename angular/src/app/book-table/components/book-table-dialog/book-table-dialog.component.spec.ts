@@ -8,7 +8,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import {CoreModule} from '../../../core/core.module';
+import { CoreModule } from '../../../core/core.module';
 import * as fromStore from '../../../store/reducers';
 import { BookTableDialogComponent } from './book-table-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
