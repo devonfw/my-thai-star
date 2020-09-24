@@ -1,13 +1,11 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { menuDishes } from 'in-memory-test-data/db-menu-dish';
-import { filteredMenuDishes } from 'in-memory-test-data/db-menu-dish.filter';
+import { menuDishes } from '../../../in-memory-test-data/db-menu-dish';
+import { filteredMenuDishes } from '../../../in-memory-test-data/db-menu-dish.filter';
 import * as uuid from 'uuid';
 import * as fromApp from '../../../app/store/reducers';
 import { CoreModule } from '../../core/core.module';
-import { click } from '../../shared/common/test-utils';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { SidenavService } from '../../sidenav/services/sidenav.service';
 import { getTranslocoModule } from '../../transloco-testing.module';
