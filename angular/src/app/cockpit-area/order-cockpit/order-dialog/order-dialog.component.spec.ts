@@ -10,7 +10,7 @@ import { ConfigService } from '../../../core/config/config.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { config } from '../../../core/config/config';
 import { getTranslocoModule } from '../../../transloco-testing.module';
-import { dialogOrderDetails } from 'in-memory-test-data/db-order-dialog-data';
+import { dialogOrderDetails } from '../../../../in-memory-test-data/db-order-dialog-data';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -45,11 +45,11 @@ describe('OrderDialogComponent', () => {
   }));
 
   it('should create', () => {
-      const name = el.query(By.css('.nameData'));
-      const email = el.query(By.css('.emailData'));
-      expect(email.nativeElement.textContent.trim()).toBe('user0@mail.com');
-      expect(name.nativeElement.textContent.trim()).toBe('user0');
-      expect(component).toBeTruthy();
-      expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
+    const name = el.query(By.css('.nameData'));
+    const email = el.query(By.css('.emailData'));
+    expect(email.nativeElement.textContent.trim()).toBe('user0@mail.com');
+    expect(name.nativeElement.textContent.trim()).toBe('user0');
+    expect(component).toBeTruthy();
+    expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
   });
 });
