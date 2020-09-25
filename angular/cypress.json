@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://localhost:4200/",
+  "env": {
+    "backendUrl": "http://localhost:8081/mythaistar/services/rest/"
+  },
+  "projectId": "p26ngi"
+}
