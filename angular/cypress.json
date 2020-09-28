@@ -9,5 +9,12 @@
   "retries": {
     "runMode": 1,
     "openMode": 2
+  },
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "overwrite": false,
+    "html": false,
+    "json": true,
+    "reportDir": "cypress/report"
   }
 }
