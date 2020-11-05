@@ -3,7 +3,7 @@ import { mobileHeight, mobileWidth } from '../support';
 describe('Testing the responsiveness of the app', () => {
   beforeEach(() => {
     cy.viewport(mobileWidth, mobileHeight)
-  })
+  });
 
   it('should change the navbar', () => {
     cy.visit('');
@@ -32,17 +32,13 @@ describe('Testing the responsiveness of the app', () => {
       .click();
     // Check the direction of the cards secction on menu
     cy.get('.details-card').should('have.css', 'flex-direction', 'column');
-  })
-
-  it('should have only one review on the menu item', ()=>{
-    cy.get('.reviews > .mat-list').eq(1).children().should('have.length', 1);
-  })
+  });
 
   it('should have a correct checking cart',()=>{
     cy.get('[name="order"]').click();
-    //Get checkout cart div
+    // Get checkout cart div
     cy.get('.mat-drawer-inner-container').should('have.css', 'width', `${mobileWidth}px`);
-  })
+  });
 
   it('should display orders list after loggin',()=>{
     cy.loginWaiter();
@@ -52,5 +48,8 @@ describe('Testing the responsiveness of the app', () => {
     .click();
     cy.get('.tableContainer')
       .should('have.css', 'overflow', 'auto');
-  })
+  });
+  it('should logout', () => {
+    cy.logout();
+  });
 });

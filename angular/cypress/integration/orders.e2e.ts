@@ -60,10 +60,10 @@ describe('Testing the orders feature', () => {
         });
     });
     firstRow.click();
-    cy.get('cockpit-order-dialog > h3').should('contain', referenceNumber);
-    cy.get(
-      'cockpit-order-dialog > div.align-right.actionButtons > button',
-    ).click();
+    cy.get('#mat-dialog-title-0').should('contain', referenceNumber);
+    cy.get( 'button')
+    .contains('CLOSE')
+    .click();
   });
 
   it('should logout', () => {

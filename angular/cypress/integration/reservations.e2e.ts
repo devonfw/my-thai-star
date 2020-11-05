@@ -62,13 +62,13 @@ describe('Testing the reservations feature', () => {
         });
     });
     firstRow.click();
-    cy.get('cockpit-reservation-dialog > h3').should(
+    cy.get('#mat-dialog-title-0').should(
       'contain',
       referenceNumber,
     );
-    cy.get(
-      'cockpit-reservation-dialog > div.align-right.actionButtons > button',
-    ).click();
+    cy.get( 'button')
+    .contains('CLOSE')
+    .click();
   });
 
   it('should logout', () => {
