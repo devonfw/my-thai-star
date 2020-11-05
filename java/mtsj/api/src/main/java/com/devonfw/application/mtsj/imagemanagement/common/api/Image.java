@@ -1,5 +1,13 @@
 package com.devonfw.application.mtsj.imagemanagement.common.api;
 
+<<<<<<< HEAD
+<<<<<<< HEAD:java/mtsj/api/src/main/java/com/devonfw/application/mtsj/imagemanagement/common/api/Image.java
+=======
+import java.sql.Blob;
+
+>>>>>>> 68dc2dc7be070ba6dcda0ef6d56f29aca99f9116:java/mtsj/core/src/main/java/com/devonfw/application/mtsj/imagemanagement/common/api/Image.java
+=======
+>>>>>>> 68dc2dc7be070ba6dcda0ef6d56f29aca99f9116
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 
@@ -22,12 +30,20 @@ public interface Image extends ApplicationEntity {
   /**
    * @return content of the {@link Image}
    */
+<<<<<<< HEAD
+  public Blob getContent();
+=======
   public String getContent();
+>>>>>>> 68dc2dc7be070ba6dcda0ef6d56f29aca99f9116
 
   /**
    * @param content of the {@link Image}
    */
+<<<<<<< HEAD
+  public void setContent(Blob content);
+=======
   public void setContent(String content);
+>>>>>>> 68dc2dc7be070ba6dcda0ef6d56f29aca99f9116
 
   /**
    * @return contentType of the {@link Image}
