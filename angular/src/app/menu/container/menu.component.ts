@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { select, Store } from '@ngrx/store';
 import { Filter, Pageable } from 'app/shared/backend-models/interfaces';
 import { isEqual } from 'lodash';
@@ -38,7 +39,10 @@ export class MenuComponent implements OnInit {
     private store: Store<fromApp.State>,
     private menuService: MenuService,
     private sidenav: SidenavService,
-  ) {}
+    title: Title
+  ) {
+    title.setTitle('Menu');
+  }
 
   ngOnInit(): void {
     this.orders$ = this.store.select(fromOrder.getAllOrders);
