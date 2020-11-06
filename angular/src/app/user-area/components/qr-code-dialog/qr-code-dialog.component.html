@@ -1,6 +1,6 @@
 <mat-card>
   <h2 mat-dialog-title class="title">{{'userArea.qrcodeDialog.twofactorTitle' | transloco}}</h2>
-  <img mat-card-image *ngIf="qrcode && qrSecret" src="{{qrcode}}">
+  <img mat-card-image *ngIf="qrcode && qrSecret" alt="{{'qrcodeDialog.qrSwitchText' | transloco}}" src="{{qrcode}}">
   <mat-card-content>
       <h2 *ngIf="qrcode && !qrSecret" class="secret">{{secret}}</h2>
     <mat-card-subtitle
