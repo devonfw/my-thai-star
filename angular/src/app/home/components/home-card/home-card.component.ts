@@ -17,7 +17,7 @@ export class HomeCardComponent {
 export interface Tile {
   titleKey: string;
   contentKey: string;
-  caption: string;
+  caption?: string;
   img: string;
   buttonLabelKey: string;
 }
