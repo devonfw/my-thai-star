@@ -78,7 +78,7 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.login),
-      exhaustMap((user: any) => {
+      switchMap((user: any) => {
         return this.userService.login(user.username, user.password).pipe(
           map((res) => {
             if (res.headers.get('X-Mythaistar-Otp') === 'NONE') {
@@ -146,9 +146,9 @@ export class AuthEffects {
   token$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.token),
-      exhaustMap((token) => {
+      switchMap((token) => {
         return this.restServiceRoot$.pipe(
-          exhaustMap((restServiceRoot) =>
+          switchMap((restServiceRoot) =>
             this.http.get(`${restServiceRoot}${this.currentUserRestPath}`).pipe(
               map((loginInfo: any) => {
                 return authActions.loginSuccess({
