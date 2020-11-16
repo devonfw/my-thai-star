@@ -59,8 +59,10 @@
   },
   "bookTable": {
     "title": "Pot convidar als seus amics per sopar o reservar una taula.",
+    "bookTabImage": "Alguns dels plats que pots trobar al nostre restaurant",
     "bookingTab": "Reserva una taula",
     "reservationTab": "Convida amics",
+    "reservationTabImage": "Els nostres clients disfruten dels serveis del nostre restaurant",
     "bookingTitle": "Reservar una taula",
     "bookingSubtitle": "Pots reservar una taula i fer comandes",
     "reservationTitle": "Afegeix la teva informació i amics",
@@ -103,9 +105,11 @@
   "home": {
     "subtitle": "Més que només menjar deliciós",
     "restaurantTitle": "El nostre restaurant",
+    "restaurantImage": "Un dels nostres clients llig un llibre mentres disfruta del seu menjar",
     "restaurantContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "El nostre menú",
+    "menuImage": "Al nostre menú trobarás quantitat de plats entre els quals triar",
     "menuContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },

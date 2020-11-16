@@ -57,8 +57,10 @@
     },
     "bookTable": {
         "title": "Вы можете пригласить своих друзей на обед или заказать стол",
+        "bookTabImage": "Некоторые блюда вы можете найти в нашем ресторане",
         "bookingTab": "Заказать стол",
         "reservationTab": "Пригласить друзей",
+        "reservationTabImage": "Нашим клиентам нравятся услуги нашего ресторана",
         "bookingTitle": "Заказать ваш стол",
         "bookingSubtitle": "Вы можете заказать стол и меню",
         "reservationTitle": "Добавьте свои данные и друзей",
@@ -96,8 +98,10 @@
     "home": {
         "subtitle": "Больше чем просто вкусная еда",
         "restaurantTitle": "Наш ресторан",
+        "restaurantImage": "Один из наших клиентов читает книгу, наслаждаясь едой",
         "restaurantContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
         "menuTitle": "Наше меню",
+        "menuImage": "В нашем меню вы найдете множество вкусных блюд на выбор",
         "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
     },
     "menu": {
