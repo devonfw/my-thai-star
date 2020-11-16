@@ -17,6 +17,7 @@ import { emailValidator } from '../../../shared/directives/email-validator.direc
 import { BookTableDialogComponent } from '../../components/book-table-dialog/book-table-dialog.component';
 import { InvitationDialogComponent } from '../../components/invitation-dialog/invitation-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-public-book-table',
@@ -46,7 +47,10 @@ export class BookTableComponent implements OnInit {
     private translocoService: TranslocoService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
-  ) {}
+    title: Title
+  ) {
+    title.setTitle('Book a table');
+  }
 
   ngOnInit(): void {
     const booking = this.reservationInfo.booking;

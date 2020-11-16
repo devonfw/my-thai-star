@@ -59,8 +59,10 @@
   },
   "bookTable": {
     "title": "Можеш да поканиш твоите приятели на обяд или да запазиш маса",
+    "bookTabImage": "Някои от ястията, които можете да намерите в нашия ресторант",
     "bookingTab": "Запази маса",
     "reservationTab": "Покани приятели",
+    "reservationTabImage": "Нашите клиенти се наслаждават на услугите на нашия ресторант",
     "bookingTitle": "Запази твоята маса",
     "bookingSubtitle": "Можеш да запазиш маса и да поръчаш меню",
     "reservationTitle": "Добави твоята информация и приятели",
@@ -101,9 +103,11 @@
   "home": {
     "subtitle": "Повече от просто вкусна храна",
     "restaurantTitle": "Нашият ресторрант",
+    "restaurantImage":"Един от нашите клиенти чете книга, докато се наслаждава на храната си",
     "restaurantContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Нашето меню",
+    "menuImage": "В нашето меню ще намерите редица вкусни ястия, от които да избирате",
     "menuContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },

@@ -21,7 +21,7 @@ export class LoginDialogComponent {
     this.dialog.close();
   }
 
-  closeLoginDialog() {
+  closeLoginDialog(): void {
     this.dialog.close();
   }
 }

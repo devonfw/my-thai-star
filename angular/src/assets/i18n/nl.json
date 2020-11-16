@@ -60,8 +60,10 @@
   "bookTable": {
     "title":
       "Je kunt jouw vrienden uitnodigen voor een lunch of een tafel boeken",
+      "bookTabImage": "Enkele van de gerechten die u in ons restaurant kunt vinden",
     "bookingTab": "Boek een tafel",
     "reservationTab": "Nodig vrienden uit",
+    "reservationTabImage": "Onze klanten genieten van de diensten van ons restaurant",
     "bookingTitle": "Boek jouw tafel",
     "bookingSubtitle": "Je kunt een tafel boeken en een menu bestellen",
     "reservationTitle": "Voeg jouw informatie en vrienden toe",
@@ -103,9 +105,11 @@
   "home": {
     "subtitle": "Meer dan heerlijk eten alleen",
     "restaurantTitle": "Ons restaurant",
+    "restaurantImage": "Een van onze klanten leest een boek terwijl hij geniet van zijn maaltijd",
     "restaurantContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Our menu",
+    "menuImage": "In onze menukaart vind je een aantal heerlijke gerechten om uit te kiezen",
     "menuContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },
