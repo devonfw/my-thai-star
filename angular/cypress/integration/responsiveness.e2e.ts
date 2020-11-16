@@ -2,13 +2,13 @@ import { mobileHeight, mobileWidth } from '../support';
 
 describe('Testing the responsiveness of the app', () => {
   beforeEach(() => {
-    cy.viewport(mobileWidth, mobileHeight)
+    cy.viewport(mobileWidth, mobileHeight);
   });
 
   it('should change the navbar', () => {
     cy.visit('');
     cy.get('.header-container')
-      .should('not.contain','div.mat-tab-links');
+      .should('not.contain', 'div.mat-tab-links');
     // Get hamburger icon
     cy.get('.header-container > .forMobile > .mat-button-wrapper')
       .should('exist');
@@ -20,7 +20,7 @@ describe('Testing the responsiveness of the app', () => {
       .should('exist');
   });
 
-  it('should display the correct direction for the card list depending on the viewport',()=>{
+  it('should display the correct direction for the card list depending on the viewport', () => {
     cy.get('.mobileSidenav')
       .contains('HOME')
       .click();
@@ -34,13 +34,13 @@ describe('Testing the responsiveness of the app', () => {
     cy.get('.details-card').should('have.css', 'flex-direction', 'column');
   });
 
-  it('should have a correct checking cart',()=>{
+  it('should have a correct checking cart', () => {
     cy.get('[name="order"]').click();
     // Get checkout cart div
     cy.get('.mat-drawer-inner-container').should('have.css', 'width', `${mobileWidth}px`);
   });
 
-  it('should display orders list after loggin',()=>{
+  it('should display orders list after login', () => {
     cy.loginWaiter();
     cy.get('.header-container > .forMobile > .mat-button-wrapper').click();
     cy.get('.mobileSidenav')
