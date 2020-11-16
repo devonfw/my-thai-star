@@ -109,11 +109,7 @@
 
         <!-- Test tools -->
         <hamcrest.version>1.3</hamcrest.version>
-<<<<<<< HEAD
-        <junit.version>4.12</junit.version>
-=======
         <junit.version>4.13.1</junit.version>
->>>>>>> 68dc2dc7be070ba6dcda0ef6d56f29aca99f9116
         <mockito.version>1.8.5</mockito.version>
         <joda-time.version>2.9.9</joda-time.version>
         <jsoup.version>1.11.2</jsoup.version>
