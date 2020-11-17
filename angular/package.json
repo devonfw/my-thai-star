@@ -69,7 +69,7 @@
     "flag-icon-css": "^3.3.0",
     "highlight.js": "^9.15.6",
     "leaflet": "^1.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "ngx-electron": "^2.2.0",
     "ngx-moment": "^5.0.0",
