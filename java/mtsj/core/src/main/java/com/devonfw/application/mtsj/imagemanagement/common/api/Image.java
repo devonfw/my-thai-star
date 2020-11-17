@@ -1,5 +1,6 @@
 package com.devonfw.application.mtsj.imagemanagement.common.api;
 
+import java.sql.Blob;
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 import com.devonfw.application.mtsj.imagemanagement.common.api.datatype.ContentType;
 
