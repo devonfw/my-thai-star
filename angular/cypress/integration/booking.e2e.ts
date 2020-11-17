@@ -31,20 +31,22 @@ describe('Testing the booking feature', () => {
   it('filter dishes', () => {
     cy.visit('menu');
     cy.url().should('eq', `${url}menu`);
-    cy.get(`[placeholder='Search our dishes']`).type('peanut');
+    // Get search dishes input 
+    cy.get(`#mat-input-1`).type('peanut');
     cy.get('button[type="submit"]').click();
-    cy.get('public-menu-card').should('have.length.gte', 1);
+    cy.get('app-public-menu-card').should('have.length.gte', 1);
     // Clear filters
     cy.get('button.clearFilter').click();
-    cy.get('public-menu-card').should('have.length.gt', 1);
+    cy.get('app-public-menu-card').should('have.length.gt', 1);
   });
 
   it('order dishes with extras and add a comment', () => {
     cy.visit('menu');
     cy.url().should('eq', `${url}menu`);
-    cy.get(`[placeholder='Search our dishes']`).type('chicken');
+    // Get search dishes input 
+    cy.get(`#mat-input-1`).type('chicken');
     cy.get('button[type="submit"]').click();
-    cy.get('public-menu-card').should('have.length.gte', 1);
+    cy.get('app-public-menu-card').should('have.length.gte', 1);
     // Add dish without extras
     cy.get('button.addOrder').click();
     // Go back to the dish
@@ -56,7 +58,7 @@ describe('Testing the booking feature', () => {
     cy.get('button.addOrder').click();
     // Add comment to the last dish
     cy.get('label.addOrderComment').last().click();
-    cy.get('public-comment-dialog').within(() => {
+    cy.get('app-public-comment-dialog').within(() => {
       cy.get(
         'textarea#mat-input-2',
       ).type('I want the dish with the extra please.', { force: true });

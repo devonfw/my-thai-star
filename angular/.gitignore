@@ -34,6 +34,9 @@ testem.log
 
 # e2e
 /cypress/videos/*
+/cypress/report/*
+/cypress/screenshots/*
+/cypress/mochawesome-report/*
 
 #System Files
 .DS_Store
