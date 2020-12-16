@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:4042/",
+  "env": {
+    "backendUrl": "http://localhost:8081/mythaistar/services/rest/",
+    "mobileWidth": 414,
+    "mobileHeight": 736
+  },
+  "projectId": "p26ngi",
+  "retries": {
+    "runMode": 1,
+    "openMode": 2
+  },
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "overwrite": false,
+    "html": false,
+    "json": true,
+    "reportDir": "cypress/report"
+  }
+}

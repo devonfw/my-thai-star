@@ -10,7 +10,7 @@ import * as fromRoot from '../../../store/reducers';
 import { SidenavOrderComponent } from './sidenav-order.component';
 import { getTranslocoModule } from '../../../transloco-testing.module';
 import { By } from '@angular/platform-browser';
-import { getAllOrderData } from 'in-memory-test-data/db-order-data';
+import { getAllOrderData } from '../../../../in-memory-test-data/db-order-data';
 import { click } from '../../../shared/common/test-utils';
 import { of } from 'rxjs';
 

@@ -58,8 +58,10 @@
   },
   "bookTable": {
     "title": "Mozesz zaprosic znajomych na lunch lub zarezerwowac stolik",
+    "bookTabImage": "Niektóre dania, które znajdziesz w naszej restauracji",
     "bookingTab": "Zarezerwuj stolik",
     "reservationTab": "Zapros znajomych",
+    "reservationTabImage": "Nasi klienci korzystają z usług naszej restauracji",
     "bookingTitle": "Zarezerwuj stolik",
     "bookingSubtitle": "Mozesz zarezerwowac stolik i zlozyc zamówienie",
     "reservationTitle": "Dodaj twoje dane i znajomych",
@@ -102,9 +104,11 @@
   "home": {
     "subtitle": "Wiecej niz pyszne jedzenie",
     "restaurantTitle": "Nasza restauracja",
+    "restaurantImage": "Jeden z naszych klientów czyta książkę, delektując się posiłkiem",
     "restaurantContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Nasza karta",
+    "menuImage": "W naszym menu znajdziecie Państwo szereg pysznych dań do wyboru",
     "menuContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },

@@ -59,8 +59,10 @@
   },
   "bookTable": {
     "title": "Vous pouvez inviter vos amis à dîner ou réserver une table.",
+    "bookTabImage": "Quelques plats que vous pouvez trouver dans notre restaurant",
     "bookingTab": "Réservez une table",
     "reservationTab": "Inviter des amis",
+    "reservationTabImage": "Nos clients apprécient les services de notre restaurant",
     "bookingTitle": "Réserver une table",
     "bookingSubtitle": "Vous pouvez réserver une table et passer des commandes",
     "reservationTitle": "Ajouter vos informations et amis",
@@ -104,9 +106,11 @@
   "home": {
     "subtitle": "Plus qu'une nourriture délicieuse",
     "restaurantTitle": "Notre restaurant",
+    "restaurantImage": "Un de nos clients lit un livre tout en dégustant son repas",
     "restaurantContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Notre menu",
+    "menuImage": "Dans notre menu, vous trouverez un certain nombre de plats délicieux à choisir",
     "menuContent":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },

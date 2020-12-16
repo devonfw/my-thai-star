@@ -10,10 +10,9 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmailConfirmationsComponent } from './email-confirmations.component';
-import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
-import { EmailConfirmationsService } from 'app/email-confirmations/services/email-confirmations.service';
-import { AppRoutingModule } from 'app/app-routing.module';
-import { CoreModule } from 'app/core/core.module';
+import { EmailConfirmationsService } from '../../services/email-confirmations.service';
+import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
+import { CoreModule } from '../../../core/core.module';
 import { config } from '../../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfigService } from '../../../core/config/config.service';
@@ -26,7 +25,7 @@ import {
 } from '@angular/router';
 import { of, observable, throwError } from 'rxjs';
 import { Component } from '@angular/core';
-import { emailConfirmationsStub } from 'in-memory-test-data/db-email-confirmation-data';
+import { emailConfirmationsStub } from '../../../../in-memory-test-data/db-email-confirmation-data';
 import { TranslocoService } from '@ngneat/transloco';
 
 const ERRORMESSAGE = 'An error has ocurred, please try again later';
@@ -83,21 +82,21 @@ const translocoServiceStub = {
 
 const emailConfirmationsServiceSuccessStub = jasmine.createSpyObj<
   EmailConfirmationsService
->('EmailConfirmationsService', {
-  sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
-  sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
-  sendCancelBooking: of(emailConfirmationsStub.booking),
-  sendCancelOrder: of(true),
-});
+  >('EmailConfirmationsService', {
+    sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
+    sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
+    sendCancelBooking: of(emailConfirmationsStub.booking),
+    sendCancelOrder: of(true),
+  });
 
 const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<
   EmailConfirmationsService
->('EmailConfirmationsService', {
-  sendAcceptInvitation: throwError(ERRORMESSAGE),
-  sendRejectInvitation: throwError(ERRORMESSAGE),
-  sendCancelBooking: throwError(ERRORMESSAGE),
-  sendCancelOrder: throwError(ERRORMESSAGE),
-});
+  >('EmailConfirmationsService', {
+    sendAcceptInvitation: throwError(ERRORMESSAGE),
+    sendRejectInvitation: throwError(ERRORMESSAGE),
+    sendCancelBooking: throwError(ERRORMESSAGE),
+    sendCancelOrder: throwError(ERRORMESSAGE),
+  });
 
 describe('EmailConfirmationsComponent', () => {
   let component: EmailConfirmationsComponent;

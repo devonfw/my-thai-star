@@ -7,7 +7,7 @@ import { SidenavService } from './sidenav.service';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import * as fromOrder from '../store';
 import { Order } from '../models/order.model';
-import { getAllOrderData } from 'in-memory-test-data/db-order-data';
+import { getAllOrderData } from '../../../in-memory-test-data/db-order-data';
 import { of } from 'rxjs/internal/observable/of';
 import { ConfigService } from '../../core/config/config.service';
 import {
@@ -88,7 +88,7 @@ describe('SidenavSharedService', () => {
         (error: HttpErrorResponse) => {
           expect(error.status).toBe(500);
         },
-      );
+    );
     const req = httpTestingController.expectOne(
       config.restServiceRoot + 'ordermanagement/v1/order',
     );

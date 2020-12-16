@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
 import * as fromRoot from '../../../store';
 import { Booking } from '../../models/booking.model';
@@ -15,7 +15,7 @@ export class BookTableEffects {
     this.actions$.pipe(
       ofType(bookTableActions.bookTable),
       map((booking) => booking.booking),
-      exhaustMap((booking: any) => {
+      switchMap((booking: any) => {
         return this.bookTableService.postBooking({ booking }).pipe(
           map((res: any) =>
             bookTableActions.bookTableSuccess({
@@ -69,7 +69,7 @@ export class BookTableEffects {
     this.actions$.pipe(
       ofType(bookTableActions.inviteFriends),
       map((booking) => booking.booking),
-      exhaustMap((booking: Booking) =>
+      switchMap((booking: Booking) =>
         this.bookTableService.postBooking(booking).pipe(
           map((res: any) => bookTableActions.inviteFriendsSuccess(res)),
           catchError((error) =>

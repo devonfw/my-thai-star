@@ -25,6 +25,7 @@ describe('HomeCardComponent', () => {
     el = fixture.debugElement;
     component.tile = {
       titleKey: 'test',
+      caption: 'test',
       contentKey: 'test',
       img: 'test',
       buttonLabelKey: 'test',

@@ -20,7 +20,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { InvitationDialogComponentStub } from 'in-memory-test-data/db-invitation';
+import { InvitationDialogComponentStub } from '../../../../in-memory-test-data/db-invitation';
 
 const mockDialogRef = {
   close: jasmine.createSpy('close'),
