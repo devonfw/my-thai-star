@@ -3,10 +3,8 @@
 name: Docker Builds
 
 # Controls when the action will run. 
-on: 
- push:
-  branches:
-      - SetUp_Github_actions
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
