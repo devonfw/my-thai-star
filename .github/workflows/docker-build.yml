@@ -1,0 +1,18 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Docker Builds
+
+# Controls when the action will run. 
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2        
+        - name: docker angular build
+          run: |
+            docker build -f angular/Dockerfile.githubactions -t my-thai-star-angular angular/.
+        - name: docker java build
+          run: |
+            docker build -f java/Dockerfile.githubactions -t my-thai-star-java java/.
