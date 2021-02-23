@@ -12,7 +12,7 @@ jobs:
         - uses: actions/checkout@v2        
         - name: docker angular build
           run: |
-            docker build -f angular/Dockerfile.travis -t my-thai-star-angular angular/.
+            docker build -f angular/Dockerfile.githubactions -t my-thai-star-angular angular/.
         - name: docker java build
           run: |
-            docker build -f java/Dockerfile.travis -t my-thai-star-java java/.
+            docker build -f java/Dockerfile.githubactions -t my-thai-star-java java/.
