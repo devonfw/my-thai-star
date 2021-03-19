@@ -19,6 +19,13 @@
     <devon.http.port>${devon.port.range}81</devon.http.port>
     <devon.db.port>${devon.port.range}43</devon.db.port>
     <devon.test.excluded.groups>subsystem,system</devon.test.excluded.groups>
+    
+    <jib.version>2.8.0</jib.version>
+    <jib.container.image>adoptopenjdk/openjdk11:jre-11.0.4_11-alpine</jib.container.image>
+    <jib.app.port>8081</jib.app.port>
+    <jib.goal>buildTar</jib.goal>
+    <jib.phase>compile</jib.phase>
+    
   </properties>
 
   <modules>
@@ -165,17 +172,27 @@
   </build>
 
   <profiles>
+  
+      <profile>
+      <id>release</id>
+      <properties>
+        <jib.goal>build</jib.goal>
+      </properties>
+    </profile>
+    
+    
+    
     <profile>
-      <id>docker</id>
+       <id>container</id>
       <build>
         <plugins>
           <plugin>
             <groupId>com.google.cloud.tools</groupId>
             <artifactId>jib-maven-plugin</artifactId>
-            <version>2.6.0</version>
+            <version>${jib.version}</version>
             <configuration>
               <from>
-                <image>adoptopenjdk/openjdk11:jre-11.0.4_11-alpine</image>
+                 <image>${jib.container.image}</image>
               </from>
               <to>
                 <image>my-thai-star/java:${project.version}</image>
@@ -183,16 +200,20 @@
               <container>
                 <mainClass>com.devonfw.application.mtsj.SpringBootApp</mainClass>
                 <ports>
-                  <port>8081</port>
+                  <port>${jib.app.port}</port>
                 </ports>
-                <format>OCI</format>
               </container>
+              <outputPaths>
+                <tar>
+                  target/my-thai-star.tar
+                </tar>
+              </outputPaths>
             </configuration>
             <executions>
               <execution>
-                <phase>package</phase>
+               <phase>${jib.phase}</phase>
                 <goals>
-                  <goal>dockerBuild</goal>
+                  <goal>${jib.goal}</goal>
                 </goals>
               </execution>
             </executions>
