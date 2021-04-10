@@ -7,9 +7,8 @@ assignees: ''
 
 ---
 
-#What needs to be researched?
+# What needs to be researched?
 
----
-##DoD
+## DoD
 - [ ] the findings are Documented
 - [ ] the team has been Informed about the findings
