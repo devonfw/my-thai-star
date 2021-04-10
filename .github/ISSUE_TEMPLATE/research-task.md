@@ -1,7 +1,7 @@
 ---
 name: Research Task
 about: something that needs to be better understood in the team
-title: ''
+title: RES
 labels: research
 assignees: ''
 

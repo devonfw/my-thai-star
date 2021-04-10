@@ -1,7 +1,7 @@
 ---
 name: requirement
 about: A requirement as specified in the requirements Document
-title: ''
+title: REQ
 labels: Requirement
 assignees: ''
 
