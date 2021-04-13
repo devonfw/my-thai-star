@@ -2,7 +2,7 @@
 name: Feature
 about: Define a work item to fulfill a requirement
 title: 'FEA - '
-labels: enhancement
+labels: Feature
 assignees: ''
 
 ---

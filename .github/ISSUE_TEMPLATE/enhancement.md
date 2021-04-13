@@ -2,7 +2,7 @@
 name: Enhancement
 about: Define a work item to fulfill a requirement
 title: ENH
-labels: enhancement
+labels: ''
 assignees: ''
 
 ---
