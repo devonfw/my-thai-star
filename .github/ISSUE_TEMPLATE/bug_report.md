@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: BUG
+title: 'BUG - '
 labels: bug
 assignees: ''
 
@@ -36,3 +36,17 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+## DoR
+- [ ] Prioritized
+- [ ] Clearly Written
+- [ ] Contains all specifications
+- [ ] Estimated
+
+## DoD
+- [ ] All code is written
+- [ ] Code review has been completed.
+- [ ] Code is documented.
+- [ ] Code is tested and tests have passed.
+- [ ] Build has been made and deployed (on a testing environment).
+- [ ] Time has been recorded

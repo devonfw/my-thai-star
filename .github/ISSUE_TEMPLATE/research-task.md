@@ -1,7 +1,7 @@
 ---
 name: Research Task
 about: something that needs to be better understood in the team
-title: RES
+title: 'RES - '
 labels: research
 assignees: ''
 
@@ -12,3 +12,4 @@ assignees: ''
 ## DoD
 - [ ] the findings are Documented
 - [ ] the team has been Informed about the findings
+- [ ] Time has been recorded

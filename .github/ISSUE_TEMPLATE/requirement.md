@@ -1,14 +1,22 @@
 ---
 name: requirement
 about: A requirement as specified in the requirements Document
-title: REQ
+title: 'REQ - '
 labels: Requirement
 assignees: ''
 
 ---
 
-# description
+## Description
 
-# Linked chapter in requirements Docs
+## Features
 
-# Linked Enhancements / Feature Requests:
+## DoR
+- [ ] Prioritized
+- [ ] Clearly Written
+- [ ] All subfeatures are ready
+- [ ] Estimated
+
+## DoD
+- [ ] All linked Features are done
+- [ ] Requirement is documented in the User Documentation
