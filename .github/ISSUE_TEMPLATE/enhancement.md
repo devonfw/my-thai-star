@@ -24,3 +24,4 @@ assignees: ''
 - [ ] Code is documented.
 - [ ] Code is tested and tests have passed.
 - [ ] Build has been made and deployed (on a testing environment).
+- [ ] Time has been recorded

@@ -1,5 +1,5 @@
 ---
-name: requirement
+name: Requirement
 about: A requirement as specified in the requirements Document
 title: 'REQ - '
 labels: Requirement
@@ -9,7 +9,7 @@ assignees: ''
 
 ## Description
 
-## Features
+## Linked Enhancements
 
 ## DoR
 - [ ] Prioritized
