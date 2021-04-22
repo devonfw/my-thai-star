@@ -17,6 +17,7 @@ import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cock
 import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cockpit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { OrderArchiveCockpitComponent } from './order-archive-cockpit/order-archive-cockpit.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
     OrderDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
+    OrderArchiveCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,
