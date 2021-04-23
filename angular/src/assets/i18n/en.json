@@ -90,6 +90,7 @@
     "menu": "Menu",
     "book": "Book table",
     "orders": "Orders",
+    "order-archive":"Archive",
     "reservations": "Reservations",
     "userActions": {
       "user": "User",

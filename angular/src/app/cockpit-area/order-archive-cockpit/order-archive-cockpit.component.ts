@@ -39,6 +39,7 @@ export class OrderArchiveCockpitComponent implements OnInit, OnDestroy {
   columns: any[];
 
   displayedColumns: string[] = [
+    'order.state',
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
@@ -50,7 +51,10 @@ export class OrderArchiveCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
+    stateId:[3,4]
   };
+
+  stateNames = []
 
   constructor(
     private dialog: MatDialog,
@@ -65,7 +69,22 @@ export class OrderArchiveCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      this.setStateNames(event)
       moment.locale(this.translocoService.getActiveLang());
+    });
+  }
+
+  setStateNames(lang:string){
+    this.translocoSubscription = this.translocoService
+    .selectTranslateObject('cockpit.orderStates', {}, lang)
+    .subscribe((cockpitTable) => {
+      this.stateNames = [
+        cockpitTable.orderedH,
+        cockpitTable.preparationH,
+        cockpitTable.deliveryH,
+        cockpitTable.deliveredH,
+        cockpitTable.canceledH,
+      ];
     });
   }
 
@@ -74,6 +93,7 @@ export class OrderArchiveCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
