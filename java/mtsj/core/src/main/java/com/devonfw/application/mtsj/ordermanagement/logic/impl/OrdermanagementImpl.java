@@ -46,6 +46,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
@@ -198,6 +199,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLinesCto.add(orderLineCto);
     }
     cto.setOrderLines(orderLinesCto);
+    cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
     ctos.add(cto);
   }
 

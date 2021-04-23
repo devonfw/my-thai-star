@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.OrderState;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**
@@ -22,6 +23,8 @@ public class OrderCto extends AbstractCto {
   private List<OrderLineCto> orderLines;
 
   private BookingEto host;
+
+  private OrderState state;
 
   public OrderEto getOrder() {
 
@@ -71,6 +74,16 @@ public class OrderCto extends AbstractCto {
   public void setHost(BookingEto host) {
 
     this.host = host;
+  }
+
+  public OrderState getState() {
+
+    return this.state;
+  }
+
+  public void setState(OrderStateEto state) {
+
+    this.state = state;
   }
 
 }

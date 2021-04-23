@@ -22,6 +22,8 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String bookingToken;
 
+  private Long[] stateId;
+
   private StringSearchConfigTo hostTokenOption;
 
   private StringSearchConfigTo emailOption;
@@ -74,6 +76,16 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
   public void setHostId(Long hostId) {
 
     this.hostId = hostId;
+  }
+
+  public Long[] getStateId() {
+
+    return this.stateId;
+  }
+
+  public void setStateId(Long[] stateId) {
+
+    this.stateId = stateId;
   }
 
   /**
