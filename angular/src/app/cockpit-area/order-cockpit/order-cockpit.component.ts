@@ -52,6 +52,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     stateId:[0,1,2]
   };
 
+  stateNames = []
+
   constructor(
     private dialog: MatDialog,
     private translocoService: TranslocoService,
@@ -66,6 +68,21 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
+    });
+  }
+
+  
+  setStateNames(lang:string){
+    this.translocoSubscription = this.translocoService
+    .selectTranslateObject('cockpit.orderStates', {}, lang)
+    .subscribe((cockpitTable) => {
+      this.stateNames = [
+        cockpitTable.orderedH,
+        cockpitTable.preparationH,
+        cockpitTable.deliveryH,
+        cockpitTable.deliveredH,
+        cockpitTable.canceledH,
+      ];
     });
   }
 
