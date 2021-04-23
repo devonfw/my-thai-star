@@ -122,8 +122,7 @@ public class OrderEto extends AbstractEto implements Order {
   @Override
   public Long getStateId() {
 
-    // TODO Auto-generated method stub
-    return null;
+    return this.state;
   }
 
   @Override
