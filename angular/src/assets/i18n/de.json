@@ -195,9 +195,17 @@
         "assistantsH": "Teilnehmer"
       }
     },
+    "orderStates":{
+      "orderedH": "Bestellt",
+      "preparationH": "Zubereitung",
+      "deliveryH": "Lieferung",
+      "deliveredH": "Zugestellt",
+      "canceledH": "Storniert"
+    },
     "table": {
       "reservationDateH": "Reservierungsdatum",
       "emailH": "Email",
+      "orderStateH":"Status",
       "bookingTokenH": "Referenznummer",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
