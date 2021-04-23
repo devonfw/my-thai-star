@@ -190,9 +190,17 @@
         "assistantsH": "Assistants"
       }
     },
+    "orderStates":{
+      "orderedH": "Ordered",
+      "preparationH": "Preparation",
+      "deliveryH": "Delivery",
+      "deliveredH": "Delivered",
+      "canceledH": "Canceled"
+    },
     "table": {
       "reservationDateH": "Reservation Date",
       "emailH": "Email",
+      "orderStateH":"State",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
       "tableH": "Table",
