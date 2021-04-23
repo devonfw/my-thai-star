@@ -95,6 +95,7 @@
     "menu": "Menü",
     "book": "Tisch buchen",
     "orders": "Bestellungen",
+    "order-archive":"Archiv",
     "reservations": "Reservierungen",
     "userActions": {
       "user": "Benutzer",
