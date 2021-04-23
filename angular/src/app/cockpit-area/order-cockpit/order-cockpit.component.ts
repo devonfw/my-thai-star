@@ -34,10 +34,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   orders: OrderListView[] = [];
   totalOrders: number;
-
   columns: any[];
 
   displayedColumns: string[] = [
+    'order.state',
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
@@ -73,6 +73,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
