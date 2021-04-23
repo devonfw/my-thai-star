@@ -73,6 +73,16 @@ public interface OrdermanagementRestService {
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
 
   /**
+   *
+   *
+   * @param order the {@link OrderEto} to be updated
+   * @return the {@link Page list} of matching {@link OrderCto}s.
+   */
+  @Path("/order/updatestate")
+  @POST
+  public OrderEto updateOrderState(OrderEto order);
+
+  /**
    * Delegates to {@link Ordermanagement#findOrderLine}.
    *
    * @param id the ID of the {@link OrderLineEto}

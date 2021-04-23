@@ -83,12 +83,24 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[0].label }}
         </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-select [(ngModel)]="selectedOrder">
-            <mat-option Value="0">{{"cockpit.orderStates.orderedH"|transloco}}</mat-option>
-            <mat-option Value="1">{{"cockpit.orderStates.preparationH"|transloco}}</mat-option>
-            <mat-option Value="2">{{"cockpit.orderStates.deliveryH"|transloco}}</mat-option>
-            <mat-option Value="3">{{"cockpit.orderStates.canceledH"|transloco}}</mat-option>
+
+        <td mat-cell *matCellDef="let element"  (click)="$event.stopPropagation();" >
+          <mat-select  (selectionChange)="changeOrderState($event, element)" [(ngModel)]="element.order.stateId">
+            <mat-option [value]="0">{{
+              'cockpit.orderStates.orderedH' | transloco
+            }}</mat-option>
+            <mat-option [value]="1">{{
+              'cockpit.orderStates.preparationH' | transloco
+            }}</mat-option>
+            <mat-option [value]="2">{{
+              'cockpit.orderStates.deliveryH' | transloco
+            }}</mat-option>
+            <mat-option [value]="3">{{
+              'cockpit.orderStates.deliveredH' | transloco
+            }}</mat-option>
+            <mat-option [value]="4">{{
+              'cockpit.orderStates.canceledH' | transloco
+            }}</mat-option>
           </mat-select>
         </td>
       </ng-container>

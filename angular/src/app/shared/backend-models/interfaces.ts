@@ -15,6 +15,7 @@ export class FilterCockpit {
     // sort?: Sorting[];
     bookingDate: string;
     email: string;
+    stateId;
     bookingToken: number;
 }
 
@@ -95,6 +96,11 @@ export class ClusteringCriteria {
     endBookingdate: string;
     dishId: number;
     clusters: number;
+}
+
+export class orderStateUpdate {
+    orderid: number;
+    stateId: string;
 }
 
 // LOGIN
