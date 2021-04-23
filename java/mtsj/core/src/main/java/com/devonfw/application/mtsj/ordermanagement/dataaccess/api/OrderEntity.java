@@ -34,6 +34,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private List<OrderLineEntity> orderLines;
 
+  private OrderStateEntity state;
+
   /**
    * @return booking
    */
@@ -169,6 +171,46 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
       bookingEntity.setId(hostId);
       this.host = bookingEntity;
     }
+  }
+
+  @Override
+  @Transient
+  public Long getStateId() {
+
+    if (this.state == null) {
+      return null;
+    }
+    return this.state.getId();
+  }
+
+  @Override
+  public void setStateId(Long stateId) {
+
+    if (stateId == null) {
+      this.state = null;
+    } else {
+      OrderStateEntity stateEntity = new stateEntity();
+      stateEntity.setId(stateId);
+      this.state = stateEntity;
+    }
+  }
+
+  /**
+   * @return state
+   */
+  @OneToOne
+  @JoinColumn(name = "idState")
+  public OrderStateEntity getState() {
+
+    return this.state;
+  }
+
+  /**
+   * @param host new value of {@link #getState}.
+   */
+  public void setState(OrderStateEntity state) {
+
+    this.state = state;
   }
 
 }

@@ -63,6 +63,10 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
     if (hostToken != null && alias.getHost() != null) {
       query.where(Alias.$(alias.getBooking().getBookingToken()).eq(hostToken));
     }
+    Long[] stateIds = criteria.getStateId();
+    if (stateIds != null && alias.getState() != null) {
+      query.where(Alias.$(alias.getState().getId()).in(stateIds));
+    }
     String email = criteria.getEmail();
     if ((email != null) && alias.getBooking() != null) {
       query.where(Alias.$(alias.getBooking().getEmail()).toLowerCase().like(email.toLowerCase()));
