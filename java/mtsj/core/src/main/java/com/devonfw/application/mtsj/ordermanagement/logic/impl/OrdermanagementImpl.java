@@ -52,10 +52,12 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesE
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderStateEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderStateRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerDayRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerMonthRepository;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
@@ -83,6 +85,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
+
+  /**
+   * @see #getOrderStateDao()
+   */
+  @Inject
+  private OrderStateRepository orderStateDao;
 
   @Inject
   private OrderedDishesPerDayRepository orderedDishesPerDayDao;
@@ -268,6 +276,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     return getBeanMapper().map(resultOrderEntity, OrderEto.class);
   }
 
+  @Override
+  public OrderEto updateOrderState(OrderEto order) {
+
+    OrderEntity orderEntity = getOrderDao().find(order.getId());
+    OrderStateEntity orderStateEntity = getOrderStateDao().find(order.getStateId());
+    // OrderStateEntity state = getBeanMapper().map(order.getStateId(), OrderStateEntity.class);
+    orderEntity.setState(orderStateEntity);
+    OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
+
+    return getBeanMapper().map(resultOrderEntity, OrderEto.class);
+  }
+
   /**
    * Returns the field 'orderDao'.
    *
@@ -332,6 +353,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   public OrderLineRepository getOrderLineDao() {
 
     return this.orderLineDao;
+  }
+
+  /**
+   * Returns the field 'orderStateDao'.
+   *
+   * @return the {@link OrderStateDao} instance.
+   */
+  public OrderStateRepository getOrderStateDao() {
+
+    return this.orderStateDao;
   }
 
   public OrderedDishesPerDayRepository getOrderedDishesPerDayDao() {
