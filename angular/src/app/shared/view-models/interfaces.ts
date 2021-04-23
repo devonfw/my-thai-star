@@ -142,6 +142,7 @@ export interface SaveOrderResponse {
   id: number;
   invitedGuestId: number;
   modificationCounter: number;
+  state: number;
   revision: any;
 }
 

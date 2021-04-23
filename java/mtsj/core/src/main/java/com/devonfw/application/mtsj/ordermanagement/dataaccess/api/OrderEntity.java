@@ -189,7 +189,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     if (stateId == null) {
       this.state = null;
     } else {
-      OrderStateEntity stateEntity = new stateEntity();
+      OrderStateEntity stateEntity = new OrderStateEntity();
       stateEntity.setId(stateId);
       this.state = stateEntity;
     }

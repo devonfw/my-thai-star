@@ -49,6 +49,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
+    stateId:[0,1,2]
   };
 
   constructor(
@@ -120,7 +121,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  selected(selection: OrderListView): void {
+  changeOrderState(event,element){
+    this.waiterCockpitService
+      .updateOrder({id:element.order.id,stateId:event.value})
+      .subscribe((data) => {
+      });
+  }
+
+  selected(selection: OrderListView,event:any): void {
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
