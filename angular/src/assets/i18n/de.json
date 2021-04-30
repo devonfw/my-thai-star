@@ -13,7 +13,8 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "addUser": "Nutzer hinzufügen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -69,7 +70,8 @@
         "idH": "Id",
         "usernameH": "Name",
         "emailH": "Email",
-        "userRoleIdH": "Rolle"
+        "userRoleIdH": "Rolle",
+        "deleteButtonH": "Löschen"
     }    
   },
   "bookTable": {
@@ -114,8 +116,7 @@
       "logout": "Abmelden",
       "changePassword": "Passwort ändern",
       "twitterAccount": "Twitteraccount",
-      "signOut": "Abmelden",
-      "orders": "Bestellungen"
+      "signOut": "Abmelden"
     }
   },
   "home": {

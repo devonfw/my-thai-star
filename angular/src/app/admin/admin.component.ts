@@ -39,7 +39,8 @@ export class AdminComponent implements OnInit {
     'users.id',
     'users.email',
     'users.username',
-    'users.userRoleId'
+    'users.userRoleId',
+    'users.deleteButton'
   ];
 
   users :UserListView[] = [];
@@ -75,6 +76,7 @@ export class AdminComponent implements OnInit {
           { name: 'users.email', label: adminTable.emailH },
           { name: 'users.username', label: adminTable.usernameH },
           { name: 'users.userRoleId', label: adminTable.userRoleIdH },
+          { name: 'users.deleteButton', label: adminTable.deleteButtonH } //TODO, aus header für Tabelle raus bekommen, unnötig
         ];
       });
   }
@@ -116,6 +118,14 @@ export class AdminComponent implements OnInit {
       });
     }
     this.applyFilters();
+  }
+
+  clickDelete(): void {
+    console.log("delete");
+  }
+
+  clickAdd(): void {
+    console.log("add");
   }
 
 }
