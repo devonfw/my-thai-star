@@ -58,7 +58,19 @@
     "guestsPH": "Gib die Einladungs-Email ein",
     "comment": "Kommentar",
     "total": "Gesamt",
-    "referenceNumber": "Referenznummer"
+    "referenceNumber": "Referenznummer",
+    "id": "Id",
+    "userRoleId": "Rolle"
+  },
+  "admin": {
+    "filter": "Filter",
+    "table": {
+        "title": "Nutzer",
+        "idH": "Id",
+        "usernameH": "Name",
+        "emailH": "Email",
+        "userRoleIdH": "Rolle"
+    }    
   },
   "bookTable": {
     "title":

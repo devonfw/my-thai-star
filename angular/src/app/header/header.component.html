@@ -45,6 +45,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         {{ 'main.orders' | transloco | uppercase }}
+        
       </a>
       <a
         mat-tab-link
@@ -53,6 +54,14 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         {{ 'main.reservations' | transloco | uppercase }}
+      </a>
+      <a
+        mat-tab-link
+        routerLink="/admin"
+        routerLinkActive="navBottomBorder"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ 'admin.home' | transloco | uppercase }}
       </a>
     </nav>
   </div>
@@ -78,6 +87,19 @@
       >
         CLUSTERING
       </a>
+    </nav>
+  </div>
+  <div *ngIf="(auth.getRole() | async) === 'ADMIN'" class="forDesktop">
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        routerLink="/admin"
+        routerLinkActive="navBottomBorder"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ 'main.home' | transloco | uppercase }}
+      </a>
+      
     </nav>
   </div>
   <button
