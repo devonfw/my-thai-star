@@ -1,4 +1,4 @@
-<form #filterForm="ngForm">
+<form (ngSubmit)="applyFilters()" #filterForm="ngForm">
     <div>
         <mat-expansion-panel>
 
@@ -9,13 +9,10 @@
             <div class="formRow">
                 <div class="formMobileRow">
                     <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email" name="email">
+                        <input matInput [placeholder]="'formFields.id' | transloco" [(ngModel)]="filters.id" name="id">
                     </mat-form-field>
                     <mat-form-field color="accent" class="searchBy">
                         <input matInput [placeholder]="'formFields.username' | transloco" [(ngModel)]="filters.username" name="username">
-                    </mat-form-field>
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.id' | transloco" [(ngModel)]="filters.id" name="id">
                     </mat-form-field>
                     <mat-form-field color="accent" class="searchBy">
                         <input matInput [placeholder]="'formFields.userRoleId' | transloco" [(ngModel)]="filters.userRoleId" name="userRoleId">
@@ -24,13 +21,10 @@
 
                 <div class="formDesktopRow">
                     <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email" name="email">
+                        <input matInput [placeholder]="'formFields.id' | transloco" [(ngModel)]="filters.id" name="id">
                     </mat-form-field>
                     <mat-form-field color="accent" class="searchBy">
                         <input matInput [placeholder]="'formFields.username' | transloco" [(ngModel)]="filters.username" name="username">
-                    </mat-form-field>
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.id' | transloco" [(ngModel)]="filters.id" name="id">
                     </mat-form-field>
                     <mat-form-field color="accent" class="searchBy">
                         <input matInput [placeholder]="'formFields.userRoleId' | transloco" [(ngModel)]="filters.userRoleId" name="userRoleId">
@@ -102,8 +96,6 @@
                     </button>
                 </td>
             </ng-container>
-            
-           
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -123,4 +115,6 @@
 
     </div>
 
+
+    
 </mat-card>

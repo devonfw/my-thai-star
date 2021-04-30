@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from 'app/core/config/config.service';
 import { UserListView } from 'app/shared/view-models/interfaces';
@@ -19,7 +20,6 @@ import { Sort } from '@angular/material/sort';
 })
 export class AdminComponent implements OnInit {
   private translocoSubscription = Subscription.EMPTY;
-
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -27,14 +27,10 @@ export class AdminComponent implements OnInit {
   private sorting: any[] = [];
   pageSize = 8;
 
-  filters: FilterAdmin = {
-    id: undefined,
-    username: undefined,
-    email: undefined,
-    userRoleId: undefined
-  };
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
   columns: any[];
+
   displayedColumns: string[] = [
     'users.id',
     'users.email',
@@ -46,8 +42,14 @@ export class AdminComponent implements OnInit {
   users :UserListView[] = [];
   totalUsers: number;
 
-
   pageSizes: number[];
+
+  filters: FilterAdmin = {
+    id: undefined,
+    username: undefined,
+    email: undefined,
+    userRoleId: undefined
+  };
 
   constructor(
     private translocoService: TranslocoService,
@@ -83,7 +85,7 @@ export class AdminComponent implements OnInit {
 
   // Daten aus Backend holen
   applyFilters(): void {
-    console.log(this.sorting);
+    //console.log(this.sorting);
     this.adminService
       .getOrders(this.pageable, this.sorting, this.filters) // filters, wie sortiert, pagesize und pagenumber
       .subscribe((data: any) => {
@@ -101,7 +103,7 @@ export class AdminComponent implements OnInit {
   clearFilters(filters: any) {
     filters.reset();
     this.applyFilters();
-    // this.pagingBar.firstPage(); 
+     //this.pagingBar.firstPage(); 
     //Pages sind auch nicht realisiert, deswegen auskommentiert
   }
 
