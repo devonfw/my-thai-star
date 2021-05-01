@@ -24,7 +24,7 @@ const messages = {
   NUMBER_MISSING:
     "You can set your phone number at Amazon.com, under log-in and security.",
   NAME_AVAILABLE: "Here is your full name: ",
-  EMAIL_AVAILABLE: "Here is your email address: ",
+  RESERVED_TABLE: "Reserved Table for: ",
   NUMBER_AVAILABLE: "Here is your phone number: ",
   ERROR: "Uh Oh. Looks like something went wrong.",
   API_FAILURE:
@@ -85,7 +85,7 @@ const ReserveIntentHandler = {
         response = responseBuilder.speak(messages.EMAIL_MISSING).getResponse();
       } else {
         response = responseBuilder
-          .speak(messages.EMAIL_AVAILABLE + email)
+          .speak(messages.RESERVED_TABLE + email)
           .getResponse();
       }
       return response;
