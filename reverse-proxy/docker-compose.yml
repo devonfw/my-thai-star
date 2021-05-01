@@ -23,7 +23,6 @@ services:
     restart: always
     networks:
       - my-thai-star
-
 networks:
   my-thai-star:
     driver: bridge
