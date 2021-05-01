@@ -8,17 +8,17 @@ import * as moment from 'moment';
 import {
   FilterAdmin,
   Pageable
-} from '../shared/backend-models/interfaces';
+} from '../../shared/backend-models/interfaces';
 import { AdminService } from './services/admin.service';
 import { Sort } from '@angular/material/sort';
 
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: 'app-cockpit-admin-cockpit',
+  templateUrl: './admin-cockpit.component.html',
+  styleUrls: ['./admin-cockpit.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminCockpitComponent implements OnInit {
   private translocoSubscription = Subscription.EMPTY;
   private pageable: Pageable = {
     pageSize: 8,
