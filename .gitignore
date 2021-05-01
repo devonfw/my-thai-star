@@ -36,3 +36,8 @@ hs_err_pid*
 java/mtsj/.vscode/
 node-old/
 node-bak/
+
+# alexa libraries # 
+alexa/lambda/node_modules
+alexa/.ask
+alexa/.vscode
