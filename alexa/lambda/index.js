@@ -77,8 +77,8 @@ const ReserveIntentHandler = {
       const email = await client.getProfileEmail();
 
       console.log("Email successfully retrieved, now responding to user.");
-    
-      await util.createReservation('simon', email);
+
+      await util.createReservation("simon", email);
 
       let response;
       if (email == null) {
@@ -184,22 +184,22 @@ const ErrorHandler = {
 };
 
 const ProfileError = {
-    canHandle(handlerInput, error) {
-      return error.name === 'ServiceError';
-    },
-    handle(handlerInput, error) {
-      if (error.statusCode === 403) {
-        return handlerInput.responseBuilder
-          .speak(messages.NOTIFY_MISSING_PERMISSIONS)
-          .withAskForPermissionsConsentCard(PERMISSIONS)
-          .getResponse();
-      }
+  canHandle(handlerInput, error) {
+    return error.name === "ServiceError";
+  },
+  handle(handlerInput, error) {
+    if (error.statusCode === 403) {
       return handlerInput.responseBuilder
-        .speak(messages.LOCATION_FAILURE)
-        .reprompt(messages.LOCATION_FAILURE)
+        .speak(messages.NOTIFY_MISSING_PERMISSIONS)
+        .withAskForPermissionsConsentCard(PERMISSIONS)
         .getResponse();
-    },
-  };
+    }
+    return handlerInput.responseBuilder
+      .speak(messages.LOCATION_FAILURE)
+      .reprompt(messages.LOCATION_FAILURE)
+      .getResponse();
+  },
+};
 
 // The SkillBuilder acts as the entry point for your skill, routing all request and response
 // payloads to the handlers above. Make sure any new handlers or interceptors you've

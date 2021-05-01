@@ -28,6 +28,13 @@ services:
     image: my-thai-star/java:latest
     networks:
       - my-thai-star
+  alexa:
+    build: 'alexa/'
+    image: my-thai-star/alexa:latest
+    container_name: 'mts_alexa_endpoint'
+    restart: always
+    networks:
+      - my-thai-star
 networks:
   my-thai-star:
     driver: bridge

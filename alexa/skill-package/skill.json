@@ -22,8 +22,8 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "uri": "https://590a897d101c.ngrok.io",
-          "sslCertificateType": "Wildcard"
+          "uri": "https://demo.bitshift-team.de/alexa",
+          "sslCertificateType": "Trusted"
         },
         "interfaces": []
       }
