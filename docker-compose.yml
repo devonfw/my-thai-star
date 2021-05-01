@@ -7,10 +7,7 @@ services:
     container_name: 'mts_reverse_proxy'
     image: my-thai-star/reverse-proxy:latest
     volumes:
-      - type: volume
-        source: /etc/letsencrypt/live/demo.bitshift-team.de/
-        target: /etc/nginx/cert
-        read_only: true
+        - /etc/letsencrypt/archive/demo.bitshift-team.de/:/etc/nginx/cert
     networks:
       - my-thai-star
     ports:
