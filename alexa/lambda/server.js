@@ -3,7 +3,7 @@ const server = net.createServer();
 const {handler} = require("./index")
 
 const PORT = 3001;
-const HOST_NAME = "localhost"
+const HOST_NAME = "0.0.0.0"
 const HTTP_HEADER_DELIMITER = '\r\n';
 const HTTP_BODY_DELIMITER = '\r\n\r\n';
 
