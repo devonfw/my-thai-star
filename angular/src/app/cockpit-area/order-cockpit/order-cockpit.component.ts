@@ -13,7 +13,7 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-
+import {FormControl} from '@angular/forms';
 @Component({
   selector: 'app-cockpit-order-cockpit',
   templateUrl: './order-cockpit.component.html',
@@ -41,6 +41,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'booking.status', //abd
   ];
 
   pageSizes: number[];
@@ -50,6 +51,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     email: undefined,
     bookingToken: undefined,
   };
+  
 
   constructor(
     private dialog: MatDialog,
@@ -76,6 +78,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'booking.status', label: cockpitTable.statusH }, //abd
         ];
       });
   }
@@ -118,13 +121,26 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     }
     this.applyFilters();
   }
-
+  //abd
+  selectedStatus = new FormControl();
+  status: string[] = [
+    'order taken',
+    'delivering order',
+    'order delivered',
+    'order paid',
+    'canceled',
+  ];
+  //abd
   selected(selection: OrderListView): void {
+  this.orders[this.orders.indexOf(selection)].booking.status= this.selectedStatus.value;//abd
+  console.log(this.orders[this.orders.indexOf(selection)].booking);//abd
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
     });
+  
   }
+
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
