@@ -20,6 +20,8 @@ import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenc
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 
+import scala.Boolean;
+
 @Entity
 @Table(name = "Booking")
 public class BookingEntity extends ApplicationPersistenceEntity implements Booking {
@@ -38,7 +40,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String email;
 
-  private String statusString;
+  private boolean canceled;
 
   private BookingType bookingType;
 
@@ -61,7 +63,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   public BookingEntity() {
 
     super();
-    this.statusString = "order taken";
+    this.canceled = false;
   }
 
   /**
@@ -176,18 +178,18 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return canceled
    */
   @Override
-  public String getStatus() {
+  public boolean getCanceled() {
 
-    return this.statusString;
+    return this.canceled;
   }
 
   /**
    * @param canceled new value of {@link #getcanceled}.
    */
   @Override
-  public void setStatus(String statusString) {
+  public void setCanceled(boolean canceled) {
 
-    this.statusString = statusString;
+    this.canceled = canceled;
   }
 
   /**
