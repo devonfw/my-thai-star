@@ -40,7 +40,7 @@ const translocoServiceStub = {
     ownerH: 'Owner',
     tableH: 'Table',
     creationDateH: 'Creation date',
-    statusH: 'Status',//abd
+    statusH: 'State',//abd
   } as any),
 };
 

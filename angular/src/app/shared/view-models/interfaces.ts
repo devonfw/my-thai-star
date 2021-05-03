@@ -89,6 +89,7 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  state?: string;//abd
 }
 
 export interface OrderDishListView {
