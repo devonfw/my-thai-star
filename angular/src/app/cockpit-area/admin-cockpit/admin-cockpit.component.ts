@@ -10,6 +10,9 @@ import { FilterAdmin, Pageable } from '../../shared/backend-models/interfaces';
 import { AdminService } from './services/admin.service';
 import { Sort } from '@angular/material/sort';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
+import { UserInfo } from 'app/shared/backend-models/interfaces';
+
 
 @Component({
   selector: 'app-cockpit-admin-cockpit',
@@ -121,8 +124,13 @@ export class AdminCockpitComponent implements OnInit {
     this.applyFilters();
   }
 
-  clickDelete(): void {
-    console.log('delete');
+  clickDelete(user: UserInfo): void {
+    console.log(user); //user is undefinded, need click related to user from html 
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.id = 'modal-component';
+    dialogConfig.data = user;
+    const modalDialog = this.matDialog.open(DeleteUserDialogComponent, dialogConfig);
+    
   }
 
   clickAdd(): void {

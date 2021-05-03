@@ -9,12 +9,14 @@ import { CoreModule } from '../../core/core.module';
 import { AdminService } from './services/admin.service';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 
 
 @NgModule({
   declarations: [
     AdminCockpitComponent,
-    RegisterDialogComponent
+    RegisterDialogComponent,
+    DeleteUserDialogComponent
   ],
   imports: [
     MatExpansionModule,

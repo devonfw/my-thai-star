@@ -117,3 +117,15 @@ export class FilterAdmin {
     userRoleId: number;
     pageable?: Pageable; 
 }
+
+export class UserInfo{
+    id: number;
+    email: string;
+    name: string;
+    roleId; number;
+}
+
+export class RoleInfo{
+    id: number;
+    name: string;
+}

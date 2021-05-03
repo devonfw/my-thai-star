@@ -4,6 +4,29 @@
       <mat-form-field color="accent">
         <input
           matInput
+          [placeholder]="'formFields.name' | transloco"
+          ngModel
+          name="name"
+          required
+          validateEmail
+        />
+        <mat-error>{{ 'cockpitArea.emailError' | transloco }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>{{ 'admin.selectRole' | transloco }}</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let roleSelector of roleSelector" [value]="roleSelector.id">
+            {{ roleSelector.name | transloco }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field color="accent">
+        <input
+          matInput
           [placeholder]="'formFields.email' | transloco"
           ngModel
           name="email"

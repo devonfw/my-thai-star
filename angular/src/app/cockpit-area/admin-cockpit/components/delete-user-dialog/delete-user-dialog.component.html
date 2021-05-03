@@ -1,0 +1,17 @@
+<h3 mat-dialog-title> 
+    <mat-icon>warning</mat-icon> 
+    {{'cockpit.admin.warning' | transloco}}
+    <mat-icon>warning</mat-icon> 
+</h3>
+<mat-divider></mat-divider>
+<ng-container>
+    
+    {{ 'cockpit.admin.userDeleteMessage' | transloco}}
+    <br/>
+    <button
+        mat-button
+        (click)="deleteUser()" >
+        <mat-icon>delete</mat-icon>
+    </button>
+</ng-container>
+
