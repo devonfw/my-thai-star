@@ -201,7 +201,8 @@
       "bookingTokenH": "Referenznummer",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
+      "creationDateH": "Erstelldatum",
+      "statusH": "Status"
     }
   }
 }

@@ -78,7 +78,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'state', label: cockpitTable.statusH }, //abd
+          { name: 'booking.state', label: cockpitTable.statusH }, //abd
         ];
       });
   }
@@ -140,10 +140,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   } 
   updateState(option , selectedOrder: OrderListView):void {
     this.orders[this.orders.indexOf(selectedOrder)].state= this.selectedState.value;//abd
-  //  this.waiterCockpitService.postBookingStauts(this.orders).subscribe((data: any) => {
-   //   console.log(data); 
-    //  console.log("data printed ");
-   // });
+    console.log( this.orders[this.orders.indexOf(selectedOrder)]);
+    this.waiterCockpitService.postBookingStauts(99999999).subscribe((data: any) => {
+  
+    });
   }
 
   ngOnDestroy(): void {
