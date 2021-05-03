@@ -43,7 +43,10 @@ export interface BookingView {
   tableId?: number;
   bookingToken?: number;
   creationDate?: string;
+  status?: string;//abd
 }
+
+
 
 export interface FriendsInvite {
   email: string;
