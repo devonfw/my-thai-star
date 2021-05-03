@@ -15,8 +15,7 @@ export interface BookingView {
   tableId?: number;
   bookingToken?: number;
   creationDate?: string;
-  status?: string;//abd
-
+ 
 }
 
 
@@ -54,6 +53,7 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  state?: string;//abd
 }
 
 // Interface to recieve responeses from the server using httpclient for getReservations

@@ -78,7 +78,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'booking.status', label: cockpitTable.statusH }, //abd
+          { name: 'state', label: cockpitTable.statusH }, //abd
         ];
       });
   }
@@ -122,7 +122,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
   //abd
-  selectedStatus = new FormControl();
+  selectedState = new FormControl();
   status: string[] = [
     'order taken',
     'delivering order',
@@ -132,15 +132,19 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   ];
   //abd
   selected(selection: OrderListView): void {
-  this.orders[this.orders.indexOf(selection)].booking.status= this.selectedStatus.value;//abd
-  console.log(this.orders[this.orders.indexOf(selection)].booking);//abd
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
     });
   
+  } 
+  updateState(option , selectedOrder: OrderListView):void {
+    this.orders[this.orders.indexOf(selectedOrder)].state= this.selectedState.value;//abd
+  //  this.waiterCockpitService.postBookingStauts(this.orders).subscribe((data: any) => {
+   //   console.log(data); 
+    //  console.log("data printed ");
+   // });
   }
-
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
