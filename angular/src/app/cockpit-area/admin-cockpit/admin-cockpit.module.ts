@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../core/core.module';
 import { AdminService } from './services/admin.service';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -24,6 +24,7 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     HttpClientModule,
     CoreModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [
     AdminService

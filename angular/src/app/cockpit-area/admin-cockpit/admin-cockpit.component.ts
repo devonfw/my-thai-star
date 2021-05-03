@@ -5,18 +5,16 @@ import { ConfigService } from 'app/core/config/config.service';
 import { UserListView } from 'app/shared/view-models/interfaces';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
-import {
-  FilterAdmin,
-  Pageable
-} from '../../shared/backend-models/interfaces';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { FilterAdmin, Pageable } from '../../shared/backend-models/interfaces';
 import { AdminService } from './services/admin.service';
 import { Sort } from '@angular/material/sort';
-
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-cockpit-admin-cockpit',
   templateUrl: './admin-cockpit.component.html',
-  styleUrls: ['./admin-cockpit.component.scss']
+  styleUrls: ['./admin-cockpit.component.scss'],
 })
 export class AdminCockpitComponent implements OnInit {
   private translocoSubscription = Subscription.EMPTY;
@@ -36,10 +34,10 @@ export class AdminCockpitComponent implements OnInit {
     'users.email',
     'users.username',
     'users.userRoleId',
-    'users.deleteButton'
+    'users.deleteButton',
   ];
 
-  users :UserListView[] = [];
+  users: UserListView[] = [];
   totalUsers: number;
 
   pageSizes: number[];
@@ -48,13 +46,14 @@ export class AdminCockpitComponent implements OnInit {
     id: undefined,
     username: undefined,
     email: undefined,
-    userRoleId: undefined
+    userRoleId: undefined,
   };
 
   constructor(
     private translocoService: TranslocoService,
     private configService: ConfigService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    public matDialog: MatDialog
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
   }
@@ -78,7 +77,7 @@ export class AdminCockpitComponent implements OnInit {
           { name: 'users.email', label: adminTable.emailH },
           { name: 'users.username', label: adminTable.usernameH },
           { name: 'users.userRoleId', label: adminTable.userRoleIdH },
-          { name: 'users.deleteButton', label: adminTable.deleteButtonH } //TODO, aus header für Tabelle raus bekommen, unnötig
+          { name: 'users.deleteButton', label: adminTable.deleteButtonH }, //TODO, aus header für Tabelle raus bekommen, unnötig
         ];
       });
   }
@@ -90,7 +89,7 @@ export class AdminCockpitComponent implements OnInit {
       .getOrders(this.pageable, this.sorting, this.filters) // filters, wie sortiert, pagesize und pagenumber
       .subscribe((data: any) => {
         if (!data) {
-          this.users = []; 
+          this.users = [];
         } else {
           this.users = data.content;
         }
@@ -103,7 +102,7 @@ export class AdminCockpitComponent implements OnInit {
   clearFilters(filters: any) {
     filters.reset();
     this.applyFilters();
-     //this.pagingBar.firstPage(); 
+    //this.pagingBar.firstPage();
     //Pages sind auch nicht realisiert, deswegen auskommentiert
   }
 
@@ -123,13 +122,16 @@ export class AdminCockpitComponent implements OnInit {
   }
 
   clickDelete(): void {
-    console.log("delete");
-    
+    console.log('delete');
   }
 
   clickAdd(): void {
-    console.log("add");
-
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.height = '350px';
+    dialogConfig.width = '600px';
+    const modalDialog = this.matDialog.open(RegisterDialogComponent, dialogConfig);
   }
-
 }
