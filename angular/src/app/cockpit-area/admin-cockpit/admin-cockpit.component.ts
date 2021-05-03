@@ -71,7 +71,7 @@ export class AdminCockpitComponent implements OnInit {
   // header für die Tabelle aus de.json (hängt von der Sprache ab) holen
   setTableHeaders(lang: string): void {
     this.translocoSubscription = this.translocoService
-      .selectTranslateObject('admin.table', {}, lang)
+      .selectTranslateObject('cockpit.admin.table', {}, lang)
       .subscribe((adminTable) => {
         this.columns = [
           { name: 'users.id', label: adminTable.idH },

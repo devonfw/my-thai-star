@@ -63,17 +63,6 @@
     "id": "Id",
     "userRoleId": "Rolle"
   },
-  "admin": {
-    "filter": "Filter",
-    "table": {
-        "title": "Nutzer",
-        "idH": "Id",
-        "usernameH": "Name",
-        "emailH": "Email",
-        "userRoleIdH": "Rolle",
-        "deleteButtonH": "Löschen"
-    }    
-  },
   "bookTable": {
     "title":
       "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -109,6 +98,7 @@
     "menu": "Menü",
     "book": "Tisch buchen",
     "orders": "Bestellungen",
+    "admin": "Administation",
     "reservations": "Reservierungen",
     "userActions": {
       "user": "Benutzer",
@@ -188,6 +178,16 @@
   },
   "cockpit": {
     "filter": "Filter",
+    "admin": {
+      "table": {
+          "title": "Nutzer",
+          "idH": "Id",
+          "usernameH": "Name",
+          "emailH": "Email",
+          "userRoleIdH": "Rolle",
+          "deleteButtonH": "Löschen"
+      }    
+    },
     "orders": {
       "title": "Bestellungen",
       "dialogTitle": "BESTELLDETAILS - REFERENZNUMMER",

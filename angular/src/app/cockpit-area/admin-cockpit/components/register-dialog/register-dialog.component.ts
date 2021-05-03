@@ -12,4 +12,15 @@ export class RegisterDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  logInSubmit(): void {
+
+  }
+
+  closeLoginDialog(): void {
+
+  }
+  signInSubmit(): void {
+
+  }
+  
 }
