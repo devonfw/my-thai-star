@@ -7,12 +7,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../core/core.module';
 import { AdminService } from './services/admin.service';
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    AdminCockpitComponent
+    AdminCockpitComponent,
+    RegisterDialogComponent
   ],
   imports: [
     MatExpansionModule,

@@ -124,10 +124,12 @@ export class AdminCockpitComponent implements OnInit {
 
   clickDelete(): void {
     console.log("delete");
+    
   }
 
   clickAdd(): void {
     console.log("add");
+
   }
 
 }
