@@ -36,6 +36,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   totalOrders: number;
 
   columns: any[];
+  status: any[];
 
   displayedColumns: string[] = [
     'booking.bookingDate',
@@ -81,6 +82,17 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.state', label: cockpitTable.statusH }, //abd
         ];
       });
+      this.translocoSubscription = this.translocoService
+      .selectTranslateObject('cockpit.status', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.status = [
+          { name: 'order taken', label: cockpitTable.orderTakenH },
+          { name: 'delivering order', label: cockpitTable.deliveringOrderH },
+          { name: 'order delivered', label: cockpitTable.orderDeliveredH },
+          { name: 'order paid', label: cockpitTable.orderPaidH },
+          { name: 'canceled', label: cockpitTable.canceledH } //abd
+        ];
+      });
   }
 
   applyFilters(): void {
@@ -122,14 +134,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
   //abd
-  selectedState = new FormControl();
-  status: string[] = [
+ /* status: any[] = [
     'order taken',
     'delivering order',
     'order delivered',
     'order paid',
     'canceled',
-  ];
+    
+  ];*/
   //abd
   selected(selection: OrderListView): void {
     this.dialog.open(OrderDialogComponent, {
@@ -138,11 +150,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   
   } 
-  updateState(option , selectedOrder: OrderListView):void {
-    this.orders[this.orders.indexOf(selectedOrder)].state= this.selectedState.value;//abd
-    console.log( this.orders[this.orders.indexOf(selectedOrder)]);
-    this.waiterCockpitService.postBookingStauts(99999999).subscribe((data: any) => {
   
+  updateState(option , selectedOrder: OrderListView):void {
+    this.orders[this.orders.indexOf(selectedOrder)].state= option.name;//abd
+    const str = JSON.stringify(this.orders[this.orders.indexOf(selectedOrder)]);
+    const obj = JSON.parse(str);
+    const id = obj.order.id;
+    this.waiterCockpitService.postBookingStauts(this.orders[this.orders.indexOf(selectedOrder)].state,id).subscribe((data: any) => {
     });
   }
 

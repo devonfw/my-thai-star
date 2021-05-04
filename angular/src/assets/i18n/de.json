@@ -203,6 +203,14 @@
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum",
       "statusH": "Status"
+    },
+    "status": {
+      "orderTakenH": "Bestellung Aufgenommen",
+      "deliveringOrderH": "Bestellung wird ausgeliefert",
+      "orderDeliveredH": "Bestellung beim Gast",
+      "orderPaidH": "Bezahlt",
+      "canceledH": "Storniert"
+   
     }
   }
 }
