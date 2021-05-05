@@ -10,7 +10,7 @@ import { UserInfo } from 'app/shared/backend-models/interfaces';
   styleUrls: ['./delete-user-dialog.component.scss']
 })
 export class DeleteUserDialogComponent implements OnInit {
- 
+
   user: any;
   constructor(
     private translocoService: TranslocoService,
@@ -19,7 +19,7 @@ export class DeleteUserDialogComponent implements OnInit {
   ) {
     this.user = dialogData;
   }
-  
+
 
   ngOnInit(): void {
   }

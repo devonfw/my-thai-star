@@ -12,9 +12,9 @@ import { RoleInfo } from 'app/shared/backend-models/interfaces'
 export class RegisterDialogComponent implements OnInit {
 
   roleSelector: RoleInfo[] = [
-    {id: 0, name: 'admin.costumer'},
-    {id: 1, name: 'admin.waiter'},
-    {id: 2, name: 'admin.manager'}
+    {id: 0, name: 'userRoles.customer'},
+    {id: 1, name: 'userRoles.waiter'},
+    {id: 2, name: 'userRoles.manager'}
   ];
 
   constructor(public dialog: MatDialog) {}

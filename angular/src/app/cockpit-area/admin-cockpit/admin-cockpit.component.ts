@@ -32,8 +32,14 @@ export class AdminCockpitComponent implements OnInit {
 
   columns: any[];
 
+  roleNames = [
+    "customer",
+    "waiter",
+    "manager",
+    "admin"
+  ]
+
   displayedColumns: string[] = [
-    'users.id',
     'users.email',
     'users.username',
     'users.userRoleId',
@@ -46,10 +52,8 @@ export class AdminCockpitComponent implements OnInit {
   pageSizes: number[];
 
   filters: FilterAdmin = {
-    id: undefined,
     username: undefined,
     email: undefined,
-    userRoleId: undefined,
   };
 
   constructor(
@@ -66,6 +70,7 @@ export class AdminCockpitComponent implements OnInit {
     this.applyFilters();
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      console.log(this.columns)
       moment.locale(this.translocoService.getActiveLang());
     });
   }
@@ -76,7 +81,6 @@ export class AdminCockpitComponent implements OnInit {
       .selectTranslateObject('cockpit.admin.table', {}, lang)
       .subscribe((adminTable) => {
         this.columns = [
-          { name: 'users.id', label: adminTable.idH },
           { name: 'users.email', label: adminTable.emailH },
           { name: 'users.username', label: adminTable.usernameH },
           { name: 'users.userRoleId', label: adminTable.userRoleIdH },
@@ -87,7 +91,6 @@ export class AdminCockpitComponent implements OnInit {
 
   // Daten aus Backend holen
   applyFilters(): void {
-    //console.log(this.sorting);
     this.adminService
       .getOrders(this.pageable, this.sorting, this.filters) // filters, wie sortiert, pagesize und pagenumber
       .subscribe((data: any) => {
@@ -138,7 +141,7 @@ export class AdminCockpitComponent implements OnInit {
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-component';
-    dialogConfig.height = '350px';
+    dialogConfig.height = '500px';
     dialogConfig.width = '600px';
     const modalDialog = this.matDialog.open(RegisterDialogComponent, dialogConfig);
   }
