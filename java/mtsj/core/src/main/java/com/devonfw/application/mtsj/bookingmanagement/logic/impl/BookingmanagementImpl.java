@@ -449,12 +449,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
     try {
       StringBuilder hostMailContent = new StringBuilder();
       hostMailContent.append("MY THAI STAR").append("\n");
-      hostMailContent.append("Hi ").append(booking.getEmail()).append("\n");
-      hostMailContent.append("Your booking has been confirmed.").append("\n");
-      hostMailContent.append("Host: ").append(booking.getName()).append("<").append(booking.getEmail()).append(">")
-          .append("\n");
+      hostMailContent.append("Hi ").append(booking.getName()).append(" your booking has been confirmed.").append("\n");
+      hostMailContent.append("To add dishes to your order pls use the following Booking CODE.").append("\n");
       hostMailContent.append("Booking CODE: ").append(booking.getBookingToken()).append("\n");
-      hostMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
+      hostMailContent.append("Your order will take place at: ").append(booking.getBookingDate()).append("\n");
       if (!booking.getInvitedGuests().isEmpty()) {
         hostMailContent.append("Guest list:").append("\n");
         for (InvitedGuestEntity guest : booking.getInvitedGuests()) {
