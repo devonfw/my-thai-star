@@ -1,4 +1,5 @@
 <form (ngSubmit)="signInSubmit(signForm.form.value)" #signForm="ngForm" >
+  
   <div class="formFields">
     <div>
       <mat-form-field color="accent">
@@ -13,16 +14,18 @@
         <mat-error>{{ 'cockpitArea.emailError' | transloco }}</mat-error>
       </mat-form-field>
     </div>
+
     <div>
       <mat-form-field>
         <mat-label>{{ 'cockpit.admin.selectRole' | transloco }}</mat-label>
-        <mat-select>
+        <mat-select [(value)]="roleId" name=roleId>
           <mat-option *ngFor="let roleSelector of roleSelector" [value]="roleSelector.id">
             {{ roleSelector.name | transloco }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+    
     <div>
       <mat-form-field color="accent">
         <input

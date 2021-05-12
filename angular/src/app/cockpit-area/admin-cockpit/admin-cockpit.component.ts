@@ -7,11 +7,11 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FilterAdmin, Pageable } from '../../shared/backend-models/interfaces';
-import { AdminService } from './services/admin.service';
 import { Sort } from '@angular/material/sort';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 import { UserInfo } from 'app/shared/backend-models/interfaces';
+import { AdminService } from '../services/admin.service';
 
 
 @Component({

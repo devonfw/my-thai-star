@@ -1,4 +1,3 @@
-import { AdminCockpitModule } from './cockpit-area/admin-cockpit/admin-cockpit.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -57,8 +56,7 @@ import { UserAreaModule } from './user-area/user-area.module';
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    HttpClientModule,
-    AdminCockpitModule
+    HttpClientModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   declarations: [AppComponent, WebviewDirective],

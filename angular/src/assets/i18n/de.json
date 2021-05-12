@@ -187,12 +187,15 @@
           "userRoleIdH": "Rolle",
           "deleteButtonH": "Löschen"
       },
-      "userDeleteMessage": " wird hiermit endgültig gelöscht!",
+      "userDeleteMessage": " wird endgültig gelöscht! Fortsetzen?",
+      "user" : "Nutzer ",
       "warning": "Sicherheitswarnung!",   
       "customer": "Kunde",
       "waiter": "Kellner",
       "manager": "Manager",
-      "selectRole": "eine Rolle wählen"
+      "selectRole": "eine Rolle wählen",
+      "confirmDelition": "Löschen",
+      "cancelDelition": "Abbrechen"
     },
     "orders": {
       "title": "Bestellungen",

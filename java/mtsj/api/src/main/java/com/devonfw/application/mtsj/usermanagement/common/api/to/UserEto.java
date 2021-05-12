@@ -17,6 +17,8 @@ public class UserEto extends AbstractEto implements User {
   private boolean twoFactorStatus;
 
   private Long userRoleId;
+  
+  private String password;
 
   @Override
   public String getUsername() {
@@ -64,6 +66,16 @@ public class UserEto extends AbstractEto implements User {
   public void setUserRoleId(Long userRoleId) {
 
     this.userRoleId = userRoleId;
+  }
+  
+  @Override
+  public String getPassword() {
+  	return this.password;
+  }
+
+  @Override
+  public void setPassword(String password) {
+  	this.password = password;
   }
 
   @Override
@@ -117,4 +129,8 @@ public class UserEto extends AbstractEto implements User {
 
     return true;
   }
+
+
+
+
 }

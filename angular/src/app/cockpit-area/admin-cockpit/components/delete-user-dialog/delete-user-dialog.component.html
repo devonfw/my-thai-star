@@ -2,15 +2,16 @@
     <mat-icon>warning</mat-icon> 
     {{'cockpit.admin.warning' | transloco}}
 </h2>
-<mat-divider></mat-divider>
-<ng-container>
-    
+
+
+<mat-dialog-content>
+    {{'cockpit.admin.user' | transloco}}
+    {{ user.name }}
     {{ 'cockpit.admin.userDeleteMessage' | transloco}}
-    <br/>
-    <button
-        mat-button
-        (click)="deleteUser()" >
-        <mat-icon>delete</mat-icon>
-    </button>
-</ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial  (click)="deleteUser()">Delete</button>
+</mat-dialog-actions>
 
