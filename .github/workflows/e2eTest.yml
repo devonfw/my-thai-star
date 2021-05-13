@@ -32,8 +32,8 @@ jobs:
         which google-chrome
         ls $(which chrome)
         ls $(which google-chrome)
-        rm $(which chrome)
-        ln $(which chrome) /usr/bin/google-chrome
+        sudo rm $(which chrome)
+        sudo ln $(which chrome) /usr/bin/google-chrome
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
