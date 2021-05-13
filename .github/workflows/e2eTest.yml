@@ -21,7 +21,7 @@ jobs:
         java-version: 11
         distribution: 'adopt'
     - name: Install Chrome
-      uses: browser-actions/setup-chrome@latest
+    - uses: browser-actions/setup-chrome@latest
       run: chrome --version
       with:
         chrome-version: beta
