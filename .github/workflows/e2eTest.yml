@@ -28,4 +28,4 @@ jobs:
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
-        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless
+        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX
