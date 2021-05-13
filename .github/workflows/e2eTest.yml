@@ -26,6 +26,7 @@ jobs:
         chrome-version: beta
     - name: debug
       run: |
+        shopt -s expand_aliases
         chrome --version
         google-chrome --version
         alias 'google-chrome'='chrome'
