@@ -28,7 +28,9 @@ jobs:
       run: |
         chrome --version
         google-chrome --version
-        alias google-chrome='chrome'
+        alias 'google-chrome'='chrome'
+        chrome --version
+        google-chrome --version
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
