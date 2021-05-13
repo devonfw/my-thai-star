@@ -26,7 +26,6 @@ jobs:
         chrome-version: beta
     - name: debug
       run: |
-        
         chrome --version
         google-chrome --version
         which chrome
@@ -34,4 +33,4 @@ jobs:
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
-        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX
+        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX -DbrowserOptions="binary_location=$(which chrome)"
