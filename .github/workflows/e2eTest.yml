@@ -30,6 +30,8 @@ jobs:
         google-chrome --version
         which chrome
         which google-chrome
+        ls $(which chrome)
+        ls $(which google-chrome)
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
