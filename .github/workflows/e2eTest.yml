@@ -33,7 +33,7 @@ jobs:
         ls $(which chrome)
         ls $(which google-chrome)
         sudo rm $(which chrome)
-        sudo ln $(which chrome) /usr/bin/google-chrome
+        sudo cp $(which chrome) /usr/bin/google-chrome
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
