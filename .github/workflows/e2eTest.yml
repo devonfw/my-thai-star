@@ -21,10 +21,11 @@ jobs:
         java-version: 11
         distribution: 'adopt'
     - name: Install Chrome
-    - uses: browser-actions/setup-chrome@latest
-      run: chrome --version
+      uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: beta
+    - name: debug
+      run: chrome --version
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
