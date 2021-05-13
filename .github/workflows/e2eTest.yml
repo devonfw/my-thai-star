@@ -25,7 +25,10 @@ jobs:
       with:
         chrome-version: beta
     - name: debug
-      run: chrome --version
+      run: |
+        chrome --version
+        google-chrome --version
+        alias google-chrome='chrome'
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
