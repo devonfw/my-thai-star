@@ -26,12 +26,11 @@ jobs:
         chrome-version: beta
     - name: debug
       run: |
-        shopt -s expand_aliases
+        
         chrome --version
         google-chrome --version
-        alias 'google-chrome'='chrome'
-        chrome --version
-        google-chrome --version
+        which chrome
+        which google-chrome
     - name: run tests
       working-directory: mrchecker/endtoend-test
       run: |
