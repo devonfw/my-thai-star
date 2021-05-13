@@ -32,7 +32,7 @@ jobs:
         which google-chrome
         ls $(which chrome)
         ls $(which google-chrome)
-        sudo rm $(which chrome)
+        sudo rm $(which google-chrome)
         sudo cp $(which chrome) /usr/bin/google-chrome
     - name: run tests
       working-directory: mrchecker/endtoend-test
