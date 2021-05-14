@@ -19,7 +19,7 @@ jobs:
       working-directory: angular
       run: |
         npm install 
-        ng test --watch=false --browsers=ChromeHeadless
+        npm run test:ci
     - name: start my thai star
       run: docker-compose up --build -d
     - name: Set up JDK 11
