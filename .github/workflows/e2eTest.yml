@@ -29,17 +29,11 @@ jobs:
       uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: beta
-    - name: debug
+    - name: link new chrome browser to /usr/bin/
       run: |
-        chrome --version
-        google-chrome --version
-        which chrome
-        which google-chrome
-        ls $(which chrome)
-        ls $(which google-chrome)
         sudo rm $(which google-chrome)
         sudo ln -s $(which chrome) /usr/bin/google-chrome
-    - name: run tests
+    - name: run e2e tests
       working-directory: mrchecker/endtoend-test
       run: |
         mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX -DbrowserOptions="binary_location=$(which chrome)"
