@@ -21,6 +21,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 
 /**
@@ -33,7 +34,13 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   @Inject
   private Ordermanagement orderManagement;
 
-  OrderCto orderCto;
+  OrderCto orderCto1;
+
+  OrderCto orderCto2;
+
+  OrderCto orderCto3;
+
+  OrderEto createdOrder;
 
   /**
    * Creation of needed objects
@@ -51,6 +58,12 @@ public class OrdermanagementTest extends ApplicationComponentTest {
     List<IngredientEntity> extras = new ArrayList<>();
     extras.add(i1);
     extras.add(i2);
+
+    // Order State
+    OrderStateEto oS1 = new OrderStateEto();
+    oS1.setStateName("ordered");
+    OrderStateEto oS2 = new OrderStateEto();
+    oS2.setStateName("preparation");
 
     // Dish
     DishEto dishEto = new DishEto();
@@ -85,10 +98,21 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
     BookingEto bookingEto = new BookingEto();
     bookingEto.setBookingToken("CB_20170510_123502595Z");
-    this.orderCto = new OrderCto();
-    this.orderCto.setBooking(bookingEto);
-    this.orderCto.setOrderLines(lines);
+    this.orderCto1 = new OrderCto();
+    this.orderCto1.setBooking(bookingEto);
+    this.orderCto1.setOrderLines(lines);
 
+    BookingEto bookingEto2 = new BookingEto();
+    bookingEto2.setBookingToken("CB_20170510_123502575Z");
+    this.orderCto2 = new OrderCto();
+    this.orderCto2.setBooking(bookingEto2);
+    this.orderCto2.setOrderLines(lines);
+
+    BookingEto bookingEto3 = new BookingEto();
+    bookingEto3.setBookingToken("CB_20170509_123502555Z");
+    this.orderCto3 = new OrderCto();
+    this.orderCto3.setBooking(bookingEto3);
+    this.orderCto3.setOrderLines(lines);
   }
 
   /**
@@ -97,7 +121,7 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   @Test
   public void orderAnOrder() {
 
-    OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
+    OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto1);
     assertThat(createdOrder).isNotNull();
   }
 
@@ -109,9 +133,9 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
     BookingEto bookingEto = new BookingEto();
     bookingEto.setBookingToken("wrongToken");
-    this.orderCto.setBooking(bookingEto);
+    this.orderCto1.setBooking(bookingEto);
     try {
-      this.orderManagement.saveOrder(this.orderCto);
+      this.orderManagement.saveOrder(this.orderCto1);
     } catch (Exception e) {
       WrongTokenException wte = new WrongTokenException();
       assertThat(e.getClass()).isEqualTo(wte.getClass());
@@ -126,9 +150,9 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
     BookingEto bookingEto = new BookingEto();
     bookingEto.setBookingToken("CB_20170509_123502555Z");
-    this.orderCto.setBooking(bookingEto);
+    this.orderCto1.setBooking(bookingEto);
     try {
-      this.orderManagement.saveOrder(this.orderCto);
+      this.orderManagement.saveOrder(this.orderCto1);
     } catch (Exception e) {
       OrderAlreadyExistException oae = new OrderAlreadyExistException();
       assertThat(e.getClass()).isEqualTo(oae.getClass());
@@ -143,9 +167,9 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
     BookingEto bookingEto = new BookingEto();
     bookingEto.setBookingToken("CB_Not_Existing_Token");
-    this.orderCto.setBooking(bookingEto);
+    this.orderCto1.setBooking(bookingEto);
     try {
-      this.orderManagement.saveOrder(this.orderCto);
+      this.orderManagement.saveOrder(this.orderCto1);
     } catch (Exception e) {
       NoBookingException nb = new NoBookingException();
       assertThat(e.getClass()).isEqualTo(nb.getClass());
@@ -160,12 +184,38 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
     BookingEto bookingEto = new BookingEto();
     bookingEto.setBookingToken("GB_Not_Existing_Token");
-    this.orderCto.setBooking(bookingEto);
+    this.orderCto1.setBooking(bookingEto);
     try {
-      this.orderManagement.saveOrder(this.orderCto);
+      this.orderManagement.saveOrder(this.orderCto1);
     } catch (Exception e) {
       NoInviteException ni = new NoInviteException();
       assertThat(e.getClass()).isEqualTo(ni.getClass());
     }
+  }
+
+  /**
+   * Tests that an OrderStateId has the ID 0
+   */
+
+  @Test
+  public void orderStateOnCreationTest() {
+
+    this.createdOrder = this.orderManagement.saveOrder(this.orderCto2);
+    assertThat(this.createdOrder.getStateId()).isEqualTo(0l);
+  }
+
+  /**
+   * Tests if the updateOrderState works correctly
+   */
+
+  @Test
+  public void updateOrderState() {
+
+    this.createdOrder = this.orderManagement.saveOrder(this.orderCto3);
+    OrderEto a = new OrderEto();
+    a.setStateId(1l);
+
+    this.createdOrder = this.orderManagement.updateOrderState(a);
+    assertThat(this.createdOrder.getStateId()).isEqualTo(1l);
   }
 }
