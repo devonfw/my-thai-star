@@ -2,16 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from 'app/core/config/config.service';
-import { UserListView } from 'app/shared/view-models/interfaces';
+import { UserListView, UserView } from 'app/shared/view-models/interfaces';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FilterAdmin, Pageable } from '../../shared/backend-models/interfaces';
 import { Sort } from '@angular/material/sort';
-import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
-import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { UserInfo } from 'app/shared/backend-models/interfaces';
 import { AdminService } from '../services/admin.service';
+import { MatTable } from '@angular/material/table';
 
 
 @Component({
@@ -46,8 +47,9 @@ export class AdminCockpitComponent implements OnInit {
     'users.deleteButton',
   ];
 
-  users: UserListView[] = [];
+  users: UserView[];
   totalUsers: number;
+  @ViewChild(MatTable) table: MatTable<any>;
 
   pageSizes: number[];
 
@@ -92,15 +94,14 @@ export class AdminCockpitComponent implements OnInit {
   // Daten aus Backend holen
   applyFilters(): void {
     this.adminService
-      .getOrders(this.pageable, this.sorting, this.filters) // filters, wie sortiert, pagesize und pagenumber
+      .getUsers(this.pageable, this.sorting, this.filters) // filters, wie sortiert, pagesize und pagenumber
       .subscribe((data: any) => {
         if (!data) {
-          this.users = [];
+          this.users = null;
         } else {
           this.users = data.content;
         }
         this.totalUsers = data.totalElements;
-        console.log(this.users);
       });
   }
 
@@ -128,12 +129,19 @@ export class AdminCockpitComponent implements OnInit {
   }
 
   clickDelete(user: UserInfo): void {
-    console.log(user); //user is undefinded, need click related to user from html 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.id = 'modal-component';
+    dialogConfig.height = '170px';
+    dialogConfig.width = '300px';
     dialogConfig.data = user;
     const modalDialog = this.matDialog.open(DeleteUserDialogComponent, dialogConfig);
-    
+    modalDialog.afterClosed().subscribe(row => {
+      const index = this.users.indexOf(row, 0);
+      if (index > -1) {
+        this.users.splice(index, 1);
+      }
+      this.table.renderRows();
+    });
   }
 
   clickAdd(): void {
@@ -144,5 +152,11 @@ export class AdminCockpitComponent implements OnInit {
     dialogConfig.height = '500px';
     dialogConfig.width = '600px';
     const modalDialog = this.matDialog.open(RegisterDialogComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(user => {
+      if(user.id) {
+        this.users.push(user);
+        this.table.renderRows();
+      }
+    });
   }
 }

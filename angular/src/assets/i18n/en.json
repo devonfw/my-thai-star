@@ -13,7 +13,8 @@
     "clearFilters": "Clear Filters",
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
-    "addComment": "Add comment"
+    "addComment": "Add comment",
+    "addUser": "Add User"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -55,7 +56,9 @@
     "guestsPH": "Enter invitation email",
     "comment": "Comment",
     "total": "Total",
-    "referenceNumber": "Reference number"
+    "referenceNumber": "Reference number",
+    "id": "Id",
+    "userRoleId": "Role"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -179,12 +182,24 @@
         "userRoleIdH": "Role",
         "deleteButtonH": "Delete"
       },
-      "userDeleteMessage": "Are you sure you want to delete this user?",
-      "warning": "Warning!",   
+      "successBarCreated": {
+        "stringpart1": "User ",
+        "stringpart2":" with id number ",
+        "stringpart3": " was created"
+      },
+      "successBarDeleted": {
+        "stringpart1": "User ",
+        "stringpart2":" with id number ",
+        "stringpart3": " was deleted"
+      },
+      "userDeleteMessage": "Confirm that you want to delete this user: ",
+      "warning": "Are u sure?",   
       "customer": "customer",
       "waiter": "Waiter",
       "manager": "Manager",
-      "selectRole": "select a role"
+      "selectRole": "select a role",
+      "confirmDelition": "Delete",
+      "cancelDelition": "Cancel"
     },
     "orders": {
       "title": "Orders",

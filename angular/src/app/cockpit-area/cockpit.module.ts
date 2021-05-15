@@ -18,12 +18,12 @@ import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cock
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
-import { RegisterDialogComponent } from './admin-cockpit/components/register-dialog/register-dialog.component';
-import { DeleteUserDialogComponent } from './admin-cockpit/components/delete-user-dialog/delete-user-dialog.component';
+import { RegisterDialogComponent } from './admin-cockpit/register-dialog/register-dialog.component';
+import { DeleteUserDialogComponent } from './admin-cockpit/delete-user-dialog/delete-user-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdminService } from './services/admin.service';
-import { UserService } from './admin-cockpit/components/services/registerservice.service';
+import { ConfirmUserDialogComponent } from './admin-cockpit/confirm-user-dialog/confirm-user-dialog.component';
 
 
 @NgModule({
@@ -42,8 +42,7 @@ import { UserService } from './admin-cockpit/components/services/registerservice
     WindowService,
     PredictionService,
     ClusteringService,
-    AdminService,
-    UserService
+    AdminService
   ],
   declarations: [
     ReservationCockpitComponent,
@@ -54,7 +53,8 @@ import { UserService } from './admin-cockpit/components/services/registerservice
     ClusteringCockpitComponent,
     AdminCockpitComponent,
     RegisterDialogComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    ConfirmUserDialogComponent
 
   ],
   exports: [

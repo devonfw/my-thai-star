@@ -119,8 +119,8 @@ export class FilterAdmin {
 export class UserInfo{
     id: number;
     email: string;
-    name: string;
-    roleId; number;
+    username: string;
+    roleId: number;
 }
 
 export class RoleInfo{

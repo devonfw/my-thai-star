@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
-import { RegisterDialogComponent } from './cockpit-area/admin-cockpit/components/register-dialog/register-dialog.component';
+import { RegisterDialogComponent } from './cockpit-area/admin-cockpit/register-dialog/register-dialog.component';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
