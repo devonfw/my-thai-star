@@ -81,7 +81,17 @@ public interface OrdermanagementRestService {
   @Path("/order/updatestate")
   @POST
   public OrderEto updateOrderState(OrderEto order);
-
+  
+  /**
+  *
+  *
+  * @param pay state of {@link OrderEto} to be updated
+  * @return the {@link Page list} of matching {@link OrderCto}s.
+  */
+ @Path("/order/updatepaystate")
+ @POST
+ public OrderEto updateOrderPayState(OrderEto order);
+  
   /**
    * Delegates to {@link Ordermanagement#findOrderLine}.
    *

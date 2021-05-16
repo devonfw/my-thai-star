@@ -41,6 +41,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'order.paystate'
   ];
 
   pageSizes: number[];
@@ -53,6 +54,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   };
 
   stateNames = []
+  payStateNames = []
 
   constructor(
     private dialog: MatDialog,
@@ -68,6 +70,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       this.setStateNames(event);
+      this.setPayStateNames(event);
       moment.locale(this.translocoService.getActiveLang());
     });
   }
@@ -86,6 +89,17 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
+  setPayStateNames(lang:string){
+    this.translocoSubscription = this.translocoService
+    .selectTranslateObject('cockpit.orderPayStates', {}, lang)
+    .subscribe((cockpitorderPayStates) => {
+      this.payStateNames = [
+        cockpitorderPayStates.paid,
+        cockpitorderPayStates.unpaid
+      ];
+    });
+  }
+
   setTableHeaders(lang: string): void {
     this.translocoSubscription = this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
@@ -95,6 +109,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'order.paystate', label: cockpitTable.orderPayStateH }
         ];
       });
   }
@@ -140,7 +155,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   changeOrderState(event,element){
     this.waiterCockpitService
-      .updateOrder({id:element.order.id,stateId:event.value})
+      .updateOrder({id:element.order.id, stateId:event.value})
+      .subscribe((data) => {
+      });
+  }
+
+  changeOrderPayState(event,element){
+    this.waiterCockpitService
+      .changeOrderPayState({id:element.order.id, paidId:event.value})
       .subscribe((data) => {
       });
   }
