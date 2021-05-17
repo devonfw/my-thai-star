@@ -23,7 +23,6 @@ import { DeleteUserDialogComponent } from './admin-cockpit/delete-user-dialog/de
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdminService } from './services/admin.service';
-import { ConfirmUserDialogComponent } from './admin-cockpit/confirm-user-dialog/confirm-user-dialog.component';
 
 
 @NgModule({
@@ -53,8 +52,7 @@ import { ConfirmUserDialogComponent } from './admin-cockpit/confirm-user-dialog/
     ClusteringCockpitComponent,
     AdminCockpitComponent,
     RegisterDialogComponent,
-    DeleteUserDialogComponent,
-    ConfirmUserDialogComponent
+    DeleteUserDialogComponent
 
   ],
   exports: [

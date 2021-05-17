@@ -51,7 +51,7 @@ export class RegisterDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<RegisterDialogComponent>,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    protected _snackBar: MatSnackBar
   ) {}
 
   //string parts for SuccessBar
