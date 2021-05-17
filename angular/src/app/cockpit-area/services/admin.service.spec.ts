@@ -1,16 +1,28 @@
-import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { AdminService } from './admin.service';
+import { config } from '../../core/config/config';
+import { provideMockStore } from '@ngrx/store/testing';
+import { ConfigService } from '../../core/config/config.service';
 
 describe('AdminService', () => {
-  let service: AdminService;
-
+  let initialState;
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AdminService);
+    initialState = { config };
+    TestBed.configureTestingModule({
+      providers: [
+        AdminService,
+        provideMockStore({ initialState }),
+        ConfigService,
+      ],
+      imports: [HttpClientTestingModule],
+    });
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  it('should create', inject(
+    [AdminService],
+    (service: AdminService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });
