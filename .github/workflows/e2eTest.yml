@@ -20,6 +20,12 @@ jobs:
       run: |
         npm install 
         npm run test:ci
+    - name: run alexa unit tests
+      working-directory: alexa
+      run: |
+        sudo npm install -g bespoken-tools 
+        export DEBUG=true
+        bst test
     - name: start my thai star
       run: docker-compose up --build -d
     - name: Set up JDK 11
