@@ -15,15 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: install alexa dependencies
+      working-directory: alexa/lambda
+      run: | 
+        npm install
+        sudo npm install -g bespoken-tools
+    - name: install angular dependencies
+      working-directory: angular
+      run: npm install 
     - name: run angular unit tests
       working-directory: angular
-      run: |
-        npm install 
-        npm run test:ci
+      run: npm run test:ci
     - name: run alexa unit tests
       working-directory: alexa
       run: |
-        sudo npm install -g bespoken-tools 
         export DEBUG=true
         bst test
     - name: start my thai star
