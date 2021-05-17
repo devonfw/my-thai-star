@@ -1,0 +1,18 @@
+---
+configuration:
+    userProfile:
+        name: James Tiberius Kirk
+        givenName: James
+        email: kirk@enterprise.org
+        mobileNumber:
+        countryCode: +1
+        phoneNumber: 123456789
+    locales: ../../skill-package/interactionModels/custom/en-US
+    
+---
+- test: Launch the my thai star skill
+- LaunchRequest: "Welcome, do you want to order food or reserve a table?"
+---
+- test: Launch and reserve a Table
+- LaunchRequest
+- ReserveIntent: "Tisch reserviert für kirk@enterprise.org"

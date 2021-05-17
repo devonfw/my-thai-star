@@ -5,12 +5,6 @@ const Alexa = require("ask-sdk-core");
 const config = require("./config");
 const util = require("./util");
 
-const PERMISSIONS = [
-  "alexa::profile:name:read",
-  "alexa::profile:email:read",
-  "alexa::profile:mobile_number:read",
-];
-
 const messages = {
   WELCOME:
     "Welcome to the Sample Alexa Customer Profile API Skill! You can ask for your name, your email address, or your phone number. What do you want to ask?",
@@ -34,6 +28,12 @@ const messages = {
   HELP: "You can use this skill by asking something like: whats my name?",
   STOP: "Bye! Thanks for using the Sample Alexa Customer Profile API Skill!",
 };
+
+const PERMISSIONS = [
+  "alexa::profile:name:read",
+  "alexa::profile:email:read",
+  "alexa::profile:mobile_number:read",
+];
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
