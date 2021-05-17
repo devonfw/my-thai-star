@@ -4,168 +4,181 @@ import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteria
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
 
 /**
- * used to find {@link com.devonfw.application.mtsj.ordermanagement.common.api.Order}s.
+ * used to find
+ * {@link com.devonfw.application.mtsj.ordermanagement.common.api.Order}s.
  */
 public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private Long bookingId;
+	private Long bookingId;
 
-  private Long invitedGuestId;
+	private Long invitedGuestId;
 
-  private String hostToken;
+	private String hostToken;
 
-  private Long hostId;
+	private Long hostId;
 
-  private String email;
+	private String email;
 
-  private String bookingToken;
+	private String bookingToken;
 
-  private Long[] stateId;
+	private Long[] stateId;
 
-  private StringSearchConfigTo hostTokenOption;
+	private Long[] paidId;
 
-  private StringSearchConfigTo emailOption;
+	private StringSearchConfigTo hostTokenOption;
 
-  private StringSearchConfigTo bookingTokenOption;
+	private StringSearchConfigTo emailOption;
 
-  /**
-   * The constructor.
-   */
-  public OrderSearchCriteriaTo() {
+	private StringSearchConfigTo bookingTokenOption;
 
-    super();
-  }
+	/**
+	 * The constructor.
+	 */
+	public OrderSearchCriteriaTo() {
 
-  public Long getBookingId() {
+		super();
+	}
 
-    return this.bookingId;
-  }
+	public Long getBookingId() {
 
-  public void setBookingId(Long bookingId) {
+		return this.bookingId;
+	}
 
-    this.bookingId = bookingId;
-  }
+	public void setBookingId(Long bookingId) {
 
-  public Long getInvitedGuestId() {
+		this.bookingId = bookingId;
+	}
 
-    return this.invitedGuestId;
-  }
+	public Long getInvitedGuestId() {
 
-  public void setInvitedGuestId(Long invitedGuestId) {
+		return this.invitedGuestId;
+	}
 
-    this.invitedGuestId = invitedGuestId;
-  }
+	public void setInvitedGuestId(Long invitedGuestId) {
 
-  public String getHostToken() {
+		this.invitedGuestId = invitedGuestId;
+	}
 
-    return this.hostToken;
-  }
+	public String getHostToken() {
 
-  public void setHostToken(String hostToken) {
+		return this.hostToken;
+	}
 
-    this.hostToken = hostToken;
-  }
+	public void setHostToken(String hostToken) {
 
-  public Long getHostId() {
+		this.hostToken = hostToken;
+	}
 
-    return this.hostId;
-  }
+	public Long getHostId() {
 
-  public void setHostId(Long hostId) {
+		return this.hostId;
+	}
 
-    this.hostId = hostId;
-  }
+	public void setHostId(Long hostId) {
 
-  public Long[] getStateId() {
+		this.hostId = hostId;
+	}
 
-    return this.stateId;
-  }
+	public Long[] getStateId() {
 
-  public void setStateId(Long[] stateId) {
+		return this.stateId;
+	}
 
-    this.stateId = stateId;
-  }
+	public void setStateId(Long[] stateId) {
 
-  /**
-   * @return email
-   */
-  public String getEmail() {
+		this.stateId = stateId;
+	}
 
-    return this.email;
-  }
+	public Long[] getPaidId() {
 
-  /**
-   * @param email new value of {@link #getEmail}.
-   */
-  public void setEmail(String email) {
+		return this.paidId;
+	}
 
-    this.email = email;
-  }
+	public void setPaidId(Long[] paidId) {
 
-  /**
-   * @return bookingToken
-   */
-  public String getBookingToken() {
+		this.paidId = paidId;
+	}
 
-    return this.bookingToken;
-  }
+	/**
+	 * @return email
+	 */
+	public String getEmail() {
 
-  /**
-   * @param bookingToken new value of {@link #getBookingToken}.
-   */
-  public void setBookingToken(String bookingToken) {
+		return this.email;
+	}
 
-    this.bookingToken = bookingToken;
-  }
+	/**
+	 * @param email new value of {@link #getEmail}.
+	 */
+	public void setEmail(String email) {
 
-  /**
-   * @return hostTokenOption
-   */
-  public StringSearchConfigTo getHostTokenOption() {
+		this.email = email;
+	}
 
-    return this.hostTokenOption;
-  }
+	/**
+	 * @return bookingToken
+	 */
+	public String getBookingToken() {
 
-  /**
-   * @param hostTokenOption new value of {@link #gethostTokenOption}.
-   */
-  public void setHostTokenOption(StringSearchConfigTo hostTokenOption) {
+		return this.bookingToken;
+	}
 
-    this.hostTokenOption = hostTokenOption;
-  }
+	/**
+	 * @param bookingToken new value of {@link #getBookingToken}.
+	 */
+	public void setBookingToken(String bookingToken) {
 
-  /**
-   * @return emailOption
-   */
-  public StringSearchConfigTo getEmailOption() {
+		this.bookingToken = bookingToken;
+	}
 
-    return this.emailOption;
-  }
+	/**
+	 * @return hostTokenOption
+	 */
+	public StringSearchConfigTo getHostTokenOption() {
 
-  /**
-   * @param emailOption new value of {@link #getemailOption}.
-   */
-  public void setEmailOption(StringSearchConfigTo emailOption) {
+		return this.hostTokenOption;
+	}
 
-    this.emailOption = emailOption;
-  }
+	/**
+	 * @param hostTokenOption new value of {@link #gethostTokenOption}.
+	 */
+	public void setHostTokenOption(StringSearchConfigTo hostTokenOption) {
 
-  /**
-   * @return bookingTokenOption
-   */
-  public StringSearchConfigTo getBookingTokenOption() {
+		this.hostTokenOption = hostTokenOption;
+	}
 
-    return this.bookingTokenOption;
-  }
+	/**
+	 * @return emailOption
+	 */
+	public StringSearchConfigTo getEmailOption() {
 
-  /**
-   * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
-   */
-  public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
+		return this.emailOption;
+	}
 
-    this.bookingTokenOption = bookingTokenOption;
-  }
+	/**
+	 * @param emailOption new value of {@link #getemailOption}.
+	 */
+	public void setEmailOption(StringSearchConfigTo emailOption) {
+
+		this.emailOption = emailOption;
+	}
+
+	/**
+	 * @return bookingTokenOption
+	 */
+	public StringSearchConfigTo getBookingTokenOption() {
+
+		return this.bookingTokenOption;
+	}
+
+	/**
+	 * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
+	 */
+	public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
+
+		this.bookingTokenOption = bookingTokenOption;
+	}
 
 }

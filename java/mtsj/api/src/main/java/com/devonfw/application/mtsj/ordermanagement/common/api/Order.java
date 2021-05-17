@@ -24,4 +24,8 @@ public interface Order extends ApplicationEntity {
 
   public void setStateId(Long state);
 
+  public Long getPaidId();
+
+  public void setPaidId(Long paidId);
+	
 }

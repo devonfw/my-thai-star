@@ -65,8 +65,10 @@
     </mat-expansion-panel>
   </div>
 </form>
+
 <mat-progress-bar *ngIf="!orders" color="accent" mode="indeterminate">
 </mat-progress-bar>
+
 <mat-card>
   <mat-card-title>{{ 'cockpit.orders.title' | transloco }}</mat-card-title>
   <mat-divider></mat-divider>
@@ -85,7 +87,7 @@
         </th>
 
         <td mat-cell *matCellDef="let element"  (click)="$event.stopPropagation();" >
-          <mat-select  (selectionChange)="changeOrderState($event, element)" [(ngModel)]="element.order.stateId">
+          <mat-select (selectionChange)="changeOrderState($event, element)" [(ngModel)]="element.order.stateId">
             <mat-option [value]="0">{{
               stateNames[0]
             }}</mat-option>
@@ -104,6 +106,7 @@
           </mat-select>
         </td>
       </ng-container>
+
 
       <!-- Date Column -->
       <ng-container matColumnDef="booking.bookingDate">
@@ -130,6 +133,24 @@
         </th>
         <td mat-cell *matCellDef="let element">
           {{ element.booking.bookingToken }}
+        </td>
+      </ng-container>
+
+       <!-- Pay State Column -->
+      <ng-container matColumnDef="order.paystate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[4].label }}
+        </th>
+
+        <td mat-cell *matCellDef="let element"  (click)="$event.stopPropagation();" >
+          <mat-select  (selectionChange)="changeOrderPayState($event, element)" [(ngModel)]="element.order.paidId">
+            <mat-option [value]="0">{{
+              payStateNames[0]
+            }}</mat-option>
+            <mat-option [value]="1">{{
+              payStateNames[1]
+            }}</mat-option>
+          </mat-select>
         </td>
       </ng-container>
 

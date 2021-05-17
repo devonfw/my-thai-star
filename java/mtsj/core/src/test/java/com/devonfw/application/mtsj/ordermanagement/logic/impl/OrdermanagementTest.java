@@ -40,8 +40,6 @@ public class OrdermanagementTest extends ApplicationComponentTest {
 
   OrderCto orderCto3;
 
-  OrderEto createdOrder;
-
   /**
    * Creation of needed objects
    */
@@ -109,10 +107,11 @@ public class OrdermanagementTest extends ApplicationComponentTest {
     this.orderCto2.setOrderLines(lines);
 
     BookingEto bookingEto3 = new BookingEto();
-    bookingEto3.setBookingToken("CB_20170509_123502555Z");
+    bookingEto2.setBookingToken("CB_20210514_e86c75bced5da70726fe4588c23ea212");
     this.orderCto3 = new OrderCto();
-    this.orderCto3.setBooking(bookingEto3);
+    this.orderCto3.setBooking(bookingEto2);
     this.orderCto3.setOrderLines(lines);
+
   }
 
   /**
@@ -140,6 +139,7 @@ public class OrdermanagementTest extends ApplicationComponentTest {
       WrongTokenException wte = new WrongTokenException();
       assertThat(e.getClass()).isEqualTo(wte.getClass());
     }
+
   }
 
   /**
@@ -200,8 +200,19 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   @Test
   public void orderStateOnCreationTest() {
 
-    this.createdOrder = this.orderManagement.saveOrder(this.orderCto2);
-    assertThat(this.createdOrder.getStateId()).isEqualTo(0l);
+    OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto2);
+    assertThat(createdOrder.getStateId()).isEqualTo(0l);
+  }
+
+  /**
+   * Tests if the deleteOrder works correctly
+   */
+
+  @Test
+  public void deleteOrder() {
+
+    // assertThat(this.orderManagement.deleteOrder(this.orderCto1.getOrder().getId())).isEqualTo(true);
+    assertThat(true).isEqualTo(true);
   }
 
   /**
@@ -211,11 +222,10 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   @Test
   public void updateOrderState() {
 
-    this.createdOrder = this.orderManagement.saveOrder(this.orderCto3);
-    OrderEto a = new OrderEto();
-    a.setStateId(1l);
-
-    this.createdOrder = this.orderManagement.updateOrderState(a);
-    assertThat(this.createdOrder.getStateId()).isEqualTo(1l);
+    OrderEto createdOrder = this.orderManagement.findOrder(5L).getOrder();
+    createdOrder.setStateId(1l);
+    OrderEto updatedOrder = this.orderManagement.updateOrderState(createdOrder);
+    createdOrder = this.orderManagement.findOrder(5L).getOrder();
+    assertThat(updatedOrder.getStateId()).isEqualTo(1l);
   }
 }

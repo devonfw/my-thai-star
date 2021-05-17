@@ -198,10 +198,15 @@
       "deliveredH": "Delivered",
       "canceledH": "Canceled"
     },
+    "orderPayStates":{
+      "paid": "Paid",
+      "unpaid": "Unpaid"
+    },
     "table": {
       "reservationDateH": "Reservation Date",
       "emailH": "Email",
       "orderStateH":"State",
+      "orderPayStateH":"Payment",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
       "tableH": "Table",

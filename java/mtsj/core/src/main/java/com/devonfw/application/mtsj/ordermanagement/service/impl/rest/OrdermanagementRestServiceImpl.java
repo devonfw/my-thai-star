@@ -42,6 +42,12 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
     return this.ordermanagement.updateOrderState(order);
   }
+  
+  @Override
+  public OrderEto updateOrderPayState(OrderEto order) {
+	  
+	  return this.ordermanagement.updateOrderPayState(order);
+  }
 
   @Override
   public boolean deleteOrder(long id) {
@@ -91,5 +97,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
     return this.ordermanagement.findOrderedDishes(searchCriteriaTo);
   }
+
+
 
 }

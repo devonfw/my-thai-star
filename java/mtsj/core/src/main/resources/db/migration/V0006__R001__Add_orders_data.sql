@@ -4,15 +4,17 @@ INSERT INTO OrderState (id,modificationCounter,stateName) VALUES (2,0,'delivery'
 INSERT INTO OrderState (id,modificationCounter,stateName) VALUES (3,0,'delivered');
 INSERT INTO OrderState (id,modificationCounter,stateName) VALUES (4,0,'canceled');
 
+INSERT INTO OrderPaid (id,modificationCounter,paidName) VALUES (0,0,'unpaid');
+INSERT INTO OrderPaid (id,modificationCounter,paidName) VALUES (1,0,'paid');
 
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (0,0, 1, 0, null, 0);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (1,0, 1, 3, 0, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (2,0, 1, 3, 1, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (3,1, 1, 3, 2, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (4,1, 1, 3, 3, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (5,2, 1, 3, 4, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (6,3, 1, 4, 8, null);
-INSERT INTO Orders (id,idState, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (7,4, 1, 4, 9, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (0,0,1, 1, 0, null, 0);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (1,0,1, 1, 3, 0, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (2,0,0, 1, 3, 1, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (3,1,0, 1, 3, 2, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (4,1,0, 1, 3, 3, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (5,2,1, 1, 3, 4, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (6,3,0, 1, 4, 8, null);
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost) VALUES (7,4,0, 1, 4, 9, null);
 
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (0, 1, 0, 2, 'please not too spicy', 0);
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (1, 1, 4, 1, null, 0);
