@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.capgemini.mrchecker.selenium.core.BasePage;
@@ -20,10 +19,10 @@ public class ThaiReservationsPage extends BasePage {
   /** Reservations table search criteria */
   private static final By reservationsTableSearch = By.xpath("//tbody[@class='td-data-table-body']/tr");
 
-  /** Search bar search criteria*/
-  private static final By searchBarFilter = By.className("td-expansion-panel-header-content");
+  /** Search bar search criteria */
+  private static final By searchBarFilter = By.className("mat-expansion-panel-header");
 
-  /** Email input search criteria*/
+  /** Email input search criteria */
   private static final By emailInputSearch = By.xpath("//input[@name=\"email\"]");
 
   /** submit data button search criteria */
@@ -34,9 +33,10 @@ public class ThaiReservationsPage extends BasePage {
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public boolean isLoaded() {
+
     getDriver().waitForPageLoaded();
 
     return getDriver().getCurrentUrl().contains("reservations");
@@ -44,17 +44,19 @@ public class ThaiReservationsPage extends BasePage {
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public void load() {
+
     BFLogger.logError("MyThaiStar reservation page was not loaded.");
   }
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public String pageTitle() {
+
     return "";
   }
 
@@ -77,16 +79,7 @@ public class ThaiReservationsPage extends BasePage {
   public HashMap<String, List<Reservation>> searchDatesByEmail(String email) {
 
     WebElement searchBar = getDriver().findElementDynamic(searchBarFilter);
-
-    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-    js.executeScript("arguments[0].click()", searchBar);
-
-    try {
-      getDriver().findElementDynamic(By.xpath("adasd"), 2);
-    } catch (Exception e) {
-
-    }
-
+    searchBar.click();
     int index = 1;
 
     Utils.sendKeysWithCheck(email, emailInputSearch, getDriver(), getWebDriverWait(), index);
@@ -116,7 +109,7 @@ public class ThaiReservationsPage extends BasePage {
     List<Reservation> reservationsByDate;
     String date, id, email;
 
-    reservations = getDriver().findElementDynamics(reservationsTableSearch);
+    reservations = getDriver().findElementDynamics(By.xpath("//table/tbody/tr"));
 
     for (int i = 1; i <= reservations.size(); i++) {
 
@@ -139,15 +132,17 @@ public class ThaiReservationsPage extends BasePage {
     return idReservations;
   }
 
-  /** Return the search criteria by xpath for a cell
+  /**
+   * Return the search criteria by xpath for a cell
    *
    * @param indexRow.
    * @param indexCol
    *
    * @return search criteria
-   * */
+   */
   public By findDataCell(int indexRow, int indexCol) {
-    return By.xpath("//tbody[@class='td-data-table-body']/tr[" + indexRow + "]/td[" + indexCol + "]//span");
+
+    return By.xpath("//table/tbody/tr[" + indexRow + "]/td[" + indexCol + "]");
   }
 
 }
