@@ -10,6 +10,7 @@ import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.datatype.Role;
@@ -41,6 +42,9 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
   @Inject
   private UserRoleRepository userRoleDao;
+
+  @Inject
+  private PasswordEncoder passwordEncoder;
 
   /**
    * The constructor.
@@ -106,7 +110,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     Objects.requireNonNull(user, "user");
     UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
 
-    // initialize, validate userEntity here if necessary
+    userEntity.setPassword(this.passwordEncoder.encode(userEntity.getPassword().toString()));
     UserEntity resultEntity = getUserDao().save(userEntity);
     LOG.debug("User with id '{}' has been created.", resultEntity.getId());
     return getBeanMapper().map(resultEntity, UserEto.class);
