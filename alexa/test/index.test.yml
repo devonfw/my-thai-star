@@ -5,8 +5,14 @@ configuration:
         givenName: James
         email: kirk@enterprise.org
         mobileNumber:
-        countryCode: +1
-        phoneNumber: 123456789
+            countryCode: +1
+            phoneNumber: 123456789
+    address:
+        addressLine1: 215 Elm Street, NW
+        city: Washington
+        countryCode: US
+        postalCode: 20816
+        stateOrRegion: DC
     locales: ../../skill-package/interactionModels/custom/en-US
     
 ---
@@ -15,4 +21,4 @@ configuration:
 ---
 - test: Launch and reserve a Table
 - LaunchRequest
-- ReserveIntent: "Tisch reserviert für kirk@enterprise.org"
+- ReserveIntent: "Reserved Table for: kirk@enterprise.org"

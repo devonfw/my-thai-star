@@ -2,8 +2,8 @@
 // Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 // session persistence, api calls, and more.
 const Alexa = require("ask-sdk-core");
-const config = require("./config");
-const util = require("./util");
+
+const util = process.env.DEBUG ? require("./utilMock") : require("./util");
 
 const messages = {
   WELCOME:
@@ -59,11 +59,8 @@ const ReserveIntentHandler = {
     );
   },
   async handle(handlerInput) {
-    const {
-      requestEnvelope,
-      serviceClientFactory,
-      responseBuilder,
-    } = handlerInput;
+    const { requestEnvelope, serviceClientFactory, responseBuilder } =
+      handlerInput;
 
     const consentToken = requestEnvelope.context.System.apiAccessToken;
     if (!consentToken) {
