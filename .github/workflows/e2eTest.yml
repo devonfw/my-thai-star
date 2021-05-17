@@ -15,17 +15,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: run angular unit tests
+      working-directory: angular
+      run: |
+        npm install 
+        npm run test:ci
+    - name: start my thai star
+      run: docker-compose up --build -d
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: 11
         distribution: 'adopt'
+    - name: run Java unit tests
+      working-directory: java/mtsj
+      run: mvn test
     - name: Install Chrome
-      run: | 
-        set -ex
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt install ./google-chrome-stable_current_amd64.deb
-    - name: run tests
+      uses: browser-actions/setup-chrome@latest
+      with:
+        chrome-version: beta
+    - name: link new chrome browser to /usr/bin/
+      run: |
+        sudo rm $(which google-chrome)
+        sudo ln -s $(which chrome) /usr/bin/google-chrome
+    - name: run e2e tests
       working-directory: mrchecker/endtoend-test
       run: |
-        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX
+        mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless -Dos=LINUX -DbrowserOptions="binary_location=$(which chrome)"

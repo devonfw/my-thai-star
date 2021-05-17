@@ -15,9 +15,10 @@ public class ThaiWaiterPage extends BasePage {
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public boolean isLoaded() {
+
     getDriver().waitForPageLoaded();
 
     return getDriver().getCurrentUrl().contains("orders");
@@ -25,18 +26,20 @@ public class ThaiWaiterPage extends BasePage {
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public void load() {
+
     BFLogger.logError("MyThaiStar waiter page was not loaded.");
 
   }
 
   /**
    * {@inheritDoc}
-   * */
+   */
   @Override
   public String pageTitle() {
+
     return "";
   }
 
@@ -60,6 +63,7 @@ public class ThaiWaiterPage extends BasePage {
   public ThaiReservationsPage switchToReservations() {
 
     getDriver().findElementDynamic(reservationsTabSearch).click();
+    getDriver().waitForElementVisible(By.xpath("//table"));
 
     return new ThaiReservationsPage();
   }
