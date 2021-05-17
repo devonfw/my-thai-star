@@ -41,3 +41,5 @@ node-bak/
 alexa/lambda/node_modules
 alexa/.ask
 alexa/.vscode
+
+alexa/test_output
