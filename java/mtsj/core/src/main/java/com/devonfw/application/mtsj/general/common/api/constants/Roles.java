@@ -10,4 +10,5 @@ public class Roles {
   public static final String MANAGER = PREFIX + "Manager";
   public static final String WAITER = PREFIX + "Waiter";
   public static final String CUSTOMER = PREFIX + "Customer";
+  public static final String ADMIN = PREFIX + "Admin";
 }

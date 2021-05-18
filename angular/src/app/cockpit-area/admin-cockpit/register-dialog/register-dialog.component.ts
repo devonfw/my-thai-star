@@ -41,7 +41,8 @@ export class RegisterDialogComponent implements OnInit {
   roleSelector: RoleInfo[] = [
     {id: 0, name: 'userRoles.customer'},
     {id: 1, name: 'userRoles.waiter'},
-    {id: 2, name: 'userRoles.manager'}
+    {id: 2, name: 'userRoles.manager'},
+    {id: 3, name: 'userRoles.admin'}
   ];
   roleId: number = 0;
   toSend = {};

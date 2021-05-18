@@ -51,6 +51,14 @@ export class AuthGuardService implements CanActivate, OnDestroy {
           return true;
         }
 
+        if (
+          (state.url === '/admin') &&
+          role === 'ADMIN' &&
+          logged
+        ) {
+          return true;
+        }
+
         if (!logged) {
           this.translocoSubscription = this.translocoService
             .selectTranslate('alerts.accessError')
