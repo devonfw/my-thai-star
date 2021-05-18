@@ -1,0 +1,20 @@
+<h4 mat-dialog-title>   
+    {{'cockpit.admin.warning' | transloco}}
+</h4>
+<mat-divider></mat-divider>
+
+
+<mat-dialog-content>
+    {{ 'cockpit.admin.userDeleteMessage' | transloco}}
+    {{ user.username }}
+</mat-dialog-content>
+
+<mat-dialog-actions align ="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial  (click)="deleteUser()">{{ 'cockpit.admin.confirmDelition' | transloco}}</button>
+    <button mat-button mat-dialog-close>{{ 'cockpit.admin.cancelDelition' | transloco}}</button>
+</mat-dialog-actions>
+
+
+<!--{{cockpit.admin.confirmDelition}}
+{{cockpit.admin.cancelDelition}} --> 
+

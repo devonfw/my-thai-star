@@ -191,3 +191,21 @@ export interface TwoFactorResponse {
   base64QrCode?: string;
   secret?: string;
 }
+export interface UserView {
+  modificationCounter: number,
+  id: number,
+  username: string,
+  email: string,
+  twoFactorStatus: boolean,
+  userRoleId: number
+}
+
+export interface UserListView {
+  userLines: UserView[];
+}
+
+export interface UsersResponse {
+  content: UserListView;
+  pageable: Pageable;
+  totalElements: number;
+}

@@ -115,3 +115,21 @@ export class Role {
     name: string;
     permission: number;
 }
+
+export class FilterAdmin {
+    username: string;
+    email: string;
+    pageable?: Pageable; 
+}
+
+export class UserInfo{
+    id: number;
+    email: string;
+    username: string;
+    roleId: number;
+}
+
+export class RoleInfo{
+    id: number;
+    name: string;
+}

@@ -57,6 +57,13 @@
               RESERVATIONS
             </a>
           </mat-nav-list>
+
+          <mat-nav-list menu-items *ngIf="(role$ | async) === 'ADMIN'">
+            <a mat-list-item (click)="navigateTo('admin')">
+              <mat-icon>home</mat-icon>
+              ADMIN
+            </a>    
+          </mat-nav-list>
         </mat-sidenav>
 
         <router-outlet #fade="outlet"></router-outlet>

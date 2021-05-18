@@ -13,7 +13,8 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "addUser": "Nutzer hinzufügen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -22,8 +23,7 @@
   },
   "alerts": {
     "accessError": "Zugang verweigert, bitte erst einloggen",
-    "genericError":
-      "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
+    "genericError":"Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
     "email confirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
@@ -31,14 +31,12 @@
       "bookingCancel": "Buchung erfolgreich abgebrochen",
       "orderCancel": "Bestellung erfolgreich abgebrochen"
     },
-    "orderID":
-      "Zum Bestellen ist eine Buchungs-ID notwendig. Gib entweder eine bereits bestehende Buchungs-ID ein oder buch einen Tisch.",
+    "orderID": "Zum Bestellen ist eine Buchungs-ID notwendig. Gib entweder eine bereits bestehende Buchungs-ID ein oder buch einen Tisch.",
     "passwordError": "Die Passwörter stimmen nicht überein",
     "authAlerts": {
       "loginSuccess": "Anmeldung erfolgreich",
       "registerSuccess": "Registrierung erfolgreich",
-      "registerFail":
-        "Registrierung fehlgeschlagen, Benutzername bereits in Verwendung",
+      "registerFail":"Registrierung fehlgeschlagen, Benutzername bereits in Verwendung",
       "logoutSuccess": "Abmeldung erfolgreich, komme bald wieder!"
     }
   },
@@ -58,11 +56,12 @@
     "guestsPH": "Gib die Einladungs-Email ein",
     "comment": "Kommentar",
     "total": "Gesamt",
-    "referenceNumber": "Referenznummer"
+    "referenceNumber": "Referenznummer",
+    "id": "Id",
+    "userRoleId": "Rolle"
   },
   "bookTable": {
-    "title":
-      "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
+    "title":"Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
     "bookTabImage": "Einige der Gerichte, die Sie in unserem Restaurant finden können",
     "bookingTab": "Tisch buchen",
     "reservationTab": "Freunde einladen",
@@ -76,18 +75,13 @@
       "bookingError": "Buchungsfehler, bitter versuche es später erneut"
     },
     "formErrors": {
-      "nameRequired":
-        "Pflichtfeld. Bitte gib ein Namen ein, um den Tisch zu buchen",
-      "emailRequired":
-        "Pflichtfeld. Bitte gib eine Email ein, um den Tisch zu buchen",
-      "emailPattern":
-        "Gib eine gültige Emailadresse ein um die Reservierung abzuschicken z.B. email@email.com.",
+      "nameRequired":"Pflichtfeld. Bitte gib ein Namen ein, um den Tisch zu buchen",
+      "emailRequired":"Pflichtfeld. Bitte gib eine Email ein, um den Tisch zu buchen",
+      "emailPattern":"Gib eine gültige Emailadresse ein um die Reservierung abzuschicken z.B. email@email.com.",
       "emailFormat": "Emailformat nicht gültig",
       "assistantsRequired": "Pflichtfeld. Bitte gib die Teilnehmeranzahl ein",
-      "assistantsMax":
-        "Du kannst nicht für mehr Teilnehmer buchen als für die groesste Tischgroesse (8), wenn du mehrere Tische brauchst, buche mehrmals.",
-      "assistantsMin":
-        "Du kannst nicht für eine leere oder negative Teilnehmeranzahl buchen"
+      "assistantsMax":"Du kannst nicht für mehr Teilnehmer buchen als für die groesste Tischgroesse (8), wenn du mehrere Tische brauchst, buche mehrmals.",
+      "assistantsMin":"Du kannst nicht für eine leere oder negative Teilnehmeranzahl buchen"
     }
   },
   "main": {
@@ -97,6 +91,7 @@
     "orders": "Bestellungen",
     "order-archive":"Archiv",
     "reservations": "Reservierungen",
+    "admin": "Administation",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -104,19 +99,17 @@
       "changePassword": "Passwort ändern",
       "twitterAccount": "Twitteraccount",
       "signOut": "Abmelden",
-      "orders": "Bestellungen"
+      "orders": "Orders"
     }
   },
   "home": {
     "subtitle": "Mehr als nur leckeres Essen",
     "restaurantTitle": "Unser Restaurant",
     "restaurantImage": "Einer unserer Kunden liest ein Buch, während er sein Essen genießt",
-    "restaurantContent":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
+    "restaurantContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Unser Menü",
     "menuImage": "In unserer Speisekarte finden Sie eine Reihe köstlicher Gerichte zur Auswahl",
-    "menuContent":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
+    "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },
   "menu": {
     "filterTitle": "FILTER",
@@ -144,8 +137,7 @@
     "noSelection": "Du hast keine Bestellung ausgewählt",
     "dialog": {
       "title": "Füge einen Kommentar hinzu",
-      "content":
-        "Hier kannst du unseren Köchen einen kurzen Kommentar hinterlassen, wie sie dein Gericht zubereiten sollen"
+      "content":"Hier kannst du unseren Köchen einen kurzen Kommentar hinterlassen, wie sie dein Gericht zubereiten sollen"
     }
   },
   "userArea": {
@@ -174,8 +166,32 @@
       "secretSwitchText": "Geheimer Schlüssel"
     }
   },
+  "userRoles":{
+    "waiter":"Kellner",
+    "customer":"Kunde",
+    "admin":"Administrator",
+    "manager":"Manager"
+  },
   "cockpit": {
     "filter": "Filter",
+    "admin": {
+      "table": {
+          "title": "Nutzer",
+          "emailH": "Email",
+          "usernameH": "Name",
+          "idH": "Id",
+          "userRoleIdH": "Rolle",
+          "deleteButtonH": "Löschen"
+      },
+      "userDeleteMessage": "Bestätigen Sie das Löschen des Users: ",
+      "warning": "Sind Sie sicher?",   
+      "customer": "Kunde",
+      "waiter": "Kellner",
+      "manager": "Manager",
+      "selectRole": "eine Rolle wählen",
+      "confirmDelition": "Löschen",
+      "cancelDelition": "Abbrechen"
+    },
     "orders": {
       "title": "Bestellungen",
       "dialogTitle": "BESTELLDETAILS - REFERENZNUMMER",

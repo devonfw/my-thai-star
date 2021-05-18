@@ -19,5 +19,9 @@ public interface User extends ApplicationEntity {
   public boolean getTwoFactorStatus();
 
   public void setTwoFactorStatus(boolean twoFactorStatus);
+  
+  public String getPassword();
+
+  public void setPassword(String password);
 
 }

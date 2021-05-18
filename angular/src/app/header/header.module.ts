@@ -7,6 +7,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './header.component';
 import { TranslocoRootModule } from '../transloco-root.module';
 
+
 @NgModule({
   imports: [
     CommonModule,

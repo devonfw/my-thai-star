@@ -1,0 +1,59 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <mat-dialog-content>
+
+    <!-- Username -->
+    <mat-form-field color="accent"> 
+      <input matInput formControlName="username" [placeholder]="'formFields.name' | transloco">
+      <mat-error>{{ 'cockpitArea.nameError' | transloco }}</mat-error>
+    </mat-form-field>
+
+    <!-- UserRole -->
+    <mat-form-field>
+      <mat-select formControlName="userRoleId">
+        <mat-option *ngFor="let roleSelector of roleSelector" [value]="roleSelector.id">
+          {{ roleSelector.name | transloco }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field>
+      <input matInput formControlName="email" [placeholder]="'formFields.email' | transloco">
+      <mat-error>{{ 'cockpitArea.emailError' | transloco }}</mat-error>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field>
+      <input matInput formControlName="password" [placeholder]="'formFields.password' | transloco">
+      <mat-error>
+        {{ 'alerts.confirmPassword' | transloco }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- ConfirmPassword -->
+    <mat-form-field>
+      <input matInput formControlName="confirmPassword" [placeholder]="'formFields.confirmPassword' | transloco">
+      <mat-error>
+        {{ 'alerts.passwordError' | transloco }}
+      </mat-error>  
+    </mat-form-field>
+
+    <!-- registerTerms -->
+    <mat-checkbox #checkbox>
+      {{'formFields.terms' | transloco}}
+    </mat-checkbox>
+
+  </mat-dialog-content>
+
+
+  <!-- Buttons -->
+  <div class="align-right">
+    <mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="!(form.valid && checkbox.checked)">Add</button>
+      <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+  
+
+</form>
