@@ -55,14 +55,6 @@
       >
         {{ 'main.reservations' | transloco | uppercase }}
       </a>
-      <a
-        mat-tab-link
-        routerLink="/admin"
-        routerLinkActive="navBottomBorder"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ 'main.admin' | transloco | uppercase }}
-      </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'MANAGER'" class="forDesktop">
@@ -97,7 +89,7 @@
         routerLinkActive="navBottomBorder"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        {{ 'main.home' | transloco | uppercase }}
+        {{ 'main.admin' | transloco | uppercase }}
       </a>
       
     </nav>
