@@ -16,8 +16,8 @@ export class AdminService {
     'usermanagement/v1/user/search';
   private readonly addUserRestPath: string =
     'usermanagement/v1/user';
-  private readonly restroot: string = 
-    'http://localhost:8081/mythaistar/services/rest/';
+  private readonly deleteUserRestPath: string =
+    'usermanagement/v1/user';
 
     private readonly restServiceRoot$: Observable<
     string
@@ -59,12 +59,11 @@ export class AdminService {
 
   deleteUser(id: number) : Observable<any> {
 
-
-    let path: string = this.restroot + this.addUserRestPath + "/" + id;
-    var ret: any;
-    ret = this.http.delete(path);
-    console.log(ret);
-    return ret;
+    let path: string = this.deleteUserRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) => 
+        this.http.delete<UserView>(`${restServiceRoot}${path}/${id}`),
+      ),
+    );
   }
-
 }
