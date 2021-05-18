@@ -169,7 +169,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   changeOrderPayState(event,element){
     this.waiterCockpitService
-      .changeOrderPayState({id:element.order.id, paidId:event.value})
+      .changeOrderPayState({id:element.order.id, paidId:event.checked ? 1 : 0})
       .subscribe((data) => {
       });
   }
