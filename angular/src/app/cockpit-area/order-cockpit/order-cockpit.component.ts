@@ -161,9 +161,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .updateOrder({id:element.order.id, stateId:event.value})
       .subscribe((data) => {
         if (event.value == 3 || event.value == 4){
-          this.orders.splice(event.value, 1);
+          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+          this.table.renderRows();
         }
-        this.table.renderRows();
       });
   }
 
