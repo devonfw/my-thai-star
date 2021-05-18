@@ -12,7 +12,7 @@ import { ConfigService } from '../../../core/config/config.service';
 import { config } from '../../../core/config/config';
 import { getTranslocoModule } from '../../../transloco-testing.module';
 
-describe('DeleteUserDialogComponent', () => {
+describe('RegisterDialogComponent', () => {
   let component: RegisterDialogComponent;
   let dialog: MatDialog;
   let initialState;
