@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { TranslocoService } from '@ngneat/transloco';
@@ -21,6 +22,8 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 })
 export class OrderCockpitComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
+  @ViewChild(MatTable) table: MatTable<OrderListView>;
+
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -157,6 +160,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.waiterCockpitService
       .updateOrder({id:element.order.id, stateId:event.value})
       .subscribe((data) => {
+        if (event.value == 3 || event.value == 4){
+          this.orders.splice(event.value, 1);
+        }
+        this.table.renderRows();
       });
   }
 
