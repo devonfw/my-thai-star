@@ -1,4 +1,4 @@
 {
     "handler": "../lambda/index.js",
-    "trace": "true"
+    "trace": "false"
 }
