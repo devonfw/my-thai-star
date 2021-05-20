@@ -31,6 +31,10 @@ jobs:
       run: |
         export DEBUG=true
         bst test
+    - name: configure non ssl nginx proxy 
+      working-directory: reverse-proxy
+      run: |
+        cp nginx_no_ssl.conf nginx.conf
     - name: start my thai star
       run: docker-compose up --build -d
     - name: Set up JDK 11
