@@ -37,4 +37,10 @@ java/mtsj/.vscode/
 node-old/
 node-bak/
 
-alexa
+# alexa libraries # 
+alexa/lambda/node_modules
+alexa/.ask
+alexa/.vscode
+
+alexa/test_output
+

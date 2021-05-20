@@ -1,0 +1,142 @@
+<form (ngSubmit)="applyFilters()" #filterForm="ngForm">
+  <div>
+    <mat-expansion-panel data-name="orderFilter">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'cockpit.filter' | transloco }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="formRow">
+        <div class="formMobileRow">
+          <mat-form-field color="accent" class="searchBy">
+            <input
+              matInput
+              [placeholder]="'formFields.email' | transloco"
+              [(ngModel)]="filters.email"
+              name="email"
+            />
+          </mat-form-field>
+          <mat-form-field color="accent" class="searchBy">
+            <input
+              matInput
+              [placeholder]="'formFields.referenceNumber' | transloco"
+              [(ngModel)]="filters.bookingToken"
+              name="bookingToken"
+            />
+          </mat-form-field>
+        </div>
+        <div class="formDesktopRow">
+          <mat-form-field color="accent" class="searchBy">
+            <input
+              matInput
+              [placeholder]="'formFields.email' | transloco"
+              [(ngModel)]="filters.email"
+              name="email"
+            />
+          </mat-form-field>
+          <mat-form-field color="accent" class="searchBy">
+            <input
+              matInput
+              [placeholder]="'formFields.referenceNumber' | transloco"
+              [(ngModel)]="filters.bookingToken"
+              name="bookingToken"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="align-right">
+        <button
+          class="orderClearFilters"
+          name="orderClearFilters"
+          mat-button
+          type="button"
+          (click)="clearFilters(filterForm)"
+        >
+          {{ 'buttons.clearFilters' | transloco }}
+        </button>
+        <button
+          class="orderApplyFilters"
+          name="orderApplyFilters"
+          mat-button
+          type="submit"
+          color="accent"
+        >
+          {{ 'buttons.applyFilters' | transloco }}
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</form>
+<mat-progress-bar *ngIf="!orders" color="accent" mode="indeterminate">
+</mat-progress-bar>
+<mat-card>
+  <mat-card-title>{{ 'cockpit.orders.title' | transloco }}</mat-card-title>
+  <mat-divider></mat-divider>
+
+  <div class="tableContainer">
+    <table
+      mat-table
+      [dataSource]="orders"
+      matSort
+      (matSortChange)="sort($event)"
+    >
+      <!-- State Column -->
+      <ng-container matColumnDef="order.state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[0].label }}
+        </th>
+        
+        <td mat-cell *matCellDef="let element" >
+          {{ stateNames[element.state.id] }} 
+        </td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="booking.bookingDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[1].label }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.booking.bookingDate | amFromUnix | amDateFormat: 'lll' }}
+        </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="booking.email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[2].label }}
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.booking.email }}</td>
+      </ng-container>
+
+      <!-- Ref No Column -->
+      <ng-container matColumnDef="booking.bookingToken">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[3].label }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.booking.bookingToken }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selected(row)"
+      ></tr>
+    </table>
+  </div>
+
+  <div class="property-text-center noResults" *ngIf="orders.length === 0">
+    <h3>{{ 'table.noResults' | transloco }}.</h3>
+  </div>
+  <mat-paginator
+    #pagingBar
+    [length]="totalOrders"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizes"
+    [showFirstLastButtons]="true"
+    (page)="page($event)"
+  >
+  </mat-paginator>
+</mat-card>
+

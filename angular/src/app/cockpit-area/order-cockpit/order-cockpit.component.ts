@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { TranslocoService } from '@ngneat/transloco';
@@ -21,6 +22,8 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 })
 export class OrderCockpitComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
+  @ViewChild(MatTable) table: MatTable<OrderListView>;
+
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -34,13 +37,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   orders: OrderListView[] = [];
   totalOrders: number;
-
   columns: any[];
 
   displayedColumns: string[] = [
+    'order.state',
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'order.paystate'
   ];
 
   pageSizes: number[];
@@ -49,7 +53,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
+    stateId:[0,1,2]
   };
+
+  stateNames = []
+  payStateNames = []
 
   constructor(
     private dialog: MatDialog,
@@ -64,7 +72,34 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      this.setStateNames(event);
+      this.setPayStateNames(event);
       moment.locale(this.translocoService.getActiveLang());
+    });
+  }
+
+  setStateNames(lang:string){
+    this.translocoSubscription = this.translocoService
+    .selectTranslateObject('cockpit.orderStates', {}, lang)
+    .subscribe((cockpitTable) => {
+      this.stateNames = [
+        cockpitTable.orderedH,
+        cockpitTable.preparationH,
+        cockpitTable.deliveryH,
+        cockpitTable.deliveredH,
+        cockpitTable.canceledH,
+      ];
+    });
+  }
+
+  setPayStateNames(lang:string){
+    this.translocoSubscription = this.translocoService
+    .selectTranslateObject('cockpit.orderPayStates', {}, lang)
+    .subscribe((cockpitorderPayStates) => {
+      this.payStateNames = [
+        cockpitorderPayStates.paid,
+        cockpitorderPayStates.unpaid
+      ];
     });
   }
 
@@ -73,9 +108,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'order.paystate', label: cockpitTable.orderPayStateH }
         ];
       });
   }
@@ -119,7 +156,25 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  selected(selection: OrderListView): void {
+  changeOrderState(event,element){
+    this.waiterCockpitService
+      .updateOrder({id:element.order.id, stateId:event.value})
+      .subscribe((data) => {
+        if (event.value == 3 || event.value == 4){
+          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+          this.table.renderRows();
+        }
+      });
+  }
+
+  changeOrderPayState(event,element){
+    this.waiterCockpitService
+      .changeOrderPayState({id:element.order.id, paidId:event.checked ? 1 : 0})
+      .subscribe((data) => {
+      });
+  }
+
+  selected(selection: OrderListView,event:any): void {
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,

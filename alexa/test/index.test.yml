@@ -1,0 +1,64 @@
+---
+configuration:
+    userProfile:
+        name: James Tiberius Kirk
+        givenName: James
+        email: kirk@enterprise.org
+        mobileNumber:
+            countryCode: +1
+            phoneNumber: 123456789
+    address:
+        addressLine1: 215 Elm Street, NW
+        city: Washington
+        countryCode: US
+        postalCode: 20816
+        stateOrRegion: DC
+    locales: ../../skill-package/interactionModels/custom/en-US
+    
+---
+- test: Launch the my thai star skill
+- LaunchRequest: "Welcome, do you want to order food or reserve a table?"
+---
+- test: Launch and reserve a Table
+- LaunchRequest
+- ReserveIntent: "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch My-Thai-Star without direct Intent call
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+---
+- test: Launch and reserve a Table without direct Intent call (reserve)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- reserve: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch and reserve a Table without direct Intent call (reserve table)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- reserve table: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch and reserve a Table without direct Intent call (reservation)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- reservation: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch and reserve a Table without direct Intent call (book)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- book: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch and reserve a Table without direct Intent call (book table)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- book table: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: Launch and reserve a Table without direct Intent call (booking)
+- open my thai star at home:
+    - prompt: "Welcome, do you want to order food or reserve a table?"
+- booking: 
+    - prompt:  "Reserved Table for: kirk@enterprise.org"

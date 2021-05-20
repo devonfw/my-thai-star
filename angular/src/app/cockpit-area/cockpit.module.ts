@@ -17,6 +17,14 @@ import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cock
 import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cockpit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { OrderArchiveCockpitComponent } from './order-archive-cockpit/order-archive-cockpit.component';
+import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
+import { RegisterDialogComponent } from './admin-cockpit/register-dialog/register-dialog.component';
+import { DeleteUserDialogComponent } from './admin-cockpit/delete-user-dialog/delete-user-dialog.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AdminService } from './services/admin.service';
+
 
 @NgModule({
   imports: [
@@ -26,12 +34,15 @@ import { TranslocoRootModule } from '../transloco-root.module';
     CoreModule,
     FormsModule,
     ReactiveFormsModule,
+    MatExpansionModule,
+    MatDialogModule
   ],
   providers: [
     WaiterCockpitService,
     WindowService,
     PredictionService,
     ClusteringService,
+    AdminService
   ],
   declarations: [
     ReservationCockpitComponent,
@@ -40,6 +51,11 @@ import { TranslocoRootModule } from '../transloco-root.module';
     OrderDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
+    OrderArchiveCockpitComponent,
+    AdminCockpitComponent,
+    RegisterDialogComponent,
+    DeleteUserDialogComponent
+
   ],
   exports: [
     ReservationCockpitComponent,

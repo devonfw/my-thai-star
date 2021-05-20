@@ -68,8 +68,25 @@ CREATE TABLE InvitedGuest (
   accepted BOOLEAN,
   modificationDate TIMESTAMP,
   idOrder BIGINT,
+  idPaid BIGINT,
   CONSTRAINT PK_InvitedGuest PRIMARY KEY(id),
   CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
+);
+
+-- *** OrderState ***
+CREATE TABLE OrderState (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  stateName VARCHAR (20),
+  CONSTRAINT PK_OrderState PRIMARY KEY(id)
+);
+
+-- *** PayOrderState ***
+CREATE TABLE OrderPaid (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  paidName VARCHAR (20),
+  CONSTRAINT PK_PayOrderState PRIMARY KEY(id)
 );
 
 -- *** OrderDish ***
@@ -79,7 +96,10 @@ CREATE TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
+  idState BIGINT,
+  idPaid BIGINT,
   CONSTRAINT PK_Order PRIMARY KEY(id),
+  CONSTRAINT FK_Order_idStatus FOREIGN KEY(idState) REFERENCES OrderState(id) NOCHECK,
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
 );

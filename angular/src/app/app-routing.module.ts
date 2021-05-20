@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
+import { RegisterDialogComponent } from './cockpit-area/admin-cockpit/register-dialog/register-dialog.component';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
+import { OrderArchiveCockpitComponent } from './cockpit-area/order-archive-cockpit/order-archive-cockpit.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -21,6 +24,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
+    path: 'order-archive',
+    component: OrderArchiveCockpitComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
     path: 'reservations',
     component: ReservationCockpitComponent,
     canActivate: [AuthGuardService],
@@ -35,6 +43,19 @@ const appRoutes: Routes = [
     component: NotSupportedComponent,
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'admin',
+    component: AdminCockpitComponent,
+    canActivate: [AuthGuardService],
+  },
+
+  {
+    //temp for debugging
+    path: 'registerUI',
+    component: RegisterDialogComponent,
+  },
+
+
   { path: '', redirectTo: '/restaurant', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

@@ -117,4 +117,20 @@ public interface Ordermanagement {
 
   Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria);
 
+  /**
+   * Updates the state of an order
+   *
+   * @param orderLine the {@link OrderEto} to update.
+   * @return the new {@link OrderEto} that has been saved with ID and version.
+   */
+  public OrderEto updateOrderState(OrderEto order);
+
+  /**
+   * Updates the pay state of an order
+   *
+   * @param orderLine the {@link OrderEto} to update.
+   * @return the new {@link OrderEto} that has been saved with ID and version.
+   */
+  OrderEto updateOrderPayState(OrderEto order);
+
 }

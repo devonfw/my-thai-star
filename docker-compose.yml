@@ -6,10 +6,14 @@ services:
     restart: always
     container_name: 'mts_reverse_proxy'
     image: my-thai-star/reverse-proxy:latest
+    volumes:
+        - /etc/letsencrypt/archive/demo.bitshift-team.de/fullchain1.pem:/etc/nginx/cert/fullchain.pem
+        - /etc/letsencrypt/archive/demo.bitshift-team.de/privkey1.pem:/etc/nginx/cert/privkey.pem
     networks:
       - my-thai-star
     ports:
-      - '8081:80'
+      - '80:80'
+      - '443:443'
   angular:
     build: 'angular/'
     restart: always
@@ -22,6 +26,13 @@ services:
     restart: always
     container_name: 'mts_java'
     image: my-thai-star/java:latest
+    networks:
+      - my-thai-star
+  alexa:
+    build: 'alexa/'
+    image: my-thai-star/alexa:latest
+    container_name: 'mts_alexa_endpoint'
+    restart: always
     networks:
       - my-thai-star
 networks:

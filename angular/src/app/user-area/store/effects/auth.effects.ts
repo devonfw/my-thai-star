@@ -184,6 +184,8 @@ export class AuthEffects {
             return this.router.navigate(['orders']);
           } else if (role === 'MANAGER') {
             return this.router.navigate(['prediction']);
+          } else if (role === 'ADMIN') {
+            return this.router.navigate(['admin']);
           }
         }),
       ),

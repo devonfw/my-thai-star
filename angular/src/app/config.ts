@@ -5,6 +5,7 @@ export const config: any = {
     { name: 'CUSTOMER', permission: 0 },
     { name: 'WAITER', permission: 1 },
     { name: 'MANAGER', permission: 2 },
+    { name: 'ADMIN', permission: 3 }
   ],
   langs: [
     { label: 'English', value: 'en' },

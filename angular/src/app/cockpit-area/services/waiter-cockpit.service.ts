@@ -14,6 +14,7 @@ import {
   OrderResponse,
   OrderView,
   OrderViewResult,
+  SaveOrderResponse,
 } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 
@@ -25,10 +26,12 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
+  private readonly updateOrderRestPath: string =
+    'ordermanagement/v1/order/updatestate';
+  private readonly updateOrderPayStatePath: string =
+    'ordermanagement/v1/order/updatepaystate';
 
-  private readonly restServiceRoot$: Observable<
-    string
-  > = this.config.getRestServiceRoot();
+  private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
 
   constructor(
     private http: HttpClient,
@@ -71,6 +74,24 @@ export class WaiterCockpitService {
           `${restServiceRoot}${this.getReservationsRestPath}`,
           filters,
         ),
+      ),
+    );
+  }
+
+  updateOrder(order: {id:number,stateId:number}): Observable<SaveOrderResponse[]> {
+    let path: string = this.updateOrderRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, order),
+      ),
+    );
+  }
+
+  changeOrderPayState(order: {id:number,paidId:number}): Observable<SaveOrderResponse[]> {
+    let path: string = this.updateOrderPayStatePath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, order),
       ),
     );
   }

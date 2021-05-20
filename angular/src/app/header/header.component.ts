@@ -56,7 +56,7 @@ export class HeaderComponent {
     } else {
       this.getFlag(this.transloco.getActiveLang());
     }
-
+    
     this.dateTimeAdapter.setLocale(this.transloco.getActiveLang());
   }
 
@@ -125,7 +125,7 @@ export class HeaderComponent {
       // TODO: manage user input
     });
   }
-
+  
   logout(): void {
     this.userAreaService.logout();
   }

@@ -174,6 +174,8 @@ public class TokenAuthenticationService {
           userDetails.setRole(Role.CUSTOMER);
         } else if (roles.get(0).equalsIgnoreCase(Role.MANAGER.getName())) {
           userDetails.setRole(Role.MANAGER);
+        } else if (roles.get(0).equalsIgnoreCase(Role.ADMIN.getName())) {
+          userDetails.setRole(Role.ADMIN);
         }
       }
     } catch (Exception e) {

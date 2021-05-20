@@ -15,11 +15,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: install alexa dependencies
+      working-directory: alexa/lambda
+      run: | 
+        npm install
+        sudo npm install -g bespoken-tools
+    - name: install angular dependencies
+      working-directory: angular
+      run: npm install 
     - name: run angular unit tests
       working-directory: angular
+      run: npm run test:ci
+    - name: run alexa unit tests
+      working-directory: alexa
       run: |
-        npm install 
-        npm run test:ci
+        export DEBUG=true
+        bst test
+    - name: configure non ssl nginx proxy 
+      working-directory: reverse-proxy
+      run: |
+        cp nginx_no_ssl.conf nginx.conf
     - name: start my thai star
       run: docker-compose up --build -d
     - name: Set up JDK 11

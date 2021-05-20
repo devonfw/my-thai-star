@@ -1,3 +1,4 @@
+import { Order } from 'app/sidenav/models/order.model';
 import { Pageable } from '../backend-models/interfaces';
 
 // DISHES
@@ -43,6 +44,7 @@ export interface BookingView {
   tableId?: number;
   bookingToken?: number;
   creationDate?: string;
+  id?: number;
 }
 
 export interface FriendsInvite {
@@ -86,6 +88,16 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  order: {
+    bookingId: number;
+    bookingToken: string;
+    hostId: number;
+    id: number;
+    invitedGuestId: number;
+    modificationCounter: number;
+    paidId: number;
+    stateId: number;
+  };
 }
 
 export interface OrderDishListView {
@@ -142,6 +154,7 @@ export interface SaveOrderResponse {
   id: number;
   invitedGuestId: number;
   modificationCounter: number;
+  state: number;
   revision: any;
 }
 
@@ -189,4 +202,22 @@ export interface TwoFactorResponse {
   twoFactorStatus?: boolean;
   base64QrCode?: string;
   secret?: string;
+}
+export interface UserView {
+  modificationCounter: number;
+  id: number;
+  username: string;
+  email: string;
+  twoFactorStatus: boolean;
+  userRoleId: number;
+}
+
+export interface UserListView {
+  userLines: UserView[];
+}
+
+export interface UsersResponse {
+  content: UserListView;
+  pageable: Pageable;
+  totalElements: number;
 }

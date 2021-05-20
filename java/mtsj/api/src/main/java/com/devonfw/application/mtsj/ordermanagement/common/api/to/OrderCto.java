@@ -11,66 +11,88 @@ import com.devonfw.module.basic.common.api.to.AbstractCto;
  */
 public class OrderCto extends AbstractCto {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private OrderEto order;
+	private OrderEto order;
 
-  private BookingEto booking;
+	private BookingEto booking;
 
-  private InvitedGuestEto invitedGuest;
+	private InvitedGuestEto invitedGuest;
 
-  private List<OrderLineCto> orderLines;
+	private List<OrderLineCto> orderLines;
 
-  private BookingEto host;
+	private BookingEto host;
 
-  public OrderEto getOrder() {
+	private OrderStateEto state;
 
-    return this.order;
-  }
+	private OrderPaidEto paid;
 
-  public void setOrder(OrderEto order) {
+	public OrderEto getOrder() {
 
-    this.order = order;
-  }
+		return this.order;
+	}
 
-  public BookingEto getBooking() {
+	public void setOrder(OrderEto order) {
 
-    return this.booking;
-  }
+		this.order = order;
+	}
 
-  public void setBooking(BookingEto booking) {
+	public BookingEto getBooking() {
 
-    this.booking = booking;
-  }
+		return this.booking;
+	}
 
-  public InvitedGuestEto getInvitedGuest() {
+	public void setBooking(BookingEto booking) {
 
-    return this.invitedGuest;
-  }
+		this.booking = booking;
+	}
 
-  public void setInvitedGuest(InvitedGuestEto invitedGuest) {
+	public InvitedGuestEto getInvitedGuest() {
 
-    this.invitedGuest = invitedGuest;
-  }
+		return this.invitedGuest;
+	}
 
-  public List<OrderLineCto> getOrderLines() {
+	public void setInvitedGuest(InvitedGuestEto invitedGuest) {
 
-    return this.orderLines;
-  }
+		this.invitedGuest = invitedGuest;
+	}
 
-  public void setOrderLines(List<OrderLineCto> orderLines) {
+	public List<OrderLineCto> getOrderLines() {
 
-    this.orderLines = orderLines;
-  }
+		return this.orderLines;
+	}
 
-  public BookingEto getHost() {
+	public void setOrderLines(List<OrderLineCto> orderLines) {
 
-    return this.host;
-  }
+		this.orderLines = orderLines;
+	}
 
-  public void setHost(BookingEto host) {
+	public BookingEto getHost() {
 
-    this.host = host;
-  }
+		return this.host;
+	}
+
+	public void setHost(BookingEto host) {
+
+		this.host = host;
+	}
+
+	public OrderStateEto getState() {
+
+		return this.state;
+	}
+
+	public void setState(OrderStateEto state) {
+
+		this.state = state;
+	}
+
+	public OrderPaidEto getPaid() {
+		return this.paid;
+	}
+
+	public void setPaid(OrderPaidEto paid) {
+		this.paid = paid;
+	}
 
 }
