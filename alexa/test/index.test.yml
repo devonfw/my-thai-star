@@ -62,3 +62,13 @@ configuration:
     - prompt: "Welcome, do you want to order food or reserve a table?"
 - booking: 
     - prompt:  "Reserved Table for: kirk@enterprise.org"
+---
+- test: AMAZON.HelpIntent
+- AMAZON.HelpIntent: "You can say hello to me! How can I help?"
+---
+- test: CancelIntent
+- AMAZON.CancelIntent: "Goodbye!"
+---
+- test: StopIntent
+- AMAZON.StopIntent: "Goodbye!"
+---
