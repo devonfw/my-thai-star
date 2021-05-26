@@ -103,12 +103,13 @@ const ReserveIntentHandler = {
       const name = await client.getProfileName();
       const date = handlerInput.requestEnvelope.request.intent.slots.Date.value;
       const time = handlerInput.requestEnvelope.request.intent.slots.Time.value;
+      const assistants = handlerInput.requestEnvelope.request.intent.slots.assistants.value;
 
       console.log("Email successfully retrieved, now responding to user.");
 
       const dateCombined = date + "T" + time + ":00";
 
-      await util.createReservation(name , email, dateCombined);
+      await util.createReservation(name , email, dateCombined, assistants);
 
       let response;
       if (email == null) {

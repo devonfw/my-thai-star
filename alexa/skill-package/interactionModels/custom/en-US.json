@@ -1,116 +1,138 @@
 {
-  "interactionModel": {
-    "languageModel": {
-      "invocationName": "my thai star at home",
-      "intents": [
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "my thai star at home",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ReserveIntent",
+                    "slots": [
+                        {
+                            "name": "Date",
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "create the reservation for the {Date}",
+                                "book a table for the {Date}",
+                                "reserve the table for the {Date}",
+                                "Please reserve the table for the {Date}"
+                            ]
+                        },
+                        {
+                            "name": "Time",
+                            "type": "AMAZON.TIME",
+                            "samples": [
+                                "book the table at {Time}",
+                                "reserve the table at {Time}",
+                                "i want to reserve the table at {Time}"
+                            ]
+                        },
+                        {
+                            "name": "assistants",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{assistants}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "book table",
+                        "reserve table",
+                        "booking",
+                        "reservation",
+                        "book",
+                        "reserve"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
         },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": []
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ReserveIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.87957409215.1176224251167"
+                            }
+                        },
+                        {
+                            "name": "Time",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.87957409215.1286221686937"
+                            }
+                        },
+                        {
+                            "name": "assistants",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.768229697429.936498840907"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
         },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "ReserveIntent",
-          "slots": [
+        "prompts": [
             {
-              "name": "Time",
-              "type": "AMAZON.TIME",
-              "samples": [
-                "book the table at {Time}",
-                "reserve the table at {Time}",
-                "i want to reserve the table at {Time}",
-                "{Time}"
-              ]
+                "id": "Elicit.Slot.87957409215.1176224251167",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "On what day do you want to reserve the table?"
+                    }
+                ]
             },
             {
-              "name": "Date",
-              "type": "AMAZON.DATE",
-              "samples": [
-                "create the reservation for the {Date}",
-                "book a table for the {Date}",
-                "reserve the table for the {Date}",
-                "Please reserve the table for the {Date}",
-                "{Date}"
-              ]
-            }
-          ],
-          "samples": [
-            "book table",
-            "reserve table",
-            "booking",
-            "reservation",
-            "book",
-            "reserve"
-          ]
-        },
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.FallbackIntent",
-          "samples": []
-        }
-      ],
-      "types": []
-    },
-    "dialog": {
-      "intents": [
-        {
-          "name": "ReserveIntent",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots": [
-            {
-              "name": "Time",
-              "type": "AMAZON.TIME",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.87957409215.1286221686937"
-              }
+                "id": "Elicit.Slot.87957409215.1286221686937",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "On what time do you want to reserve the table?"
+                    }
+                ]
             },
             {
-              "name": "Date",
-              "type": "AMAZON.DATE",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.87957409215.1176224251167"
-              }
+                "id": "Elicit.Slot.768229697429.936498840907",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "With how many people are you going to come?"
+                    }
+                ]
             }
-          ],
-          "delegationStrategy": "SKILL_RESPONSE"
-        }
-      ],
-      "delegationStrategy": "ALWAYS"
-    },
-    "prompts": [
-      {
-        "id": "Elicit.Slot.87957409215.1176224251167",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "On what day do you want to reserve the table?"
-          }
         ]
-      },
-      {
-        "id": "Elicit.Slot.87957409215.1286221686937",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "On what time do you want to reserve the table?"
-          }
-        ]
-      }
-    ]
-  },
-  "version": "10"
+    }
 }
