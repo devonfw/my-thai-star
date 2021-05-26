@@ -24,8 +24,16 @@ public class OrderCto extends AbstractCto {
 	private BookingEto host;
 
 	private OrderStateEto state;
+	
+	private AddressEto address;
+	
+	public AddressEto getAddress() {
+		return address;
+	}
 
-	private OrderPaidEto paid;
+	public void setAddress(AddressEto address) {
+		this.address = address;
+	}
 
 	public OrderEto getOrder() {
 
@@ -85,14 +93,6 @@ public class OrderCto extends AbstractCto {
 	public void setState(OrderStateEto state) {
 
 		this.state = state;
-	}
-
-	public OrderPaidEto getPaid() {
-		return this.paid;
-	}
-
-	public void setPaid(OrderPaidEto paid) {
-		this.paid = paid;
 	}
 
 }

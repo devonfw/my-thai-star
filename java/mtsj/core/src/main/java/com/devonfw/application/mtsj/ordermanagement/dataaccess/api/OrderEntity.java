@@ -37,7 +37,10 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   private OrderStateEntity state;
   
   private OrderPaidEntity paid;
-
+  
+  private AddressEntity address;
+  
+  
   /**
    * @return booking
    */
@@ -215,7 +218,47 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.state = state;
   }
   
+  ////////////////////
   
+  @Override
+  @Transient
+  public Long getAddressId() {
+
+    if (this.address == null) {
+      return null;
+    }
+    return this.address.getId();
+  }
+
+  @Override
+  public void setAddressId(Long addressId) {
+
+    if (addressId == null) {
+      this.address = null;
+    } else {
+      AddressEntity addressEntity = new AddressEntity();
+      addressEntity.setId(addressId);
+      this.address = addressEntity;
+    }
+  }
+
+  /**
+   * @return address
+   */
+  @OneToOne
+  @JoinColumn(name = "idAddress")
+  public AddressEntity getAddress() {
+    return this.address;
+  }
+
+  /**
+   * @param new value of {@link #getAddress}.
+   */
+  public void setAddress(AddressEntity address) {
+    this.address = address;
+  }
+  
+  ////////////////////
   
   @Override
   @Transient
@@ -257,8 +300,4 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.paid = paid;
   }
   
-  
-  
-  
-
 }

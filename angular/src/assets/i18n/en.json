@@ -240,8 +240,13 @@
       "orderPayStateH":"Payment",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
-      "tableH": "Table",
-      "creationDateH": "Creation date"
+      "tablenumberH": "Table",
+      "creationDateH": "Creation date",
+      "tableNumberH": "Table",
+      "postCodeH":"Post Code",
+      "cityH":"City",
+      "streetNameH":"Street",
+      "houseNumberH":"House Number"
     }
   }
 }

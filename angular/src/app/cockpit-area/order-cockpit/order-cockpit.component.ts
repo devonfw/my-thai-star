@@ -40,11 +40,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   columns: any[];
 
   displayedColumns: string[] = [
+    'booking.tableNumber',
+    'order.paystate',
     'order.state',
-    'booking.bookingDate',
-    'booking.email',
-    'booking.bookingToken',
-    'order.paystate'
+    'booking.bookingDate'
   ];
 
   pageSizes: number[];
@@ -108,11 +107,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'booking.tableNumber', label: cockpitTable.tablenumberH },
+          { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'order.paystate', label: cockpitTable.orderPayStateH }
+          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH }
         ];
       });
   }
