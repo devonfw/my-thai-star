@@ -1,29 +1,10 @@
 {
   "manifest": {
-    "publishingInformation": {
-      "locales": {
-        "en-US": {
-          "name": "mts",
-          "summary": "Sample Short Description",
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
-          "keywords": []
-        }
-      },
-      "isAvailableWorldwide": true,
-      "testingInstructions": "Sample Testing Instructions.",
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": []
-    },
     "apis": {
       "custom": {
         "endpoint": {
-          "uri": "https://demo.bitshift-team.de/alexa",
-          "sslCertificateType": "Trusted"
+          "sslCertificateType": "Trusted",
+          "uri": "https://demo.bitshift-team.de/alexa"
         },
         "interfaces": []
       }
@@ -39,6 +20,25 @@
       {
         "name": "alexa::profile:mobile_number:read"
       }
-    ]
+    ],
+    "publishingInformation": {
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
+      "locales": {
+        "en-US": {
+          "description": "Sample Full Description",
+          "examplePhrases": [
+            "Alexa open hello world",
+            "hello",
+            "help"
+          ],
+          "keywords": [],
+          "name": "mts",
+          "summary": "Sample Short Description"
+        }
+      },
+      "testingInstructions": "Sample Testing Instructions."
+    }
   }
 }

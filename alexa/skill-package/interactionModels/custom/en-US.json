@@ -1,42 +1,116 @@
 {
-    "interactionModel": {
-        "languageModel": {
-            "invocationName": "my thai star at home",
-            "intents": [
-                {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
-                {
-                    "name": "ReserveIntent",
-                    "slots": [],
-                    "samples": [
-                        "reserve",
-                        "reserve table",
-                        "book",
-                        "book table",
-                        "reservation",
-                        "booking"
-                    ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
-                }
-            ],
-            "types": []
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my thai star at home",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "ReserveIntent",
+          "slots": [
+            {
+              "name": "Time",
+              "type": "AMAZON.TIME",
+              "samples": [
+                "book the table at {Time}",
+                "reserve the table at {Time}",
+                "i want to reserve the table at {Time}",
+                "{Time}"
+              ]
+            },
+            {
+              "name": "Date",
+              "type": "AMAZON.DATE",
+              "samples": [
+                "create the reservation for the {Date}",
+                "book a table for the {Date}",
+                "reserve the table for the {Date}",
+                "Please reserve the table for the {Date}",
+                "{Date}"
+              ]
+            }
+          ],
+          "samples": [
+            "book table",
+            "reserve table",
+            "booking",
+            "reservation",
+            "book",
+            "reserve"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
         }
-    }
+      ],
+      "types": []
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "ReserveIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "Time",
+              "type": "AMAZON.TIME",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.87957409215.1286221686937"
+              }
+            },
+            {
+              "name": "Date",
+              "type": "AMAZON.DATE",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.87957409215.1176224251167"
+              }
+            }
+          ],
+          "delegationStrategy": "SKILL_RESPONSE"
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.87957409215.1176224251167",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "On what day do you want to reserve the table?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.87957409215.1286221686937",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "On what time do you want to reserve the table?"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "10"
 }

@@ -48,7 +48,6 @@ const lambdaHandlerName = getLambdaHandlerName();
  */
 
 localDebugger.listen(portNumber, HOST_NAME, () => {
-    console.log(`Starting server on port: ${localDebugger.address().port}.`);
 });
 
 /**
@@ -61,13 +60,11 @@ localDebugger.listen(portNumber, HOST_NAME, () => {
  */
 
 localDebugger.on('connection', (socket) => {
-    console.log(`Connection from: ${socket.remoteAddress}:${socket.remotePort}`);
     socket.on('data', (data) => {
+        fs.writeFileSync("dbg.json",data);
         const body = JSON.parse(data.toString().split(HTTP_BODY_DELIMITER).pop());
-        console.log(`Request envelope: ${JSON.stringify(body)}`);
         skillInvoker[lambdaHandlerName](body, null, (_invokeErr, response) => {
             response = JSON.stringify(response);
-            console.log(`Response envelope: ${response}`);
             socket.write(`HTTP/1.1 200 OK${HTTP_HEADER_DELIMITER}Content-Type: application/json;charset=UTF-8${HTTP_HEADER_DELIMITER}Content-Length: ${response.length}${HTTP_BODY_DELIMITER}${response}`);
         });
     });
@@ -87,8 +84,6 @@ function getAndValidatePortNumber() {
         throw new Error(`Port out of legal range: ${portNumberArgument}. The port number should be in the range [0, 65535]`);
     }
     if (portNumberArgument === 0) {
-        console.log('The TCP server will listen on a port that is free.'
-        + 'Check logs to find out what port number is being used');
     }
     return portNumberArgument;
 }

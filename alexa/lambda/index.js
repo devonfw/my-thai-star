@@ -51,6 +51,34 @@ const LaunchRequestHandler = {
   },
 };
 
+const StartedReserveIntentHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest'
+    && request.intent.name === 'ReserveIntent'
+    && request.dialogState === 'STARTED';
+  },
+
+  handle(handlerInput) {
+    const currentIntent = handlerInput.requestEnvelope.request.intent;
+    return handlerInput.responseBuilder.addDelegateDirective(currentIntent).getResponse();
+  },
+};
+
+const InProgressReserveIntentHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest'
+    &&  request.intent.name === 'ReserveIntent'
+    &&  request.dialogState === 'IN_PROGRESS';
+  },
+
+  handle(handlerInput) {
+    const currentIntent = handlerInput.requestEnvelope.request.intent;
+    return handlerInput.responseBuilder.addDelegateDirective(currentIntent).getResponse();
+  },
+};
+
 const ReserveIntentHandler = {
   canHandle(handlerInput) {
     return (
@@ -72,10 +100,15 @@ const ReserveIntentHandler = {
     try {
       const client = serviceClientFactory.getUpsServiceClient();
       const email = await client.getProfileEmail();
+      const name = await client.getProfileName();
+      const date = handlerInput.requestEnvelope.request.intent.slots.Date.value;
+      const time = handlerInput.requestEnvelope.request.intent.slots.Time.value;
 
       console.log("Email successfully retrieved, now responding to user.");
 
-      await util.createReservation("simon", email);
+      const dateCombined = date + "T" + time + ":00";
+
+      await util.createReservation(name , email, dateCombined);
 
       let response;
       if (email == null) {
@@ -95,6 +128,7 @@ const ReserveIntentHandler = {
     }
   },
 };
+
 const HelpIntentHandler = {
   canHandle(handlerInput) {
     return (
@@ -204,6 +238,8 @@ const ProfileError = {
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
+    StartedReserveIntentHandler,
+    InProgressReserveIntentHandler,
     ReserveIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
