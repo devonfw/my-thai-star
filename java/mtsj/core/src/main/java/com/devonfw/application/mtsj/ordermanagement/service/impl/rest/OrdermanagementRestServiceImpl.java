@@ -26,7 +26,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   private Ordermanagement ordermanagement;
 
   @Override
-  public OrderCto getOrder(long id) {
+  public OrderCto getOrder(String id) {
 
     return this.ordermanagement.findOrder(id);
   }
@@ -42,11 +42,11 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
     return this.ordermanagement.updateOrderState(order);
   }
-  
+
   @Override
   public OrderEto updateOrderPayState(OrderEto order) {
-	  
-	  return this.ordermanagement.updateOrderPayState(order);
+
+    return this.ordermanagement.updateOrderPayState(order);
   }
 
   @Override
@@ -97,7 +97,4 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
     return this.ordermanagement.findOrderedDishes(searchCriteriaTo);
   }
-
-
-
 }

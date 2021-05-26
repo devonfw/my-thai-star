@@ -98,6 +98,7 @@ CREATE TABLE Orders (
   idHost BIGINT,
   idState BIGINT,
   idPaid BIGINT,
+  orderToken VARCHAR (255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idStatus FOREIGN KEY(idState) REFERENCES OrderState(id) NOCHECK,
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,

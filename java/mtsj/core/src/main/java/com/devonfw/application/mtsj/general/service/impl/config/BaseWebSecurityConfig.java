@@ -89,8 +89,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
     "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
-    "/services/rest/ordermanagement/v1/order", "/services/rest/bookingmanagement/v1/booking",
-    "/services/rest/bookingmanagement/v1/booking/cancel/**",
+    "/services/rest/ordermanagement/v1/order", "/services/rest/ordermanagement/v1/order/**",
+    "/services/rest/bookingmanagement/v1/booking", "/services/rest/bookingmanagement/v1/booking/cancel/**",
     "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
     "/services/rest/bookingmanagement/v1/invitedguest/decline/**",
     "/services/rest/ordermanagement/v1/order/cancelorder/**" };

@@ -1,0 +1,35 @@
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: green;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.userstate-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding-bottom: 5%;
+  padding-top: 5%;
+  background: url('../../../assets/images/star.png'),url('../../../assets/images/Wood2.jpg');
+  background-position:  top, center;
+  background-size:  13%, cover;
+  background-repeat:  no-repeat, repeat;
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  .subtitle {
+    padding-top: 10px;
+    font-size: 0.7em;
+    margin-top: -16px;
+  }
+}

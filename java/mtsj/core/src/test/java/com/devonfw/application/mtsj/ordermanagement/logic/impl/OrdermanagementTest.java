@@ -222,10 +222,10 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   @Test
   public void updateOrderState() {
 
-    OrderEto createdOrder = this.orderManagement.findOrder(5L).getOrder();
+    OrderEto createdOrder = this.orderManagement.findOrder("OR_dbg6").getOrder();
     createdOrder.setStateId(1l);
     OrderEto updatedOrder = this.orderManagement.updateOrderState(createdOrder);
-    createdOrder = this.orderManagement.findOrder(5L).getOrder();
+    createdOrder = this.orderManagement.findOrder("OR_dbg6").getOrder();
     assertThat(updatedOrder.getStateId()).isEqualTo(1l);
   }
 }

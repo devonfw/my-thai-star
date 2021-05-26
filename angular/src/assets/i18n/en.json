@@ -21,6 +21,10 @@
     "of": "of",
     "noResults": "No results to display"
   },
+  "orderStateView":{
+    "thankYou":"Thank you for your order",
+    "orderPenging":"Your order will be delivered shortly"
+  },
   "alerts": {
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",

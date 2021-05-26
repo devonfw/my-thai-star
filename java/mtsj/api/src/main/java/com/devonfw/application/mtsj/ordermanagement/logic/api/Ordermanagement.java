@@ -1,5 +1,6 @@
 package com.devonfw.application.mtsj.ordermanagement.logic.api;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public interface Ordermanagement {
    * @param id The id 'id' of the Order.
    * @return The {@link OrderEto} with id 'id'
    */
-  OrderCto findOrder(Long id);
+  OrderCto findOrder(String id);
 
   /**
    * Returns a paginated list of Orders matching the search criteria. Needs Authorization.
@@ -133,4 +134,5 @@ public interface Ordermanagement {
    */
   OrderEto updateOrderPayState(OrderEto order);
 
+  String buildToken(String email, String type) throws NoSuchAlgorithmException;
 }

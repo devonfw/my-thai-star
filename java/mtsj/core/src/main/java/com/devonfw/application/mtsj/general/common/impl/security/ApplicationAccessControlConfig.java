@@ -108,7 +108,7 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
     AccessControlGroup manager = group(GROUP_MANAGER, PERMISSION_FIND_BOOKING, PERMISSION_FIND_ORDER,
         PERMISSION_FIND_NEXT_WEEK_PREDICTION, PERMISSION_FIND_GEO_CLUSTER);
-    
+
     AccessControlGroup admin = group(GROUP_ADMIN, PERMISSION_FIND_USER, PERMISSION_DELETE_USER, PERMISSION_SAVE_USER);
 
   }
