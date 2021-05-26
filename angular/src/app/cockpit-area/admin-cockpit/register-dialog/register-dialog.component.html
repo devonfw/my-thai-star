@@ -25,17 +25,17 @@
 
     <!-- Password -->
     <mat-form-field>
-      <input matInput formControlName="password" [placeholder]="'formFields.password' | transloco">
-      <mat-error>
-        {{ 'alerts.confirmPassword' | transloco }}
-      </mat-error>
-    </mat-form-field>
-
-    <!-- ConfirmPassword -->
-    <mat-form-field>
-      <input matInput formControlName="confirmPassword" [placeholder]="'formFields.confirmPassword' | transloco">
+      <input type="password" matInput formControlName="password" [placeholder]="'formFields.password' | transloco">
       <mat-error>
         {{ 'alerts.passwordError' | transloco }}
+      </mat-error>
+    </mat-form-field>
+    
+    <!-- ConfirmPassword -->
+    <mat-form-field>
+      <input type="password" matInput formControlName="confirmPassword" [placeholder]="'formFields.confirmPassword' | transloco">
+      <mat-error>
+        {{ 'alerts.confirmPassword' | transloco }}
       </mat-error>  
     </mat-form-field>
 

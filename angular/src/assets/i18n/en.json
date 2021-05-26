@@ -32,7 +32,8 @@
       "orderCancel": "Order succesfully canceled"
     },
     "orderID": "To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table",
-    "passwordError": "Password Mismatch",
+    "passwordError": "Minimum 6 signs",
+    "confirmPassword":"Password Mismatch",
     "authAlerts": {
       "loginSuccess": "Login successful",
       "registerSuccess": "Register successful",
