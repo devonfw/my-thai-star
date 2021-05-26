@@ -35,12 +35,13 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   private List<OrderLineEntity> orderLines;
 
   private OrderStateEntity state;
-  
+
   private OrderPaidEntity paid;
   
   private AddressEntity address;
   
-  
+  private String OrderToken;
+
   /**
    * @return booking
    */
@@ -218,8 +219,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.state = state;
   }
   
-  ////////////////////
-  
   @Override
   @Transient
   public Long getAddressId() {
@@ -257,9 +256,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   public void setAddress(AddressEntity address) {
     this.address = address;
   }
-  
-  ////////////////////
-  
+
   @Override
   @Transient
   public Long getPaidId() {
@@ -299,5 +296,17 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
     this.paid = paid;
   }
-  
+
+  @Override
+  public String getOrderToken() {
+
+    return this.OrderToken;
+  }
+
+  @Override
+  public void setOrderToken(String OrderToken) {
+
+    this.OrderToken = OrderToken;
+  }
+
 }

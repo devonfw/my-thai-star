@@ -22,25 +22,29 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
    * @param idBooking
    * @return the list {@link OrderEntity} objects that matched the search.
    */
-  @Query("SELECT orders FROM OrderEntity orders" //
-      + " WHERE orders.booking.id = :idBooking")
+  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.id = :idBooking")
   List<OrderEntity> findOrders(@Param("idBooking") Long idBooking);
 
   /**
    * @param idInvitedGuest
    * @return the list {@link OrderEntity} objects that matched the search.
    */
-  @Query("SELECT orders FROM OrderEntity orders" //
-      + " WHERE orders.invitedGuest.id = :idInvitedGuest")
+  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.invitedGuest.id = :idInvitedGuest")
   List<OrderEntity> findOrdersByInvitedGuest(@Param("idInvitedGuest") Long idInvitedGuest);
 
   /**
    * @param bookingToken
    * @return the {@link OrderEntity} objects that matched the search.
    */
-  @Query("SELECT orders FROM OrderEntity orders" //
-      + " WHERE orders.booking.bookingToken = :bookingToken")
+  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.bookingToken = :bookingToken")
   List<OrderEntity> findOrdersByBookingToken(@Param("bookingToken") String bookingToken);
+
+  /**
+   * @param bookingToken
+   * @return the {@link OrderEntity} objects that matched the search.
+   */
+  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.orderToken = :orderToken")
+  List<OrderEntity> findOrderByOrderToken(@Param("orderToken") String orderToken);
 
   /**
    * @param criteria the {@link OrderSearchCriteriaTo} with the criteria to search.

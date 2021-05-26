@@ -1,7 +1,11 @@
 package com.devonfw.application.mtsj.ordermanagement.logic.impl;
 
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -72,133 +76,134 @@ import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 @Transactional
 public class OrdermanagementImpl extends AbstractComponentFacade implements Ordermanagement {
 
-	/**
-	 * Logger instance.
-	 */
-	private static final Logger LOG = LoggerFactory.getLogger(OrdermanagementImpl.class);
+  /**
+   * Logger instance.
+   */
+  private static final Logger LOG = LoggerFactory.getLogger(OrdermanagementImpl.class);
 
-	/**
-	 * @see #getOrderDao()
-	 */
-	@Inject
-	private OrderRepository orderDao;
+  /**
+   * @see #getOrderDao()
+   */
+  @Inject
+  private OrderRepository orderDao;
 
-	/**
-	 * @see #getOrderLineDao()
-	 */
-	@Inject
-	private OrderLineRepository orderLineDao;
+  /**
+   * @see #getOrderLineDao()
+   */
+  @Inject
+  private OrderLineRepository orderLineDao;
 
-	/**
-	 * @see #getOrderStateDao()
-	 */
-	@Inject
-	private OrderStateRepository orderStateDao;
-	
-	@Inject
-	private OrderPayStateRepository orderPayStateDao;
+  /**
+   * @see #getOrderStateDao()
+   */
+  @Inject
+  private OrderStateRepository orderStateDao;
 
-	@Inject
-	private OrderedDishesPerDayRepository orderedDishesPerDayDao;
+  @Inject
+  private OrderPayStateRepository orderPayStateDao;
 
-	@Inject
-	private OrderedDishesPerMonthRepository orderedDishesPerMonthDao;
+  @Inject
+  private OrderedDishesPerDayRepository orderedDishesPerDayDao;
 
-	@Inject
-	private Bookingmanagement bookingManagement;
+  @Inject
+  private OrderedDishesPerMonthRepository orderedDishesPerMonthDao;
 
-	@Inject
-	private Dishmanagement dishManagement;
+  @Inject
+  private Bookingmanagement bookingManagement;
 
-	@Inject
-	private Mail mailService;
+  @Inject
+  private Dishmanagement dishManagement;
 
-	@Value("${client.port}")
-	private int clientPort;
+  @Inject
+  private Mail mailService;
 
-	@Value("${server.servlet.context-path}")
-	private String serverContextPath;
+  @Value("${client.port}")
+  private int clientPort;
 
-	@Value("${mythaistar.hourslimitcancellation}")
-	private int hoursLimit;
+  @Value("${server.servlet.context-path}")
+  private String serverContextPath;
 
-	/**
-	 * The constructor.
-	 */
-	public OrdermanagementImpl() {
+  @Value("${mythaistar.hourslimitcancellation}")
+  private int hoursLimit;
 
-		super();
-	}
+  /**
+   * The constructor.
+   */
+  public OrdermanagementImpl() {
 
-	@Override
-	public OrderCto findOrder(Long id) {
+    super();
+  }
 
-		LOG.debug("Get Order with id {} from database.", id);
-		OrderEntity entity = getOrderDao().find(id);
-		OrderCto cto = new OrderCto();
-		cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
-		cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
-		cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
-		cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
-		cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
-		return cto;
-	}
+  @Override
+  public OrderCto findOrder(String id) {
 
-	@Override
-	@RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
-	public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
+    LOG.debug("Get Order with id " + id + " from database.");
+    List<OrderEntity> entityList = getOrderDao().findOrderByOrderToken(id);
+    OrderEntity entity = entityList.get(0);
+    OrderCto cto = new OrderCto();
+    cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
+    cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
+    cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
+    cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
+    cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
+    return cto;
+  }
 
-		return findOrderCtos(criteria);
-	}
+  @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_ORDER)
+  public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo criteria) {
 
-	@Override
-	public List<OrderCto> findOrdersByInvitedGuest(Long invitedGuestId) {
+    return findOrderCtos(criteria);
+  }
 
-		List<OrderCto> ctos = new ArrayList<>();
-		List<OrderEntity> orders = getOrderDao().findOrdersByInvitedGuest(invitedGuestId);
-		for (OrderEntity order : orders) {
-			processOrders(ctos, order);
-		}
-		return ctos;
+  @Override
+  public List<OrderCto> findOrdersByInvitedGuest(Long invitedGuestId) {
 
-	}
+    List<OrderCto> ctos = new ArrayList<>();
+    List<OrderEntity> orders = getOrderDao().findOrdersByInvitedGuest(invitedGuestId);
+    for (OrderEntity order : orders) {
+      processOrders(ctos, order);
+    }
+    return ctos;
 
-	@Override
-	public List<OrderCto> findOrdersByBookingToken(String bookingToken) {
+  }
 
-		List<OrderCto> ctos = new ArrayList<>();
-		List<OrderEntity> orders = getOrderDao().findOrdersByBookingToken(bookingToken);
-		for (OrderEntity order : orders) {
-			processOrders(ctos, order);
-		}
-		return ctos;
+  @Override
+  public List<OrderCto> findOrdersByBookingToken(String bookingToken) {
 
-	}
+    List<OrderCto> ctos = new ArrayList<>();
+    List<OrderEntity> orders = getOrderDao().findOrdersByBookingToken(bookingToken);
+    for (OrderEntity order : orders) {
+      processOrders(ctos, order);
+    }
+    return ctos;
 
-	@Override
-	public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  }
 
-		List<OrderCto> ctos = new ArrayList<>();
-		Page<OrderCto> pagListTo = null;
-		Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
-		for (OrderEntity order : orders.getContent()) {
-			processOrders(ctos, order);
-		}
+  @Override
+  public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
-		if (ctos.size() > 0) {
-			Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), ctos.size());
-			pagListTo = new PageImpl<>(ctos, pagResultTo, orders.getTotalElements());
-		}
-		return pagListTo;
-	}
+    List<OrderCto> ctos = new ArrayList<>();
+    Page<OrderCto> pagListTo = null;
+    Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
+    for (OrderEntity order : orders.getContent()) {
+      processOrders(ctos, order);
+    }
 
-	/**
-	 * @param ctos
-	 * @param order
-	 */
-	private void processOrders(List<OrderCto> ctos, OrderEntity order) {
+    if (ctos.size() > 0) {
+      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), ctos.size());
+      pagListTo = new PageImpl<>(ctos, pagResultTo, orders.getTotalElements());
+    }
+    return pagListTo;
+  }
 
-		OrderCto cto = new OrderCto();
+  /**
+   * @param ctos
+   * @param order
+   */
+  private void processOrders(List<OrderCto> ctos, OrderEntity order) {
+
+    OrderCto cto = new OrderCto();
 		cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
 		cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
 		cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
@@ -216,383 +221,407 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 		cto.setOrderLines(orderLinesCto);
 		cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
 		ctos.add(cto);
-	}
-
-	@Override
-	public List<OrderCto> findOrders(Long idBooking) {
-
-		List<OrderCto> ctos = new ArrayList<>();
-		List<OrderEntity> orders = getOrderDao().findOrders(idBooking);
-		for (OrderEntity order : orders) {
-			processOrders(ctos, order);
-		}
-
-		return ctos;
-	}
-
-	@Override
-	public boolean deleteOrder(Long orderId) {
-
-		OrderEntity order = getOrderDao().find(orderId);
-
-		if (!cancellationAllowed(order)) {
-			throw new CancelNotAllowedException();
-		}
-		List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
-
-		for (OrderLineEntity orderLine : orderLines) {
-			getOrderLineDao().deleteById(orderLine.getId());
-		}
-		getOrderDao().delete(order);
-		LOG.debug("The order with id '{}' has been deleted.", orderId);
-
-		return true;
-	}
-
-	@Override
-	public OrderEto saveOrder(OrderCto order) {
-
-		Objects.requireNonNull(order, "order");
-		List<OrderLineCto> linesCto = order.getOrderLines();
-		List<OrderLineEntity> orderLineEntities = new ArrayList<>();
-		for (OrderLineCto lineCto : linesCto) {
-			OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
-			orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
-			orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
-			orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
-			orderLineEntity.setComment(lineCto.getOrderLine().getComment());
-			orderLineEntities.add(orderLineEntity);
-		}
-		OrderStateEto a = new OrderStateEto();
-		a.setId(0L);
-		order.setState(a);
-		OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
-		String token = orderEntity.getBooking().getBookingToken();
-		// initialize, validate orderEntity here if necessary
-		orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
-		orderEntity.setOrderLines(orderLineEntities);
-		OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
-		LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
-
-		for (OrderLineEntity orderLineEntity : orderLineEntities) {
-			orderLineEntity.setOrderId(resultOrderEntity.getId());
-			OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
-			LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
-		}
-
-		sendOrderConfirmationEmail(token, resultOrderEntity);
-
-		return getBeanMapper().map(resultOrderEntity, OrderEto.class);
-	}
-
-	@Override
-	public OrderEto updateOrderState(OrderEto order) {
-
-		OrderEntity orderEntity = getOrderDao().find(order.getId());
-		OrderStateEntity orderStateEntity = getOrderStateDao().find(order.getStateId());
-		// OrderStateEntity state = getBeanMapper().map(order.getStateId(),
-		// OrderStateEntity.class);
-		orderEntity.setState(orderStateEntity);
-		OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
-		LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
-
-		return getBeanMapper().map(resultOrderEntity, OrderEto.class);
-	}
-					
-	public OrderEto updateOrderPayState(OrderEto order) {
-
-		OrderEntity orderEntity = getOrderDao().find(order.getId());
-		OrderPaidEntity orderPayStateEntity = getOrderPayStateDao().find(order.getPaidId());
-
-		orderEntity.setPaid(orderPayStateEntity);
-		OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
-		LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
-
-		return getBeanMapper().map(resultOrderEntity, OrderEto.class);
-	}
-
-	/**
-	 * Returns the field 'orderDao'.
-	 *
-	 * @return the {@link OrderDao} instance.
-	 */
-	public OrderRepository getOrderDao() {
-
-		return this.orderDao;
-	}
-
-	@Override
-	public OrderLineEto findOrderLine(Long id) {
-
-		LOG.debug("Get OrderLine with id {} from database.", id);
-		return getBeanMapper().map(getOrderLineDao().find(id), OrderLineEto.class);
-	}
-
-	@Override
-	public Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria) {
-
-		Page<OrderLineEntity> orderlines = getOrderLineDao().findOrderLines(criteria);
-		List<OrderLineCto> orderLinesCto = new ArrayList<>();
-		for (OrderLineEntity orderline : orderlines.getContent()) {
-			OrderLineCto orderLineCto = new OrderLineCto();
-			orderLineCto
-					.setOrderLine(getBeanMapper().map(this.orderLineDao.find(orderline.getId()), OrderLineEto.class));
-			orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientEto.class));
-			orderLinesCto.add(orderLineCto);
-		}
-
-		Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderLinesCto.size());
-		Page<OrderLineCto> pagListTo = new PageImpl<>(orderLinesCto, pagResultTo, pagResultTo.getPageSize());
-		return pagListTo;
-	}
-
-	@Override
-	public boolean deleteOrderLine(Long orderLineId) {
-
-		OrderLineEntity orderLine = getOrderLineDao().find(orderLineId);
-		getOrderLineDao().delete(orderLine);
-		LOG.debug("The orderLine with id '{}' has been deleted.", orderLineId);
-		return true;
-	}
-
-	@Override
-	public OrderLineEto saveOrderLine(OrderLineEto orderLine) {
-
-		Objects.requireNonNull(orderLine, "orderLine");
-		OrderLineEntity orderLineEntity = getBeanMapper().map(orderLine, OrderLineEntity.class);
-
-		// initialize, validate orderLineEntity here if necessary
-		OrderLineEntity resultEntity = getOrderLineDao().save(orderLineEntity);
-		LOG.debug("OrderLine with id '{}' has been created.", resultEntity.getId());
+  }
+
+  @Override
+  public List<OrderCto> findOrders(Long idBooking) {
+
+    List<OrderCto> ctos = new ArrayList<>();
+    List<OrderEntity> orders = getOrderDao().findOrders(idBooking);
+    for (OrderEntity order : orders) {
+      processOrders(ctos, order);
+    }
+
+    return ctos;
+  }
+
+  @Override
+  public boolean deleteOrder(Long orderId) {
+
+    OrderEntity order = getOrderDao().find(orderId);
+
+    if (!cancellationAllowed(order)) {
+      throw new CancelNotAllowedException();
+    }
+    List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
+
+    for (OrderLineEntity orderLine : orderLines) {
+      getOrderLineDao().deleteById(orderLine.getId());
+    }
+    getOrderDao().delete(order);
+    LOG.debug("The order with id '{}' has been deleted.", orderId);
+
+    return true;
+  }
+
+  @Override
+  public OrderEto saveOrder(OrderCto order) {
+
+    Objects.requireNonNull(order, "order");
+    List<OrderLineCto> linesCto = order.getOrderLines();
+    List<OrderLineEntity> orderLineEntities = new ArrayList<>();
+    for (OrderLineCto lineCto : linesCto) {
+      OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
+      orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
+      orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
+      orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
+      orderLineEntity.setComment(lineCto.getOrderLine().getComment());
+      orderLineEntities.add(orderLineEntity);
+    }
+    OrderStateEto a = new OrderStateEto();
+    a.setId(0L);
+    order.setState(a);
+    OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+    String token = orderEntity.getBooking().getBookingToken();
+    // initialize, validate orderEntity here if necessary
+    orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
+    orderEntity.setOrderLines(orderLineEntities);
+    OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
+
+    for (OrderLineEntity orderLineEntity : orderLineEntities) {
+      orderLineEntity.setOrderId(resultOrderEntity.getId());
+      OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
+      LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
+    }
+    try {
+      orderEntity.setOrderToken(buildToken(orderEntity.getId().toString() + order.getBooking().getEmail(), "OR_"));
+    } catch (NoSuchAlgorithmException e) {
+      LOG.debug("MD5 Algorithm not available at the enviroment");
+    }
+    sendOrderConfirmationEmail(token, resultOrderEntity);
+
+    return getBeanMapper().map(resultOrderEntity, OrderEto.class);
+  }
+
+  @Override
+  public OrderEto updateOrderState(OrderEto order) {
+
+    OrderEntity orderEntity = getOrderDao().find(order.getId());
+    OrderStateEntity orderStateEntity = getOrderStateDao().find(order.getStateId());
+    // OrderStateEntity state = getBeanMapper().map(order.getStateId(),
+    // OrderStateEntity.class);
+    orderEntity.setState(orderStateEntity);
+    OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
+
+    return getBeanMapper().map(resultOrderEntity, OrderEto.class);
+  }
+
+  @Override
+  public OrderEto updateOrderPayState(OrderEto order) {
+
+    OrderEntity orderEntity = getOrderDao().find(order.getId());
+    OrderPaidEntity orderPayStateEntity = getOrderPayStateDao().find(order.getPaidId());
+
+    orderEntity.setPaid(orderPayStateEntity);
+    OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
+
+    return getBeanMapper().map(resultOrderEntity, OrderEto.class);
+  }
+
+  /**
+   * Returns the field 'orderDao'.
+   *
+   * @return the {@link OrderDao} instance.
+   */
+  public OrderRepository getOrderDao() {
+
+    return this.orderDao;
+  }
+
+  @Override
+  public OrderLineEto findOrderLine(Long id) {
+
+    LOG.debug("Get OrderLine with id {} from database.", id);
+    return getBeanMapper().map(getOrderLineDao().find(id), OrderLineEto.class);
+  }
+
+  @Override
+  public Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria) {
+
+    Page<OrderLineEntity> orderlines = getOrderLineDao().findOrderLines(criteria);
+    List<OrderLineCto> orderLinesCto = new ArrayList<>();
+    for (OrderLineEntity orderline : orderlines.getContent()) {
+      OrderLineCto orderLineCto = new OrderLineCto();
+      orderLineCto.setOrderLine(getBeanMapper().map(this.orderLineDao.find(orderline.getId()), OrderLineEto.class));
+      orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientEto.class));
+      orderLinesCto.add(orderLineCto);
+    }
+
+    Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderLinesCto.size());
+    Page<OrderLineCto> pagListTo = new PageImpl<>(orderLinesCto, pagResultTo, pagResultTo.getPageSize());
+    return pagListTo;
+  }
+
+  @Override
+  public boolean deleteOrderLine(Long orderLineId) {
+
+    OrderLineEntity orderLine = getOrderLineDao().find(orderLineId);
+    getOrderLineDao().delete(orderLine);
+    LOG.debug("The orderLine with id '{}' has been deleted.", orderLineId);
+    return true;
+  }
+
+  @Override
+  public OrderLineEto saveOrderLine(OrderLineEto orderLine) {
+
+    Objects.requireNonNull(orderLine, "orderLine");
+    OrderLineEntity orderLineEntity = getBeanMapper().map(orderLine, OrderLineEntity.class);
+
+    // initialize, validate orderLineEntity here if necessary
+    OrderLineEntity resultEntity = getOrderLineDao().save(orderLineEntity);
+    LOG.debug("OrderLine with id '{}' has been created.", resultEntity.getId());
 
-		return getBeanMapper().map(resultEntity, OrderLineEto.class);
-	}
+    return getBeanMapper().map(resultEntity, OrderLineEto.class);
+  }
 
-	/**
-	 * Returns the field 'orderLineDao'.
-	 *
-	 * @return the {@link OrderLineDao} instance.
-	 */
-	public OrderLineRepository getOrderLineDao() {
-
-		return this.orderLineDao;
-	}
-
-	/**
-	 * Returns the field 'orderStateDao'.
-	 *
-	 * @return the {@link OrderStateDao} instance.
-	 */
-	public OrderStateRepository getOrderStateDao() {
-
-		return this.orderStateDao;
-	}
-	
-	public OrderPayStateRepository getOrderPayStateDao() {
-
-		return this.orderPayStateDao;
-	}
-
-	public OrderedDishesPerDayRepository getOrderedDishesPerDayDao() {
-
-		return this.orderedDishesPerDayDao;
-	}
-
-	public OrderedDishesPerMonthRepository getOrderedDishesPerMonthDao() {
-
-		return this.orderedDishesPerMonthDao;
-	}
-
-	private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
-
-		// BOOKING VALIDATION
-		if (getOrderType(token) == BookingType.COMMON) {
-			BookingCto booking = getBookingbyToken(token);
-			if (booking == null) {
-				throw new NoBookingException();
-			}
-			List<OrderCto> currentOrders = getBookingOrders(booking.getBooking().getId());
-			if (!currentOrders.isEmpty()) {
-				throw new OrderAlreadyExistException();
-			}
-			orderEntity.setBookingId(booking.getBooking().getId());
-
-			// GUEST VALIDATION
-		} else if (getOrderType(token) == BookingType.INVITED) {
-
-			InvitedGuestEto guest = getInvitedGuestByToken(token);
-			if (guest == null) {
-				throw new NoInviteException();
-			}
-			List<OrderCto> currentGuestOrders = getInvitedGuestOrders(guest.getId());
-			if (!currentGuestOrders.isEmpty()) {
-				throw new OrderAlreadyExistException();
-			}
-			orderEntity.setBookingId(guest.getBookingId());
-			orderEntity.setInvitedGuestId(guest.getId());
-		}
-
-		return orderEntity;
-
-	}
-
-	private BookingType getOrderType(String token) throws WrongTokenException {
-
-		if (token.startsWith("CB_")) {
-			return BookingType.COMMON;
-		} else if (token.startsWith("GB_")) {
-			return BookingType.INVITED;
-		} else {
-			throw new WrongTokenException();
-		}
-	}
-
-	private BookingCto getBookingbyToken(String token) {
-
-		return this.bookingManagement.findBookingByToken(token);
-	}
-
-	private List<OrderCto> getBookingOrders(Long idBooking) {
-
-		return findOrders(idBooking);
-	}
-
-	private InvitedGuestEto getInvitedGuestByToken(String token) {
-
-		return this.bookingManagement.findInvitedGuestByToken(token);
-	}
-
-	private List<OrderCto> getInvitedGuestOrders(Long idInvitedGuest) {
-
-		return findOrdersByInvitedGuest(idInvitedGuest);
-	}
-
-	private void sendOrderConfirmationEmail(String token, OrderEntity order) {
-
-		Objects.requireNonNull(token, "token");
-		Objects.requireNonNull(order, "order");
-		try {
-			String emailTo = getBookingOrGuestEmail(token);
-			StringBuilder mailContent = new StringBuilder();
-
-			mailContent.append("MY THAI STAR").append("\n");
-			mailContent.append("Hi ").append(emailTo).append("\n");
-			mailContent.append("Your order has been created.").append("\n");
-			mailContent.append(getContentFormatedWithCost(order)).append("\n");
-			mailContent.append("\n").append("Link to cancel order: ");
-			String link = "http://localhost:" + this.clientPort + "/booking/cancelOrder/" + order.getId();
-			mailContent.append(link);
-			this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
-		} catch (Exception e) {
-			LOG.error("Email not sent. {}", e.getMessage());
-		}
-	}
-
-	private String getContentFormatedWithCost(OrderEntity order) {
-
-		List<OrderLineEntity> orderLines = this.orderLineDao.findOrderLines(order.getId());
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("\n");
-		BigDecimal finalPrice = BigDecimal.ZERO;
-		for (OrderLineEntity orderLine : orderLines) {
-			DishCto dishCto = this.dishManagement.findDish(orderLine.getDishId());
-			List<IngredientEto> extras = dishCto.getExtras();
-			Set<IngredientEto> set = new HashSet<>();
-			set.addAll(extras);
-			extras.clear();
-			extras.addAll(set);
-			// dish name
-			BigDecimal linePrice = BigDecimal.ZERO;
-			sb.append(dishCto.getDish().getName()).append(", x").append(orderLine.getAmount());
-			// dish cost
-			BigDecimal dishCost = dishCto.getDish().getPrice().multiply(new BigDecimal(orderLine.getAmount()));
-			linePrice = dishCost;
-			// dish selected extras
-			sb.append(". Extras: ");
-			for (Ingredient extra : extras) {
-				for (Ingredient selectedExtra : orderLine.getExtras()) {
-					if (extra.getId().equals(selectedExtra.getId())) {
-						sb.append(extra.getName()).append(",");
-						linePrice = linePrice.add(extra.getPrice());
-						break;
-					}
-				}
-			}
-
-			// dish cost
-			sb.append(" ==>").append(". Dish cost: ").append(linePrice.toString());
-			sb.append("\n");
-			// increase the finalPrice of the order
-			finalPrice = finalPrice.add(linePrice);
-		}
-
-		return sb.append("Total Order cost: ").append(finalPrice.toString()).toString();
-	}
-
-	private String getBookingOrGuestEmail(String token) {
-
-		// Get the Host email
-		if (getOrderType(token) == BookingType.COMMON) {
-			BookingCto booking = getBookingbyToken(token);
-			if (booking == null) {
-				throw new NoBookingException();
-			}
-			return booking.getBooking().getEmail();
-
-			// Get the Guest email
-		} else if (getOrderType(token) == BookingType.INVITED) {
-
-			InvitedGuestEto guest = getInvitedGuestByToken(token);
-			if (guest == null) {
-				throw new NoInviteException();
-			}
-			return guest.getEmail();
-		} else
-
-		{
-			return null;
-		}
-	}
-
-	private boolean cancellationAllowed(OrderEntity order) {
-
-		BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
-		Instant bookingTime = booking.getBooking().getBookingDate();
-		long bookingTimeMillis = bookingTime.toEpochMilli();
-		long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
-		long now = Instant.now().toEpochMilli();
-
-		return (now > cancellationLimit) ? false : true;
-	}
-
-	@Override
-	public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria) {
-
-		List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
-		if (criteria.getType() == OrderedDishesSearchCriteriaTo.Type.DAILY) {
-			Page<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao()
-					.findOrderedDishesPerDay(criteria);
-			for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getContent()) {
-				OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
-				orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
-				orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
-				orderedDishesCtos.add(orderedDishesCto);
-			}
-			Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
-			return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
-		} else {
-			Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao()
-					.findOrderedDishesPerMonth(criteria);
-			for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getContent()) {
-				OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
-				orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
-				orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
-				orderedDishesCtos.add(orderedDishesCto);
-			}
-			Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
-			return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
-		}
-	}
+  /**
+   * Returns the field 'orderLineDao'.
+   *
+   * @return the {@link OrderLineDao} instance.
+   */
+  public OrderLineRepository getOrderLineDao() {
+
+    return this.orderLineDao;
+  }
+
+  /**
+   * Returns the field 'orderStateDao'.
+   *
+   * @return the {@link OrderStateDao} instance.
+   */
+  public OrderStateRepository getOrderStateDao() {
+
+    return this.orderStateDao;
+  }
+
+  public OrderPayStateRepository getOrderPayStateDao() {
+
+    return this.orderPayStateDao;
+  }
+
+  public OrderedDishesPerDayRepository getOrderedDishesPerDayDao() {
+
+    return this.orderedDishesPerDayDao;
+  }
+
+  public OrderedDishesPerMonthRepository getOrderedDishesPerMonthDao() {
+
+    return this.orderedDishesPerMonthDao;
+  }
+
+  private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
+
+    // BOOKING VALIDATION
+    if (getOrderType(token) == BookingType.COMMON) {
+      BookingCto booking = getBookingbyToken(token);
+      if (booking == null) {
+        throw new NoBookingException();
+      }
+      List<OrderCto> currentOrders = getBookingOrders(booking.getBooking().getId());
+      if (!currentOrders.isEmpty()) {
+        throw new OrderAlreadyExistException();
+      }
+      orderEntity.setBookingId(booking.getBooking().getId());
+
+      // GUEST VALIDATION
+    } else if (getOrderType(token) == BookingType.INVITED) {
+
+      InvitedGuestEto guest = getInvitedGuestByToken(token);
+      if (guest == null) {
+        throw new NoInviteException();
+      }
+      List<OrderCto> currentGuestOrders = getInvitedGuestOrders(guest.getId());
+      if (!currentGuestOrders.isEmpty()) {
+        throw new OrderAlreadyExistException();
+      }
+      orderEntity.setBookingId(guest.getBookingId());
+      orderEntity.setInvitedGuestId(guest.getId());
+    }
+
+    return orderEntity;
+
+  }
+
+  private BookingType getOrderType(String token) throws WrongTokenException {
+
+    if (token.startsWith("CB_")) {
+      return BookingType.COMMON;
+    } else if (token.startsWith("GB_")) {
+      return BookingType.INVITED;
+    } else {
+      throw new WrongTokenException();
+    }
+  }
+
+  private BookingCto getBookingbyToken(String token) {
+
+    return this.bookingManagement.findBookingByToken(token);
+  }
+
+  private List<OrderCto> getBookingOrders(Long idBooking) {
+
+    return findOrders(idBooking);
+  }
+
+  private InvitedGuestEto getInvitedGuestByToken(String token) {
+
+    return this.bookingManagement.findInvitedGuestByToken(token);
+  }
+
+  private List<OrderCto> getInvitedGuestOrders(Long idInvitedGuest) {
+
+    return findOrdersByInvitedGuest(idInvitedGuest);
+  }
+
+  private void sendOrderConfirmationEmail(String token, OrderEntity order) {
+
+    Objects.requireNonNull(token, "token");
+    Objects.requireNonNull(order, "order");
+    try {
+      String emailTo = getBookingOrGuestEmail(token);
+      StringBuilder mailContent = new StringBuilder();
+
+      mailContent.append("MY THAI STAR").append("\n");
+      mailContent.append("Hi ").append(emailTo).append("\n");
+      mailContent.append("Your order has been created.").append("\n");
+      mailContent.append(getContentFormatedWithCost(order)).append("\n");
+      mailContent.append("\n").append("Link to cancel order: ");
+      String link = "http://localhost:" + this.clientPort + "/booking/cancelOrder/" + order.getId();
+      mailContent.append(link);
+      this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+  }
+
+  private String getContentFormatedWithCost(OrderEntity order) {
+
+    List<OrderLineEntity> orderLines = this.orderLineDao.findOrderLines(order.getId());
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n");
+    BigDecimal finalPrice = BigDecimal.ZERO;
+    for (OrderLineEntity orderLine : orderLines) {
+      DishCto dishCto = this.dishManagement.findDish(orderLine.getDishId());
+      List<IngredientEto> extras = dishCto.getExtras();
+      Set<IngredientEto> set = new HashSet<>();
+      set.addAll(extras);
+      extras.clear();
+      extras.addAll(set);
+      // dish name
+      BigDecimal linePrice = BigDecimal.ZERO;
+      sb.append(dishCto.getDish().getName()).append(", x").append(orderLine.getAmount());
+      // dish cost
+      BigDecimal dishCost = dishCto.getDish().getPrice().multiply(new BigDecimal(orderLine.getAmount()));
+      linePrice = dishCost;
+      // dish selected extras
+      sb.append(". Extras: ");
+      for (Ingredient extra : extras) {
+        for (Ingredient selectedExtra : orderLine.getExtras()) {
+          if (extra.getId().equals(selectedExtra.getId())) {
+            sb.append(extra.getName()).append(",");
+            linePrice = linePrice.add(extra.getPrice());
+            break;
+          }
+        }
+      }
+
+      // dish cost
+      sb.append(" ==>").append(". Dish cost: ").append(linePrice.toString());
+      sb.append("\n");
+      // increase the finalPrice of the order
+      finalPrice = finalPrice.add(linePrice);
+    }
+
+    return sb.append("Total Order cost: ").append(finalPrice.toString()).toString();
+  }
+
+  private String getBookingOrGuestEmail(String token) {
+
+    // Get the Host email
+    if (getOrderType(token) == BookingType.COMMON) {
+      BookingCto booking = getBookingbyToken(token);
+      if (booking == null) {
+        throw new NoBookingException();
+      }
+      return booking.getBooking().getEmail();
+
+      // Get the Guest email
+    } else if (getOrderType(token) == BookingType.INVITED) {
+
+      InvitedGuestEto guest = getInvitedGuestByToken(token);
+      if (guest == null) {
+        throw new NoInviteException();
+      }
+      return guest.getEmail();
+    } else
+
+    {
+      return null;
+    }
+  }
+
+  private boolean cancellationAllowed(OrderEntity order) {
+
+    BookingCto booking = this.bookingManagement.findBooking(order.getBookingId());
+    Instant bookingTime = booking.getBooking().getBookingDate();
+    long bookingTimeMillis = bookingTime.toEpochMilli();
+    long cancellationLimit = bookingTimeMillis - (3600000 * this.hoursLimit);
+    long now = Instant.now().toEpochMilli();
+
+    return (now > cancellationLimit) ? false : true;
+  }
+
+  @Override
+  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria) {
+
+    List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
+    if (criteria.getType() == OrderedDishesSearchCriteriaTo.Type.DAILY) {
+      Page<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
+      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getContent()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerDay.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
+    } else {
+      Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao()
+          .findOrderedDishesPerMonth(criteria);
+      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getContent()) {
+        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
+        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
+        orderedDishesCto.setDish(getBeanMapper().map(orderedDishesPerMonth.getDish(), DishEto.class));
+        orderedDishesCtos.add(orderedDishesCto);
+      }
+      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
+      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
+    }
+  }
+
+  @Override
+  public String buildToken(String idString, String type) throws NoSuchAlgorithmException {
+
+    Instant now = Instant.now();
+    LocalDateTime ldt1 = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
+    String date = String.format("%04d", ldt1.getYear()) + String.format("%02d", ldt1.getMonthValue())
+        + String.format("%02d", ldt1.getDayOfMonth()) + "_";
+
+    String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
+        + String.format("%02d", ldt1.getSecond());
+
+    MessageDigest md = MessageDigest.getInstance("MD5");
+    md.update((idString + date + time).getBytes());
+    byte[] digest = md.digest();
+    StringBuilder sb = new StringBuilder();
+    for (byte b : digest) {
+      sb.append(String.format("%02x", b & 0xff));
+    }
+    return type + date + sb;
+  }
 
 }

@@ -4,7 +4,6 @@ import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 
 /**
  * TODO simon This type ...
- *
  */
 public interface Order extends ApplicationEntity {
 
@@ -32,4 +31,15 @@ public interface Order extends ApplicationEntity {
 
   public void setAddressId(Long addressId);
 	
+
+  /**
+   * @return OrderTokenId
+   */
+  public String getOrderToken();
+
+  /**
+   * @param OrderToken setter for OrderToken attribute
+   */
+  public void setOrderToken(String OrderToken);
+
 }
