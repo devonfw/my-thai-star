@@ -20,7 +20,6 @@ module.exports.getS3PreSignedUrl = function getS3PreSignedUrl(s3ObjectKey) {
 module.exports.createReservation = (name, email, date) => {
   return new Promise((resolve, reject) => {
     date = new Date(date);
-//    date.setDate(date.getDate() + 5);
     console.log(date);
     const body = JSON.stringify({
       booking: {
