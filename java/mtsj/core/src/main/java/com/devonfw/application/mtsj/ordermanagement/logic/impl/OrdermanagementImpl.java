@@ -488,7 +488,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Hi ").append(emailTo).append("\n");
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
-      mailContent.append("\n").append("Link to cancel order: ");
+      mailContent.append("\n\n").append("You can check your order here: \n");
+      String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
+      mailContent.append(orderStateCheckLink);
+      mailContent.append("\n\n").append("Link to cancel order: \n");
       String link = "http://localhost:" + this.clientPort + "/booking/cancelOrder/" + order.getId();
       mailContent.append(link);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
