@@ -5,6 +5,8 @@ import { OrderService } from './order.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { ViewChild } from '@angular/core'
 import { MatHorizontalStepper } from '@angular/material/stepper'
+import { OrderListView } from 'app/shared/view-models/interfaces';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-order-state-view',
@@ -14,6 +16,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper'
 export class OrderStateViewComponent implements OnInit, OnDestroy{
   private orderId: string;
   public currentState: number = 0;
+  public currentOrder: OrderListView;
   private refreshInterval :NodeJS.Timeout;
   constructor(
     private translocoService: TranslocoService,
@@ -21,6 +24,24 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
+  columnsOrderLines: any[];
+  columnsOL: string[] = [
+    'dish.name',
+    'orderLine.comment',
+    'extras',
+    'orderLine.amount',
+    'dish.price',
+  ];
+
+  columnsAdresses: any[];
+  columnsA: string[] = [
+    'dish.name',
+    'orderLine.comment',
+    'extras',
+    'orderLine.amount',
+    'dish.price'
+  ];
 
 
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
@@ -30,6 +51,11 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      this.setTableHeaders(event);
+    });
+
     let translation1: string;
     
     forkJoin([
@@ -40,14 +66,54 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.orderId = params.get('id');
+      this.orderService.getOrder(this.orderId).subscribe((order) => {
+        this.currentState = order.order.stateId;
+        this.currentOrder = order;
+
+        
+      });
       this.refreshInterval = setInterval(() => this.orderService.getOrder(this.orderId).subscribe((order) => {
         this.currentState = order.order.stateId;
+        this.currentOrder = order;
+        console.log("this.currentOrder");
+        console.log(this.currentOrder);
+        console.log("this.currentOrder");
       }),6000);
     });
 
     this.router.events.subscribe(asd => {
         console.log(asd);
     })
+  }
+
+  setTableHeaders(lang: string): void {
+    this.translocoService
+    .selectTranslateObject('cockpit.orders.dialogTable', {}, lang)
+    .subscribe((cockpitDialogTable) => {
+      this.columnsOrderLines = [
+        { name: 'dish.name', label: cockpitDialogTable.dishH },
+        { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
+        { name: 'extras', label: cockpitDialogTable.extrasH },
+        { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
+        {
+          name: 'dish.price',
+          label: cockpitDialogTable.priceH,
+          numeric: true,
+          format: (v: number) => v.toFixed(2),
+        },
+      ];
+    });
+
+    this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.columnsAdresses = [
+          { name: 'postCode', label: cockpitTable.postCodeH },
+          { name: 'city', label: cockpitTable.cityH },
+          { name: 'street', label: cockpitTable.streetNameH },
+          { name: 'houseNumber', label: cockpitTable.houseNumberH }
+        ];
+      });
   }
 
   ngOnDestroy(): void {

@@ -4,6 +4,8 @@ import { OrderStateViewComponent } from './order-state-view/order-state-view.com
 import {MatStepperModule} from "@angular/material/stepper"
 import {MatCardModule} from "@angular/material/card"
 import { TranslocoModule } from '@ngneat/transloco';
+import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [OrderStateViewComponent],
@@ -11,7 +13,9 @@ import { TranslocoModule } from '@ngneat/transloco';
     CommonModule,
     MatStepperModule,
     MatCardModule,
-    TranslocoModule
+    TranslocoModule,
+    MatTableModule,
+    MatDividerModule
   ]
 })
 export class OrderStateViewModule { }

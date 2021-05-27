@@ -139,13 +139,29 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     LOG.debug("Get Order with id " + id + " from database.");
     List<OrderEntity> entityList = getOrderDao().findOrderByOrderToken(id);
-    OrderEntity entity = entityList.get(0);
+    OrderEntity order = entityList.get(0);
     OrderCto cto = new OrderCto();
-    cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
-    cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
-    cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
-    cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
-    cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
+	cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
+	cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
+	cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
+	cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
+	cto.setOrder(getBeanMapper().map(order, OrderEto.class));
+	cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
+	List<OrderLineCto> orderLinesCto = new ArrayList<>();
+	for (OrderLineEntity orderLine : order.getOrderLines()) {
+		OrderLineCto orderLineCto = new OrderLineCto();
+		orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
+		orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
+		orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
+		orderLinesCto.add(orderLineCto);
+	}
+	cto.setOrderLines(orderLinesCto);
+	cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
+    //cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
+    //cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
+    //cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
+    //cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
+    //cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
     return cto;
   }
 

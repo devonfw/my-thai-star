@@ -108,6 +108,7 @@ export interface OrderListView {
     paidId: number;
     stateId: number;
   };
+  address: AddressView;
 }
 
 export interface OrderDishListView {
