@@ -37,10 +37,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   private OrderStateEntity state;
 
   private OrderPaidEntity paid;
-  
+
   private AddressEntity address;
-  
-  private String OrderToken;
 
   private String OrderToken;
 
@@ -220,7 +218,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
     this.state = state;
   }
-  
+
   @Override
   @Transient
   public Long getAddressId() {
@@ -249,6 +247,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   @OneToOne
   @JoinColumn(name = "idAddress")
   public AddressEntity getAddress() {
+
     return this.address;
   }
 
@@ -256,6 +255,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
    * @param new value of {@link #getAddress}.
    */
   public void setAddress(AddressEntity address) {
+
     this.address = address;
   }
 
