@@ -35,7 +35,7 @@
   </table>
 </div>
 <div class="tableContainer">
-  <table mat-table [dataSource]="dataa">
+  <table mat-table [dataSource]="dataa" *ngIf="this.dataa && this.dataa.length > 0">
     <!-- PostCode Column -->
     <ng-container matColumnDef="postCode">
       <th mat-header-cell *matHeaderCellDef class="postCodeHeader"> {{columnsa[0].label}} </th>
