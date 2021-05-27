@@ -16,8 +16,6 @@ export class EmailConfirmationsService {
     'bookingmanagement/v1/invitedguest/decline/';
   private readonly cancelReserveRestPath: string =
     'bookingmanagement/v1/booking/cancel/';
-  private readonly cancelOrderRestPath: string =
-    'ordermanagement/v1/order/cancelorder/';
 
   constructor(private http: HttpClient, private config: ConfigService) {}
 
@@ -46,16 +44,6 @@ export class EmailConfirmationsService {
       exhaustMap((restServiceRoot) =>
         this.http.get<InvitationResponse>(
           `${restServiceRoot}${this.cancelReserveRestPath}` + token,
-        ),
-      ),
-    );
-  }
-
-  sendCancelOrder(token: string): Observable<boolean> {
-    return this.restServiceRoot$.pipe(
-      exhaustMap((restServiceRoot) =>
-        this.http.get<boolean>(
-          `${restServiceRoot}${this.cancelOrderRestPath}` + token,
         ),
       ),
     );

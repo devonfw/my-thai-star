@@ -507,9 +507,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("\n\n").append("You can check your order here: \n");
       String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
       mailContent.append(orderStateCheckLink);
-      mailContent.append("\n\n").append("Link to cancel order: \n");
-      String link = "http://localhost:" + this.clientPort + "/booking/cancelOrder/" + order.getId();
-      mailContent.append(link);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {
       LOG.error("Email not sent. {}", e.getMessage());
