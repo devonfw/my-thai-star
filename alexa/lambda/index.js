@@ -116,7 +116,7 @@ const ReserveIntentHandler = {
         response = responseBuilder.speak(messages.EMAIL_MISSING).getResponse();
       } else {
         response = responseBuilder
-          .speak(messages.RESERVED_TABLE + email)
+          .speak(messages.RESERVED_TABLE + email + " for " + date + " at " + time)
           .getResponse();
       }
       return response;

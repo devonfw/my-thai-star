@@ -1,4 +1,14 @@
 {
     "handler": "../lambda/index.js",
-    "trace": "false"
+    "trace": false,
+    "jest": {
+        "silent": false,
+        "coveragePathIgnorePatterns": [
+            "index-test.js",
+            "local-debugger.js",
+            "server.js",
+            "util.js",
+            "utilMock.js"
+        ]
+    }
 }
