@@ -7,56 +7,60 @@ import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 
 public interface Booking extends ApplicationEntity {
 
-  public String getName();
+	public String getName();
 
-  public void setName(String name);
+	public void setName(String name);
 
-  public String getBookingToken();
+	public String getBookingToken();
 
-  public void setBookingToken(String bookingToken);
+	public void setBookingToken(String bookingToken);
 
-  public String getComment();
+	public String getComment();
 
-  public void setComment(String comment);
+	public void setComment(String comment);
 
-  public Instant getBookingDate();
+	public Instant getBookingDate();
 
-  public void setBookingDate(Instant bookingDate);
+	public void setBookingDate(Instant bookingDate);
 
-  public Instant getExpirationDate();
+	public Instant getExpirationDate();
 
-  public void setExpirationDate(Instant expirationDate);
+	public void setExpirationDate(Instant expirationDate);
 
-  public Instant getCreationDate();
+	public Instant getCreationDate();
 
-  public void setCreationDate(Instant creationDate);
+	public void setCreationDate(Instant creationDate);
 
-  public String getEmail();
+	public String getEmail();
 
-  public void setEmail(String email);
+	public void setEmail(String email);
 
-  public Boolean getCanceled();
+	public Boolean getCanceled();
 
-  public void setCanceled(Boolean canceled);
+	public void setCanceled(Boolean canceled);
 
-  public BookingType getBookingType();
+	public BookingType getBookingType();
 
-  public void setBookingType(BookingType bookingType);
+	public void setBookingType(BookingType bookingType);
 
-  public Long getTableId();
+	public Long getTableId();
 
-  public void setTableId(Long tableId);
+	public void setTableId(Long tableId);
 
-  public Long getOrderId();
+	public Long getOrderId();
 
-  public void setOrderId(Long orderId);
+	public void setOrderId(Long orderId);
 
-  public Integer getAssistants();
+	public Integer getAssistants();
 
-  public void setAssistants(Integer assistants);
+	public void setAssistants(Integer assistants);
 
-  public Long getUserId();
+	public Long getUserId();
 
-  public void setUserId(Long userId);
+	public void setUserId(Long userId);
+
+	public Boolean getDelivery();
+
+	public void setDelivery(Boolean delivery);
 
 }

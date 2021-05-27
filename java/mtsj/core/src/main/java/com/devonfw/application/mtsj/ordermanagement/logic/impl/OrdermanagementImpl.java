@@ -40,6 +40,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBooki
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.AddressEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
@@ -200,6 +201,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 		OrderCto cto = new OrderCto();
 		cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
 		cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
+		cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
 		cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
 		cto.setOrder(getBeanMapper().map(order, OrderEto.class));
 		cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));

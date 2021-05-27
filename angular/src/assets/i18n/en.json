@@ -32,7 +32,8 @@
       "orderCancel": "Order succesfully canceled"
     },
     "orderID": "To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table",
-    "passwordError": "Password Mismatch",
+    "passwordError": "Minimum 6 signs",
+    "confirmPassword":"Password Mismatch",
     "authAlerts": {
       "loginSuccess": "Login successful",
       "registerSuccess": "Register successful",
@@ -240,8 +241,13 @@
       "orderPayStateH":"Payment",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
-      "tableH": "Table",
-      "creationDateH": "Creation date"
+      "tablenumberH": "Table",
+      "creationDateH": "Creation date",
+      "tableNumberH": "Table",
+      "postCodeH":"Post Code",
+      "cityH":"City",
+      "streetNameH":"Street",
+      "houseNumberH":"House Number"
     }
   }
 }

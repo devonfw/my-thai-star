@@ -26,6 +26,8 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 	private Long[] stateId;
 
 	private Long[] paidId;
+	
+	private Boolean delivery;
 
 	private StringSearchConfigTo hostTokenOption;
 
@@ -39,6 +41,14 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 	public OrderSearchCriteriaTo() {
 
 		super();
+	}
+	
+	public Boolean isDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(Boolean delivery) {
+		this.delivery = delivery;
 	}
 
 	public Long getBookingId() {

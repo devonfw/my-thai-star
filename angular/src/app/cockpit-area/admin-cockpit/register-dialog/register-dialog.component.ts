@@ -28,7 +28,6 @@ export function MustMatch(controlName: string, matchingControlName: string) {
   }
 }
 
-
 @Component({
   selector: 'app-register-dialog',
   templateUrl: './register-dialog.component.html',
@@ -72,7 +71,7 @@ export class RegisterDialogComponent implements OnInit {
       email: [[''],[Validators.required,,Validators.email]],
       userRoleId: [0],
       password: [[''],[Validators.required, Validators.minLength(6)]],
-      confirmPassword: [[''],[Validators.minLength(6)]],
+      confirmPassword: [[''],[]],
     },{ 
       validator: MustMatch('password', 'confirmPassword') 
     });
