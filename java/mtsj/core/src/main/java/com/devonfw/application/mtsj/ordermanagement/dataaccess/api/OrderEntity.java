@@ -42,6 +42,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   
   private String OrderToken;
 
+  private String OrderToken;
+
   /**
    * @return booking
    */
