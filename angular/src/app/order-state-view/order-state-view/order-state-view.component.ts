@@ -5,8 +5,10 @@ import { OrderService } from './order.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { ViewChild } from '@angular/core'
 import { MatHorizontalStepper } from '@angular/material/stepper'
-import { OrderListView } from 'app/shared/view-models/interfaces';
+import { AddressView, OrderListView, OrderView } from 'app/shared/view-models/interfaces';
 import { MatTableModule } from '@angular/material/table';
+import { PriceCalculatorService } from 'app/sidenav/services/price-calculator.service';
+
 
 @Component({
   selector: 'app-order-state-view',
@@ -17,12 +19,14 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
   private orderId: string;
   public currentState: number = 0;
   public currentOrder: OrderListView;
+  public orderLines: OrderView[];
   private refreshInterval :NodeJS.Timeout;
   constructor(
     private translocoService: TranslocoService,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private priceCalculator: PriceCalculatorService,
   ) { }
 
   columnsOrderLines: any[];
@@ -34,16 +38,16 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
     'dish.price',
   ];
 
+  address: AddressView[] = [];
   columnsAdresses: any[];
   columnsA: string[] = [
-    'dish.name',
-    'orderLine.comment',
-    'extras',
-    'orderLine.amount',
-    'dish.price'
+    'postCode',
+    'city',
+    'street',
+    'houseNumber'
   ];
 
-
+  totalPrice: number;
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 
   ngAfterViewInit() {
@@ -66,18 +70,20 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.orderId = params.get('id');
+
       this.orderService.getOrder(this.orderId).subscribe((order) => {
         this.currentState = order.order.stateId;
-        this.currentOrder = order;
+        this.orderLines = order.orderLines;
+        this.totalPrice = this.getTotalPrice();
 
-        
+        if(order.address) {
+          this.address.push(order.address);
+        }
       });
+
+
       this.refreshInterval = setInterval(() => this.orderService.getOrder(this.orderId).subscribe((order) => {
         this.currentState = order.order.stateId;
-        this.currentOrder = order;
-        console.log("this.currentOrder");
-        console.log(this.currentOrder);
-        console.log("this.currentOrder");
       }),6000);
     });
 
@@ -114,6 +120,10 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
           { name: 'houseNumber', label: cockpitTable.houseNumberH }
         ];
       });
+  }
+
+  getTotalPrice(): number {
+    return this.priceCalculator.getTotalPrice(this.orderLines);
   }
 
   ngOnDestroy(): void {

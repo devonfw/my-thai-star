@@ -23,7 +23,9 @@
   },
   "orderStateView":{
     "thankYou":"Thank you for your order",
-    "orderPenging":"Your order will be delivered shortly"
+    "orderPending":"Your order will be delivered shortly",
+    "order":"Your Order",
+    "address":"Delivery address"
   },
   "alerts": {
     "accessError": "Access denied, please log in first",
