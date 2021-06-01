@@ -37,7 +37,7 @@ public interface OrdermanagementRestService {
    */
   @GET
   @Path("/order/{id}/")
-  public OrderCto getOrder(@PathParam("id") long id);
+  public OrderCto getOrder(@PathParam("id") String id);
 
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.
@@ -73,25 +73,21 @@ public interface OrdermanagementRestService {
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo);
 
   /**
-   *
-   *
    * @param order the {@link OrderEto} to be updated
    * @return the {@link Page list} of matching {@link OrderCto}s.
    */
   @Path("/order/updatestate")
   @POST
   public OrderEto updateOrderState(OrderEto order);
-  
+
   /**
-  *
-  *
-  * @param pay state of {@link OrderEto} to be updated
-  * @return the {@link Page list} of matching {@link OrderCto}s.
-  */
- @Path("/order/updatepaystate")
- @POST
- public OrderEto updateOrderPayState(OrderEto order);
-  
+   * @param pay state of {@link OrderEto} to be updated
+   * @return the {@link Page list} of matching {@link OrderCto}s.
+   */
+  @Path("/order/updatepaystate")
+  @POST
+  public OrderEto updateOrderPayState(OrderEto order);
+
   /**
    * Delegates to {@link Ordermanagement#findOrderLine}.
    *

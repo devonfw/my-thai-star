@@ -88,20 +88,6 @@ describe('EmailConfirmationsService', () => {
     req.flush(emailConfirmationsStub.booking);
   });
 
-  it('should verify CancelOrder through email service', () => {
-    emailConfirmationsService
-      .sendCancelOrder('testingToken')
-      .subscribe((orderCancellation) => {
-        expect(orderCancellation).toBeTruthy();
-      });
-    const req = httpTestingController.expectOne(
-      config.restServiceRoot +
-      'ordermanagement/v1/order/cancelorder/testingToken',
-    );
-    expect(req.request.method).toEqual('GET');
-    req.flush(of(true));
-  });
-
   // -------- Negative Scenatio --------//
 
   it('should verify AcceptInvitation incase email service failed', () => {
@@ -153,24 +139,6 @@ describe('EmailConfirmationsService', () => {
     );
     expect(req.request.method).toEqual('GET');
     req.flush('Booking cancelled', {
-      status: 500,
-      statusText: 'Internal Server Error',
-    });
-  });
-
-  it('should verify CancelOrder incase email service failed', () => {
-    emailConfirmationsService.sendCancelOrder('testingToken').subscribe(
-      () => fail('Order cancellation operation failed'),
-      (error: HttpErrorResponse) => {
-        expect(error.status).toBe(500);
-      },
-    );
-    const req = httpTestingController.expectOne(
-      config.restServiceRoot +
-      'ordermanagement/v1/order/cancelorder/testingToken',
-    );
-    expect(req.request.method).toEqual('GET');
-    req.flush('Order cancelled', {
       status: 500,
       statusText: 'Internal Server Error',
     });

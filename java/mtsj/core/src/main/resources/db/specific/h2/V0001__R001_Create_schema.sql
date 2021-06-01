@@ -111,6 +111,7 @@ CREATE TABLE Orders (
   idState BIGINT,
   idAddress BIGINT,
   idPaid BIGINT,
+  orderToken VARCHAR (255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idStatus FOREIGN KEY(idState) REFERENCES OrderState(id) NOCHECK,
   CONSTRAINT FK_Order_idAddress FOREIGN KEY(idAddress) REFERENCES AddressTable(id) NOCHECK,

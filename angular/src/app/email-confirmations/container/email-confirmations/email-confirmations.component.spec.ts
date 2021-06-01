@@ -85,8 +85,7 @@ const emailConfirmationsServiceSuccessStub = jasmine.createSpyObj<
   >('EmailConfirmationsService', {
     sendAcceptInvitation: of(emailConfirmationsStub.acceptInvitation),
     sendRejectInvitation: of(emailConfirmationsStub.rejectInvitation),
-    sendCancelBooking: of(emailConfirmationsStub.booking),
-    sendCancelOrder: of(true),
+    sendCancelBooking: of(emailConfirmationsStub.booking)
   });
 
 const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<
@@ -94,8 +93,7 @@ const emailConfirmationsServiceErrorStub = jasmine.createSpyObj<
   >('EmailConfirmationsService', {
     sendAcceptInvitation: throwError(ERRORMESSAGE),
     sendRejectInvitation: throwError(ERRORMESSAGE),
-    sendCancelBooking: throwError(ERRORMESSAGE),
-    sendCancelOrder: throwError(ERRORMESSAGE),
+    sendCancelBooking: throwError(ERRORMESSAGE)
   });
 
 describe('EmailConfirmationsComponent', () => {
@@ -164,13 +162,6 @@ describe('EmailConfirmationsComponent', () => {
       ActivatedRoute,
       ActivatedMockStubs.cancelBookingStub,
     );
-    compileTestBed();
-    expect(component).toBeTruthy();
-    expect(snackBarService.openSnack).toHaveBeenCalled();
-  });
-
-  it('verify email confirmation service call for Cancel Order', () => {
-    testBedOverrideProvider(ActivatedRoute, ActivatedMockStubs.cancelOrderStub);
     compileTestBed();
     expect(component).toBeTruthy();
     expect(snackBarService.openSnack).toHaveBeenCalled();

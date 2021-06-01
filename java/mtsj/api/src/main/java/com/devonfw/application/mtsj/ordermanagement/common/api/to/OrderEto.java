@@ -8,154 +8,171 @@ import com.devonfw.module.basic.common.api.to.AbstractEto;
  */
 public class OrderEto extends AbstractEto implements Order {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private Long bookingId;
+  private Long bookingId;
 
-	private Long invitedGuestId;
+  private Long invitedGuestId;
 
-	private String bookingToken;
+  private String bookingToken;
 
-	private Long state;
+  private Long state;
 
-	private Long paidId;
-	
-	private Long address;
+  private Long paidId;
 
-	/**
-	 * @return bookingToken
-	 */
-	public String getBookingToken() {
+  private Long address;
 
-		return this.bookingToken;
-	}
+  private String orderToken;
 
-	/**
-	 * @param bookingToken new value of {@link #getbookingToken}.
-	 */
-	public void setBookingToken(String bookingToken) {
+  /**
+   * @return bookingToken
+   */
+  public String getBookingToken() {
 
-		this.bookingToken = bookingToken;
-	}
+    return this.bookingToken;
+  }
 
-	private Long hostId;
+  /**
+   * @param bookingToken new value of {@link #setbookingToken}.
+   */
+  public void setBookingToken(String bookingToken) {
 
-	@Override
-	public Long getBookingId() {
+    this.bookingToken = bookingToken;
+  }
 
-		return this.bookingId;
-	}
+  private Long hostId;
 
-	@Override
-	public void setBookingId(Long bookingId) {
+  @Override
+  public Long getBookingId() {
 
-		this.bookingId = bookingId;
-	}
+    return this.bookingId;
+  }
 
-	@Override
-	public Long getInvitedGuestId() {
+  @Override
+  public void setBookingId(Long bookingId) {
 
-		return this.invitedGuestId;
-	}
+    this.bookingId = bookingId;
+  }
 
-	@Override
-	public void setInvitedGuestId(Long invitedGuestId) {
+  @Override
+  public Long getInvitedGuestId() {
 
-		this.invitedGuestId = invitedGuestId;
-	}
+    return this.invitedGuestId;
+  }
 
-	@Override
-	public int hashCode() {
+  @Override
+  public void setInvitedGuestId(Long invitedGuestId) {
 
-		final int prime = 31;
-		int result = super.hashCode();
+    this.invitedGuestId = invitedGuestId;
+  }
 
-		result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
+  @Override
+  public int hashCode() {
 
-		result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
+    final int prime = 31;
+    int result = super.hashCode();
 
-		return result;
-	}
+    result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
 
-	@Override
-	public boolean equals(Object obj) {
+    result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
 
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		// class check will be done by super type EntityTo!
-		if (!super.equals(obj)) {
-			return false;
-		}
-		OrderEto other = (OrderEto) obj;
+    return result;
+  }
 
-		if (this.bookingId == null) {
-			if (other.bookingId != null) {
-				return false;
-			}
-		} else if (!this.bookingId.equals(other.bookingId)) {
-			return false;
-		}
+  @Override
+  public boolean equals(Object obj) {
 
-		if (this.invitedGuestId == null) {
-			if (other.invitedGuestId != null) {
-				return false;
-			}
-		} else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
-			return false;
-		}
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    // class check will be done by super type EntityTo!
+    if (!super.equals(obj)) {
+      return false;
+    }
+    OrderEto other = (OrderEto) obj;
 
-		return true;
-	}
+    if (this.bookingId == null) {
+      if (other.bookingId != null) {
+        return false;
+      }
+    } else if (!this.bookingId.equals(other.bookingId)) {
+      return false;
+    }
 
-	@Override
-	public Long getHostId() {
+    if (this.invitedGuestId == null) {
+      if (other.invitedGuestId != null) {
+        return false;
+      }
+    } else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
+      return false;
+    }
 
-		return this.hostId;
-	}
+    return true;
+  }
 
-	@Override
-	public void setHostId(Long hostId) {
+  @Override
+  public Long getHostId() {
 
-		this.hostId = hostId;
-	}
+    return this.hostId;
+  }
 
-	@Override
-	public Long getStateId() {
+  @Override
+  public void setHostId(Long hostId) {
 
-		return this.state;
-	}
+    this.hostId = hostId;
+  }
 
-	@Override
-	public void setStateId(Long state) {
+  @Override
+  public Long getStateId() {
 
-		this.state = state;
-	}
+    return this.state;
+  }
 
-	@Override
-	public Long getPaidId() {
+  @Override
+  public void setStateId(Long state) {
 
-		return this.paidId;
-	}
+    this.state = state;
+  }
 
-	@Override
-	public void setPaidId(Long paidId) {
-		this.paidId = paidId;
+  @Override
+  public Long getPaidId() {
 
-	}
+    return this.paidId;
+  }
 
-	@Override
-	public Long getAddressId() {
-		return this.address;
-	}
+  @Override
+  public void setPaidId(Long paidId) {
 
-	@Override
-	public void setAddressId(Long addressId) {
-		this.address = addressId;
+    this.paidId = paidId;
 
-	}
+  }
+
+  @Override
+  public Long getAddressId() {
+
+    return this.address;
+  }
+
+  @Override
+  public void setAddressId(Long addressId) {
+
+    this.address = addressId;
+
+  }
+
+  @Override
+  public String getOrderToken() {
+
+    return this.orderToken;
+  }
+
+  @Override
+  public void setOrderToken(String OrderToken) {
+
+    this.orderToken = OrderToken;
+  }
 
 }
