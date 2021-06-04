@@ -45,6 +45,7 @@ export interface BookingView {
   bookingToken?: number;
   creationDate?: string;
   id?: number;
+  delivery: boolean;
 }
 
 export interface FriendsInvite {
@@ -85,6 +86,15 @@ export interface OrderViewResult {
   extras: string;
 }
 
+export interface AddressView {
+  modificationCounter: 0,
+  id: number,
+  postCode: number,
+  city: string,
+  streetName: string,
+  houseNumber: number
+}
+
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
@@ -98,6 +108,7 @@ export interface OrderListView {
     paidId: number;
     stateId: number;
   };
+  address: AddressView;
 }
 
 export interface OrderDishListView {

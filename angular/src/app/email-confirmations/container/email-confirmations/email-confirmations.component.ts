@@ -84,20 +84,6 @@ export class EmailConfirmationsComponent implements OnInit {
             },
           );
           break;
-        case 'cancelOrder':
-          this.emailService.sendCancelOrder(this.token).subscribe(
-            (res: boolean) => {
-              this.snackBarService.openSnack(
-                emailConfirmationStrings.orderCancel,
-                10000,
-                'green',
-              );
-            },
-            (error: any) => {
-              this.snackBarService.openSnack(errorString, 10000, 'red');
-            },
-          );
-          break;
         default:
           this.snackBarService.openSnack(errorUrlString, 10000, 'black');
           break;

@@ -52,6 +52,7 @@ CREATE TABLE Booking (
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
+  delivery BOOLEAN,
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
@@ -89,6 +90,17 @@ CREATE TABLE OrderPaid (
   CONSTRAINT PK_PayOrderState PRIMARY KEY(id)
 );
 
+-- *** Address ***
+CREATE TABLE AddressTable (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  postCode BIGINT,
+  city VARCHAR(255),
+  streetName VARCHAR (255),
+  houseNumber BIGINT,
+  CONSTRAINT PK_Address PRIMARY KEY(id)
+);
+
 -- *** OrderDish ***
 CREATE TABLE Orders (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -97,9 +109,12 @@ CREATE TABLE Orders (
   idInvitedGuest BIGINT,
   idHost BIGINT,
   idState BIGINT,
+  idAddress BIGINT,
   idPaid BIGINT,
+  orderToken VARCHAR (255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idStatus FOREIGN KEY(idState) REFERENCES OrderState(id) NOCHECK,
+  CONSTRAINT FK_Order_idAddress FOREIGN KEY(idAddress) REFERENCES AddressTable(id) NOCHECK,
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
 );

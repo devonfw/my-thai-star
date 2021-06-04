@@ -1,0 +1,94 @@
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: green;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  margin: 4px
+}
+
+table {
+  width: 100%;
+  min-width: 600px;
+}
+
+h4 {
+  display: block;
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.totalRow {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  text-transform: uppercase;
+  margin: 0px 6%;
+}
+
+.address th {
+  width: 25%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.lines th {
+  width: 20%;
+  font-weight: bold;
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+tr {
+  text-align: justify;
+}
+
+
+.userstate-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding-bottom: 5%;
+  padding-top: 5%;
+  background: url('../../../assets/images/star.png'),url('../../../assets/images/Wood2.jpg');
+  background-position:  top, center;
+  background-size:  13%, cover;
+  background-repeat:  no-repeat, repeat;
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  .subtitle {
+    padding-top: 10px;
+    font-size: 0.7em;
+    margin-top: -16px;
+  }
+
+
+}
+
+@media only screen and (max-width: 600px) {
+  table {
+    width: 100%;
+    min-width: 300px;
+  }
+}

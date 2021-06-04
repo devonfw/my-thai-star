@@ -25,7 +25,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdminService } from './services/admin.service';
 
-
 @NgModule({
   imports: [
     CommonModule,

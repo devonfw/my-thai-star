@@ -1,0 +1,114 @@
+<div class="userstate-view">
+    <h1 class= "title">MY THAI STAR</h1>
+    <span class= "subtitle">{{'home.subtitle' | transloco}}</span>
+</div>
+
+<mat-horizontal-stepper [selectedIndex]="currentState" #stepper>
+  <mat-step>
+    <ng-template matStepLabel >Ordered</ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Preparation</ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Delivery</ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Delivered</ng-template>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<mat-card class="center">
+  <mat-card-content >
+    <div>
+      <div class="star"></div>
+      <h1 class="center">{{"orderStateView.thankYou" | transloco}}</h1>
+      <p class="center"> {{"orderStateView.orderPending" | transloco}} </p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- <mat-progress-bar *ngIf="!orders" color="accent" mode="indeterminate">
+</mat-progress-bar> -->
+
+<mat-card class="center">
+  <mat-card-content >
+    <div class="tableContainer">
+      <h4 class="center">{{'orderStateView.order' | transloco}}</h4>
+      <div class="lines">
+        <table mat-table [dataSource]="orderLines">
+          <!-- Dish Column -->
+          <ng-container matColumnDef="dish.name">
+            <th mat-header-cell *matHeaderCellDef> {{columnsOrderLines[0].label}} </th>
+            <td mat-cell *matCellDef="let element" class="dishNameData"> {{element.dish.name}} </td>
+          </ng-container>
+          <!-- Comments Column -->
+          <ng-container matColumnDef="orderLine.comment">
+            <th mat-header-cell *matHeaderCellDef class="commentHeader"> {{columnsOrderLines[1].label}} </th>
+            <td mat-cell *matCellDef="let element" class="commentData"> {{element.orderLine.comment}} </td>
+          </ng-container>
+          <!-- Extra Column -->
+          <ng-container matColumnDef="extras">
+            <th mat-header-cell *matHeaderCellDef class="extrasHeader"> {{columnsOrderLines[2].label}} </th>
+            <td mat-cell *matCellDef="let element" class="extrasData"> {{element.orderLine.extras}} </td>
+          </ng-container>
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="orderLine.amount">
+            <th mat-header-cell *matHeaderCellDef class="amountHeader"> {{columnsOrderLines[3].label}} </th>
+            <td mat-cell *matCellDef="let element" class="amountData"> {{element.orderLine.amount}} </td>
+          </ng-container>
+          <!-- Price Column -->
+          <ng-container matColumnDef="dish.price">
+            <th mat-header-cell *matHeaderCellDef class="priceHeader"> {{columnsOrderLines[4].label}} </th>
+            <td mat-cell *matCellDef="let element" class="priceData"> {{element.dish.price | number:'1.2-2'}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="columnsOL"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsOL;"></tr>
+  
+        </table>
+      </div> 
+    </div>
+
+        
+    <div class="totalRow">
+      <h4>{{'formFields.total' | transloco}}</h4>
+      <h4>{{totalPrice | number : '2.2-2'}}</h4>
+    </div>
+
+
+    <div class="tableContainer" *ngIf="this.address && this.address.length > 0">
+      <h4 class="center">{{"orderStateView.address" | transloco}}</h4>
+      <div class="address">
+        <table mat-table [dataSource]="address" >
+          <!-- PostCode Column -->
+          <ng-container matColumnDef="postCode">
+            <th mat-header-cell *matHeaderCellDef class="postCodeHeader"> {{columnsAdresses[0].label}} </th>
+            <td mat-cell *matCellDef="let element" class="postCodeData"> {{element.postCode}} </td>
+          </ng-container>
+          <!-- city Column -->
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef class="cityHeader"> {{columnsAdresses[1].label}} </th>
+            <td mat-cell *matCellDef="let element" class="cityData"> {{element.city}} </td>
+          </ng-container>
+          <!-- street Column -->
+          <ng-container matColumnDef="street">
+            <th mat-header-cell *matHeaderCellDef class="streetHeader"> {{columnsAdresses[2].label}} </th>
+            <td mat-cell *matCellDef="let element" class="streetData"> {{element.streetName}} </td>
+          </ng-container>
+          <!-- houseNumber Column -->
+          <ng-container matColumnDef="houseNumber">
+            <th mat-header-cell *matHeaderCellDef class="houseNumberHeader"> {{columnsAdresses[3].label}} </th>
+            <td mat-cell *matCellDef="let element" class="houseNumberData"> {{element.houseNumber}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsA"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsA;"></tr>
+        </table>
+      </div>   
+    </div>
+
+
+    <mat-divider></mat-divider>
+  </mat-card-content>
+</mat-card>
+  

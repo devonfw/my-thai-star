@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, OrderView, AddressView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -25,7 +25,7 @@ export class OrderDialogComponent implements OnInit {
     'creationDate',
     'name',
     'email',
-    'tableId',
+    'tableId'
   ];
 
   datao: OrderView[] = [];
@@ -35,7 +35,16 @@ export class OrderDialogComponent implements OnInit {
     'orderLine.comment',
     'extras',
     'orderLine.amount',
-    'dish.price',
+    'dish.price'
+  ];
+
+  dataa: AddressView[] = [];
+  columnsa: any[];
+  displayedColumnsA: string[] = [
+    'postCode',
+    'city',
+    'street',
+    'houseNumber'
   ];
 
   pageSizes: number[];
@@ -62,6 +71,9 @@ export class OrderDialogComponent implements OnInit {
     );
     this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
+    if(this.data.address) {
+      this.dataa.push(this.data.address);
+    }    
     this.filter();
   }
 
@@ -74,9 +86,21 @@ export class OrderDialogComponent implements OnInit {
           { name: 'creationDate', label: cockpitTable.creationDateH },
           { name: 'name', label: cockpitTable.ownerH },
           { name: 'email', label: cockpitTable.emailH },
-          { name: 'tableId', label: cockpitTable.tableH },
+          { name: 'tableId', label: cockpitTable.tablenumberH },
         ];
       });
+
+      
+        this.translocoService
+          .selectTranslateObject('cockpit.table', {}, lang)
+          .subscribe((cockpitTable) => {
+            this.columnsa = [
+              { name: 'postCode', label: cockpitTable.postCodeH },
+              { name: 'city', label: cockpitTable.cityH },
+              { name: 'street', label: cockpitTable.streetNameH },
+              { name: 'houseNumber', label: cockpitTable.houseNumberH }
+            ];
+          });
 
     this.translocoService
       .selectTranslateObject('cockpit.orders.dialogTable', {}, lang)

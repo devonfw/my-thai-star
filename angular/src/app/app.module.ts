@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookTableModule } from './book-table/book-table.module';
 import { WaiterCockpitModule } from './cockpit-area/cockpit.module';
+import {OrderStateViewModule} from "./order-state-view/order-state-view.module"
 import { ConfigModule } from './core/config/config.module';
 import { CoreModule } from './core/core.module';
 import { EmailConfirmationModule } from './email-confirmations/email-confirmations.module';
@@ -40,6 +41,7 @@ import { UserAreaModule } from './user-area/user-area.module';
     BookTableModule,
     SidenavModule,
     WaiterCockpitModule,
+    OrderStateViewModule,
     UserAreaModule,
     CoreModule,
     EmailConfirmationModule,

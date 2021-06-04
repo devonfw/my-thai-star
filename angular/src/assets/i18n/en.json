@@ -21,6 +21,12 @@
     "of": "of",
     "noResults": "No results to display"
   },
+  "orderStateView":{
+    "thankYou":"Thank you for your order",
+    "orderPending":"Your order will be delivered shortly",
+    "order":"Your Order",
+    "address":"Delivery address"
+  },
   "alerts": {
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",
@@ -32,7 +38,8 @@
       "orderCancel": "Order succesfully canceled"
     },
     "orderID": "To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table",
-    "passwordError": "Password Mismatch",
+    "passwordError": "Minimum 6 signs",
+    "confirmPassword":"Password Mismatch",
     "authAlerts": {
       "loginSuccess": "Login successful",
       "registerSuccess": "Register successful",
@@ -240,8 +247,13 @@
       "orderPayStateH":"Payment",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
-      "tableH": "Table",
-      "creationDateH": "Creation date"
+      "tablenumberH": "Table",
+      "creationDateH": "Creation date",
+      "tableNumberH": "Table",
+      "postCodeH":"Post Code",
+      "cityH":"City",
+      "streetNameH":"Street",
+      "houseNumberH":"House Number"
     }
   }
 }

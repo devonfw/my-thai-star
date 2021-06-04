@@ -17,8 +17,12 @@ public class OrderEto extends AbstractEto implements Order {
   private String bookingToken;
 
   private Long state;
-  
+
   private Long paidId;
+
+  private Long address;
+
+  private String orderToken;
 
   /**
    * @return bookingToken
@@ -29,7 +33,7 @@ public class OrderEto extends AbstractEto implements Order {
   }
 
   /**
-   * @param bookingToken new value of {@link #getbookingToken}.
+   * @param bookingToken new value of {@link #setbookingToken}.
    */
   public void setBookingToken(String bookingToken) {
 
@@ -136,13 +140,39 @@ public class OrderEto extends AbstractEto implements Order {
   @Override
   public Long getPaidId() {
 
-	return this.paidId;
+    return this.paidId;
   }
-	
+
   @Override
   public void setPaidId(Long paidId) {
-	  this.paidId = paidId;
-		
+
+    this.paidId = paidId;
+
+  }
+
+  @Override
+  public Long getAddressId() {
+
+    return this.address;
+  }
+
+  @Override
+  public void setAddressId(Long addressId) {
+
+    this.address = addressId;
+
+  }
+
+  @Override
+  public String getOrderToken() {
+
+    return this.orderToken;
+  }
+
+  @Override
+  public void setOrderToken(String OrderToken) {
+
+    this.orderToken = OrderToken;
   }
 
 }
