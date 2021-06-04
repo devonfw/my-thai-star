@@ -45,6 +45,13 @@
                             "samples": [
                                 "{assistants}"
                             ]
+                        },
+                        {
+                            "name": "wantsToOrder",
+                            "type": "YesNo",
+                            "samples": [
+                                "{wantsToOrder}"
+                            ]
                         }
                     ],
                     "samples": [
@@ -85,17 +92,39 @@
                             "samples": [
                                 "{yesno}"
                             ]
-                        },
-                        {
-                            "name": "filter",
-                            "type": "filter",
-                            "multipleValues": {
-                                "enabled": true
-                            }
                         }
                     ],
                     "samples": [
                         "menu"
+                    ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "slots": [
+                        {
+                            "name": "dish",
+                            "type": "dish",
+                            "multipleValues": {
+                                "enabled": false
+                            }
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "multipleValues": {
+                                "enabled": false
+                            }
+                        },
+                        {
+                            "name": "completedOrder",
+                            "type": "YesNo"
+                        }
+                    ],
+                    "samples": [
+                        "deliver food",
+                        "deliver",
+                        "order",
+                        "order food"
                     ]
                 }
             ],
@@ -126,6 +155,53 @@
                         {
                             "name": {
                                 "value": "Yes"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "dish",
+                    "values": [
+                        {
+                            "id": "4",
+                            "name": {
+                                "value": "thai thighs"
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "name": {
+                                "value": "garlic paradise"
+                            }
+                        },
+                        {
+                            "id": "3",
+                            "name": {
+                                "value": "Thai Noodle Beef"
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "name": {
+                                "value": "Thai Green Chicken Curry"
+                            }
+                        },
+                        {
+                            "id": "0",
+                            "name": {
+                                "value": "Thai Basil Fried Rice"
+                            }
+                        },
+                        {
+                            "id": "6",
+                            "name": {
+                                "value": "Tea"
+                            }
+                        },
+                        {
+                            "id": "5",
+                            "name": {
+                                "value": "Beer"
                             }
                         }
                     ]
@@ -166,6 +242,15 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.768229697429.936498840907"
                             }
+                        },
+                        {
+                            "name": "wantsToOrder",
+                            "type": "YesNo",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.416831846262.1282753347160"
+                            }
                         }
                     ]
                 },
@@ -183,10 +268,32 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.651679093523.1585989462730"
                             }
+                        }
+                    ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "dish",
+                            "type": "dish",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
-                            "name": "filter",
-                            "type": "filter",
+                            "name": "amount",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "completedOrder",
+                            "type": "YesNo",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -230,6 +337,51 @@
                     {
                         "type": "PlainText",
                         "value": "Do you want to filter the menu?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.416831846262.1282753347160",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "do you want to add an order to your reservation?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.31726352607.297595709107",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What dish do you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.31726352607.40705637701",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many of the dishes do you want to order?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.116738986105.1111507054301",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "ìs this everything"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.779500351870.106968438407",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to order another dish?"
                     }
                 ]
             }

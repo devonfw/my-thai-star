@@ -43,6 +43,51 @@ module.exports.createReservation = (name, email, date, assistants) => {
 
     const req = http.request(options, (res) => {
       console.log(`statusCode: ${res.statusCode}`);
+      let responseObjectString = '';
+      res.on("data", (d) => {
+        responseObjectString += d.toString();
+        process.stdout.write(d);
+      });
+      res.on("end", (d) => {
+        resolve(JSON.parse(responseObjectString));
+      });
+    });
+
+    req.on("error", (error) => {
+      reject(error);
+    });
+
+    req.write(body);
+    req.end();
+  });
+};
+
+
+module.exports.createOrder = async (name, email, orderlines ) => {
+  let today = new Date()
+  let todayIn2Mins = new Date (today.setMinutes(today.getMinutes() +2))
+  let reservation = await this.createReservation(name, email, todayIn2Mins.toISOString(), 1);
+  
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      booking: {
+        bookingToken: reservation.bookingToken,
+      },
+      orderLines: orderlines.map(el => {return {orderLine:{dishId:el.dish.id, amount:el.amount,comment:""}, extras:[]}})
+    });
+    const options = {
+      port: config.myThaiStarBackend.port,
+      path: config.myThaiStarBackend.createOrderEndpoint,
+      method: "POST",
+      host: config.myThaiStarBackend.host,
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": body.length,
+      },
+    };
+
+    const req = http.request(options, (res) => {
+      console.log(`statusCode: ${res.statusCode}`);
       res.on("data", (d) => {
         process.stdout.write(d);
       });

@@ -155,26 +155,53 @@ const OrderIntentHandler = {
       request.type === "IntentRequest" && request.intent.name === "OrderIntent"
     );
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     console.log(handlerInput);
-    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-    const enteredAmount = sessionAttributes.amount;
-    const enteredDish = sessionAttributes.dish;
-    const enteredOneMoreOrder = sessionAttributes.completedOrder;
+    const sessionAttributes =
+      handlerInput.attributesManager.getSessionAttributes();
+    if (!sessionAttributes.orderlist) sessionAttributes.orderlist = [];
     
-    const enteredAmount = handlerInput.requestEnvelope.request.intent.slots.amount.value;
-    const enteredDish = handlerInput.requestEnvelope.request.intent.slots.dish.value;
-    const enteredOneMoreOrder =handlerInput.requestEnvelope.request.intent.slots.completedOrder.value;
+    const lastAction = sessionAttributes.lastAction;
+
+    switch (lastAction) {
+      case "setDish":
+        sessionAttributes.dish = handlerInput.requestEnvelope.request.intent.slots.dish.resolutions.resolutionsPerAuthority[0].values[0].value;
+        break;
+      case "setAmount":
+        sessionAttributes.amount = handlerInput.requestEnvelope.request.intent.slots.amount.value;
+        break;
+      case "setCompletedOrder":
+        sessionAttributes.oneMoreOrder =
+          handlerInput.requestEnvelope.request.intent.slots.completedOrder
+            .value;
+        break;
+      default:
+        break;
+    }
+    
+    const amount = sessionAttributes.amount;
+    const dish = sessionAttributes.dish;
+    const oneMoreOrder = sessionAttributes.oneMoreOrder;
+
+
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
     if (oneMoreOrder == "no") {
-      
-      console.log(JSON.stringify(sessionAttributes));
-      //call to util JS
+      const client = handlerInput.serviceClientFactory.getUpsServiceClient();
+      const email = await client.getProfileEmail();
+      const name = await client.getProfileName();
+
+      await util.createOrder(name, email, sessionAttributes.orderlist);
+      return handlerInput.responseBuilder
+      .speak("blablabb")
+      .getResponse();
+
     } else if (
       !dish &&
       (oneMoreOrder === "yes" || oneMoreOrder === undefined)
     ) {
+      sessionAttributes.lastAction = "setDish";
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
       return handlerInput.responseBuilder
         .addElicitSlotDirective("dish")
         .speak("Which dish would you like to order")
@@ -183,36 +210,26 @@ const OrderIntentHandler = {
       !amount &&
       (oneMoreOrder === "yes" || oneMoreOrder === undefined)
     ) {
+      sessionAttributes.lastAction = "setAmount";
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
       return handlerInput.responseBuilder
         .addElicitSlotDirective("amount")
         .speak("How many times would you like to order that dish")
         .getResponse();
-    } else if (oneMoreOrder === undefined) {
+    } else if (amount && dish) {
+      sessionAttributes.lastAction = "setCompletedOrder";
+
+      sessionAttributes.orderlist.push({ dish, amount });
+
+      delete sessionAttributes.amount;
+      delete sessionAttributes.dish;
+      delete sessionAttributes.completedOrder;
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
       return handlerInput.responseBuilder
         .addElicitSlotDirective("completedOrder")
         .speak("one More?")
         .getResponse();
-    } else if (amount && dish && oneMoreOrder) {
-      const sessionAttributes =
-        handlerInput.attributesManager.getSessionAttributes();
-      if (!sessionAttributes.orderlist) sessionAttributes.orderlist = [];
-      sessionAttributes.orderlist.push({ dish, amount });
-
-      delete handlerInput.requestEnvelope.request.intent.slots.amount;
-      delete handlerInput.requestEnvelope.request.intent.slots.dish;
-      delete handlerInput.requestEnvelope.request.intent.slots.completedOrder.resolutions;
-      
-      const response = handlerInput
-      console.log(response);
-      return response;
     }
-
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-    return handlerInput.responseBuilder
-      .addElicitSlotDirective("dish")
-      .speak("blablabb")
-      .getResponse();
   },
 };
 
