@@ -54,14 +54,18 @@ const LaunchRequestHandler = {
 const StartedReserveIntentHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest'
-    && request.intent.name === 'ReserveIntent'
-    && request.dialogState !== 'COMPLETED';
+    return (
+      request.type === "IntentRequest" &&
+      request.intent.name === "ReserveIntent" &&
+      request.dialogState !== "COMPLETED"
+    );
   },
 
   handle(handlerInput) {
     const currentIntent = handlerInput.requestEnvelope.request.intent;
-    return handlerInput.responseBuilder.addDelegateDirective(currentIntent).getResponse();
+    return handlerInput.responseBuilder
+      .addDelegateDirective(currentIntent)
+      .getResponse();
   },
 };
 
@@ -89,20 +93,31 @@ const ReserveIntentHandler = {
       const name = await client.getProfileName();
       const date = handlerInput.requestEnvelope.request.intent.slots.Date.value;
       const time = handlerInput.requestEnvelope.request.intent.slots.Time.value;
-      const assistants = handlerInput.requestEnvelope.request.intent.slots.assistants.value;
+      const wantsToOrder =
+        handlerInput.requestEnvelope.request.intent.slots.wantsToOrder.value;
+      const assistants =
+        handlerInput.requestEnvelope.request.intent.slots.assistants.value;
 
       console.log("Email successfully retrieved, now responding to user.");
 
       const dateCombined = date + "T" + time + ":00";
 
-      await util.createReservation(name , email, dateCombined, assistants);
+      if (wantsToOrder) {
+        return (response = responseBuilder
+          .addDelegateDirective(StartedOrderIntentHandler)
+          .getResponse());
+      }
+
+      await util.createReservation(name, email, dateCombined, assistants);
 
       let response;
       if (email == null) {
         response = responseBuilder.speak(messages.EMAIL_MISSING).getResponse();
       } else {
         response = responseBuilder
-          .speak(messages.RESERVED_TABLE + email + " for " + date + " at " + time)
+          .speak(
+            messages.RESERVED_TABLE + email + " for " + date + " at " + time
+          )
           .getResponse();
       }
       return response;
@@ -116,15 +131,89 @@ const ReserveIntentHandler = {
   },
 };
 
-const StartedMenuIntentHandler = {
+const StartedOrderIntentHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest'
-    && request.intent.name === 'ReserveIntent'
-    && request.dialogState !== 'COMPLETED';
+    return (
+      request.type === "IntentRequest" &&
+      request.intent.name === "OrderIntent" &&
+      request.dialogState !== "COMPLETED"
+    );
   },
+  handle(handlerInput) {
+    const currentIntent = handlerInput.requestEnvelope.request.intent;
+    return handlerInput.responseBuilder
+      .addDelegateDirective(currentIntent)
+      .getResponse();
+  },
+};
 
-  
+const OrderIntentHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return (
+      request.type === "IntentRequest" && request.intent.name === "OrderIntent"
+    );
+  },
+  handle(handlerInput) {
+    console.log(handlerInput);
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+    const enteredAmount = sessionAttributes.amount;
+    const enteredDish = sessionAttributes.dish;
+    const enteredOneMoreOrder = sessionAttributes.completedOrder;
+    
+    const enteredAmount = handlerInput.requestEnvelope.request.intent.slots.amount.value;
+    const enteredDish = handlerInput.requestEnvelope.request.intent.slots.dish.value;
+    const enteredOneMoreOrder =handlerInput.requestEnvelope.request.intent.slots.completedOrder.value;
+
+    if (oneMoreOrder == "no") {
+      
+      console.log(JSON.stringify(sessionAttributes));
+      //call to util JS
+    } else if (
+      !dish &&
+      (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+    ) {
+      return handlerInput.responseBuilder
+        .addElicitSlotDirective("dish")
+        .speak("Which dish would you like to order")
+        .getResponse();
+    } else if (
+      !amount &&
+      (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+    ) {
+      return handlerInput.responseBuilder
+        .addElicitSlotDirective("amount")
+        .speak("How many times would you like to order that dish")
+        .getResponse();
+    } else if (oneMoreOrder === undefined) {
+      return handlerInput.responseBuilder
+        .addElicitSlotDirective("completedOrder")
+        .speak("one More?")
+        .getResponse();
+    } else if (amount && dish && oneMoreOrder) {
+      const sessionAttributes =
+        handlerInput.attributesManager.getSessionAttributes();
+      if (!sessionAttributes.orderlist) sessionAttributes.orderlist = [];
+      sessionAttributes.orderlist.push({ dish, amount });
+
+      delete handlerInput.requestEnvelope.request.intent.slots.amount;
+      delete handlerInput.requestEnvelope.request.intent.slots.dish;
+      delete handlerInput.requestEnvelope.request.intent.slots.completedOrder.resolutions;
+      
+      const response = handlerInput
+      console.log(response);
+      return response;
+    }
+
+    const currentIntent = handlerInput.requestEnvelope.request.intent;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+    return handlerInput.responseBuilder
+      .addElicitSlotDirective("dish")
+      .speak("blablabb")
+      .getResponse();
+  },
 };
 
 const HelpIntentHandler = {
@@ -238,7 +327,8 @@ exports.handler = Alexa.SkillBuilders.custom()
     LaunchRequestHandler,
     StartedReserveIntentHandler,
     ReserveIntentHandler,
-    StartedMenuIntentHandler,
+    StartedOrderIntentHandler,
+    OrderIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
