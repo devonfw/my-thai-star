@@ -18,24 +18,59 @@ configuration:
 - test: Launch the my thai star skill
 - LaunchRequest: "Welcome, do you want to order food or reserve a table?"
 ---
+- test: Launch basic Skill with utterance
+- open my thai star at home:
+    -  prompt: "Welcome, do you want to order food or reserve a table?"
+---
 - test: Simple call, no slot value provided
 - ReserveIntent:
+    - request.request.dialogState: STARTED
     - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: IN_Progress
-- LaunchRequest
-- ReserveIntent Date=2021-05-31 Time=10:00: 
+- test: Utterance call for the Intent
+- reserve:
+    - request.request.dialogState: STARTED
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: Utterance call for the Intent
+- book:
+    - request.request.dialogState: STARTED
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 1 Slot provided (Date)
+- ReserveIntent Date=2021-05-31:
     - request.request.dialogState: IN_PROGRESS
     - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Complete Dialog sequence
+- test: 1 Slot provided (Time)
+- ReserveIntent Time=10:00:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 1 Slot provided (assistants)
+- ReserveIntent assistants=2:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 2 Slots provided (Date & Time)
+- ReserveIntent Date=2021-05-31 Time=10:00:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 2 Slots provided (Date & assistants)
+- ReserveIntent Date=2021-05-31 assistants=3: 
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 2 Slots provided (Time & assistants)
+- ReserveIntent Time=10:00 assistants=1: 
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test: 3 Slots provided
 - ReserveIntent Time=10:00 Date=2021-05-31 assistants=4:
     - request.request.dialogState: COMPLETED
     - prompt: "Reserved Table for: kirk@enterprise.org for 2021-05-31 at 10:00"
----
-- test: reserve
-- reserve:
-    - response.directives[0].type: "Dialog.Delegate"
 ---
 - test: AMAZON.HelpIntent
 - AMAZON.HelpIntent: "You can say hello to me! How can I help?"

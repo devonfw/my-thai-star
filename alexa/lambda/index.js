@@ -56,21 +56,7 @@ const StartedReserveIntentHandler = {
     const request = handlerInput.requestEnvelope.request;
     return request.type === 'IntentRequest'
     && request.intent.name === 'ReserveIntent'
-    && request.dialogState === 'STARTED';
-  },
-
-  handle(handlerInput) {
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    return handlerInput.responseBuilder.addDelegateDirective(currentIntent).getResponse();
-  },
-};
-
-const InProgressReserveIntentHandler = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest'
-    &&  request.intent.name === 'ReserveIntent'
-    &&  request.dialogState === 'IN_PROGRESS';
+    && request.dialogState !== 'COMPLETED';
   },
 
   handle(handlerInput) {
@@ -128,6 +114,17 @@ const ReserveIntentHandler = {
       throw error;
     }
   },
+};
+
+const StartedMenuIntentHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest'
+    && request.intent.name === 'ReserveIntent'
+    && request.dialogState !== 'COMPLETED';
+  },
+
+  
 };
 
 const HelpIntentHandler = {
@@ -240,8 +237,8 @@ exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
     StartedReserveIntentHandler,
-    InProgressReserveIntentHandler,
     ReserveIntentHandler,
+    StartedMenuIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,

@@ -25,7 +25,8 @@
                                 "create the reservation for the {Date}",
                                 "book a table for the {Date}",
                                 "reserve the table for the {Date}",
-                                "Please reserve the table for the {Date}"
+                                "Please reserve the table for the {Date}",
+                                "{Date}"
                             ]
                         },
                         {
@@ -34,7 +35,8 @@
                             "samples": [
                                 "book the table at {Time}",
                                 "reserve the table at {Time}",
-                                "i want to reserve the table at {Time}"
+                                "i want to reserve the table at {Time}",
+                                "{Time}"
                             ]
                         },
                         {
@@ -46,12 +48,24 @@
                         }
                     ],
                     "samples": [
-                        "book table",
-                        "reserve table",
-                        "booking",
-                        "reservation",
+                        "reserve",
+                        "reserve a table for {Date} at {Time} for {assistants} persons",
+                        "reserve a table for {Date}",
+                        "reserve a table at {Time}",
+                        "reserve a table for {assistants} persons",
+                        "reserve a table for {Date} at {Time}",
+                        "reserve a table for {Date} for {assistants} persons",
+                        "reserve a table at {Time} for {assistants} persons",
                         "book",
-                        "reserve"
+                        "book a table for {Date} at {Time} for {assistants} persons",
+                        "book a table for {Date}",
+                        "book a table at {Time}",
+                        "book a table for {assistants} persons",
+                        "book a table for {Date} at {Time}",
+                        "book a table for {Date} for {assistants} persons",
+                        "book a table at {Time} for {assistants} persons",
+                        "create a reservation",
+                        "create a booking"
                     ]
                 },
                 {
@@ -61,9 +75,62 @@
                 {
                     "name": "AMAZON.FallbackIntent",
                     "samples": []
+                },
+                {
+                    "name": "MenuIntent",
+                    "slots": [
+                        {
+                            "name": "yesno",
+                            "type": "YesNo",
+                            "samples": [
+                                "{yesno}"
+                            ]
+                        },
+                        {
+                            "name": "filter",
+                            "type": "filter",
+                            "multipleValues": {
+                                "enabled": true
+                            }
+                        }
+                    ],
+                    "samples": [
+                        "menu"
+                    ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "filter",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "vegan"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "noodle"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "YesNo",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "No"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Yes"
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         "dialog": {
             "intents": [
@@ -101,6 +168,30 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "MenuIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "yesno",
+                            "type": "YesNo",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.651679093523.1585989462730"
+                            }
+                        },
+                        {
+                            "name": "filter",
+                            "type": "filter",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -130,6 +221,15 @@
                     {
                         "type": "PlainText",
                         "value": "With how many people are you going to come?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.651679093523.1585989462730",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to filter the menu?"
                     }
                 ]
             }
