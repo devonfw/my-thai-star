@@ -19,6 +19,8 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearc
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStatesByEmailCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 
 /**
@@ -79,6 +81,14 @@ public interface OrdermanagementRestService {
   @Path("/order/updatestate")
   @POST
   public OrderEto updateOrderState(OrderEto order);
+  
+  /**
+   * @param email
+   * @return active orders by email
+   */
+  @Path("/order/activeOrders")
+  @POST
+  public OrdersCto getActiveOrders(OrderSearchCriteriaTo email);
 
   /**
    * @param pay state of {@link OrderEto} to be updated

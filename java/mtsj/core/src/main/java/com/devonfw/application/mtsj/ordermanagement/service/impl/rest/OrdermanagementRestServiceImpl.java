@@ -13,6 +13,8 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearc
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStatesByEmailCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.ordermanagement.service.api.rest.OrdermanagementRestService;
 
@@ -41,6 +43,12 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   public OrderEto updateOrderState(OrderEto order) {
 
     return this.ordermanagement.updateOrderState(order);
+  }
+
+  @Override
+  public OrdersCto getActiveOrders(OrderSearchCriteriaTo email) {
+
+    return this.ordermanagement.findActiveOrders(email);
   }
 
   @Override
