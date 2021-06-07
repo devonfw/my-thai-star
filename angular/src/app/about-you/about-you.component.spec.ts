@@ -1,26 +1,45 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { getTranslocoModule } from '../transloco-testing.module';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from '../core/core.module';
+import { AppModule } from '../app.module';
 import { AboutYouComponent } from './about-you.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import { ConfigService } from '../core/config/config.service';
+import { config } from '../core/config/config';
+import { getTranslocoModule } from '../transloco-testing.module';
 
-describe('AboutYouComponent', () => {
+fdescribe('RegisterDialogComponent', () => {
   let component: AboutYouComponent;
-  let fixture: ComponentFixture<AboutYouComponent>;
-
+  let dialog: MatDialog;
+  let initialState;
   beforeEach(async(() => {
+    initialState = { config };
     TestBed.configureTestingModule({
-      declarations: [ AboutYouComponent ],
-      imports:[getTranslocoModule()]
-    })
-    .compileComponents();
+      providers: [
+        provideMockStore({ initialState }),
+        ConfigService,
+        HttpClient,
+      ],
+      imports: [
+        BrowserAnimationsModule,
+        AppModule,
+        getTranslocoModule(),
+        CoreModule,
+        HttpClientTestingModule,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AboutYouComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  
+    dialog = TestBed.inject(MatDialog);
+    component = dialog.open(AboutYouComponent).componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+})
