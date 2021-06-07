@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { getTranslocoModule } from '../transloco-testing.module';
 import { AboutYouComponent } from './about-you.component';
 
 describe('AboutYouComponent', () => {
@@ -8,7 +8,8 @@ describe('AboutYouComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AboutYouComponent ]
+      declarations: [ AboutYouComponent ],
+      imports:[getTranslocoModule()]
     })
     .compileComponents();
   }));
