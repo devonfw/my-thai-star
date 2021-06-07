@@ -19,58 +19,39 @@
                     "name": "ReserveIntent",
                     "slots": [
                         {
-                            "name": "Date",
-                            "type": "AMAZON.DATE",
-                            "samples": [
-                                "create the reservation for the {Date}",
-                                "book a table for the {Date}",
-                                "reserve the table for the {Date}",
-                                "Please reserve the table for the {Date}",
-                                "{Date}"
-                            ]
+                            "name": "date",
+                            "type": "AMAZON.DATE"
                         },
                         {
-                            "name": "Time",
-                            "type": "AMAZON.TIME",
-                            "samples": [
-                                "book the table at {Time}",
-                                "reserve the table at {Time}",
-                                "i want to reserve the table at {Time}",
-                                "{Time}"
-                            ]
+                            "name": "time",
+                            "type": "AMAZON.TIME"
                         },
                         {
                             "name": "assistants",
-                            "type": "AMAZON.NUMBER",
-                            "samples": [
-                                "{assistants}"
-                            ]
+                            "type": "AMAZON.NUMBER"
                         },
                         {
                             "name": "wantsToOrder",
-                            "type": "YesNo",
-                            "samples": [
-                                "{wantsToOrder}"
-                            ]
+                            "type": "YesNo"
                         }
                     ],
                     "samples": [
                         "reserve",
-                        "reserve a table for {Date} at {Time} for {assistants} persons",
-                        "reserve a table for {Date}",
-                        "reserve a table at {Time}",
+                        "reserve a table for {date} at {time} for {assistants} persons",
+                        "reserve a table for {date}",
+                        "reserve a table at {time}",
                         "reserve a table for {assistants} persons",
-                        "reserve a table for {Date} at {Time}",
-                        "reserve a table for {Date} for {assistants} persons",
-                        "reserve a table at {Time} for {assistants} persons",
+                        "reserve a table for {date} at {time}",
+                        "reserve a table for {date} for {assistants} persons",
+                        "reserve a table at {time} for {assistants} persons",
                         "book",
-                        "book a table for {Date} at {Time} for {assistants} persons",
-                        "book a table for {Date}",
-                        "book a table at {Time}",
+                        "book a table for {date} at {time} for {assistants} persons",
+                        "book a table for {date}",
+                        "book a table at {time}",
                         "book a table for {assistants} persons",
-                        "book a table for {Date} at {Time}",
-                        "book a table for {Date} for {assistants} persons",
-                        "book a table at {Time} for {assistants} persons",
+                        "book a table for {date} at {time}",
+                        "book a table for {date} for {assistants} persons",
+                        "book a table at {time} for {assistants} persons",
                         "create a reservation",
                         "create a booking"
                     ]
@@ -165,31 +146,50 @@
                         {
                             "id": "4",
                             "name": {
-                                "value": "thai thighs"
+                                "value": "Thai Thighs Fish/Prawns",
+                                "synonyms": [
+                                    "Thighs",
+                                    "Prawns"
+                                ]
                             }
                         },
                         {
                             "id": "1",
                             "name": {
-                                "value": "garlic paradise"
+                                "value": "Garlic Paradise Salad",
+                                "synonyms": [
+                                    "Garlic Paradise",
+                                    "Salad"
+                                ]
                             }
                         },
                         {
                             "id": "3",
                             "name": {
-                                "value": "Thai Noodle Beef"
+                                "value": "Thai Peanut Beef",
+                                "synonyms": [
+                                    "Beef"
+                                ]
                             }
                         },
                         {
                             "id": "2",
                             "name": {
-                                "value": "Thai Green Chicken Curry"
+                                "value": "Thai green chicken curry",
+                                "synonyms": [
+                                    "green curry",
+                                    "Curry"
+                                ]
                             }
                         },
                         {
                             "id": "0",
                             "name": {
-                                "value": "Thai Basil Fried Rice"
+                                "value": "Thai Spicy Basil Fried Rice",
+                                "synonyms": [
+                                    "Basil Rice",
+                                    "Fried Rice"
+                                ]
                             }
                         },
                         {
@@ -217,40 +217,40 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "Date",
+                            "name": "date",
                             "type": "AMAZON.DATE",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.87957409215.1176224251167"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "isInDuration",
+                                    "prompt": "Slot.Validation.698210688078.1609394377601.128375739531",
+                                    "start": "P0D",
+                                    "end": ""
+                                }
+                            ]
                         },
                         {
-                            "name": "Time",
+                            "name": "time",
                             "type": "AMAZON.TIME",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.87957409215.1286221686937"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
                             "name": "assistants",
                             "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.768229697429.936498840907"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
                             "name": "wantsToOrder",
                             "type": "YesNo",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.416831846262.1282753347160"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 },
@@ -282,7 +282,13 @@
                             "type": "dish",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
-                            "prompts": {}
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.47655686711.467069269950.1524378880796"
+                                }
+                            ]
                         },
                         {
                             "name": "amount",
@@ -382,6 +388,24 @@
                     {
                         "type": "PlainText",
                         "value": "Do you want to order another dish?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.47655686711.467069269950.1524378880796",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please order something that's on the menu."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.698210688078.1609394377601.128375739531",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Pls refer to a date that is in the future."
                     }
                 ]
             }
