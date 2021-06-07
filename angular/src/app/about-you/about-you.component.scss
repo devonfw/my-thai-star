@@ -2,12 +2,13 @@ iframe {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-.mat-list .mat-list-item {
-    height: 20px; /* default is 72px */
-    //TODO items-align center 
+    margin-bottom: 10px;
 }
 
-*{
+* {
     text-align: center;
+}
+
+.item {
+    display: inherit;
 }

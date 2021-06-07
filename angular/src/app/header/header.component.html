@@ -11,11 +11,11 @@
   <div *ngIf="(auth.getRole() | async) === 'CUSTOMER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a
-      mat-tab-link
-      (click)="openAboutYouDialog()"
-    >
-      {{ 'main.aboutYou.title' | transloco | uppercase }}
-    </a>
+        mat-tab-link
+        (click)="openAboutYouDialog()"
+      >
+        {{ 'aboutYou.title' | transloco | uppercase }}
+      </a>
       <a
         mat-tab-link
         routerLink="/restaurant"
