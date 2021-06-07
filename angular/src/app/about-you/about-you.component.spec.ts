@@ -11,7 +11,7 @@ import { ConfigService } from '../core/config/config.service';
 import { config } from '../core/config/config';
 import { getTranslocoModule } from '../transloco-testing.module';
 
-fdescribe('RegisterDialogComponent', () => {
+describe('RegisterDialogComponent', () => {
   let component: AboutYouComponent;
   let dialog: MatDialog;
   let initialState;
