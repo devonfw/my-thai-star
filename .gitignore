@@ -44,3 +44,7 @@ alexa/.vscode
 
 alexa/test_output
 
+alexa/dbg_good.json
+alexa/dbg.json
+.vscode/launch.json
+.vscode/settings.json

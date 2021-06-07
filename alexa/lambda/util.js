@@ -17,16 +17,16 @@ module.exports.getS3PreSignedUrl = function getS3PreSignedUrl(s3ObjectKey) {
   return s3PreSignedUrl;
 };
 
-module.exports.createReservation = (name, email) => {
+module.exports.createReservation = (name, email, date, assistants) => {
   return new Promise((resolve, reject) => {
-    let date = new Date();
-    date.setDate(date.getDate() + 5)
+    date = new Date(date);
+    console.log(date);
     const body = JSON.stringify({
       booking: {
         bookingDate: date.toISOString(),
         name,
         email,
-        assistants: 1,
+        assistants: assistants,
       },
     });
 
