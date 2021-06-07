@@ -14,7 +14,6 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCri
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStatesByEmailCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.ordermanagement.service.api.rest.OrdermanagementRestService;
 
