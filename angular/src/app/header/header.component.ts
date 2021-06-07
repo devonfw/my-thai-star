@@ -128,7 +128,7 @@ export class HeaderComponent {
   }
   openAboutYouDialog():void{
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.height = '650px';
+    dialogConfig.height = '750px';
     dialogConfig.width = '500px';
     this.dialog.open(AboutYouComponent, dialogConfig);
   }
