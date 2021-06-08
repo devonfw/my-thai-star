@@ -92,6 +92,17 @@
     "order-archive":"Archiv",
     "reservations": "Reservierungen",
     "admin": "Administation",
+    "aboutYou":{
+      "opening": "Öffnungszeiten",
+      "title": "Über uns",
+      "monday": "Montag",
+      "tuesday": "Dienstag",
+      "wednesday": "Mittwoch",
+      "thursday": "Donnerstag",
+      "friday": "Freitag",
+      "saturday": "Samstag",
+      "location": "Unser Standort"
+    },
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
