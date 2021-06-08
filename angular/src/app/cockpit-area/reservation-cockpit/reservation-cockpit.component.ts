@@ -34,7 +34,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
+  displayedColumns: string[] = ['bookingDate', 'email', 'tablenumber'];
 
   pageSizes: number[];
 
@@ -42,7 +42,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
-    stateId:undefined
+    stateId: undefined
   };
 
   constructor(
@@ -69,7 +69,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
         this.columns = [
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'booking.tablenumber', label: cockpitTable.tablenumberH },
         ];
       });
   }
@@ -86,7 +86,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
         if (!data) {
           this.reservations = [];
         } else {
-          this.reservations = data.content;
+          this.reservations = data.content.filter(row => !row.booking.delivery);
         }
         this.totalReservations = data.totalElements;
       });
