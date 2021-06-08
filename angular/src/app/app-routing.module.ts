@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
-import { RegisterDialogComponent } from './cockpit-area/admin-cockpit/register-dialog/register-dialog.component';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { OrderArchiveCockpitComponent } from './cockpit-area/order-archive-cockpit/order-archive-cockpit.component';
@@ -13,6 +12,7 @@ import { EmailConfirmationsComponent } from './email-confirmations/container/ema
 import { HomeComponent } from './home/container/home/home.component';
 import { MenuComponent } from './menu/container/menu.component';
 import {OrderStateViewComponent} from './order-state-view/order-state-view/order-state-view.component'
+import {AboutYouComponent} from './about-you/about-you.component'
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },
@@ -52,9 +52,8 @@ const appRoutes: Routes = [
   },
 
   {
-    //temp for debugging
-    path: 'registerUI',
-    component: RegisterDialogComponent,
+    path: 'aboutYou',
+    component: AboutYouComponent,
   },
 
 
