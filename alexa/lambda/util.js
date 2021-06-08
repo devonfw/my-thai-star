@@ -17,7 +17,7 @@ module.exports.getS3PreSignedUrl = function getS3PreSignedUrl(s3ObjectKey) {
   return s3PreSignedUrl;
 };
 
-module.exports.createReservation = (name, email, date, assistants) => {
+module.exports.createReservation = (name, email, date, assistants, delivery) => {
   return new Promise((resolve, reject) => {
     date = new Date(date);
     console.log(date);
@@ -27,12 +27,98 @@ module.exports.createReservation = (name, email, date, assistants) => {
         name,
         email,
         assistants: assistants,
+        delivery: delivery,
       },
     });
 
     const options = {
       port: config.myThaiStarBackend.port,
       path: config.myThaiStarBackend.createBookingEndpoint,
+      method: "POST",
+      host: config.myThaiStarBackend.host,
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": body.length,
+      },
+    };
+
+    const req = http.request(options, (res) => {
+      console.log(`statusCode: ${res.statusCode}`);
+      let responseObjectString = '';
+      res.on("data", (d) => {
+        responseObjectString += d.toString();
+        process.stdout.write(d);
+      });
+      res.on("end", (d) => {
+        resolve(JSON.parse(responseObjectString));
+      });
+    });
+
+    req.on("error", (error) => {
+      reject(error);
+    });
+
+    req.write(body);
+    req.end();
+  });
+};
+
+
+module.exports.createDelivery = async (name, email, orderlines) => {
+  let today = new Date()
+  let todayIn2Mins = new Date (today.setMinutes(today.getMinutes() +2))
+  let reservation = await this.createReservation(name, email, todayIn2Mins.toISOString(), 1, true);
+  
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      booking: {
+        bookingToken: reservation.bookingToken,
+      },
+      orderLines: orderlines.map(el => {return {orderLine:{dishId:el.dish.id, amount:el.amount,comment:""}, extras:[]}})
+    });
+    const options = {
+      port: config.myThaiStarBackend.port,
+      path: config.myThaiStarBackend.createOrderEndpoint,
+      method: "POST",
+      host: config.myThaiStarBackend.host,
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": body.length,
+      },
+    };
+
+    const req = http.request(options, (res) => {
+      console.log(`statusCode: ${res.statusCode}`);
+      res.on("data", (d) => {
+        process.stdout.write(d);
+      });
+      res.on("end", (d) => {
+        resolve();
+      });
+    });
+
+    req.on("error", (error) => {
+      reject(error);
+    });
+
+    req.write(body);
+    req.end();
+  });
+};
+
+module.exports.createOrder = async (name, email, orderlines, combinedDate, assistants) => {
+  let reservation = await this.createReservation(name, email, combinedDate, assistants, false);
+  
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      booking: {
+        bookingToken: reservation.bookingToken,
+      },
+      orderLines: orderlines.map(el => {return {orderLine:{dishId:el.dish.id, amount:el.amount,comment:""}, extras:[]}})
+    });
+    const options = {
+      port: config.myThaiStarBackend.port,
+      path: config.myThaiStarBackend.createOrderEndpoint,
       method: "POST",
       host: config.myThaiStarBackend.host,
       headers: {
