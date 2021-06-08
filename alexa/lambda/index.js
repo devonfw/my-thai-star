@@ -30,6 +30,7 @@ const messages = {
 };
 
 const PERMISSIONS = [
+  "read::alexa:device:all:address",
   "alexa::profile:name:read",
   "alexa::profile:email:read",
   "alexa::profile:mobile_number:read",
@@ -59,10 +60,9 @@ const ReserveIntentHandler = {
     );
   },
   async handle(handlerInput) {
- 
     const sessionAttributes =
       handlerInput.attributesManager.getSessionAttributes();
-    
+
     const lastAction = sessionAttributes.lastAction;
 
     switch (lastAction) {
@@ -100,7 +100,13 @@ const ReserveIntentHandler = {
 
       const combinedDate = date + "T" + time + ":00";
 
-      await util.createReservation(name, email, combinedDate, assistants, false)
+      await util.createReservation(
+        name,
+        email,
+        combinedDate,
+        assistants,
+        false
+      );
       return handlerInput.responseBuilder
         .speak(
           messages.RESERVED_TABLE + email + " for " + date + " at " + time + "."
@@ -140,18 +146,15 @@ const ReserveIntentHandler = {
 
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
       return handlerInput.responseBuilder
-        .addElicitSlotDirective('dish', 
-          {
-            name: "OrderIntent",
-            confirmationStatus: "CONFIRMED",
-            slots: {
-            }
-          }
-        )
+        .addElicitSlotDirective("dish", {
+          name: "OrderIntent",
+          confirmationStatus: "CONFIRMED",
+          slots: {},
+        })
         .speak("What item do you want to add to your order?")
         .getResponse();
-        }
-  }
+    }
+  },
 };
 
 const OrderIntentHandler = {
@@ -188,25 +191,42 @@ const OrderIntentHandler = {
     const amount = sessionAttributes.amount;
     const dish = sessionAttributes.dish;
     const oneMoreOrder = sessionAttributes.oneMoreOrder;
-    const client = handlerInput.serviceClientFactory.getUpsServiceClient();
-    const email = await client.getProfileEmail();
-    const name = await client.getProfileName();
+
+      const client = handlerInput.serviceClientFactory.getUpsServiceClient();
+      const email = await client.getProfileEmail();
+      const name = await client.getProfileName();
+      const { deviceId } = handlerInput.requestEnvelope.context.System.device;
+      const deviceAddressServiceClient =
+        handlerInput.serviceClientFactory.getDeviceAddressServiceClient();
+      const address = await deviceAddressServiceClient.getFullAddress(deviceId);
+      console.log(address);
 
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
     if (oneMoreOrder == "no" && sessionAttributes.wantsToOrder === undefined) {
-      await util.createDelivery(name, email, sessionAttributes.orderlist);
+      await util.createDelivery(name, email, sessionAttributes.orderlist, address);
       return handlerInput.responseBuilder
-        .speak("Your delivery has been placed. Thank you for you ordering from us.")
+        .speak(
+          "Your delivery has been placed. Thank you for you ordering from us."
+        )
         .getResponse();
-    } else if (oneMoreOrder == "no" && sessionAttributes.wantsToOrder === "yes") {
+    } else if (
+      oneMoreOrder == "no" &&
+      sessionAttributes.wantsToOrder === "yes"
+    ) {
       const date = sessionAttributes.date;
       const time = sessionAttributes.time;
       const assistants = sessionAttributes.assistants;
 
       const combinedDate = date + "T" + time + ":00";
 
-      await util.createOrder(name, email, sessionAttributes.orderlist, combinedDate, assistants);
+      await util.createOrder(
+        name,
+        email,
+        sessionAttributes.orderlist,
+        combinedDate,
+        assistants
+      );
       return handlerInput.responseBuilder
         .speak("Your Order has been placed. Thank you for your booking.")
         .getResponse();
