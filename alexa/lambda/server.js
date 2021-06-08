@@ -7,7 +7,7 @@ const PORT = 3001;
 const app = express();
 app.use(bodyParser.json());
 
-app.post("/", (req, res) => {
+app.post("*", (req, res) => {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(`Revieved request from ${ip}`)
   const body = req.body;
