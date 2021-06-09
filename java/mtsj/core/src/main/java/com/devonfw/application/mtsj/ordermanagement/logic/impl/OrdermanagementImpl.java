@@ -545,7 +545,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
       mailContent.append("\n\n").append("You can check your order here: \n");
-      String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
+      String orderStateCheckLink = "https://demo.bitshift-team.de" + "/order/" + order.getOrderToken();
       mailContent.append(orderStateCheckLink);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {
