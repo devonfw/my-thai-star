@@ -63,6 +63,7 @@ import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEnti
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderStateEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.AddressRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderPayStateRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
@@ -94,6 +95,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
+
+  /**
+   * @see #getAddressDao()
+   */
+  @Inject
+  private AddressRepository addressDao;
 
   /**
    * @see #getOrderStateDao()
@@ -289,12 +296,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
-    AddressEntity address = new AddressEntity();
-    address.setCity(order.getAddress().getCity());
-    address.setHouseNumber(order.getAddress().getHouseNumber());
-    address.setPostCode(order.getAddress().getPostCode());
-    address.setStreetName(order.getAddress().getStreetName());
-    orderEntity.setAddress(address);
+
+    if (order.getAddress() != null) {
+      AddressEntity address = new AddressEntity();
+      address.setCity(order.getAddress().getCity());
+      address.setHouseNumber(order.getAddress().getHouseNumber());
+      address.setPostCode(order.getAddress().getPostCode());
+      address.setStreetName(order.getAddress().getStreetName());
+      orderEntity.setAddress(address);
+      getAddressDao().save(address);
+    }
+
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 
@@ -419,6 +431,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   public OrderLineRepository getOrderLineDao() {
 
     return this.orderLineDao;
+  }
+
+  /**
+   * Returns the field 'addressDao'.
+   *
+   * @return the {@link AddressDao} instance.
+   */
+  public AddressRepository getAddressDao() {
+
+    return this.addressDao;
   }
 
   /**

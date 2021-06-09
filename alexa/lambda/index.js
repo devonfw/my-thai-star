@@ -100,7 +100,7 @@ const ReserveIntentHandler = {
 
       const combinedDate = date + "T" + time + ":00";
 
-      await util.createReservation(
+      util.createReservation(
         name,
         email,
         combinedDate,
@@ -204,7 +204,7 @@ const OrderIntentHandler = {
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
     if (oneMoreOrder == "no" && sessionAttributes.wantsToOrder === undefined) {
-      await util.createDelivery(name, email, sessionAttributes.orderlist, address);
+      util.createDelivery(name, email, sessionAttributes.orderlist, address);
       return handlerInput.responseBuilder
         .speak(
           "Your delivery has been placed. Thank you for you ordering from us."
@@ -220,7 +220,7 @@ const OrderIntentHandler = {
 
       const combinedDate = date + "T" + time + ":00";
 
-      await util.createOrder(
+      util.createOrder(
         name,
         email,
         sessionAttributes.orderlist,
