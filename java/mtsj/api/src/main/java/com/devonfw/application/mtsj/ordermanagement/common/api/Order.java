@@ -26,11 +26,6 @@ public interface Order extends ApplicationEntity {
   public Long getPaidId();
 
   public void setPaidId(Long paidId);
-  
-  public Long getAddressId();
-
-  public void setAddressId(Long addressId);
-	
 
   /**
    * @return OrderTokenId

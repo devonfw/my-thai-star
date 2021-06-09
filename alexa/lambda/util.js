@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const config = require("./config");
 const http = require("http");
+const { CognitoIdentity } = require("aws-sdk");
 
 const s3SigV4Client = new AWS.S3({
   signatureVersion: "v4",
@@ -64,7 +65,7 @@ module.exports.createReservation = (name, email, date, assistants, delivery) => 
 };
 
 
-module.exports.createDelivery = async (name, email, orderlines) => {
+module.exports.createDelivery = async (name, email, orderlines, address) => {
   let today = new Date()
   let todayIn2Mins = new Date (today.setMinutes(today.getMinutes() +2))
   let reservation = await this.createReservation(name, email, todayIn2Mins.toISOString(), 1, true);
@@ -73,6 +74,12 @@ module.exports.createDelivery = async (name, email, orderlines) => {
     const body = JSON.stringify({
       booking: {
         bookingToken: reservation.bookingToken,
+      },
+      address: {
+        postCode: address.postalCode,
+        city: address.city,
+        streetName: "Packstation",
+        houseNumber: "103"
       },
       orderLines: orderlines.map(el => {return {orderLine:{dishId:el.dish.id, amount:el.amount,comment:""}, extras:[]}})
     });
