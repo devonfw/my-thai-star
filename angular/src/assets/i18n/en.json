@@ -253,7 +253,8 @@
       "postCodeH":"Post Code",
       "cityH":"City",
       "streetNameH":"Street",
-      "houseNumberH":"House Number"
+      "houseNumberH":"House Number",
+      "tableNotDefined": "---"
     }
   }
 }

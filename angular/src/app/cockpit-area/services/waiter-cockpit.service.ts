@@ -11,6 +11,7 @@ import { exhaustMap } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
 import {
   BookingResponse,
+  BookingView,
   OrderResponse,
   OrderView,
   OrderViewResult,
@@ -22,6 +23,8 @@ import { PriceCalculatorService } from '../../sidenav/services/price-calculator.
 export class WaiterCockpitService {
   private readonly getReservationsRestPath: string =
     'bookingmanagement/v1/booking/search';
+    private readonly updateTableNumber: string =
+    'bookingmanagement/v1/booking/updateTable';
   private readonly getOrdersRestPath: string =
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
@@ -30,7 +33,7 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/updatestate';
   private readonly updateOrderPayStatePath: string =
     'ordermanagement/v1/order/updatepaystate';
-
+    
   private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
 
   constructor(
@@ -92,6 +95,16 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, order),
+      ),
+    );
+  }
+
+
+  changeTableNumber(booking: any): Observable<BookingView> {
+    let path: string = this.updateTableNumber;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+         this.http.post<BookingView>(`${restServiceRoot}${path}`, booking),
       ),
     );
   }

@@ -24,9 +24,9 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private Long[] stateId;
 
-	private Long[] paidId;
+  private Long[] paidId;
 	
-	private Boolean delivery;
+  private Boolean delivery;
 
   private String orderToken;
 

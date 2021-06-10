@@ -157,5 +157,15 @@ public interface BookingmanagementRestService {
   @Path("/table/search")
   @POST
   public Page<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo);
+  
+  /**
+   * Delegates to {@link Bookingmanagement#updateTableNumber}.
+   *
+   * @param booking the {@link BookingEto} to be saved
+   * @return the recently created {@link BookingEto}
+   */
+  @POST
+  @Path("/booking/updateTable")
+  public BookingEto updateTableNumber(BookingEto booking);
 
 }

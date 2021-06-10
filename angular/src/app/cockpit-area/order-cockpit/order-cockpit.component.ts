@@ -165,11 +165,19 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
+  changeTableNumber(event,element){
+    console.log(event.value)
+    console.log(element)
+    element.booking.tableId = event.value;
+    this.waiterCockpitService
+      .changeTableNumber(element.booking)
+      .subscribe((data) => {});
+  }
+
   changeOrderPayState(event,element){
     this.waiterCockpitService
       .changeOrderPayState({id:element.order.id, paidId:event.checked ? 1 : 0})
-      .subscribe((data) => {
-      });
+      .subscribe((data) => {});
   }
 
   selected(selection: OrderListView,event:any): void {

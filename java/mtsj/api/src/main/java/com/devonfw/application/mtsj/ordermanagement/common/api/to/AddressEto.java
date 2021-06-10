@@ -1,11 +1,12 @@
 package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
-import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.Address;
 import com.devonfw.module.basic.common.api.to.AbstractEto;
 
 public class AddressEto extends AbstractEto implements Address {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long postCode;
 	private String city;
 	private String streetName;

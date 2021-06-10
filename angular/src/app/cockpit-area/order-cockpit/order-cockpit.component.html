@@ -86,9 +86,24 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[0].label }}
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
           <ng-container *ngIf="!element.booking.delivery">
-            {{ element.booking.tableId }}
+            
+            <mat-select
+              (selectionChange)="changeTableNumber($event, element)"
+              [(ngModel)]="element.booking.tableId"
+            >
+              <mat-option [value]="0">{{ 'cockpit.table.tableNotDefined' | transloco }}</mat-option>
+              <mat-option [value]="1">1</mat-option>
+              <mat-option [value]="2">2</mat-option>
+              <mat-option [value]="3">3</mat-option>
+              <mat-option [value]="4">4</mat-option>
+              <mat-option [value]="5">5</mat-option>
+              <mat-option [value]="6">6</mat-option>
+              <mat-option [value]="7">7</mat-option>
+              <mat-option [value]="8">8</mat-option>
+            </mat-select>
+
           </ng-container>
           <ng-container *ngIf="element.booking.delivery">
             Delivery

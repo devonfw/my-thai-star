@@ -153,5 +153,7 @@ public interface Bookingmanagement {
   InvitedGuestEto declineInvite(String guestToken);
 
   String buildToken(String email, String type) throws NoSuchAlgorithmException;
+  
+  public BookingEto updateTableNumber(BookingEto booking);
 
 }

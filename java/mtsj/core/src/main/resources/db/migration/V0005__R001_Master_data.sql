@@ -8,7 +8,7 @@ INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, e
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', false, 'manager@mail.com', 2);
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (3, 1, 'admin', '{bcrypt}$2a$10$fhcb1hvSNRRXBnoRocxLU.S85hoEH2UgBfnF4NP0G8PuFy6eD6cle', false, 'admin@gmail.com', 3);
 
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 0);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
