@@ -50,6 +50,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderPaidEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
@@ -280,10 +281,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 			orderLineEntity.setComment(lineCto.getOrderLine().getComment());
 			orderLineEntities.add(orderLineEntity);
 		}
-		OrderStateEto a = new OrderStateEto();
-		a.setId(0L);
-		order.setState(a);
+		
+//		OrderStateEto a = new OrderStateEto();
+//		a.setId(0L);
+//		order.setState(a);
+//		OrderPaidEto p = new OrderPaidEto();
+//		p.setId(0L);
+//		order.setPaidId(p);
+		
 		OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+		
+		orderEntity.setPaidId(0L);
+		orderEntity.setStateId(0L);
+		
 		String token = orderEntity.getBooking().getBookingToken();
 		// initialize, validate orderEntity here if necessary
 		orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
