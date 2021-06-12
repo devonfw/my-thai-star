@@ -43,7 +43,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.tableNumber',
     'order.paystate',
     'order.state',
-    'booking.bookingDate'
+    'booking.bookingDate',
+    'order.cancle'
   ];
 
   pageSizes: number[];
@@ -110,7 +111,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.tableNumber', label: cockpitTable.tablenumberH },
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH }
+          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'order.cancle', label: cockpitTable.cancleH }
         ];
       });
   }
@@ -154,15 +156,15 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  changeOrderState(event,element){
+  changeOrderState(newStateID,element){
     this.waiterCockpitService
-      .updateOrder({id:element.order.id, stateId:event.value})
+      .updateOrder({id:element.order.id, stateId:newStateID})
       .subscribe((data) => {
-        if (event.value == 3 || event.value == 4){
+        if (newStateID == 3 || newStateID == 4){
           this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
-          this.table.renderRows();
         }
       });
+      this.table.renderRows();
   }
 
   changeOrderPayState(event,element){
