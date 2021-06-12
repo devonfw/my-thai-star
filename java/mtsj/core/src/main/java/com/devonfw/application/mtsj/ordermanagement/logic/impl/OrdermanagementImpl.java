@@ -44,6 +44,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBooki
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.ActiveOrdersWithDateCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.AddressEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
@@ -55,7 +56,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersEto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEntity;
@@ -319,19 +320,43 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 		return getBeanMapper().map(resultOrderEntity, OrderEto.class);
 	}
 
-	public OrdersCto findActiveOrders(OrderSearchCriteriaTo email) {
+	public ActiveOrdersWithDateCto findActiveOrders(OrderSearchCriteriaTo email) {
 
 		LOG.debug("Get active orders with email " + email.getEmail() + " from database.");
 
-		OrdersCto cto = new OrdersCto();
 		List<OrderEto> orders = new ArrayList<OrderEto>();
 		List<OrderEntity> entityList = getOrderDao().findAktiveOrdersByEmail(email.getEmail());
+		HashSet<Long> s = new HashSet<Long>();
 
 		for (OrderEntity order : entityList) {
 			orders.add(getBeanMapper().map(order, OrderEto.class));
+			if(!s.contains(order.getBookingId())) {
+				s.add(Long.valueOf(order.getBookingId()));
+			}
 		}
-
-		cto.setOrders(orders);
+		
+		List<OrdersEto> eto = new ArrayList<OrdersEto>();
+		List<OrderEto> newOrders;
+		OrdersEto obj;
+			
+		for(long bookingId: s) {
+			newOrders = new ArrayList<OrderEto>();
+			obj = new OrdersEto();
+			
+			for(OrderEto order: orders) {
+				if(bookingId == order.getBookingId()) {
+					newOrders.add(order);
+				}			
+			}
+			
+			Instant creationDate = this.bookingManagement.findBooking(bookingId).getBooking().getCreationDate();
+			
+			obj.setCreationDate(creationDate);
+			obj.setOrders(newOrders);
+			eto.add(obj);
+		}
+		ActiveOrdersWithDateCto cto = new ActiveOrdersWithDateCto();
+		cto.setContent(eto);
 		return cto;
 	}
 
