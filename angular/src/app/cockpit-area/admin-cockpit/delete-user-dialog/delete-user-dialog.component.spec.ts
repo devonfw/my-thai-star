@@ -54,7 +54,7 @@ describe('DeleteUserDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should containe user.username', () => {
+  it('should contain user.username', () => {
     expect(component.user.username).toEqual(user.username);
   });
 });

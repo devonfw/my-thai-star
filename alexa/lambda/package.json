@@ -18,6 +18,9 @@
   "author": "Amazon Alexa",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.12",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "net": "^1.0.2"
   },
   "devDependencies": {
