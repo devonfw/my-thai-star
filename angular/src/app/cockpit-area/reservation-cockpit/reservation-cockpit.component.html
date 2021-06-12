@@ -35,23 +35,31 @@
     <div class="tableContainer">
         <table mat-table [dataSource]="reservations" matSort (matSortChange)="sort($event)">
 
-          <!-- Date Column -->
-          <ng-container matColumnDef="bookingDate">
+          <!-- id column -->
+          <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+            <td mat-cell *matCellDef="let element"> {{element.booking.id}} </td>
+          </ng-container>
+
+          <!-- Date column -->
+          <ng-container matColumnDef="bookingDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
             <td mat-cell *matCellDef="let element"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
           </ng-container>
 
-          <!-- Email Column -->
+          <!-- Email column -->
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
             <td mat-cell *matCellDef="let element"> {{element.booking.email}} </td>
           </ng-container>
 
-          <!-- Ref No Column -->
+          <!-- Table Number column -->
           <ng-container matColumnDef="tablenumber">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
             <td mat-cell *matCellDef="let element"> {{element.booking.tableId}} </td>
           </ng-container>
+
+
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row)"></tr>
