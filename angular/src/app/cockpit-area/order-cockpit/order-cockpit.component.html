@@ -145,20 +145,21 @@
         </td>
       </ng-container>
 
-      <!-- Cancle Button Column-->
-      <ng-container matColumnDef="order.cancle">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header >
+      <!-- Cancel Button Column-->
+      <ng-container matColumnDef="order.cancel">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[4].label }}
         </th>
-        <td 
+        <td
         mat-cell
-        *matCellDef="let element" 
-        >
+        *matCellDef="let element"
+        (click)="$event.stopPropagation()"
+      >
           <button 
           mat-button
           (click)="changeOrderState(4, element)"
           >
-            {{stateNames[element.order.stateId]}}  
+            <mat-icon class="cancel">clear</mat-icon>
           </button>
         </td>  
       </ng-container>  

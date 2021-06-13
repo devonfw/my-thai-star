@@ -44,7 +44,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
-    'order.cancle'
+    'order.cancel'
   ];
 
   pageSizes: number[];
@@ -112,7 +112,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'order.cancle', label: cockpitTable.cancleH }
+          { name: 'order.cancel', label: cockpitTable.cancelH }
         ];
       });
   }

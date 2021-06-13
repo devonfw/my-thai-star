@@ -245,7 +245,7 @@
       "emailH": "Email",
       "orderStateH":"State",
       "orderPayStateH":"Payment",
-      "cancleH":"Cancle",
+      "cancelH":"Cancle",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
       "tablenumberH": "Table",
