@@ -128,6 +128,20 @@ export interface OrderResponse {
   content: OrderListView;
 }
 
+// Interface to recieve responeses from the server using httpclient for get tables
+export interface Table {
+  modificationCounter: number,
+  id: number,
+  seatsNumber: number
+}
+
+// Interface to recieve responeses from the server using httpclient for get tables
+export interface TableResponse {
+  content: Table[];
+  pageable: Pageable;
+  totalElements:number;
+}
+
 // Interface to recieve responeses from the server using httpclient for get OrderDishResponse
 export interface OrderDishResponse {
   pageable: Pageable;

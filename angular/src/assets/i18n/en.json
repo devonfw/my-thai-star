@@ -254,7 +254,7 @@
       "cityH":"City",
       "streetNameH":"Street",
       "houseNumberH":"House Number",
-      "tableNotDefined": "---"
+      "tableNotDefinedH": "---"
     }
   }
 }
