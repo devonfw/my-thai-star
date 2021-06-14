@@ -53,7 +53,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
-    stateId: [0, 1, 2],
+    stateId: undefined,
+    archive: false,
+    order_cockpit: true
   };
 
   stateNames = [];
@@ -164,11 +166,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.waiterCockpitService
       .updateOrder({ id: element.order.id, stateId: event.value })
       .subscribe((data) => {
-        if (event.value == 3 || event.value == 4) {
-          this.orders.splice(
-            this.orders.findIndex((el) => el.order.id == element.order.id),
-            1,
-          );
+        if ((element.order.paidId == 1 && event.value == 3) || (element.order.paidId == 0 && event.value == 4)) {
+          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
           this.table.renderRows();
         }
       });
@@ -190,12 +189,18 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   changeOrderPayState(event, element) {
+    event.checked ? element.order.paidId = 1 : element.order.paidId = 0
     this.waiterCockpitService
       .changeOrderPayState({
         id: element.order.id,
         paidId: event.checked ? 1 : 0,
       })
-      .subscribe((data) => {});
+      .subscribe((data) => {
+    if ((element.order.paidId == 1 && event.value == 3) || (element.order.paidId == 0 && event.value == 4)) {
+          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+          this.table.renderRows();
+        }
+    });
   }
 
   selected(selection: OrderListView, event: any): void {

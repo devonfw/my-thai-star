@@ -16,6 +16,8 @@ export class FilterCockpit {
     bookingDate: string;
     email: string;
     stateId;
+    archive: boolean;
+    order_cockpit: boolean;
     bookingToken: number;
 }
 
