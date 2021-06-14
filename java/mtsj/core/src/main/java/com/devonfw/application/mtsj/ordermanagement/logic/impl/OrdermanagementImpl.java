@@ -206,16 +206,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderCto> ctos = new ArrayList<>();
     Page<OrderCto> pagListTo = null;
     Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
-    
+
     for (OrderEntity order : orders.getContent()) {
-    	if(criteria.isArchive()) {
- 			if((order.getPaidId() == 1 && order.getStateId() == 3) || (order.getPaidId() == 0 && order.getStateId() == 4))
- 				processOrders(ctos, order);
- 			
- 		} else if(criteria.isOrder_cockpit()) {
- 			if(!((order.getPaidId() == 1 && order.getStateId() == 3) || (order.getPaidId() == 0 && order.getStateId() == 4)))
- 				processOrders(ctos, order);
- 		}	
+      if (criteria.isArchive()) {
+        if ((order.getPaidId() == 1 && order.getStateId() == 3) || (order.getPaidId() == 0 && order.getStateId() == 4))
+          processOrders(ctos, order);
+
+      } else if (criteria.isOrder_cockpit()) {
+        if (!((order.getPaidId() == 1 && order.getStateId() == 3)
+            || (order.getPaidId() == 0 && order.getStateId() == 4)))
+          processOrders(ctos, order);
+      } else {
+        processOrders(ctos, order);
+      }
     }
 
     if (ctos.size() > 0) {
@@ -224,9 +227,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
     return pagListTo;
   }
-  
-  
-  
 
   /**
    * @param ctos
