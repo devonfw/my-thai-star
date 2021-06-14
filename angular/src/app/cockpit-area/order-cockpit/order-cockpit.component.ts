@@ -45,7 +45,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
-    'order.cancel'
+    'order.cancel',
+    'order.decrement'
   ];
 
   pageSizes: number[];
@@ -93,6 +94,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         cockpitTable.deliveryH,
         cockpitTable.deliveredH,
         cockpitTable.canceledH,
+        cockpitTable.decrementH,
       ];
     });
   }
@@ -117,7 +119,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'order.cancel', label: cockpitTable.cancelH }
+          { name: 'order.cancel', label: cockpitTable.cancelH },
+          { name: 'order.decrement', label: cockpitTable.decrementH }
         ];
       });
   }
