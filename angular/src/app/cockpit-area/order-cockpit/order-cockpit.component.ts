@@ -14,6 +14,7 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-cockpit-order-cockpit',
@@ -64,9 +65,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
+    private  snackBarService: SnackBarService
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
   }
+
+   //string part for SuccessBar
+   stringpart:string;
 
   ngOnInit(): void {
     this.applyFilters();
@@ -162,9 +167,12 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (newStateID == 3 || newStateID == 4){
           this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+          //TODO: make it transloco!
+          this.stringpart = "Order " + element.booking.id + " has been moved to the order-archive!";
+          this.snackBarService.openSnack(this.stringpart, 10000, 'green');
+          this.table.renderRows();
         }
-      });
-      this.table.renderRows();
+      }); 
   }
 
   changeOrderPayState(event,element){
@@ -180,6 +188,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       data: selection,
     });
   }
+
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
