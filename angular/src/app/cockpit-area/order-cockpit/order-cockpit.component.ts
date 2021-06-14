@@ -165,18 +165,20 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   changeOrderState(newStateID,element){
-    element.order.stateId = newStateID;
-    this.waiterCockpitService
-      .updateOrder({id:element.order.id, stateId:newStateID})
-      .subscribe((data) => {
-        if (newStateID == 3 || newStateID == 4){
-          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
-          //TODO: make it transloco!
-          this.stringpart = "Order " + element.booking.id + " has been moved to the order-archive!";
-          this.snackBarService.openSnack(this.stringpart, 10000, 'green');
-          this.table.renderRows();
-        }
-      }); 
+    if(newStateID >= 0) {
+      element.order.stateId = newStateID;
+      this.waiterCockpitService
+        .updateOrder({id:element.order.id, stateId:newStateID})
+        .subscribe((data) => {
+          if (newStateID == 3 || newStateID == 4){
+            this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+            //TODO: make it transloco!
+            this.stringpart = "Order " + element.booking.id + " has been moved to the order-archive!";
+            this.snackBarService.openSnack(this.stringpart, 10000, 'green');
+            this.table.renderRows();
+          }
+        }); 
+    } 
   }
 
   changeOrderPayState(event,element){
