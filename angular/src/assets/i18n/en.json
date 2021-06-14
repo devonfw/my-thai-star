@@ -65,7 +65,8 @@
     "total": "Total",
     "referenceNumber": "Reference number",
     "id": "Id",
-    "userRoleId": "Role"
+    "userRoleId": "Role",
+    "stateId": "State"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -249,12 +250,12 @@
       "ownerH": "Owner",
       "tablenumberH": "Table",
       "creationDateH": "Creation date",
-      "tableNumberH": "Table",
       "postCodeH":"Post Code",
       "cityH":"City",
       "streetNameH":"Street",
       "houseNumberH":"House Number",
-      "tableNotDefinedH": "---"
+      "tableNotDefinedH": "---",
+      "idH":"Id number"
     }
   },
   "aboutYou": {
