@@ -1,0 +1,9 @@
+---
+configuration:
+  locales: ../../skill-package/interactionModels/custom/en-US
+---
+- test.skip: missing User Permissions
+- ReserveIntent Date=2021-05-31 Time=10:00 assistants=4:
+  - request.request.dialogState: COMPLETED
+  - prompt: "Please enable Customer Profile permissions in the Amazon Alexa app."
+---

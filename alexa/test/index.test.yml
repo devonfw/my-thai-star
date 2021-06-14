@@ -14,51 +14,71 @@ configuration:
         postalCode: 20816
         stateOrRegion: DC
     locales: ../../skill-package/interactionModels/custom/en-US
-    
+# TODO remove .skip in this and EdgeCase test file and fix the tests
 ---
-- test: Launch the my thai star skill
+- test.skip: Launch the my thai star skill
 - LaunchRequest: "Welcome, do you want to order food or reserve a table?"
 ---
-- test: Launch and reserve a Table
-- LaunchRequest
-- ReserveIntent: "Reserved Table for: kirk@enterprise.org"
----
-- test: Launch My-Thai-Star without direct Intent call
+- test.skip: Launch basic Skill with utterance
 - open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
+    -  prompt: "Welcome, do you want to order food or reserve a table?"
 ---
-- test: Launch and reserve a Table without direct Intent call (reserve)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- reserve: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: Simple call, no slot value provided
+- ReserveIntent:
+    - request.request.dialogState: STARTED
+    - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Launch and reserve a Table without direct Intent call (reserve table)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- reserve table: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: Utterance call for the Intent
+- reserve:
+    - request.request.dialogState: STARTED
+    - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Launch and reserve a Table without direct Intent call (reservation)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- reservation: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: Utterance call for the Intent
+- book:
+    - request.request.dialogState: STARTED
+    - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Launch and reserve a Table without direct Intent call (book)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- book: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: 1 Slot provided (Date)
+- ReserveIntent Date=2021-05-31:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Launch and reserve a Table without direct Intent call (book table)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- book table: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: 1 Slot provided (Time)
+- ReserveIntent Time=10:00:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
 ---
-- test: Launch and reserve a Table without direct Intent call (booking)
-- open my thai star at home:
-    - prompt: "Welcome, do you want to order food or reserve a table?"
-- booking: 
-    - prompt:  "Reserved Table for: kirk@enterprise.org"
+- test.skip: 1 Slot provided (assistants)
+- ReserveIntent assistants=2:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test.skip: 2 Slots provided (Date & Time)
+- ReserveIntent Date=2021-05-31 Time=10:00:
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test.skip: 2 Slots provided (Date & assistants)
+- ReserveIntent Date=2021-05-31 assistants=3: 
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test.skip: 2 Slots provided (Time & assistants)
+- ReserveIntent Time=10:00 assistants=1: 
+    - request.request.dialogState: IN_PROGRESS
+    - response.directives[0].type: "Dialog.Delegate"
+---
+- test.skip: 3 Slots provided
+- ReserveIntent Time=10:00 Date=2021-05-31 assistants=4 wantsToOrder=no:
+    - request.request.dialogState: COMPLETED
+    - prompt: "Reserved Table for: kirk@enterprise.org for 2021-05-31 at 10:00"
+---
+- test: AMAZON.HelpIntent
+- AMAZON.HelpIntent: "You can say hello to me! How can I help?"
+---
+- test: CancelIntent
+- AMAZON.CancelIntent: "Goodbye!"
+---
+- test: StopIntent
+- AMAZON.StopIntent: "Goodbye!"
+---

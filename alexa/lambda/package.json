@@ -4,14 +4,30 @@
   "description": "alexa utility for quickly building skills",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "index.js"
+    ],
+    "testMatch": [
+      "**/*-test.js"
+    ]
   },
   "author": "Amazon Alexa",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.12",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "net": "^1.0.2"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "virtual-alexa": "0.7.0",
     "ask-sdk-core": "^2.6.0",
     "ask-sdk-model": "^1.18.0",
-    "aws-sdk": "^2.326.0",
-    "net": "^1.0.2"
+    "aws-sdk": "^2.326.0"
   }
 }

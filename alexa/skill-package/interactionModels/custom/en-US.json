@@ -17,14 +17,43 @@
                 },
                 {
                     "name": "ReserveIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        },
+                        {
+                            "name": "assistants",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "wantsToOrder",
+                            "type": "YesNo"
+                        }
+                    ],
                     "samples": [
                         "reserve",
-                        "reserve table",
+                        "reserve a table for {date} at {time} for {assistants} persons",
+                        "reserve a table for {date}",
+                        "reserve a table at {time}",
+                        "reserve a table for {assistants} persons",
+                        "reserve a table for {date} at {time}",
+                        "reserve a table for {date} for {assistants} persons",
+                        "reserve a table at {time} for {assistants} persons",
                         "book",
-                        "book table",
-                        "reservation",
-                        "booking"
+                        "book a table for {date} at {time} for {assistants} persons",
+                        "book a table for {date}",
+                        "book a table at {time}",
+                        "book a table for {assistants} persons",
+                        "book a table for {date} at {time}",
+                        "book a table for {date} for {assistants} persons",
+                        "book a table at {time} for {assistants} persons",
+                        "create a reservation",
+                        "create a booking"
                     ]
                 },
                 {
@@ -34,9 +63,352 @@
                 {
                     "name": "AMAZON.FallbackIntent",
                     "samples": []
+                },
+                {
+                    "name": "MenuIntent",
+                    "slots": [
+                        {
+                            "name": "yesno",
+                            "type": "YesNo",
+                            "samples": [
+                                "{yesno}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "menu"
+                    ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "slots": [
+                        {
+                            "name": "dish",
+                            "type": "dish",
+                            "multipleValues": {
+                                "enabled": false
+                            }
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "multipleValues": {
+                                "enabled": false
+                            }
+                        },
+                        {
+                            "name": "completedOrder",
+                            "type": "YesNo"
+                        }
+                    ],
+                    "samples": [
+                        "deliver food",
+                        "deliver",
+                        "order",
+                        "order food"
+                    ]
                 }
             ],
-            "types": []
-        }
+            "types": [
+                {
+                    "name": "filter",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "vegan"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "noodle"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "YesNo",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "No"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Yes"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "dish",
+                    "values": [
+                        {
+                            "id": "4",
+                            "name": {
+                                "value": "Thai Thighs Fish/Prawns",
+                                "synonyms": [
+                                    "Thighs",
+                                    "Prawns"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "name": {
+                                "value": "Garlic Paradise Salad",
+                                "synonyms": [
+                                    "Garlic Paradise",
+                                    "Salad"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "3",
+                            "name": {
+                                "value": "Thai Peanut Beef",
+                                "synonyms": [
+                                    "Beef"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "name": {
+                                "value": "Thai green chicken curry",
+                                "synonyms": [
+                                    "green curry",
+                                    "Curry"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "0",
+                            "name": {
+                                "value": "Thai Spicy Basil Fried Rice",
+                                "synonyms": [
+                                    "Basil Rice",
+                                    "Fried Rice"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "6",
+                            "name": {
+                                "value": "Tea"
+                            }
+                        },
+                        {
+                            "id": "5",
+                            "name": {
+                                "value": "Beer"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ReserveIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "isInDuration",
+                                    "prompt": "Slot.Validation.698210688078.1609394377601.128375739531",
+                                    "start": "P0D",
+                                    "end": ""
+                                }
+                            ]
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "assistants",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "wantsToOrder",
+                            "type": "YesNo",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "MenuIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "yesno",
+                            "type": "YesNo",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.651679093523.1585989462730"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "dish",
+                            "type": "dish",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.47655686711.467069269950.1524378880796"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "completedOrder",
+                            "type": "YesNo",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.87957409215.1176224251167",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "On what day do you want to reserve the table?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.87957409215.1286221686937",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "On what time do you want to reserve the table?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.768229697429.936498840907",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "With how many people are you going to come?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.651679093523.1585989462730",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to filter the menu?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.416831846262.1282753347160",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "do you want to add an order to your reservation?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.31726352607.297595709107",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What dish do you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.31726352607.40705637701",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many of the dishes do you want to order?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.116738986105.1111507054301",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "ìs this everything"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.779500351870.106968438407",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to order another dish?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.47655686711.467069269950.1524378880796",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please order something that's on the menu."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.698210688078.1609394377601.128375739531",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Pls refer to a date that is in the future."
+                    }
+                ]
+            }
+        ]
     }
 }

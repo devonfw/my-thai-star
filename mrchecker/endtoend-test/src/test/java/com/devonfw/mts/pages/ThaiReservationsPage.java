@@ -113,9 +113,9 @@ public class ThaiReservationsPage extends BasePage {
 
     for (int i = 1; i <= reservations.size(); i++) {
 
-      date = getDriver().findElementDynamic(findDataCell(i, 1)).getText();
-      email = getDriver().findElementDynamic(findDataCell(i, 2)).getText();
-      id = getDriver().findElementDynamic(findDataCell(i, 3)).getText();
+      date = getDriver().findElementDynamic(findDataCell(i, 2)).getText();
+      email = getDriver().findElementDynamic(findDataCell(i, 3)).getText();
+      id = getDriver().findElementDynamic(findDataCell(i, 1)).getText();
       try {
         date = Utils.changeDateFormat(date, "MMM dd, yyyy hh:mm a", "MM/dd/yyyy hh:mm a");
       } catch (ParseException e) {

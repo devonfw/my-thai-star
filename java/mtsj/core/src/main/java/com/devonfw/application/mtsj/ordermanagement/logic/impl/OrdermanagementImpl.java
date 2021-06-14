@@ -55,12 +55,15 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.AddressEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderStateEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.AddressRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderPayStateRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
@@ -92,6 +95,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
+
+  /**
+   * @see #getAddressDao()
+   */
+  @Inject
+  private AddressRepository addressDao;
 
   /**
    * @see #getOrderStateDao()
@@ -141,27 +150,22 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderEntity> entityList = getOrderDao().findOrderByOrderToken(id);
     OrderEntity order = entityList.get(0);
     OrderCto cto = new OrderCto();
-	cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
-	cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
-	cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
-	cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
-	cto.setOrder(getBeanMapper().map(order, OrderEto.class));
-	cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
-	List<OrderLineCto> orderLinesCto = new ArrayList<>();
-	for (OrderLineEntity orderLine : order.getOrderLines()) {
-		OrderLineCto orderLineCto = new OrderLineCto();
-		orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
-		orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
-		orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
-		orderLinesCto.add(orderLineCto);
-	}
-	cto.setOrderLines(orderLinesCto);
-	cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
-    //cto.setBooking(getBeanMapper().map(entity.getBooking(), BookingEto.class));
-    //cto.setHost(getBeanMapper().map(entity.getHost(), BookingEto.class));
-    //cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
-    //cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
-    //cto.setInvitedGuest(getBeanMapper().map(entity.getInvitedGuest(), InvitedGuestEto.class));
+    cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
+    cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
+    cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
+    cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
+    cto.setOrder(getBeanMapper().map(order, OrderEto.class));
+    cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
+    List<OrderLineCto> orderLinesCto = new ArrayList<>();
+    for (OrderLineEntity orderLine : order.getOrderLines()) {
+      OrderLineCto orderLineCto = new OrderLineCto();
+      orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
+      orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
+      orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
+      orderLinesCto.add(orderLineCto);
+    }
+    cto.setOrderLines(orderLinesCto);
+    cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
     return cto;
   }
 
@@ -220,23 +224,23 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   private void processOrders(List<OrderCto> ctos, OrderEntity order) {
 
     OrderCto cto = new OrderCto();
-		cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
-		cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
-		cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
-		cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
-		cto.setOrder(getBeanMapper().map(order, OrderEto.class));
-		cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
-		List<OrderLineCto> orderLinesCto = new ArrayList<>();
-		for (OrderLineEntity orderLine : order.getOrderLines()) {
-			OrderLineCto orderLineCto = new OrderLineCto();
-			orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
-			orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
-			orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
-			orderLinesCto.add(orderLineCto);
-		}
-		cto.setOrderLines(orderLinesCto);
-		cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
-		ctos.add(cto);
+    cto.setBooking(getBeanMapper().map(order.getBooking(), BookingEto.class));
+    cto.setHost(getBeanMapper().map(order.getHost(), BookingEto.class));
+    cto.setAddress(getBeanMapper().map(order.getAddress(), AddressEto.class));
+    cto.setInvitedGuest(getBeanMapper().map(order.getInvitedGuest(), InvitedGuestEto.class));
+    cto.setOrder(getBeanMapper().map(order, OrderEto.class));
+    cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
+    List<OrderLineCto> orderLinesCto = new ArrayList<>();
+    for (OrderLineEntity orderLine : order.getOrderLines()) {
+      OrderLineCto orderLineCto = new OrderLineCto();
+      orderLineCto.setDish(getBeanMapper().map(orderLine.getDish(), DishEto.class));
+      orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
+      orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
+      orderLinesCto.add(orderLineCto);
+    }
+    cto.setOrderLines(orderLinesCto);
+    cto.setState(getBeanMapper().map(order.getState(), OrderStateEto.class));
+    ctos.add(cto);
   }
 
   @Override
@@ -292,6 +296,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
+
+    if (order.getAddress() != null) {
+      AddressEntity address = new AddressEntity();
+      address.setCity(order.getAddress().getCity());
+      address.setHouseNumber(order.getAddress().getHouseNumber());
+      address.setPostCode(order.getAddress().getPostCode());
+      address.setStreetName(order.getAddress().getStreetName());
+      orderEntity.setAddress(address);
+      getAddressDao().save(address);
+    }
+
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 
@@ -315,13 +330,28 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     OrderEntity orderEntity = getOrderDao().find(order.getId());
     OrderStateEntity orderStateEntity = getOrderStateDao().find(order.getStateId());
-    // OrderStateEntity state = getBeanMapper().map(order.getStateId(),
-    // OrderStateEntity.class);
     orderEntity.setState(orderStateEntity);
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
 
     return getBeanMapper().map(resultOrderEntity, OrderEto.class);
+  }
+
+  @Override
+  public OrdersCto findActiveOrders(OrderSearchCriteriaTo email) {
+
+    LOG.debug("Get active orders with email " + email.getEmail() + " from database.");
+
+    OrdersCto cto = new OrdersCto();
+    List<OrderEto> orders = new ArrayList<OrderEto>();
+    List<OrderEntity> entityList = getOrderDao().findAktiveOrdersByEmail(email.getEmail());
+
+    for (OrderEntity order : entityList) {
+      orders.add(getBeanMapper().map(order, OrderEto.class));
+    }
+
+    cto.setOrders(orders);
+    return cto;
   }
 
   @Override
@@ -401,6 +431,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   public OrderLineRepository getOrderLineDao() {
 
     return this.orderLineDao;
+  }
+
+  /**
+   * Returns the field 'addressDao'.
+   *
+   * @return the {@link AddressDao} instance.
+   */
+  public AddressRepository getAddressDao() {
+
+    return this.addressDao;
   }
 
   /**
@@ -505,7 +545,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
       mailContent.append("\n\n").append("You can check your order here: \n");
-      String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
+      String orderStateCheckLink = "https://demo.bitshift-team.de" + "/order/" + order.getOrderToken();
       mailContent.append(orderStateCheckLink);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {
