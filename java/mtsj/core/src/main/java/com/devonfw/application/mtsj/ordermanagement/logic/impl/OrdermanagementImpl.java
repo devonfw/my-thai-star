@@ -299,10 +299,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
       orderLineEntities.add(orderLineEntity);
     }
-    OrderStateEto a = new OrderStateEto();
-    a.setId(0L);
-    order.setState(a);
+
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+
+    orderEntity.setPaidId(0L);
+    orderEntity.setStateId(0L);
+
     String token = orderEntity.getBooking().getBookingToken();
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);

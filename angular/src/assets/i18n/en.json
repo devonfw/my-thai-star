@@ -254,6 +254,7 @@
       "cityH":"City",
       "streetNameH":"Street",
       "houseNumberH":"House Number",
+      "tableNotDefinedH": "---",
       "idH":"Id number"
     }
   },

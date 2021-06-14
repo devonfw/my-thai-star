@@ -11,7 +11,9 @@ import { exhaustMap } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
 import {
   BookingResponse,
+  BookingView,
   OrderResponse,
+  TableResponse,
   OrderView,
   OrderViewResult,
   SaveOrderResponse,
@@ -22,6 +24,8 @@ import { PriceCalculatorService } from '../../sidenav/services/price-calculator.
 export class WaiterCockpitService {
   private readonly getReservationsRestPath: string =
     'bookingmanagement/v1/booking/search';
+  private readonly updateTableNumber: string =
+    'bookingmanagement/v1/booking/updateTable';
   private readonly getOrdersRestPath: string =
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
@@ -30,8 +34,10 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/updatestate';
   private readonly updateOrderPayStatePath: string =
     'ordermanagement/v1/order/updatepaystate';
-
-  private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
+  private readonly getTablesRestPath: string =
+    'bookingmanagement/v1/table/search';
+  private readonly restServiceRoot$: Observable<string> =
+    this.config.getRestServiceRoot();
 
   constructor(
     private http: HttpClient,
@@ -61,6 +67,17 @@ export class WaiterCockpitService {
     );
   }
 
+  getTables(): Observable<TableResponse> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<TableResponse>(
+          `${restServiceRoot}${this.getTablesRestPath}`,
+          { pageable: { pageSize: 8, pageNumber: 0, sort: [] } },
+        ),
+      ),
+    );
+  }
+
   getReservations(
     pageable: Pageable,
     sorting: Sort[],
@@ -78,7 +95,10 @@ export class WaiterCockpitService {
     );
   }
 
-  updateOrder(order: {id:number,stateId:number}): Observable<SaveOrderResponse[]> {
+  updateOrder(order: {
+    id: number;
+    stateId: number;
+  }): Observable<SaveOrderResponse[]> {
     let path: string = this.updateOrderRestPath;
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
@@ -87,11 +107,23 @@ export class WaiterCockpitService {
     );
   }
 
-  changeOrderPayState(order: {id:number,paidId:number}): Observable<SaveOrderResponse[]> {
+  changeOrderPayState(order: {
+    id: number;
+    paidId: number;
+  }): Observable<SaveOrderResponse[]> {
     let path: string = this.updateOrderPayStatePath;
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, order),
+      ),
+    );
+  }
+
+  changeTableNumber(booking: any): Observable<BookingView> {
+    let path: string = this.updateTableNumber;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<BookingView>(`${restServiceRoot}${path}`, booking),
       ),
     );
   }

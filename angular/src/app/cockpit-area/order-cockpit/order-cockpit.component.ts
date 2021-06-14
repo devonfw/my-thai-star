@@ -22,6 +22,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 })
 export class OrderCockpitComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
+  public tables = [];
   @ViewChild(MatTable) table: MatTable<OrderListView>;
 
   private pageable: Pageable = {
@@ -43,7 +44,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.tableNumber',
     'order.paystate',
     'order.state',
-    'booking.bookingDate'
+    'booking.bookingDate',
   ];
 
   pageSizes: number[];
@@ -54,11 +55,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingToken: undefined,
     stateId: undefined,
     archive: false,
-    order_cockpit: true
+    order_cockpit: true,
   };
 
-  stateNames = []
-  payStateNames = []
+  stateNames = [];
+  payStateNames = [];
 
   constructor(
     private dialog: MatDialog,
@@ -77,31 +78,36 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       this.setPayStateNames(event);
       moment.locale(this.translocoService.getActiveLang());
     });
-  }
-
-  setStateNames(lang:string){
-    this.translocoSubscription = this.translocoService
-    .selectTranslateObject('cockpit.orderStates', {}, lang)
-    .subscribe((cockpitTable) => {
-      this.stateNames = [
-        cockpitTable.orderedH,
-        cockpitTable.preparationH,
-        cockpitTable.deliveryH,
-        cockpitTable.deliveredH,
-        cockpitTable.canceledH,
-      ];
+    this.waiterCockpitService.getTables().subscribe((data) => {
+      this.tables = Array(data.totalElements)
+        .fill(0)
+        .map((x, i) => i);
     });
   }
 
-  setPayStateNames(lang:string){
+  setStateNames(lang: string) {
     this.translocoSubscription = this.translocoService
-    .selectTranslateObject('cockpit.orderPayStates', {}, lang)
-    .subscribe((cockpitorderPayStates) => {
-      this.payStateNames = [
-        cockpitorderPayStates.paid,
-        cockpitorderPayStates.unpaid
-      ];
-    });
+      .selectTranslateObject('cockpit.orderStates', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.stateNames = [
+          cockpitTable.orderedH,
+          cockpitTable.preparationH,
+          cockpitTable.deliveryH,
+          cockpitTable.deliveredH,
+          cockpitTable.canceledH,
+        ];
+      });
+  }
+
+  setPayStateNames(lang: string) {
+    this.translocoSubscription = this.translocoService
+      .selectTranslateObject('cockpit.orderPayStates', {}, lang)
+      .subscribe((cockpitorderPayStates) => {
+        this.payStateNames = [
+          cockpitorderPayStates.paid,
+          cockpitorderPayStates.unpaid,
+        ];
+      });
   }
 
   setTableHeaders(lang: string): void {
@@ -112,7 +118,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.tableNumber', label: cockpitTable.tablenumberH },
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH }
+          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
         ];
       });
   }
@@ -156,30 +162,60 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  changeOrderState(event,element){
+  changeOrderState(event, element) {
     this.waiterCockpitService
-      .updateOrder({id:element.order.id, stateId:event.value})
+      .updateOrder({ id: element.order.id, stateId: event.value })
       .subscribe((data) => {
-        if ((element.order.paidId == 1 && event.value == 3) || (element.order.paidId == 0 && event.value == 4)) {
-          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+        if (
+          (element.order.paidId == 1 && event.value == 3) ||
+          (element.order.paidId == 0 && event.value == 4)
+        ) {
+          this.orders.splice(
+            this.orders.findIndex((el) => el.order.id == element.order.id),
+            1,
+          );
           this.table.renderRows();
         }
       });
   }
 
-  changeOrderPayState(event,element){
-    event.checked ? element.order.paidId = 1 : element.order.paidId = 0
+  changeTableNumber(event, element) {
+    element.booking.tableId = event.value;
     this.waiterCockpitService
-      .changeOrderPayState({id:element.order.id, paidId:event.checked ? 1 : 0})
+      .changeTableNumber(element.booking)
       .subscribe((data) => {
-        if ((element.order.paidId == 1 && event.value == 3) || (element.order.paidId == 0 && event.value == 4)) {
-          this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
+        this.waiterCockpitService
+          .getOrders(this.pageable, this.sorting, this.filters)
+          .subscribe((data: any) => {
+            this.orders = data.content;
+            this.totalOrders = data.totalElements;
+            this.table.renderRows();
+          });
+      });
+  }
+
+  changeOrderPayState(event, element) {
+    event.checked ? (element.order.paidId = 1) : (element.order.paidId = 0);
+    this.waiterCockpitService
+      .changeOrderPayState({
+        id: element.order.id,
+        paidId: event.checked ? 1 : 0,
+      })
+      .subscribe((data) => {
+        if (
+          (element.order.paidId == 1 && element.order.stateId == 3) ||
+          (element.order.paidId == 0 && element.order.stateId == 4)
+        ) {
+          this.orders.splice(
+            this.orders.findIndex((el) => el.order.id == element.order.id),
+            1,
+          );
           this.table.renderRows();
         }
       });
   }
 
-  selected(selection: OrderListView,event:any): void {
+  selected(selection: OrderListView, event: any): void {
     this.dialog.open(OrderDialogComponent, {
       width: '80%',
       data: selection,
