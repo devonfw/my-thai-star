@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DateTimeAdapter } from '@busacca/ng-pick-datetime';
 import { AuthService } from '../core/authentication/auth.service';
@@ -19,6 +19,7 @@ import { UserAreaService } from '../user-area/services/user-area.service';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { find } from 'lodash';
+import { AboutYouComponent } from '../about-you/about-you.component';
 
 @Component({
   selector: 'app-public-header',
@@ -124,6 +125,12 @@ export class HeaderComponent {
     dialogRef.afterClosed().subscribe((content: any) => {
       // TODO: manage user input
     });
+  }
+  openAboutYouDialog():void{
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.height = '750px';
+    dialogConfig.width = '500px';
+    this.dialog.open(AboutYouComponent, dialogConfig);
   }
   
   logout(): void {

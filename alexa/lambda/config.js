@@ -2,6 +2,7 @@ module.exports = {
     myThaiStarBackend:{
         host:"java",
         port:8081,
-        createBookingEndpoint:"/mythaistar/services/rest/bookingmanagement/v1/booking"
+        createBookingEndpoint:"/mythaistar/services/rest/bookingmanagement/v1/booking",
+        createOrderEndpoint:"/mythaistar/services/rest/ordermanagement/v1/order/"
     }
 }

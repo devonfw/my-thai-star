@@ -56,12 +56,14 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesC
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.AddressEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderStateEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.AddressRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderPayStateRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
@@ -93,6 +95,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
+
+  /**
+   * @see #getAddressDao()
+   */
+  @Inject
+  private AddressRepository addressDao;
 
   /**
    * @see #getOrderStateDao()
@@ -290,6 +298,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
+
+    if (order.getAddress() != null) {
+      AddressEntity address = new AddressEntity();
+      address.setCity(order.getAddress().getCity());
+      address.setHouseNumber(order.getAddress().getHouseNumber());
+      address.setPostCode(order.getAddress().getPostCode());
+      address.setStreetName(order.getAddress().getStreetName());
+      orderEntity.setAddress(address);
+      getAddressDao().save(address);
+    }
+
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 
@@ -417,6 +436,16 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   /**
+   * Returns the field 'addressDao'.
+   *
+   * @return the {@link AddressDao} instance.
+   */
+  public AddressRepository getAddressDao() {
+
+    return this.addressDao;
+  }
+
+  /**
    * Returns the field 'orderStateDao'.
    *
    * @return the {@link OrderStateDao} instance.
@@ -518,7 +547,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
       mailContent.append("\n\n").append("You can check your order here: \n");
-      String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
+      String orderStateCheckLink = "https://demo.bitshift-team.de" + "/order/" + order.getOrderToken();
       mailContent.append(orderStateCheckLink);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {

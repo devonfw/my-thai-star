@@ -219,7 +219,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.state = state;
   }
 
-  @Override
   @Transient
   public Long getAddressId() {
 
@@ -229,7 +228,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     return this.address.getId();
   }
 
-  @Override
   public void setAddressId(Long addressId) {
 
     if (addressId == null) {
@@ -244,8 +242,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   /**
    * @return address
    */
-  @OneToOne
   @JoinColumn(name = "idAddress")
+  @OneToOne
   public AddressEntity getAddress() {
 
     return this.address;
