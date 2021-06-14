@@ -162,6 +162,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   changeOrderState(newStateID,element){
+    element.order.stateId = newStateID;
     this.waiterCockpitService
       .updateOrder({id:element.order.id, stateId:newStateID})
       .subscribe((data) => {

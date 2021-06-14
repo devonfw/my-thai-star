@@ -164,12 +164,13 @@
           </button>
         </td>  
       </ng-container>  
-      
-        <tr
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns"
-          (click)="selected(row)"
-        ></tr>
+        (click)="selected(row)"
+      ></tr>
     </table>
   </div>
 
