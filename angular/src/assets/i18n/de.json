@@ -201,7 +201,10 @@
         "extrasH": "Extra",
         "quantityH": "Anzahl",
         "priceH": "Preis"
-      }
+      },
+      "snackbarInHouse": "Die Bestellung von Tisch ",
+      "snackbarDelivery": "Die Lieferung an ",
+      "snackbarEnd": " wurde in das Bestellungsarchiv verschoben."
     },
     "reservations": {
       "title": "Reservierungen",

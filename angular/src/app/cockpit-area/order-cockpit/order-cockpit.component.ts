@@ -15,6 +15,7 @@ import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
+import { template } from 'lodash';
 
 @Component({
   selector: 'app-cockpit-order-cockpit',
@@ -45,8 +46,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
-    'order.cancel',
-    'order.decrement'
+    'order.cancel'
   ];
 
   pageSizes: number[];
@@ -94,7 +94,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         cockpitTable.deliveryH,
         cockpitTable.deliveredH,
         cockpitTable.canceledH,
-        cockpitTable.decrementH,
       ];
     });
   }
@@ -119,8 +118,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'order.cancel', label: cockpitTable.cancelH },
-          { name: 'order.decrement', label: cockpitTable.decrementH }
+          { name: 'order.cancel', label: cockpitTable.cancelH }
         ];
       });
   }
@@ -168,16 +166,30 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     element.order.stateId = newStateID;
     this.waiterCockpitService
       .updateOrder({id:element.order.id, stateId:newStateID})
-      .subscribe((data) => {
+      .subscribe(() => {
         if (newStateID == 3 || newStateID == 4){
           this.orders.splice(this.orders.findIndex(el => el.order.id == element.order.id), 1);
-          //TODO: make it transloco!
-          this.stringpart = "Order " + element.booking.id + " has been moved to the order-archive!";
+          this.stringpart = this.stringInputForSnackBar(element);
           this.snackBarService.openSnack(this.stringpart, 10000, 'green');
           this.table.renderRows();
         }
       }); 
   }
+
+  stringInputForSnackBar(element): string{
+    var temp;
+    if(element.booking.delivery){
+      temp = this.translocoService.translate('cockpit.orders.snackbarDelivery') 
+      + element.booking.name 
+      + this.translocoService.translate('cockpit.orders.snackbarEnd') ; 
+    }else{
+      temp = this.translocoService.translate('cockpit.orders.snackbarInHouse') 
+      + element.booking.tableId 
+      + this.translocoService.translate('cockpit.orders.snackbarEnd') ; 
+    }
+    return temp;
+  }
+
 
   changeOrderPayState(event,element){
     this.waiterCockpitService
@@ -192,7 +204,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       data: selection,
     });
   }
-
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
