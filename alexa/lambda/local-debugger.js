@@ -12,14 +12,12 @@
  */
 
 /* ## DEPRECATION NOTICE
-
 This script has been deprecated and is no longer supported. 
 Please use the [ASK Toolkit for VS Code]
 (https://marketplace.visualstudio.com/items?itemName=ask-toolkit.alexa-skills-kit-toolkit), 
 which provides a more end-to-end integration with Visual Studio Code. If you 
 use another editor/IDE, please check out the [ASK SDK Local Debug package at npm]
 (https://www.npmjs.com/package/ask-sdk-local-debug).
-
 */
 
 const net = require("net");
