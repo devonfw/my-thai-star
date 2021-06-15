@@ -34,12 +34,14 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuest
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.WaitersHelpCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.BookingRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.InvitedGuestRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
+import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.WaitersHelpRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
@@ -47,7 +49,8 @@ import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.WaitersHelpEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 
@@ -78,6 +81,18 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 	 */
 	@Inject
 	private BookingRepository bookingDao;
+	
+	/**
+	 * @see #getWaitersHelpDao()
+	 */
+	@Inject
+	private WaitersHelpRepository waitersHelpDao;
+	
+	/**
+	 * @see #getOrderDao()
+	 */
+	@Inject
+	private OrderRepository orderDao;
 
 	/**
 	 * @see #getInvitedGuestDao()
@@ -259,8 +274,25 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 	 * @return the {@link BookingDao} instance.
 	 */
 	public BookingRepository getBookingDao() {
-
 		return this.bookingDao;
+	}
+	
+	/**
+	 * Returns the field 'OrderDao'.
+	 *
+	 * @return the {@link OrderDao} instance.
+	 */
+	public OrderRepository getOrderDao() {
+	    return this.orderDao;
+	  }
+	
+	/**
+	 * Returns the field 'WaitersHelpDao'.
+	 *
+	 * @return the {@link WaitersHelpDao} instance.
+	 */
+	public WaitersHelpRepository getWaitersHelpDao() {
+		return this.waitersHelpDao;
 	}
 
 	@Override
@@ -591,6 +623,21 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 		LOG.debug("Booking with id '{}' has been updated.", resultBookingEntity.getId());
 		return getBeanMapper().map(resultBookingEntity, BookingEto.class);
 		
+	}
+	
+	@Override
+	public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
+		List<OrderEntity> entityList = getOrderDao().findAktiveOrdersByBookingId(searchCriteriaTo.getTableId(),searchCriteriaTo.getBookingId());	
+	    List<OrderEto> orders = new ArrayList<OrderEto>();
+	    
+		WaitersHelpEntity waitersHelpEntity = getWaitersHelpDao().find(searchCriteriaTo.getWaitersHelp());
+    
+	    for (OrderEntity order : entityList) {
+	        order.setWaitersHelp(waitersHelpEntity);
+			OrderEntity resultOrderEntity = getOrderDao().save(order);
+			orders.add(getBeanMapper().map(resultOrderEntity, OrderEto.class));
+	    }    
+		return orders;
 	}
 
 }

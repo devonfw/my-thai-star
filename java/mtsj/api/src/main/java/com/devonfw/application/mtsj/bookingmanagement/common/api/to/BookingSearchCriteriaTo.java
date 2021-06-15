@@ -9,246 +9,257 @@ import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
 /**
  *
  *
- * used to find {@link com.devonfw.application.mtsj.bookingmanagement.common.api.Booking}s.
+ * used to find
+ * {@link com.devonfw.application.mtsj.bookingmanagement.common.api.Booking}s.
  */
 public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private String name;
+	private String name;
 
-  private String bookingToken;
+	private String bookingToken;
 
-  private String comment;
+	private String comment;
 
-  private Instant bookingDate;
+	private Instant bookingDate;
 
-  private Instant expirationDate;
+	private Instant expirationDate;
 
-  private Instant creationDate;
+	private Instant creationDate;
 
-  private String email;
+	private String email;
 
-  private Boolean canceled;
+	private Boolean canceled;
 
-  private BookingType bookingType;
+	private BookingType bookingType;
 
-  private Long tableId;
+	private Long tableId;
 
-  private Long orderId;
+	private Long orderId;
 
-  private Integer assistants;
+	private Long waitersHelp;
 
-  private Long userId;
+	private Integer assistants;
 
-  private StringSearchConfigTo nameOption;
+	private Long userId;
 
-  private StringSearchConfigTo bookingTokenOption;
+	private StringSearchConfigTo nameOption;
 
-  private StringSearchConfigTo commentOption;
+	private StringSearchConfigTo bookingTokenOption;
 
-  private StringSearchConfigTo emailOption;
+	private StringSearchConfigTo commentOption;
 
-  /**
-   * The constructor.
-   */
-  public BookingSearchCriteriaTo() {
+	private StringSearchConfigTo emailOption;
 
-    super();
-  }
+	/**
+	 * The constructor.
+	 */
+	public BookingSearchCriteriaTo() {
 
-  public String getName() {
+		super();
+	}
 
-    return this.name;
-  }
+	public Long getWaitersHelp() {
+		return waitersHelp;
+	}
 
-  public void setName(String name) {
+	public void setWaitersHelp(Long waitersHelp) {
+		this.waitersHelp = waitersHelp;
+	}
 
-    this.name = name;
-  }
+	public String getName() {
 
-  public String getBookingToken() {
+		return this.name;
+	}
 
-    return this.bookingToken;
-  }
+	public void setName(String name) {
 
-  public void setBookingToken(String bookingToken) {
+		this.name = name;
+	}
 
-    this.bookingToken = bookingToken;
-  }
+	public String getBookingToken() {
 
-  public String getComment() {
+		return this.bookingToken;
+	}
 
-    return this.comment;
-  }
+	public void setBookingToken(String bookingToken) {
 
-  public void setComment(String comment) {
+		this.bookingToken = bookingToken;
+	}
 
-    this.comment = comment;
-  }
+	public String getComment() {
 
-  public Instant getBookingDate() {
+		return this.comment;
+	}
 
-    return this.bookingDate;
-  }
+	public void setComment(String comment) {
 
-  public void setBookingDate(Instant bookingDate) {
+		this.comment = comment;
+	}
 
-    this.bookingDate = bookingDate;
-  }
+	public Instant getBookingDate() {
 
-  public Instant getExpirationDate() {
+		return this.bookingDate;
+	}
 
-    return this.expirationDate;
-  }
+	public void setBookingDate(Instant bookingDate) {
 
-  public void setExpirationDate(Instant expirationDate) {
+		this.bookingDate = bookingDate;
+	}
 
-    this.expirationDate = expirationDate;
-  }
+	public Instant getExpirationDate() {
 
-  public Instant getCreationDate() {
+		return this.expirationDate;
+	}
 
-    return this.creationDate;
-  }
+	public void setExpirationDate(Instant expirationDate) {
 
-  public void setCreationDate(Instant creationDate) {
+		this.expirationDate = expirationDate;
+	}
 
-    this.creationDate = creationDate;
-  }
+	public Instant getCreationDate() {
 
-  public String getEmail() {
+		return this.creationDate;
+	}
 
-    return this.email;
-  }
+	public void setCreationDate(Instant creationDate) {
 
-  public void setEmail(String email) {
+		this.creationDate = creationDate;
+	}
 
-    this.email = email;
-  }
+	public String getEmail() {
 
-  public Boolean getCanceled() {
+		return this.email;
+	}
 
-    return this.canceled;
-  }
+	public void setEmail(String email) {
 
-  public void setCanceled(Boolean canceled) {
+		this.email = email;
+	}
 
-    this.canceled = canceled;
-  }
+	public Boolean getCanceled() {
 
-  public BookingType getBookingType() {
+		return this.canceled;
+	}
 
-    return this.bookingType;
-  }
+	public void setCanceled(Boolean canceled) {
 
-  public void setBookingType(BookingType bookingType) {
+		this.canceled = canceled;
+	}
 
-    this.bookingType = bookingType;
-  }
+	public BookingType getBookingType() {
 
-  public Long getTableId() {
+		return this.bookingType;
+	}
 
-    return this.tableId;
-  }
+	public void setBookingType(BookingType bookingType) {
 
-  public void setTableId(Long tableId) {
+		this.bookingType = bookingType;
+	}
 
-    this.tableId = tableId;
-  }
+	public Long getTableId() {
 
-  public Long getOrderId() {
+		return this.tableId;
+	}
 
-    return this.orderId;
-  }
+	public void setTableId(Long tableId) {
 
-  public void setOrderId(Long orderId) {
+		this.tableId = tableId;
+	}
 
-    this.orderId = orderId;
-  }
+	public Long getOrderId() {
 
-  public Integer getAssistants() {
+		return this.orderId;
+	}
 
-    return this.assistants;
-  }
+	public void setOrderId(Long orderId) {
 
-  public void setAssistants(Integer assistants) {
+		this.orderId = orderId;
+	}
 
-    this.assistants = assistants;
-  }
+	public Integer getAssistants() {
 
-  public Long getUserId() {
+		return this.assistants;
+	}
 
-    return this.userId;
-  }
+	public void setAssistants(Integer assistants) {
 
-  public void setUserId(Long userId) {
+		this.assistants = assistants;
+	}
 
-    this.userId = userId;
-  }
+	public Long getUserId() {
 
-  /**
-   * @return nameOption
-   */
-  public StringSearchConfigTo getNameOption() {
+		return this.userId;
+	}
 
-    return this.nameOption;
-  }
+	public void setUserId(Long userId) {
 
-  /**
-   * @param nameOption new value of {@link #getnameOption}.
-   */
-  public void setNameOption(StringSearchConfigTo nameOption) {
+		this.userId = userId;
+	}
 
-    this.nameOption = nameOption;
-  }
+	/**
+	 * @return nameOption
+	 */
+	public StringSearchConfigTo getNameOption() {
 
-  /**
-   * @return bookingTokenOption
-   */
-  public StringSearchConfigTo getBookingTokenOption() {
+		return this.nameOption;
+	}
 
-    return this.bookingTokenOption;
-  }
+	/**
+	 * @param nameOption new value of {@link #getnameOption}.
+	 */
+	public void setNameOption(StringSearchConfigTo nameOption) {
 
-  /**
-   * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
-   */
-  public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
+		this.nameOption = nameOption;
+	}
 
-    this.bookingTokenOption = bookingTokenOption;
-  }
+	/**
+	 * @return bookingTokenOption
+	 */
+	public StringSearchConfigTo getBookingTokenOption() {
 
-  /**
-   * @return commentOption
-   */
-  public StringSearchConfigTo getCommentOption() {
+		return this.bookingTokenOption;
+	}
 
-    return this.commentOption;
-  }
+	/**
+	 * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
+	 */
+	public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
 
-  /**
-   * @param commentOption new value of {@link #getcommentOption}.
-   */
-  public void setCommentOption(StringSearchConfigTo commentOption) {
+		this.bookingTokenOption = bookingTokenOption;
+	}
 
-    this.commentOption = commentOption;
-  }
+	/**
+	 * @return commentOption
+	 */
+	public StringSearchConfigTo getCommentOption() {
 
-  /**
-   * @return emailOption
-   */
-  public StringSearchConfigTo getEmailOption() {
+		return this.commentOption;
+	}
 
-    return this.emailOption;
-  }
+	/**
+	 * @param commentOption new value of {@link #getcommentOption}.
+	 */
+	public void setCommentOption(StringSearchConfigTo commentOption) {
 
-  /**
-   * @param emailOption new value of {@link #getemailOption}.
-   */
-  public void setEmailOption(StringSearchConfigTo emailOption) {
+		this.commentOption = commentOption;
+	}
 
-    this.emailOption = emailOption;
-  }
+	/**
+	 * @return emailOption
+	 */
+	public StringSearchConfigTo getEmailOption() {
+
+		return this.emailOption;
+	}
+
+	/**
+	 * @param emailOption new value of {@link #getemailOption}.
+	 */
+	public void setEmailOption(StringSearchConfigTo emailOption) {
+
+		this.emailOption = emailOption;
+	}
 
 }

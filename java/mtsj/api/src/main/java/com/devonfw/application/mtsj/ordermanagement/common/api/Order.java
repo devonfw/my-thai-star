@@ -36,5 +36,9 @@ public interface Order extends ApplicationEntity {
    * @param OrderToken setter for OrderToken attribute
    */
   public void setOrderToken(String OrderToken);
+  
+  public Long getWaitersHelpId();
+
+  public void setWaitersHelpId(Long waitersHelpId);
 
 }

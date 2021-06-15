@@ -8,156 +8,166 @@ import com.devonfw.module.basic.common.api.to.AbstractEto;
  */
 public class OrderEto extends AbstractEto implements Order {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private Long bookingId;
+	private Long bookingId;
 
-  private Long invitedGuestId;
+	private Long invitedGuestId;
 
-  private String bookingToken;
+	private String bookingToken;
 
-  private Long state;
+	private Long state;
 
-  private Long paidId;
+	private Long paidId;
 
-  private String orderToken;
+	private String orderToken;
 
-  /**
-   * @return bookingToken
-   */
-  public String getBookingToken() {
+	private Long waitersHelpId;
 
-    return this.bookingToken;
-  }
+	/**
+	 * @return bookingToken
+	 */
+	public String getBookingToken() {
 
-  /**
-   * @param bookingToken new value of {@link #setbookingToken}.
-   */
-  public void setBookingToken(String bookingToken) {
+		return this.bookingToken;
+	}
 
-    this.bookingToken = bookingToken;
-  }
+	/**
+	 * @param bookingToken new value of {@link #setbookingToken}.
+	 */
+	public void setBookingToken(String bookingToken) {
 
-  private Long hostId;
+		this.bookingToken = bookingToken;
+	}
 
-  @Override
-  public Long getBookingId() {
+	private Long hostId;
 
-    return this.bookingId;
-  }
+	@Override
+	public Long getBookingId() {
 
-  @Override
-  public void setBookingId(Long bookingId) {
+		return this.bookingId;
+	}
 
-    this.bookingId = bookingId;
-  }
+	@Override
+	public void setBookingId(Long bookingId) {
 
-  @Override
-  public Long getInvitedGuestId() {
+		this.bookingId = bookingId;
+	}
 
-    return this.invitedGuestId;
-  }
+	@Override
+	public Long getInvitedGuestId() {
 
-  @Override
-  public void setInvitedGuestId(Long invitedGuestId) {
+		return this.invitedGuestId;
+	}
 
-    this.invitedGuestId = invitedGuestId;
-  }
+	@Override
+	public void setInvitedGuestId(Long invitedGuestId) {
 
-  @Override
-  public int hashCode() {
+		this.invitedGuestId = invitedGuestId;
+	}
 
-    final int prime = 31;
-    int result = super.hashCode();
+	@Override
+	public int hashCode() {
 
-    result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
+		final int prime = 31;
+		int result = super.hashCode();
 
-    result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
+		result = prime * result + ((this.bookingId == null) ? 0 : this.bookingId.hashCode());
 
-    return result;
-  }
+		result = prime * result + ((this.invitedGuestId == null) ? 0 : this.invitedGuestId.hashCode());
 
-  @Override
-  public boolean equals(Object obj) {
+		return result;
+	}
 
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    // class check will be done by super type EntityTo!
-    if (!super.equals(obj)) {
-      return false;
-    }
-    OrderEto other = (OrderEto) obj;
+	@Override
+	public boolean equals(Object obj) {
 
-    if (this.bookingId == null) {
-      if (other.bookingId != null) {
-        return false;
-      }
-    } else if (!this.bookingId.equals(other.bookingId)) {
-      return false;
-    }
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		// class check will be done by super type EntityTo!
+		if (!super.equals(obj)) {
+			return false;
+		}
+		OrderEto other = (OrderEto) obj;
 
-    if (this.invitedGuestId == null) {
-      if (other.invitedGuestId != null) {
-        return false;
-      }
-    } else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
-      return false;
-    }
+		if (this.bookingId == null) {
+			if (other.bookingId != null) {
+				return false;
+			}
+		} else if (!this.bookingId.equals(other.bookingId)) {
+			return false;
+		}
 
-    return true;
-  }
+		if (this.invitedGuestId == null) {
+			if (other.invitedGuestId != null) {
+				return false;
+			}
+		} else if (!this.invitedGuestId.equals(other.invitedGuestId)) {
+			return false;
+		}
 
-  @Override
-  public Long getHostId() {
+		return true;
+	}
 
-    return this.hostId;
-  }
+	@Override
+	public Long getHostId() {
 
-  @Override
-  public void setHostId(Long hostId) {
+		return this.hostId;
+	}
 
-    this.hostId = hostId;
-  }
+	@Override
+	public void setHostId(Long hostId) {
 
-  @Override
-  public Long getStateId() {
+		this.hostId = hostId;
+	}
 
-    return this.state;
-  }
+	@Override
+	public Long getStateId() {
 
-  @Override
-  public void setStateId(Long state) {
+		return this.state;
+	}
 
-    this.state = state;
-  }
+	@Override
+	public void setStateId(Long state) {
 
-  @Override
-  public Long getPaidId() {
+		this.state = state;
+	}
 
-    return this.paidId;
-  }
+	@Override
+	public Long getPaidId() {
 
-  @Override
-  public void setPaidId(Long paidId) {
+		return this.paidId;
+	}
 
-    this.paidId = paidId;
+	@Override
+	public void setPaidId(Long paidId) {
 
-  }
+		this.paidId = paidId;
 
-  @Override
-  public String getOrderToken() {
+	}
 
-    return this.orderToken;
-  }
+	@Override
+	public String getOrderToken() {
 
-  @Override
-  public void setOrderToken(String OrderToken) {
+		return this.orderToken;
+	}
 
-    this.orderToken = OrderToken;
-  }
+	@Override
+	public void setOrderToken(String OrderToken) {
+
+		this.orderToken = OrderToken;
+	}
+
+	public Long getWaitersHelpId() {
+		return waitersHelpId;
+	}
+
+	public void setWaitersHelpId(Long waitersHelpId) {
+		this.waitersHelpId = waitersHelpId;
+	}
 
 }

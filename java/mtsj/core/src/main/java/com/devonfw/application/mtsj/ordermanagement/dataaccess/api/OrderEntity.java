@@ -41,6 +41,10 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   private AddressEntity address;
 
   private String OrderToken;
+  
+  private WaitersHelpEntity waitersHelp;
+  
+  
 
   /**
    * @return booking
@@ -307,6 +311,44 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   public void setOrderToken(String OrderToken) {
 
     this.OrderToken = OrderToken;
+  }
+
+  @Override
+  @Transient
+  public Long getWaitersHelpId() {
+
+    if (this.waitersHelp == null) {
+      return null;
+    }
+    return this.waitersHelp.getId();
+  }
+
+  @Override
+  public void setWaitersHelpId(Long waitersHelpId) {
+
+    if (waitersHelpId == null) {
+      this.waitersHelp = null;
+    } else {
+    	WaitersHelpEntity waitersHelpEntity = new WaitersHelpEntity();
+    	waitersHelpEntity.setId(waitersHelpId);
+    	this.waitersHelp = waitersHelpEntity;
+    }
+  }
+
+  /**
+   * @return waitersHelp
+   */
+  @OneToOne
+  @JoinColumn(name = "idHelp")
+  public WaitersHelpEntity getWaitersHelp() {
+    return this.waitersHelp;
+  }
+
+  /**
+   * @param new value of {@link #waitersHelp}.
+   */
+  public void setWaitersHelp(WaitersHelpEntity waitersHelp) {
+    this.waitersHelp = waitersHelp;
   }
 
 }

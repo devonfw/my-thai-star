@@ -12,6 +12,8 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuest
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.WaitersHelpCriteriaTo;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 
 /**
  * Interface for Bookingmanagement component.
@@ -155,5 +157,7 @@ public interface Bookingmanagement {
   String buildToken(String email, String type) throws NoSuchAlgorithmException;
   
   public BookingEto updateTableNumber(BookingEto booking);
+  
+  public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
 
 }
