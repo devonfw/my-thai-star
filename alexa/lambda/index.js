@@ -175,8 +175,15 @@ const OrderIntentHandler = {
 
     switch (lastAction) {
       case "setDish":
-        sessionAttributes.dish =
+        if(handlerInput.requestEnvelope.request.intent.slots.dish.resolutions.resolutionsPerAuthority[0].values){
+          sessionAttributes.dish =
           handlerInput.requestEnvelope.request.intent.slots.dish.resolutions.resolutionsPerAuthority[0].values[0].value;
+        }else{
+          return handlerInput.responseBuilder
+          .addElicitSlotDirective("dish")
+          .speak("Sorry, i did not understand you, please order an item from the menu")
+          .getResponse();
+        }
         break;
       case "setAmount":
         sessionAttributes.amount =
