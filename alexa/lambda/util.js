@@ -25,6 +25,7 @@ module.exports.createReservation = (
   assistants,
   delivery
 ) => {
+
   return new Promise((resolve, reject) => {
     date = new Date(date);
     const body = JSON.stringify({
@@ -50,7 +51,8 @@ module.exports.createReservation = (
 
     const req = http.request(options, (res) => {
       console.log(`statusCode: ${res.statusCode}`);
-      let responseObjectString = "";
+
+      let responseObjectString = '';
       res.on("data", (d) => {
         responseObjectString += d.toString();
         process.stdout.write(d);
@@ -154,6 +156,7 @@ module.exports.createOrder = async (
           extras: [],
         };
       }),
+
     });
     const options = {
       port: config.myThaiStarBackend.port,
@@ -193,6 +196,7 @@ module.exports.getActiveOrders = async (emailC) => {
     const options = {
       port: config.myThaiStarBackend.port,
       path: config.myThaiStarBackend.getActiveOrdersEndpoint,
+
       method: "POST",
       host: config.myThaiStarBackend.host,
       headers: {
@@ -210,6 +214,7 @@ module.exports.getActiveOrders = async (emailC) => {
       });
       res.on("end", (d) => {
         resolve(JSON.parse(responseObjectString));
+
       });
     });
 

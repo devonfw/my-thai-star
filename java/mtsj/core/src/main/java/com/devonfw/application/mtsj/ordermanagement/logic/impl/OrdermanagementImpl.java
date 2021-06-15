@@ -57,6 +57,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesC
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersEto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.AddressEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
@@ -103,6 +104,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   @Inject
   private AddressRepository addressDao;
 
+  /**
+   * @see #getOrderStateDao()
+   */
   @Inject
   private OrderStateRepository orderStateDao;
 
@@ -204,8 +208,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderCto> ctos = new ArrayList<>();
     Page<OrderCto> pagListTo = null;
     Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
+
     for (OrderEntity order : orders.getContent()) {
-      processOrders(ctos, order);
+      if (criteria.isArchive()) {
+        if ((order.getPaidId() == 1 && order.getStateId() == 3) || (order.getPaidId() == 0 && order.getStateId() == 4))
+          processOrders(ctos, order);
+
+      } else if (criteria.isOrder_cockpit()) {
+        if (!((order.getPaidId() == 1 && order.getStateId() == 3)
+            || (order.getPaidId() == 0 && order.getStateId() == 4)))
+          processOrders(ctos, order);
+      } else {
+        processOrders(ctos, order);
+      }
     }
 
     if (ctos.size() > 0) {
@@ -286,15 +301,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
       orderLineEntities.add(orderLineEntity);
     }
-    OrderStateEto a = new OrderStateEto();
-    a.setId(0L);
-    order.setState(a);
+
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+
+    orderEntity.setPaidId(0L);
+    orderEntity.setStateId(0L);
+
     String token = orderEntity.getBooking().getBookingToken();
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
-    orderEntity.setPaidId(0l);
+
     if (order.getAddress() != null) {
       AddressEntity address = new AddressEntity();
       address.setCity(order.getAddress().getCity());
@@ -373,6 +390,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
     ActiveOrdersWithDateCto cto = new ActiveOrdersWithDateCto();
     cto.setContent(eto);
+
     return cto;
   }
 
@@ -567,7 +585,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       mailContent.append("Your order has been created.").append("\n");
       mailContent.append(getContentFormatedWithCost(order)).append("\n");
       mailContent.append("\n\n").append("You can check your order here: \n");
-      String orderStateCheckLink = "http://localhost:" + this.clientPort + "/order/" + order.getOrderToken();
+      String orderStateCheckLink = "https://demo.bitshift-team.de" + "/order/" + order.getOrderToken();
       mailContent.append(orderStateCheckLink);
       this.mailService.sendMail(emailTo, "Order confirmation", mailContent.toString());
     } catch (Exception e) {

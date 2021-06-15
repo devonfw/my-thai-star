@@ -25,6 +25,7 @@ import { By } from '@angular/platform-browser';
 import { click } from '../../shared/common/test-utils';
 import { ascSortOrder } from '../../../in-memory-test-data/db-order-asc-sort';
 import { orderData } from '../../../in-memory-test-data/db-order';
+import { tableData } from '../../../in-memory-test-data/db-table';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
@@ -45,6 +46,7 @@ const translocoServiceStub = {
 
 const waiterCockpitServiceStub = {
   getOrders: jasmine.createSpy('getOrders').and.returnValue(of(orderData)),
+  getTables: jasmine.createSpy('getTables').and.returnValue(of(tableData)),
 };
 
 const waiterCockpitServiceSortStub = {

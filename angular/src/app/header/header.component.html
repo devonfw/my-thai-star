@@ -12,6 +12,12 @@
     <nav mat-tab-nav-bar>
       <a
         mat-tab-link
+        (click)="openAboutYouDialog()"
+      >
+        {{ 'aboutYou.title' | transloco | uppercase }}
+      </a>
+      <a
+        mat-tab-link
         routerLink="/restaurant"
         routerLinkActive="navBottomBorder"
         [routerLinkActiveOptions]="{ exact: true }"

@@ -36,7 +36,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private OrderStateEntity state;
 
-  private OrderPaidEntity paid;
+  private OrderPaidEntity paidId;
 
   private AddressEntity address;
 
@@ -219,7 +219,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.state = state;
   }
 
-  @Override
   @Transient
   public Long getAddressId() {
 
@@ -229,7 +228,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     return this.address.getId();
   }
 
-  @Override
   public void setAddressId(Long addressId) {
 
     if (addressId == null) {
@@ -244,8 +242,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   /**
    * @return address
    */
-  @OneToOne
   @JoinColumn(name = "idAddress")
+  @OneToOne
   public AddressEntity getAddress() {
 
     return this.address;
@@ -263,21 +261,21 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   @Transient
   public Long getPaidId() {
 
-    if (this.paid == null) {
+    if (this.paidId == null) {
       return null;
     }
-    return this.paid.getId();
+    return this.paidId.getId();
   }
 
   @Override
   public void setPaidId(Long paidId) {
 
     if (paidId == null) {
-      this.paid = null;
+      this.paidId = null;
     } else {
       OrderPaidEntity paidEntity = new OrderPaidEntity();
       paidEntity.setId(paidId);
-      this.paid = paidEntity;
+      this.paidId = paidEntity;
     }
   }
 
@@ -288,15 +286,15 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   @JoinColumn(name = "idPaid")
   public OrderPaidEntity getPaid() {
 
-    return this.paid;
+    return this.paidId;
   }
 
   /**
    * @param host new value of {@link #getPaid}.
    */
-  public void setPaid(OrderPaidEntity paid) {
+  public void setPaid(OrderPaidEntity paidId) {
 
-    this.paid = paid;
+    this.paidId = paidId;
   }
 
   @Override

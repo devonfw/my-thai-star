@@ -27,6 +27,8 @@ export class BookTableDialogComponent implements OnInit {
   }
 
   sendBooking(): void {
+    this.data.delivery = false;
+    this.data.tableId = 0; 
     this.store.dispatch(bookTableActions.bookTable({ booking: this.data }));
     this.dialog.close(true);
   }

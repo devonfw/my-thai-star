@@ -16,6 +16,8 @@ export class FilterCockpit {
   bookingDate: string;
   email: string;
   bookingToken: number;
+  archive: boolean;
+  order_cockpit: boolean;
 }
 
 export class Pageable {

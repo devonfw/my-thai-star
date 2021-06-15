@@ -45,6 +45,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     const speakOutput =
       "Welcome to My Thai Star. If you want to know what i can do for you please say Help";
+
     return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
@@ -100,7 +101,14 @@ const ReserveIntentHandler = {
 
       const combinedDate = date + "T" + time + ":00";
 
-      util.createReservation(name, email, combinedDate, assistants, false);
+
+      util.createReservation(
+        name,
+        email,
+        combinedDate,
+        assistants,
+        false
+      );
       return handlerInput.responseBuilder
         .speak(
           messages.RESERVED_TABLE + email + " for " + date + " at " + time + "."
@@ -307,6 +315,7 @@ const OrderStateHandler = {
     return handlerInput.responseBuilder
       .speak(res)
       .getResponse();
+
   },
 };
 

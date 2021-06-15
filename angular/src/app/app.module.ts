@@ -27,6 +27,7 @@ import { WebviewDirective } from './shared/directives/webview.directive';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { CustomSerializer, effects, reducers } from './store';
 import { UserAreaModule } from './user-area/user-area.module';
+import { AboutYouComponent } from './about-you/about-you.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,7 @@ import { UserAreaModule } from './user-area/user-area.module';
     HttpClientModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
-  declarations: [AppComponent, WebviewDirective],
+  declarations: [AppComponent, WebviewDirective, AboutYouComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

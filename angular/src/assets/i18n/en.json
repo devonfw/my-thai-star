@@ -65,7 +65,8 @@
     "total": "Total",
     "referenceNumber": "Reference number",
     "id": "Id",
-    "userRoleId": "Role"
+    "userRoleId": "Role",
+    "stateId": "State"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -249,11 +250,26 @@
       "ownerH": "Owner",
       "tablenumberH": "Table",
       "creationDateH": "Creation date",
-      "tableNumberH": "Table",
       "postCodeH":"Post Code",
       "cityH":"City",
       "streetNameH":"Street",
-      "houseNumberH":"House Number"
+      "houseNumberH":"House Number",
+      "tableNotDefinedH": "---",
+      "idH":"Id number"
     }
+  },
+  "aboutYou": {
+    "title": "About us",
+    "opening": "Opening hours",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "location": "Our location",
+    "restday": " is a rest day",
+    "footer": "This is just a template AboutYou page due to the fact, that the restaurant My-Thai-Star does not exist."
   }
 }
