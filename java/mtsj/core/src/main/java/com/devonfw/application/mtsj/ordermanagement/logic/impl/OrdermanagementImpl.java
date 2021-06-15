@@ -57,7 +57,6 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesC
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersEto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.AddressEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
