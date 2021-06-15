@@ -20,8 +20,6 @@ public class OrderEto extends AbstractEto implements Order {
 
   private Long paidId;
 
-  private Long address;
-
   private String orderToken;
 
   /**
@@ -147,19 +145,6 @@ public class OrderEto extends AbstractEto implements Order {
   public void setPaidId(Long paidId) {
 
     this.paidId = paidId;
-
-  }
-
-  @Override
-  public Long getAddressId() {
-
-    return this.address;
-  }
-
-  @Override
-  public void setAddressId(Long addressId) {
-
-    this.address = addressId;
 
   }
 

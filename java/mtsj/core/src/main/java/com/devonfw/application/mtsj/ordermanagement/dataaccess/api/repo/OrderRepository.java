@@ -18,72 +18,84 @@ import com.querydsl.jpa.impl.JPAQuery;
  */
 public interface OrderRepository extends DefaultRepository<OrderEntity> {
 
-  /**
-   * @param idBooking
-   * @return the list {@link OrderEntity} objects that matched the search.
-   */
-  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.id = :idBooking")
-  List<OrderEntity> findOrders(@Param("idBooking") Long idBooking);
+	/**
+	 * @param idBooking
+	 * @return the list {@link OrderEntity} objects that matched the search.
+	 */
+	@Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.id = :idBooking")
+	List<OrderEntity> findOrders(@Param("idBooking") Long idBooking);
 
-  /**
-   * @param idInvitedGuest
-   * @return the list {@link OrderEntity} objects that matched the search.
-   */
-  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.invitedGuest.id = :idInvitedGuest")
-  List<OrderEntity> findOrdersByInvitedGuest(@Param("idInvitedGuest") Long idInvitedGuest);
+	/**
+	 * @param idInvitedGuest
+	 * @return the list {@link OrderEntity} objects that matched the search.
+	 */
+	@Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.invitedGuest.id = :idInvitedGuest")
+	List<OrderEntity> findOrdersByInvitedGuest(@Param("idInvitedGuest") Long idInvitedGuest);
 
-  /**
-   * @param bookingToken
-   * @return the {@link OrderEntity} objects that matched the search.
-   */
-  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.bookingToken = :bookingToken")
-  List<OrderEntity> findOrdersByBookingToken(@Param("bookingToken") String bookingToken);
+	/**
+	 * @param bookingToken
+	 * @return the {@link OrderEntity} objects that matched the search.
+	 */
+	@Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.booking.bookingToken = :bookingToken")
+	List<OrderEntity> findOrdersByBookingToken(@Param("bookingToken") String bookingToken);
 
-  /**
-   * @param bookingToken
-   * @return the {@link OrderEntity} objects that matched the search.
-   */
-  @Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.orderToken = :orderToken")
-  List<OrderEntity> findOrderByOrderToken(@Param("orderToken") String orderToken);
+	/**
+	 * @param orderToken
+	 * @return the {@link OrderEntity} objects that matched the search.
+	 */
+	@Query("SELECT orders FROM OrderEntity orders" + " WHERE orders.orderToken = :orderToken")
+	List<OrderEntity> findOrderByOrderToken(@Param("orderToken") String orderToken);
 
-  /**
-   * @param criteria the {@link OrderSearchCriteriaTo} with the criteria to search.
-   * @return the {@link Page} of the {@link OrderEntity} objects that matched the search.
-   */
-  default Page<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
+	/**
+	 * @param email
+	 * @return the {@link OrderEntity} objects that matched the search.
+	 */
+	@Query("SELECT orders FROM OrderEntity orders, BookingEntity booking"
+			+ " WHERE booking.email = :email AND orders.booking.id = booking.id"
+			+ " AND ((orders.paid.id = 0 AND orders.state != 4)" 
+			+ " OR (orders.paid.id = 1 AND orders.state != 3))") 
+	List<OrderEntity> findAktiveOrdersByEmail(@Param("email") String email);
 
-    OrderEntity alias = newDslAlias();
-    JPAQuery<OrderEntity> query = newDslQuery(alias);
+	/**
+	 * @param criteria the {@link OrderSearchCriteriaTo} with the criteria to
+	 *                 search.
+	 * @return the {@link Page} of the {@link OrderEntity} objects that matched the
+	 *         search.
+	 */
+	default Page<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
 
-    Long booking = criteria.getBookingId();
-    if (booking != null && alias.getBooking() != null) {
-      query.where(Alias.$(alias.getBooking().getId()).eq(booking));
-    }
-    Long invitedGuest = criteria.getInvitedGuestId();
-    if (invitedGuest != null && alias.getInvitedGuest() != null) {
-      query.where(Alias.$(alias.getInvitedGuest().getId()).eq(invitedGuest));
-    }
-    String hostToken = criteria.getHostToken();
-    if (hostToken != null && alias.getHost() != null) {
-      query.where(Alias.$(alias.getBooking().getBookingToken()).eq(hostToken));
-    }
-    Long[] stateIds = criteria.getStateId();
-    if (stateIds != null && alias.getState() != null) {
-      query.where(Alias.$(alias.getState().getId()).in(stateIds));
-    }
-    Long[] paidIds = criteria.getPaidId();
-    if (paidIds != null && alias.getPaid() != null) {
-      query.where(Alias.$(alias.getPaid().getId()).in(paidIds));
-    }
-    String email = criteria.getEmail();
-    if ((email != null) && alias.getBooking() != null) {
-      query.where(Alias.$(alias.getBooking().getEmail()).toLowerCase().like(email.toLowerCase()));
-    }
-    String bookingToken = criteria.getBookingToken();
-    if ((bookingToken != null) && alias.getBooking() != null) {
-      query.where(Alias.$(alias.getBooking().getBookingToken()).toLowerCase().eq(bookingToken.toLowerCase()));
-    }
-    return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
-  }
+		OrderEntity alias = newDslAlias();
+		JPAQuery<OrderEntity> query = newDslQuery(alias);
+
+		Long booking = criteria.getBookingId();
+		if (booking != null && alias.getBooking() != null) {
+			query.where(Alias.$(alias.getBooking().getId()).eq(booking));
+		}
+		Long invitedGuest = criteria.getInvitedGuestId();
+		if (invitedGuest != null && alias.getInvitedGuest() != null) {
+			query.where(Alias.$(alias.getInvitedGuest().getId()).eq(invitedGuest));
+		}
+		String hostToken = criteria.getHostToken();
+		if (hostToken != null && alias.getHost() != null) {
+			query.where(Alias.$(alias.getBooking().getBookingToken()).eq(hostToken));
+		}
+		Long[] stateIds = criteria.getStateId();
+		if (stateIds != null && alias.getState() != null) {
+			query.where(Alias.$(alias.getState().getId()).in(stateIds));
+		}
+		Long[] paidIds = criteria.getPaidId();
+		if (paidIds != null && alias.getPaid() != null) {
+			query.where(Alias.$(alias.getPaid().getId()).in(paidIds));
+		}
+		String email = criteria.getEmail();
+		if ((email != null) && alias.getBooking() != null) {
+			query.where(Alias.$(alias.getBooking().getEmail()).toLowerCase().like(email.toLowerCase()));
+		}
+		String bookingToken = criteria.getBookingToken();
+		if ((bookingToken != null) && alias.getBooking() != null) {
+			query.where(Alias.$(alias.getBooking().getBookingToken()).toLowerCase().eq(bookingToken.toLowerCase()));
+		}
+		return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
+	}
 
 }
