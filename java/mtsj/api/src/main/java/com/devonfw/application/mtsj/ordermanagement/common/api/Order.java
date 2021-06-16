@@ -7,38 +7,34 @@ import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
  */
 public interface Order extends ApplicationEntity {
 
-  public Long getBookingId();
+	public Long getBookingId();
 
-  public void setBookingId(Long bookingId);
+	public void setBookingId(Long bookingId);
 
-  public Long getInvitedGuestId();
+	public Long getInvitedGuestId();
 
-  public void setInvitedGuestId(Long invitedGuestId);
+	public void setInvitedGuestId(Long invitedGuestId);
 
-  public Long getHostId();
+	public Long getHostId();
 
-  public void setHostId(Long hostId);
+	public void setHostId(Long hostId);
 
-  public Long getStateId();
+	public Long getStateId();
 
-  public void setStateId(Long state);
+	public void setStateId(Long state);
 
-  public Long getPaidId();
+	public Long getPaidId();
 
-  public void setPaidId(Long paidId);
+	public void setPaidId(Long paidId);
 
-  /**
-   * @return OrderTokenId
-   */
-  public String getOrderToken();
+	/**
+	 * @return OrderTokenId
+	 */
+	public String getOrderToken();
 
-  /**
-   * @param OrderToken setter for OrderToken attribute
-   */
-  public void setOrderToken(String OrderToken);
-  
-  public Long getWaitersHelpId();
-
-  public void setWaitersHelpId(Long waitersHelpId);
+	/**
+	 * @param OrderToken setter for OrderToken attribute
+	 */
+	public void setOrderToken(String OrderToken);
 
 }

@@ -11,24 +11,6 @@ public class TableSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private Integer seatsNumber;
 
-  private String deviceId;
-
-  /**
-   * @return deviceId
-   */
-  public String getDeviceId() {
-
-    return this.deviceId;
-  }
-
-  /**
-   * @param deviceId new value of {@link #getdeviceId}.
-   */
-  public void setDeviceId(String deviceId) {
-
-    this.deviceId = deviceId;
-  }
-
   /**
    * The constructor.
    */

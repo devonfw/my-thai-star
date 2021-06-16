@@ -158,6 +158,6 @@ public interface Bookingmanagement {
 
   public BookingEto updateTableNumber(BookingEto booking);
 
-  public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
+  public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
 
 }

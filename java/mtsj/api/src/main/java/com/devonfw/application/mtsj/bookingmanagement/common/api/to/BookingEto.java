@@ -50,6 +50,8 @@ public class BookingEto extends AbstractEto implements Booking {
 
 	private Long userId;
 
+	private Long waitersHelpId;
+
 	@Override
 	public String getName() {
 
@@ -261,7 +263,7 @@ public class BookingEto extends AbstractEto implements Booking {
 		} else if (!this.canceled.equals(other.canceled)) {
 			return false;
 		}
-		
+
 		if (this.delivery == null) {
 			if (other.delivery != null) {
 				return false;
@@ -325,15 +327,23 @@ public class BookingEto extends AbstractEto implements Booking {
 	}
 
 	@Override
-	public Boolean getDelivery() {	
+	public Boolean getDelivery() {
 		return this.delivery;
 	}
 
 	@Override
 	public void setDelivery(Boolean delivery) {
-		this.delivery = delivery;	
+		this.delivery = delivery;
 	}
 
+	@Override
+	public Long getWaitersHelpId() {
+		return this.waitersHelpId;
+	}
 
-	
+	@Override
+	public void setWaitersHelpId(Long waitersHelpId) {
+		this.waitersHelpId = waitersHelpId;
+	}
+
 }

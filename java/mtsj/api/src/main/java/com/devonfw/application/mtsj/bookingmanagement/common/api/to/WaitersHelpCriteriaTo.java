@@ -6,27 +6,21 @@ public class WaitersHelpCriteriaTo extends AbstractSearchCriteriaTo {
 	 
 	private static final long serialVersionUID = 1L;
 	
-	private Long tableId;
 	private Long waitersHelp;
-	private Long bookingId;
+	private String deviceId;
 	
-	public Long getTableId() {
-		return tableId;
-	}
-	public void setTableId(Long tableId) {
-		this.tableId = tableId;
-	}
 	public Long getWaitersHelp() {
 		return waitersHelp;
 	}
 	public void setWaitersHelp(Long waitersHelp) {
 		this.waitersHelp = waitersHelp;
 	}
-	public Long getBookingId() {
-		return bookingId;
+	public String getDeviceId() {
+		return deviceId;
 	}
-	public void setBookingId(Long bookingId) {
-		this.bookingId = bookingId;
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 	
+
 }

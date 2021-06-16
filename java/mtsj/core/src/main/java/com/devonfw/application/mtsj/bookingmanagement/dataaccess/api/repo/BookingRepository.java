@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
+import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
@@ -30,6 +31,14 @@ public interface BookingRepository extends DefaultRepository<BookingEntity> {
 	@Query("SELECT booking FROM BookingEntity booking" //
 			+ " WHERE booking.bookingToken = :token")
 	BookingEntity findBookingByToken(@Param("token") String token);
+	
+	/**
+	 * @param tableId
+	 * @return the {@link BookingEntity} objects that matched the search.
+	 */
+	@Query("SELECT booking FROM BookingEntity booking" 
+			+ " WHERE booking.table.id = :tableId")
+	List<BookingEntity> findBookingByTableId(@Param("tableId") Long tableId);
 
 	/**
 	 * @param criteria the {@link BookingSearchCriteriaTo} with the criteria to

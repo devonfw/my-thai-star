@@ -22,8 +22,6 @@ public class OrderEto extends AbstractEto implements Order {
 
 	private String orderToken;
 
-	private Long waitersHelpId;
-
 	/**
 	 * @return bookingToken
 	 */
@@ -160,14 +158,6 @@ public class OrderEto extends AbstractEto implements Order {
 	public void setOrderToken(String OrderToken) {
 
 		this.orderToken = OrderToken;
-	}
-
-	public Long getWaitersHelpId() {
-		return waitersHelpId;
-	}
-
-	public void setWaitersHelpId(Long waitersHelpId) {
-		this.waitersHelpId = waitersHelpId;
 	}
 
 }

@@ -37,6 +37,14 @@ CREATE TABLE User (
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
+-- *** Waiter's help ***
+CREATE TABLE WaitersHelp (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  waitersHelpName VARCHAR (20),
+  CONSTRAINT PK_WaitersHelp PRIMARY KEY(id)
+);
+
 -- *** Booking ***
 CREATE TABLE Booking (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -49,15 +57,17 @@ CREATE TABLE Booking (
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
-  canceled BOOLEAN NOT NULL DEFAULT ((0)) ,
+  canceled BOOLEAN NOT NULL DEFAULT ((0)),
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
+  idHelp BIGINT,
   delivery BOOLEAN,
   assistants INTEGER,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK
+  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK,
+  CONSTRAINT FK_Booking_idHelp FOREIGN KEY(idHelp) REFERENCES WaitersHelp(id) NOCHECK
 );
 
 -- *** InvitedGuest ***
@@ -91,14 +101,6 @@ CREATE TABLE OrderPaid (
   CONSTRAINT PK_PayOrderState PRIMARY KEY(id)
 );
 
--- *** Waiter's help ***
-CREATE TABLE WaitersHelp (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  waitersHelpName VARCHAR (20),
-  CONSTRAINT PK_WaitersHelp PRIMARY KEY(id)
-);
-
 -- *** Address ***
 CREATE TABLE AddressTable (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -120,14 +122,12 @@ CREATE TABLE Orders (
   idState BIGINT,
   idAddress BIGINT,
   idPaid BIGINT,
-  idHelp BIGINT,
   orderToken VARCHAR (255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idStatus FOREIGN KEY(idState) REFERENCES OrderState(id) NOCHECK,
   CONSTRAINT FK_Order_idAddress FOREIGN KEY(idAddress) REFERENCES AddressTable(id) NOCHECK,
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
-  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK,
-  CONSTRAINT FK_Order_idHelp FOREIGN KEY(idHelp) REFERENCES WaitersHelp(id) NOCHECK
+  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
 );
 
 -- *** Category ***

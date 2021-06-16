@@ -18,6 +18,7 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.Booking;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.WaitersHelpEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 
 @Entity
@@ -50,6 +51,8 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
 	private UserEntity user;
 
+	private WaitersHelpEntity waitersHelp;
+
 	private List<InvitedGuestEntity> invitedGuests;
 
 	private List<OrderEntity> orders;
@@ -72,13 +75,13 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 	public Boolean getDelivery() {
 		return this.delivery;
 	}
+
 	/**
 	 * @param canceled new value of {@link #getdelivery}.
 	 */
 	public void setDelivery(Boolean delivery) {
 		this.delivery = delivery;
 	}
-	
 
 	/**
 	 * @return name
@@ -405,6 +408,44 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 			userEntity.setId(userId);
 			this.user = userEntity;
 		}
+	}
+
+	@Override
+	@Transient
+	public Long getWaitersHelpId() {
+
+		if (this.waitersHelp == null) {
+			return null;
+		}
+		return this.waitersHelp.getId();
+	}
+
+	@Override
+	public void setWaitersHelpId(Long waitersHelpId) {
+
+		if (waitersHelpId == null) {
+			this.waitersHelp = null;
+		} else {
+			WaitersHelpEntity waitersHelpEntity = new WaitersHelpEntity();
+			waitersHelpEntity.setId(waitersHelpId);
+			this.waitersHelp = waitersHelpEntity;
+		}
+	}
+
+	/**
+	 * @return waitersHelp
+	 */
+	@OneToOne
+	@JoinColumn(name = "idHelp")
+	public WaitersHelpEntity getWaitersHelp() {
+		return this.waitersHelp;
+	}
+
+	/**
+	 * @param new value of {@link #waitersHelp}.
+	 */
+	public void setWaitersHelp(WaitersHelpEntity waitersHelp) {
+		this.waitersHelp = waitersHelp;
 	}
 
 }

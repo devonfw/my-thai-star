@@ -626,18 +626,25 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 	}
 	
 	@Override
-	public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
-		List<OrderEntity> entityList = getOrderDao().findAktiveOrdersByBookingId(searchCriteriaTo.getTableId(),searchCriteriaTo.getBookingId());	
-	    List<OrderEto> orders = new ArrayList<OrderEto>();
-	    
-		WaitersHelpEntity waitersHelpEntity = getWaitersHelpDao().find(searchCriteriaTo.getWaitersHelp());
-    
-	    for (OrderEntity order : entityList) {
-	        order.setWaitersHelp(waitersHelpEntity);
-			OrderEntity resultOrderEntity = getOrderDao().save(order);
-			orders.add(getBeanMapper().map(resultOrderEntity, OrderEto.class));
-	    }    
-		return orders;
+	public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
+		String deviceId = searchCriteriaTo.getDeviceId();
+		TableEntity tableEntity = getTableDao().findTablesByDeviceId(deviceId).get(0);
+		List<BookingEntity> bookings = getBookingDao().findBookingByTableId(tableEntity.getId());
+		
+		List<OrderEntity> orders;
+		BookingEntity resultBookingEntity = null;
+		for(BookingEntity bookingItem : bookings) {
+			orders = getOrderDao().findAktiveOrdersByBookingId(bookingItem.getId());
+			if(!orders.isEmpty()) {
+				bookingItem.setWaitersHelpId(searchCriteriaTo.getWaitersHelp());
+				resultBookingEntity = getBookingDao().save(bookingItem);
+				LOG.debug("Booking with id '{}' has been updated.", resultBookingEntity.getId());
+				break; // only one booking with open orders
+			}	
+		}
+		
+		return getBeanMapper().map(resultBookingEntity, BookingEto.class);
+
 	}
 
 }

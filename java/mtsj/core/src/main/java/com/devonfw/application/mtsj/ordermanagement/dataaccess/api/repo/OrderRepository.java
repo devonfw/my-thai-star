@@ -55,18 +55,17 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
 			+ " AND ((orders.paid.id = 0 AND orders.state != 4)" 
 			+ " OR (orders.paid.id = 1 AND orders.state != 3))") 
 	List<OrderEntity> findAktiveOrdersByEmail(@Param("email") String email);
-
+	
 	/**
 	 * @param email
 	 * @return the {@link OrderEntity} objects that matched the search.
 	 */
-	@Query("SELECT orders FROM OrderEntity orders, BookingEntity booking" + " WHERE booking.id = :bookingId"
-			+ " AND orders.booking.id = booking.id" 
-			+ " AND booking.table.id = :tableId"
+	@Query("SELECT orders FROM OrderEntity orders"
+			+ " WHERE orders.booking.id = :bookingId"
 			+ " AND ((orders.paid.id = 0 AND orders.state != 4)" 
-			+ " OR (orders.paid.id = 1 AND orders.state != 3))")
-	List<OrderEntity> findAktiveOrdersByBookingId(@Param("tableId") Long tableId, @Param("bookingId") Long bookingId);
-	
+			+ " OR (orders.paid.id = 1 AND orders.state != 3))") 
+	List<OrderEntity> findAktiveOrdersByBookingId(@Param("bookingId") Long bookingId);
+
 	/**
 	 * @param criteria the {@link OrderSearchCriteriaTo} with the criteria to
 	 *                 search.

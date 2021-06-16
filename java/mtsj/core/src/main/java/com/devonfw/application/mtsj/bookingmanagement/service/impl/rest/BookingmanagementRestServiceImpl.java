@@ -128,7 +128,7 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
 	}
 	
 
-	public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
+	public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
 		return this.bookingmanagement.updateWaitersHelp(searchCriteriaTo);
 	}
 

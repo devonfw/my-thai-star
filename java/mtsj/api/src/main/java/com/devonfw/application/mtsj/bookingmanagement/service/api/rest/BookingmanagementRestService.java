@@ -180,6 +180,6 @@ public interface BookingmanagementRestService {
    */
   @POST
   @Path("/booking/updateWaitersHelp")
-  public List<OrderEto> updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
+  public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
 
 }
