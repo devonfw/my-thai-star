@@ -8,4 +8,8 @@ public interface Table extends ApplicationEntity {
 
   public void setSeatsNumber(Integer seatsNumber);
 
+  public String getDeviceId();
+
+  public void setDeviceId(String DeviceId);
+
 }

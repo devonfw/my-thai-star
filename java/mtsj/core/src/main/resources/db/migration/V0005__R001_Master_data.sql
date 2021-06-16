@@ -8,15 +8,15 @@ INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, e
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', false, 'manager@mail.com', 2);
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (3, 1, 'admin', '{bcrypt}$2a$10$fhcb1hvSNRRXBnoRocxLU.S85hoEH2UgBfnF4NP0G8PuFy6eD6cle', false, 'admin@gmail.com', 3);
 
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 0);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (3, 1, 4);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (4, 1, 6);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (5, 1, 6);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (6, 1, 6);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (7, 1, 8);
-INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (8, 1, 8);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (0, 1, 0, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (1, 1, 4, 'amzn1.ask.device.AEZH4V2LDGIAUH5NR7GAFGFHMLQEH3VHV4YKWHVZ3RGTWJHMZX56YIWS7YD56PRCFYRSJMCUFVZ2YCPFZGELLD5ZER4ZVH5X3O5TAF7TAR4WWQOGS7C6YTISIQOGYMHZJGMS5M327YOGA3OXAOAIZLGQ2EZE3QEVNX4JKWFRQAVRUQCQUXHKY');
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (2, 1, 4, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (3, 1, 4, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (4, 1, 6, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (5, 1, 6, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (6, 1, 6, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (7, 1, 8, null);
+INSERT INTO "Table"(id, modificationCounter, seatsNumber, deviceId) VALUES (8, 1, 8, null);
 
 
 

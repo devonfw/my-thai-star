@@ -12,6 +12,26 @@ public class TableEto extends AbstractEto implements Table {
 
   private Integer seatsNumber;
 
+  private String deviceId;
+
+  /**
+   * @return deviceId
+   */
+  @Override
+  public String getDeviceId() {
+
+    return this.deviceId;
+  }
+
+  /**
+   * @param deviceId new value of {@link #getdeviceId}.
+   */
+  @Override
+  public void setDeviceId(String deviceId) {
+
+    this.deviceId = deviceId;
+  }
+
   @Override
   public Integer getSeatsNumber() {
 

@@ -10,6 +10,7 @@ CREATE TABLE "Table" (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
+  deviceId VARCHAR,
   CONSTRAINT PK_Table PRIMARY KEY(id)
 );
 
