@@ -208,6 +208,7 @@ const OrderIntentHandler = {
     const deviceAddressServiceClient =
       handlerInput.serviceClientFactory.getDeviceAddressServiceClient();
     const address = await deviceAddressServiceClient.getFullAddress(deviceId);
+    console.log(address);
 
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
@@ -326,6 +327,44 @@ const OrderStateHandler = {
   },
 };
 
+const WaiterIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === "WaiterIntent"
+    );
+  },
+  async handle(handlerInput) {
+    const { deviceId } = handlerInput.requestEnvelope.context.System.device;
+    console.log(deviceId);
+    
+    await util.setWaiterState(2, deviceId);
+
+    return handlerInput.responseBuilder
+      .speak("The waiter for your table was informed that you need help.")
+      .getResponse();
+  }
+};
+
+const BillIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === "BillIntent"
+    );
+  },
+  async handle(handlerInput) {
+    const { deviceId } = handlerInput.requestEnvelope.context.System.device;
+    console.log(deviceId);
+
+    await util.setWaiterState(1, deviceId);
+
+    return handlerInput.responseBuilder
+      .speak("The waiter for your table was informed that you want to pay and need the bill.")
+      .getResponse();
+  }
+};
+
 const HelpIntentHandler = {
   canHandle(handlerInput) {
     return (
@@ -438,6 +477,8 @@ exports.handler = Alexa.SkillBuilders.custom()
     ReserveIntentHandler,
     OrderIntentHandler,
     OrderStateHandler,
+    WaiterIntentHandler,
+    BillIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
