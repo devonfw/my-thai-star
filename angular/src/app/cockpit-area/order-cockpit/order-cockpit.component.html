@@ -126,19 +126,20 @@
         (click)="$event.stopPropagation()"
       >
        <!-- decrement -->
-      <ng-container *ngIf="element.order.stateId == 0">
+<!--       <ng-template  *ngIf="element.order.stateId != 0;then enabled else disabled"> </ng-template >
+      <ng-template  #enabled> 
+        <button mat-button (click)="changeOrderState(element.order.stateId-1, element)"> 
+          <mat-icon>arrow_backward</mat-icon>
+        </button>
+      </ng-template >
+      <ng-template  #disabled> 
         <button mat-button disabled> 
           <mat-icon>arrow_backward</mat-icon>
         </button>
-      </ng-container>
-      <ng-container *ngIf="element.order.stateId != 0">
-        <button 
-        mat-button
-        (click)="changeOrderState(element.order.stateId-1, element)"
-        > 
-          <mat-icon>arrow_backward</mat-icon>
-        </button>
-      </ng-container>
+      </ng-template > -->
+      <button mat-button (click)="changeOrderState(element.order.stateId-1, element)"> 
+        <mat-icon>arrow_backward</mat-icon>
+      </button>
         <!-- current state -->
         {{stateNames[element.order.stateId]}} 
         <!-- increment -->
