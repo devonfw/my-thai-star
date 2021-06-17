@@ -314,9 +314,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     if (order.getAddress() != null) {
       AddressEntity address = new AddressEntity();
       address.setCity(order.getAddress().getCity());
-      address.setHouseNumber(order.getAddress().getHouseNumber());
-      address.setPostCode(order.getAddress().getPostCode());
-      address.setStreetName(order.getAddress().getStreetName());
+//      address.setHouseNumber(order.getAddress().getHouseNumber());
+//      address.setPostCode(order.getAddress().getPostCode());
+//      address.setStreetName(order.getAddress().getStreetName());
       orderEntity.setAddress(address);
       getAddressDao().save(address);
     }
