@@ -634,7 +634,7 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 		List<OrderEntity> orders;
 		BookingEntity resultBookingEntity = null;
 		for(BookingEntity bookingItem : bookings) {
-			orders = getOrderDao().findAktiveOrdersByBookingId(bookingItem.getId());
+			orders = getOrderDao().findActiveOrdersByBookingId(bookingItem.getId());
 			if(!orders.isEmpty()) {
 				bookingItem.setWaitersHelpId(searchCriteriaTo.getWaitersHelp());
 				resultBookingEntity = getBookingDao().save(bookingItem);
