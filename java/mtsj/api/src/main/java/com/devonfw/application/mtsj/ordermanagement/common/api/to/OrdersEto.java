@@ -1,14 +1,12 @@
 package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
+import java.time.Instant;
 import java.util.List;
 
-import com.devonfw.module.basic.common.api.to.AbstractCto;
-
-public class OrdersCto extends AbstractCto {
-
-	private static final long serialVersionUID = 1L;
-
+public class OrdersEto {
+	
 	private List<OrderEto> orders;
+	private Instant creationDate;
 
 	public List<OrderEto> getOrders() {
 		return this.orders;
@@ -17,4 +15,13 @@ public class OrdersCto extends AbstractCto {
 	public void setOrders(List<OrderEto> orders) {
 		this.orders = orders;
 	}
+
+	public Instant getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Instant creationDate) {
+		this.creationDate = creationDate;
+	}
+
 }

@@ -25,8 +25,18 @@ public class OrderCto extends AbstractCto {
 
 	private OrderStateEto state;
 	
+	private OrderPaidEto paidId;
+	
 	private AddressEto address;
 	
+	public OrderPaidEto getPaidId() {
+		return paidId;
+	}
+
+	public void setPaidId(OrderPaidEto paidId) {
+		this.paidId = paidId;
+	}
+
 	public AddressEto getAddress() {
 		return address;
 	}

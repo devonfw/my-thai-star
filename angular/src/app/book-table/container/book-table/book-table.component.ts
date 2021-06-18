@@ -126,9 +126,11 @@ export class BookTableComponent implements OnInit {
           this.invitationForm.reset();
           this.invitationModel = [];
           checkbox.checked = false;
-        }
+        } 
       });
   }
+
+  
 
   validateEmail(event: MatChipInputEvent): void {
     this.invitationModel.push(event.value);

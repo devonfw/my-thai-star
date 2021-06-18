@@ -89,10 +89,14 @@ export interface OrderViewResult {
 export interface AddressView {
   modificationCounter: 0,
   id: number,
-  postCode: number,
-  city: string,
-  streetName: string,
-  houseNumber: number
+  stateOrRegion : string,
+  city : string,
+  countryCode : string,
+  postalCode : string,
+  addressLine1 : string,
+  addressLine2 : string,
+  addressLine3 : string,
+  districtOrCounty : string
 }
 
 export interface OrderListView {
@@ -126,6 +130,20 @@ export interface BookingResponse {
 export interface OrderResponse {
   pageable: Pageable;
   content: OrderListView;
+}
+
+// Interface to recieve responeses from the server using httpclient for get tables
+export interface Table {
+  modificationCounter: number,
+  id: number,
+  seatsNumber: number
+}
+
+// Interface to recieve responeses from the server using httpclient for get tables
+export interface TableResponse {
+  content: Table[];
+  pageable: Pageable;
+  totalElements:number;
 }
 
 // Interface to recieve responeses from the server using httpclient for get OrderDishResponse

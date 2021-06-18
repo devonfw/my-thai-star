@@ -74,7 +74,7 @@ configuration:
     - prompt: "Reserved Table for: kirk@enterprise.org for 2021-05-31 at 10:00"
 ---
 - test: AMAZON.HelpIntent
-- AMAZON.HelpIntent: "You can say hello to me! How can I help?"
+- AMAZON.HelpIntent: "I currently have following commands: order food, reserve a table and whats the state of my order"
 ---
 - test: CancelIntent
 - AMAZON.CancelIntent: "Goodbye!"

@@ -44,6 +44,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBooki
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.OrderAlreadyExistException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.WrongTokenException;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.ActiveOrdersWithDateCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.AddressEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
@@ -55,7 +56,7 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderStateEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersCto;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrdersEto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.AddressEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
@@ -97,7 +98,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   private OrderLineRepository orderLineDao;
 
   /**
-   * @see #getAddressDao()
+   * @see #getOrderStateDao()
    */
   @Inject
   private AddressRepository addressDao;
@@ -206,8 +207,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderCto> ctos = new ArrayList<>();
     Page<OrderCto> pagListTo = null;
     Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
+
     for (OrderEntity order : orders.getContent()) {
-      processOrders(ctos, order);
+      if (criteria.isArchive()) {
+        if ((order.getPaidId() == 1 && order.getStateId() == 3) || (order.getPaidId() == 0 && order.getStateId() == 4))
+          processOrders(ctos, order);
+
+      } else if (criteria.isOrder_cockpit()) {
+        if (!((order.getPaidId() == 1 && order.getStateId() == 3)
+            || (order.getPaidId() == 0 && order.getStateId() == 4)))
+          processOrders(ctos, order);
+      } else {
+        processOrders(ctos, order);
+      }
     }
 
     if (ctos.size() > 0) {
@@ -288,10 +300,12 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
       orderLineEntities.add(orderLineEntity);
     }
-    OrderStateEto a = new OrderStateEto();
-    a.setId(0L);
-    order.setState(a);
+
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+
+    orderEntity.setPaidId(0L);
+    orderEntity.setStateId(0L);
+
     String token = orderEntity.getBooking().getBookingToken();
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
@@ -300,9 +314,13 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     if (order.getAddress() != null) {
       AddressEntity address = new AddressEntity();
       address.setCity(order.getAddress().getCity());
-      address.setHouseNumber(order.getAddress().getHouseNumber());
-      address.setPostCode(order.getAddress().getPostCode());
-      address.setStreetName(order.getAddress().getStreetName());
+      address.setStateOrRegion(order.getAddress().getStateOrRegion());
+      address.setCountryCode(order.getAddress().getCountryCode()); 
+      address.setPostalCode(order.getAddress().getPostalCode());
+      address.setAddressLine1(order.getAddress().getAddressLine1());
+      address.setAddressLine2(order.getAddress().getAddressLine2());
+      address.setAddressLine3(order.getAddress().getAddressLine3());     
+      address.setDistrictOrCounty(order.getAddress().getDistrictOrCounty());
       orderEntity.setAddress(address);
       getAddressDao().save(address);
     }
@@ -338,19 +356,44 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  public OrdersCto findActiveOrders(OrderSearchCriteriaTo email) {
+  public ActiveOrdersWithDateCto findActiveOrders(OrderSearchCriteriaTo email) {
 
     LOG.debug("Get active orders with email " + email.getEmail() + " from database.");
 
-    OrdersCto cto = new OrdersCto();
     List<OrderEto> orders = new ArrayList<OrderEto>();
     List<OrderEntity> entityList = getOrderDao().findAktiveOrdersByEmail(email.getEmail());
+    HashSet<Long> s = new HashSet<Long>();
 
     for (OrderEntity order : entityList) {
       orders.add(getBeanMapper().map(order, OrderEto.class));
+      if (!s.contains(order.getBookingId())) {
+        s.add(Long.valueOf(order.getBookingId()));
+      }
     }
 
-    cto.setOrders(orders);
+    List<OrdersEto> eto = new ArrayList<OrdersEto>();
+    List<OrderEto> newOrders;
+    OrdersEto obj;
+
+    for (long bookingId : s) {
+      newOrders = new ArrayList<OrderEto>();
+      obj = new OrdersEto();
+
+      for (OrderEto order : orders) {
+        if (bookingId == order.getBookingId()) {
+          newOrders.add(order);
+        }
+      }
+
+      Instant creationDate = this.bookingManagement.findBooking(bookingId).getBooking().getCreationDate();
+
+      obj.setCreationDate(creationDate);
+      obj.setOrders(newOrders);
+      eto.add(obj);
+    }
+    ActiveOrdersWithDateCto cto = new ActiveOrdersWithDateCto();
+    cto.setContent(eto);
+
     return cto;
   }
 

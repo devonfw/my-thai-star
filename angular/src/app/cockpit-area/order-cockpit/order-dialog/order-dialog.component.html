@@ -39,23 +39,19 @@
     <!-- PostCode Column -->
     <ng-container matColumnDef="postCode">
       <th mat-header-cell *matHeaderCellDef class="postCodeHeader"> {{columnsa[0].label}} </th>
-      <td mat-cell *matCellDef="let element" class="postCodeData"> {{element.postCode}} </td>
+      <td mat-cell *matCellDef="let element" class="postCodeData"> {{element.postalCode}} </td>
     </ng-container>
     <!-- city Column -->
     <ng-container matColumnDef="city">
       <th mat-header-cell *matHeaderCellDef class="cityHeader"> {{columnsa[1].label}} </th>
       <td mat-cell *matCellDef="let element" class="cityData"> {{element.city}} </td>
     </ng-container>
-    <!-- street Column -->
-    <ng-container matColumnDef="street">
-      <th mat-header-cell *matHeaderCellDef class="streetHeader"> {{columnsa[2].label}} </th>
-      <td mat-cell *matCellDef="let element" class="streetData"> {{element.streetName}} </td>
+    <!-- StreetLine Column -->
+    <ng-container matColumnDef="addressLine">
+      <th mat-header-cell *matHeaderCellDef class="addressLineHeader"> {{columnsa[2].label}} </th>
+      <td mat-cell *matCellDef="let element" class="addressLineData"> {{this.addressLine}} </td>
     </ng-container>
-    <!-- houseNumber Column -->
-    <ng-container matColumnDef="houseNumber">
-      <th mat-header-cell *matHeaderCellDef class="houseNumberHeader"> {{columnsa[3].label}} </th>
-      <td mat-cell *matCellDef="let element" class="houseNumberData"> {{element.houseNumber}} </td>
-    </ng-container>
+   
 
     <tr mat-header-row *matHeaderRowDef="displayedColumnsA"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumnsA;"></tr>

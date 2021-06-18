@@ -254,8 +254,8 @@
       "creationDateH": "Creation date",
       "postCodeH":"Post Code",
       "cityH":"City",
-      "streetNameH":"Street",
-      "houseNumberH":"House Number",
+      "addressLineH":"Address line",
+      "tableNotDefinedH": "---",
       "idH":"Id number"
     }
   },

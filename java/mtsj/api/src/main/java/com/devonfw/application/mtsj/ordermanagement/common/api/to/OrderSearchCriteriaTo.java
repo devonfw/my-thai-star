@@ -4,39 +4,43 @@ import com.devonfw.application.mtsj.general.common.api.to.AbstractSearchCriteria
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
 
 /**
- * used to find {@link com.devonfw.application.mtsj.ordermanagement.common.api.Order}s.
+ * used to find
+ * {@link com.devonfw.application.mtsj.ordermanagement.common.api.Order}s.
  */
 public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private Long bookingId;
+	private Long bookingId;
 
-  private Long invitedGuestId;
+	private Long invitedGuestId;
 
-  private String hostToken;
+	private String hostToken;
 
-  private Long hostId;
+	private Long hostId;
 
-  private String email;
+	private String email;
 
-  private String bookingToken;
+	private String bookingToken;
 
-  private Long[] stateId;
+	private Long[] stateId;
 
 	private Long[] paidId;
-	
+
 	private Boolean delivery;
 
-  private String orderToken;
+	private String orderToken;
 
-  private StringSearchConfigTo hostTokenOption;
+	private StringSearchConfigTo hostTokenOption;
 
-  private StringSearchConfigTo emailOption;
+	private StringSearchConfigTo emailOption;
 
-  private StringSearchConfigTo bookingTokenOption;
+	private StringSearchConfigTo bookingTokenOption;
 
+	private boolean archive;
 	
+	private boolean order_cockpit;
+
 	public Boolean isDelivery() {
 		return delivery;
 	}
@@ -44,168 +48,198 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 	public void setDelivery(Boolean delivery) {
 		this.delivery = delivery;
 	}
-  /**
-   * The constructor.
-   */
-  public OrderSearchCriteriaTo() {
 
-    super();
-  }
+	/**
+	 * The constructor.
+	 */
+	public OrderSearchCriteriaTo() {
 
-  public Long getBookingId() {
+		super();
+	}
 
-    return this.bookingId;
-  }
+	public Long getBookingId() {
 
-  public void setBookingId(Long bookingId) {
+		return this.bookingId;
+	}
 
-    this.bookingId = bookingId;
-  }
+	public void setBookingId(Long bookingId) {
 
-  public Long getInvitedGuestId() {
+		this.bookingId = bookingId;
+	}
 
-    return this.invitedGuestId;
-  }
+	public Long getInvitedGuestId() {
 
-  public void setInvitedGuestId(Long invitedGuestId) {
+		return this.invitedGuestId;
+	}
 
-    this.invitedGuestId = invitedGuestId;
-  }
+	public void setInvitedGuestId(Long invitedGuestId) {
 
-  public String getHostToken() {
+		this.invitedGuestId = invitedGuestId;
+	}
 
-    return this.hostToken;
-  }
+	public String getHostToken() {
 
-  public void setHostToken(String hostToken) {
+		return this.hostToken;
+	}
 
-    this.hostToken = hostToken;
-  }
+	public void setHostToken(String hostToken) {
 
-  public Long getHostId() {
+		this.hostToken = hostToken;
+	}
 
-    return this.hostId;
-  }
+	public Long getHostId() {
 
-  public void setHostId(Long hostId) {
+		return this.hostId;
+	}
 
-    this.hostId = hostId;
-  }
+	public void setHostId(Long hostId) {
 
-  public Long[] getStateId() {
+		this.hostId = hostId;
+	}
 
-    return this.stateId;
-  }
+	public Long[] getStateId() {
 
-  public void setStateId(Long[] stateId) {
+		return this.stateId;
+	}
 
-    this.stateId = stateId;
-  }
+	public void setStateId(Long[] stateId) {
 
-  public Long[] getPaidId() {
+		this.stateId = stateId;
+	}
 
-    return this.paidId;
-  }
+	public Long[] getPaidId() {
 
-  public void setPaidId(Long[] paidId) {
+		return this.paidId;
+	}
 
-    this.paidId = paidId;
-  }
+	public void setPaidId(Long[] paidId) {
 
-  /**
-   * @return email
-   */
-  public String getEmail() {
+		this.paidId = paidId;
+	}
 
-    return this.email;
-  }
+	/**
+	 * @return email
+	 */
+	public String getEmail() {
 
-  /**
-   * @param email new value of {@link #getEmail}.
-   */
-  public void setEmail(String email) {
+		return this.email;
+	}
 
-    this.email = email;
-  }
+	/**
+	 * @param email new value of {@link #getEmail}.
+	 */
+	public void setEmail(String email) {
 
-  /**
-   * @return bookingToken
-   */
-  public String getBookingToken() {
+		this.email = email;
+	}
 
-    return this.bookingToken;
-  }
+	/**
+	 * @return bookingToken
+	 */
+	public String getBookingToken() {
 
-  /**
-   * @param bookingToken new value of {@link #getBookingToken}.
-   */
-  public void setBookingToken(String bookingToken) {
+		return this.bookingToken;
+	}
 
-    this.bookingToken = bookingToken;
-  }
+	/**
+	 * @param bookingToken new value of {@link #getBookingToken}.
+	 */
+	public void setBookingToken(String bookingToken) {
 
-  /**
-   * @return hostTokenOption
-   */
-  public StringSearchConfigTo getHostTokenOption() {
+		this.bookingToken = bookingToken;
+	}
 
-    return this.hostTokenOption;
-  }
+	/**
+	 * @return hostTokenOption
+	 */
+	public StringSearchConfigTo getHostTokenOption() {
 
-  /**
-   * @param hostTokenOption new value of {@link #gethostTokenOption}.
-   */
-  public void setHostTokenOption(StringSearchConfigTo hostTokenOption) {
+		return this.hostTokenOption;
+	}
 
-    this.hostTokenOption = hostTokenOption;
-  }
+	/**
+	 * @param hostTokenOption new value of {@link #gethostTokenOption}.
+	 */
+	public void setHostTokenOption(StringSearchConfigTo hostTokenOption) {
 
-  /**
-   * @return emailOption
-   */
-  public StringSearchConfigTo getEmailOption() {
+		this.hostTokenOption = hostTokenOption;
+	}
 
-    return this.emailOption;
-  }
+	/**
+	 * @return emailOption
+	 */
+	public StringSearchConfigTo getEmailOption() {
 
-  /**
-   * @param emailOption new value of {@link #getemailOption}.
-   */
-  public void setEmailOption(StringSearchConfigTo emailOption) {
+		return this.emailOption;
+	}
 
-    this.emailOption = emailOption;
-  }
+	/**
+	 * @param emailOption new value of {@link #getemailOption}.
+	 */
+	public void setEmailOption(StringSearchConfigTo emailOption) {
 
-  /**
-   * @return bookingTokenOption
-   */
-  public StringSearchConfigTo getBookingTokenOption() {
+		this.emailOption = emailOption;
+	}
 
-    return this.bookingTokenOption;
-  }
+	/**
+	 * @return bookingTokenOption
+	 */
+	public StringSearchConfigTo getBookingTokenOption() {
 
-  /**
-   * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
-   */
-  public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
+		return this.bookingTokenOption;
+	}
 
-    this.bookingTokenOption = bookingTokenOption;
-  }
+	/**
+	 * @param bookingTokenOption new value of {@link #getbookingTokenOption}.
+	 */
+	public void setBookingTokenOption(StringSearchConfigTo bookingTokenOption) {
 
-  /**
-   * @return orderToken
-   */
-  public String getOrderToken() {
+		this.bookingTokenOption = bookingTokenOption;
+	}
 
-    return this.orderToken;
-  }
+	/**
+	 * @return orderToken
+	 */
+	public String getOrderToken() {
 
-  /**
-   * @param orderToken new value of {@link #getOrderToken}.
-   */
-  public void setOrderToken(String orderToken) {
+		return this.orderToken;
+	}
 
-    this.orderToken = orderToken;
-  }
+	/**
+	 * @param orderToken new value of {@link #getOrderToken}.
+	 */
+	public void setOrderToken(String orderToken) {
 
+		this.orderToken = orderToken;
+	}
+
+	/**
+	 * @param isArchive
+	 */
+	public boolean isArchive() {
+		return archive;
+	}
+	
+	/**
+	 * @param archive new value archive
+	 */
+	public void setArchive(boolean archive) {
+		this.archive = archive;
+	}
+
+	/**
+	 * @param archive new value isOrder_cockpit
+	 */
+	public boolean isOrder_cockpit() {
+		return order_cockpit;
+	}
+
+	/**
+	 * @param isOrder_cockpit
+	 */
+	public void setOrder_cockpit(boolean order_cockpit) {
+		this.order_cockpit = order_cockpit;
+	}
+
+	
 }
