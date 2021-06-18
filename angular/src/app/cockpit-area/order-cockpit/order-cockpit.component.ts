@@ -82,9 +82,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       this.setStateNames(event);
-      this.
-      
-      (event);
+      this.setPayStateNames(event);
       moment.locale(this.translocoService.getActiveLang());
     });
     this.waiterCockpitService.getTables().subscribe((data) => {
