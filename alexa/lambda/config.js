@@ -4,6 +4,7 @@ module.exports = {
         port:8081,
         createBookingEndpoint:"/mythaistar/services/rest/bookingmanagement/v1/booking",
         createOrderEndpoint:"/mythaistar/services/rest/ordermanagement/v1/order",
-        getActiveOrdersEndpoint:"/mythaistar/services/rest/ordermanagement/v1/order/activeOrders"
+        getActiveOrdersEndpoint:"/mythaistar/services/rest/ordermanagement/v1/order/activeOrders",
+        getDishesEndpoint:"/mythaistar/services/rest/dishmanagement/v1/dish/search"
     }
 }
