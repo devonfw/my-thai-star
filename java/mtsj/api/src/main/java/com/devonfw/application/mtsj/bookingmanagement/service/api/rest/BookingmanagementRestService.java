@@ -173,7 +173,7 @@ public interface BookingmanagementRestService {
   public BookingEto updateTableNumber(BookingEto booking);
   
   /**
-   * Delegates to {@link Bookingmanagement#updateTableNumber}.
+   * Delegates to {@link Bookingmanagement#updateWaitersHelp}.
    *
    * @param booking the {@link BookingEto} to be saved
    * @return the recently created {@link BookingEto}

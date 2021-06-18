@@ -39,6 +39,14 @@ public interface BookingRepository extends DefaultRepository<BookingEntity> {
 	@Query("SELECT booking FROM BookingEntity booking" 
 			+ " WHERE booking.table.id = :tableId")
 	List<BookingEntity> findBookingByTableId(@Param("tableId") Long tableId);
+	
+	/**
+	 * @param tableId
+	 * @return the {@link BookingEntity} objects that matched the search.
+	 */
+	@Query("SELECT booking FROM BookingEntity booking" 
+			+ " WHERE booking.id = :bookingId")
+	List<BookingEntity> findBookingById(@Param("bookingId") Long bookingId);
 
 	/**
 	 * @param criteria the {@link BookingSearchCriteriaTo} with the criteria to

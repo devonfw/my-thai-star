@@ -237,6 +237,10 @@
       "deliveredH": "Delivered",
       "canceledH": "Canceled"
     },
+    "waitersHelp":{
+      "help": "Help!",
+      "bill": "Bill"
+    },
     "orderPayStates":{
       "paid": "Paid",
       "unpaid": "Unpaid"
@@ -255,7 +259,8 @@
       "streetNameH":"Street",
       "houseNumberH":"House Number",
       "tableNotDefinedH": "---",
-      "idH":"Id number"
+      "idH":"Id number",
+      "waitersHelpH":"Waiters's help"
     }
   },
   "aboutYou": {

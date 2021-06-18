@@ -8,6 +8,7 @@ public class WaitersHelpCriteriaTo extends AbstractSearchCriteriaTo {
 	
 	private Long waitersHelp;
 	private String deviceId;
+	private Long bookingId;
 	
 	public Long getWaitersHelp() {
 		return waitersHelp;
@@ -21,6 +22,11 @@ public class WaitersHelpCriteriaTo extends AbstractSearchCriteriaTo {
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
+	public Long getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(Long bookingId) {
+		this.bookingId = bookingId;
+	}
 	
-
 }

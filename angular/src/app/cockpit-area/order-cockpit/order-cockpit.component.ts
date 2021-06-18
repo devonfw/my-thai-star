@@ -23,6 +23,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 export class OrderCockpitComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
   public tables = [];
+  private refreshInterval :NodeJS.Timeout;
   @ViewChild(MatTable) table: MatTable<OrderListView>;
 
   private pageable: Pageable = {
@@ -45,6 +46,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
+    'booking.waitersHelp'
   ];
 
   pageSizes: number[];
@@ -71,7 +73,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.applyFilters();
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       this.setStateNames(event);
@@ -83,6 +87,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         .fill(0)
         .map((x, i) => i);
     });
+
+    this.refreshInterval = setInterval(() => this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters).subscribe((data: any) => {
+      this.orders = data.content;  
+      this.totalOrders = data.totalElements;
+    }), 5000);
   }
 
   setStateNames(lang: string) {
@@ -119,6 +128,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'booking.waitersHelp', label: cockpitTable.waitersHelpH }
         ];
       });
   }
@@ -189,6 +199,22 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           .subscribe((data: any) => {
             this.orders = data.content;
             this.totalOrders = data.totalElements;
+            this.table.renderRows();
+          });
+      });
+  }
+
+  resetWaitersHelp(element) {   
+    this.waiterCockpitService
+      .resetWaitersHelp({
+          waitersHelp: 0,
+          bookingId: element.booking.id
+      })
+      .subscribe((data) => {
+        this.waiterCockpitService
+          .getOrders(this.pageable, this.sorting, this.filters)
+          .subscribe((data: any) => {
+            this.applyFilters();
             this.table.renderRows();
           });
       });

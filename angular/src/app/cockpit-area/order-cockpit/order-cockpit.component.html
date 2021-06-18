@@ -97,6 +97,8 @@
               <mat-option *ngFor="let table of tables; index as i; first as isFirst" [value]=i+1>{{i+1}}</mat-option>
             </mat-select>
 
+            
+
           </ng-container>
           <ng-container *ngIf="element.booking.delivery">
             Delivery
@@ -157,6 +159,32 @@
         </td>
       </ng-container>
 
+       <!-- Waiter's help Column -->
+       <ng-container matColumnDef="booking.waitersHelp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[4].label }}
+        </th>
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+
+          <div [ngSwitch]="element.booking.waitersHelpId">
+
+            <button *ngSwitchCase="0" mat-raised-button color="accent" class="btn">
+              <mat-icon>check_circle_outline</mat-icon>
+            </button>
+
+            <button *ngSwitchCase="1" mat-raised-button color="primary" class="btn" (click)="resetWaitersHelp(element)">
+              {{ 'cockpit.waitersHelp.bill' | transloco }}
+            </button>
+
+            <button *ngSwitchCase="2" mat-raised-button color="warn" class="btn" (click)="resetWaitersHelp(element)">            
+              {{ 'cockpit.waitersHelp.help' | transloco }}
+            </button>
+
+         </div>
+         
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
@@ -167,7 +195,7 @@
   </div>
 
   <div class="property-text-center noResults" *ngIf="orders.length === 0">
-    <h3>{{ 'table.noResults' | transloco }}.</h3>
+    <h3>{{ 'table.noResults' | transloco }}</h3>
   </div>
   <mat-paginator
     #pagingBar
