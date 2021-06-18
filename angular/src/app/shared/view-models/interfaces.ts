@@ -90,10 +90,14 @@ export interface OrderViewResult {
 export interface AddressView {
   modificationCounter: 0,
   id: number,
-  postCode: number,
-  city: string,
-  streetName: string,
-  houseNumber: number
+  stateOrRegion : string,
+  city : string,
+  countryCode : string,
+  postalCode : string,
+  addressLine1 : string,
+  addressLine2 : string,
+  addressLine3 : string,
+  districtOrCounty : string
 }
 
 export interface OrderListView {

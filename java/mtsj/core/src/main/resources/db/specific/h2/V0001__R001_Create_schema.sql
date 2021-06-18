@@ -105,10 +105,15 @@ CREATE TABLE OrderPaid (
 CREATE TABLE AddressTable (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  postCode BIGINT,
+  stateOrRegion VARCHAR(255),
   city VARCHAR(255),
-  streetName VARCHAR (255),
-  houseNumber BIGINT,
+  countryCode VARCHAR(255),
+  postalCode VARCHAR(255),
+  addressLine1 VARCHAR(255),
+  addressLine2 VARCHAR(255),
+  addressLine3 VARCHAR(255),
+  districtOrCounty VARCHAR(255),
+
   CONSTRAINT PK_Address PRIMARY KEY(id)
 );
 

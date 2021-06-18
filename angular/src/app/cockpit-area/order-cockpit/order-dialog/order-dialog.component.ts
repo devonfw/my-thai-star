@@ -39,12 +39,12 @@ export class OrderDialogComponent implements OnInit {
   ];
 
   dataa: AddressView[] = [];
+  addressLine: string;
   columnsa: any[];
   displayedColumnsA: string[] = [
     'postCode',
     'city',
-    'street',
-    'houseNumber'
+    'addressLine'
   ];
 
   pageSizes: number[];
@@ -73,6 +73,7 @@ export class OrderDialogComponent implements OnInit {
     this.datat.push(this.data.booking);
     if(this.data.address) {
       this.dataa.push(this.data.address);
+      this.addressLine = this.data.address.addressLine1 + "\n" + this.data.address.addressLine2 + "\n" + this.data.address.addressLine2
     }    
     this.filter();
   }
@@ -97,8 +98,7 @@ export class OrderDialogComponent implements OnInit {
             this.columnsa = [
               { name: 'postCode', label: cockpitTable.postCodeH },
               { name: 'city', label: cockpitTable.cityH },
-              { name: 'street', label: cockpitTable.streetNameH },
-              { name: 'houseNumber', label: cockpitTable.houseNumberH }
+              { name: 'addressLine', label: cockpitTable.addressLineH }
             ];
           });
 

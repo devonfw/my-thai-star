@@ -15,65 +15,79 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.Address;
 @Table(name = "AddressTable")
 public class AddressEntity extends ApplicationPersistenceEntity implements Address {
 
-	private Long postCode;
+	private static final long serialVersionUID = 1L;
+	
+	private String stateOrRegion;
 	private String city;
-	private String streetName;
-	private Long houseNumber;
+	private String countryCode;
+	private String postalCode;
+	private String addressLine1;
+	private String addressLine2;
+	private String addressLine3;
+	private String districtOrCounty;
 
-	/**
-	 * @return postCode
-	 */
-	public Long getPostCode() {
-		return postCode;
+	public String getStateOrRegion() {
+		return stateOrRegion;
 	}
 
-	/**
-	 * set postCode
-	 */
-	public void setPostCode(Long postCode) {
-		this.postCode = postCode;
+	public void setStateOrRegion(String stateOrRegion) {
+		this.stateOrRegion = stateOrRegion;
 	}
 
-	/**
-	 * @return city
-	 */
 	public String getCity() {
 		return city;
 	}
 
-	/**
-	 * set city
-	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	/**
-	 * @return streetName
-	 */
-	public String getStreetName() {
-		return streetName;
+	public String getCountryCode() {
+		return countryCode;
 	}
 
-	/**
-	 * set streetName
-	 */
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
-	/**
-	 * @return houseNumber
-	 */
-	public Long getHouseNumber() {
-		return houseNumber;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	/**
-	 * set houseNumber
-	 */
-	public void setHouseNumber(Long houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getAddressLine1() {
+		return addressLine1;
+	}
+
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
+
+	public String getAddressLine2() {
+		return addressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+
+	public String getAddressLine3() {
+		return addressLine3;
+	}
+
+	public void setAddressLine3(String addressLine3) {
+		this.addressLine3 = addressLine3;
+	}
+
+	public String getDistrictOrCounty() {
+		return districtOrCounty;
+	}
+
+	public void setDistrictOrCounty(String districtOrCounty) {
+		this.districtOrCounty = districtOrCounty;
 	}
 
 }
