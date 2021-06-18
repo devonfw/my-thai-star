@@ -339,7 +339,7 @@ const MenuIntentHandler = {
     if (!sessionAttributes.page) sessionAttributes.page = 0;
     
     var page = sessionAttributes.page;
-    const size = 6;
+    const size = 3;
     
     if (handlerInput.requestEnvelope.request.intent.slots.hearMore.value === undefined){
       var speakOutput = "The current Items on the Menu are: ";
