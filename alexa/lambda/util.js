@@ -87,12 +87,7 @@ module.exports.createDelivery = async (name, email, orderlines, address) => {
       booking: {
         bookingToken: reservation.bookingToken,
       },
-      address: {
-        postCode: address.postalCode,
-        city: address.city,
-        streetName: "Packstation",
-        houseNumber: "103",
-      },
+      address: address,
       orderLines: orderlines.map((el) => {
         return {
           orderLine: { dishId: el.dish.id, amount: el.amount, comment: "" },
