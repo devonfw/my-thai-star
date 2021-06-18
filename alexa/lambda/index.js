@@ -326,6 +326,77 @@ const OrderStateHandler = {
   },
 };
 
+const MenuIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === "MenuIntent"
+    );
+  },
+  async handle(handlerInput) {
+    const sessionAttributes =
+      handlerInput.attributesManager.getSessionAttributes();
+    if (!sessionAttributes.page) sessionAttributes.page = 0;
+    
+    var page = sessionAttributes.page;
+    const size = 3;
+    
+    if (handlerInput.requestEnvelope.request.intent.slots.hearMore.value === undefined){
+      var speakOutput = "The current Items on the Menu are: ";
+      const dishes = await util.getDishes(size, page);
+      page++;
+      sessionAttributes.page = page;
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+      var i;
+      for(i = 0; i < dishes.content.length; i++){
+        speakOutput += dishes.content[i].dish.name + ", ";
+      }
+      speakOutput += "do you want to hear more dishes?"
+
+      return handlerInput.responseBuilder
+        .addElicitSlotDirective("hearMore")
+        .speak(speakOutput)
+        .getResponse();
+    }else if (handlerInput.requestEnvelope.request.intent.slots.hearMore.value === "yes"){
+      const dishes = await util.getDishes(size, page);
+      page++;
+      sessionAttributes.page = page;
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+      if(dishes === undefined) {
+        return handlerInput.responseBuilder
+          .speak("Sorry there are no more dishes on the menu")
+          .getResponse();
+      }else if(dishes.content.length < size) {
+        var i;
+        var speakOutput = "";
+        for(i = 0; i < dishes.content.length; i++) {
+          speakOutput += dishes.content[i].dish.name + ", ";
+        }
+        speakOutput += "Thats everything that is on the menu."
+        return handlerInput.responseBuilder
+          .speak(speakOutput)
+          .getResponse();
+      } else if (dishes.content.length === size) {
+        var i;
+        var speakOutput = "";
+        for(i = 0; i < dishes.content.length; i++){
+          speakOutput += dishes.content[i].dish.name + ", ";
+        }
+        speakOutput += "Do you want to hear more?"
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("hearMore")
+          .speak(speakOutput)
+          .getResponse();
+      }
+    }else if (handlerInput.requestEnvelope.request.intent.slots.hearMore.value === "no"){
+      return handlerInput.responseBuilder
+        .speak("Hope you heared something you liked")
+        .getResponse();
+    }
+  },
+};
+
 const HelpIntentHandler = {
   canHandle(handlerInput) {
     return (
@@ -438,6 +509,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     ReserveIntentHandler,
     OrderIntentHandler,
     OrderStateHandler,
+    MenuIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
