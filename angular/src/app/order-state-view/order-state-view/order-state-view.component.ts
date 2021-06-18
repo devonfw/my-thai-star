@@ -39,12 +39,12 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
   ];
 
   address: AddressView[] = [];
+  addressLine: string;
   columnsAdresses: any[];
   columnsA: string[] = [
     'postCode',
     'city',
-    'street',
-    'houseNumber'
+    'addressLine'
   ];
 
   totalPrice: number;
@@ -78,6 +78,7 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
 
         if(order.address) {
           this.address.push(order.address);
+          this.addressLine = order.address.addressLine1 + "\n" + order.address.addressLine2 + "\n" + order.address.addressLine2
         }
       });
 
@@ -116,8 +117,7 @@ export class OrderStateViewComponent implements OnInit, OnDestroy{
         this.columnsAdresses = [
           { name: 'postCode', label: cockpitTable.postCodeH },
           { name: 'city', label: cockpitTable.cityH },
-          { name: 'street', label: cockpitTable.streetNameH },
-          { name: 'houseNumber', label: cockpitTable.houseNumberH }
+          { name: 'addressLine', label: cockpitTable.addressLineH }
         ];
       });
   }
