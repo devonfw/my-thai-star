@@ -15,7 +15,7 @@ import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
-import { template } from 'lodash';
+import {IntervalService} from './interval.service'
 
 @Component({
   selector: 'app-cockpit-order-cockpit',
@@ -25,7 +25,6 @@ import { template } from 'lodash';
 export class OrderCockpitComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
   public tables = [];
-  private refreshInterval :NodeJS.Timeout;
   @ViewChild(MatTable) table: MatTable<OrderListView>;
 
   private pageable: Pageable = {
@@ -70,6 +69,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
+    private intervalService:IntervalService,
     private configService: ConfigService,
     private  snackBarService: SnackBarService
   ) {
@@ -95,10 +95,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         .map((x, i) => i);
     });
 
-    this.refreshInterval = setInterval(() => this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters).subscribe((data: any) => {
+    this.intervalService.setInterval(5000,() => this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters).subscribe((data: any) => {
       this.orders = data.content;  
       this.totalOrders = data.totalElements;
-    }), 5000);
+    }));
   }
 
   setStateNames(lang: string) {

@@ -26,6 +26,7 @@ import { click } from '../../shared/common/test-utils';
 import { ascSortOrder } from '../../../in-memory-test-data/db-order-asc-sort';
 import { orderData } from '../../../in-memory-test-data/db-order';
 import { tableData } from '../../../in-memory-test-data/db-table';
+import { IntervalService } from './interval.service';
 
 const mockDialog = {
   open: jasmine.createSpy('open').and.returnValue({
@@ -53,14 +54,31 @@ const waiterCockpitServiceSortStub = {
   getOrders: jasmine.createSpy('getOrders').and.returnValue(of(ascSortOrder)),
 };
 
+
+class MockIntervalService {
+  callback;
+
+  clearInterval = jasmine.createSpy('clearInterval');
+
+  setInterval(time: number, callback: () => void): any {
+    this.callback = callback;
+    return null;
+  }
+
+  tick() {
+    this.callback();
+  }
+}
+
 class TestBedSetUp {
-  static loadWaiterCockpitServiceStud(waiterCockpitStub: any): any {
+  static loadWaiterCockpitServiceStud(waiterCockpitStub: any, mockIntervalService:any): any {
     const initialState = { config };
     return TestBed.configureTestingModule({
       declarations: [OrderCockpitComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
         { provide: WaiterCockpitService, useValue: waiterCockpitStub },
+        { provide: IntervalService, useValue: mockIntervalService },
         TranslocoService,
         ConfigService,
         provideMockStore({ initialState }),
@@ -85,10 +103,12 @@ describe('OrderCockpitComponent', () => {
   let translocoService: TranslocoService;
   let configService: ConfigService;
   let el: DebugElement;
-
+  let mockIntervalService: MockIntervalService;
+  
   beforeEach(async(() => {
     initialState = { config };
-    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub)
+    mockIntervalService = new MockIntervalService();
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub, mockIntervalService)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(OrderCockpitComponent);
@@ -160,10 +180,12 @@ describe('TestingOrderCockpitComponentWithSortOrderData', () => {
   let translocoService: TranslocoService;
   let configService: ConfigService;
   let el: DebugElement;
+  let mockIntervalService: MockIntervalService;
 
   beforeEach(async(() => {
+    mockIntervalService = new MockIntervalService();
     initialState = { config };
-    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub)
+    TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub, mockIntervalService)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(OrderCockpitComponent);
