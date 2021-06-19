@@ -1,6 +1,10 @@
 package com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
@@ -14,21 +18,30 @@ import com.querydsl.jpa.impl.JPAQuery;
  */
 public interface TableRepository extends DefaultRepository<TableEntity> {
 
-  /**
-   * @param criteria the {@link TableSearchCriteriaTo} with the criteria to search.
-   * @return the {@link Page} of the {@link TableEntity} objects that matched the search.
-   */
-  default Page<TableEntity> findTables(TableSearchCriteriaTo criteria) {
+	/**
+	 * @param deviceId
+	 * @return the {@link TableEntity} objects that matched the search.
+	 */
+	@Query("SELECT tables FROM TableEntity tables" + " WHERE tables.deviceId = :deviceId")
+	List<TableEntity> findTablesByDeviceId(@Param("deviceId") String deviceId);
 
-    TableEntity alias = newDslAlias();
-    JPAQuery<TableEntity> query = newDslQuery(alias);
+	/**
+	 * @param criteria the {@link TableSearchCriteriaTo} with the criteria to
+	 *                 search.
+	 * @return the {@link Page} of the {@link TableEntity} objects that matched the
+	 *         search.
+	 */
+	default Page<TableEntity> findTables(TableSearchCriteriaTo criteria) {
 
-    Integer seatsNumber = criteria.getSeatsNumber();
-    if (seatsNumber != null) {
-      query.where(Alias.$(alias.getSeatsNumber()).eq(seatsNumber));
-    }
+		TableEntity alias = newDslAlias();
+		JPAQuery<TableEntity> query = newDslQuery(alias);
 
-    return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
+		Integer seatsNumber = criteria.getSeatsNumber();
+		if (seatsNumber != null) {
+			query.where(Alias.$(alias.getSeatsNumber()).eq(seatsNumber));
+		}
 
-  }
+		return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
+
+	}
 }

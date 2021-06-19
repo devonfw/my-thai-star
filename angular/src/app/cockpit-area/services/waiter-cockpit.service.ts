@@ -36,6 +36,8 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/updatepaystate';
   private readonly getTablesRestPath: string =
     'bookingmanagement/v1/table/search';
+  private readonly updateWaitersHelp: string =
+    'bookingmanagement/v1/booking/updateWaitersHelp';
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
 
@@ -115,6 +117,15 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, order),
+      ),
+    );
+  }
+
+  resetWaitersHelp(resp: any): Observable<SaveOrderResponse[]> {
+    let path: string = this.updateWaitersHelp;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<SaveOrderResponse[]>(`${restServiceRoot}${path}`, resp),
       ),
     );
   }

@@ -11,6 +11,26 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private Integer seatsNumber;
 
+  private String deviceId;
+
+  /**
+   * @return deviceId
+   */
+  @Override
+  public String getDeviceId() {
+
+    return this.deviceId;
+  }
+
+  /**
+   * @param deviceId new value of {@link #getdeviceId}.
+   */
+  @Override
+  public void setDeviceId(String deviceId) {
+
+    this.deviceId = deviceId;
+  }
+
   private static final long serialVersionUID = 1L;
 
   /**

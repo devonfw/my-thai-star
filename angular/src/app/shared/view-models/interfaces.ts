@@ -46,6 +46,7 @@ export interface BookingView {
   creationDate?: string;
   id?: number;
   delivery: boolean;
+  waitersHelpId: number;
 }
 
 export interface FriendsInvite {

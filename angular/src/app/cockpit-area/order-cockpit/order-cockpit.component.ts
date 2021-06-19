@@ -15,7 +15,7 @@ import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
-import { template } from 'lodash';
+import {IntervalService} from './interval.service'
 
 @Component({
   selector: 'app-cockpit-order-cockpit',
@@ -47,6 +47,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
+    'booking.waitersHelp',
     'order.cancel'
   ];
 
@@ -68,6 +69,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
+    private intervalService:IntervalService,
     private configService: ConfigService,
     private  snackBarService: SnackBarService
   ) {
@@ -78,7 +80,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
    stringpart:string;
 
   ngOnInit(): void {
+
     this.applyFilters();
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       this.setStateNames(event);
@@ -90,6 +94,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         .fill(0)
         .map((x, i) => i);
     });
+
+    this.intervalService.setInterval(5000,() => this.waiterCockpitService.getOrders(this.pageable, this.sorting, this.filters).subscribe((data: any) => {
+      this.orders = data.content;  
+      this.totalOrders = data.totalElements;
+    }));
   }
 
   setStateNames(lang: string) {
@@ -126,6 +135,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
+          { name: 'booking.waitersHelp', label: cockpitTable.waitersHelpH },
           { name: 'order.cancel', label: cockpitTable.cancelH }
         ];
       });
@@ -213,6 +223,22 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           .subscribe((data: any) => {
             this.orders = data.content;
             this.totalOrders = data.totalElements;
+            this.table.renderRows();
+          });
+      });
+  }
+
+  resetWaitersHelp(element) {   
+    this.waiterCockpitService
+      .resetWaitersHelp({
+          waitersHelp: 0,
+          bookingId: element.booking.id
+      })
+      .subscribe((data) => {
+        this.waiterCockpitService
+          .getOrders(this.pageable, this.sorting, this.filters)
+          .subscribe((data: any) => {
+            this.applyFilters();
             this.table.renderRows();
           });
       });

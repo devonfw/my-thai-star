@@ -34,12 +34,14 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuest
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.WaitersHelpCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.InvitedGuestEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.TableEntity;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.BookingRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.InvitedGuestRepository;
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.TableRepository;
+import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.repo.WaitersHelpRepository;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
@@ -47,7 +49,8 @@ import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderPaidEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.WaitersHelpEntity;
+import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 
@@ -78,6 +81,18 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 	 */
 	@Inject
 	private BookingRepository bookingDao;
+
+	/**
+	 * @see #getWaitersHelpDao()
+	 */
+	@Inject
+	private WaitersHelpRepository waitersHelpDao;
+
+	/**
+	 * @see #getOrderDao()
+	 */
+	@Inject
+	private OrderRepository orderDao;
 
 	/**
 	 * @see #getInvitedGuestDao()
@@ -193,7 +208,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
 		Objects.requireNonNull(booking, "booking");
 		BookingEntity bookingEntity = getBeanMapper().map(booking.getBooking(), BookingEntity.class);
+
 		bookingEntity.setCanceled(false);
+		bookingEntity.setWaitersHelpId(booking.getBooking().getId());
+
 		List<InvitedGuestEntity> invited = getBeanMapper().mapList(booking.getInvitedGuests(),
 				InvitedGuestEntity.class);
 
@@ -259,8 +277,25 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 	 * @return the {@link BookingDao} instance.
 	 */
 	public BookingRepository getBookingDao() {
-
 		return this.bookingDao;
+	}
+
+	/**
+	 * Returns the field 'OrderDao'.
+	 *
+	 * @return the {@link OrderDao} instance.
+	 */
+	public OrderRepository getOrderDao() {
+		return this.orderDao;
+	}
+
+	/**
+	 * Returns the field 'WaitersHelpDao'.
+	 *
+	 * @return the {@link WaitersHelpDao} instance.
+	 */
+	public WaitersHelpRepository getWaitersHelpDao() {
+		return this.waitersHelpDao;
 	}
 
 	@Override
@@ -584,13 +619,47 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
 	@Override
 	public BookingEto updateTableNumber(BookingEto booking) {
-		
+
 		BookingEntity bookingEntity = getBookingDao().find(booking.getId());
 		bookingEntity.setTableId(booking.getTableId());
 		BookingEntity resultBookingEntity = getBookingDao().save(bookingEntity);
 		LOG.debug("Booking with id '{}' has been updated.", resultBookingEntity.getId());
 		return getBeanMapper().map(resultBookingEntity, BookingEto.class);
-		
+
 	}
 
+	@Override
+	public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
+		
+		BookingEntity resultBookingEntity = null;
+		if(searchCriteriaTo.getBookingId() == null && searchCriteriaTo.getDeviceId() == null) {
+			try {
+				throw new Exception("deviceId or bookingId should be given");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		} else if (searchCriteriaTo.getBookingId() != null) {
+			BookingEntity entity = getBookingDao().find(searchCriteriaTo.getBookingId());
+			entity.setWaitersHelpId(searchCriteriaTo.getWaitersHelp());
+			resultBookingEntity = getBookingDao().save(entity);
+			LOG.debug("Booking with id '{}' has been updated.", resultBookingEntity.getId());		
+		} else {
+			String deviceId = searchCriteriaTo.getDeviceId();
+			TableEntity tableEntity = getTableDao().findTablesByDeviceId(deviceId).get(0);;		
+			List<BookingEntity> bookings = getBookingDao().findBookingByTableId(tableEntity.getId());
+			List<OrderEntity> orders;
+			for (BookingEntity bookingItem : bookings) {
+				orders = getOrderDao().findActiveOrdersByBookingId(bookingItem.getId());
+				if (!orders.isEmpty()) {
+					bookingItem.setWaitersHelpId(searchCriteriaTo.getWaitersHelp());
+					resultBookingEntity = getBookingDao().save(bookingItem);
+					LOG.debug("Booking with id '{}' has been updated.", resultBookingEntity.getId());
+					break; // only one booking with open orders
+				}
+			}
+		}
+		
+		return getBeanMapper().map(resultBookingEntity, BookingEto.class);
+	}
 }

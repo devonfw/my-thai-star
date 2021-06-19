@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.bookingmanagement.service.api.rest;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,7 +21,9 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuest
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.WaitersHelpCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 
 /**
  * The service interface for REST calls in order to execute the logic of component {@link Bookingmanagement}.
@@ -167,5 +171,15 @@ public interface BookingmanagementRestService {
   @POST
   @Path("/booking/updateTable")
   public BookingEto updateTableNumber(BookingEto booking);
+  
+  /**
+   * Delegates to {@link Bookingmanagement#updateWaitersHelp}.
+   *
+   * @param booking the {@link BookingEto} to be saved
+   * @return the recently created {@link BookingEto}
+   */
+  @POST
+  @Path("/booking/updateWaitersHelp")
+  public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo);
 
 }

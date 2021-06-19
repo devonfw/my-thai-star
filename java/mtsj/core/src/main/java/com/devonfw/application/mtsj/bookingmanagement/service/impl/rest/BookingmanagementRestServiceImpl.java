@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.bookingmanagement.service.impl.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.Valid;
@@ -14,8 +16,10 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuest
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestSearchCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.TableSearchCriteriaTo;
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.WaitersHelpCriteriaTo;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
 import com.devonfw.application.mtsj.bookingmanagement.service.api.rest.BookingmanagementRestService;
+import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
 
 /**
  * The service implementation for REST calls in order to execute the logic of
@@ -121,6 +125,11 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
 	@Override
 	public BookingEto updateTableNumber(BookingEto booking) {
 		return this.bookingmanagement.updateTableNumber(booking);
+	}
+	
+
+	public BookingEto updateWaitersHelp(WaitersHelpCriteriaTo searchCriteriaTo) {
+		return this.bookingmanagement.updateWaitersHelp(searchCriteriaTo);
 	}
 
 }

@@ -16,10 +16,16 @@ INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvited
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (3,1,0, 1, 3, 2, null, null, 'OR_dbg4');
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (4,1,0, 1, 3, 3, null, null, 'OR_dbg5');
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (5,2,1, 1, 3, 4, null, null, 'OR_dbg6');
-INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (6,3,0, 1, 4, 8, null, null, 'OR_dbg7');
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (6,3,1, 1, 4, 8, null, null, 'OR_dbg7');
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (7,4,0, 1, 4, 9, null, null, 'OR_dbg8');
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (8,2,1, 1, 6, null, null, 0, 'OR_dbg9');
 INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (9,2,1, 1, 6, null, null, 1, 'OR_dbg10');
+
+-- for Alexa call waiter
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (10,3,1, 1, 8, null, null, null, 'OR_dbg11');
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (11,3,1, 1, 8, null, null, null, 'OR_dbg12');
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (12,0,0, 1, 9, null, null, null, 'OR_dbg13');
+INSERT INTO Orders (id,idState,idPaid, modificationCounter, idBooking, idInvitedGuest, idHost, idAddress, orderToken) VALUES (13,0,0, 1, 9, null, null, null, 'OR_dbg14');
 
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (0, 1, 0, 2, 'please not too spicy', 0);
 INSERT INTO OrderLine (id, modificationCounter, idDish, amount, comment, idOrder) VALUES (1, 1, 4, 1, null, 0);

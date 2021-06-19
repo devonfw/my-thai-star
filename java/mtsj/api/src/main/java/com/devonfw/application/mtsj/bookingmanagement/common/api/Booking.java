@@ -2,6 +2,8 @@ package com.devonfw.application.mtsj.bookingmanagement.common.api;
 
 import java.time.Instant;
 
+import javax.persistence.Transient;
+
 import com.devonfw.application.mtsj.bookingmanagement.common.api.datatype.BookingType;
 import com.devonfw.application.mtsj.general.common.api.ApplicationEntity;
 
@@ -62,5 +64,9 @@ public interface Booking extends ApplicationEntity {
 	public Boolean getDelivery();
 
 	public void setDelivery(Boolean delivery);
+	
+	public Long getWaitersHelpId();
+
+	public void setWaitersHelpId(Long waitersHelpId);
 
 }
