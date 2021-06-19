@@ -213,64 +213,163 @@ const OrderIntentHandler = {
 
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
-    if (oneMoreOrder == "no" && sessionAttributes.wantsToOrder === undefined) {
-      util.createDelivery(name, email, sessionAttributes.orderlist, address);
-      return handlerInput.responseBuilder
-        .speak("Your delivery has been placed. Thank you for ordering from us.")
-        .getResponse();
-    } else if (
-      oneMoreOrder == "no" &&
-      sessionAttributes.wantsToOrder === "yes"
+    if (
+      handlerInput.requestEnvelope.request.intent.slots.confirmation.value ===
+      undefined
     ) {
-      const date = sessionAttributes.date;
-      const time = sessionAttributes.time;
-      const assistants = sessionAttributes.assistants;
+      if (!dish && (oneMoreOrder === "yes" || oneMoreOrder === undefined)) {
+        sessionAttributes.lastAction = "setDish";
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("dish")
+          .speak("What item do you want to add to your order?")
+          .getResponse();
+      } else if (
+        !amount &&
+        (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+      ) {
+        sessionAttributes.lastAction = "setAmount";
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("amount")
+          .speak("How many times would you like to order that item")
+          .getResponse();
+      } else if (
+        amount &&
+        dish &&
+        (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+      ) {
+        sessionAttributes.lastAction = "setCompletedOrder";
 
-      const combinedDate = date + "T" + time + ":00";
+        sessionAttributes.orderlist.push({ dish, amount });
 
-      util.createOrder(
-        name,
-        email,
-        sessionAttributes.orderlist,
-        combinedDate,
-        assistants
-      );
-      return handlerInput.responseBuilder
-        .speak("Your Order has been placed. Thank you for your booking.")
-        .getResponse();
+        delete sessionAttributes.amount;
+        delete sessionAttributes.dish;
+        delete sessionAttributes.completedOrder;
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("completedOrder")
+          .speak("Do you want to add another item from the Menu?")
+          .getResponse();
+      } else if (amount && dish && oneMoreOrder === "no") {
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("confirmation")
+          .speak("Do you want to hear your Order again?")
+          .getResponse();
+      }
+      if (!dish && (oneMoreOrder === "yes" || oneMoreOrder === undefined)) {
+        sessionAttributes.lastAction = "setDish";
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("dish")
+          .speak("What item do you want to add to your order?")
+          .getResponse();
+      } else if (
+        !amount &&
+        (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+      ) {
+        sessionAttributes.lastAction = "setAmount";
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("amount")
+          .speak("How many times would you like to order that item")
+          .getResponse();
+      } else if (
+        amount &&
+        dish &&
+        (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+      ) {
+        sessionAttributes.lastAction = "setCompletedOrder";
+
+        sessionAttributes.orderlist.push({ dish, amount });
+
+        delete sessionAttributes.amount;
+        delete sessionAttributes.dish;
+        delete sessionAttributes.completedOrder;
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("completedOrder")
+          .speak("Do you want to add another item from the Menu?")
+          .getResponse();
+      } else if (oneMoreOrder === "no") {
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("confirmation")
+          .speak("Do you want to hear your Order again?")
+          .getResponse();
+      }
     } else if (
-      !dish &&
-      (oneMoreOrder === "yes" || oneMoreOrder === undefined)
+      handlerInput.requestEnvelope.request.intent.slots.confirmation.value &&
+      oneMoreOrder === "no"
     ) {
-      sessionAttributes.lastAction = "setDish";
-      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-      return handlerInput.responseBuilder
-        .addElicitSlotDirective("dish")
-        .speak("What item do you want to add to your order?")
-        .getResponse();
-    } else if (
-      !amount &&
-      (oneMoreOrder === "yes" || oneMoreOrder === undefined)
-    ) {
-      sessionAttributes.lastAction = "setAmount";
-      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-      return handlerInput.responseBuilder
-        .addElicitSlotDirective("amount")
-        .speak("How many times would you like to order that item")
-        .getResponse();
-    } else if (amount && dish) {
-      sessionAttributes.lastAction = "setCompletedOrder";
+      if (
+        handlerInput.requestEnvelope.request.intent.slots.confirmation.value ===
+          "yes" &&
+        handlerInput.requestEnvelope.request.intent.slots.correct.value ===
+          undefined
+      ) {
+        var speakOutput = "Your Order is: \n";
+        var i;
 
-      sessionAttributes.orderlist.push({ dish, amount });
+        const orders = sessionAttributes.orderlist;
+        for (i = 0; i < orders.length; i++) {
+          speakOutput +=
+            orders[i].amount + " times the " + orders[i].dish.name + ".\n";
+        }
+        speakOutput += "Is that correct?";
 
-      delete sessionAttributes.amount;
-      delete sessionAttributes.dish;
-      delete sessionAttributes.completedOrder;
-      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-      return handlerInput.responseBuilder
-        .addElicitSlotDirective("completedOrder")
-        .speak("Do you want to add another item from the Menu?")
-        .getResponse();
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective("correct")
+          .speak(speakOutput)
+          .getResponse();
+      } else if (
+        (handlerInput.requestEnvelope.request.intent.slots.confirmation
+          .value === "yes" &&
+          handlerInput.requestEnvelope.request.intent.slots.correct.value ===
+            "yes") ||
+        handlerInput.requestEnvelope.request.intent.slots.confirmation.value ===
+          "no"
+      ) {
+        if (sessionAttributes.wantsToOrder === undefined) {
+          await util.createDelivery(
+            name,
+            email,
+            sessionAttributes.orderlist,
+            address
+          );
+          return handlerInput.responseBuilder
+            .speak(
+              "Your delivery has been placed. Thank you for ordering from us."
+            )
+            .getResponse();
+        } else if (sessionAttributes.wantsToOrder === "yes") {
+          const date = sessionAttributes.date;
+          const time = sessionAttributes.time;
+          const assistants = sessionAttributes.assistants;
+
+          const combinedDate = date + "T" + time + ":00";
+
+          util.createOrder(
+            name,
+            email,
+            sessionAttributes.orderlist,
+            combinedDate,
+            assistants
+          );
+          return handlerInput.responseBuilder
+            .speak("Your Order has been placed. Thank you for your booking.")
+            .getResponse();
+        }
+      } else if (
+        handlerInput.requestEnvelope.request.intent.slots.confirmation.value ===
+          "yes" &&
+        handlerInput.requestEnvelope.request.intent.slots.correct.value === "no"
+      ) {
+        return handlerInput.responseBuilder
+          .speak(
+            "I'm Sorry to hear that. If you want to make a new Order please call the My Thai Star Skill again."
+          )
+          .getResponse();
+      }
     }
   },
 };
@@ -337,7 +436,24 @@ const OrderStateHandler = {
       }
     }
 
+
     return handlerInput.responseBuilder.speak(res).getResponse();
+  },
+};
+
+const AddressIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === "AddressIntent"
+    );
+  },
+
+  async handle(handlerInput) {
+    const speakOutput =
+      "The restaurants address is Place de l'Étoile - 11 rue de Tilsitt - 75017 Paris.";
+
+    return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
 };
 
@@ -530,6 +646,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     ReserveIntentHandler,
     OrderIntentHandler,
     OrderStateHandler,
+    AddressIntentHandler,
     MenuIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
