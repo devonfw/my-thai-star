@@ -81,8 +81,8 @@
       (matSortChange)="sort($event)"
     >
 
-       <!-- Table/Delivery Column -->
-       <ng-container matColumnDef="booking.tableNumber">
+      <!-- Table/Delivery Column -->
+      <ng-container matColumnDef="booking.tableNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[0].label }}
         </th>
@@ -101,7 +101,7 @@
 
           </ng-container>
           <ng-container *ngIf="element.booking.delivery">
-            Delivery
+            {{ element.booking.name }}
           </ng-container>
         </td>
       </ng-container>
@@ -111,43 +111,51 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[1].label }}
         </th>
-
         <td
           mat-cell
           *matCellDef="let element"
           (click)="$event.stopPropagation()"
         >
           <mat-checkbox
-            class="example-margin"
-            [checked]="element.order.paidId == 0 ? false : true"
-            (change)="changeOrderPayState($event, element)"
+          class="example-margin"
+          [checked]="element.order.paidId == 0 ? false : true"
+          (change)="changeOrderPayState($event, element)"
           ></mat-checkbox>
         </td>
       </ng-container>
 
-     <!-- State Column -->
-     <ng-container matColumnDef="order.state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ columns[2].label }}
-      </th>
-
-      <td
+      <!-- State Column -->
+      <ng-container matColumnDef="order.state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ columns[2].label }}
+        </th>
+        <td
         mat-cell
         *matCellDef="let element"
         (click)="$event.stopPropagation()"
-      >
-        <mat-select
-          (selectionChange)="changeOrderState($event, element)"
-          [(ngModel)]="element.order.stateId"
         >
-          <mat-option [value]="0">{{ stateNames[0] }}</mat-option>
-          <mat-option [value]="1">{{ stateNames[1] }}</mat-option>
-          <mat-option [value]="2">{{ stateNames[2] }}</mat-option>
-          <mat-option [value]="3">{{ stateNames[3] }}</mat-option>
-          <mat-option [value]="4">{{ stateNames[4] }}</mat-option>
-        </mat-select>
-      </td>
-    </ng-container>
+          <!-- decrement -->
+          <ng-template  *ngIf="element.order.stateId != 0;then enabled else disabled"> </ng-template >
+          <ng-template  #enabled> 
+            <button mat-button (click)="changeOrderState(element.order.stateId-1, element)"> 
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+          </ng-template >
+          <ng-template  #disabled> 
+            <button mat-button disabled> 
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+          </ng-template > 
+          <!-- current state -->
+          {{stateNames[element.order.stateId]}} 
+          <!-- increment -->
+          <button mat-button
+          (click)="changeOrderState(element.order.stateId+1, element)"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
       <!-- Date Column -->
       <ng-container matColumnDef="booking.bookingDate">
@@ -160,7 +168,7 @@
       </ng-container>
 
        <!-- Waiter's help Column -->
-       <ng-container matColumnDef="booking.waitersHelp">
+      <ng-container matColumnDef="booking.waitersHelp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columns[4].label }}
         </th>
@@ -185,9 +193,25 @@
         </td>
       </ng-container>
 
+      <!-- Cancel Button Column-->
+      <ng-container matColumnDef="order.cancel">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ columns[4].label }}
+        </th>
+        <td
+        mat-cell
+        *matCellDef="let element"
+        (click)="$event.stopPropagation()"
+        >
+          <button mat-button
+          (click)="changeOrderState(4, element)"
+          >
+            <mat-icon class="cancel">clear</mat-icon> 
+          </button>
+        </td>  
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
+      <tr mat-row
         *matRowDef="let row; columns: displayedColumns"
         (click)="selected(row)"
       ></tr>

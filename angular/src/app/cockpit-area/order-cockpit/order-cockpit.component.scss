@@ -56,6 +56,10 @@ td:not(:nth-child(1)) {
   width: 100px!important;
 }
 
+.cancel {
+  color: red;
+}
+
 @media (max-width: 599px) {
   .forDesktop {
     display: none;

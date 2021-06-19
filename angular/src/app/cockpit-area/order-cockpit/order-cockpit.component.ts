@@ -14,6 +14,8 @@ import {
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
+import { template } from 'lodash';
 
 @Component({
   selector: 'app-cockpit-order-cockpit',
@@ -46,7 +48,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'order.paystate',
     'order.state',
     'booking.bookingDate',
-    'booking.waitersHelp'
+    'booking.waitersHelp',
+    'order.cancel'
   ];
 
   pageSizes: number[];
@@ -68,9 +71,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
+    private  snackBarService: SnackBarService
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
   }
+
+   //string part for SuccessBar
+   stringpart:string;
 
   ngOnInit(): void {
 
@@ -128,7 +135,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'order.paystate', label: cockpitTable.orderPayStateH },
           { name: 'order.state', label: cockpitTable.orderStateH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.waitersHelp', label: cockpitTable.waitersHelpH }
+          { name: 'booking.waitersHelp', label: cockpitTable.waitersHelpH },
+          { name: 'order.cancel', label: cockpitTable.cancelH }
         ];
       });
   }
@@ -172,6 +180,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
+
   changeOrderState(event, element) {
     this.waiterCockpitService
       .updateOrder({ id: element.order.id, stateId: event.value })
@@ -186,7 +195,22 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           );
           this.table.renderRows();
         }
-      });
+      }); 
+  }
+
+
+  stringInputForSnackBar(element): string{
+    var temp;
+    if(element.booking.delivery){
+      temp = this.translocoService.translate('cockpit.orders.snackbarDelivery') 
+      + element.booking.name 
+      + this.translocoService.translate('cockpit.orders.snackbarEnd') ; 
+    }else{
+      temp = this.translocoService.translate('cockpit.orders.snackbarInHouse') 
+      + element.booking.tableId 
+      + this.translocoService.translate('cockpit.orders.snackbarEnd') ; 
+    }
+    return temp;
   }
 
   changeTableNumber(event, element) {
