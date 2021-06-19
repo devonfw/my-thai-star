@@ -246,14 +246,15 @@
       "emailH": "Email",
       "orderStateH":"State",
       "orderPayStateH":"Payment",
+      "cancelH":"Cancel",
+      "decrementH":"Decrement Order",
       "bookingTokenH": "Reference Number",
       "ownerH": "Owner",
       "tablenumberH": "Table",
       "creationDateH": "Creation date",
       "postCodeH":"Post Code",
       "cityH":"City",
-      "streetNameH":"Street",
-      "houseNumberH":"House Number",
+      "addressLineH":"Address line",
       "tableNotDefinedH": "---",
       "idH":"Id number"
     }
