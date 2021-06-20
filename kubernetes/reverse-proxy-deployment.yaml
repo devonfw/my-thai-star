@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: reverse-proxy
+  name: reverse-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: reverse-proxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/my-thai-star: "true"
+        io.kompose.service: reverse-proxy
+    spec:
+      containers:
+        - image:  313903476179.dkr.ecr.eu-central-1.amazonaws.com/my-thai-star/reverse-proxy:latest
+          name: mts-reverse-proxy
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/nginx/cert/
+              name: certs
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: certs
+          secret:
+            secretName: ssl-key-cert
+status: {}

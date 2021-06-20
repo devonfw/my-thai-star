@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: alexa
+  labels:
+    io.kompose.service: alexa
+spec:
+  selector:
+    io.kompose.service: alexa
+  ports:
+    - port: 3001
+      targetPort: 3001
+---
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: alexa
+  name: alexa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: alexa
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/my-thai-star: "true"
+        io.kompose.service: alexa
+    spec:
+      containers:
+        - image:  313903476179.dkr.ecr.eu-central-1.amazonaws.com/my-thai-star/alexa:latest
+          name: mts-alexa-endpoint
+          resources: {}
+      restartPolicy: Always
+status: {}

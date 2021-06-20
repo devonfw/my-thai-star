@@ -1,0 +1,11 @@
+kind: Service
+metadata:
+  name: angular
+  labels:
+    io.kompose.service: anglar
+spec:
+  selector:
+    io.kompose.service: angular
+  ports:
+    - port: 80
+      targetPort: 80

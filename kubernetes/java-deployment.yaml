@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: java
+  name: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: java
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/my-thai-star: "true"
+        io.kompose.service: java
+    spec:
+      containers:
+        - image: 313903476179.dkr.ecr.eu-central-1.amazonaws.com/my-thai-star/java:latest
+          name: mts-java
+          resources: {}
+      restartPolicy: Always
+status: {}

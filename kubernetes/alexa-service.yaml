@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alexa
+  labels:
+    io.kompose.service: alexa
+spec:
+  selector:
+    io.kompose.service: alexa
+  ports:
+    - port: 3001
+      targetPort: 3001
