@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../../../core/core.module';
@@ -18,7 +18,7 @@ describe('ReservationDialogComponent', () => {
   let dialog: MatDialog;
   let initialState;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     initialState = { config };
     TestBed.configureTestingModule({
       providers: [

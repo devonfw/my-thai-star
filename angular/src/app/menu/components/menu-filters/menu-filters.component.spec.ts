@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 
 import { MenuFiltersComponent } from './menu-filters.component';
 import { FilterSortComponent } from './filter-sort/filter-sort.component';
@@ -16,7 +16,7 @@ describe('MenuFiltersComponent', () => {
   let fixture: ComponentFixture<MenuFiltersComponent>;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         MenuFiltersComponent,

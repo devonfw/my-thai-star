@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FilterSearchComponent } from './filter-search.component';
 import { CoreModule } from '../../../../core/core.module';
@@ -12,7 +12,7 @@ describe('FilterSearchComponent', () => {
   let fixture: ComponentFixture<FilterSearchComponent>;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FilterSearchComponent],
       imports: [CoreModule, getTranslocoModule()],
