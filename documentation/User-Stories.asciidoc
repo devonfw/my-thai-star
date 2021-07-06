@@ -10,7 +10,7 @@ The list of user stories, exported from JIRA, can be downloaded from link:resour
 
 Epic: Invite friends
 
-As a guest I want to create an dinner event by entering date and time and adding potential guests by their emails so that each potential guests receives a email in order to confirm or decline my invite.
+As a guest I want to create an dinner event by entering date and time and adding potential guests by their emails so that each potential guest will receives an email in order to confirm or decline my invite.
 
 ===== Acceptance criteria
  . only date and time in future possible and both required
