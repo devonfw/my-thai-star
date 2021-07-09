@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '~@angular/material/theming';
 
 *,
@@ -67,9 +68,9 @@ mat-card {
 
 @mixin snackbar-bgc() {
   .bgc-red-600 {
-    background-color: mat-color($mat-red, 600);
+    background-color: mat.get-color-from-palette(mat.$red-palette, 600);
   }
   .bgc-green-600 {
-    background-color: mat-color($mat-green, 600);
+    background-color: mat.get-color-from-palette(mat.$green-palette, 600);
   }
 }

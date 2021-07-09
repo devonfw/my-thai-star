@@ -1,12 +1,5 @@
 import { DebugElement } from '@angular/core';
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  flush,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -40,7 +33,7 @@ describe('BookTableComponent', () => {
   let dialog: MatDialog;
   let snackBarService: SnackBarService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnack']);
     TestBed.configureTestingModule({
       declarations: [BookTableComponent, EmailValidatorDirective],

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FilterSortComponent, SortDirection } from './filter-sort.component';
@@ -9,7 +9,7 @@ describe('FilterSortComponent', () => {
   let component: FilterSortComponent;
   let fixture: ComponentFixture<FilterSortComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FilterSortComponent],
       imports: [

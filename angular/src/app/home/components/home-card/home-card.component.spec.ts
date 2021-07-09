@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, waitForAsync } from '@angular/core/testing';
 
 import { HomeCardComponent } from './home-card.component';
 import { CoreModule } from '../../../core/core.module';
@@ -12,7 +12,7 @@ describe('HomeCardComponent', () => {
   let fixture: ComponentFixture<HomeCardComponent>;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [HomeCardComponent],
       imports: [CoreModule, getTranslocoModule()],

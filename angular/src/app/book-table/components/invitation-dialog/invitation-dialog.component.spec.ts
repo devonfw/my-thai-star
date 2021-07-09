@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import {
   MatDialog,
   MatDialogRef,
@@ -35,7 +35,7 @@ describe('InvitationDialogComponent', () => {
   let mockStore: MockStore;
   const initialState = { booking: undefined };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const bookTableServiceSpy = jasmine.createSpyObj('BookTableService', [
       'composeBooking',
       'postBooking',

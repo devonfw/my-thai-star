@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommentAlertComponent } from './comment-alert.component';
@@ -7,7 +7,7 @@ describe('CommentAlertComponent', () => {
   let component: CommentAlertComponent;
   let fixture: ComponentFixture<CommentAlertComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CommentAlertComponent],
       imports: [MatButtonModule, MatDialogModule],
