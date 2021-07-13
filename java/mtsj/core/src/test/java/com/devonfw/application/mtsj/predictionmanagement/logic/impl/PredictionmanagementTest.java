@@ -1,7 +1,7 @@
 package com.devonfw.application.mtsj.predictionmanagement.logic.impl;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -14,10 +14,8 @@ import javax.persistence.Query;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,7 +25,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
 import org.springframework.test.context.TestExecutionListeners;
 
-import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepository;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
@@ -57,8 +54,7 @@ ReactorContextTestExecutionListener.class })
 @ExtendWith(MockitoExtension.class)
 public class PredictionmanagementTest extends ComponentTest {
 
-  @InjectMocks
-  private Predictionmanagement predictionManagement = new PredictionmanagementImpl();
+  private PredictionmanagementImpl predictionManagement = new PredictionmanagementImpl();
 
   @Mock
   private PredictionDayDataRepository predictionDayDataRepository;
@@ -107,59 +103,23 @@ public class PredictionmanagementTest extends ComponentTest {
   @WithMockUser(username = "manager", authorities = { Roles.MANAGER })
   public void getNextWeekPrediction() {
 
-    // Class<?> type = Mockito.any();
-    List<String> holidays = new ArrayList<>();
-    holidays.add("0");
-
-    List<Double> temperatures = new ArrayList<>();
-    temperatures.add(Double.valueOf(20.5d));
     PredictionSearchCriteriaTo eto = new PredictionSearchCriteriaTo();
-    eto.setHolidays(holidays);
-    eto.setTemperatures(temperatures);
-    // eto.setType(Type.PREDICTION);
+    eto.setHolidays(List.of("0"));
+    eto.setTemperatures(List.of(Double.valueOf(20.5d)));
     eto.setStartBookingdate(new Timestamp(System.currentTimeMillis()));
-    PageRequest pageable = PageRequest.of(0, 100);
-    eto.setPageable(pageable);
+    eto.setPageable(PageRequest.of(0, 100));
 
-    // PredictionDayDataRepository predictionDayDataRepository = mock(PredictionDayDataRepository.class);
-    // PredictionModelDataRepository predictionModelDataRepository = mock(PredictionModelDataRepository.class);
-    // EntityManager entityManager = mock(EntityManager.class);
-    // PredictionForecastDataEntity forecastData = mock(PredictionForecastDataEntity.class);
-    // PredictionDayDataEntity predictionDayDataEntity = mock(PredictionDayDataEntity.class);
-    // PredictionModelDataEntity entity = mock(PredictionModelDataEntity.class);
+    this.predictionManagement.setPredictionDayDataRepository(this.predictionDayDataRepository);
+    this.predictionManagement.setDishRepository(this.dishRepository);
+    this.predictionManagement.setEntityManager(this.entityManager);
+    this.predictionManagement.setPredictionModelDataRepository(this.predictionModelDataRepository);
 
-    doNothing().when(this.predictionDayDataRepository).deletePredictionForecastData();
+    when(this.entityManager.createNativeQuery(anyString())).thenReturn(mock(Query.class));
     when(this.dishRepository.findAll()).thenReturn(returnDishes());
-    doNothing().when(this.entityManager).persist(this.forecastData);
-    // Page<PredictionDayDataEntity> predictionDayDataPage = mock(Page.class);
     when(this.predictionDayDataRepository.getPrediction(eto)).thenReturn(returnPagePredictionDayData());
-    // generatePredictionFor
-    doNothing().when(this.predictionModelDataRepository).deleteTmpPredictionModel();
-    doNothing().when(this.predictionModelDataRepository).prepareModelPredictions(1l);
-    doNothing().when(this.predictionDayDataRepository).deleteTmpPredictionForecast();
-
-    // Query mockedQuery = mock(Query.class);
-    when(this.entityManager.createNativeQuery(any())).thenReturn(this.mockedQuery);
-    when(this.mockedQuery.executeUpdate()).thenReturn(1);
-    doNothing().when(this.predictionDayDataRepository).deletePredictionDayDatabyDish(1l);
-    doNothing().when(this.predictionDayDataRepository).savePredictions(1l);
-    // train
-
-    when(this.predictionModelDataRepository.isTrainingNecessary(new Long(1), "date")).thenReturn(1);
-    when(this.predictionModelDataRepository.isTrainingPossible()).thenReturn(1);
-    doNothing().when(this.predictionModelDataRepository).deleteTmpPredictionData();
-    doNothing().when(this.predictionModelDataRepository).prepareTrainingData(new Long(1),
-        new Timestamp(System.currentTimeMillis()));
-    doNothing().when(this.predictionModelDataRepository).deleteTmpPredictionModel();
-    doNothing().when(this.predictionModelDataRepository).deleteTmpPredictionFit();
-
-    // Query mockedQuery1 = mock(Query.class);
-    // when(this.entityManager.createNativeQuery("dummy").executeUpdate()).thenReturn(1);
-    doNothing().when(this.predictionModelDataRepository).deletePreditionDataModelbyDishId(1l);
-    when(this.predictionModelDataRepository.save(this.entity)).thenReturn(this.entity);
-    doNothing().when(this.predictionModelDataRepository).addPredictionModel(1l);
 
     PredictionDataTo nextWeekPrediction = this.predictionManagement.getNextWeekPrediction(eto);
+
     assertThat(nextWeekPrediction).isNotNull();
     assertThat(nextWeekPrediction.getData()).isNotNull();
     assertThat(nextWeekPrediction.getData().size()).isEqualTo(1);
@@ -171,6 +131,7 @@ public class PredictionmanagementTest extends ComponentTest {
     expected.setModificationCounter(predictionDayData.getModificationCounter());
     expected.setTimestamp(predictionDayData.getTimestamp());
     assertThat(nextWeekPrediction.getData().get(0)).isEqualToComparingFieldByField(expected);
+
   }
 
   private List<DishEntity> returnDishes() {
