@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +26,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
 import org.springframework.test.context.TestExecutionListeners;
 
+import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.DishEntity;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.DishRepository;
 import com.devonfw.application.mtsj.general.common.api.constants.Roles;
