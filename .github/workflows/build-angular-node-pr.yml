@@ -1,0 +1,50 @@
+on:
+
+  pull_request:
+    branches: [develop]
+
+name: Build
+
+jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      Angular: ${{ steps.filter.outputs.Angular }}
+      Node: ${{ steps.filter.outputs.Node }}
+    steps:
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          Angular:
+            - 'angular/**'
+          Node:
+            - 'node/**'
+  # JOB to build Angular code
+  Angular:
+    needs: changes
+    if: ${{ needs.changes.outputs.Angular == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: build
+        run: |
+          cd angular
+          npm install
+          npm run build
+  # JOB to build Node code
+  Node:
+    needs: changes
+    if: ${{ needs.changes.outputs.Node == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: build
+        run: |
+          cd node
+          yarn install
+          npm run build
