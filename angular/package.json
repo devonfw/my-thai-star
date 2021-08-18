@@ -93,7 +93,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/leaflet": "^1.4.4",
     "@types/lodash": "^4.14.123",
-    "@types/node": "^12.11.1",
+    "@types/node": "^16.6.1",
     "@types/selenium-webdriver": "3.0.15",
     "@types/uuid": "^3.4.5",
     "codelyzer": "^6.0.0",
