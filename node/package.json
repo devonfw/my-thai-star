@@ -24,7 +24,7 @@
   "dependencies": {
     "@devon4node/common": "^2.0.0",
     "@devon4node/config": "^2.0.0",
-    "@devon4node/mailer": "^2.0.0",
+    "@devon4node/mailer": "^3.1.1",
     "@nestjs/common": "^7.0.7",
     "@nestjs/core": "^7.0.7",
     "@nestjs/jwt": "^7.0.0",
