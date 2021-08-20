@@ -87,7 +87,7 @@
     "@angular-devkit/schematics": "~12.1.1",
     "@angular/cli": "~12.2.2",
     "@angular/compiler-cli": "~12.1.1",
-    "@angular/language-service": "~12.1.1",
+    "@angular/language-service": "~12.2.2",
     "@types/hammerjs": "2.0.36",
     "@types/jasmine": "~3.8.2",
     "@types/jasminewd2": "~2.0.10",
