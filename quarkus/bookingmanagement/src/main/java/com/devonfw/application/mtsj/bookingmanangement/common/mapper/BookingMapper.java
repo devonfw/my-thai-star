@@ -21,6 +21,6 @@ public interface BookingMapper {
 
   BookingEto mapTo(BookingEntity booking);
 
-  BookingEntity mapToEntity(BookingEto booking);
+  BookingEntity mapTo(BookingEto booking);
 
 }

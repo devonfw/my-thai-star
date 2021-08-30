@@ -12,10 +12,10 @@ public interface InvitedGuestMapper {
 
   InvitedGuestEto mapTo(InvitedGuestEntity invitedGuest);
 
-  List<InvitedGuestEto> mapToList(List<InvitedGuestEntity> invitedGuests);
+  List<InvitedGuestEto> mapTp(List<InvitedGuestEntity> invitedGuests);
 
-  InvitedGuestEntity mapToEntity(InvitedGuestEto invitedGuest);
+  InvitedGuestEntity mapTo(InvitedGuestEto invitedGuest);
 
-  List<InvitedGuestEntity> mapToListEntity(List<InvitedGuestEto> invitedGuests);
+  List<InvitedGuestEntity> mapTo(List<InvitedGuestEto> invitedGuests);
 
 }

@@ -1,10 +1,5 @@
 package com.devonfw.application.mtsj.bookingmanangement.logic;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,6 +7,7 @@ import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import com.devonfw.application.mtsj.bookingmanangement.common.TokenBuilder;
 import com.devonfw.application.mtsj.bookingmanangement.common.mapper.BookingMapper;
 import com.devonfw.application.mtsj.bookingmanangement.common.mapper.InvitedGuestMapper;
 import com.devonfw.application.mtsj.bookingmanangement.common.mapper.TableMapper;
@@ -32,16 +28,16 @@ public class BookingManagement {
   BookingRepository bookingDao;
 
   @Inject
-  TableRepository tableDao;
-
-  @Inject
-  InvitedGuestRepository invitedGuestDao;
-
-  @Inject
   BookingMapper bookingMapper;
 
   @Inject
+  TableRepository tableDao;
+
+  @Inject
   TableMapper tableMapper;
+
+  @Inject
+  InvitedGuestRepository invitedGuestDao;
 
   @Inject
   InvitedGuestMapper invitedGuestMapper;
@@ -54,8 +50,8 @@ public class BookingManagement {
     }
     BookingCto cto = new BookingCto();
     cto.setBooking(this.bookingMapper.mapTo(booking.get()));
-    cto.setTable(this.tableMapper.mapToDTO(booking.get().getTable()));
-    cto.setInvitedGuests(this.invitedGuestMapper.mapToList(booking.get().getInvitedGuests()));
+    cto.setTable(this.tableMapper.mapTo(booking.get().getTable()));
+    cto.setInvitedGuests(this.invitedGuestMapper.mapTp(booking.get().getInvitedGuests()));
     return cto;
   }
 
@@ -75,10 +71,10 @@ public class BookingManagement {
       throw new RuntimeException("Valid table required.");
     }
 
-    BookingEntity bookingEntity = this.bookingMapper.mapToEntity(booking.getBooking());
+    BookingEntity bookingEntity = this.bookingMapper.mapTo(booking.getBooking());
     bookingEntity.setCanceled(false);
     bookingEntity.setTable(table.get());
-    bookingEntity.setBookingToken(buildToken(bookingEntity.getEmail(), "CB_"));
+    bookingEntity.setBookingToken(TokenBuilder.build(bookingEntity.getEmail(), "CB_"));
 
     BookingEntity resultEntity = this.bookingDao.save(bookingEntity);
     if (Objects.nonNull(booking.getInvitedGuests())) {
@@ -89,35 +85,11 @@ public class BookingManagement {
 
   private void saveGuests(List<InvitedGuestEto> invitedGuests, Long bookingId) {
 
-    List<InvitedGuestEntity> invitedGuestEntities = this.invitedGuestMapper.mapToListEntity(invitedGuests);
+    List<InvitedGuestEntity> invitedGuestEntities = this.invitedGuestMapper.mapTo(invitedGuests);
     invitedGuestEntities.forEach(guest -> {
-      guest.setGuestToken(buildToken(guest.getEmail(), "GB_"));
+      guest.setGuestToken(TokenBuilder.build(guest.getEmail(), "GB_"));
       guest.setIdBooking(bookingId);
       this.invitedGuestDao.save(guest);
     });
   }
-
-  private String buildToken(String email, String type) {
-
-    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
-    String date = String.format("%04d%02d%02d_", localDateTime.getYear(), localDateTime.getMonthValue(),
-        localDateTime.getDayOfMonth());
-    String time = String.format("%02d%02d%02d", localDateTime.getHour(), localDateTime.getMinute(),
-        localDateTime.getSecond());
-
-    MessageDigest md = null;
-    try {
-      md = MessageDigest.getInstance("MD5");
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    md.update((email + date + time).getBytes());
-    byte[] digest = md.digest();
-    StringBuilder sb = new StringBuilder();
-    for (byte b : digest) {
-      sb.append(String.format("%02x", b & 0xff));
-    }
-    return type + date + sb;
-  }
-
 }

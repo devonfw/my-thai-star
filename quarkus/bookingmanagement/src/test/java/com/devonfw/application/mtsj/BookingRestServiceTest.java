@@ -18,6 +18,6 @@ public class BookingRestServiceTest {
   @Test
   public void testGetBooking() {
 
-    //given().when().get("/booking/0").then().statusCode(200);
+    given().when().get("/booking/0").then().statusCode(200);
   }
 }

@@ -8,7 +8,7 @@ import com.devonfw.application.mtsj.bookingmanangement.dataaccess.TableEntity;
 @Mapper(componentModel = "cdi")
 public interface TableMapper {
 
-  TableEto mapToDTO(TableEntity table);
+  TableEto mapTo(TableEntity table);
 
-  TableEntity mapToEntity(TableEto table);
+  TableEntity mapTo(TableEto table);
 }
