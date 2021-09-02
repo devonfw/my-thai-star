@@ -57,7 +57,12 @@ public class BookingManagement {
 
   public void deleteBooking(Long bookingId) {
 
-    this.bookingDao.deleteById(bookingId);
+    Optional<BookingEntity> booking = this.bookingDao.findById(bookingId);
+    if (booking.isEmpty()) {
+      throw new RuntimeException("Booking deos not exists.");
+    }
+    System.out.println(booking.get());
+    this.bookingDao.delete(booking.get());
   }
 
   public BookingEto saveBooking(BookingCto booking) {

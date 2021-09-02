@@ -34,7 +34,7 @@ CREATE TABLE Booking (
 CREATE TABLE InvitedGuest (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  idBooking BIGINT NOT NULL,
+  idBooking BIGINT,
   guestToken VARCHAR (255),
   email VARCHAR (60),
   accepted BOOLEAN,
