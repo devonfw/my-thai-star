@@ -51,7 +51,7 @@ public class BookingManagement {
     BookingCto cto = new BookingCto();
     cto.setBooking(this.bookingMapper.mapTo(booking.get()));
     cto.setTable(this.tableMapper.mapTo(booking.get().getTable()));
-    cto.setInvitedGuests(this.invitedGuestMapper.mapTp(booking.get().getInvitedGuests()));
+    cto.setInvitedGuests(this.invitedGuestMapper.mapToEto(booking.get().getInvitedGuests()));
     return cto;
   }
 
@@ -86,7 +86,7 @@ public class BookingManagement {
 
   private void saveGuests(List<InvitedGuestEto> invitedGuests, Long bookingId) {
 
-    List<InvitedGuestEntity> invitedGuestEntities = this.invitedGuestMapper.mapTo(invitedGuests);
+    List<InvitedGuestEntity> invitedGuestEntities = this.invitedGuestMapper.mapToEntity(invitedGuests);
     invitedGuestEntities.forEach(guest -> {
       guest.setGuestToken(TokenBuilder.build(guest.getEmail(), "GB_"));
       guest.setIdBooking(bookingId);
