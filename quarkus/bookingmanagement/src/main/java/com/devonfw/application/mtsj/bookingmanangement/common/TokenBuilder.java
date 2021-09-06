@@ -13,20 +13,21 @@ public class TokenBuilder {
 
   public static String build(String email, String type) {
 
-    MessageDigest md = null;
-    try {
-      md = MessageDigest.getInstance("MD5");
-    } catch (NoSuchAlgorithmException e) {
-      log.info("Token build error", e);
-    }
-
     LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
     String date = String.format("%04d%02d%02d_", localDateTime.getYear(), localDateTime.getMonthValue(),
         localDateTime.getDayOfMonth());
     String time = String.format("%02d%02d%02d", localDateTime.getHour(), localDateTime.getMinute(),
         localDateTime.getSecond());
-    md.update((email + date + time).getBytes());
-    byte[] digest = md.digest();
+
+    MessageDigest md = null;
+    byte[] digest = new byte[0];
+    try {
+      md = MessageDigest.getInstance("MD5");
+      md.update((email + date + time).getBytes());
+      digest = md.digest();
+    } catch (NoSuchAlgorithmException e) {
+      log.info("Token build error", e);
+    }
     StringBuilder sb = new StringBuilder();
     for (byte b : digest) {
       sb.append(String.format("%02x", b & 0xff));

@@ -7,17 +7,17 @@ import javax.validation.constraints.NotNull;
 
 import com.devonfw.application.mtsj.bookingmanangement.common.datatype.BookingType;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entity transport object of Booking
  */
-@Data
-public class BookingEto {
-
-  private static final long serialVersionUID = 1L;
-
-  private Long id;
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class BookingEto extends AbstractEto {
 
   @NotNull
   private String name;

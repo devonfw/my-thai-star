@@ -1,16 +1,18 @@
 package com.devonfw.application.mtsj.bookingmanangement.common.to;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entity transport object of Table
  */
-@Data
-public class TableEto {
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class TableEto extends AbstractEto {
 
   private static final long serialVersionUID = 1L;
-
-  private Long id;
 
   private Integer seatsNumber;
 

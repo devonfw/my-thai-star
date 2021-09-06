@@ -2,17 +2,19 @@ package com.devonfw.application.mtsj.bookingmanangement.common.to;
 
 import java.time.Instant;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entity transport object of InvitedGuest
  */
-@Data
-public class InvitedGuestEto {
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class InvitedGuestEto extends AbstractEto {
 
   private static final long serialVersionUID = 1L;
-
-  private Long id;
 
   private Long bookingId;
 

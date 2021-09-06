@@ -61,7 +61,6 @@ public class BookingManagement {
     if (booking.isEmpty()) {
       throw new RuntimeException("Booking deos not exists.");
     }
-    System.out.println(booking.get());
     this.bookingDao.delete(booking.get());
   }
 
@@ -70,17 +69,14 @@ public class BookingManagement {
     if (Objects.isNull(booking)) {
       throw new RuntimeException("Booking cannot be empty.");
     }
-
     Optional<TableEntity> table = this.tableDao.findById(booking.getTable().getId());
     if (table.isEmpty()) {
       throw new RuntimeException("Valid table required.");
     }
-
     BookingEntity bookingEntity = this.bookingMapper.mapTo(booking.getBooking());
     bookingEntity.setCanceled(false);
     bookingEntity.setTable(table.get());
     bookingEntity.setBookingToken(TokenBuilder.build(bookingEntity.getEmail(), "CB_"));
-
     BookingEntity resultEntity = this.bookingDao.save(bookingEntity);
     if (Objects.nonNull(booking.getInvitedGuests())) {
       saveGuests(booking.getInvitedGuests(), resultEntity.getId());

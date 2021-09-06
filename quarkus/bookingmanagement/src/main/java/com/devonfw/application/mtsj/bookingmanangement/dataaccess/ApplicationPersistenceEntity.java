@@ -7,9 +7,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @MappedSuperclass
+@ToString
 public abstract class ApplicationPersistenceEntity {
 
   private Long id;
