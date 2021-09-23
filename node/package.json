@@ -27,7 +27,7 @@
     "@devon4node/mailer": "^3.1.1",
     "@nestjs/common": "^7.5.5",
     "@nestjs/core": "^7.0.7",
-    "@nestjs/jwt": "^7.0.0",
+    "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^7.6.18",
     "@nestjs/swagger": "4.7.12",
