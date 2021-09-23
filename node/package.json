@@ -31,7 +31,7 @@
     "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^7.6.18",
     "@nestjs/swagger": "4.5.1",
-    "@nestjs/terminus": "7.0.0",
+    "@nestjs/terminus": "7.2.0",
     "@nestjs/typeorm": "^7.0.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.2.3",
