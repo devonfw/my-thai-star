@@ -98,7 +98,7 @@
     "@types/uuid": "^8.3.1",
     "codelyzer": "^6.0.0",
     "concurrently": "^6.2.1",
-    "cypress": "^5.2.0",
+    "cypress": "^8.4.1",
     "electron": "9.4.0",
     "electron-builder": "22.11.7",
     "electron-reload": "^1.5.0",
