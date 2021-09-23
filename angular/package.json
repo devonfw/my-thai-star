@@ -95,7 +95,7 @@
     "@types/lodash": "^4.14.123",
     "@types/node": "^12.11.1",
     "@types/selenium-webdriver": "4.0.15",
-    "@types/uuid": "^3.4.5",
+    "@types/uuid": "^8.3.1",
     "codelyzer": "^6.0.0",
     "concurrently": "^6.2.1",
     "cypress": "^5.2.0",
