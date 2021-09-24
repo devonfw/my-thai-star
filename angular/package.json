@@ -110,7 +110,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-firefox-launcher": "^2.1.1",
     "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
+    "karma-jasmine-html-reporter": "^1.7.0",
     "mochawesome": "^6.1.1",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.1.0",
