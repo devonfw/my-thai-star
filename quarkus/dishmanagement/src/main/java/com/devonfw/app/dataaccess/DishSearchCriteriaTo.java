@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.devonfw.app.common.AbstractSearchCriteriaTo;
 import com.devonfw.app.common.StringSearchConfigTo;
+import com.devonfw.app.common.to.CategoryEto;
 
 /**
  * used to find {@link com.devonfw.application.mtsj.dishmanagement.common.api.Dish}s.
