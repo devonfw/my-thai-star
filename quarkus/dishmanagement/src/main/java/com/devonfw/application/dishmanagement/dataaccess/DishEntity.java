@@ -17,6 +17,8 @@ import com.devonfw.application.dishmanagement.common.ApplicationPersistenceEntit
  */
 @Entity
 @Table(name = "Dish")
+// @Getter
+// @Setter
 public class DishEntity extends ApplicationPersistenceEntity {
 
   private String name;
@@ -28,54 +30,94 @@ public class DishEntity extends ApplicationPersistenceEntity {
   // TODO- MS communication
   // private ImageEntity image;
 
+  private List<IngredientEntity> extras;
+
+  private List<CategoryEntity> categories;
+
+  /**
+   * @return name
+   */
+  public String getName() {
+
+    return this.name;
+  }
+
+  /**
+   * @param name new value of {@link #getname}.
+   */
+  public void setName(String name) {
+
+    this.name = name;
+  }
+
+  /**
+   * @return description
+   */
+  public String getDescription() {
+
+    return this.description;
+  }
+
+  /**
+   * @param description new value of {@link #getdescription}.
+   */
+  public void setDescription(String description) {
+
+    this.description = description;
+  }
+
+  /**
+   * @return price
+   */
+  public BigDecimal getPrice() {
+
+    return this.price;
+  }
+
+  /**
+   * @param price new value of {@link #getprice}.
+   */
+  public void setPrice(BigDecimal price) {
+
+    this.price = price;
+  }
+
+  /**
+   * @return extras
+   */
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "DishIngredient", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
-  private List<IngredientEntity> extras;
+  public List<IngredientEntity> getExtras() {
 
+    return this.extras;
+  }
+
+  /**
+   * @param extras new value of {@link #getextras}.
+   */
+  public void setExtras(List<IngredientEntity> extras) {
+
+    this.extras = extras;
+  }
+
+  /**
+   * @return categories
+   */
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "DishCategory", joinColumns = {
   @javax.persistence.JoinColumn(name = "idDish") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idCategory"))
-  private List<CategoryEntity> categories;
+  public List<CategoryEntity> getCategories() {
 
-  // /**
-  // * @return image
-  // */
-  // @OneToOne
-  // @JoinColumn(name = "idImage")
-  // public ImageEntity getImage() {
-  //
-  // return this.image;
-  // }
-  //
-  // /**
-  // * @param image new value of {@link #getImage}.
-  // */
-  // public void setImage(ImageEntity image) {
-  //
-  // this.image = image;
-  // }
+    return this.categories;
+  }
 
-  // @Override
-  // @Transient
-  // public Long getImageId() {
-  //
-  // if (this.image == null) {
-  // return null;
-  // }
-  // return this.image.getId();
-  // }
-  //
-  // @Override
-  // public void setImageId(Long imageId) {
-  //
-  // if (imageId == null) {
-  // this.image = null;
-  // } else {
-  // ImageEntity imageEntity = new ImageEntity();
-  // imageEntity.setId(imageId);
-  // this.image = imageEntity;
-  // }
-  // }
+  /**
+   * @param categories new value of {@link #getcategories}.
+   */
+  public void setCategories(List<CategoryEntity> categories) {
+
+    this.categories = categories;
+  }
 
 }
