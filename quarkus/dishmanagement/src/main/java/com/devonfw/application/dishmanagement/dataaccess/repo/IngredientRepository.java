@@ -7,7 +7,7 @@ import com.devonfw.application.dishmanagement.dataaccess.IngredientEntity;
 /**
  * {@link DefaultRepository} for {@link IngredientEntity}.
  */
-public interface IngredientRepository extends JpaRepository<IngredientEntity, Long> {
+public interface IngredientRepository extends JpaRepository<IngredientEntity, Long>, IngredientFragment {
 
   /**
    * @param criteria the {@link IngredientSearchCriteriaTo} with the criteria to search.

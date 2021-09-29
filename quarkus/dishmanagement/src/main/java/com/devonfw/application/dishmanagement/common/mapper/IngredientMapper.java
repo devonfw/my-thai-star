@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.devonfw.application.dishmanagement.common.to.CategoryEto;
-import com.devonfw.application.dishmanagement.dataaccess.CategoryEntity;
+import com.devonfw.application.dishmanagement.common.to.IngredientEto;
+import com.devonfw.application.dishmanagement.dataaccess.IngredientEntity;
 
 @Mapper(componentModel = "cdi")
-public interface CategoryMapper {
+public interface IngredientMapper {
+
   default Date map(OffsetDateTime value) {
 
     if (value == null) {
@@ -19,9 +20,9 @@ public interface CategoryMapper {
     return new Date(value.toInstant().toEpochMilli());
   }
 
-  CategoryEto mapTo(CategoryEntity category);
+  IngredientEntity mapTo(IngredientEto ingredientEto);
 
-  CategoryEntity mapTo(CategoryEto category);
+  IngredientEto mapTo(IngredientEntity ingredientEntity);
 
-  List<CategoryEto> mapList(List<CategoryEntity> entities);
+  List<IngredientEto> mapList(List<IngredientEntity> entities);
 }

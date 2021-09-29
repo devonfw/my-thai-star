@@ -7,7 +7,7 @@ import com.devonfw.application.dishmanagement.dataaccess.DishEntity;
 /**
  * {@link DefaultRepository} for {@link DishEntity}.
  */
-public interface DishRepository extends JpaRepository<DishEntity, Long> {
+public interface DishRepository extends JpaRepository<DishEntity, Long>, DishFragment {
 
   /**
    * @param criteria the {@link DishSearchCriteriaTo} with the criteria to search.
