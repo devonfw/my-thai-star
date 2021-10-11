@@ -99,7 +99,7 @@
     "codelyzer": "^6.0.2",
     "concurrently": "^6.3.0",
     "cypress": "^8.5.0",
-    "electron": "9.4.0",
+    "electron": "15.1.2",
     "electron-builder": "22.11.7",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.9.0",
