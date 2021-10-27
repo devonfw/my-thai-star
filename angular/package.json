@@ -94,7 +94,7 @@
     "@types/leaflet": "^1.7.5",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.4",
-    "@types/selenium-webdriver": "4.0.15",
+    "@types/selenium-webdriver": "4.0.16",
     "@types/uuid": "^8.3.1",
     "codelyzer": "^6.0.2",
     "concurrently": "^6.3.0",
