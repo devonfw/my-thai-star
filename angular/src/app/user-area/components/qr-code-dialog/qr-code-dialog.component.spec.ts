@@ -1,10 +1,4 @@
-import {
-  async,
-  TestBed,
-  ComponentFixture,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -63,7 +57,7 @@ describe('QrCodeDialogComponent', () => {
     fixture.detectChanges();
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,

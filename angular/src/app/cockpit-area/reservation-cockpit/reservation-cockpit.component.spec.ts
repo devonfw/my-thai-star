@@ -4,13 +4,7 @@ import { State } from '../../store';
 import { ConfigService } from '../../core/config/config.service';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { config } from '../../core/config/config';
-import {
-  TestBed,
-  ComponentFixture,
-  async,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslocoService } from '@ngneat/transloco';
 import { of } from 'rxjs/internal/observable/of';
@@ -88,7 +82,7 @@ describe('ReservationCockpitComponent', () => {
   let configService: ConfigService;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     initialState = { config };
     TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceStub)
       .compileComponents()
@@ -163,7 +157,7 @@ describe('TestingReservationCockpitComponentWithSortOrderData', () => {
   let configService: ConfigService;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     initialState = { config };
     TestBedSetUp.loadWaiterCockpitServiceStud(waiterCockpitServiceSortStub)
       .compileComponents()

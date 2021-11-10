@@ -1,12 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  inject,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, inject, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmailConfirmationsComponent } from './email-confirmations.component';
@@ -116,7 +109,7 @@ describe('EmailConfirmationsComponent', () => {
     TestBed.overrideProvider(service, { useValue: provider });
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     initialState = { config };
     TestBed.configureTestingModule({
       declarations: [EmailConfirmationsComponent],
