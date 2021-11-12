@@ -101,9 +101,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mts-devonfw.cloud.okteto.net
+    - sujithmn.cloud.okteto.net
   rules:
-  - host: mts-devonfw.cloud.okteto.net
+  - host: sujithmn.cloud.okteto.net
     http:
       paths:
       - path: /api(/)(.*)
@@ -120,9 +120,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mts-devonfw.cloud.okteto.net
+    - sujithmn.cloud.okteto.net
   rules:
-  - host: mts-devonfw.cloud.okteto.net
+  - host: sujithmn.cloud.okteto.net
     http:
       paths:
       - path: /*
