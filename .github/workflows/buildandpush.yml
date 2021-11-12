@@ -49,8 +49,8 @@ jobs:
           echo VERSION=$VERSION
           
           docker tag $JAVA_IMAGE_NAME $JAVA_IMAGE_ID:1.0
-          docker push $JAVA_IMAGE_ID:$VERSION
+          docker push $JAVA_IMAGE_ID:1.0
 
           docker tag $ANGULAR_IMAGE_NAME $ANGULAR_IMAGE_ID:1.0
-          docker push $ANGULAR_IMAGE_ID:$VERSION
+          docker push $ANGULAR_IMAGE_ID:1.0
           
