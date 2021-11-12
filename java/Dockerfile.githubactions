@@ -2,7 +2,7 @@
 
 FROM maven:3.6-jdk-11 AS build
 WORKDIR /app
-COPY mtsj/. /app
+COPY java/mtsj/. /app
 RUN mvn test
 RUN mvn install
 RUN ls -l server/target
