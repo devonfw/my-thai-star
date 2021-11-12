@@ -101,9 +101,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - sujithmn.cloud.okteto.net
+    - mts-sujithmn.cloud.okteto.net
   rules:
-  - host: sujithmn.cloud.okteto.net
+  - host: mts-sujithmn.cloud.okteto.net
     http:
       paths:
       - path: /api(/)(.*)
@@ -120,9 +120,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - sujithmn.cloud.okteto.net
+    - mts-sujithmn.cloud.okteto.net
   rules:
-  - host: sujithmn.cloud.okteto.net
+  - host: mts-sujithmn.cloud.okteto.net
     http:
       paths:
       - path: /*
