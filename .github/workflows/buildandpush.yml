@@ -1,7 +1,6 @@
 name: Build and Push
 
 on:   
-  push:
   # Run tests for any PRs.
   pull_request:
 
