@@ -3,6 +3,7 @@ name: Build and Push
 on:   
   # Run tests for any PRs.
   pull_request:
+  workflow_dispatch:
 
 env:
   JAVA_IMAGE_NAME: my-thai-star-java
