@@ -1,7 +1,7 @@
 name: Deploy to Okteto
 
 on: 
-  pull_request:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     - name: "Activate personal namespace"
       uses: okteto/namespace@latest
       with:
-        name: devonfw
+        name: sujithmn
     
     - name: "Create deployment"
       uses: okteto/apply@latest
