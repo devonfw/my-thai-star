@@ -1,0 +1,27 @@
+name: Deploy to Okteto
+
+on: 
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - uses: okteto/login@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+        
+    - name: "Activate personal namespace"
+      uses: okteto/namespace@latest
+      with:
+        name: devonfw
+    
+    - name: "Create deployment"
+      uses: okteto/apply@latest
+      with:
+        manifest: k8s.yml
