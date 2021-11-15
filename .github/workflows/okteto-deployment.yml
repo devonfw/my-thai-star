@@ -2,6 +2,7 @@ name: Deploy to Okteto
 
 on: 
   push:
+     branches: [develop]
   workflow_dispatch:
 
 jobs:
@@ -14,7 +15,7 @@ jobs:
 
     - uses: okteto/login@latest
       with:
-        token: ${{ secrets.OKTETO_TOKEN }}
+        token: ${{ secrets.OKTETO_LOGIN_TOKEN }}
         
     - name: "Activate personal namespace"
       uses: okteto/namespace@latest
