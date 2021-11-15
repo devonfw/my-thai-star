@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: angular
-        image: ghcr.io/sujithmn/my-thai-star-angular:latest
+        image: ghcr.io/devonfw/my-thai-star-angular:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
       - name: java
-        image: ghcr.io/sujithmn/my-thai-star-java:latest
+        image: ghcr.io/devonfw/my-thai-star-java:latest
         imagePullPolicy: Always
         ports:
           - name: http
