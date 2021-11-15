@@ -20,7 +20,7 @@ jobs:
     - name: "Activate personal namespace"
       uses: okteto/namespace@latest
       with:
-        name:  devonfw
+        name:  devonfw-core
     
     - name: "Create deployment"
       uses: okteto/apply@latest
