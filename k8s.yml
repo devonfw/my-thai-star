@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: angular
-        image: ghcr.io/devonfw/my-thai-star-angular:latest
+        image: ghcr.io/devonfw-core/my-thai-star-angular:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
       - name: java
-        image: ghcr.io/devonfw/my-thai-star-java:latest
+        image: ghcr.io/devonfw-core/my-thai-star-java:latest
         imagePullPolicy: Always
         ports:
           - name: http
@@ -101,9 +101,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mts-devonfw.cloud.okteto.net
+    - mts-devonfw-core.cloud.okteto.net
   rules:
-  - host: mts-devonfw.cloud.okteto.net
+  - host: mts-devonfw-core.cloud.okteto.net
     http:
       paths:
       - path: /api(/)(.*)
@@ -120,9 +120,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mts-devonfw.cloud.okteto.net
+    - mts-devonfw-core.cloud.okteto.net
   rules:
-  - host: mts-devonfw.cloud.okteto.net
+  - host: mts-devonfw-core.cloud.okteto.net
     http:
       paths:
       - path: /*
