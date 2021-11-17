@@ -14,7 +14,7 @@ The Node.js backend for My Thai Star application is going to be based on:
 To know more details about the above technologies please visit the following documentation:
 
  - https://serverless.com/[Serverless]
- - https://github.com/oasp/oasp4fn/wiki[OASP4Fn]
+ - https://github.com/devonfw/devon4node/wiki[devon4node]
  - https://aws.amazon.com/dynamodb/developer-resources/[DynamoDB]
 
 == Basic architecture details
@@ -23,7 +23,7 @@ This structure can be shown in the following example image:
 
 image::images/serverless/folder_organization.png[, link="images/serverless/folder_organization.png"]
 
-* handlers - All function handlers following oasp4fn structure
+* handlers - All function handlers following devon4node structure
 * src
 ** model - Folder with all data model
 ** utils - Folder with all utils like classes and functions
@@ -77,9 +77,9 @@ In order to be compatible with the other backend implementations, we must follow
 - (GET) `/mythaistar/services/rest/security/v1/currentuser/`.
 
 
-You can find all the details for the services implementation in the https://github.com/oasp/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
+You can find all the details for the services implementation in the https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
 
-To treat these http services, we must define the handlers following the https://github.com/oasp/oasp4fn/wiki/Structure[oasp4fn convention]:
+To treat these http services, we must define the handlers following the https://github.com/devonfw/devon4node/wiki[devon4node convention]:
 
 - (handlers/Http/POST/dish-search-handler) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 
