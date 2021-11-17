@@ -36,21 +36,7 @@ jobs:
           # Change all uppercase to lowercase
           JAVA_IMAGE_ID=$(echo $JAVA_IMAGE_ID | tr '[A-Z]' '[a-z]')
           ANGULAR_IMAGE_ID=$(echo $ANGULAR_IMAGE_ID | tr '[A-Z]' '[a-z]')
-          
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
-          echo JAVA_IMAGE_ID=$JAVA_IMAGE_ID
-          echo ANGULAR_IMAGE_ID=$ANGULAR_IMAGE_ID
-               
-          echo VERSION=$VERSION
-          
-          docker tag $JAVA_IMAGE_NAME $JAVA_IMAGE_ID
-          docker push $JAVA_IMAGE_ID
 
-          docker tag $ANGULAR_IMAGE_NAME $ANGULAR_IMAGE_ID
+          docker push $JAVA_IMAGE_ID
           docker push $ANGULAR_IMAGE_ID
           
