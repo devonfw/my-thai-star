@@ -36,7 +36,10 @@ jobs:
           # Change all uppercase to lowercase
           JAVA_IMAGE_ID=$(echo $JAVA_IMAGE_ID | tr '[A-Z]' '[a-z]')
           ANGULAR_IMAGE_ID=$(echo $ANGULAR_IMAGE_ID | tr '[A-Z]' '[a-z]')
-
+          
+          docker tag $JAVA_IMAGE_NAME $JAVA_IMAGE_ID
           docker push $JAVA_IMAGE_ID
+          
+          docker tag $ANGULAR_IMAGE_NAME $ANGULAR_IMAGE_ID
           docker push $ANGULAR_IMAGE_ID
           
