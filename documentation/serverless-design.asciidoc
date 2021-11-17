@@ -8,7 +8,7 @@ toc::[]
 The Node.js backend for My Thai Star application is going to be based on:
 
  - *Serverless* as serverless framework
- - *OASP4Fn* as data access layer framework
+ - *devon4node* as data access layer framework
  - *DynamoDB* as NoSQL Database
 
 To know more details about the above technologies please visit the following documentation:
@@ -134,7 +134,7 @@ export async function bookingSearch(event: HttpEvent, context: Context, callback
 }
 ----
 
-The default integration for a handler is _lambda_. See https://github.com/oasp/oasp4fn/wiki/Configuration[oasp documentation] for more information about default values and how to change it.
+The default integration for a handler is _lambda_. See https://github.com/devonfw/devon4node/wiki/guides-configuration-module[devon4node documentation] for more information about default values and how to change it.
 [NOTE]
 ====
 If you change the integration to lambda-proxy, you must take care that in this case the data will not be parsed. You must do JSON.parse explicitly 
