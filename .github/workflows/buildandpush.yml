@@ -48,9 +48,9 @@ jobs:
                
           echo VERSION=$VERSION
           
-          docker tag $JAVA_IMAGE_NAME $JAVA_IMAGE_ID:${{ github.sha }}
-          docker push $JAVA_IMAGE_ID:${{ github.sha }}
+          docker tag $JAVA_IMAGE_NAME $JAVA_IMAGE_ID
+          docker push $JAVA_IMAGE_ID
 
-          docker tag $ANGULAR_IMAGE_NAME $ANGULAR_IMAGE_ID:${{ github.sha }}
-          docker push $ANGULAR_IMAGE_ID:${{ github.sha }}
+          docker tag $ANGULAR_IMAGE_NAME $ANGULAR_IMAGE_ID
+          docker push $ANGULAR_IMAGE_ID
           
