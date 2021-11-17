@@ -8,13 +8,13 @@ toc::[]
 The Node.js backend for My Thai Star application is going to be based on:
 
  - *Express.js* as the web application framework
- - *OASP4Fn* as data access layer framework
+ - *devon4node* as data access layer framework
  - *DynamoDB* as NoSQL Database
 
 To know more details about the above technologies please visit the following documentation:
 
  - https://expressjs.com[Express.js]
- - https://github.com/oasp/oasp4fn/wiki[OASP4Fn]
+ - https://github.com/devonfw/devon4node/wiki[devon4node]
  - https://aws.amazon.com/dynamodb/developer-resources/[DynamoDB]
 
 == Basic architecture details
@@ -117,7 +117,7 @@ router.post('/booking/search', (req: types.CustomRequest, res: Response) => {
 
 === Logic layer and Data access layer
 
-In the _logic_ layer we will locate all the _business logic_ of the application. It will be located in the file logic.ts. If in this layer we need to get access to the data, we make use of data access layer directly, in this case using OASP4fn with the DynamoDB adapter.
+In the _logic_ layer we will locate all the _business logic_ of the application. It will be located in the file logic.ts. If in this layer we need to get access to the data, we make use of data access layer directly, in this case using devon4node with the DynamoDB adapter.
 
 Example:
 
@@ -134,7 +134,7 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
 }
 ----
 
-We could define the data access layer separately, but oasp4fn allows us to do this in a simple and clear way. So, we decided  to not separate the access layer to the logic business.
+We could define the data access layer separately, but devon4node allows us to do this in a simple and clear way. So, we decided  to not separate the access layer to the logic business.
 
 == Security with Json Web Token
 
