@@ -6,8 +6,8 @@ on:
  workflow_dispatch:
 
 env:
-  JAVA_IMAGE_NAME: my-thai-star-java
-  ANGULAR_IMAGE_NAME: my-thai-star-angular
+  JAVA_IMAGE_NAME: my-thai-star-be
+  ANGULAR_IMAGE_NAME: my-thai-star-ui
   
 jobs:
   push:
