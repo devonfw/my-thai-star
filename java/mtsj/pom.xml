@@ -27,7 +27,7 @@
   </modules>
 
   <dependencyManagement>
-  <dependencies>
+    <dependencies>
       <!-- overriding jackson version from spring-boot by importing BOM before -->
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
