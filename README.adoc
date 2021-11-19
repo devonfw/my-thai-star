@@ -2,6 +2,7 @@
 
 develop: image:https://travis-ci.com/devonfw/my-thai-star.svg?branch=develop["build-status",link="https://travis-ci.com/devonfw/my-thai-star"]
 
+Live URL : https://mts-devonfw-core.cloud.okteto.net/
 
 This repository is an **ADCS Capgemini** initiative that hosts an application reference called **My Thai Star**. This application is about the management of a restaurant.
 

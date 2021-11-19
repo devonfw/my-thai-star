@@ -1,12 +1,13 @@
 name: Deploy to Okteto
 
-on: 
-  push:
-     branches: [develop]
+on:
+  schedule:
+    - cron:  '30 23 * * *'
   workflow_dispatch:
 
 jobs:
   deploy:
+    if: ${{github.repository == 'devonfw/my-thai-star'}}
     runs-on: ubuntu-latest
     steps:
 
