@@ -13,7 +13,7 @@ It is a tool to run application in isolated environments. Those _isolated enviro
 
 Of course, it is necessary to have an external Deployment Server. Every Docker process will run in it. It will be accessed from Production Line pipelines via *SSH*. Thus, the pipeline itself will manage the scenario of, if every previous process like testing passes as OK, stop actual containers and create new ones.
 
-This external server will be located in http://de-mucdevondepl01 .
+This external server will be located in https://mts-devonfw-core.cloud.okteto.net/
 
 == Container Schema
 
