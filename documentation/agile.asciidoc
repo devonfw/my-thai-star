@@ -11,7 +11,7 @@ The team working on the development of the My Thai Star app and the documentatio
 Within the My Thai Star project we decided on having one hour Sprint Planning meetings for a four-week Sprints. This decision is based on the fact that this project is not the main project of the team members. As the backlog refinement is done during the Sprint Planning we make usage of the planningpoker.com tool for the estimation of the tasks.
 
 .Screenshot of planningpoker.com during Sprint 1 Planning
-image::images/methodology_1.png[Screenshot of planningpoker.com, width="450", link="images/methodology_01.png"]
+image::images/methodology_1.png[Screenshot of planningpoker.com, width="450", link="images/methodology_1.png"]
 
 During the Sprint Planning meeting the team receives support from Devon colleagues outside the development. This feedback helps the team to focus on important functionalities and task by keeping the eyes on the overall aim which is to have a working application by the end of June 2017.
 
@@ -38,12 +38,12 @@ For the My Thai Stair project the team decided on using the Jira agile documenta
 With having a list of the Epics and User Stories for the My Thai Star development in GitHub, the team transferred the User Stories into the Jira backlog as it is shown in the screenshot below. All User Stories are labeled colorfully with the related Epic which shapes the backlog in clearly manner.
 
 .Screenshot of the Jira backlog during Sprint 2
-image::images/methodology_2.png[Screenshot of planningpoker.com, width="450", link="images/methodology_02.png"]
+image::images/methodology_2.png[Screenshot of planningpoker.com, width="450", link="images/methodology_2.png"]
 
 We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with subtask is that every single subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single subtask the whole process of a user story is better organized.
 
 .Screenshots of Subtasks during Sprint 2
-image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_03.png"]
+image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_3.png"]
 
 = 2.	My Thai Star – Agile Diary
 
