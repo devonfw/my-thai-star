@@ -1,9 +1,9 @@
 :toc: macro
 toc::[]
 
-= MyThaiStar on Native Kubernetes as a Service (nKaaS)
+= `MyThaiStar` on Native Kubernetes as a Service (nKaaS)
 
-The MyThaiStar sample application can be deployed on a nKaaS environment. The required Kubernetes configuration files can be found in the MyThaiStar repository. There are no additional changes required in order to deploy the application.
+The `MyThaiStar` sample application can be deployed on a nKaaS environment. The required Kubernetes configuration files can be found in the `MyThaiStar` repository. There are no additional changes required in order to deploy the application.
 
 == Setting up the environment
 
@@ -30,18 +30,18 @@ On your own namespace you should have permissions to create/delete deployments/s
 
 == Setting up Harbor
 
-Jenkins will build the MyThaiStar Docker images and push them to the nKaaS link:http://harbor.demo.xpaas.io[Harbor registry]. The Jenkinsfile defaults to a Harbor project called "my-thai-star". If there's no such project on Harbor, simply create a new one.
+Jenkins will build the `MyThaiStar` Docker images and push them to the nKaaS link:http://harbor.demo.xpaas.io[Harbor registry]. The Jenkinsfile defaults to a Harbor project called "my-thai-star". If there's no such project on Harbor, simply create a new one.
 
 == Setting up Jenkins
 
-As MyThaiStar includes all required Jenkinsfiles for nKaaS, almost no configurations have to be performed by the user.
-Create a new Pipeline on link:http://jenkins.demo.xpaas.io[Jenkins] and configure its definition to be a "Pipeline script from SCM". The SCM used is "Git" and the repository URL is the MyThaiStar repository https://github.com/devonfw/my-thai-star.git or your fork of it.
+As `MyThaiStar` includes all required Jenkinsfiles for nKaaS, almost no configurations have to be performed by the user.
+Create a new Pipeline on link:http://jenkins.demo.xpaas.io[Jenkins] and configure its definition to be a "Pipeline script from SCM". The SCM used is "Git" and the repository URL is the `MyThaiStar` repository https://github.com/devonfw/my-thai-star.git or your fork of it.
 
-The Branch Specifier should point to `*/develop`, the Script Path is `jenkins/nKaaS/Jenkinsfile` as that's where the Jenkinsfile is located at the MyThaiStar repository.
+The Branch Specifier should point to `*/develop`, the Script Path is `jenkins/nKaaS/Jenkinsfile` as that's where the Jenkinsfile is located at the `MyThaiStar` repository.
 Checking the "Lightweight checkout" could speed up the Pipeline.
 
-*Note:* If you're using the nKaaS link:http://bitbucket.demo.xpaas.io[Bitbucket] as repository for your MyThaiStar clone you have to perform some additional configurations. First you'll have to create a new SSH keypair, for example with `ssh-keygen`. Add the public key to the Bitbucket authentication methods and the private key in Jenkins to a new pair of credentials. This step is required for Jenkins to be able to authenticate against Bitbucket.
-Afterwards, instead of the official MyThaiStar repository, specify your Bitbucket repository:
+*Note:* If you're using the nKaaS link:http://bitbucket.demo.xpaas.io[Bitbucket] as repository for your `MyThaiStar` clone you have to perform some additional configurations. First you'll have to create a new SSH keypair, for example with `ssh-keygen`. Add the public key to the Bitbucket authentication methods and the private key in Jenkins to a new pair of credentials. This step is required for Jenkins to be able to authenticate against Bitbucket.
+Afterwards, instead of the official `MyThaiStar` repository, specify your Bitbucket repository:
 
 [source]
 ----

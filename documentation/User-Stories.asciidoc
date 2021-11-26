@@ -15,7 +15,7 @@ As a guest I want to create an dinner event by entering date and time and adding
 ===== Acceptance criteria
  . only date and time in future possible and both required
  . only valid email addresses: text@text.xx, one entered email-address is required
- . if AGB are not checked, an error message is shown
+ . if `AGB` are not checked, an error message is shown
  . after the invite is done
  .. I see the confirmation screen of my invite (see wireframe)
  .. I receive a confirmation email about my invite containing date, time and invited guests
@@ -30,7 +30,7 @@ As a guest I want to create a reservation by entering date and time and number o
 ===== Acceptance criteria
 . only date and time in future possible and both required
 . only valid email addresses: text@text.xx, one entered email-address is required
-. if AGB are not checked, an error message is shown
+. if `AGB` are not checked, an error message is shown
 . after the reservation is done
 .. I see a confirmation screen of my reservation with datetime, number of persons and kids
 .. I receive a confirmation email about my reservation
@@ -53,10 +53,10 @@ As an invited guest I would like to receive an email - after somebody as invited
 
 === US: revoke accepted invite
 
-As an invited guest I would like to revoke my previous answer in order to inform the system and the inviter about my no showup
+As an invited guest I would like to revoke my previous answer in order to inform the system and the `inviter` about my no showup
 
 ==== AC:
- . the inviter and myself receives an email about my cancellation
+ . the `inviter` and myself receives an email about my cancellation
  . the system sets my status of my invite to no
  . in case I have placed an order, the order is also removed from the system.
  . the cancellation is only possible 10 minutes before the event takes place. The system shows a message that cancellation is not possible anymore.
@@ -76,7 +76,7 @@ As a waiter I would like to search by reference number or email address for the 
 
 ===== AC:
 . After entering the email the systems shows the number of the table. In case no reservation found, a message is shown.
-. Entered email address could be email of inviter or any invited guest.
+. Entered email address could be email of `inviter` or any invited guest.
 
 === US: cancel invite
 Epic: Invite friends
@@ -85,9 +85,9 @@ As a guests who has sent an invite I want to be able to cancel my previous invit
 
 ===== AC:
  . the option to cancel the invite is available in the confirmation-mail about my invite
- . after my cancellation all invited guests receives a mail about the cancelation
+ . after my cancellation all invited guests receives a mail about the cancellation
  . I see a confirmation that my invite was cancelled successfully
- . after my cancelation my invite and reservation and all orders related to it are deleted from the system and no one can accept or decline any invite for it
+ . after my cancellation my invite and reservation and all orders related to it are deleted from the system and no one can accept or decline any invite for it
  . the cancellation is only possible one hour before the invite takes place. After that I am not allowed to cancel it any more.
 
 == Epic: Digital Menu
@@ -98,7 +98,7 @@ As a guest I want to filter the menu so that I only see the dishes I am interest
 ===== AC:
 . the guest can filter by
  .. type: starter | main dish | dessert; XOR; if nothing is selected all are shown (default value)
- .. veggy (yes|no|does not matter (default))
+ .. `veggy` (yes|no|does not matter (default))
  .. vegan (yes|no|does not matter (default))
  .. rice (yes|no|does not matter (default))
  .. curry (yes|no|does not matter (default))
@@ -200,9 +200,9 @@ AC:
  . all orders/reservations are shown in a list view (read-only). Those list can be filtered and sorted (similar to excel-data-filters)
  . orders/reservations are shown in separate lists.
  . for each order the dish, meat, comment, item, reservation-id, reservation datetime, creation-datetime is shown
- . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
- . the default filter for all lists is the todays date for reservation datetime. this filter can be deleted.
- . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data analytics those orders and reservation shall still exist in the system.
+ . for each reservation the `inviters` email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
+ . the default filter for all lists is the today's date for reservation datetime. this filter can be deleted.
+ . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for `data analytics` those orders and reservation shall still exist in the system.
 
 
 

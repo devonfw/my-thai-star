@@ -7,7 +7,7 @@ The Angular client-side of My Thai Star is going to have some specific needs for
 
 == Pipeline
 
-The Pipeline for the Angular client-side is going to be called *MyThaiStar_FRONTEND_BUILD*. It is located in the PL instance, under the link:https://devon.s2-eu.capgemini.com/jenkins/job/MTS/[MTS folder] (as previously explained). It is going to follow a process flow like this one:
+The Pipeline for the Angular client-side is going to be called `*MyThaiStar_FRONTEND_BUILD*`. It is located in the PL instance, under the link:https://devon.s2-eu.capgemini.com/jenkins/job/MTS/[MTS folder] (as previously explained). It is going to follow a process flow like this one:
 
 image::images/ci/angular/angular_pipeline_flow.PNG[, link="angular_pipeline_flow.PNG"]
 
@@ -62,7 +62,7 @@ yarn audit
 ----
 . *SonarQube code analysis*
 +
-The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to sonarQube and wait until sonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
+The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to SonarQube and wait until SonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
 . *Build Application*
 +
 The building process of the Angular client would result in a folder called `/dist` in the main Angular's directory. That folder is the one that is going to be served afterwards as an artifact. This process has also been adapted to some Deployment needs. This building script executes the following:
@@ -99,40 +99,40 @@ In order to easily reuse the pipeline in other angular projects, all variables h
 ----
 environment {
     // Script for build the application. Defined at package.json
-    buildScript = 'build --configuration=docker'
+    `buildScript` = 'build --configuration=docker'
     // Script for lint the application. Defined at package.json
-    lintScript = 'lint'
+    `lintScript` = 'lint'
     // Script for test the application. Defined at package.json
     testScript = 'test:ci'
     // Angular directory
-    angularDir = 'angular'
+    `angularDir` = 'angular'
     // SRC folder. It will be angularDir/srcDir
-    srcDir = 'src'
+    `srcDir = 'src'`
     // Name of the custom tool for chrome stable
     chrome = 'Chrome-stable'
 
-    // sonarQube
-    // Name of the sonarQube tool
-    sonarTool = 'SonarQube'
-    // Name of the sonarQube environment
-    sonarEnv = "SonarQube"
+    // SonarQube
+    // Name of the SonarQube tool
+    `sonarTool` = 'SonarQube'
+    // Name of the SonarQube environment
+    `sonarEnv` = "SonarQube"
 
     // Nexus
     // Artifact groupId
-    groupId = 'com.devonfw.mythaistar'
+    `groupId` = 'com.devonfw.mythaistar'
     // Nexus repository ID
-    repositoryId = 'pl-nexus'
+    `repositoryId` = 'pl-nexus'
     // Nexus internal URL
-    repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
+    `repositoryUrl` = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
     // Maven global settings configuration ID
-    globalSettingsId = 'MavenSettings'
+    `globalSettingsId` = 'MavenSettings'
     // Maven tool id
-    mavenInstallation = 'Maven3'
+    `mavenInstallation` = 'Maven3'
 }
 ----
 
 ==== Description
-- *buildScript*: script for build the application. It must be defined at package.json.
+- `*buildScript*`: script for build the application. It must be defined at package.json.
 +
 Example (package.json):
 +
@@ -154,9 +154,9 @@ This will be used as follows:
 +
 [source, groovy]
 ----
-sh """yarn ${buildScript}"""
+`sh """yarn ${buildScript}"""`
 ----
-- *lintScript*: Script for lint the application. Defined at package.json
+- `*lintScript*`: Script for lint the application. Defined at package.json
 +
 Example (package.json):
 +
@@ -178,7 +178,7 @@ This will be used as follows:
 +
 [source, groovy]
 ----
-sh """yarn ${lintScript}"""
+`sh """yarn ${lintScript}"""`
 ----
 - *testScript*: Script for test the application. Defined at package.json
 +
@@ -204,31 +204,31 @@ This will be used as follows:
 ----
 sh """yarn ${testScript}"""
 ----
-- *angularDir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
+- `*angularDir*`: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
 +
 image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
-- *srcDir*: Directory where you store the source code. For angular applications the default value is `src`
+- `*srcDir*`: Directory where you store the source code. For angular applications the default value is `src`
 +
 image::images/ci/angular/src_directory.png[, link="src_directory.PNG"]
 - *chrome*: Since you need a browser to run your tests, we must provide one. This variable contains the name of the custom tool for google chrome.
 +
 image::images/ci/angular/chrome_installation.png[, link="chrome_installation.PNG"]
-- *sonarTool*: Name of the sonarQube scanner installation.
+- `*sonarTool*`: Name of the SonarQube scanner installation.
 +
 image::images/ci/angular/sonar-scanner.png[, link="sonar-scanner.PNG"]
-- *sonarEnv*: Name of the sonarQube environment. SonarQube is the default value for PL.
+- `*sonarEnv*`: Name of the SonarQube environment. SonarQube is the default value for PL.
 +
 image::images/ci/angular/sonar-env.png[, link="sonar-env.PNG"]
-- *groupId*: Group id of the application. It will be used to storage the application in nexus3
+- `*groupId*`: Group id of the application. It will be used to storage the application in nexus3
 +
 image::images/ci/angular/nexus3_groupid.png[, link="nexus3_groupid.PNG"]
-- *repositoryId*: Id of the nexus3 repository. It must be defined at maven global config file.
+- `*repositoryId*`: Id of the nexus3 repository. It must be defined at maven global config file.
 +
 image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
-- *repositoryUrl*: The url of the repository.
-- *globalSettingsId*: The id of the global settings file.
+- `*repositoryUrl*`: The url of the repository.
+- `*globalSettingsId*`: The id of the global settings file.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
-- mavenInstallation: The name of the maven tool.
+- `mavenInstallation`: The name of the maven tool.
 +
 image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]

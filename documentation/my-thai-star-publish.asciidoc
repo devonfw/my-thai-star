@@ -1,7 +1,7 @@
 :toc: macro
 toc::[]
 
-= Publishing the MyThaiStar Application
+= Publishing the `MyThaiStar` Application
 
 This page will explain how to build and deploy the application.
 
@@ -16,7 +16,7 @@ However, only a folder is relevant to this topic: *MTS*
 
 We'll have a closer look at the pipeline configuration script and its stages:
 
-*Note*: Have a look at this wiki over https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline[here] to get a basic idea on how to write pipeline scripts.
+*Note*: Have a look at this wiki over `https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline[here]` to get a basic idea on how to write pipeline scripts.
 
 . Checking out my-thai-star form GitHub
 +
@@ -24,10 +24,10 @@ This stage will check out the source code directly from GitHub:
 +
 [source, groovy]
 ----
-git credentialsId:'github-devonfw-ci', url:'https://github.com/devonfw/my-thai-star/'
+git credentialsId:`'github-devonfw-ci'`, url:'https://github.com/devonfw/my-thai-star/'
 ----
 +
-Credentials are required for authentication as we're checking out a private repository. 'github-devonfw-ci' is a pair of credentials that was created for this sole purpose. 
+Credentials are required for authentication as we're checking out a private repository. `'github-devonfw-ci'` is a pair of credentials that was created for this sole purpose. 
 . Loading custom tools
 +
 To build the application, two tools are required: Node 6 and Angular CLI.
@@ -73,7 +73,7 @@ or
 +
 [source, groovy]
 ----
-yarn test:ci
+`yarn test:ci`
 ----
 +
 . Build application
@@ -130,7 +130,7 @@ The complete Groovy script:
 node {
     stage 'Checking out my-thai-star from GitHub'
         node {
-            git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
+            git branch: 'develop', credentialsId: `'github-devonfw-ci'`, url: 'https://github.com/devonfw/my-thai-star/'
         }
 
     stage 'Loading Custom Tools'
@@ -194,7 +194,7 @@ node {
 }
 ----
 
-== Accessing MyThaiStar
+== Accessing `MyThaiStar`
 Finally, the application will be available at this URL: http://de-mucdevondepl01:8090[http://de-mucdevondepl01:8090].
 
 == Notes

@@ -24,9 +24,9 @@ The Sprint Review meetings are time boxed to one hour for the four week Sprint. 
 
 For this project the team aligned on not having a specific Sprint Retrospective meeting. The team is going to have a retrospective of a finished Sprint during the Sprint Review.
 
-=== Daily Standups
+=== `Daily Standups`
 
-The team aligned on having two weekly Standup meetings instead of a Daily Standup meeting. In comparison with the time boxed length of 15mins described in the CAF for this project the team extended the Standup meeting to 30mins. The content of the meetings remains the same.
+The team aligned on having two weekly `Standup` meetings instead of a Daily `Standup` meeting. In comparison with the time boxed length of `15mins` described in the CAF for this project the team extended the `Standup` meeting to `30mins`. The content of the meetings remains the same.
 
 === Backlog refinement
 
@@ -42,9 +42,8 @@ image::images/methodology_2.png[Screenshot of planningpoker.com, width="450", li
 
 We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with subtask is that every single subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single subtask the whole process of a user story is better organized.
 
-.Screenshots of Subtasks during Sprint 2
-image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_03.png"]
-
+.Screenshots of `Subtasks` during Sprint 2
+`image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_03.png"]`
 = 2.	My Thai Star – Agile Diary
 
 In parallel to the Diary Ideation we use this Agile Diary to document our Scrum events. The target of this diary is to describe the differences to the Scrum methodology as well as specific characteristics of the project. We also document the process on how we approach the Scrum methodology over the length of the project.
