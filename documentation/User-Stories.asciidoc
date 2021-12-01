@@ -144,7 +144,7 @@ As a guest I want to cancel my order.
 AC:
 
 . in my received confirmation mail I have the option to cancel my order
-. the cancelation is only possible one hour before my reservation takes place
+. the cancellation is only possible one hour before my reservation takes place
 . my order is deleted from the system
 
 Remark: Changing the order is not possible. For that the order must be canceled and created from scratch again

@@ -57,16 +57,16 @@ It contains the title, and some other basic functions regarding open and close s
 ===== Footer (only for desktop)
 At the end of the page that shows only when open on desktop.
 
-==== HomeComponent
+==== Home Component
 Main view that shows up when the app initializes.
 
-==== `MenuComponent`
+==== Menu Component
 View where the users can view, filter and select the dishes (with their extras) they want to order it contains a component to each menu entry:
 
 ===== Menu-card
 This component composes all the data of a dish in a card. Component made to display indeterminate number of dishes easily.
 
-==== `BookTableComponent`
+==== Book Table Component
 View to make book a table in a given data with a given number of assistants or create a reservation with a number of invitations via email.
 
 ===== Book-table-dialog
@@ -75,7 +75,7 @@ Dialog which opens as a result of fulfilling the booking form, it displays all t
 ===== Invitation-dialog
 Dialog which opens as a result of fulfilling the invitation form, it displays all the data of the booking with friends attempt, if everything is correct, the user can send the information or cancel if something is wrong.
 
-==== `UserArea`
+==== User Area
 Group of dialogs with the proposal of giving some functionalities to the user, as login, register, change password or connect with Twitter.
 
 ===== Login-dialog
@@ -145,10 +145,10 @@ Main task of this services is to provide visibility at app level of the current 
 * Check the permissions of the current user.
 * Store the username and the JWT token.
 
-=== `SnackService`
+=== Snack Service
 Service created to serve as a factory of Angular Material `Snackbars`, which are used commonly through the app. This service accepts some parameters to customize the `snackBar` and opens it with this parameters.
 
-=== `WindowService`
+=== Window Service
 For responsiveness reasons, the dialogs have to accept a width parameter to adjust to screen width and this information is given by Window object, as it is a good practice to have it in an isolated service, which also calculates the width percentage to apply on the dialogs.
 
 === Equal-validator-directive
