@@ -42,7 +42,7 @@ image::images/angular/routes.png[, link="images/angular/routes.png"]
 _Note: `no-name-route corresponds to whatever URL the user introduced and does not exist, it redirects to HomeComponent._`
 
 === Public area
-==== `AppComponent`
+==== App Component
 Contains the components that are on top of all views, including:
 
 ===== Order sidenav
@@ -90,13 +90,13 @@ Dialog designed specifically to connect your user account with Twitter.
 === Waiter cockpit area
 Restricted area to workers of the restaurant, here we can see all information about booked tables with the selected orders and the reservations with all the guests and their acceptance or decline of the event.
 
-==== `OrderCockpitComponent`
+==== Order Cockpit Component
 Data table with all the booked tables and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
 ===== Order-dialog
 Complete display of data regarding the selected table and its orders.
 
-==== `ReservationCockpitComponent`
+==== Reservation Cockpit Component
 Data table with all the reservations and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
 ===== Reservation-dialog
