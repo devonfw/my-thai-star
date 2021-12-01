@@ -50,7 +50,7 @@ SELECT DATABASE_NAME,  ACTIVE_STATUS FROM SYS.M_DATABASES ORDER BY 1;
 Run the below for enabling the script server
 [source, sql]
 ----
-`ALTER DATABASE HXE ADD 'scriptserver'`
+ALTER DATABASE HXE ADD 'scriptserver'
 ----
 To check if the script server is enable, execute below statement
 [source, sql]

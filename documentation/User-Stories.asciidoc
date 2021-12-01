@@ -53,10 +53,10 @@ As an invited guest I would like to receive an email - after somebody as invited
 
 === US: revoke accepted invite
 
-As an invited guest I would like to revoke my previous answer in order to inform the system and the `inviter` about my no showup
+As an invited guest I would like to revoke my previous answer in order to inform the system and the inviter about my no showup
 
 ==== AC:
- . the `inviter` and myself receives an email about my cancellation
+ . the inviter and myself receives an email about my cancellation
  . the system sets my status of my invite to no
  . in case I have placed an order, the order is also removed from the system.
  . the cancellation is only possible 10 minutes before the event takes place. The system shows a message that cancellation is not possible anymore.
@@ -76,7 +76,7 @@ As a waiter I would like to search by reference number or email address for the 
 
 ===== AC:
 . After entering the email the systems shows the number of the table. In case no reservation found, a message is shown.
-. Entered email address could be email of `inviter` or any invited guest.
+. Entered email address could be email of inviter or any invited guest.
 
 === US: cancel invite
 Epic: Invite friends
@@ -98,7 +98,7 @@ As a guest I want to filter the menu so that I only see the dishes I am interest
 ===== AC:
 . the guest can filter by
  .. type: starter | main dish | dessert; XOR; if nothing is selected all are shown (default value)
- .. `veggy` (yes|no|does not matter (default))
+ .. veggy (yes|no|does not matter (default))
  .. vegan (yes|no|does not matter (default))
  .. rice (yes|no|does not matter (default))
  .. curry (yes|no|does not matter (default))
@@ -200,9 +200,9 @@ AC:
  . all orders/reservations are shown in a list view (read-only). Those list can be filtered and sorted (similar to excel-data-filters)
  . orders/reservations are shown in separate lists.
  . for each order the dish, meat, comment, item, reservation-id, reservation datetime, creation-datetime is shown
- . for each reservation the `inviters` email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
+ . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
  . the default filter for all lists is the today's date for reservation datetime. this filter can be deleted.
- . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for `data analytics` those orders and reservation shall still exist in the system.
+ . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data analytics those orders and reservation shall still exist in the system.
 
 
 

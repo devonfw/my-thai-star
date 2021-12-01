@@ -205,7 +205,7 @@ To provide to the client with the current user data our application should expos
 
 [source, javascript]
 ----
-`app.get('/mythaistar/services/rest/security/v1/currentuser', auth.getCurrentUser);`
+app.get('/mythaistar/services/rest/security/v1/currentuser', auth.getCurrentUser);
 ----
 
 ==== Authorization
@@ -222,7 +222,7 @@ To ensure this, the _Authorization_ class has the `_securizedEndpoint_` method t
 
 [source, javascript]
 ----
-`app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
+app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
 app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
-app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));`
+app.use('/mythaistar/services/rest/bookingmanagement/v1/booking/search', auth.securizedEndpoint('WAITER'));
 ----

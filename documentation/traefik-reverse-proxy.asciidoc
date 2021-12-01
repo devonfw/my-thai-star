@@ -12,10 +12,10 @@ Example of labels:
 [source,yaml]
 ----
 labels:
-    `- "traefik.http.routers.angular.rule=PathPrefix(`/`)"
+    - "traefik.http.routers.angular.rule=PathPrefix(`/`)"
     - "traefik.http.services.angular.loadBalancer.healthcheck.path=/health"
     - "traefik.http.services.angular.loadBalancer.healthcheck.interval=10s"
-    - "traefik.http.services.angular.loadBalancer.healthcheck.scheme=http"`
+    - "traefik.http.services.angular.loadBalancer.healthcheck.scheme=http"
 ----
 
 === How to use it
@@ -24,7 +24,7 @@ If you want to build the images from code, change to My Thai Star root folder an
 
 [source,bash]
 ----
-`$ docker-compose -f docker-compose.traefik.yml up -d --build`
+$ docker-compose -f docker-compose.traefik.yml up -d --build
 ----
 
 If you want to build the images from artifacts, change to `traefik` folder `(reverse-proxy/traefik)` and execute:

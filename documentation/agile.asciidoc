@@ -26,7 +26,7 @@ For this project the team aligned on not having a specific Sprint Retrospective 
 
 === `Daily Standups`
 
-The team aligned on having two weekly `Standup` meetings instead of a Daily `Standup` meeting. In comparison with the time boxed length of `15mins` described in the CAF for this project the team extended the `Standup` meeting to `30mins`. The content of the meetings remains the same.
+The team aligned on having two weekly Stand up meetings instead of a Daily `Standup` meeting. In comparison with the time boxed length of 15 mins described in the CAF for this project the team extended the `Standup` meeting to 30 mins. The content of the meetings remains the same.
 
 === Backlog refinement
 
