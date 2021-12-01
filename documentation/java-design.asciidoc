@@ -215,7 +215,7 @@ public interface DishmanagementRestService {
 
 === Service impl
 
-Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the _impl.rest_ package and implement the _RestService interface_.
+Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the _impl.rest_ package and implement the `_RestService interface_`.
 
 [source, java]
 ----
@@ -281,7 +281,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
 }
 ----
 
-The _BeanMapper_ will provide the needed transformations between _entity_ and _transfer objects_.
+The `_BeanMapper_` will provide the needed transformations between _entity_ and _transfer objects_.
 
 Also, the _logic_ layer is the place to add validation for _Authorization_ based on _roles_ as we will see later.
 
@@ -317,7 +317,7 @@ The _Json Web Token_ pattern will be implemented based on the https://docs.sprin
 
 ==== Authentication
 
-Based on the _Spring Security_ approach, we will implement a class extending _WebSecurityConfigurerAdapter_ (_Devon4j_ already provides the _BaseWebSecurityConfig_ class) to define the security _entry point_ and filters. Also, as _My Thai Star_ is a mainly _public_ application, we will define here the resources that won't be secured.
+Based on the _Spring Security_ approach, we will implement a class extending `_WebSecurityConfigurerAdapter_` (_Devon4j_ already provides the `_BaseWebSecurityConfig_` class) to define the security _entry point_ and filters. Also, as _My Thai Star_ is a mainly _public_ application, we will define here the resources that won't be secured.
 
 List of _unsecured resources_:
 
@@ -328,21 +328,21 @@ List of _unsecured resources_:
 - _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
 - _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
 
-To configure the _login_ we will set up the _HttpSecurity_ object in the _configure_ method of the class. We will define a _JWTLoginFilter_ class that will handle the requests to the `/login` _endpoint_.
+To configure the _login_ we will set up the `_HttpSecurity_` object in the _configure_ method of the class. We will define a _JWTLoginFilter_ class that will handle the requests to the `/login` _endpoint_.
 
 [source, java]
 ----
 http.[...].antMatchers(HttpMethod.POST, "/login").permitAll().[...].addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 ----
 
-In the same _HttpSecurity_ object we will set up the filter for the rest of the requests, to check the presence of the JWT token in the header. First we will need to create a _JWTAuthenticationFilter_ class extending the _GenericFilterBean_ class. Then we can add the filter to the _HttpSecurity_ object
+In the same `_HttpSecurity_` object we will set up the filter for the rest of the requests, to check the presence of the JWT token in the header. First we will need to create a `_JWTAuthenticationFilter_` class extending the `_GenericFilterBean_` class. Then we can add the filter to the `_HttpSecurity_` object
 
 [source, java]
 ----
-http.[...].addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+http.[...].addFilterBefore(new `JWTAuthenticationFilter()`, UsernamePasswordAuthenticationFilter.class);
 ----
 
-Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the _inMemoryAuthentication_ of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
 
 - user: _waiter_
 - password: _waiter_
@@ -361,7 +361,7 @@ auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waite
 
 Following the https://jwt.io/introduction/[official documentation] the implementation details for the MyThaiStar's jwt will be:
 
-* _Secret_: Used as part of the signature of the token, acting as a private key. For the showcase purposes we will use simply "ThisIsASecret". 
+* _Secret_: Used as part of the signature of the token, acting as a private key. For the showcase purposes we will use simply `"ThisIsASecret"`. 
 
 * _Token Prefix_ schema: Bearer. The token will look like `Bearer <token>` 
 
@@ -372,9 +372,9 @@ Following the https://jwt.io/introduction/[official documentation] the implement
 * The _claims_ are the content of the _payload_ of the token. The _claims_ are statements about the user, so we will include the user info in this section.
 
   ** _subject_: "sub". The username.
-  ** _issuer_: "iss". Who creates the token. We could use the _url_ of our service but, as this is a showcase app, we simply will use "MyThaiStarApp"
+  ** _issuer_: `"iss"`. Who creates the token. We could use the _url_ of our service but, as this is a showcase app, we simply will use `"MyThaiStarApp"`
   ** _expiration date_: "exp". Defines when the token expires.
-  ** _creation date_: "iat". Defines when the token has been created.
+  ** _creation date_: `"iat"`. Defines when the token has been created.
   ** _scope_: "scope". Array of strings to store the user roles.
 
 * Signature Algorithm: To encrypt the token we will use the default algorithm HS512.
@@ -418,11 +418,11 @@ We need to secure three services, that only should be accessible for users with 
 
 As part of the token we are providing the user _Role_. So, when validating the token, we can obtain that same information and build a `UsernamePasswordAuthenticationToken` with username and the roles as collection of _Granted Authorities_.
 
-Doing so, afterwards, in the implementation class of the _logic_ layer we can set up the related methods with the _java security_ '@RolesAllowed' annotation to block the access to the resource to users that does not match the expected roles.
+Doing so, afterwards, in the implementation class of the _logic_ layer we can set up the related methods with the _java security_ `'@RolesAllowed'` annotation to block the access to the resource to users that does not match the expected roles.
 
 [source,java]
 ----
-@RolesAllowed(Roles.WAITER)
+`@RolesAllowed(Roles.WAITER)`
 public PaginatedListTo<BookingEto> findBookings(BookingSearchCriteriaTo criteria) {
   return findBookings(criteria);
 }

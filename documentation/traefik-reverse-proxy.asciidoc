@@ -27,7 +27,7 @@ If you want to build the images from code, change to My Thai Star root folder an
 $ docker-compose -f docker-compose.traefik.yml up -d --build
 ----
 
-If you want to build the images from artifacts, change to traefik folder (reverse-proxy/traefik) and execute:
+If you want to build the images from artifacts, change to `traefik` folder `(reverse-proxy/traefik)` and execute:
 
 [source,bash]
 ----
@@ -43,4 +43,4 @@ If you want to check the behaviour of the application when you scale up the back
 $ docker-compose scale java=5
 ----
 
-With this, the access to the java backend will be using the load balacing method: Weighted Round Robin.
+With this, the access to the java backend will be using the load balancing method: Weighted Round Robin.

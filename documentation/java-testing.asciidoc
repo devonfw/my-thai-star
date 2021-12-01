@@ -17,14 +17,14 @@ Then, in the declaration of the test class, we will use the `@SpringBootTest` an
 
 _Spring Test_ allows us to use _Dependency Injection_ so we can inject our component directly using the `@Inject` annotation.
 
-Each test will be represented by a method annotated with `@Test`. Inside the method we will test one functionality, evaluating the result thanks to the _asserts_ provided by the _ComponentTest_ class that we are extending.
+Each test will be represented by a method annotated with `@Test`. Inside the method we will test one functionality, evaluating the result thanks to the _asserts_ provided by the `_ComponentTest_` class that we are extending.
 
 A simple test example
 
 [source,java]
 ----
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ComponentTest {
+public class DishmanagementTest extends `ComponentTest` {
 
   @Inject
   private Dishmanagement dishmanagement;

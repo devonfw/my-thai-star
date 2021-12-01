@@ -3,7 +3,7 @@ toc::[]
 
 = Client and Server CI - deprecated
 
-The fact that there are 2 different pipelines dedicated to 2 different technologies ( *my_thai_star_angular* and *my_thai_star_java* ) does not mean that both can be _fusioned_ in another different one. That is the case of the *mts* pipeline. Basically the greater difference is the way of deploying at the end of it. Both only-one-part pipelines use the first deployment strategy (deploying independent Docker containers) but this one uses the second one: Docker Compose. 
+The fact that there are 2 different pipelines dedicated to 2 different technologies ( *my_thai_star_angular* and *my_thai_star_java* ) does not mean that both can be `_fusioned_` in another different one. That is the case of the *mts* pipeline. Basically the greater difference is the way of deploying at the end of it. Both only-one-part pipelines use the first deployment strategy (deploying independent Docker containers) but this one uses the second one: Docker Compose. 
 
 == Pipeline
 
