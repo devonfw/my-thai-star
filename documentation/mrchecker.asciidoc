@@ -24,8 +24,8 @@ cd mrchecker/endtoend-test/
 optionally you can use it with a headless version or using another navigator:
 ```
 // chrome headless (without visual component)
-`mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless`// use firefox navigator
-`mvn test -Dtest=MyThaiStarTest -Dbrowser=FireFox`
+mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless// use firefox navigator
+mvn test -Dtest=MyThaiStarTest -Dbrowser=FireFox
 ```
 
 *The second is importing the project in devonfw Eclipse and running _MyThaiStarTest.java_ as JUnit (right click, run as JUnit)* 
