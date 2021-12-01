@@ -99,35 +99,35 @@ In order to easily reuse the pipeline in other angular projects, all variables h
 ----
 environment {
     // Script for build the application. Defined at package.json
-    `buildScript` = 'build --configuration=docker'
+    buildScript = 'build --configuration=docker'
     // Script for lint the application. Defined at package.json
-    `lintScript` = 'lint'
+    lintScript = 'lint'
     // Script for test the application. Defined at package.json
     testScript = 'test:ci'
     // Angular directory
-    `angularDir` = 'angular'
+    angularDir = 'angular'
     // SRC folder. It will be angularDir/srcDir
-    `srcDir = 'src'`
+    srcDir = 'src'`
     // Name of the custom tool for chrome stable
     chrome = 'Chrome-stable'
 
     // SonarQube
     // Name of the SonarQube tool
-    `sonarTool` = 'SonarQube'
+    sonarTool = 'SonarQube'
     // Name of the SonarQube environment
-    `sonarEnv` = "SonarQube"
+    sonarEnv = "SonarQube"
 
     // Nexus
     // Artifact groupId
-    `groupId` = 'com.devonfw.mythaistar'
+    groupId = 'com.devonfw.mythaistar'
     // Nexus repository ID
-    `repositoryId` = 'pl-nexus'
+    repositoryId`= 'pl-nexus'
     // Nexus internal URL
-    `repositoryUrl` = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
+    repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
     // Maven global settings configuration ID
-    `globalSettingsId` = 'MavenSettings'
+    globalSettingsId = 'MavenSettings'
     // Maven tool id
-    `mavenInstallation` = 'Maven3'
+    mavenInstallation = 'Maven3'
 }
 ----
 

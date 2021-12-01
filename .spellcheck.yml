@@ -11,7 +11,7 @@ matrix:
     output:  en-devonfw.dic
   pipeline:
   - pyspelling.filters.url:
-   #Ignore for directory path
+  #Ignore for directory path
   - pyspelling.filters.context: 
       context_visible_first: true
       escapes: '^.*[\/\\][^\/\\]+$'
