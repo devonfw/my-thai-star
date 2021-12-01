@@ -172,7 +172,7 @@ To verify the presence of the _Authorization token_ in the headers, we will regi
 
 [source, javascript]
 ----
-`app.use(auth.registerAuthentication);`
+app.use(auth.registerAuthentication);
 ----
 
 Finally, we have two default users created in the database:

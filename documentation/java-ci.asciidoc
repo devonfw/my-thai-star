@@ -102,7 +102,7 @@ In order to easily reuse the pipeline in other java projects, all variables have
 ----
 environment {
     // Directory with java project
-    `javaDir` = 'java/mtsj'
+    javaDir = 'java/mtsj'
 
     // SonarQube
     // Name of the SonarQube environment

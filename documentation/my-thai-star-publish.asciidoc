@@ -24,7 +24,7 @@ This stage will check out the source code directly from GitHub:
 +
 [source, groovy]
 ----
-git credentialsId:`'github-devonfw-ci'`, url:'https://github.com/devonfw/my-thai-star/'
+git credentialsId:'github-devonfw-ci', url:'https://github.com/devonfw/my-thai-star/'
 ----
 +
 Credentials are required for authentication as we're checking out a private repository. `'github-devonfw-ci'` is a pair of credentials that was created for this sole purpose. 
@@ -73,7 +73,7 @@ or
 +
 [source, groovy]
 ----
-`yarn test:ci`
+yarn test:ci
 ----
 +
 . Build application
@@ -130,7 +130,7 @@ The complete Groovy script:
 node {
     stage 'Checking out my-thai-star from GitHub'
         node {
-            git branch: 'develop', credentialsId: `'github-devonfw-ci'`, url: 'https://github.com/devonfw/my-thai-star/'
+            git branch: 'develop', credentialsId: 'github-devonfw-ci', url: 'https://github.com/devonfw/my-thai-star/'
         }
 
     stage 'Loading Custom Tools'

@@ -354,7 +354,7 @@ Finally, as default users to start using the _My Thai Star_ app we are going to 
 
 [source, java]
 ----
-`auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0").password("password").roles("Customer");`
+auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("user0").password("password").roles("Customer");
 ----
 
 ==== Token set up
@@ -418,7 +418,7 @@ We need to secure three services, that only should be accessible for users with 
 
 As part of the token we are providing the user _Role_. So, when validating the token, we can obtain that same information and build a `UsernamePasswordAuthenticationToken` with username and the roles as collection of _Granted Authorities_.
 
-Doing so, afterwards, in the implementation class of the _logic_ layer we can set up the related methods with the _java security_ `'@RolesAllowed'` annotation to block the access to the resource to users that does not match the expected roles.
+Doing so, afterwards, in the implementation class of the _logic_ layer we can set up the related methods with the _java security_ '@RolesAllowed' annotation to block the access to the resource to users that does not match the expected roles.
 
 [source,java]
 ----

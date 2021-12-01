@@ -154,7 +154,7 @@ This will be used as follows:
 +
 [source, groovy]
 ----
-`sh """yarn ${buildScript}"""`
+sh """yarn ${buildScript}"""
 ----
 - `*lintScript*`: Script for lint the application. Defined at package.json
 +
@@ -178,7 +178,7 @@ This will be used as follows:
 +
 [source, groovy]
 ----
-`sh """yarn ${lintScript}"""`
+sh """yarn ${lintScript}"""
 ----
 - *testScript*: Script for test the application. Defined at package.json
 +

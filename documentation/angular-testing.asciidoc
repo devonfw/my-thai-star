@@ -68,7 +68,7 @@ At this moment this is the case for most of the components, in the future, some 
 
 === Dialog components
 
-Dialog components are in a special category because they can not be tested normally. In the way Material implements the opening of `dialogs`, you have to create a component that will load into a dialog, to tell the module to load this components when needed, they have to be added into a special array category: `_EntryComponents_`. So, to test them, we need to import them in the test file as well.
+Dialog components are in a special category because they can not be tested normally. In the way Material implements the opening of dialogs, you have to create a component that will load into a dialog, to tell the module to load this components when needed, they have to be added into a special array category: `_EntryComponents_`. So, to test them, we need to import them in the test file as well.
 
 Also, the testing code to open the component is a bit different too:
 
