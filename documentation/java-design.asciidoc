@@ -215,7 +215,7 @@ public interface DishmanagementRestService {
 
 === Service impl
 
-Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the _impl.rest_ package and implement the _RestService interface_.
+Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the _impl.rest_ package and implement the `_RestService interface_`.
 
 [source, java]
 ----
@@ -342,7 +342,7 @@ In the same `_HttpSecurity_` object we will set up the filter for the rest of th
 http.[...].addFilterBefore(new `JWTAuthenticationFilter()`, UsernamePasswordAuthenticationFilter.class);
 ----
 
-Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the _inMemoryAuthentication_ of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
 
 - user: _waiter_
 - password: _waiter_
@@ -381,7 +381,7 @@ Following the https://jwt.io/introduction/[official documentation] the implement
 
 An example of a token claims before encryption would be:
 
-`{sub=waiter, scope=[ROLE_Waiter], `iss=MyThaiStarApp`, exp=1496920280, iat=1496916680}`
+`{sub=waiter, scope=[ROLE_Waiter], iss=MyThaiStarApp, exp=1496920280, iat=1496916680}`
 
 
 ==== Current User request

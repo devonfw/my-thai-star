@@ -38,4 +38,4 @@
 **** link:deployment-strategies.asciidoc[Deployment Strategies]
 **** link:future-deployment.asciidoc[Future Deployment]
 **** link:traefik-reverse-proxy.asciidoc[Traefik as reverse proxy]
-*** link:nkaas.asciidoc[Deployment on nKaaS]
+*** link:nkaas.asciidoc[Deployment on nKaas]

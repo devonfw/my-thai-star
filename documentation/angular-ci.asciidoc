@@ -54,7 +54,7 @@ ng test --browsers ChromeHeadless --watch=false
 ----
 . *Check dependencies*
 +
-Before continue, we print the result of `yarn audit`. It shows the vulnerabilities in the dependencies. It do not process the reponse. The purpose is only to track the result of the command.
+Before continue, we print the result of `yarn audit`. It shows the vulnerabilities in the dependencies. It do not process the response. The purpose is only to track the result of the command.
 +
 [source, groovy]
 ----
