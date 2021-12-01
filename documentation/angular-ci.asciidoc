@@ -107,7 +107,7 @@ environment {
     // Angular directory
     angularDir = 'angular'
     // SRC folder. It will be angularDir/srcDir
-    srcDir = 'src'`
+    srcDir = 'src'
     // Name of the custom tool for chrome stable
     chrome = 'Chrome-stable'
 
@@ -121,7 +121,7 @@ environment {
     // Artifact groupId
     groupId = 'com.devonfw.mythaistar'
     // Nexus repository ID
-    repositoryId`= 'pl-nexus'
+    repositoryId= 'pl-nexus'
     // Nexus internal URL
     repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
     // Maven global settings configuration ID
