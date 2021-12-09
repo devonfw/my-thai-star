@@ -27,6 +27,10 @@ jobs:
       uses: okteto/apply@latest
       with:
         manifest: k8s.yml
+    - name: Sleep for 30 seconds
+      uses: jakejarvis/wait-action@v0.1.0
+      with:
+        time: '30s'        
     - name: Verify
       uses: srt32/uptime@v0.2
       with:
