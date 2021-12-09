@@ -2,7 +2,7 @@ name: Deploy to Okteto
 
 on:
   schedule:
-    - cron:  '30 23 * * *'
+    - cron:  '0 */4 * * *'
   workflow_dispatch:
 
 jobs:
@@ -27,3 +27,9 @@ jobs:
       uses: okteto/apply@latest
       with:
         manifest: k8s.yml
+    - name: Verify
+      uses: srt32/uptime@v0.2
+      with:
+        url-to-hit: "https://mts-devonfw-core.cloud.okteto.net/bookTable"
+        expected-statuses: "200"
+        
