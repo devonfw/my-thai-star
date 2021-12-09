@@ -152,7 +152,7 @@ For the _Authentication_ and _Authorization_ the app will implement the https://
 
 === Jwt basics
 
-Refer to link:java-design.asciidoc#jwt-basics[Jwt basiscs] for more information.
+Refer to link:java-design.asciidoc#jwt-basics[Jwt basics] for more information.
 
 === Jwt implementation details
 

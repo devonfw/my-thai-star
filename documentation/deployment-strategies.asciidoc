@@ -43,7 +43,7 @@ sshagent (credentials: ['my_ssh_token']) {
 +
 For every operation performed in the external Deployment Server, it is necessary to define _where_ those commands are going to be executed. So, for each one of previous `docker` commands, this should appear before:
 
-    ssh -o StrictHostKeyChecking=no root@10.40.235.244
+    `ssh -o StrictHostKeyChecking=no root@10.40.235.244`
 
 == Docker Compose
 

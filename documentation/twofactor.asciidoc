@@ -18,7 +18,7 @@ When dealing with 2FA, another provider and filter is handling the request from 
 image::images/security/security_cross_component_twofactor.png[, ]
 
 Here you can observe which filter will be used.
-*JWTAuthenticationFilter* does intercept any request, which enforces being authenticated via JWT
+`*JWTAuthenticationFilter*` does intercept any request, which enforces being authenticated via JWT
 
 image::images/security/filters_png.png[, ]
 

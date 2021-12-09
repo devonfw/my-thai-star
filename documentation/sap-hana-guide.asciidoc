@@ -57,7 +57,7 @@ To check if the script server is enable, execute below statement
 ----
 SELECT SERVICE_NAME, PORT, ACTIVE_STATUS FROM SYS.M_SERVICES ORDER BY 1;
 ----
-It should see the scriptserver in it.
+It should see the `scriptserver` in it.
 
 == Creating a User on HXE
 

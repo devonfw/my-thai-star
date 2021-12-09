@@ -15,7 +15,7 @@ As a guest I want to create an dinner event by entering date and time and adding
 ===== Acceptance criteria
  . only date and time in future possible and both required
  . only valid email addresses: text@text.xx, one entered email-address is required
- . if AGB are not checked, an error message is shown
+ . if `AGB` are not checked, an error message is shown
  . after the invite is done
  .. I see the confirmation screen of my invite (see wireframe)
  .. I receive a confirmation email about my invite containing date, time and invited guests
@@ -30,7 +30,7 @@ As a guest I want to create a reservation by entering date and time and number o
 ===== Acceptance criteria
 . only date and time in future possible and both required
 . only valid email addresses: text@text.xx, one entered email-address is required
-. if AGB are not checked, an error message is shown
+. if `AGB` are not checked, an error message is shown
 . after the reservation is done
 .. I see a confirmation screen of my reservation with datetime, number of persons and kids
 .. I receive a confirmation email about my reservation
@@ -85,9 +85,9 @@ As a guests who has sent an invite I want to be able to cancel my previous invit
 
 ===== AC:
  . the option to cancel the invite is available in the confirmation-mail about my invite
- . after my cancellation all invited guests receives a mail about the cancelation
+ . after my cancellation all invited guests receives a mail about the cancellation
  . I see a confirmation that my invite was cancelled successfully
- . after my cancelation my invite and reservation and all orders related to it are deleted from the system and no one can accept or decline any invite for it
+ . after my cancellation my invite and reservation and all orders related to it are deleted from the system and no one can accept or decline any invite for it
  . the cancellation is only possible one hour before the invite takes place. After that I am not allowed to cancel it any more.
 
 == Epic: Digital Menu
@@ -144,7 +144,7 @@ As a guest I want to cancel my order.
 AC:
 
 . in my received confirmation mail I have the option to cancel my order
-. the cancelation is only possible one hour before my reservation takes place
+. the cancellation is only possible one hour before my reservation takes place
 . my order is deleted from the system
 
 Remark: Changing the order is not possible. For that the order must be canceled and created from scratch again
@@ -201,7 +201,7 @@ AC:
  . orders/reservations are shown in separate lists.
  . for each order the dish, meat, comment, item, reservation-id, reservation datetime, creation-datetime is shown
  . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
- . the default filter for all lists is the todays date for reservation datetime. this filter can be deleted.
+ . the default filter for all lists is the today's date for reservation datetime. this filter can be deleted.
  . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data analytics those orders and reservation shall still exist in the system.
 
 
