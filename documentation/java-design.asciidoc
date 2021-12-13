@@ -313,7 +313,7 @@ image::images/java/jwt_schema.png[, link="images/java/jwt_schema.png"]
 
 === Jwt implementation details
 
-The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
+The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/4.0.x/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
 
 ==== Authentication
 

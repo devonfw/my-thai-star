@@ -61,4 +61,4 @@ After setting up the Jenkins Pipeline, you can simply run it by clicking on the 
 
 Finally, the applications should be available at http://my-thai-star.demo.xpaas.io. 
 
-The first part, `my-thai-star`, IST specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nkaas/ingress.yaml[ingress] configuration at `host`. The second part, `demo.xpaas.io`, is the host of the nkaas you're working on.
+The first part, `my-thai-star`, IST specified in the MTS link:https://github.com/devonfw/my-thai-star/blob/develop/jenkins/nKaaS/ingress.yaml[ingress] configuration at `host`. The second part, `demo.xpaas.io`, is the host of the nkaas you're working on.
