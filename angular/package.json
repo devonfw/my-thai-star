@@ -91,7 +91,7 @@
     "@types/hammerjs": "2.0.40",
     "@types/jasmine": "~3.10.2",
     "@types/jasminewd2": "~2.0.10",
-    "@types/leaflet": "^1.7.5",
+    "@types/leaflet": "^1.7.7",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.6",
     "@types/selenium-webdriver": "4.0.16",
