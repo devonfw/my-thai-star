@@ -1,0 +1,42 @@
+== Oketeto GitHub Action Deployment
+
+Applying Kubernetes manifest (k8s.yml) in the okteto cloud pulls the docker image and deploy the application.
+
+The first task is to prepare the docker image and upload to a container registry (ghcr here).
+Secondly prepare okteto pipeline workflow yaml to apply the k8s.yml and verify the deployment.
+
+=== Docker build
+
+In our example, we have two containers to be built and upload. See the examples below.
+
+Java (backend)
+
+* https://github.com/devonfw/my-thai-star/blob/develop/.github/workflows/build-push-java-image.yml
+
+Angular (frontend)
+
+*	https://github.com/devonfw/my-thai-star/blob/develop/.github/workflows/build-push-java-image.yml
+
+=== Kubernetes
+
+Below Objects had been configured on k8s.yml for the Java and Angular.
+
+* Deployment
+*	Service
+*	Ingres
+
+Here is the sample.
+https://github.com/devonfw/my-thai-star/blob/develop/k8s.yml
+
+=== Okteto deployment
+
+Create an Okteto login and create a personal access token. The token will be stored in github secretes and used by pipeline.
+
+The pipeline script does the following.
+
+•	Login the okteto environment and activate the namespace.
+•	Applying the K8s.yaml (kubernates configuration) for deployment
+•	Verify the deployment.
+
+Sample pipeline:
+https://github.com/devonfw/my-thai-star/blob/develop/.github/workflows/okteto-deployment.yml

@@ -23,7 +23,7 @@ This external server will be located in https://mts-devonfw-core.cloud.okteto.ne
 2. **tomcat** for the Java Server
 3. **nginx** for the Angular Client
 
-The usage of the **Reverse Proxy** will allow the client to call via `/api` every single Java Server's REST operation. Moreover, there will only be 1 port in usage in the remote Docker host, the one mapped for the Reverse Proxy: `8080`. 
+The usage of the **Reverse Proxy** will allow the client to call via `/api` every single Java Server's REST operation. Moreover, there will only be 1 port in usage in the remote Docker host, the one mapped for the Reverse Proxy: `8080`.
 Besides the deployment itself using **nginx** and **tomcat**, both client and server are previously built using **nodejs** and **maven** images. Artifacts produced by them will be pasted in servers' containers using multi-stage docker builds. It will all follow this schema:
 
 image::https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png[, link="https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png"]
@@ -42,3 +42,5 @@ The steps to run **My Thai Star** are:
 
 1. Clone the repository `$ git clone https://github.com/devonfw/my-thai-star.git`
 2. Run the docker compose command: `$ docker-compose up`
+
+NOTE: My thai star deployed in Okteto cloud environment. URL: https://mts-devonfw-core.cloud.okteto.net/ Refer the link:okteto-deployment.asciidoc[deployment guide] to understand the steps to deploy in Okteto cloud.
