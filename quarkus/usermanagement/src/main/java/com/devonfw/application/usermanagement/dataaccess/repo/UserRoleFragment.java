@@ -6,5 +6,5 @@ import com.devonfw.application.usermanagement.common.to.UserRoleSearchCriteriaTo
 import com.devonfw.application.usermanagement.dataaccess.UserRoleEntity;
 
 public interface UserRoleFragment {
-  public Page<UserRoleEntity> findByCriteria(UserRoleSearchCriteriaTo userSearchCriteria);
+  public Page<UserRoleEntity> findRolesByCriteria(UserRoleSearchCriteriaTo userSearchCriteria);
 }

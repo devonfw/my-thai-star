@@ -6,5 +6,5 @@ import com.devonfw.application.usermanagement.common.to.UserSearchCriteriaTo;
 import com.devonfw.application.usermanagement.dataaccess.UserEntity;
 
 public interface UserFragment {
-  public Page<UserEntity> findByCriteria(UserSearchCriteriaTo userSearchCriteria);
+  public Page<UserEntity> findUserByCriteria(UserSearchCriteriaTo userSearchCriteria);
 }

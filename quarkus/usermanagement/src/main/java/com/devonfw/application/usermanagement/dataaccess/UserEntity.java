@@ -9,9 +9,6 @@ import javax.persistence.Transient;
 
 import com.devonfw.application.usermanagement.common.ApplicationPersistenceEntity;
 
-import lombok.Data;
-
-@Data
 @Entity
 @Table(name = "User")
 public class UserEntity extends ApplicationPersistenceEntity {
@@ -53,5 +50,32 @@ public class UserEntity extends ApplicationPersistenceEntity {
       userRoleEntity.setId(userRoleId);
       this.userRole = userRoleEntity;
     }
+
   }
+
+  public String getUsername() {
+
+    return this.username;
+  }
+
+  public String getPassword() {
+
+    return this.password;
+  }
+
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  public String getSecret() {
+
+    return this.secret;
+  }
+
+  public boolean isTwoFactorStatus() {
+
+    return this.twoFactorStatus;
+  }
+
 }

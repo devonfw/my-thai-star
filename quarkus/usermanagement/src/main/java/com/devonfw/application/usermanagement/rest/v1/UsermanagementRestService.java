@@ -90,7 +90,7 @@ public class UsermanagementRestService {
   @POST
   public Page<UserEto> findUsersByPost(UserSearchCriteriaTo searchCriteriaTo) {
 
-    return this.userMapper.map(this.userRepository.findByCriteria(searchCriteriaTo));
+    return this.userMapper.map(this.userRepository.findUserByCriteria(searchCriteriaTo));
   }
 
   @GET
@@ -128,6 +128,6 @@ public class UsermanagementRestService {
   @POST
   public Page<UserRoleEto> findUserRolesByPost(UserRoleSearchCriteriaTo searchCriteriaTo) {
 
-    return this.userRoleMapper.map(this.userRoleRepository.findByCriteria(searchCriteriaTo));
+    return this.userRoleMapper.map(this.userRoleRepository.findRolesByCriteria(searchCriteriaTo));
   }
 }

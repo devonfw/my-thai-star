@@ -9,6 +9,9 @@ import javax.persistence.Table;
 
 import com.devonfw.application.usermanagement.common.ApplicationPersistenceEntity;
 
+import lombok.Setter;
+
+@Setter
 @Entity
 @Table(name = "UserRole")
 public class UserRoleEntity extends ApplicationPersistenceEntity {
@@ -23,4 +26,15 @@ public class UserRoleEntity extends ApplicationPersistenceEntity {
 
     return this.users;
   }
+
+  public String getName() {
+
+    return this.name;
+  }
+
+  public Boolean isActive() {
+
+    return this.active;
+  }
+
 }
