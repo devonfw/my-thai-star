@@ -33,7 +33,7 @@ public class UserFragmentImpl implements UserFragment {
       predicates.add(userEntity.username.eq(searchCriteria.getUsername()));
     }
     if (!isEmpty(searchCriteria.getEmail())) {
-      predicates.add(userEntity.email.eq(searchCriteria.getUsername()));
+      predicates.add(userEntity.email.eq(searchCriteria.getEmail()));
     }
 
     if (searchCriteria.getUserRoleId() != null) {

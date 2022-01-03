@@ -18,7 +18,7 @@ public class UserEto extends AbstractEto {
 
   private String email;
 
-  private boolean twoFactorStatus;
+  private Boolean twoFactorStatus;
 
   private Long userRoleId;
 }

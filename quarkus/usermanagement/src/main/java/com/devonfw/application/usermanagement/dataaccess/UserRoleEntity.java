@@ -10,7 +10,9 @@ import javax.persistence.Table;
 import com.devonfw.application.usermanagement.common.ApplicationPersistenceEntity;
 
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Setter
 @Entity
 @Table(name = "UserRole")

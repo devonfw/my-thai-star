@@ -9,6 +9,11 @@ import javax.persistence.Transient;
 
 import com.devonfw.application.usermanagement.common.ApplicationPersistenceEntity;
 
+import lombok.Setter;
+
+//@Data
+//@ToString
+@Setter
 @Entity
 @Table(name = "User")
 public class UserEntity extends ApplicationPersistenceEntity {
@@ -21,7 +26,7 @@ public class UserEntity extends ApplicationPersistenceEntity {
 
   private String secret;
 
-  private boolean twoFactorStatus;
+  private Boolean twoFactorStatus;
 
   private UserRoleEntity userRole;
 
