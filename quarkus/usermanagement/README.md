@@ -1,4 +1,4 @@
-# dishmanagement Project
+# Usermanagement Service
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
