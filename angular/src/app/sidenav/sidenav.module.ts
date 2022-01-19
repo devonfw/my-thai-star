@@ -15,22 +15,21 @@ import { reducers, effects } from './store';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    TranslocoModule,
-    CoreModule,
-    StoreModule.forFeature('sidenav', reducers),
-    EffectsModule.forFeature(effects),
-  ],
-  providers: [SidenavService, WindowService],
-  declarations: [
-    SidenavComponent,
-    SidenavOrderComponent,
-    CommentDialogComponent,
-    CommentAlertComponent,
-  ],
-  exports: [SidenavComponent],
-  entryComponents: [CommentDialogComponent, CommentAlertComponent],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        TranslocoModule,
+        CoreModule,
+        StoreModule.forFeature('sidenav', reducers),
+        EffectsModule.forFeature(effects),
+    ],
+    providers: [SidenavService, WindowService],
+    declarations: [
+        SidenavComponent,
+        SidenavOrderComponent,
+        CommentDialogComponent,
+        CommentAlertComponent,
+    ],
+    exports: [SidenavComponent]
 })
 export class SidenavModule {}
