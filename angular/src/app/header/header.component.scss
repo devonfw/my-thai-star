@@ -9,6 +9,16 @@
   justify-content: center;
 }
 
+.title {
+  display: flex;
+  flex-direction: column;
+  .sub-title {
+    font-size: small;
+    height: 15px;
+    line-height: 15px;
+  }
+}
+
 [flex] {
   flex: 1;
   box-sizing: border-box;

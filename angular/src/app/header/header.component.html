@@ -5,7 +5,10 @@
   <a mat-icon-button>
     <mat-icon>star_border</mat-icon>
   </a>
-  <span>My Thai Star</span>
+  <div flex class="title">
+    <span>My Thai Star</span>
+    <span class="sub-title">A demo application</span>
+  </div>
 
   <span flex></span>
   <div *ngIf="(auth.getRole() | async) === 'CUSTOMER'" class="forDesktop">
