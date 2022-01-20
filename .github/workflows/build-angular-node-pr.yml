@@ -40,7 +40,7 @@ jobs:
         run: |
           cd angular
           npm install
-          npm test --browsers ChromeHeadless
+          npm run test:ci
   # JOB to build Node code
   Node:
     needs: changes
