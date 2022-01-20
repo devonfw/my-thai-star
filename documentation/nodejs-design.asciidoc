@@ -92,7 +92,7 @@ These routers will define the behavior for each service and use the logical laye
 
 An example of service definition:
 
-[source, javascript]
+[source, JavaScript]
 ----
 router.post('/booking/search', (req: types.CustomRequest, res: Response) => {
     try {
@@ -121,7 +121,7 @@ In the _logic_ layer we will locate all the _business logic_ of the application.
 
 Example:
 
-[source, javascript]
+[source, JavaScript]
 ----
 export async function cancelOrder(orderId: string, callback: (err: types.Error | null) => void) {
     let order: dbtypes.Order;
@@ -163,14 +163,14 @@ List of _unsecured resources_:
 
 To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method _auth_ for handle the requests to the /login endpoint.
 
-[source, javascript]
+[source, JavaScript]
 ----
 app.post('/mythaistar/login', auth.auth);
 ----
 
 To verify the presence of the _Authorization token_ in the headers, we will register in the express the `_Authentication.registerAuthentication_` middleware. This middleware will check if the token is correct, if so, it will place the user in the request and continue to process it. If the token is not correct it will continue processing the request normally.
 
-[source, javascript]
+[source, JavaScript]
 ----
 app.use(auth.registerAuthentication);
 ----
@@ -203,7 +203,7 @@ Following the https://jwt.io/introduction/[official documentation] the implement
 
 To provide to the client with the current user data our application should expose a service to return the user details. In this case the _Authentication_ has a method called `_getCurrentUser_` which will return the user data. We only need register it at express.
 
-[source, javascript]
+[source, JavaScript]
 ----
 app.get('/mythaistar/services/rest/security/v1/currentuser', auth.getCurrentUser);
 ----
@@ -220,7 +220,7 @@ We need to secure three services, that only should be accessible for users with 
 
 To ensure this, the _Authorization_ class has the `_securizedEndpoint_` method that guarantees access based on the role. This method can be used as middleware in secure services. As the role is included in the token, once validated we will have this information in the request and the middleware can guarantee access or return a 403 error.
 
-[source, javascript]
+[source, JavaScript]
 ----
 app.use('/mythaistar/services/rest/ordermanagement/v1/order/filter', auth.securizedEndpoint('WAITER'));
 app.use('/mythaistar/services/rest/ordermanagement/v1/order/search', auth.securizedEndpoint('WAITER'));
