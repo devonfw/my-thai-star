@@ -25,7 +25,7 @@ Angular components were created using angular/CLI `ng create component` so they 
 
 As an example, this is the _spec.ts_ of the menu view component:
 
-[source, javascript]
+[source, JavaScript]
 ----
 all the imports...
 
@@ -72,7 +72,7 @@ Dialog components are in a special category because they can not be tested norma
 
 Also, the testing code to open the component is a bit different too:
 
-[source, javascript]
+[source, JavaScript]
 ----
 ...
   beforeEach(() => {
@@ -90,7 +90,7 @@ As well as components, services can be tested too, actually, they are even more 
 
 As an example of testing services i am going to use a well done services, with a specific purpose and with its logic completely tested, the price-calculator service:
 
-[source, javascript]
+[source, JavaScript]
 ----
 ...
 

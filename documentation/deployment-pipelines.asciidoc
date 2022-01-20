@@ -16,7 +16,7 @@ Deploys on the server the Java part of My Thai Star.
 
 === Parameters
 
-- `*registryUrl*`: The url to the docker registry where the image is stored.
+- `*registryUrl*`: The URL to the docker registry where the image is stored.
 - `*registryCredentialsId*`: Credentials to publish/download images from registry.
 - `*dockerNetwork*`: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the `dockerNetwork`.
 - *VERSION*: The version that you can to deploy.
@@ -32,7 +32,7 @@ Deploys on the server the Angular part of My Thai Star
 
 === Parameters
 
-- `*registryUrl*`: The url to the docker registry where the image is stored.
+- `*registryUrl*`: The URL to the docker registry where the image is stored.
 - `*registryCredentialsId*`: Credentials to publish/download images from registry.
 - `*dockerNetwork*`: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the `dockerNetwork`.
 - *VERSION*: The version that you can to deploy.
@@ -50,7 +50,7 @@ The `MyThaiStar_REVERSE-PROXY_DEPLOY` pipeline will deploy the My Thai Star reve
 
 === Parameters
 
-- `*registryUrl*`: The url to the docker registry where the image is stored.
+- `*registryUrl*`: The URL to the docker registry where the image is stored.
 - `*registryCredentialsId*`: Credentials to publish/download images from registry.
 - `*buildReverseProxy*`: If yes, it will build and publish a new version of reverse-proxy.
 - *port*: Port of the MTS application. You must ensure that those port is available in the deployment machine.
