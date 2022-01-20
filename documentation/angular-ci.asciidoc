@@ -95,8 +95,7 @@ The Angular project Pipeline needed some "extra" features to complete all planne
 
 In order to easily reuse the pipeline in other angular projects, all variables have been defined in the block environment. All variables have the default values that Production Line uses, so if you're going to work in production line you won't have to change anything. Example:
 
-[source, groovy]
-----
+```
 environment {
     // Script for build the application. Defined at package.json
     buildScript = 'build --configuration=docker'
@@ -129,15 +128,14 @@ environment {
     // Maven tool id
     mavenInstallation = 'Maven3'
 }
-----
+```
 
 ==== Description
 - `*buildScript*`: script for build the application. It must be defined at package.json.
 +
 Example (package.json):
 +
-[source, json]
-----
+```
 {
     "name": "mythaistar-restaurant",
     ...
@@ -148,7 +146,7 @@ Example (package.json):
     }
     ...
 }
-----
+```
 +
 This will be used as follows:
 +
@@ -176,10 +174,9 @@ Example (package.json):
 +
 This will be used as follows:
 +
-[source, groovy]
-----
+```
 sh """yarn ${lintScript}"""
-----
+```
 - *testScript*: Script for test the application. Defined at package.json
 +
 Example (package.json):
@@ -200,10 +197,9 @@ Example (package.json):
 +
 This will be used as follows:
 +
-[source, groovy]
-----
+```
 sh """yarn ${testScript}"""
-----
+```
 - `*angularDir*`: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
 +
 image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
@@ -225,7 +221,7 @@ image::images/ci/angular/nexus3_groupid.png[, link="nexus3_groupid.PNG"]
 - `*repositoryId*`: Id of the nexus3 repository. It must be defined at maven global config file.
 +
 image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
-- `*repositoryUrl*`: The url of the repository.
+- `*repositoryUrl*`: The URL of the repository.
 - `*globalSettingsId*`: The id of the global settings file.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]

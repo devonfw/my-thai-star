@@ -193,7 +193,7 @@ Following the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventi
 
 You can find all the details for the services implementation in the https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
 
-=== Service api
+=== Service API
 
 The _api.rest_ package in the _service_ layer of a _component_ will store the definition of the service by a  _Java interface_. In this definition of the service we will set-up the _endpoints_ of the service, the type of data expected and returned, the _HTTP_ method for each endpoint of the service and other configurations if needed.
 

@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The Node.js backend for My Thai Star application is going to be based on:
+The NodeJS backend for My Thai Star application is going to be based on:
 
  - *Serverless* as serverless framework
  - *devon4node* as data access layer framework

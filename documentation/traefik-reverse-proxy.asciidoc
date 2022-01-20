@@ -5,7 +5,7 @@ toc::[]
 
 This implementation is the same as described at link:deployment.asciidoc[My Thai Star deployment wiki page]. The only thing that changes is that Traefik is used instead of NGINX. 
 
-Using Traefik as reverse proxy, we can define the routes using labels in the docker containers instead of using a nginx.conf file. With this, it is not necessary to modify the reverse proxy container for each application. In addition, as Traefik is listening to the docker daemon, it can detect new containers and create routes for them without rebooting.
+Using Traefik as reverse proxy, we can define the routes using labels in the docker containers instead of using a Nginx config file. With this, it is not necessary to modify the reverse proxy container for each application. In addition, as Traefik is listening to the docker daemon, it can detect new containers and create routes for them without rebooting.
 
 Example of labels:
 
@@ -36,7 +36,7 @@ $ docker-compose up -d --build
 
 After a seconds, when the healthcheck detects that containers are running, your application will be available at http://localhost:8090. Also, the Traefik dashboard is available at http://localhost:8080.
 
-If you want to check the behaviour of the application when you scale up the backend, you can execute:
+If you want to check the behavior of the application when you scale up the backend, you can execute:
 
 [source,bash]
 ----
