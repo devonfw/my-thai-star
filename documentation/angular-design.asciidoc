@@ -154,7 +154,7 @@ For responsiveness reasons, the dialogs have to accept a width parameter to adju
 === Equal-validator-directive
 This directive located in the shared folder of `userArea` is used in 2 fields to make sure they have the same value. This directive is used in confirm password fields in register and change password.
 
-== Mock Backend
+== Mock backend
 
 To develop meanwhile a real back-end is being developed let us to make a more realistic application and to make easier the adaptation when the backend is able to be connected and called. Its structure is as following:
 
