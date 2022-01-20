@@ -36,6 +36,12 @@ jobs:
           cd angular
           npm install
           npm run build
+          cd ..
+      - name: test
+        run: |
+          cd angular
+          npm install
+          npm run test:ci
   # JOB to build Node code
   Node:
     needs: changes
@@ -49,3 +55,9 @@ jobs:
           cd node
           yarn install
           yarn build
+          cd ..
+      - name: test
+        run: |
+          cd node
+          yarn install
+          npm test
