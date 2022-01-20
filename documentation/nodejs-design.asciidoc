@@ -36,7 +36,7 @@ image::images/nodejs/folder_organization.png[, link="images/nodejs/folder_organi
 
 == Layers
 
-- Service Layer: this layer will expose the REST api to exchange information with the client applications.
+- Service Layer: this layer will expose the REST API to exchange information with the client applications.
 - Logic Layer: the layer in charge of hosting the business logic of the application.
 - Data Access Layer: the layer to communicate with the data base.
 

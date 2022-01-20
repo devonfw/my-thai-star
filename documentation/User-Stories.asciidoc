@@ -32,12 +32,12 @@ As a guest I want to create a reservation by entering date and time and number o
 . only valid email addresses: text@text.xx, one entered email-address is required
 . if `AGB` are not checked, an error message is shown
 . after the reservation is done
-.. I see a confirmation screen of my reservation with datetime, number of persons and kids
+.. I see a confirmation screen of my reservation with date time, number of persons and kids
 .. I receive a confirmation email about my reservation
 
 
 ===== Wireframes
-see realtimeboard
+see realtime board
 
 === US: handle invite
 

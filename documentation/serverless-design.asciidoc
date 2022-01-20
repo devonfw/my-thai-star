@@ -140,7 +140,7 @@ The default integration for a handler is _lambda_. See https://github.com/devonf
 If you change the integration to lambda-proxy, you must take care that in this case the data will not be parsed. You must do JSON.parse explicitly 
 ====
 
-After defining all the handlers, we must execute the _fun_ command, which will generate the files serverless.yml and webpack.config.js. 
+After defining all the handlers, we must execute the _fun_ command, which will generate the files serverless.yml and `webpack.config.js`. 
 
 === Logic layer and Data access layer
 

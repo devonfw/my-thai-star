@@ -372,7 +372,7 @@ Following the https://jwt.io/introduction/[official documentation] the implement
 * The _claims_ are the content of the _payload_ of the token. The _claims_ are statements about the user, so we will include the user info in this section.
 
   ** _subject_: "sub". The username.
-  ** _issuer_: `"iss"`. Who creates the token. We could use the _url_ of our service but, as this is a showcase app, we simply will use `"MyThaiStarApp"`
+  ** _issuer_: `"iss"`. Who creates the token. We could use the URL of our service but, as this is a showcase app, we simply will use `"MyThaiStarApp"`
   ** _expiration date_: "exp". Defines when the token expires.
   ** _creation date_: `"iat"`. Defines when the token has been created.
   ** _scope_: "scope". Array of strings to store the user roles.

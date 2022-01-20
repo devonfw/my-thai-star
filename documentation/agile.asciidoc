@@ -40,7 +40,7 @@ With having a list of the Epics and User Stories for the My Thai Star developmen
 .Screenshot of the JIRA backlog during Sprint 2
 image::images/methodology_2.png[Screenshot of planningpoker.com, width="450", link="images/methodology_02.png"]
 
-We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with subtask is that every single subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single subtask the whole process of a user story is better organized.
+We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with Subtask is that every single Subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single Subtask the whole process of a user story is better organized.
 
 .Screenshots of Sub tasks during Sprint 2
 `image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_03.png"]`

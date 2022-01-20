@@ -48,12 +48,12 @@ SELECT DATABASE_NAME,  ACTIVE_STATUS FROM SYS.M_DATABASES ORDER BY 1;
 
 == Enabling the script server
 Run the below for enabling the script server
-[source, sql]
+[source, SQL]
 ----
 ALTER DATABASE HXE ADD 'scriptserver'
 ----
 To check if the script server is enable, execute below statement
-[source, sql]
+[source, SQL]
 ----
 SELECT SERVICE_NAME, PORT, ACTIVE_STATUS FROM SYS.M_SERVICES ORDER BY 1;
 ----
@@ -62,17 +62,17 @@ It should see the `scriptserver` in it.
 == Creating a User on HXE
 
 - Connect using the below
-[source, sql]
+[source, SQL]
 ----
 \c -d hxe -n localhost:39013 -u system -p <password>
 ----
 - To create a user
-[source, sql]
+[source, SQL]
 ----
 Create user hanauser1 password <password> no force_first_password_change
 ----
 - Grant below permission to the user
-[source, sql]
+[source, SQL]
 ----
 GRANT AFLPM_CREATOR_ERASER_EXECUTE TO hanauser1
 GRANT AFL__SYS_AFL_AFLPAL_EXECUTE TO hanauser1 – here we have 2 underscore
@@ -89,7 +89,7 @@ GRANT MODELING TO hanauser1
 ----
 
 - Now connect to HXE tenant using below
-[source, sql]
+[source, SQL]
 ----
 \c -d hxe -n localhost:39013 -u hanauser1 -p <password>
 ----
@@ -128,7 +128,7 @@ spring.datasource.password=password
 
 === Setting up MTSJ angular
 
-update the following property in config file in my-thai-star\angular\src\app\core\config
+update the following property in config file in `my-thai-star\angular\src\app\core\config`
 
 [source, properties]
 ----
