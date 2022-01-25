@@ -24,7 +24,7 @@ A simple test example
 [source,java]
 ----
 @SpringBootTest(classes = SpringBootApp.class)
-public class DishmanagementTest extends ComponentTest {
+public class DishmanagementTest extends `ComponentTest` {
 
   @Inject
   private Dishmanagement dishmanagement;

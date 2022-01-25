@@ -4,7 +4,7 @@ toc::[]
 = Angular design
 
 == Introduction
-MyThaiStar client side has been built using latest frameworks, component libraries and designs:
+`MyThaiStar` client side has been built using latest frameworks, component libraries and designs:
 
 *Angular* _4_ as main front-end Framework. https://angular.io/
 
@@ -66,7 +66,8 @@ View where the users can view, filter and select the dishes (with their extras) 
 ===== Menu-card
 This component composes all the data of a dish in a card. Component made to display indeterminate number of dishes easily.
 
-==== Book-Table-Component
+==== Book Table Component
+
 View to make book a table in a given data with a given number of assistants or create a reservation with a number of invitations via email.
 
 ===== Book-table-dialog
@@ -90,13 +91,15 @@ Dialog designed specifically to connect your user account with Twitter.
 === Waiter cockpit area
 Restricted area to workers of the restaurant, here we can see all information about booked tables with the selected orders and the reservations with all the guests and their acceptance or decline of the event.
 
-==== Order-Cockpit-Component
+
+==== Order Cockpit Component
 Data table with all the booked tables and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
 ===== Order-dialog
 Complete display of data regarding the selected table and its orders.
 
-==== Reservation-Cockpit-Component
+==== Reservation Cockpit Component
+
 Data table with all the reservations and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
 ===== Reservation-dialog
@@ -106,7 +109,7 @@ Complete display of data regarding the selected table and its guests.
 As the application send emails to both guests and hosts, we choose an approach based on URL where the email contain a button with an URL to a service in the app and a token, front-end read that token and depending on the URL, will redirect to one service or another. For example: 
 [source]
 ----
-http://localhost:4200/booking/cancel/CB_20170605_8fb5bc4c84a1c5049da1f6beb1968afc
+`http://localhost:4200/booking/cancel/CB_20170605_8fb5bc4c84a1c5049da1f6beb1968afc`
 ----
 This URL will tell the app that is a cancellation of a booking with the token `_CB_20170605_8fb5bc4c84a1c5049da1f6beb1968afc_`. The app will process this information, send it to back-end with the correct headers, show the confirmation of the event and redirect to home page.
 
@@ -146,13 +149,14 @@ Main task of this services is to provide visibility at app level of the current 
 * Store the username and the JWT token.
 
 === Snack Service
-Service created to serve as a factory of Angular Material Snack-bars, which are used commonly through the app. This service accepts some parameters to customize the snack-Bar and opens it with this parameters.
+Service created to serve as a factory of Angular Material `Snackbars`, which are used commonly through the app. This service accepts some parameters to customize the `snackBar` and opens it with this parameters.
 
 === Window Service
 For responsiveness reasons, the dialogs have to accept a width parameter to adjust to screen width and this information is given by Window object, as it is a good practice to have it in an isolated service, which also calculates the width percentage to apply on the dialogs.
 
 === Equal-validator-directive
-This directive located in the shared folder of user Area is used in 2 fields to make sure they have the same value. This directive is used in confirm password fields in register and change password.
+This directive located in the shared folder of `userArea` is used in 2 fields to make sure they have the same value. This directive is used in confirm password fields in register and change password.
+
 
 == Mock Back-end
 
@@ -167,6 +171,7 @@ Contains the three main groups of functionalities in the application. Every grou
 * *Mock back-end service* which implements all the methods declared in the interface using mock data stored in a local file and mainly uses Lodash to operate the arrays.
 * *Real back-end service* works as Mock back-end but in this case the methods call for server rest services through Http.
 
+
 === Booking
 The booking group of functionalities manages the calls to reserve a table with a given time and assistants or with guests, get reservations filtered, accept or decline invitations or cancel the reservation.
 
@@ -177,7 +182,8 @@ Management of the orders, including saving, filtering and cancel an order.
 The dishes group of functionalities manages the calls to get and filter dishes.
 
 === Login
-Login manages the user Area logic: login, register and change password.
+Login manages the `userArea` logic: login, register and change password.
+
 
 == Security
 

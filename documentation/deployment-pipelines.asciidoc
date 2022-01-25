@@ -11,7 +11,7 @@ image::images/ci/deployment/deployment_arch.png[, link=images/ci/deployment/depl
 
 The parts to be deployed are: an NGINX reverse proxy, the java application and the angular application.
 
-== MyThaiStar_SERVER_DEPLOY Pipeline
+== `MyThaiStar_SERVER_DEPLOY Pipeline`
 
 Deploys on the server the Java part of My Thai Star.
 
@@ -43,11 +43,11 @@ Deploys on the server the Angular part of My Thai Star
 - *Create docker network*: Create the docker network with the name provided as parameter.
 - *Deploy new image*: Deploy a new angular container. If it already exists, first it delete the previous one.
 
-== MyThaiStar_REVERSE-PROXY_DEPLOY Pipeline
+== `MyThaiStar_REVERSE-PROXY_DEPLOY Pipeline`
 
 NOTE: As reverse proxy connects to the Java and Angular application, both must be deployed before you execute this pipeline.
 
-The MyThaiStar_REVERSE-PROXY_DEPLOY pipeline will deploy the My Thai Star reverse proxy into a remote machine using docker.
+The `MyThaiStar_REVERSE-PROXY_DEPLOY` pipeline will deploy the My Thai Star reverse proxy into a remote machine using docker.
 
 === Parameters
 

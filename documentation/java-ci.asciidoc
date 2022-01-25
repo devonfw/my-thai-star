@@ -110,9 +110,9 @@ environment {
 
     // Nexus 3
     // Maven global settings configuration ID
-    globalSettingsId = 'MavenSettings'
+    `globalSettingsId = 'MavenSettings'`
     // Maven tool id
-    mavenInstallation = 'Maven3'
+    `mavenInstallation = 'Maven3'`
 
     // Docker
     dockerRegistryCredentials = 'nexus-api'

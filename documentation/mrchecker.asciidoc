@@ -20,13 +20,11 @@ To run the e2e test you have two options:
 ```
 cd mrchecker/endtoend-test/
 mvn test -Dtest=MyThaiStarTest -Dbrowser=Chrome
-
 ```
 optionally you can use it with a headless version or using another navigator:
 ```
 // chrome headless (without visual component)
-mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless
-// use firefox navigator
+mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless// use firefox navigator
 mvn test -Dtest=MyThaiStarTest -Dbrowser=FireFox
 ```
 

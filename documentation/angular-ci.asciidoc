@@ -121,7 +121,7 @@ environment {
     // Artifact groupId
     groupId = 'com.devonfw.mythaistar'
     // Nexus repository ID
-    repositoryId = 'pl-nexus'
+    repositoryId= 'pl-nexus'
     // Nexus internal URL
     repositoryUrl = 'http://nexus3-core:8081/nexus3/repository/maven-snapshots'
     // Maven global settings configuration ID
@@ -157,6 +157,7 @@ This will be used as follows:
 sh """yarn ${buildScript}"""
 ----
 - *lint Script*: Script for lint the application. Defined at package.json
+
 +
 Example (package.json):
 +
@@ -230,5 +231,6 @@ image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
 - maven Installation: The name of the maven tool.
+
 +
 image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]

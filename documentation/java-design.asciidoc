@@ -313,7 +313,7 @@ image::images/java/jwt_schema.png[, link="images/java/jwt_schema.png"]
 
 === JWT implementation details
 
-The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
+The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/4.0.x/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
 
 ==== Authentication
 
@@ -339,7 +339,7 @@ In the same `_HttpSecurity_` object we will set up the filter for the rest of th
 
 [source, java]
 ----
-http.[...].addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+http.[...].addFilterBefore(new `JWTAuthenticationFilter()`, UsernamePasswordAuthenticationFilter.class);
 ----
 
 Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
@@ -422,7 +422,7 @@ Doing so, afterwards, in the implementation class of the _logic_ layer we can se
 
 [source,java]
 ----
-@RolesAllowed(Roles.WAITER)
+`@RolesAllowed(Roles.WAITER)`
 public PaginatedListTo<BookingEto> findBookings(BookingSearchCriteriaTo criteria) {
   return findBookings(criteria);
 }

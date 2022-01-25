@@ -1,7 +1,7 @@
 :toc: macro
 toc::[]
 
-= Publishing the MyThaiStar Application
+= Publishing the `MyThaiStar` Application
 
 This page will explain how to build and deploy the application.
 
@@ -27,7 +27,7 @@ This stage will check out the source code directly from GitHub:
 git credentialsId:'github-devonfw-ci', url:'https://github.com/devonfw/my-thai-star/'
 ----
 +
-Credentials are required for authentication as we're checking out a private repository. 'github-devonfw-ci' is a pair of credentials that was created for this sole purpose. 
+Credentials are required for authentication as we're checking out a private repository. `'github-devonfw-ci'` is a pair of credentials that was created for this sole purpose. 
 . Loading custom tools
 +
 To build the application, two tools are required: Node 6 and Angular CLI.
@@ -194,7 +194,7 @@ node {
 }
 ----
 
-== Accessing MyThaiStar
+== Accessing `MyThaiStar`
 Finally, the application will be available at this URL: http://de-mucdevondepl01:8090[http://de-mucdevondepl01:8090].
 
 == Notes

@@ -1,7 +1,7 @@
 :toc: macro
 toc::[]
 
-= MyThaiStar Wiki
+= `MyThaiStar` Wiki
 
 == User Stories
 - link:user-stories.asciidoc[User Stories]
@@ -49,4 +49,4 @@ toc::[]
 ==  CI/CD
 - link:production-line-ci.asciidoc[Production Line CI]
 - link:deployment.asciidoc[Deployment]
-- link:nkaas.asciidoc[Deployment on nKaaS]
+- link:nkaas.asciidoc[Deployment on nkaas]
