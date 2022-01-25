@@ -17,35 +17,27 @@ import { effects, reducers } from './store';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    TranslocoModule,
-    HttpClientModule,
-    CoreModule,
-    StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature(effects),
-  ],
-  providers: [UserAreaService, AuthGuardService, AuthService],
-
-  declarations: [
-    LoginDialogComponent,
-    PasswordDialogComponent,
-    TwitterDialogComponent,
-    TwoFactorDialogComponent,
-    QrCodeDialogComponent,
-  ],
-  exports: [
-    LoginDialogComponent,
-    PasswordDialogComponent,
-    TwitterDialogComponent,
-  ],
-  entryComponents: [
-    LoginDialogComponent,
-    TwoFactorDialogComponent,
-    QrCodeDialogComponent,
-    PasswordDialogComponent,
-    TwitterDialogComponent,
-  ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        TranslocoModule,
+        HttpClientModule,
+        CoreModule,
+        StoreModule.forFeature('auth', reducers),
+        EffectsModule.forFeature(effects),
+    ],
+    providers: [UserAreaService, AuthGuardService, AuthService],
+    declarations: [
+        LoginDialogComponent,
+        PasswordDialogComponent,
+        TwitterDialogComponent,
+        TwoFactorDialogComponent,
+        QrCodeDialogComponent,
+    ],
+    exports: [
+        LoginDialogComponent,
+        PasswordDialogComponent,
+        TwitterDialogComponent,
+    ]
 })
 export class UserAreaModule {}

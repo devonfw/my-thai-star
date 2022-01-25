@@ -10,7 +10,7 @@ MrChecker is a testing framework included in devonfw with several useful modules
 
 First of all download the repository.
 
-You must run My Thai Star front-end and backend application and modify your url to the front in `mrchecker/endtoend-test/src/resources/settings.properties`
+You must run My Thai Star front-end and backend application and modify your URL to the front in `mrchecker/endtoend-test/src/resources/settings.properties`
 
 Now you can run end to end test to *check* if the application works properly.
 

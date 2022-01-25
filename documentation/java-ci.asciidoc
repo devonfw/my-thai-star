@@ -59,7 +59,7 @@ Execute the OWASP Dependency Checker in order to validate the project dependenci
 +
 [source, groovy]
 ----
-dependencyCheck additionalArguments: '--project "mtsj" --scan java/mtsj --format XML', odcInstallation: 'dependency-check'
+dependencyCheck additionalArguments: '--project "MTSJ" --scan java/mtsj --format XML', odcInstallation: 'dependency-check'
 dependencyCheckPublisher pattern: ''
 ----
 +

@@ -37,7 +37,7 @@ As a guest I want to create a reservation by entering date and time and number o
 
 
 ===== Wireframes
-see realtimeboard
+see real time board
 
 === US: handle invite
 
@@ -86,7 +86,7 @@ As a guests who has sent an invite I want to be able to cancel my previous invit
 ===== AC:
  . the option to cancel the invite is available in the confirmation-mail about my invite
  . after my cancellation all invited guests receives a mail about the cancellation
- . I see a confirmation that my invite was cancelled successfully
+ . I see a confirmation that my invite was canceled successfully
  . after my cancellation my invite and reservation and all orders related to it are deleted from the system and no one can accept or decline any invite for it
  . the cancellation is only possible one hour before the invite takes place. After that I am not allowed to cancel it any more.
 
@@ -202,7 +202,7 @@ AC:
  . for each order the dish, meat, comment, item, reservation-id, reservation datetime, creation-datetime is shown
  . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
  . the default filter for all lists is the today's date for reservation datetime. this filter can be deleted.
- . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data analytics those orders and reservation shall still exist in the system.
+ . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data Analytics those orders and reservation shall still exist in the system.
 
 
 

@@ -2,7 +2,7 @@
 
 == 1.1 Team Setup
 
-The team working on the development of the My Thai Star app and the documentation beside the technical development works distributed in various locations across Germany, the Netherlands, Spain and Poland. For the communication part the team uses the two channels Skype and Mail and for the documentation part the team makes usage mainly of GitHub and Jira.
+The team working on the development of the My Thai Star app and the documentation beside the technical development works distributed in various locations across Germany, the Netherlands, Spain and Poland. For the communication part the team uses the two channels Skype and Mail and for the documentation part the team makes usage mainly of GitHub and JIRA.
 
 == 1.2 Scrum events
 
@@ -34,13 +34,13 @@ The team decided that the backlog refinement meeting is part of the Sprint Plann
 
 == 1.3 Establish Product Backlog
 
-For the My Thai Stair project the team decided on using the Jira agile documentation which is one of the widely used agile tools. Jira is equipped with several of useful tools regarding the agile software development (e.g. Scrum-Board). One of the big advantages of Jira are the extensive configuration and personalization possibilities.
-With having a list of the Epics and User Stories for the My Thai Star development in GitHub, the team transferred the User Stories into the Jira backlog as it is shown in the screenshot below. All User Stories are labeled colorfully with the related Epic which shapes the backlog in clearly manner.
+For the My Thai Stair project the team decided on using the JIRA agile documentation which is one of the widely used agile tools. JIRA is equipped with several of useful tools regarding the agile software development (e.g. Scrum-Board). One of the big advantages of JIRA are the extensive configuration and personalization possibilities.
+With having a list of the Epics and User Stories for the My Thai Star development in GitHub, the team transferred the User Stories into the JIRA backlog as it is shown in the screenshot below. All User Stories are labeled colorfully with the related Epic which shapes the backlog in clearly manner.
 
-.Screenshot of the Jira backlog during Sprint 2
+.Screenshot of the JIRA backlog during Sprint 2
 image::images/methodology_2.png[Screenshot of planningpoker.com, width="450", link="images/methodology_02.png"]
 
-We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with subtask is that every single subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single subtask the whole process of a user story is better organized.
+We decided on working with Subtask as a single user story comprised a number of single and separated tasks. Another benefit of working with Subtask is that every single Subtask can be assigned to a single team member whereas a user story can only be assigned to one team member. By picking single Subtask the whole process of a user story is better organized.
 
 .Screenshots of Sub tasks during Sprint 2
 `image::images/methodology_3.png[Screenshot of Subtasks, width="450", link="images/methodology_03.png"]`
@@ -69,7 +69,7 @@ Unfortunately not all user stories of Sprint 1 could have been completed. Due th
 
 == 03.05.2017 Sprint 2 Planning
 
-As we aligned during the Sprint 1 Review on transferring unfinished user stories into Sprint 2 the focus for Sprint 2 was on finishing these transferred user stories. During our discussion on how many user stories we could work on in Sprint 2 we needed to remind ourselves that the overall target is to develop an example application for the DevonFW. Considering this we aligned on a clear target for Sprint 2: To focus on finishing User Stories as we need to aim for a practicable and realizable solution. Everybody aligned on the aim of having a working application at the end of Sprint 2.
+As we aligned during the Sprint 1 Review on transferring unfinished user stories into Sprint 2 the focus for Sprint 2 was on finishing these transferred user stories. During our discussion on how many user stories we could work on in Sprint 2 we needed to remind ourselves that the overall target is to develop an example application for the devonfw. Considering this we aligned on a clear target for Sprint 2: To focus on finishing User Stories as we need to aim for a practicable and realizable solution. Everybody aligned on the aim of having a working application at the end of Sprint 2.
 For the estimation process of user stories we make again usage of planningpoker.com as the team prefers this “easy-to-use” tool. During our second estimation process we had the situation in which the estimated story points differs strongly from one team member to another. In this case the team members shortly explains how the understood and interpreted the user story. It turned out that team members misinterpreted the user stories. With having this discussion all team members got the same understanding of the specific functionality and scope of a user story. After the alignment the team members adjusted their estimations.
 Beside this need for discussion the team estimated most of the user stories with very similar story points. This fact shows the increase within the effort estimation for each team member in comparison to Sprint 1 planning. Over the short time of two Sprint planning the team received a better understanding and feeling for the estimation with story points.
 

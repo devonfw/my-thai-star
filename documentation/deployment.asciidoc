@@ -7,7 +7,7 @@ The main deployment tool used for *My Thai Star* is be *Docker*.
 
 image::images/ci/deployment/docker.png[, link="https://www.docker.com/"]
 
-It is a tool to run application in isolated environments. Those _isolated environments_ will be what we call *Docker containers*. For instance, it won't be necessary any installation of *nginx* or *Apache tomcat* or anything necessary to deploy, because there will be some containers that actually _have_ those technologies inside.
+It is a tool to run application in isolated environments. Those _isolated environments_ will be what we call *Docker containers*. For instance, it won't be necessary any installation of *Nginx* or *Apache tomcat* or anything necessary to deploy, because there will be some containers that actually _have_ those technologies inside.
 
 == Where Docker containers will be running?
 
@@ -19,12 +19,12 @@ This external server will be located in https://mts-devonfw-core.cloud.okteto.ne
 
 3 Docker containers are being used for the deployment of My Thai Star:
 
-1. **nginx** for the Reverse Proxy
+1. **Nginx** for the Reverse Proxy
 2. **tomcat** for the Java Server
-3. **nginx** for the Angular Client
+3. **Nginx** for the Angular Client
 
 The usage of the **Reverse Proxy** will allow the client to call via `/api` every single Java Server's REST operation. Moreover, there will only be 1 port in usage in the remote Docker host, the one mapped for the Reverse Proxy: `8080`. 
-Besides the deployment itself using **nginx** and **tomcat**, both client and server are previously built using **nodejs** and **maven** images. Artifacts produced by them will be pasted in servers' containers using multi-stage docker builds. It will all follow this schema:
+Besides the deployment itself using **Nginx** and **tomcat**, both client and server are previously built using **NodeJS** and **maven** images. Artifacts produced by them will be pasted in servers' containers using multi-stage docker builds. It will all follow this schema:
 
 image::https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png[, link="https://user-images.githubusercontent.com/20857839/36028242-8998f41c-0d9e-11e8-93b3-6bfe50152bf8.png"]
 

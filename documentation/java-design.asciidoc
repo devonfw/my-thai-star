@@ -9,7 +9,7 @@ The Java backend for My Thai Star application is going to be based on:
 
 - *DEVON4J* as the Java framework
 - *Devonfw* as the Development environment
-- *Cobigen* as code generation tool
+- *CobiGen* as code generation tool
 
 To know more details about the above technologies please visit the following documentation:
 
@@ -17,7 +17,7 @@ To know more details about the above technologies please visit the following doc
 
 - https://github.com/devonfw/devon/wiki[Devonfw]
 
-- https://github.com/devonfw/cobigen/wiki[Cobigen]
+- https://github.com/devonfw/cobigen/wiki[CobiGen]
 
 == Basic architecture details
 
@@ -61,14 +61,14 @@ As _common components_ (that don't exactly represent an application's area but p
 
 Other components:
 
-- Security (will manage the access to the _private_ part of the application using a https://jwt.io/[jwt] implementation).
+- Security (will manage the access to the _private_ part of the application using a https://jwt.io/[JWT] implementation).
 
 - Twitter integration: planned as a _Microservice_ will provide the twitter integration needed for some specific functionalities of the application. 
 
 
 === Layers
 
-- https://github.com/devonfw/devon4j/wiki/guide-service-layer[Service Layer]: this layer will expose the REST api to exchange information with the client applications.
+- https://github.com/devonfw/devon4j/wiki/guide-service-layer[Service Layer]: this layer will expose the REST API to exchange information with the client applications.
 
 - https://github.com/devonfw/devon4j/wiki/guide-logic-layer[Logic Layer]: the layer in charge of hosting the business logic of the application.
 
@@ -193,7 +193,7 @@ Following the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventi
 
 You can find all the details for the services implementation in the https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
 
-=== Service api
+=== Service API
 
 The _api.rest_ package in the _service_ layer of a _component_ will store the definition of the service by a  _Java interface_. In this definition of the service we will set-up the _endpoints_ of the service, the type of data expected and returned, the _HTTP_ method for each endpoint of the service and other configurations if needed.
 
@@ -301,17 +301,17 @@ To get more details about _pagination_, _data base security, _concurrency contro
 
 For the _Authentication_ and _Authorization_ the app will implement the https://jwt.io/[json web token] protocol.
 
-=== Jwt basics
+=== JWT basics
 
-- A user will provide a username / password combination to our auth server.
+- A user will provide a username / password combination to our Auth server.
 
-- The auth server will try to identify the user and, if the credentials match, will issue a token.
+- The Auth server will try to identify the user and, if the credentials match, will issue a token.
 
 - The user will send the token as the _Authorization_ header to access resources on server protected by JWT Authentication.
 
 image::images/java/jwt_schema.png[, link="images/java/jwt_schema.png"]
 
-=== Jwt implementation details
+=== JWT implementation details
 
 The _Json Web Token_ pattern will be implemented based on the https://docs.spring.io/spring-security/site/docs/4.0.x/reference/htmlsingle/[_Spring Security_] framework that is provided by default in the _Devon4j_ projects.
 
@@ -342,7 +342,7 @@ In the same `_HttpSecurity_` object we will set up the filter for the rest of th
 http.[...].addFilterBefore(new `JWTAuthenticationFilter()`, UsernamePasswordAuthenticationFilter.class);
 ----
 
-Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder Auth)` method we will create:
 
 - user: _waiter_
 - password: _waiter_
@@ -359,7 +359,7 @@ auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waite
 
 ==== Token set up
 
-Following the https://jwt.io/introduction/[official documentation] the implementation details for the MyThaiStar's jwt will be:
+Following the https://jwt.io/introduction/[official documentation] the implementation details for the MyThaiStar's JWT will be:
 
 * _Secret_: Used as part of the signature of the token, acting as a private key. For the showcase purposes we will use simply `"ThisIsASecret"`. 
 
@@ -372,7 +372,7 @@ Following the https://jwt.io/introduction/[official documentation] the implement
 * The _claims_ are the content of the _payload_ of the token. The _claims_ are statements about the user, so we will include the user info in this section.
 
   ** _subject_: "sub". The username.
-  ** _issuer_: `"iss"`. Who creates the token. We could use the _url_ of our service but, as this is a showcase app, we simply will use `"MyThaiStarApp"`
+  ** _issuer_: `"iss"`. Who creates the token. We could use the URL of our service but, as this is a showcase app, we simply will use `"MyThaiStarApp"`
   ** _expiration date_: "exp". Defines when the token expires.
   ** _creation date_: `"iat"`. Defines when the token has been created.
   ** _scope_: "scope". Array of strings to store the user roles.
