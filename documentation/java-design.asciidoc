@@ -88,7 +88,7 @@ As it is explained in the `https://github.com/devonfw/devon4j/wiki/guide-depende
 
 image::images/java/dependency_injection.png[, link="images/java/dependency_injection.png"]
 
-- Separation of API and implementation: Inside each layer we will separate the elements in different packages: `_api_` and `_impl_`. The `_api_` will store the `_interface_` with the methods definition and inside the _impl_ we will store the class that implements the `_interface_`.
+- Separation of API and implementation: Inside each layer we will separate the elements in different packages: `_api_` and `_impl_`. The `_api_` will store the `_interface_` with the methods definition and inside the `_impl_` we will store the class that implements the `_interface_`.
 
 image::images/java/layer_api_impl.png[, link="images/java/layer_api_impl.png"]
 
@@ -242,7 +242,7 @@ You can see the Devon4j conventions for REST services https://github.com/devonfw
 
 == Logic layer
 
-In the _logic_ layer we will locate all the _business logic_ of the application. We will keep the same schema as we have done for the _service_ layer, having an `_api_` package with the definition of the methods and a _impl_ package for the implementation.
+In the _logic_ layer we will locate all the _business logic_ of the application. We will keep the same schema as we have done for the _service_ layer, having an `_api_` package with the definition of the methods and a `_impl_` package for the implementation.
 
 Also, inside the `_api_` package, a _to_ package will be the place to store the `https://github.com/devonfw/devon4j/wiki/guide-transferobject[_transfer objects_]` needed to pass data through the layers of the component.
 
@@ -259,7 +259,7 @@ public interface Dishmanagement {
 }
 ----
 
-The logic _impl_ class:
+The logic `_impl_` class:
 
 [source, java]
 ----
@@ -289,7 +289,7 @@ Also, the _logic_ layer is the place to add validation for _Authorization_ based
 
 The data-access layer is responsible for managing the connections to access and process data. The mapping between java objects to a relational database is done in _Devon4j_ with the https://spring.io/projects/spring-data-jpa[spring-data-jpa]. 
 
-As in the previous layers, the _data-access_ layer will have both `_api_` and _impl_ packages. However, in this case, the implementation will be slightly different. The `_api_` package will store the _component_ main _entities and, inside the `_api_` package, another `_api.repo_` package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
+As in the previous layers, the _data-access_ layer will have both `_api_` and `_impl_` packages. However, in this case, the implementation will be slightly different. The `_api_` package will store the _component_ main _entities and, inside the `_api_` package, another `_api.repo_` package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
 
 For queries we will differentiate between _static queries_ (that will be located in a mapped file) and _dynamic queries_ (implemented with http://www.querydsl.com/[QueryDsl]). You can find all the details about how to manage queries with _Devon4j_ https://github.com/devonfw/devon4j/wiki/guide-jpa-query[here]. 
 
@@ -324,7 +324,7 @@ List of _unsecured resources_:
 - `_/services/rest/dishmanagement/**_`: to allow anonymous users to see the dishes info in the _menu_ section.
 - `_/services/rest/ordermanagement/v1/order_`: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
 - `_/services/rest/bookingmanagement/v1/booking_`: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
-- `_/services/rest/bookingmanagement/v1/booking/cancel/**_`: to allow cancelling a booking from an email. Only the _booking token_ is needed.
+- `_/services/rest/bookingmanagement/v1/booking/cancel/**_`: to allow canceling a booking from an email. Only the _booking token_ is needed.
 - `_/services/rest/bookingmanagement/v1/invitedguest/accept/**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
 - `_/services/rest/bookingmanagement/v1/invitedguest/decline/**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 

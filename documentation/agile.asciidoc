@@ -34,7 +34,7 @@ The team decided that the backlog refinement meeting is part of the Sprint Plann
 
 == 1.3 Establish Product Backlog
 
-For the My Thai Stair project the team decided on using the JIRA agile documentation which is one of the widely used agile tools. JIRA is equipped with several of useful tools regarding the agile software development (e.g. Scrum-Board). One of the big advantages of JIRA are the extensive configuration and personalization possibilities.
+For the My Thai Stair project the team decided on using the JIRA agile documentation which is one of the widely used agile tools. JIRA is equipped with several of useful tools regarding the agile software development (e.g. Scrum-Board). One of the big advantages of JIRA are the extensive configuration and personalisation possibilities.
 With having a list of the Epics and User Stories for the My Thai Star development in GitHub, the team transferred the User Stories into the JIRA backlog as it is shown in the screenshot below. All User Stories are labeled colorfully with the related Epic which shapes the backlog in clearly manner.
 
 .Screenshot of the JIRA backlog during Sprint 2
