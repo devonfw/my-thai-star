@@ -58,7 +58,7 @@ describe('MenuComponent', () => {
 });
 ----
 
-First we declare the component to be tested and a Fixture object, then, we configure the `testingModule` right in the same way we could configure the MenuModule with the difference here that tests always have to use the mock backend because we do not want to really depend on a server to test our components.
+First we declare the component to be tested and a Fixture object, then, we configure the `testingModule` right in the same way we could configure the MenuModule with the difference here that tests always have to use the mock back-end because we do not want to really depend on a server to test our components.
 
 Once configured the test module, we have to prepare the context of the test, in this case we create the component, that is exactly what is going on in the `beforeEach()` function.
 

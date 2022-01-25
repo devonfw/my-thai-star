@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The NodeJS backend for My Thai Star application is going to be based on:
+The NodeJS back-end for My Thai Star application is going to be based on:
 
  - *Serverless* as serverless framework
  - *devon4node* as data access layer framework
@@ -58,7 +58,7 @@ To give service to the defined _User Stories_ we will need to implement the foll
 - provide the _current user_ data (see the _Security_ section)
 
 
-In order to be compatible with the other backend implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
+In order to be compatible with the other back-end implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
 
 - (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 

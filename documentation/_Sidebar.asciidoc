@@ -8,7 +8,7 @@
 *** Server Side
 **** link:java-design.asciidoc[Java design]
 **** link:net-design.asciidoc[.NET design]
-**** link:nodejs-design.asciidoc[Node.js design]
+**** link:nodejs-design.asciidoc[NodeJS design]
 **** link:serverless-design.asciidoc[Serverless design]
 **** link:graphql-design.asciidoc[GraphQL design]
 *** Client Side
@@ -20,7 +20,7 @@
 *** Server Side
 **** link:java-testing.asciidoc[Java testing]
 **** link:net-testing.asciidoc[.NET testing]
-**** link:nodejs-testing.asciidoc[Node.js testing]
+**** link:nodejs-testing.asciidoc[NodeJS testing]
 **** link:graphql-testing.asciidoc[GraphQL testing]
 *** Client Side
 **** link:angular-testing.asciidoc[Angular testing]

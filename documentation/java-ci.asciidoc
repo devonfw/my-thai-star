@@ -122,14 +122,14 @@ environment {
 ----
 
 ==== Description
-- *javaDir*: Relative route to java application. In My Thai Star this is the `java/mtsj` folder. The actual directory (.) is also allowed.
+- *java Dir*: Relative route to java application. In My Thai Star this is the `java/mtsj` folder. The actual directory (.) is also allowed.
 +
 image::images/ci/java/java_directory.png[, link="java_directory.png"]
-- *sonarEnv*: Name of the sonarQube environment. SonarQube is the default value for PL.
-- *globalSettingsId*: The id of the global settings file. `MavenSettings` is the default value for PL.
+- *sonar Env*: Name of the sonarQube environment. SonarQube is the default value for PL.
+- *global Settings Id*: The id of the global settings file. `MavenSettings` is the default value for PL.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
-- *mavenInstallation*: The name of the maven tool. Maven3 is the default value for PL.
+- *maven Installation*: The name of the maven tool. Maven3 is the default value for PL.
 +
 image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]
 

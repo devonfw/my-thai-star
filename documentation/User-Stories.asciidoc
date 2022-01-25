@@ -37,7 +37,7 @@ As a guest I want to create a reservation by entering date and time and number o
 
 
 ===== Wireframes
-see realtime-board
+see real-time-board
 
 === US: handle invite
 

@@ -21,15 +21,15 @@ To know more details about the above technologies please visit the following doc
 
 == Basic architecture details
 
-Following the DEVON4J conventions the Java My Thai Star backend is going to be developed dividing the application in _Components_ and using a three layers architecture.
+Following the DEVON4J conventions the Java My Thai Star back-end is going to be developed dividing the application in _Components_ and using a three layers architecture.
 
 === Project modules
 
-Using the DEVON4J approach for the Java backend project we will have a structure of a _Maven_ project formed by three projects
+Using the DEVON4J approach for the Java back-end project we will have a structure of a _Maven_ project formed by three projects
 
 image::images/java/project_modules.png[, link="images/java/project_modules.png"]
 
-- _api_: Stores all the REST interfaces and corresponding Request/Response objects.
+- `_api_`: Stores all the REST interfaces and corresponding Request/Response objects.
 
 - _core_: Stores all the logic and functionality of the application.
 
@@ -49,13 +49,13 @@ As _main components_ we will find:
 
 - `_Ordermanagement_`: This component handles the process to order dishes (related to bookings). A user (as a host or as a guest) can create orders (that contain dishes) or cancel an existing one. The users with waiter role can see all ordered orders.
 
-- `_Dishmanagement_`: This component groups the logic related to the menu (dishes) view. Its main feature is to provide the client with the data of the available dishes but also can be used by other components (Ordermanagement) as a data provider in some processes.
+- `_Dishmanagement_`: This component groups the logic related to the menu (dishes) view. Its main feature is to provide the client with the data of the available dishes but also can be used by other components `(Ordermanagement)` as a data provider in some processes.
 
 - `_Usermanagement_`: Takes care of the User Profile management, allowing to create and update the data profiles.
 
 As _common components_ (that don't exactly represent an application's area but provide functionalities that can be used by the _main components_):
 
-- `_Imagemanagement_`: Manages the images of the application. In a first approach the` _Dishmanagement_` component and the _Usermanagement_ component will have an image as part of its data. The `_Imagemanagement_` component will expose the functionality to store and retrieve this kind of data.
+- `_Imagemanagement_`: Manages the images of the application. In a first approach the` _Dishmanagement_` component and the `_Usermanagement_` component will have an image as part of its data. The `_Imagemanagement_` component will expose the functionality to store and retrieve this kind of data.
 
 - `_Mailservice_`: with this service we will provide the functionality for sending email notifications. This is a shared service between different app components such as `_bookingmanagement_` or `_ordercomponent_`.
 
@@ -78,7 +78,7 @@ This architecture is going to be reflected dividing each component of the applic
 
 === Component structure
 
-Each one of the components defined previously are going to be structured using the _three-layers_ architecture. In each case we will have a _service_ package, a _logic_ package and a _dataaccess_ package to fit the layers definition.
+Each one of the components defined previously are going to be structured using the _three-layers_ architecture. In each case we will have a _service_ package, a _logic_ package and a `_dataaccess_` package to fit the layers definition.
 
 image::images/java/component_structure.png[, link="images/java/component_structure.png"]
 
@@ -88,7 +88,7 @@ As it is explained in the `https://github.com/devonfw/devon4j/wiki/guide-depende
 
 image::images/java/dependency_injection.png[, link="images/java/dependency_injection.png"]
 
-- Separation of API and implementation: Inside each layer we will separate the elements in different packages:` _api_` and `_impl_`. The `_api_` will store the `_interface_` with the methods definition and inside the _impl_ we will store the class that implements the `_interface_`.
+- Separation of API and implementation: Inside each layer we will separate the elements in different packages: `_api_` and `_impl_`. The `_api_` will store the `_interface_` with the methods definition and inside the _impl_ we will store the class that implements the `_interface_`.
 
 image::images/java/layer_api_impl.png[, link="images/java/layer_api_impl.png"]
 
@@ -195,7 +195,7 @@ You can find all the details for the services implementation in the https://gith
 
 === Service API
 
-The _api.rest_ package in the _service_ layer of a _component_ will store the definition of the service by a  _Java interface_. In this definition of the service we will set-up the _endpoints_ of the service, the type of data expected and returned, the _HTTP_ method for each endpoint of the service and other configurations if needed.
+The `_api.rest_` package in the _service_ layer of a _component_ will store the definition of the service by a  _Java interface_. In this definition of the service we will set-up the _endpoints_ of the service, the type of data expected and returned, the _HTTP_ method for each endpoint of the service and other configurations if needed.
 
 [source, java]
 ----
@@ -215,7 +215,7 @@ public interface DishmanagementRestService {
 
 === Service impl
 
-Once the service _api_ is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the `_impl.rest_` package and implement the `_RestService interface_`.
+Once the service `_api_` is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the `_impl.rest_` package and implement the `_RestService interface_`.
 
 [source, java]
 ----
@@ -242,13 +242,13 @@ You can see the Devon4j conventions for REST services https://github.com/devonfw
 
 == Logic layer
 
-In the _logic_ layer we will locate all the _business logic_ of the application. We will keep the same schema as we have done for the _service_ layer, having an _api_ package with the definition of the methods and a _impl_ package for the implementation.
+In the _logic_ layer we will locate all the _business logic_ of the application. We will keep the same schema as we have done for the _service_ layer, having an `_api_` package with the definition of the methods and a _impl_ package for the implementation.
 
-Also, inside the _api_ package, a _to_ package will be the place to store the https://github.com/devonfw/devon4j/wiki/guide-transferobject[_transfer objects_] needed to pass data through the layers of the component.
+Also, inside the `_api_` package, a _to_ package will be the place to store the `https://github.com/devonfw/devon4j/wiki/guide-transferobject[_transfer objects_]` needed to pass data through the layers of the component.
 
 image::images/java/logic_layer.png[, link="images/java/logic_layer.png"]
 
-The logic _api_ definition:
+The logic `_api_` definition:
 [source, java]
 ----
 public interface Dishmanagement {
@@ -289,7 +289,7 @@ Also, the _logic_ layer is the place to add validation for _Authorization_ based
 
 The data-access layer is responsible for managing the connections to access and process data. The mapping between java objects to a relational database is done in _Devon4j_ with the https://spring.io/projects/spring-data-jpa[spring-data-jpa]. 
 
-As in the previous layers, the _data-access_ layer will have both _api_ and _impl_ packages. However, in this case, the implementation will be slightly different. The _api_ package will store the _component_ main _entities and, inside the _api_ package, another _api.repo_ package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
+As in the previous layers, the _data-access_ layer will have both `_api_` and _impl_ packages. However, in this case, the implementation will be slightly different. The `_api_` package will store the _component_ main _entities and, inside the `_api_` package, another _api.repo_ package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
 
 For queries we will differentiate between _static queries_ (that will be located in a mapped file) and _dynamic queries_ (implemented with http://www.querydsl.com/[QueryDsl]). You can find all the details about how to manage queries with _Devon4j_ https://github.com/devonfw/devon4j/wiki/guide-jpa-query[here]. 
 
@@ -342,7 +342,7 @@ In the same `_HttpSecurity_` object we will set up the filter for the rest of th
 http.[...].addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 ----
 
-Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the _inMemoryAuthentication_ of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
 
 - user: _waiter_
 - password: _waiter_
