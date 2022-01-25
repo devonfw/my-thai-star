@@ -164,12 +164,12 @@ Based on the _JSON web token_ approach, we will implement two methods in order t
 
 List of _unsecured resources_:
 
-- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
-- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
-- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
-- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+- `_/services/rest/dishmanagement/**_`: to allow anonymous users to see the dishes info in the _menu_ section.
+- `_/services/rest/ordermanagement/v1/order_`: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- `_/services/rest/bookingmanagement/v1/booking_`: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- `_/services/rest/bookingmanagement/v1/booking/cancel/**_`: to allow cancelling a booking from an email. Only the _booking token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/accept/**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/decline/**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 
 To configure the _login_ we will create a handler called login and then we will use the method _code_ to verify the user and generate the token.
 

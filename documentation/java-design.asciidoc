@@ -321,12 +321,12 @@ Based on the _Spring Security_ approach, we will implement a class extending _We
 
 List of _unsecured resources_:
 
-- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
-- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
-- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
-- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+- `_/services/rest/dishmanagement/**_`: to allow anonymous users to see the dishes info in the _menu_ section.
+- `_/services/rest/ordermanagement/v1/order_`: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- `_/services/rest/bookingmanagement/v1/booking_`: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- `_/services/rest/bookingmanagement/v1/booking/cancel/**_`: to allow cancelling a booking from an email. Only the _booking token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/accept/**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/decline/**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 
 To configure the _login_ we will set up the _HttpSecurity_ object in the _configure_ method of the class. We will define a _JWTLoginFilter_ class that will handle the requests to the `/login` _endpoint_.
 
