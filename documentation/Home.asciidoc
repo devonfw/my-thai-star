@@ -49,4 +49,4 @@ toc::[]
 ==  CI/CD
 - link:production-line-ci.asciidoc[Production Line CI]
 - link:deployment.asciidoc[Deployment]
-- link:nkaas.asciidoc[Deployment on nkaas]
+- link:nkaas.asciidoc[Deployment on nKaaS]

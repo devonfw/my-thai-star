@@ -16,7 +16,7 @@ However, only a folder is relevant to this topic: *MTS*
 
 We'll have a closer look at the pipeline configuration script and its stages:
 
-*Note*: Have a look at this wiki over `https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline`[here] to get a basic idea on how to write pipeline scripts.
+*Note*: Have a look at this wiki over `https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline[here]` to get a basic idea on how to write pipeline scripts.
 
 . Checking out MyThaiStar form GitHub
 +
