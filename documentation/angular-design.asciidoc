@@ -103,7 +103,7 @@ Data table with all the reservations and a filter to search them, to show more i
 Complete display of data regarding the selected table and its guests.
 
 === Email Management
-As the application send emails to both guests and hosts, we choose an approach based on URL’s where the email contain a button with an URL to a service in the app and a token, front-end read that token and depending on the URL, will redirect to one service or another. For example: 
+As the application send emails to both guests and hosts, we choose an approach based on URL where the email contain a button with an URL to a service in the app and a token, front-end read that token and depending on the URL, will redirect to one service or another. For example: 
 [source]
 ----
 http://localhost:4200/booking/cancel/CB_20170605_8fb5bc4c84a1c5049da1f6beb1968afc

@@ -62,7 +62,7 @@ yarn audit
 ----
 . *SonarQube code analysis*
 +
-The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to sonarQube and wait until sonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
+The script load and execute the tool `sonar-scanner`. This tool is loaded here because it's not used in any other part of the pipeline. The `sonar-scanner` will take all code, upload it to SonarQube and wait until SonarQube send us a response with the quality of our code. If the code do not pass the quality gate, the pipeline will stop at this point.
 . *Build Application*
 +
 The building process of the Angular client would result in a folder called `/dist` in the main Angular's directory. That folder is the one that is going to be served afterwards as an artifact. This process has also been adapted to some Deployment needs. This building script executes the following:
@@ -111,10 +111,10 @@ environment {
     // Name of the custom tool for chrome stable
     chrome = 'Chrome-stable'
 
-    // sonarQube
-    // Name of the sonarQube tool
+    // SonarQube
+    // Name of the SonarQube tool
     sonarTool = 'SonarQube'
-    // Name of the sonarQube environment
+    // Name of the SonarQube environment
     sonarEnv = "SonarQube"
 
     // Nexus
@@ -207,16 +207,16 @@ sh """yarn ${testScript}"""
 - *angular-Dir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
 +
 image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
-- *src-Dir*: Directory where you store the source code. For angular applications the default value is `src`
+- *`srcDir`*: Directory where you store the source code. For angular applications the default value is `src`
 +
 image::images/ci/angular/src_directory.png[, link="src_directory.PNG"]
 - *chrome*: Since you need a browser to run your tests, we must provide one. This variable contains the name of the custom tool for google chrome.
 +
 image::images/ci/angular/chrome_installation.png[, link="chrome_installation.PNG"]
-- *sonar-Tool*: Name of the sonarQube scanner installation.
+- *sonar-Tool*: Name of the SonarQube scanner installation.
 +
 image::images/ci/angular/sonar-scanner.png[, link="sonar-scanner.PNG"]
-- *sonar-Env*: Name of the sonarQube environment. SonarQube is the default value for PL.
+- *sonar-Env*: Name of the SonarQube environment. SonarQube is the default value for PL.
 +
 image::images/ci/angular/sonar-env.png[, link="sonar-env.PNG"]
 - *group-Id*: Group id of the application. It will be used to storage the application in nexus3
@@ -225,8 +225,8 @@ image::images/ci/angular/nexus3_groupid.png[, link="nexus3_groupid.PNG"]
 - *repository-Id*: Id of the nexus3 repository. It must be defined at maven global config file.
 +
 image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
-- *repository-Url*: The URL of the repository.
-- *globalSettings-Id*: The id of the global settings file.
+- *repository URL*: The URL of the repository.
+- *global Settings Id*: The id of the global settings file.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
 - maven Installation: The name of the maven tool.

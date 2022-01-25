@@ -104,8 +104,8 @@ environment {
     // Directory with java project
     javaDir = 'java/mtsj'
 
-    // sonarQube
-    // Name of the sonarQube environment
+    // SonarQube
+    // Name of the SonarQube environment
     sonarEnv = "SonarQube"
 
     // Nexus 3
@@ -125,7 +125,7 @@ environment {
 - *java Dir*: Relative route to java application. In My Thai Star this is the `java/mtsj` folder. The actual directory (.) is also allowed.
 +
 image::images/ci/java/java_directory.png[, link="java_directory.png"]
-- *sonar Env*: Name of the sonarQube environment. SonarQube is the default value for PL.
+- *sonar Env*: Name of the SonarQube environment. SonarQube is the default value for PL.
 - *global Settings Id*: The id of the global settings file. `MavenSettings` is the default value for PL.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]

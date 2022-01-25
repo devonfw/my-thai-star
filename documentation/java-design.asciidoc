@@ -213,7 +213,7 @@ public interface DishmanagementRestService {
 }
 ----
 
-=== Service impl
+=== Service `impl`
 
 Once the service `_api_` is defined we need to implement it using the _Java interface_ as reference. We will add the _service implementation_ class to the `_impl.rest_` package and implement the `_RestService interface_`.
 
@@ -289,7 +289,7 @@ Also, the _logic_ layer is the place to add validation for _Authorization_ based
 
 The data-access layer is responsible for managing the connections to access and process data. The mapping between java objects to a relational database is done in _Devon4j_ with the https://spring.io/projects/spring-data-jpa[spring-data-jpa]. 
 
-As in the previous layers, the _data-access_ layer will have both `_api_` and _impl_ packages. However, in this case, the implementation will be slightly different. The `_api_` package will store the _component_ main _entities and, inside the `_api_` package, another _api.repo_ package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
+As in the previous layers, the _data-access_ layer will have both `_api_` and _impl_ packages. However, in this case, the implementation will be slightly different. The `_api_` package will store the _component_ main _entities and, inside the `_api_` package, another `_api.repo_` package will store the Repositories. The _repository_ interface will extend `DefaultRepository` interface (located in `com.devonfw.module.jpa.dataaccess.api.data` package of http://repo1.maven.org/maven2/com/devonfw/java/starters/devon4j-starter-spring-data-jpa/3.0.0/[devon4j-starter-spring-data-jpa] ).
 
 For queries we will differentiate between _static queries_ (that will be located in a mapped file) and _dynamic queries_ (implemented with http://www.querydsl.com/[QueryDsl]). You can find all the details about how to manage queries with _Devon4j_ https://github.com/devonfw/devon4j/wiki/guide-jpa-query[here]. 
 

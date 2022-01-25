@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The NodeJS backend for My Thai Star application is going to be based on:
+The NodeJS back-end for My Thai Star application is going to be based on:
 
  - *ExpressJS* as the web application framework
  - *devon4node* as data access layer framework
@@ -61,7 +61,7 @@ To give service to the defined _User Stories_ we will need to implement the foll
 - provide the _current user_ data (see the _Security_ section)
 
 
-In order to be compatible with the other backend implementations, we must follow the `https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions]` proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
+In order to be compatible with the other back-end implementations, we must follow the `https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions]` proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
 
 - (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 
@@ -147,7 +147,7 @@ Refer to link:java-design.asciidoc#jwt-basics[JWT basics] for more information.
 
 === JWT implementation details
 
-The _Json Web Token_ pattern will be implemented based on the https://github.com/auth0/node-jsonwebtoken[_JSON web token_] library available on npm.
+The _Json Web Token_ pattern will be implemented based on the `https://github.com/auth0/node-jsonwebtoken[_JSON web token_]` library available on npm.
 
 ==== Authentication
 
@@ -162,14 +162,14 @@ List of _unsecured resources_:
 - `_/services/rest/bookingmanagement/v1/invitedguest/accept/\**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
 - `_/services/rest/bookingmanagement/v1/invitedguest/decline/\**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 
-To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method _auth_ for handle the requests to the /login endpoint.
+To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method `_auth_` for handle the requests to the /login endpoint.
 
 [source, JavaScript]
 ----
 app.post('/mythaistar/login', auth.auth);
 ----
 
-To verify the presence of the _Authorization token_ in the headers, we will register in the express the _Authentication.registerAuthentication_ middleware. This middleware will check if the token is correct, if so, it will place the user in the request and continue to process it. If the token is not correct it will continue processing the request normally.
+To verify the presence of the _Authorization token_ in the headers, we will register in the express the `_Authentication.registerAuthentication_` middleware. This middleware will check if the token is correct, if so, it will place the user in the request and continue to process it. If the token is not correct it will continue processing the request normally.
 
 [source, JavaScript]
 ----
@@ -202,7 +202,7 @@ Following `the https://jwt.io/introduction/[official documentation]` the impleme
 
 ==== Current User request
 
-To provide to the client with the current user data our application should expose a service to return the user details. In this case the _Authentication_ has a method called _getCurrentUser_ which will return the user data. We only need register it at express.
+To provide to the client with the current user data our application should expose a service to return the user details. In this case the _Authentication_ has a method called `_getCurrentUser_` which will return the user data. We only need register it at express.
 
 [source, JavaScript]
 ----
@@ -219,7 +219,7 @@ We need to secure three services, that only should be accessible for users with 
 
 - (POST) `/mythaistar/services/rest/ordermanagement/v1/order/filter`.
 
-To ensure this, the _Authorization_ class has the _securizedEndpoint_ method that guarantees access based on the role. This method can be used as middleware in secure services. As the role is included in the token, once validated we will have this information in the request and the middleware can guarantee access or return a 403 error.
+To ensure this, the _Authorization_ class has the `_securizedEndpoint_` method that guarantees access based on the role. This method can be used as middleware in secure services. As the role is included in the token, once validated we will have this information in the request and the middleware can guarantee access or return a 403 error.
 
 [source, JavaScript]
 ----

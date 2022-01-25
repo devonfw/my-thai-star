@@ -17,7 +17,7 @@ Deploys on the server the Java part of My Thai Star.
 
 === Parameters
 
-- *registry Url*: The URL to the docker registry where the image is stored.
+- *registry URL*: The URL to the docker registry where the image is stored.
 - *registry Credentials Id*: Credentials to publish/download images from registry.
 - *docker Network*: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the docker Network.
 - *VERSION*: The version that you can to deploy.
@@ -33,9 +33,9 @@ Deploys on the server the Angular part of My Thai Star
 
 === Parameters
 
-- *registry Url*: The URL to the docker registry where the image is stored.
+- *registry URL*: The URL to the docker registry where the image is stored.
 - *registry Credentials Id*: Credentials to publish/download images from registry.
-- *docker Network*: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the dockerNetwork.
+- *docker Network*: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the docker Network.
 - *VERSION*: The version that you can to deploy.
 
 === Pipeline steps
@@ -51,11 +51,11 @@ The MyThaiStar_REVERSE-PROXY_DEPLOY pipeline will deploy the My Thai Star revers
 
 === Parameters
 
-- *registry Url*: The URL to the docker registry where the image is stored.
+- *registry URL*: The URL to the docker registry where the image is stored.
 - *registry Credentials Id*: Credentials to publish/download images from registry.
 - *build-Reverse-Proxy*: If yes, it will build and publish a new version of reverse-proxy.
 - *port*: Port of the MTS application. You must ensure that those port is available in the deployment machine.
-- *docker Network*: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the port and the dockerNetwork.
+- *docker Network*: Network of your My Thai Star application. You can deploy several versions of MTS in the same server by changing the port and the docker Network.
 - *VERSION*: The version that you can to deploy.
 
 === Pipeline steps
