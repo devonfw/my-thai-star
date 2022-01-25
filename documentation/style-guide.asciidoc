@@ -7,7 +7,7 @@ image::images/mts_styleguide.png[, link="images/mts_styleguide.png"]
 
 = Low and high fidelity wireframes
 
-History of mockup designs for My Thai Star.
+History of Mockup designs for My Thai Star.
 
 * link:resources/MTS_Wireframes_Low_Fidelity.pdf[MTS Wireframes Low Fidelity]
 * link:resources/MTS_Wireframes_High_Fidelity_(Sprint_1).pdf[MTS Wireframes High Fidelity (Sprint 1)]

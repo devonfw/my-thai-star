@@ -15,7 +15,7 @@ toc::[]
 === Server Side
 - link:java-design.asciidoc[Java design]
 - link:net-design.asciidoc[.NET design]
-- link:nodejs-design.asciidoc[Node.js design (deprecated)]
+- link:nodejs-design.asciidoc[NodeJS design (deprecated)]
 - link:graphql-design.asciidoc[GraphQL design]
 
 === Client Side
@@ -33,7 +33,7 @@ toc::[]
 === Server Side
 - link:java-testing.asciidoc[Java testing]
 - link:net-testing.asciidoc[.NET testing]
-- link:nodejs-testing.asciidoc[Node.js testing]
+- link:nodejs-testing.asciidoc[NodeJS testing]
 - link:graphql-testing.asciidoc[GraphQL testing]
 
 === Client Side

@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The Node.js backend for My Thai Star application is going to be based on:
+The NodeJS backend for My Thai Star application is going to be based on:
 
  - *Serverless* as serverless framework
  - *devon4node* as data access layer framework
@@ -24,7 +24,7 @@ This structure can be shown in the following example image:
 image::images/serverless/folder_organization.png[, link="images/serverless/folder_organization.png"]
 
 * handlers - All function handlers following devon4node structure
-* src
+* `src`
 ** model - Folder with all data model
 ** utils - Folder with all utils like classes and functions
 ** _config.ts_ - File with server configs
@@ -33,7 +33,7 @@ image::images/serverless/folder_organization.png[, link="images/serverless/folde
 
 == Layers
 
-- Service Layer: this layer will expose the REST api to exchange information with the client applications.
+- Service Layer: this layer will expose the REST API to exchange information with the client applications.
 - Logic Layer: the layer in charge of hosting the business logic of the application.
 - Data Access Layer: the layer to communicate with the data base.
 
@@ -79,7 +79,7 @@ In order to be compatible with the other backend implementations, we must follow
 
 You can find all the details for the services implementation in the https://github.com/devonfw/my-thai-star/blob/develop/swagger/mythaistar.yaml[Swagger definition] included in the My Thai Star project on Github.
 
-To treat these http services, we must define the handlers following the https://github.com/devonfw/devon4node/wiki[devon4node convention]:
+To treat these Http services, we must define the handlers following the https://github.com/devonfw/devon4node/wiki[devon4node convention]:
 
 - (handlers/Http/POST/dish-search-handler) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 
@@ -101,7 +101,7 @@ These handlers will define the behavior for each service and use the logical lay
 
 An example of handler definition:
 
-[source, javascript]
+[source, JavaScript]
 ----
 oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
 export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {
@@ -140,21 +140,21 @@ The default integration for a handler is _lambda_. See https://github.com/devonf
 If you change the integration to lambda-proxy, you must take care that in this case the data will not be parsed. You must do JSON.parse explicitly 
 ====
 
-After defining all the handlers, we must execute the _fun_ command, which will generate the files serverless.yml and webpack.config.js. 
+After defining all the handlers, we must execute the _fun_ command, which will generate the files serverless.yml and `webpack.config.js`. 
 
 === Logic layer and Data access layer
 
-link:nodejs-design.asciidoc#logic-layer-and-data-access-layer[See in nodejs section]
+link:NodeJS-design.asciidoc#logic-layer-and-data-access-layer[See in NodeJS section]
 
 == Security with Json Web Token
 
 For the _Authentication_ and _Authorization_ the app will implement the https://jwt.io/[json web token] protocol.
 
-=== Jwt basics
+=== JWT basics
 
-Refer to link:java-design.asciidoc#jwt-basics[Jwt basiscs] for more information.
+Refer to link:java-design.asciidoc#jwt-basics[JWT basics] for more information.
 
-=== Jwt implementation details
+=== JWT implementation details
 
 The _Json Web Token_ pattern will be implemented based on the https://github.com/auth0/node-jsonwebtoken[_JSON web token_] library available on npm.
 
@@ -173,7 +173,7 @@ List of _unsecured resources_:
 
 To configure the _login_ we will create a handler called login and then we will use the method _code_ to verify the user and generate the token.
 
-[source, javascript]
+[source, JavaScript]
 ----
 app.post(oasp4fn.config({ integration: 'lambda-proxy', path: '/mythaistar/login' });
 export async function login(event: HttpEvent, context: Context, callback: Function) {
@@ -196,13 +196,13 @@ We have two default users created in the database:
 
 ==== Token set up
 
-link:nodejs-design.asciidoc#token-set-up[See in nodejs section]
+link:NodeJS-design.asciidoc#token-set-up[See in NodeJS section]
 
 ==== Current User request
 
 To provide the client with the current user data our application should expose a service to return the user details. In order to do this, we must define a handler called current-user-handler. This handler must decode the _Authorization token_ and return the user data.
 
-[source, javascript]
+[source, JavaScript]
 ----
 oasp4fn.config({
     path: '/mythaistar/services/rest/security/v1/currentuser',
@@ -235,7 +235,7 @@ We need to secure three services, that only should be accessible for users with 
 
 To ensure this, we must decode the _Authorization token_ and check the result. As the role is included in the token, once validated we will have this information and can guarantee access or return a 403 error.
 
-[source, javascript]
+[source, JavaScript]
 ----
 oasp4fn.config({ path: '/mythaistar/services/rest/bookingmanagement/v1/booking/search' });
 export async function bookingSearch(event: HttpEvent, context: Context, callback: Function) {
