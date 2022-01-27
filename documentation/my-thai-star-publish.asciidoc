@@ -18,7 +18,7 @@ We'll have a closer look at the pipeline configuration script and its stages:
 
 *Note*: Have a look at this wiki over `https://github.com/devonfw/devon-ci/wiki/guide-devonci-jenkins-pipeline[here]` to get a basic idea on how to write pipeline scripts.
 
-. Checking out my-thai-star form GitHub
+. Checking out MyThaiStar form GitHub
 +
 This stage will check out the source code directly from GitHub:
 +

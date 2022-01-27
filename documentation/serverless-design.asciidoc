@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The NodeJS backend for My Thai Star application is going to be based on:
+The NodeJS back-end for My Thai Star application is going to be based on:
 
  - *Serverless* as serverless framework
  - *devon4node* as data access layer framework
@@ -24,7 +24,7 @@ This structure can be shown in the following example image:
 image::images/serverless/folder_organization.png[, link="images/serverless/folder_organization.png"]
 
 * handlers - All function handlers following devon4node structure
-* src
+* `src`
 ** model - Folder with all data model
 ** utils - Folder with all utils like classes and functions
 ** _config.ts_ - File with server configs
@@ -58,7 +58,7 @@ To give service to the defined _User Stories_ we will need to implement the foll
 - provide the _current user_ data (see the _Security_ section)
 
 
-In order to be compatible with the other backend implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
+In order to be compatible with the other back-end implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
 
 - (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 
@@ -144,7 +144,7 @@ After defining all the handlers, we must execute the _fun_ command, which will g
 
 === Logic layer and Data access layer
 
-link:nodejs-design.asciidoc#logic-layer-and-data-access-layer[See in NodeJS section]
+link:NodeJS-design.asciidoc#logic-layer-and-data-access-layer[See in NodeJS section]
 
 == Security with Json Web Token
 
@@ -164,12 +164,12 @@ Based on the _JSON web token_ approach, we will implement two methods in order t
 
 List of _unsecured resources_:
 
-- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
-- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
-- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
-- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+- `_/services/rest/dishmanagement/**_`: to allow anonymous users to see the dishes info in the _menu_ section.
+- `_/services/rest/ordermanagement/v1/order_`: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- `_/services/rest/bookingmanagement/v1/booking_`: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- `_/services/rest/bookingmanagement/v1/booking/cancel/**_`: to allow canceling a booking from an email. Only the _booking token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/accept/**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/decline/**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 
 To configure the _login_ we will create a handler called login and then we will use the method _code_ to verify the user and generate the token.
 
@@ -196,7 +196,7 @@ We have two default users created in the database:
 
 ==== Token set up
 
-link:nodejs-design.asciidoc#token-set-up[See in NodeJS section]
+link:NodeJS-design.asciidoc#token-set-up[See in NodeJS section]
 
 ==== Current User request
 

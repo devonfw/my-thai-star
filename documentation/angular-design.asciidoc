@@ -39,7 +39,7 @@ List of components that serve as a main view to navigate or components developed
 
 image::images/angular/routes.png[, link="images/angular/routes.png"]
 
-_Note: `no-name-route corresponds to whatever URL the user introduced and does not exist, it redirects to HomeComponent._`
+_Note: no-name-route corresponds to whatever URL the user introduced and does not exist, it redirects to Home-Component._
 
 === Public area
 ==== App Component
@@ -57,16 +57,17 @@ It contains the title, and some other basic functions regarding open and close s
 ===== Footer (only for desktop)
 At the end of the page that shows only when open on desktop.
 
-==== Home Component
+==== Home-Component
 Main view that shows up when the app initializes.
 
-==== Menu Component
+==== Menu-Component
 View where the users can view, filter and select the dishes (with their extras) they want to order it contains a component to each menu entry:
 
 ===== Menu-card
 This component composes all the data of a dish in a card. Component made to display indeterminate number of dishes easily.
 
 ==== Book Table Component
+
 View to make book a table in a given data with a given number of assistants or create a reservation with a number of invitations via email.
 
 ===== Book-table-dialog
@@ -90,6 +91,7 @@ Dialog designed specifically to connect your user account with Twitter.
 === Waiter cockpit area
 Restricted area to workers of the restaurant, here we can see all information about booked tables with the selected orders and the reservations with all the guests and their acceptance or decline of the event.
 
+
 ==== Order Cockpit Component
 Data table with all the booked tables and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
@@ -97,6 +99,7 @@ Data table with all the booked tables and a filter to search them, to show more 
 Complete display of data regarding the selected table and its orders.
 
 ==== Reservation Cockpit Component
+
 Data table with all the reservations and a filter to search them, to show more info about that table you can click on it and open a dialog.
 
 ===== Reservation-dialog
@@ -154,18 +157,19 @@ For responsiveness reasons, the dialogs have to accept a width parameter to adju
 === Equal-validator-directive
 This directive located in the shared folder of `userArea` is used in 2 fields to make sure they have the same value. This directive is used in confirm password fields in register and change password.
 
-== Mock backend
+== Mock Back-end
 
-To develop meanwhile a real back-end is being developed let us to make a more realistic application and to make easier the adaptation when the backend is able to be connected and called. Its structure is as following:
+To develop meanwhile a real back-end is being developed let us to make a more realistic application and to make easier the adaptation when the back-end is able to be connected and called. Its structure is as following:
 
 image::images/angular/back-end.png[, link="images/angular/back-end.png"]
 
 Contains the three main groups of functionalities in the application. Every group is composed by:
 
 * An *interface* with all the methods to implement.
-* A *service* that implements that interface, the main task of this service is to choose between real backend and mock backend depending on an environment variable.
-* *Mock backend service* which implements all the methods declared in the interface using mock data stored in a local file and mainly uses `Lodash` to operate the arrays.
-* *Real backend service* works as Mock backend but in this case the methods call for server rest services through http.
+* A *service* that implements that interface, the main task of this service is to choose between real back-end and mock back-end depending on an environment variable.
+* *Mock back-end service* which implements all the methods declared in the interface using mock data stored in a local file and mainly uses Lodash to operate the arrays.
+* *Real back-end service* works as Mock back-end but in this case the methods call for server rest services through Http.
+
 
 === Booking
 The booking group of functionalities manages the calls to reserve a table with a given time and assistants or with guests, get reservations filtered, accept or decline invitations or cancel the reservation.
@@ -179,6 +183,7 @@ The dishes group of functionalities manages the calls to get and filter dishes.
 === Login
 Login manages the `userArea` logic: login, register and change password.
 
+
 == Security
 
 My Thai Star security is composed by two main security services:
@@ -186,7 +191,7 @@ My Thai Star security is composed by two main security services:
 === Auth-guard
 
 Front-end security approach, this service implements an interface called `CanActivate` that comes from angular/router module. `CanActivate` interface forces you to implement a `canActivate()` function which returns a Boolean.
-This service checks with the AuthService stored data if the user is logged and if he has enough permission to access the waiter cockpit. This prevents that a forbidden user could access to waiter cockpit just by editing the URL in the browser.
+This service checks with the Auth-Service stored data if the user is logged and if he has enough permission to access the waiter cockpit. This prevents that a forbidden user could access to waiter cockpit just by editing the URL in the browser.
 
 === JWT
 

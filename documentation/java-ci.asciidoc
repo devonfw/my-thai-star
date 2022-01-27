@@ -7,7 +7,7 @@ The Java server-side of My Thai Star is an *devon4j*-based application. As long 
 
 == Pipeline
 
-This Pipeline is called `*MyThaiStar_SERVER_BUILD*`, and it is located exactly in the same PL instance's folder than `*MyThaiStar_FRONTEND_BUILD*`. Let's see how the Pipeline's flow behaves.
+This Pipeline is called *MyThaiStar_SERVER_BUILD*, and it is located exactly in the same PL instance's folder than `*MyThaiStar_FRONTEND_BUILD*`. Let's see how the Pipeline's flow behaves.
 
 image::images/ci/java/java_pipeline_flow.PNG[, link="java_pipeline_flow.PNG"] 
 
@@ -116,20 +116,20 @@ environment {
 
     // Docker
     dockerRegistryCredentials = 'nexus-api'
-    dockerRegistryProtocol = 'https://'
+    dockerRegistryProtocol = 'https://\'
     dockerTool = 'docker-global
 }
 ----
 
 ==== Description
-- `*javaDir*`: Relative route to java application. In My Thai Star this is the java/mtsj folder. The actual directory (.) is also allowed.
+- *java Dir*: Relative route to java application. In My Thai Star this is the `java/mtsj` folder. The actual directory (.) is also allowed.
 +
 image::images/ci/java/java_directory.png[, link="java_directory.png"]
-- `*sonarEnv*`: Name of the SonarQube environment. SonarQube is the default value for PL.
-- `*globalSettingsId*`: The id of the global settings file. `MavenSettings` is the default value for PL.
+- *sonar Env*: Name of the SonarQube environment. SonarQube is the default value for PL.
+- *global Settings Id*: The id of the global settings file. `MavenSettings` is the default value for PL.
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
-- `*mavenInstallation*`: The name of the maven tool. Maven3 is the default value for PL.
+- *maven Installation*: The name of the maven tool. Maven3 is the default value for PL.
 +
 image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]
 

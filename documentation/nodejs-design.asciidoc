@@ -5,7 +5,7 @@ toc::[]
 
 == Introduction
 
-The NodeJS backend for My Thai Star application is going to be based on:
+The NodeJS back-end for My Thai Star application is going to be based on:
 
  - *ExpressJS* as the web application framework
  - *devon4node* as data access layer framework
@@ -24,7 +24,7 @@ This structure can be shown in the following example image:
 image::images/nodejs/folder_organization.png[, link="images/nodejs/folder_organization.png"]
 
 * public - All files which be exposed on the server directly
-* src
+* `src`
 ** database folder - Folder with scripts to create/delete/seed the database
 ** model - Folder with all data model
 ** routes - Folder with all ExpressJS routers
@@ -61,7 +61,7 @@ To give service to the defined _User Stories_ we will need to implement the foll
 - provide the _current user_ data (see the _Security_ section)
 
 
-In order to be compatible with the other backend implementations, we must follow the https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions] proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
+In order to be compatible with the other back-end implementations, we must follow the `https://github.com/devonfw/devon4j/wiki/guide-rest[naming conventions]` proposed for _Devon4j_ applications. We will define the following _end points_ for the listed services.
 
 - (POST) `/mythaistar/services/rest/dishmanagement/v1/dish/search`.
 
@@ -84,9 +84,9 @@ You can find all the details for the services implementation in the https://gith
 
 To treat these services separately, the following routers were created:
 
-- bookingmanagement: will answer all requests with the prefix `/mythaistar/services/rest/bookingmanagement/v1`
-- dishmanagement: will answer all requests with the prefix `/mythaistar/services/rest/dishmanagement/v1`
-- ordermanagement: will answer all requests with the prefix `/mythaistar/services/rest/ordermanagement/v1`
+- `bookingmanagement`: will answer all requests with the prefix `/mythaistar/services/rest/bookingmanagement/v1`
+- `dishmanagement`: will answer all requests with the prefix `/mythaistar/services/rest/dishmanagement/v1`
+- `ordermanagement`: will answer all requests with the prefix `/mythaistar/services/rest/ordermanagement/v1`
 
 These routers will define the behavior for each service and use the logical layer.
 
@@ -131,6 +131,7 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
         order = await oasp4fn.table('Order', orderId).promise() as dbtypes.Order;
 
         [...]
+    }
 }
 ----
 
@@ -138,7 +139,7 @@ We could define the data access layer separately, but devon4node allows us to do
 
 == Security with Json Web Token
 
-For the _Authentication_ and _Authorization_ the app will implement the https://jwt.io/[json web token] protocol.
+For the _Authentication_ and _Authorization_ the app will implement the `https://jwt.io/[json web token]` protocol.
 
 === JWT basics
 
@@ -146,7 +147,7 @@ Refer to link:java-design.asciidoc#jwt-basics[JWT basics] for more information.
 
 === JWT implementation details
 
-The _Json Web Token_ pattern will be implemented based on the https://github.com/auth0/node-jsonwebtoken[_JSON web token_] library available on npm.
+The _Json Web Token_ pattern will be implemented based on the `https://github.com/auth0/node-jsonwebtoken[_JSON web token_]` library available on npm.
 
 ==== Authentication
 
@@ -154,14 +155,14 @@ Based on the _JSON web token_ approach, we will implement a class _Authenticatio
 
 List of _unsecured resources_:
 
-- _/services/rest/dishmanagement/**_: to allow anonymous users to see the dishes info in the _menu_ section.
-- _/services/rest/ordermanagement/v1/order_: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
-- _/services/rest/bookingmanagement/v1/booking_: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
-- _/services/rest/bookingmanagement/v1/booking/cancel/**_: to allow cancelling a booking from an email. Only the _booking token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/accept/**_: to allow guests to accept an invite. Only a _guest token_ is needed.
-- _/services/rest/bookingmanagement/v1/invitedguest/decline/**_: to allow guests to reject an invite. Only a _guest token_ is needed.
+- `_/services/rest/dishmanagement/\**_`: to allow anonymous users to see the dishes info in the _menu_ section.
+- `_/services/rest/ordermanagement/v1/order_`: to allow anonymous users to save an order. They will need a _booking token_ but they won't be authenticated to do this task.
+- `_/services/rest/bookingmanagement/v1/booking_`: to allow anonymous users to create a booking. Only a _booking token_ is necessary to accomplish this task.
+- `_/services/rest/bookingmanagement/v1/booking/cancel/\**_`: to allow canceling a booking from an email. Only the _booking token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/accept/\**_`: to allow guests to accept an invite. Only a _guest token_ is needed.
+- `_/services/rest/bookingmanagement/v1/invitedguest/decline/\**_`: to allow guests to reject an invite. Only a _guest token_ is needed.
 
-To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method _auth_ for handle the requests to the /login endpoint.
+To configure the _login_ we will create an instance of _Authentication_ in the app file and then we will use the method `_auth_` for handle the requests to the /login endpoint.
 
 [source, JavaScript]
 ----
@@ -187,7 +188,7 @@ Finally, we have two default users created in the database:
 
 ==== Token set up
 
-Following the https://jwt.io/introduction/[official documentation] the implementation details for the MyThaiStar's JWT will be:
+Following `the https://jwt.io/introduction/[official documentation]` the implementation details for the MyThaiStar's JWT will be:
 
 * _Secret_: Used as part of the signature of the token, acting as a private key. It can be modified at config.ts file.
 

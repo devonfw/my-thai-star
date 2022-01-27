@@ -50,7 +50,7 @@ image::images/java/test_results_eclipse.PNG[, link="images/java/test_results_ecl
 
 === From command line using Maven
 
-We can also run tests using _Maven_ and the command line, using the command _mvn test_ (or _mvn clean test_).
+We can also run tests using _Maven_ and the command line, using the command `_mvn test_` (or `_mvn clean test_`).
 
 ----
 `C:\MyThaiStar>mvn clean test`

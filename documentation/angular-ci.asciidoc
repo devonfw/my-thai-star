@@ -7,7 +7,7 @@ The Angular client-side of My Thai Star is going to have some specific needs for
 
 == Pipeline
 
-The Pipeline for the Angular client-side is going to be called `*MyThaiStar_FRONTEND_BUILD*`. It is located in the PL instance, under the link:https://devon.s2-eu.capgemini.com/jenkins/job/MTS/[MTS folder] (as previously explained). It is going to follow a process flow like this one:
+The Pipeline for the Angular client-side is going to be called *MyThaiStar_FRONT-END_BUILD*. It is located in the PL instance, under the link:https://devon.s2-eu.capgemini.com/jenkins/job/MTS/[MTS folder] (as previously explained). It is going to follow a process flow like this one:
 
 image::images/ci/angular/angular_pipeline_flow.PNG[, link="angular_pipeline_flow.PNG"]
 
@@ -131,7 +131,7 @@ environment {
 ```
 
 ==== Description
-- `*buildScript*`: script for build the application. It must be defined at package.json.
+- *build Script*: script for build the application. It must be defined at package.json.
 +
 Example (package.json):
 +
@@ -154,7 +154,8 @@ This will be used as follows:
 ----
 sh """yarn ${buildScript}"""
 ----
-- `*lintScript*`: Script for lint the application. Defined at package.json
+- *lint Script*: Script for lint the application. Defined at package.json
+
 +
 Example (package.json):
 +
@@ -176,8 +177,9 @@ This will be used as follows:
 +
 ```
 sh """yarn ${lintScript}"""
-```
-- *testScript*: Script for test the application. Defined at package.json
+
+----
+- *test Script*: Script for test the application. Defined at package.json
 +
 Example (package.json):
 +
@@ -199,32 +201,35 @@ This will be used as follows:
 +
 ```
 sh """yarn ${testScript}"""
-```
-- `*angularDir*`: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
+----
+- *angular-Dir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
+
 +
 image::images/ci/angular/angular_directory.png[, link="angular_directory.PNG"]
-- `*srcDir*`: Directory where you store the source code. For angular applications the default value is `src`
+- *`srcDir`*: Directory where you store the source code. For angular applications the default value is `src`
 +
 image::images/ci/angular/src_directory.png[, link="src_directory.PNG"]
 - *chrome*: Since you need a browser to run your tests, we must provide one. This variable contains the name of the custom tool for google chrome.
 +
 image::images/ci/angular/chrome_installation.png[, link="chrome_installation.PNG"]
-- `*sonarTool*`: Name of the SonarQube scanner installation.
+- *sonar-Tool*: Name of the SonarQube scanner installation.
 +
 image::images/ci/angular/sonar-scanner.png[, link="sonar-scanner.PNG"]
-- `*sonarEnv*`: Name of the SonarQube environment. SonarQube is the default value for PL.
+- *sonar-Env*: Name of the SonarQube environment. SonarQube is the default value for PL.
 +
 image::images/ci/angular/sonar-env.png[, link="sonar-env.PNG"]
-- `*groupId*`: Group id of the application. It will be used to storage the application in nexus3
+- *group-Id*: Group id of the application. It will be used to storage the application in nexus3
 +
 image::images/ci/angular/nexus3_groupid.png[, link="nexus3_groupid.PNG"]
-- `*repositoryId*`: Id of the nexus3 repository. It must be defined at maven global config file.
+- *repository-Id*: Id of the nexus3 repository. It must be defined at maven global config file.
 +
 image::images/ci/angular/nexus3_id.png[, link="nexus3_id.PNG"]
-- `*repositoryUrl*`: The URL of the repository.
-- `*globalSettingsId*`: The id of the global settings file.
+- *repository URL*: The URL of the repository.
+- *global Settings Id*: The id of the global settings file.
+
 +
 image::images/ci/angular/nexus3_global_config.png[, link="nexus3_global_config.PNG"]
-- `mavenInstallation`: The name of the maven tool.
+- maven Installation: The name of the maven tool.
+
 +
 image::images/ci/angular/maven_tool.png[, link="maven_tool.PNG"]

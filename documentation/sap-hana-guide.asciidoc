@@ -32,7 +32,7 @@ Once you have install SAP HANA with VMware , you need to setup the DB.
 
 - After you start VMware, login with hxeadm as login and the password.
 At the prompt  - hxehost:hxeadm>hdbsql
-Please note the IP address, that need to be put in MTSJ java backend
+Please note the IP address, that need to be put in MTSJ java back-end
 
 - On prompt hdbsql> type below to connect to the DB
 [source, SQL]
@@ -93,14 +93,14 @@ GRANT MODELING TO hanauser1
 ----
 \c -d hxe -n localhost:39013 -u hanauser1 -p <password>
 ----
-== Setting up MTSJ Java backend
+== Setting up MTSJ Java back-end
 
 - Update application.properties file
 
 [source, properties]
 ----
 # update the below
-spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana
+`spring.flyway.locations=classpath:db/migration,classpath:db/specific/hana`
 # Add the below
 spring.jpa.database=default
 spring.jpa.database-platform=org.hibernate.dialect.HANAColumnStoreDialect
@@ -135,5 +135,5 @@ update the following property in config file in `my-thai-star\angular\src\app\co
 enablePrediction: true,
 ----
 
-- Setting up data for Predictive use case, please refer to https://github.com/SAP/hana-my-thai-star-data-generator 
+- Setting up data for Predictive use case, please refer to `https://github.com/SAP/hana-my-thai-star-data-generator` 
 

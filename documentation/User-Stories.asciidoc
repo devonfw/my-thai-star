@@ -32,12 +32,14 @@ As a guest I want to create a reservation by entering date and time and number o
 . only valid email addresses: text@text.xx, one entered email-address is required
 . if `AGB` are not checked, an error message is shown
 . after the reservation is done
-.. I see a confirmation screen of my reservation with datetime, number of persons and kids
+.. I see a confirmation screen of my reservation with date-time, number of persons and kids
 .. I receive a confirmation email about my reservation
 
 
 ===== Wireframes
+
 see real time board
+
 
 === US: handle invite
 
@@ -199,9 +201,9 @@ AC:
 
  . all orders/reservations are shown in a list view (read-only). Those list can be filtered and sorted (similar to excel-data-filters)
  . orders/reservations are shown in separate lists.
- . for each order the dish, meat, comment, item, reservation-id, reservation datetime, creation-datetime is shown
- . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-datetime are shown
- . the default filter for all lists is the today's date for reservation datetime. this filter can be deleted.
+ . for each order the dish, meat, comment, item, reservation-id, reservation date-time, creation-date-time is shown
+ . for each reservation the inviters email, the guests-emails, the number of accepts and declines, calculated table number, the reservation-id, reservation date-time and creation-date-time are shown
+ . the default filter for all lists is the today's date for reservation date-time. this filter can be deleted.
  . only reservations and orders with reservation date in the future shall be available in this view. All other orders and reservation shall not be deleted; for data Analytics those orders and reservation shall still exist in the system.
 
 
