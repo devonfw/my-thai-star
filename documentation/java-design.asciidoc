@@ -62,7 +62,6 @@ As _common components_ (that don't exactly represent an application's area but p
 Other components:
 
 - Security (will manage the access to the _private_ part of the application using a `https://jwt.io/[jwt]` implementation).
-
 - Twitter integration: planned as a _Microservice_ will provide the twitter integration needed for some specific functionalities of the application. 
 
 
@@ -342,7 +341,7 @@ In the same `_HttpSecurity_` object we will set up the filter for the rest of th
 http.[...].addFilterBefore(new `JWTAuthenticationFilter()`, UsernamePasswordAuthenticationFilter.class);
 ----
 
-Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder auth)` method we will create:
+Finally, as default users to start using the _My Thai Star_ app we are going to define two profiles using the `_inMemoryAuthentication_` of the _Spring Security_ framework. In the `configure(AuthenticationManagerBuilder Auth)` method we will create:
 
 - user: _waiter_
 - password: _waiter_
