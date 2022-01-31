@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-import com.devonfw.app.dishmanagement.common.api.ApplicationEntity;
+import com.devonfw.app.usermanagement.common.api.ApplicationEntity;
 import com.devonfw.module.basic.common.api.entity.PersistenceEntity;
 
 /**
