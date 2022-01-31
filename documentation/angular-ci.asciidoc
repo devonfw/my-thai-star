@@ -178,7 +178,7 @@ This will be used as follows:
 ```
 sh """yarn ${lintScript}"""
 
-----
+```
 - *test Script*: Script for test the application. Defined at package.json
 +
 Example (package.json):
@@ -201,7 +201,7 @@ This will be used as follows:
 +
 ```
 sh """yarn ${testScript}"""
-----
+```
 - *angular-Dir*: Relative route to angular application. In My Thai Star this is the angular folder. The actual directory (.) is also allowed.
 
 +
