@@ -9,6 +9,20 @@
   justify-content: center;
 }
 
+.title {
+  display: flex;
+  flex-direction: column;
+  .sub-title {
+    font-size: small;
+    font-style: italic;
+    height: 15px;
+    line-height: 15px;
+    a {
+      color: #fff;
+    }
+  }
+}
+
 [flex] {
   flex: 1;
   box-sizing: border-box;

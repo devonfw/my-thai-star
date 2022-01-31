@@ -52,7 +52,7 @@ The second way of deployment will be by orchestrating both elements of the appli
 
 === Project adjustment
 
-In order to perform this second way of deployment, some files will be created in the project. The first one is the *Dockerfile* for the Angular client-side. This file will pull (if necessary) an *nginx* Docker image and copy the Angular artifact (`/dist` folder) inside of the deployment folder of the image. It will be located in the main directory of the Angular client-side project.
+In order to perform this second way of deployment, some files will be created in the project. The first one is the *Dockerfile* for the Angular client-side. This file will pull (if necessary) an *Nginx* Docker image and copy the Angular artifact (`/dist` folder) inside of the deployment folder of the image. It will be located in the main directory of the Angular client-side project.
 
 image::images/ci/deployment/dockerfile-angular.PNG[, link="dockerfile-angular.PNG"]
 
