@@ -18,28 +18,27 @@ import { effects, reducers } from './store';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule,
-    TranslocoModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    StoreModule.forFeature('menu', reducers),
-    EffectsModule.forFeature(effects),
-  ],
-  providers: [MenuService],
-  declarations: [
-    MenuComponent,
-    MenuCardComponent,
-    MenuFiltersComponent,
-    FilterSearchComponent,
-    FilterSortComponent,
-    FilterCheckboxesComponent,
-    MenuCardCommentsComponent,
-    MenuCardDetailsComponent,
-  ],
-  exports: [MenuComponent],
-  entryComponents: [],
+    imports: [
+        CommonModule,
+        CoreModule,
+        TranslocoModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        StoreModule.forFeature('menu', reducers),
+        EffectsModule.forFeature(effects),
+    ],
+    providers: [MenuService],
+    declarations: [
+        MenuComponent,
+        MenuCardComponent,
+        MenuFiltersComponent,
+        FilterSearchComponent,
+        FilterSortComponent,
+        FilterCheckboxesComponent,
+        MenuCardCommentsComponent,
+        MenuCardDetailsComponent,
+    ],
+    exports: [MenuComponent]
 })
 export class MenuModule {}

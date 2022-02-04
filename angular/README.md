@@ -2,7 +2,9 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
-**UPDATE:** Angular CLI has been updated to 12.1.1 version.
+**UPDATE:** Angular CLI has been updated to 13.1.2 version. 
+
+**NOTE:** There won't be anymore updates to angular unless there is some breaking change in the future versions.
 
 ## Install or update the project
 
