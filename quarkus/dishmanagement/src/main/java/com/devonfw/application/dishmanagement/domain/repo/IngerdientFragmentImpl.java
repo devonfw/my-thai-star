@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.devonfw.application.dishmanagement.domain.IngredientSearchCriteriaTo;
+import com.devonfw.application.dishmanagement.domain.IngredientSearchCriteriaDto;
 import com.devonfw.application.dishmanagement.domain.model.IngredientEntity;
 import com.devonfw.application.dishmanagement.domain.model.QIngredientEntity;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -22,7 +22,7 @@ public class IngerdientFragmentImpl implements IngredientFragment {
   EntityManager em;
 
   @Override
-  public Page<IngredientEntity> findIngredients(IngredientSearchCriteriaTo criteria) {
+  public Page<IngredientEntity> findIngredients(IngredientSearchCriteriaDto criteria) {
 
     Pageable pageable = criteria.getPageable();
     QIngredientEntity ingredientEntity = QIngredientEntity.ingredientEntity;

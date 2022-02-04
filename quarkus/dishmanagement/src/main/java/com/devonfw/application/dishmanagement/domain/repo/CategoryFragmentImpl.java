@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.devonfw.application.dishmanagement.domain.CategorySearchCriteriaTo;
+import com.devonfw.application.dishmanagement.domain.CategorySearchCriteriaDto;
 import com.devonfw.application.dishmanagement.domain.model.CategoryEntity;
 import com.devonfw.application.dishmanagement.domain.model.QCategoryEntity;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -21,7 +21,7 @@ public class CategoryFragmentImpl implements CategoryFragment {
   EntityManager em;
 
   @Override
-  public Page<CategoryEntity> findCategorys(CategorySearchCriteriaTo criteria) {
+  public Page<CategoryEntity> findCategorys(CategorySearchCriteriaDto criteria) {
 
     Pageable pageable = criteria.getPageable();
     QCategoryEntity categoryEntity = QCategoryEntity.categoryEntity;

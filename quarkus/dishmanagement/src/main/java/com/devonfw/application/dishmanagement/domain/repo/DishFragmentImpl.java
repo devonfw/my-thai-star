@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.devonfw.application.dishmanagement.domain.DishSearchCriteriaTo;
+import com.devonfw.application.dishmanagement.domain.DishSearchCriteriaDto;
 import com.devonfw.application.dishmanagement.domain.model.DishEntity;
 import com.devonfw.application.dishmanagement.domain.model.QDishEntity;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -22,7 +22,7 @@ public class DishFragmentImpl implements DishFragment {
   EntityManager em;
 
   @Override
-  public Page<DishEntity> findDishs(DishSearchCriteriaTo criteria) {
+  public Page<DishEntity> findDishs(DishSearchCriteriaDto criteria) {
 
     Pageable pageable = criteria.getPageable();
     QDishEntity dishEntity = QDishEntity.dishEntity;

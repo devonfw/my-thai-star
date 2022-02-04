@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CategorySearchCriteriaTo extends AbstractSearchCriteriaDto {
+public class CategorySearchCriteriaDto extends AbstractSearchCriteriaDto {
 
   private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class CategorySearchCriteriaTo extends AbstractSearchCriteriaDto {
   /**
    * The constructor.
    */
-  public CategorySearchCriteriaTo() {
+  public CategorySearchCriteriaDto() {
 
     super();
   }

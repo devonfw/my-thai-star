@@ -29,9 +29,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.devonfw.application.dishmanagement.domain.CategorySearchCriteriaTo;
-import com.devonfw.application.dishmanagement.domain.DishSearchCriteriaTo;
-import com.devonfw.application.dishmanagement.domain.IngredientSearchCriteriaTo;
+import com.devonfw.application.dishmanagement.domain.CategorySearchCriteriaDto;
+import com.devonfw.application.dishmanagement.domain.DishSearchCriteriaDto;
+import com.devonfw.application.dishmanagement.domain.IngredientSearchCriteriaDto;
 import com.devonfw.application.dishmanagement.domain.model.CategoryEntity;
 import com.devonfw.application.dishmanagement.domain.model.DishEntity;
 import com.devonfw.application.dishmanagement.domain.model.IngredientEntity;
@@ -102,7 +102,7 @@ public class DishManagementRestService {
 
   @Path("/category/search")
   @POST
-  public Page<CategoryDto> findCategorysByPost(CategorySearchCriteriaTo searchCriteriaTo) {
+  public Page<CategoryDto> findCategorysByPost(CategorySearchCriteriaDto searchCriteriaTo) {
 
     Page<CategoryDto> pagListTo = null;
     Page<CategoryEntity> categories = this.categoryRepo.findCategorys(searchCriteriaTo);
@@ -153,7 +153,7 @@ public class DishManagementRestService {
   @Path("/dish/search")
   @POST
   // @CrossOrigin
-  public Page<DishDto> findDishsByPost(DishSearchCriteriaTo searchCriteriaTo) {
+  public Page<DishDto> findDishsByPost(DishSearchCriteriaDto searchCriteriaTo) {
 
     Page<DishDto> pagListTo = null;
     Page<DishEntity> entities = this.dishRepository.findDishs(searchCriteriaTo);
@@ -207,7 +207,7 @@ public class DishManagementRestService {
 
   @Path("/ingredient/search")
   @POST
-  public Page<IngredientDto> findIngredientsByPost(IngredientSearchCriteriaTo searchCriteriaTo) {
+  public Page<IngredientDto> findIngredientsByPost(IngredientSearchCriteriaDto searchCriteriaTo) {
 
     Page<IngredientDto> pagListTo = null;
     Page<IngredientEntity> entities = this.ingredientRepository.findIngredients(searchCriteriaTo);

@@ -16,7 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DishSearchCriteriaTo extends AbstractSearchCriteriaDto {
+public class DishSearchCriteriaDto extends AbstractSearchCriteriaDto {
 
   private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class DishSearchCriteriaTo extends AbstractSearchCriteriaDto {
   /**
    * The constructor.
    */
-  public DishSearchCriteriaTo() {
+  public DishSearchCriteriaDto() {
 
     super();
   }
