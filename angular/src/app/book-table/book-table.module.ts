@@ -16,23 +16,22 @@ import { reducers, effects } from './store';
 import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SharedModule,
-    HttpClientModule,
-    TranslocoRootModule,
-    CoreModule,
-    StoreModule.forFeature('bookTable', reducers),
-    EffectsModule.forFeature(effects),
-  ],
-  providers: [BookTableService, WindowService, SnackBarService],
-  declarations: [
-    InvitationDialogComponent,
-    BookTableComponent,
-    BookTableDialogComponent,
-  ],
-  exports: [BookTableComponent],
-  entryComponents: [InvitationDialogComponent, BookTableDialogComponent],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SharedModule,
+        HttpClientModule,
+        TranslocoRootModule,
+        CoreModule,
+        StoreModule.forFeature('bookTable', reducers),
+        EffectsModule.forFeature(effects),
+    ],
+    providers: [BookTableService, WindowService, SnackBarService],
+    declarations: [
+        InvitationDialogComponent,
+        BookTableComponent,
+        BookTableDialogComponent,
+    ],
+    exports: [BookTableComponent]
 })
 export class BookTableModule {}

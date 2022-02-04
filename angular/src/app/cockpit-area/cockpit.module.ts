@@ -19,39 +19,33 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    TranslocoRootModule,
-    CoreModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [
-    WaiterCockpitService,
-    WindowService,
-    PredictionService,
-    ClusteringService,
-  ],
-  declarations: [
-    ReservationCockpitComponent,
-    OrderCockpitComponent,
-    ReservationDialogComponent,
-    OrderDialogComponent,
-    PredictionCockpitComponent,
-    ClusteringCockpitComponent,
-  ],
-  exports: [
-    ReservationCockpitComponent,
-    OrderCockpitComponent,
-    PredictionCockpitComponent,
-    ClusteringCockpitComponent,
-  ],
-  entryComponents: [
-    ReservationDialogComponent,
-    OrderDialogComponent,
-    PredictionCockpitComponent,
-    ClusteringCockpitComponent,
-  ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        TranslocoRootModule,
+        CoreModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    providers: [
+        WaiterCockpitService,
+        WindowService,
+        PredictionService,
+        ClusteringService,
+    ],
+    declarations: [
+        ReservationCockpitComponent,
+        OrderCockpitComponent,
+        ReservationDialogComponent,
+        OrderDialogComponent,
+        PredictionCockpitComponent,
+        ClusteringCockpitComponent,
+    ],
+    exports: [
+        ReservationCockpitComponent,
+        OrderCockpitComponent,
+        PredictionCockpitComponent,
+        ClusteringCockpitComponent,
+    ]
 })
 export class WaiterCockpitModule { }

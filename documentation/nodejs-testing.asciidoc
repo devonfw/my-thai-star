@@ -1,6 +1,6 @@
 :toc:
 toc::[]
 
-= Node.js testing
+= NodeJS testing
 
 TODO

@@ -10,7 +10,7 @@ MrChecker is a testing framework included in devonfw with several useful modules
 
 First of all download the repository.
 
-You must run My Thai Star front-end and backend application and modify your url to the front in `mrchecker/endtoend-test/src/resources/settings.properties`
+You must run My Thai Star front-end and back-end application and modify your URL to the front in `mrchecker/endtoend-test/src/resources/settings.properties`
 
 Now you can run end to end test to *check* if the application works properly.
 
@@ -28,7 +28,7 @@ mvn test -Dtest=MyThaiStarTest -Dbrowser=ChromeHeadless// use firefox navigator
 mvn test -Dtest=MyThaiStarTest -Dbrowser=FireFox
 ```
 
-*The second is importing the project in devonfw Eclipse and running _MyThaiStarTest.java_ as JUnit (right click, run as JUnit)* 
+*The second is importing the project in devonfw Eclipse and running `_MyThaiStarTest.java_` as JUnit (right click, run as JUnit)* 
 
 They can be executed one by one or all in one go, comment or uncomment _@Test_ before those tests to enable or disable them.
 
@@ -50,9 +50,9 @@ The included tests do the following:
 
 * `_Test_bookTable_`: Log in and book a table, then login with a waiter and check if the table was successfully booked.
 
-* `_Test_orderMenu_`: Log in and order food for a certain booked table.
+*` _Test_orderMenu_`: Log in and order food for a certain booked table.
 
-These four tests can be found inside `*MyThaiStarTest.java*` located link:https://github.com/devonfw/my-thai-star/tree/develop/mrchecker/endtoend-test/src/test/java/com/devonfw/mts/tests[here]. 
+These four tests can be found inside *`MyThaiStarTest.java`* located link:https://github.com/devonfw/my-thai-star/tree/develop/mrchecker/endtoend-test/src/test/java/com/devonfw/mts/tests[here]. 
 
 
 
