@@ -99,7 +99,7 @@
     "concurrently": "^6.3.0",
     "cypress": "^8.7.0",
     "electron": "11.5.0",
-    "electron-builder": "22.13.1",
+    "electron-builder": "22.14.13",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.10.1",
     "jasmine-spec-reporter": "~7.0.0",
