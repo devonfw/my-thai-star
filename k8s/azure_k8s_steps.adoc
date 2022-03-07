@@ -74,5 +74,3 @@ kubectl get all
 ```
 * Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
 * Sample URL for Reference - http://950544bf62f74dde9abd.westeurope.aksapp.io/
-
-=== AWS
