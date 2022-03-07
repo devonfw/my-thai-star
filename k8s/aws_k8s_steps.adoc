@@ -1,4 +1,4 @@
-= Kubernetes Deployment in AWS EKS (Elastic Kubernetes Service)
+== Kubernetes Deployment in AWS EKS (Elastic Kubernetes Service)
 
 ```
 aws
