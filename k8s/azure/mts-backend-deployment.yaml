@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-backend
+  labels:
+    app: mts
+spec:
+  selector:
+    matchLabels:
+      app: mts
+      tier: mts-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mts
+        tier: mts-backend
+    spec:
+      containers:
+      - name: mts-backend
+        image: ghcr.io/devonfw/my-thai-star-java:latest
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8081
