@@ -68,5 +68,11 @@ az network dns record-set a add-record \
 #Execute the Kubernetes YAML Files
 cd k8s/azure
 kubectl apply -f ./
+
+#Check the status of the Deployments, Services, Pods
+kubectl get all
 ```
+* Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
+* Sample URL for Reference - http://950544bf62f74dde9abd.westeurope.aksapp.io/
+
 === AWS
