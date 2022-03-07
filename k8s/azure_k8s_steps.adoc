@@ -1,6 +1,4 @@
-== Kubernetes Deployment
-
-=== Azure
+== Kubernetes Deployment in Azure AKS (Azure Kubernetes Service)
 ```
 #Connect to Azure from CLI (either local machine or VM)
 az login
@@ -8,7 +6,7 @@ az login
 #Set the Azure Subscription in which Kubernetes Cluster presents
 az account set --subscription <subscription-name>
 
-#Connect to Azure Kubernetes Service (AKS) Cluster
+#Connect to AKS Cluster
 az aks get-credentials --resource-group DefaultResourceGroup-WEU --name devon-aks
 
 #Enable http_application_routing in AKS
