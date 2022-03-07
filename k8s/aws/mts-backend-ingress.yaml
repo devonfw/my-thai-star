@@ -1,0 +1,24 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: mts-backend
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /mythaistar/$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+    - hosts:
+        - ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
+  rules:
+    - host: ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
+      http:
+        paths:
+          - path: /api(/)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: mts-backend
+                port:
+                  number: 8081
