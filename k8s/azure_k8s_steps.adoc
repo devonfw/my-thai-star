@@ -25,9 +25,9 @@ az aks show --resource-group DefaultResourceGroup-WEU --name devon-aks --query a
 spec:
   tls:
     - hosts:
-        - 950544bf62f74dde9abd.westeurope.aksapp.io
+        - 100001xx11x11xxx1xxx.westeurope.aksapp.io
   rules:
-    - host: 950544bf62f74dde9abd.westeurope.aksapp.io
+    - host: 100001xx11x11xxx1xxx.westeurope.aksapp.io
 ...
 ```
 ```
@@ -57,7 +57,7 @@ az network dns record-set a add-record \
 #Sample Command for Reference
 az network dns record-set a add-record \
     --resource-group mc_defaultresourcegroup-weu_devon-aks_westeurope \
-    --zone-name 950544bf62f74dde9abd.westeurope.aksapp.io \
+    --zone-name 100001xx11x11xxx1xxx.westeurope.aksapp.io \
     --record-set-name "*" \
     --ipv4-address 20.103.114.206
 ```
@@ -71,4 +71,4 @@ kubectl apply -f ./
 kubectl get all
 ```
 * Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
-* Sample URL for Reference - http://950544bf62f74dde9abd.westeurope.aksapp.io/
+* Sample URL for Reference - http://100001xx11x11xxx1xxx.westeurope.aksapp.io/
