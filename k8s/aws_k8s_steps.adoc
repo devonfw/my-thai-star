@@ -20,7 +20,11 @@ aws eks --region eu-west-1 update-kubeconfig --name hangar-test-eks
 #Install Ingress Controller by Nginx using helm command - in case, helm not present, install
 helm upgrade --install nginx-ingress nginx-ingress-controller --set ingressClassResource.default=true --set containerSecurityContext.allowPrivilegeEscalation=false --repo https://charts.bitnami.com/bitnami --namespace nginx-ingress --create-namespace
 ```
-* Update the two Ingress YAML Files present in the folder /k8s/azure with the DomainName came as the output of the above command
+```
+#Get the DomainName/HostName from the below command - Nginx Ingress Controller's LoadBalancer
+kubectl get svc --all-namespaces
+```
+* Update the two Ingress YAML Files present in the folder /k8s/aws with the DomainName came as the output of the above command
 
 ```
 ...
@@ -33,10 +37,7 @@ spec:
 ...
 
 ```
-```
-#Get the DomainName/HostName from the below command - Nginx Ingress Controller's LoadBalancer
-kubectl get svc --all-namespaces
-```
+
 ```
 #Execute the Kubernetes YAML Files
 cd k8s/azure
