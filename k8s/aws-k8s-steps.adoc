@@ -1,5 +1,16 @@
 == Kubernetes Deployment in AWS EKS (Elastic Kubernetes Service)
 
+=== Pre-requisites
+* AWS EKS Cluster is required to be up and running for this deployment. In case, you need to create new EKS Cluster, please refer this link:https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html[documentation].
+
+=== Steps
+Here are the high level steps which are followed by AWS CLI Commands.
+
+* Connect to AWS EKS Cluster.
+* Create one Ingress Controller in the Cluster.
+* Update the Ingress YAML files.
+* Execute/Apply the YAML files and test the application.
+
 ```
 #Connect to AWS from CLI (either local machine or VM) - in case, AWS CLI not present, install 
 aws --version
