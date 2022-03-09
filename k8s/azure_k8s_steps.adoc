@@ -4,18 +4,24 @@
 az login
 
 #Set the Azure Subscription in which Kubernetes Cluster presents
-az account set --subscription <subscription-name>
+az account set --subscription <mySubscription>
 
 #Connect to AKS Cluster
+az aks get-credentials --resource-group <myResourceGroup> --name <myAKSCluster>
+#Sample Command for Reference
 az aks get-credentials --resource-group DefaultResourceGroup-WEU --name devon-aks
 
 #Enable http_application_routing in AKS
+az aks enable-addons --resource-group <myResourceGroup> --name <myAKSCluster> --addons http_application_routing
+#Sample Command for Reference
 az aks enable-addons --resource-group DefaultResourceGroup-WEU --name devon-aks --addons http_application_routing
 
-#Disable http_application_routing in AKS
-az aks disable-addons --resource-group DefaultResourceGroup-WEU --name devon-aks --addons http_application_routing
+#Incase, you want to Disable http_application_routing in AKS, here is the command
+az aks disable-addons --resource-group <myResourceGroup> --name <myAKSCluster> --addons http_application_routing
 
 #Get the DomainName to be used in Ingress YAML Files
+az aks show --resource-group <myResourceGroup> --name <myAKSCluster> --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
+#Sample Command for Reference
 az aks show --resource-group DefaultResourceGroup-WEU --name devon-aks --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
 ```
 * Update the two Ingress YAML Files present in the folder /k8s/azure with the DomainName came as the output of the above command
