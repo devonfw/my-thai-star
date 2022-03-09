@@ -1,4 +1,16 @@
 == Kubernetes Deployment in Azure AKS (Azure Kubernetes Service)
+
+=== Pre-requisites
+* Azure AKS Cluster is required to be up and running for this deployment. In case, you need to create new AKS Cluster, please refer this link:https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal[link].
+
+=== Steps
+Here are the high level steps which are followed by Azure CLI Commands.
+
+* Connect to Azure AKS Cluster.
+* Enable the Ingress Controller in the Cluster.
+* Update the Ingress YAML files.
+* Execute/Apply the YAML files and test the application.
+
 ```
 #Connect to Azure from CLI (either local machine or VM)
 az login
