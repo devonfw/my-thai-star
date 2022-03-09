@@ -31,20 +31,20 @@ kubectl get svc --all-namespaces
 spec:
   tls:
     - hosts:
-        - ad4c6e0522b8644ebb3a5dfe6361e717-1983979589.eu-west-1.elb.amazonaws.com
+        - ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
   rules:
-    - host: ad4c6e0522b8644ebb3a5dfe6361e717-1983979589.eu-west-1.elb.amazonaws.com
+    - host: ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
 ...
 
 ```
 
 ```
 #Execute the Kubernetes YAML Files
-cd k8s/azure
+cd k8s/aws
 kubectl apply -f ./
 
 #Check the status of the Deployments, Services, Pods
 kubectl get all
 ```
 * Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
-* Sample URL for Reference - http://ad4c6e0522b8644ebb3a5dfe6361e717-1983979589.eu-west-1.elb.amazonaws.com/
+* Sample URL for Reference - http://ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com/
