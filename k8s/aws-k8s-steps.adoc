@@ -1,7 +1,7 @@
 == Kubernetes Deployment in AWS EKS (Elastic Kubernetes Service)
 
 === Pre-requisites
-* AWS EKS Cluster is required to be up and running for this deployment. In case, you need to create new EKS Cluster, please refer this link:https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html[documentation].
+* AWS EKS Cluster is required to be up and running for this deployment. In case, you need to create new EKS Cluster, please refer this link:https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html[link].
 
 === Steps
 Here are the high level steps which are followed by AWS CLI Commands.
