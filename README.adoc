@@ -80,7 +80,7 @@ The result of this deployment will be the same as in the deployment from code, b
 
 === In Kubernetes
 
-If you are using k8s yaml files and deploy in Kubernetes Clusters, then, please refer the following links which are part of "k8s" folder:
+If you are using k8s yaml files (inside "k8s" folder) and deploy in Kubernetes Clusters, then, please refer the following:
 
 - For AWS EKS Cluster, click link:https://github.com/devonfw/my-thai-star/k8s/aws-k8s-steps.adoc[here].
 - For Azure AKS Cluster, click link:https://github.com/devonfw/my-thai-star/k8s/azure-k8s-steps.adoc[here].
