@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-frontend
+  labels:
+    app: mts
+spec:
+  selector:
+    matchLabels:
+      app: mts
+      tier: mts-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mts
+        tier: mts-frontend
+    spec:
+      containers:
+      - name: mts-frontend
+        image: ghcr.io/devonfw/my-thai-star-angular:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http

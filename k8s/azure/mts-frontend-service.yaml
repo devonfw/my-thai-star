@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mts-frontend
+  labels:
+    app: mts
+    tier: mts-frontend
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+    name: http
+  selector:
+    app: mts
+    tier: mts-frontend
