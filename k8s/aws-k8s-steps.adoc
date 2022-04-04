@@ -1,0 +1,61 @@
+== Kubernetes Deployment in AWS EKS (Elastic Kubernetes Service)
+
+=== Pre-requisites
+* AWS EKS Cluster is required to be up and running for this deployment. In case, you need to create new EKS Cluster, please refer this link:https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html[link].
+
+=== Steps
+Here are the high level steps which are followed by AWS CLI Commands.
+
+* Connect to AWS EKS Cluster.
+* Create one Ingress Controller in the Cluster.
+* Update the Ingress YAML files.
+* Execute/Apply the YAML files and test the application.
+
+```
+#Connect to AWS from CLI (either local machine or VM) - in case, AWS CLI not present, install 
+aws --version
+
+#Check if it is connected
+aws sts get-caller-identity
+
+#If connected to AWS, skip this command or else, use this and connect
+aws configure
+
+#Connect to AWS EKS Cluster
+aws eks --region <region> update-kubeconfig --name <clusterName>
+
+#Sample
+aws eks --region eu-west-1 update-kubeconfig --name hangar-test-eks
+
+
+#Install Ingress Controller by Nginx using helm command - in case, helm not present, install
+helm upgrade --install nginx-ingress nginx-ingress-controller --set ingressClassResource.default=true --set containerSecurityContext.allowPrivilegeEscalation=false --repo https://charts.bitnami.com/bitnami --namespace nginx-ingress --create-namespace
+```
+```
+#Get the DomainName/HostName from the below command - Nginx Ingress Controller's LoadBalancer
+kubectl get svc --all-namespaces
+```
+* Update the two Ingress YAML Files present in the folder /k8s/aws with the DomainName came as the output of the above command
+
+```
+...
+spec:
+  tls:
+    - hosts:
+        - ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
+  rules:
+    - host: ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com
+...
+
+```
+
+```
+#Execute the Kubernetes YAML Files
+cd k8s/aws
+kubectl apply -f ./
+
+#Check the status of the Deployments, Services, Pods
+kubectl get all
+```
+* Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
+* Sample URL for Reference - http://ab1c2d1001xxxxxxxxxxxxxxxxxxx101-1000000001.eu-west-1.elb.amazonaws.com/

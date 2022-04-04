@@ -1,0 +1,92 @@
+== Kubernetes Deployment in Azure AKS (Azure Kubernetes Service)
+
+=== Pre-requisites
+* Azure AKS Cluster is required to be up and running for this deployment. In case, you need to create new AKS Cluster, please refer this link:https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal[link].
+
+=== Steps
+Here are the high level steps which are followed by Azure CLI Commands.
+
+* Connect to Azure AKS Cluster.
+* Enable the Ingress Controller in the Cluster.
+* Update the Ingress YAML files.
+* Execute/Apply the YAML files and test the application.
+
+```
+#Connect to Azure from CLI (either local machine or VM)
+az login
+
+#Set the Azure Subscription in which Kubernetes Cluster presents
+az account set --subscription <mySubscription>
+
+#Connect to AKS Cluster
+az aks get-credentials --resource-group <myResourceGroup> --name <myAKSCluster>
+#Sample Command for Reference
+az aks get-credentials --resource-group DefaultResourceGroup-WEU --name devon-aks
+
+#Enable http_application_routing in AKS
+az aks enable-addons --resource-group <myResourceGroup> --name <myAKSCluster> --addons http_application_routing
+#Sample Command for Reference
+az aks enable-addons --resource-group DefaultResourceGroup-WEU --name devon-aks --addons http_application_routing
+
+#Incase, you want to Disable http_application_routing in AKS, here is the command
+az aks disable-addons --resource-group <myResourceGroup> --name <myAKSCluster> --addons http_application_routing
+
+#Get the DomainName to be used in Ingress YAML Files
+az aks show --resource-group <myResourceGroup> --name <myAKSCluster> --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
+#Sample Command for Reference
+az aks show --resource-group DefaultResourceGroup-WEU --name devon-aks --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
+```
+* Update the two Ingress YAML Files present in the folder /k8s/azure with the DomainName came as the output of the above command
+
+```
+...
+spec:
+  tls:
+    - hosts:
+        - 100001xx11x11xxx1xxx.westeurope.aksapp.io
+  rules:
+    - host: 100001xx11x11xxx1xxx.westeurope.aksapp.io
+...
+```
+```
+#Get the External-IP Address of the Nginx Ingress Controller
+kubectl get svc --all-namespaces
+```
+Sample Output
+```
+NAMESPACE     NAME                                           TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE
+default       kubernetes                                     ClusterIP      10.0.0.1       <none>           443/TCP                      4d4h
+default       mts-backend                                    ClusterIP      10.0.29.221    <none>           8081/TCP                     4d4h
+default       mts-frontend                                   ClusterIP      10.0.155.233   <none>           80/TCP                       4d4h
+kube-system   addon-http-application-routing-nginx-ingress   LoadBalancer   10.0.151.104   20.103.114.206   80:30679/TCP,443:32259/TCP   4d4h
+kube-system   healthmodel-replicaset-service                 ClusterIP      10.0.214.184   <none>           25227/TCP                    4d4h
+kube-system   kube-dns                                       ClusterIP      10.0.0.10      <none>           53/UDP,53/TCP                4d4h
+kube-system   metrics-server                                 ClusterIP      10.0.120.228   <none>           443/TCP                      4d4h
+```
+```
+#Map the DomainName with the External-IP Address
+az network dns record-set a add-record \
+    --resource-group <myResourceGroup> \
+    --zone-name <myCustomDomain> \
+    --record-set-name "*" \
+    --ipv4-address <myExternalIP>
+```
+```
+#Sample Command for Reference
+az network dns record-set a add-record \
+    --resource-group mc_defaultresourcegroup-weu_devon-aks_westeurope \
+    --zone-name 100001xx11x11xxx1xxx.westeurope.aksapp.io \
+    --record-set-name "*" \
+    --ipv4-address 20.103.114.206
+```
+
+```
+#Execute the Kubernetes YAML Files
+cd k8s/azure
+kubectl apply -f ./
+
+#Check the status of the Deployments, Services, Pods
+kubectl get all
+```
+* Once the Services and Pods are up and running, use the DomainName URL and test the Application. 
+* Sample URL for Reference - http://100001xx11x11xxx1xxx.westeurope.aksapp.io/
