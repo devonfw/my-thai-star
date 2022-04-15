@@ -25,3 +25,12 @@ CREATE TABLE User (
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
+-- *** UserFavourite ***
+CREATE TABLE UserFavourite (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  idUser BIGINT NOT NULL,
+  idDish BIGINT NOT NULL,
+  CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
+  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK
+);

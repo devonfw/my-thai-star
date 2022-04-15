@@ -1,5 +1,7 @@
 package com.devonfw.application.usermanagement.rest.v1.model;
 
+import java.util.Set;
+
 import com.devonfw.application.usermanagement.general.domain.model.AbstractDto;
 
 import lombok.AllArgsConstructor;
@@ -21,4 +23,6 @@ public class UserDto extends AbstractDto {
   private Boolean twoFactorStatus;
 
   private Long userRoleId;
+
+  private Set<UserFavouriteDto> userFavourites;
 }

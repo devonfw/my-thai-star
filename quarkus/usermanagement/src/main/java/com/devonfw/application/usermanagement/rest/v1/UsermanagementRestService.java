@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.usermanagement.domain.model.UserEntity;
@@ -31,9 +32,11 @@ import com.devonfw.application.usermanagement.domain.repo.UserRoleRepository;
 import com.devonfw.application.usermanagement.rest.v1.mapper.UserMapper;
 import com.devonfw.application.usermanagement.rest.v1.mapper.UserRoleMapper;
 import com.devonfw.application.usermanagement.rest.v1.model.UserDto;
+import com.devonfw.application.usermanagement.rest.v1.model.UserQrCodeDto;
 import com.devonfw.application.usermanagement.rest.v1.model.UserRoleDto;
 import com.devonfw.application.usermanagement.rest.v1.model.UserRoleSearchCriteriaDto;
 import com.devonfw.application.usermanagement.rest.v1.model.UserSearchCriteriaDto;
+import com.devonfw.application.usermanagement.utils.QrCodeService;
 
 @Path("/usermanagement/v1")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -64,6 +67,41 @@ public class UsermanagementRestService {
       return this.userMapper.map(entity.get());
     }
     return null;
+  }
+
+  @GET
+  @Path("/user/pairing/{username}/")
+  public UserQrCodeDto getUserQrCode(@PathParam("username") String username) {
+
+    UserEntity user = this.userRepository.findByUsername(username);
+    if (user == null) {
+      throw new WebApplicationException(String.format("Username: %s not found", username), 400);
+    }
+    if (user.getSecret() == null) {
+      user.setSecret(Base32.random());
+      UserEntity resultEntity = this.userRepository.save(user);
+    }
+    return user.isTwoFactorStatus() ? QrCodeService.generateQrCode(user) : null;
+  }
+
+  @GET
+  @Path("/user/twofactor/{username}")
+  public UserDto getUserStatus(@PathParam("username") String username) {
+
+    return this.userMapper.map(this.userRepository.findByUsername(username));
+  }
+
+  @POST
+  @Path("/user/twofactor")
+  public UserDto saveUserTwoFactor(UserDto user) {
+
+    UserEntity userEntity = this.userRepository.findByUsername(user.getUsername());
+    if (userEntity == null) {
+      throw new WebApplicationException(String.format("Username: %s not found", user.getUsername()), 400);
+    }
+    userEntity.setTwoFactorStatus(user.getTwoFactorStatus());
+    UserEntity resultEntity = this.userRepository.save(userEntity);
+    return this.userMapper.map(resultEntity);
   }
 
   @POST

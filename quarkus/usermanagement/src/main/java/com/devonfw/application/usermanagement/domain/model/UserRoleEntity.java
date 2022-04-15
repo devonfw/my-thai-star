@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.devonfw.application.usermanagement.domain.model.UserEntity;
 import com.devonfw.application.usermanagement.general.domain.model.ApplicationPersistenceEntity;
 
 import lombok.Setter;

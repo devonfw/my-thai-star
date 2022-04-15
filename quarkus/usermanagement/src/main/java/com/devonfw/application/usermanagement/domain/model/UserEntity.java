@@ -1,9 +1,12 @@
 package com.devonfw.application.usermanagement.domain.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -11,8 +14,6 @@ import com.devonfw.application.usermanagement.general.domain.model.ApplicationPe
 
 import lombok.Setter;
 
-//@Data
-//@ToString
 @Setter
 @Entity
 @Table(name = "User")
@@ -29,6 +30,15 @@ public class UserEntity extends ApplicationPersistenceEntity {
   private Boolean twoFactorStatus;
 
   private UserRoleEntity userRole;
+
+  private Set<UserFavouriteEntity> userFavouriteEntity;
+
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "idUser")
+  public Set<UserFavouriteEntity> getUserFavouriteEntity() {
+
+    return this.userFavouriteEntity;
+  }
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "idRole")
