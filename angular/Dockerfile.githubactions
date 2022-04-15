@@ -3,6 +3,7 @@ FROM node:lts AS build
 WORKDIR /app
 
 COPY angular/package.json /app/package.json
+COPY angular/package-lock.json /app/package-lock.json
 RUN npm install
 COPY angular/. /app
 RUN npm run build -- --configuration=docker
