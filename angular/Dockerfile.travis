@@ -8,5 +8,5 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
         && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
         && apt-get update && apt-get -y install google-chrome-stable
 
-RUN yarn
-RUN yarn test:ci && yarn lint && yarn build --configuration=docker
+RUN npm install
+RUN npm run test:ci && npm run lint && npm run build -- --configuration=docker
