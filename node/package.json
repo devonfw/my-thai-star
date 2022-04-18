@@ -40,7 +40,7 @@
     "helmet": "^4.6.0",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
