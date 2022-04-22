@@ -18,7 +18,7 @@
     <mts.database.profile>h2mem</mts.database.profile>    <!-- profile for spring -->
     <mts.database.groupId>com.h2database</mts.database.groupId>
     <mts.database.artifactId>h2</mts.database.artifactId>
-    <mts.database.version>1.4.194</mts.database.version>
+    <mts.database.version>2.1.212</mts.database.version>
   </properties>
 
   <dependencies>

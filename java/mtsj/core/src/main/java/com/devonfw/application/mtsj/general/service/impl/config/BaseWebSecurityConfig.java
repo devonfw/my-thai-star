@@ -3,6 +3,7 @@ package com.devonfw.application.mtsj.general.service.impl.config;
 import javax.inject.Inject;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +28,6 @@ import com.devonfw.module.security.common.api.config.WebSecurityConfigurer;
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
   @Inject
   private BaseUserDetailsService userDetailsService;
 
@@ -51,9 +51,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     return authProvider;
   }
 
+  @Lazy
   @Inject
   private AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
 
+  @Lazy
   @Inject
   private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
 
