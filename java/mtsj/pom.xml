@@ -9,13 +9,13 @@
 
   <properties>
     <spring.boot.version>2.6.6</spring.boot.version>
-    <devon4j.version>2021.04.002</devon4j.version>
+    <devon4j.version>2021.04.003</devon4j.version>
     <java.version>1.8</java.version>
     <devon.test.excluded.groups>subsystem,system</devon.test.excluded.groups>
     <junit.version>5.7.1</junit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <jackson.version>2.13.2.2</jackson.version> <!-- Overriding Jackson for fixing vulnerabilities -->
+    <jackson.version>2.13.2.20220328</jackson.version> <!-- Overriding Jackson for fixing vulnerabilities -->
     <guava.version>31.1-jre</guava.version>
     <flatten.mode>oss</flatten.mode>
  </properties>
