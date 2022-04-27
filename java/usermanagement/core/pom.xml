@@ -3,36 +3,34 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.devonfw.java.mtsj</groupId>
-    <artifactId>mtsj</artifactId>
-    <version>3.2.0-SNAPSHOT</version>
+    <groupId>com.devonfw.app</groupId>
+    <artifactId>usermanagement</artifactId>
+    <version>${revision}</version>
   </parent>
-  <artifactId>mtsj-core</artifactId>
+  <artifactId>usermanagement-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>Core of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (devon4j).</description>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <mts.database.name>h2</mts.database.name>
-    <mts.database.profile>h2mem</mts.database.profile>    <!-- profile for spring -->
-    <mts.database.groupId>com.h2database</mts.database.groupId>
-    <mts.database.artifactId>h2</mts.database.artifactId>
-    <mts.database.version>2.1.212</mts.database.version>
-  </properties>
+  <description>Core of the server for the usermanagement application - a simple example based on devon4j.</description>
 
   <dependencies>
+
+    <!-- Java One Time API -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>mtsj-api</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.jboss.aerogear</groupId>
+      <artifactId>aerogear-otp-java</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+ <!-- Google ZXing Core -->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>javase</artifactId>
+      <version>3.4.0</version>
     </dependency>
 
 
-
     <dependency>
-      <groupId>com.devonfw.java.starters</groupId>
-      <artifactId>devon4j-starter-security-cors</artifactId>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
     </dependency>
 
     <!-- Bean-Mapping for conversion from TO to Entity and vice versa -->
@@ -52,16 +50,28 @@
       <artifactId>devon4j-web</artifactId>
     </dependency>
 
-    <!-- Only required if you want to call external REST services within your Java application -->
+    <!-- Starter for asynchronous consuming REST services via Jaca HTTP Client (Java11+) -->
+    <!--
     <dependency>
       <groupId>com.devonfw.java.starters</groupId>
-      <artifactId>devon4j-starter-cxf-client-rest</artifactId>
+      <artifactId>devon4j-starter-http-client-rest-async</artifactId>
     </dependency>
-    <!-- Only required if you want to call external SOAP services within your Java application -->
+    -->
+    <!-- Starter for synchronous consuming REST services via Jaca HTTP Client (Java11+)
+      NOTE: As an alternative you can also use devon4j-starter-cxf-client-rest with Apache CXF (Java8+) -->
+    <!--
+    <dependency>
+      <groupId>com.devonfw.java.starters</groupId>
+      <artifactId>devon4j-starter-http-client-rest-sync</artifactId>
+    </dependency>
+    -->
+    <!-- Starter for synchronous consuming SOAP services via Apache CXF (Java8+) -->
+    <!--
     <dependency>
       <groupId>com.devonfw.java.starters</groupId>
       <artifactId>devon4j-starter-cxf-client-ws</artifactId>
     </dependency>
+    -->
 
     <!-- Only required if you want to provide REST services within your Java application -->
     <dependency>
@@ -69,10 +79,12 @@
       <artifactId>devon4j-starter-cxf-server-rest</artifactId>
     </dependency>
     <!-- Only required if you want to provide SOAP services within your Java application -->
-    <dependency>
+    <!--
+      <dependency>
       <groupId>com.devonfw.java.starters</groupId>
       <artifactId>devon4j-starter-cxf-server-ws</artifactId>
-    </dependency>
+      </dependency>
+    -->
 
     <!-- Only required if you want to use spring-data to access DB via JPA -->
     <dependency>
@@ -138,9 +150,9 @@
 
     <!-- Database -->
     <dependency>
-      <groupId>com.h2database</groupId>
+            <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-    </dependency>
+          </dependency>
 
     <!-- Flyway for DB Schema version management and migration -->
     <dependency>
@@ -178,7 +190,12 @@
       <artifactId>logstash-logback-encoder</artifactId>
     </dependency>
 
-
+    <!-- Tests -->
+    <dependency>
+      <groupId>com.devonfw.java.modules</groupId>
+      <artifactId>devon4j-test-jpa</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -194,81 +211,9 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-    </dependency>
-
-    <!-- Java One Time API -->
-    <dependency>
-      <groupId>org.jboss.aerogear</groupId>
-      <artifactId>aerogear-otp-java</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-
-    <!-- Google ZXing Core -->
-    <dependency>
-      <groupId>com.google.zxing</groupId>
-      <artifactId>javase</artifactId>
-      <version>3.4.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-mail</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.devonfw.java.modules</groupId>
-      <artifactId>devon4j-logging</artifactId>
-    </dependency>
-
-    <!-- Tests -->
-    <dependency>
-      <groupId>com.devonfw.java.modules</groupId>
-      <artifactId>devon4j-test-jpa</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
 
-
-
   <profiles>
-    <profile>
-      <id>hana</id>
-      <properties>
-        <mts.database.name>hana</mts.database.name>
-        <mts.database.profile>hana</mts.database.profile>
-        <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
-        <mts.database.artifactId>ngdbc</mts.database.artifactId>
-        <mts.database.version>2.3.48</mts.database.version>
-      </properties>
-      <build>
-        <resources>
-          <!-- Custom entity mapping for HANA -->
-          <resource>
-            <directory>src/main/resources/db/specific/hana</directory>
-            <includes>
-              <include>orm.xml</include>
-            </includes>
-            <targetPath>META-INF</targetPath>
-          </resource>
-        </resources>
-      </build>
-    </profile>
     <profile>
       <id>embedded</id>
       <activation>
@@ -284,7 +229,6 @@
       </dependencies>
     </profile>
   </profiles>
-
 
   <build>
     <plugins>
