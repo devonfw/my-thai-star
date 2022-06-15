@@ -26,6 +26,7 @@ import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Implementation of component interface of usermanagement
@@ -41,6 +42,9 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
   @Inject
   private UserRoleRepository userRoleDao;
+  
+  @Inject
+  private PasswordEncoder passwordEncoder;
 
   /**
    * The constructor.
@@ -104,8 +108,14 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserEto saveUser(UserEto user) {
 
     Objects.requireNonNull(user, "user");
+    
+    if (user.getUserRoleId() == null) {
+      user.setUserRoleId(0L);
+    }
+    
     UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
-
+    userEntity.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
+    
     // initialize, validate userEntity here if necessary
     UserEntity resultEntity = getUserDao().save(userEntity);
     LOG.debug("User with id '{}' has been created.", resultEntity.getId());

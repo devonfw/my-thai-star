@@ -3,9 +3,9 @@ FROM node:lts AS build
 WORKDIR /app
 
 COPY package.json /app/package.json
-RUN yarn
+RUN npm install
 COPY . /app
-RUN yarn build --configuration=docker
+RUN npm run build -- --configuration=docker
 
 # 2. Deploy
 FROM bitnami/nginx:latest
