@@ -119,16 +119,17 @@ describe('UserAreaService', () => {
     });
   });
 
-  it('should open My Thai Star application by successful login credential', fakeAsync(() => {
-    userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com');
-    tick();
-    const req = httpTestingController.expectOne(
-      config.restServiceRoot + 'usermanagement/v1/user/register',
-    );
-    console.log('request URL: ' + req.request.url);
-    expect(req.request.method).toEqual('POST');
-    req.flush('success');
-    expect(snackService.success).toHaveBeenCalled();
+  it('should open My Thai Star application by successful login credential', waitForAsync(() => {
+    userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com')
+    .toPromise()
+    .then(() => {
+      const req = httpTestingController.expectOne(
+        config.restServiceRoot + 'usermanagement/v1/user/register',
+      );
+      expect(req.request.method).toEqual('POST');
+      req.flush('success');
+      expect(snackService.success).toHaveBeenCalled();
+    });
   }));
 
   it('should throw error in case login credentials not matched', waitForAsync(() => {
@@ -138,7 +139,6 @@ describe('UserAreaService', () => {
       const req = httpTestingController.expectOne(
         config.restServiceRoot + 'usermanagement/v1/user/register',
       );
-      console.log('request URL: ' + req.request.url);
       expect(req.request.method).toEqual('POST');
       req.flush('Login credentials not matched', {
         status: 500,
