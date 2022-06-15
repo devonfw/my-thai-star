@@ -31,6 +31,12 @@ const authReducer = createReducer(
     ...state,
     error: error.message,
   })),
+  on(authActions.register, (state) => ({ ...state })),
+  on(authActions.registerSuccess, (state, { username }) => ({ ...state, user: { user: username, ...state.user } })),
+  on(authActions.registerFail, (state, { error }) => ({
+    ...state,
+    error: error.error.message,
+  })),
   on(authActions.logout, (state) => ({ ...initialState })),
   on(authActions.logoutFail, (state) => ({
     ...state,

@@ -49,11 +49,18 @@ export class AuthEffects {
       map((result: any) => {
         if (result === undefined) {
           return authActions.closeDialog();
+        } else if (result.email) {
+          return authActions.register({
+            username: result.username,
+            password: result.password,
+            email: result.email
+          });
+        } else {
+          return authActions.login({
+            username: result.username,
+            password: result.password,
+          });
         }
-        return authActions.login({
-          username: result.username,
-          password: result.password,
-        });
       }),
     ),
   );
@@ -196,6 +203,57 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(authActions.loginFail),
         map((errorData) => errorData.error),
+        tap((error) => {
+          this.snackBar.openSnack(error.message, 4000, 'red');
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  // Communicate with Server (this.userService.register),
+  // dispatch registerSuccess if there is a successful response,
+  // else dispatch registerFail
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.register),
+      switchMap((user: any) => {
+        return this.userService.register(user.username, user.password, user.email).pipe(
+          map((res) => {
+            if (res.username) {
+              return authActions.registerSuccess({
+                username: res.username
+              });
+            }
+          }),
+          catchError((error) => of(authActions.registerFail({ error }))),
+        );
+      }),
+    ),
+  );
+
+  // open snackBar on successfull registration
+  registerSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.registerSuccess),
+        map((user) => user.username),
+        tap((user: string) => {
+          this.snackBar.openSnack(
+            user + ' ' + this.translocoService.translate('alerts.authAlerts.registerSuccess'),
+            4000,
+            'green',
+          );
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  // Show snackbar and close Dialog
+  registerFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.registerFail),
+        map((errorData) => errorData.error.error),
         tap((error) => {
           this.snackBar.openSnack(error.message, 4000, 'red');
         }),

@@ -28,6 +28,12 @@
       <div class="formFields">
         <div>
           <mat-form-field color="accent">
+            <input matInput [placeholder]="'formFields.username' | transloco" ngModel name="username" required>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field color="accent">
             <input matInput [placeholder]="'formFields.email' | transloco" ngModel name="email" required validateEmail>
             <mat-error>{{'userArea.emailError' | transloco}}</mat-error>
           </mat-form-field>
