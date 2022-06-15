@@ -122,7 +122,7 @@ describe('UserAreaService', () => {
   it('should open My Thai Star application by successful login credential', () => {
     userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com');
     const req = httpTestingController.expectOne(
-      config.restServiceRoot + 'register',
+      config.restServiceRoot + 'usermanagement/v1/user/register',
     );
     expect(req.request.method).toEqual('POST');
     req.flush('success');
@@ -132,7 +132,7 @@ describe('UserAreaService', () => {
   it('should throw error in case login credentials not matched', () => {
     userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com');
     const req = httpTestingController.expectOne(
-      config.restServiceRoot + 'register',
+      config.restServiceRoot + 'usermanagement/v1/user/register',
     );
     expect(req.request.method).toEqual('POST');
     req.flush('Login credentials not matched', {
