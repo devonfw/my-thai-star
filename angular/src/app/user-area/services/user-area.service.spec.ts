@@ -1,4 +1,4 @@
-import { inject, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { inject, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule, MemoizedSelector } from '@ngrx/store';
 import { AuthService } from '../../core/authentication/auth.service';
@@ -119,8 +119,9 @@ describe('UserAreaService', () => {
     });
   });
 
-  it('should open My Thai Star application by successful login credential', () => {
+  it('should open My Thai Star application by successful login credential', fakeAsync(() => {
     userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com');
+    tick();
     const req = httpTestingController.expectOne(
       config.restServiceRoot + 'usermanagement/v1/user/register',
     );
@@ -128,21 +129,24 @@ describe('UserAreaService', () => {
     expect(req.request.method).toEqual('POST');
     req.flush('success');
     expect(snackService.success).toHaveBeenCalled();
-  });
+  }));
 
-  it('should throw error in case login credentials not matched', () => {
-    userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com');
-    const req = httpTestingController.expectOne(
-      config.restServiceRoot + 'usermanagement/v1/user/register',
-    );
-    console.log('request URL: ' + req.request.url);
-    expect(req.request.method).toEqual('POST');
-    req.flush('Login credentials not matched', {
-      status: 500,
-      statusText: 'Internal Server Error',
+  it('should throw error in case login credentials not matched', waitForAsync(() => {
+    userAreaService.register('capgemini', 'capgemini', 'capgemini@capgemini.com')
+    .toPromise()
+    .then(() => {
+      const req = httpTestingController.expectOne(
+        config.restServiceRoot + 'usermanagement/v1/user/register',
+      );
+      console.log('request URL: ' + req.request.url);
+      expect(req.request.method).toEqual('POST');
+      req.flush('Login credentials not matched', {
+        status: 500,
+        statusText: 'Internal Server Error',
+      });
+      expect(snackService.fail).toHaveBeenCalled();
     });
-    expect(snackService.fail).toHaveBeenCalled();
-  });
+  }));
 
   it('should update password', () => {
     authService = TestBed.inject(AuthService);
