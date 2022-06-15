@@ -124,6 +124,7 @@ describe('UserAreaService', () => {
     const req = httpTestingController.expectOne(
       config.restServiceRoot + 'usermanagement/v1/user/register',
     );
+    console.log('request URL: ' + req.request.url);
     expect(req.request.method).toEqual('POST');
     req.flush('success');
     expect(snackService.success).toHaveBeenCalled();
@@ -134,6 +135,7 @@ describe('UserAreaService', () => {
     const req = httpTestingController.expectOne(
       config.restServiceRoot + 'usermanagement/v1/user/register',
     );
+    console.log('request URL: ' + req.request.url);
     expect(req.request.method).toEqual('POST');
     req.flush('Login credentials not matched', {
       status: 500,
