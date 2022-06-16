@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { props, createAction, union } from '@ngrx/store';
 import { TokenString, UserDataResponse } from '../../models/user';
 
@@ -24,6 +25,20 @@ export const loginFail = createAction(
   '[Auth] LoginFail',
   props<{ error: Error }>(),
 );
+export const register = createAction(
+  '[Auth] Register',
+  props<{ username: string; password: string; email: string }>(),
+);
+
+export const registerSuccess = createAction(
+  '[Auth] RegisterSuccess',
+  props<{ username: string }>(),
+);
+
+export const registerFail = createAction(
+  '[Auth] RegisterFail',
+  props<{ error: HttpErrorResponse }>(),
+);
 
 export const logout = createAction('[Auth] Logout');
 
@@ -44,6 +59,9 @@ const all = union({
   login,
   loginSuccess,
   loginFail,
+  register,
+  registerSuccess,
+  registerFail,
   token,
   logout,
   logoutFail,
