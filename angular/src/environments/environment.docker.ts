@@ -1,4 +1,5 @@
 export const environment: {
   production: boolean;
   loadExternalConfig: boolean;
-} = { production: true, loadExternalConfig: true };
+  enableRouterTracing: boolean;
+} = { production: true, loadExternalConfig: true, enableRouterTracing: false };

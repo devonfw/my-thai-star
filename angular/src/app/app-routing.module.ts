@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from 'environments/environment';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true, relativeLinkResolution: 'legacy' }, // <-- debugging purposes only
+      { enableTracing: environment.enableRouterTracing, relativeLinkResolution: 'legacy' }, // <-- debugging purposes only
     ),
   ],
   exports: [RouterModule],
