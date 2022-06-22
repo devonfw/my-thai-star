@@ -2,13 +2,12 @@ package com.devonfw.application.bookingmanangement.rest.v1.model;
 
 import java.time.Instant;
 
+import com.devonfw.application.bookingmanangement.general.domain.model.ApplicationSearchCriteriaDto;
+
 import lombok.Data;
 
-/**
- * used to find {@link com.devonfw.application.mtsj.bookingmanagement.common.api.InvitedGuest}s.
- */
 @Data
-public class InvitedGuestSearchCriteriaTo {
+public class InvitedGuestSearchCriteriaTo extends ApplicationSearchCriteriaDto {
 
   private static final long serialVersionUID = 1L;
 

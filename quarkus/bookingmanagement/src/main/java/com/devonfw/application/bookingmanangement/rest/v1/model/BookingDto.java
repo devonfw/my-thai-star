@@ -7,18 +7,16 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import com.devonfw.application.bookingmanangement.domain.model.BookingType;
+import com.devonfw.application.bookingmanangement.general.domain.model.AbstractDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * Entity transport object of Booking
- */
-@Data
-public class BookingDto {
+@Setter
+@Getter
+public class BookingDto extends AbstractDto {
 
   private static final long serialVersionUID = 1L;
-
-  private Long id;
 
   @NotNull
   private String name;

@@ -7,11 +7,6 @@ import com.devonfw.application.bookingmanangement.general.domain.model.Applicati
 
 import lombok.Data;
 
-/**
- *
- *
- * used to find {@link com.devonfw.application.mtsj.bookingmanagement.common.api.Booking}s.
- */
 @Data
 public class BookingSearchCriteriaTo extends ApplicationSearchCriteriaDto {
 

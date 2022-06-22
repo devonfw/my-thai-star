@@ -10,12 +10,10 @@ import javax.persistence.Table;
 
 import com.devonfw.application.bookingmanangement.general.domain.model.ApplicationPersistenceEntity;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Setter
 @Table(name = "InvitedGuest")
 @ToString(callSuper = true, includeFieldNames = true)
@@ -38,4 +36,45 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity {
 
     return this.booking;
   }
+
+  /**
+   * @return guestToken
+   */
+  public String getGuestToken() {
+
+    return this.guestToken;
+  }
+
+  /**
+   * @return email
+   */
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  /**
+   * @return accepted
+   */
+  public Boolean getAccepted() {
+
+    return this.accepted;
+  }
+
+  /**
+   * @return modificationDate
+   */
+  public Instant getModificationDate() {
+
+    return this.modificationDate;
+  }
+
+  /**
+   * @return idBooking
+   */
+  public Long getIdBooking() {
+
+    return this.idBooking;
+  }
+
 }

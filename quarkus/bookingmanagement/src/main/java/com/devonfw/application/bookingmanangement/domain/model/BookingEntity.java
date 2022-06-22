@@ -14,12 +14,10 @@ import javax.validation.constraints.Min;
 
 import com.devonfw.application.bookingmanangement.general.domain.model.ApplicationPersistenceEntity;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @Table(name = "Booking")
@@ -62,6 +60,56 @@ public class BookingEntity extends ApplicationPersistenceEntity {
   public List<InvitedGuestEntity> getInvitedGuests() {
 
     return this.invitedGuests;
+  }
+
+  public String getName() {
+
+    return this.name;
+  }
+
+  public String getBookingToken() {
+
+    return this.bookingToken;
+  }
+
+  public String getComment() {
+
+    return this.comment;
+  }
+
+  public Instant getBookingDate() {
+
+    return this.bookingDate;
+  }
+
+  public Instant getExpirationDate() {
+
+    return this.expirationDate;
+  }
+
+  public Instant getCreationDate() {
+
+    return this.creationDate;
+  }
+
+  public String getEmail() {
+
+    return this.email;
+  }
+
+  public Boolean getCanceled() {
+
+    return this.canceled;
+  }
+
+  public BookingType getBookingType() {
+
+    return this.bookingType;
+  }
+
+  public Integer getAssistants() {
+
+    return this.assistants;
   }
 
 }

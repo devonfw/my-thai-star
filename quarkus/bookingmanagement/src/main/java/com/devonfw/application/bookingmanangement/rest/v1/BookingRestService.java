@@ -22,8 +22,15 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.springframework.data.domain.Page;
+
 import com.devonfw.application.bookingmanangement.logic.BookingManagement;
 import com.devonfw.application.bookingmanangement.rest.v1.model.BookingDto;
+import com.devonfw.application.bookingmanangement.rest.v1.model.BookingSearchCriteriaTo;
+import com.devonfw.application.bookingmanangement.rest.v1.model.InvitedGuestDto;
+import com.devonfw.application.bookingmanangement.rest.v1.model.InvitedGuestSearchCriteriaTo;
+import com.devonfw.application.bookingmanangement.rest.v1.model.TableDto;
+import com.devonfw.application.bookingmanangement.rest.v1.model.TableSearchCriteriaTo;
 
 @Path("/bookingmanagement/v1")
 @ApplicationScoped
@@ -35,13 +42,13 @@ public class BookingRestService {
   UriInfo uriInfo;
 
   @Inject
-  BookingManagement bookingManagement;
+  BookingManagement bookingmanagement;
 
   @GET
   @Path("/booking/{id}")
   public BookingDto getBooking(@PathParam("id") Long id) {
 
-    return this.bookingManagement.findBooking(id);
+    return this.bookingmanagement.findBooking(id);
   }
 
   @POST
@@ -52,7 +59,7 @@ public class BookingRestService {
     if (isEmpty(booking.getBookingToken())) {
       throw new WebApplicationException("Booking token was not set on request.", 400);
     }
-    String bookingId = Long.toString(this.bookingManagement.saveBooking(booking).getId());
+    String bookingId = Long.toString(this.bookingmanagement.saveBooking(booking).getId());
     UriBuilder uriBuilder = this.uriInfo.getAbsolutePathBuilder().path(bookingId);
     return created(uriBuilder.build()).build();
   }
@@ -62,8 +69,104 @@ public class BookingRestService {
   @Transactional
   public Response deleteBooking(@PathParam("id") long id) {
 
-    this.bookingManagement.deleteBooking(id);
+    this.bookingmanagement.deleteBooking(id);
     return status(Status.NO_CONTENT.getStatusCode()).build();
+  }
+
+  @Path("/booking/search")
+  @POST
+  public Page<BookingDto> findBookingsByPost(BookingSearchCriteriaTo searchCriteriaTo) {
+
+    return this.bookingmanagement.findBookingsByPost(searchCriteriaTo);
+
+  }
+
+  @GET
+  @Path("/invitedguest/{id}/")
+  public InvitedGuestDto getInvitedGuest(@PathParam("id") long id) {
+
+    return this.bookingmanagement.findInvitedGuest(id);
+
+  }
+
+  @POST
+  @Path("/invitedguest/")
+  @Transactional
+  public Response saveInvitedGuest(InvitedGuestDto invitedguest) {
+
+    String invitedGuestId = Long.toString(this.bookingmanagement.saveInvitedGuest(invitedguest).getId());
+    UriBuilder uriBuilder = this.uriInfo.getAbsolutePathBuilder().path(invitedGuestId);
+    return created(uriBuilder.build()).build();
+  }
+
+  @DELETE
+  @Path("/invitedguest/{id}/")
+  public Response deleteInvitedGuest(@PathParam("id") long id) {
+
+    this.bookingmanagement.deleteInvitedGuest(id);
+    return status(Status.NO_CONTENT.getStatusCode()).build();
+  }
+
+  @Path("/invitedguest/search")
+  @POST
+  public Page<InvitedGuestDto> findInvitedGuestsByPost(InvitedGuestSearchCriteriaTo criteria) {
+
+    return this.bookingmanagement.findInvitedGuestDtos(criteria);
+  }
+
+  @Path("/invitedguest/accept/{token}")
+  @GET
+  public InvitedGuestDto acceptInvite(@PathParam("token") String guestToken) {
+
+    return this.bookingmanagement.acceptInvite(guestToken);
+  }
+
+  @Path("/invitedguest/decline/{token}")
+  @GET
+  public InvitedGuestDto declineInvite(@PathParam("token") String guestToken) {
+
+    return this.bookingmanagement.declineInvite(guestToken);
+
+  }
+
+  @Path("/booking/cancel/{token}")
+  @GET
+  public void cancelInvite(@PathParam("token") String bookingToken) {
+
+    this.bookingmanagement.cancelInvite(bookingToken);
+  }
+
+  @GET
+  @Path("/table/{id}/")
+  public TableDto getTable(@PathParam("id") long id) {
+
+    return this.bookingmanagement.findTable(id);
+
+  }
+
+  @POST
+  @Path("/table/")
+  public Response saveTable(TableDto table) {
+
+    String tableId = Long.toString(this.bookingmanagement.saveTable(table).getId());
+    UriBuilder uriBuilder = this.uriInfo.getAbsolutePathBuilder().path(tableId);
+    return created(uriBuilder.build()).build();
+
+  }
+
+  @DELETE
+  @Path("/table/{id}/")
+  public Response deleteTable(@PathParam("id") long id) {
+
+    this.bookingmanagement.deleteTable(id);
+    return status(Status.NO_CONTENT.getStatusCode()).build();
+  }
+
+  @Path("/table/search")
+  @POST
+  public Page<TableDto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo) {
+
+    return this.bookingmanagement.findTableDtos(searchCriteriaTo);
   }
 
 }

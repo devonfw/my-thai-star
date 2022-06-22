@@ -6,5 +6,5 @@ import com.devonfw.application.bookingmanangement.domain.model.BookingEntity;
 import com.devonfw.application.bookingmanangement.rest.v1.model.BookingSearchCriteriaTo;
 
 public interface BookingFragment {
-  public Page<BookingEntity> findUserByCriteria(BookingSearchCriteriaTo bookingSearchCriteriaTo);
+  Page<BookingEntity> findBookingsByCriteria(BookingSearchCriteriaTo criteria);
 }
