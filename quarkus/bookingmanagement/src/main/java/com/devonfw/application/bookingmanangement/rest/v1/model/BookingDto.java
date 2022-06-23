@@ -9,11 +9,17 @@ import javax.validation.constraints.NotNull;
 import com.devonfw.application.bookingmanangement.domain.model.BookingType;
 import com.devonfw.application.bookingmanangement.general.domain.model.AbstractDto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookingDto extends AbstractDto {
 
   private static final long serialVersionUID = 1L;
