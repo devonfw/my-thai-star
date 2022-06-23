@@ -10,6 +10,53 @@ mat-form-field {
   margin-bottom: 8px;
 }
 
+.demo-credentials-text {
+  float: left;
+  margin: 3px 0 0;
+  font-size: 0.8em;
+  cursor: pointer;
+  mat-icon {
+    font-size: 1.5em;
+    position: relative;
+    top: 4px;
+  }
+}
+
+.demo-credentials {
+  font-size: 0.8em;
+  background: bisque;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 4px;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    th,
+    td {
+      text-align: left;
+      border-bottom: 1px solid;
+      &:first-child {
+        width: 40%;
+      }
+      &:last-child {
+        text-align: right;
+      }
+    }
+    tr {
+      &:last-child {
+        td {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 599px) {
   .forgotPassword {
     cursor: pointer;
