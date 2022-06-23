@@ -40,7 +40,7 @@ public class BookingRestServiceTest {
         .modificationCounter(1) //
         .bookingId(0L) //
         .accepted(true) //
-        .email("Testname@cg.com") //
+        .email("guestuser@cg.com") //
         .guestToken("guesttoken") //
         .build();
     BookingDto bookingDto = BookingDto.builder().name("Testname") //
