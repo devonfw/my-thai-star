@@ -30,11 +30,35 @@ public class BookingFragmentImpl implements BookingFragment {
     QBookingEntity bookingEntity = QBookingEntity.bookingEntity;
     List<Predicate> predicates = new ArrayList<>();
 
-    if (searchCriteria.getAssistants() != null) {
-      predicates.add(bookingEntity.assistants.eq(searchCriteria.getAssistants()));
+    if (!isEmpty(searchCriteria.getName())) {
+      predicates.add(bookingEntity.name.eq(searchCriteria.getName()));
     }
     if (!isEmpty(searchCriteria.getBookingToken())) {
       predicates.add(bookingEntity.bookingToken.eq(searchCriteria.getBookingToken()));
+    }
+    if (!isEmpty(searchCriteria.getComment())) {
+      predicates.add(bookingEntity.comment.eq(searchCriteria.getComment()));
+    }
+    if (searchCriteria.getBookingDate() != null) {
+      predicates.add(bookingEntity.bookingDate.eq(searchCriteria.getBookingDate()));
+    }
+    if (searchCriteria.getExpirationDate() != null) {
+      predicates.add(bookingEntity.expirationDate.eq(searchCriteria.getExpirationDate()));
+    }
+    if (searchCriteria.getCreationDate() != null) {
+      predicates.add(bookingEntity.creationDate.eq(searchCriteria.getCreationDate()));
+    }
+    if (!isEmpty(searchCriteria.getEmail())) {
+      predicates.add(bookingEntity.email.eq(searchCriteria.getEmail()));
+    }
+    if (searchCriteria.getCanceled() != null) {
+      predicates.add(bookingEntity.canceled.eq(searchCriteria.getCanceled()));
+    }
+    if (searchCriteria.getBookingType() != null) {
+      predicates.add(bookingEntity.bookingType.eq(searchCriteria.getBookingType()));
+    }
+    if (searchCriteria.getTableId() != null) {
+      predicates.add(bookingEntity.table.id.eq(searchCriteria.getTableId()));
     }
 
     JPAQuery<BookingEntity> query = new JPAQuery<BookingEntity>(this.em).from(bookingEntity);
