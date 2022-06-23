@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@javax.persistence.Table(name = "T_Table")
+@javax.persistence.Table(name = "Table")
 public class TableEntity extends ApplicationPersistenceEntity {
 
   @Column(name = "SEATS_NUMBER")

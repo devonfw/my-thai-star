@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -136,23 +135,7 @@ public class BookingManagement {
 
   public Page<BookingDto> findBookingDtos(BookingSearchCriteriaTo criteria) {
 
-    Page<BookingDto> pagListTo = null;
-    Page<BookingEntity> bookings = this.bookingDao.findBookingsByCriteria(criteria);
-    List<BookingDto> ctos = new ArrayList<>();
-    for (BookingEntity entity : bookings.getContent()) {
-      BookingDto bookingDto = this.bookingMapper.map(entity);
-      bookingDto.setInvitedGuests(this.invitedGuestMapper.mapList(entity.getInvitedGuests()));
-      // cto.setOrder(getBeanMapper().map(entity.getOrder(), OrderEto.class));
-      bookingDto.setTable(this.tableMapper.mapToDto(entity.getTable()));
-      // cto.setUser(getBeanMapper().map(entity.getUser(), UserEto.class));
-      // cto.setOrders(getBeanMapper().mapList(entity.getOrders(), OrderEto.class));
-      ctos.add(bookingDto);
-    }
-    if (ctos.size() > 0) {
-      // Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), ctos.size());
-      // pagListTo = new PageImpl<>(ctos, pagResultTo, bookings.getTotalElements());
-    }
-    return pagListTo;
+    return this.bookingMapper.map(this.bookingDao.findBookingsByCriteria(criteria));
   }
 
   public InvitedGuestDto findInvitedGuest(long id) {

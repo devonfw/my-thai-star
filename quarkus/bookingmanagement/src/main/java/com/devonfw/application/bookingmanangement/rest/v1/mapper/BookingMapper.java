@@ -9,7 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import com.devonfw.application.bookingmanangement.domain.model.BookingEntity;
 import com.devonfw.application.bookingmanangement.rest.v1.model.BookingDto;
 
-@Mapper(componentModel = "cdi", uses = { TableMapper.class, InvitedGuestMapper.class })
+@Mapper(componentModel = "cdi")
 public interface BookingMapper {
 
   BookingDto map(BookingEntity booking);
