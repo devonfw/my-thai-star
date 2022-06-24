@@ -59,8 +59,7 @@ public class BookingManagement {
     if (booking.isEmpty()) {
       return null;
     }
-    BookingDto dto = new BookingDto();
-    dto = this.bookingMapper.map(booking.get());
+    BookingDto dto = this.bookingMapper.map(booking.get());
     dto.setTable(this.tableMapper.mapToDto(booking.get().getTable()));
     dto.setInvitedGuests(this.invitedGuestMapper.mapList(booking.get().getInvitedGuests()));
     return dto;
@@ -99,7 +98,7 @@ public class BookingManagement {
     List<InvitedGuestEntity> invitedGuestEntities = this.invitedGuestMapper.mapToListEntity(invitedGuests);
     invitedGuestEntities.forEach(guest -> {
       guest.setGuestToken(buildToken(guest.getEmail(), "GB_"));
-      guest.setIdBooking(bookingId);
+      guest.setBookingId(bookingId);
       this.invitedGuestDao.save(guest);
     });
   }
@@ -172,7 +171,7 @@ public class BookingManagement {
 
     InvitedGuestDto invited = findInvitedGuestByToken(guestToken);
     invited.setAccepted(true);
-    BookingDto bookingDto = findBooking(invited.getBookingId());
+    // BookingDto bookingDto = findBooking(invited.getBookingId());
     // TODO send email
     return saveInvitedGuest(invited);
   }
@@ -181,7 +180,7 @@ public class BookingManagement {
 
     InvitedGuestDto invited = findInvitedGuestByToken(guestToken);
     invited.setAccepted(false);
-    BookingDto bookingDto = findBooking(invited.getBookingId());
+    // BookingDto bookingDto = findBooking(invited.getBookingId());
     // TODO send email
     // TODO delete Order
     return saveInvitedGuest(invited);

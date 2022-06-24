@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.devonfw.application.bookingmanangement.general.domain.model.ApplicationPersistenceEntity;
 
@@ -27,8 +28,6 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity {
   private Boolean accepted;
 
   private Instant modificationDate;
-
-  private Long idBooking;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "idBooking", insertable = false, updatable = false)
@@ -69,12 +68,25 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity {
     return this.modificationDate;
   }
 
-  /**
-   * @return idBooking
-   */
-  public Long getIdBooking() {
+  @Transient
+  public Long getBookingId() {
 
-    return this.idBooking;
+    if (this.booking == null) {
+      return null;
+    }
+    return this.booking.getId();
+  }
+
+  public void setBookingId(Long bookingId) {
+
+    if (bookingId == null) {
+      this.booking = null;
+    } else {
+      BookingEntity bookingEntity = new BookingEntity();
+      bookingEntity.setId(bookingId);
+      bookingEntity.setModificationCounter(0);
+      this.booking = bookingEntity;
+    }
   }
 
 }
