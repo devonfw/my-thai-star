@@ -2,14 +2,14 @@ package com.devonfw.application.bookingmanangement.rest.v1.mapper;
 
 import java.util.List;
 
+import com.devonfw.application.bookingmanangement.domain.model.BookingEntity;
+import com.devonfw.application.bookingmanangement.rest.v1.model.BookingDto;
+
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-import com.devonfw.application.bookingmanangement.domain.model.BookingEntity;
-import com.devonfw.application.bookingmanangement.rest.v1.model.BookingDto;
-
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = "cdi", uses = { TableMapper.class, InvitedGuestMapper.class })
 public interface BookingMapper {
 
   BookingDto map(BookingEntity booking);

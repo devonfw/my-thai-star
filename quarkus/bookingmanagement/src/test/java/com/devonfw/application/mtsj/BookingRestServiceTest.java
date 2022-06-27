@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-
 import com.devonfw.application.bookingmanangement.rest.v1.model.BookingDto;
 import com.devonfw.application.bookingmanangement.rest.v1.model.InvitedGuestDto;
 import com.devonfw.application.bookingmanangement.rest.v1.model.TableDto;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.response.Response;
@@ -33,11 +33,9 @@ public class BookingRestServiceTest {
   void saveUser() {
 
     TableDto tableDto = TableDto.builder().id(0L) //
-        .modificationCounter(1) //
-        .seatsNumber(1) //
         .build();
     InvitedGuestDto invitedGuestDto = InvitedGuestDto.builder().id(0L) //
-        .modificationCounter(1) //
+        .modificationCounter(0) //
         .bookingId(0L) //
         .accepted(true) //
         .email("guestuser@cg.com") //

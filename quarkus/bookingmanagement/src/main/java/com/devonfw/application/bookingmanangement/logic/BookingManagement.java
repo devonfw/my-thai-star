@@ -20,6 +20,7 @@ import com.devonfw.application.bookingmanangement.domain.model.TableEntity;
 import com.devonfw.application.bookingmanangement.domain.repo.BookingRepository;
 import com.devonfw.application.bookingmanangement.domain.repo.InvitedGuestRepository;
 import com.devonfw.application.bookingmanangement.domain.repo.TableRepository;
+import com.devonfw.application.bookingmanangement.logic.exception.CancelInviteNotAllowedException;
 import com.devonfw.application.bookingmanangement.rest.v1.mapper.BookingMapper;
 import com.devonfw.application.bookingmanangement.rest.v1.mapper.InvitedGuestMapper;
 import com.devonfw.application.bookingmanangement.rest.v1.mapper.TableMapper;

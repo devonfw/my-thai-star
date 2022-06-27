@@ -1,6 +1,5 @@
 package com.devonfw.application.bookingmanangement.rest.v1;
 
-import static com.devonfw.application.bookingmanangement.utils.StringUtils.isEmpty;
 import static javax.ws.rs.core.Response.created;
 import static javax.ws.rs.core.Response.status;
 
@@ -14,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -56,9 +54,6 @@ public class BookingRestService {
   @Transactional
   public Response saveBooking(BookingDto booking) {
 
-    if (isEmpty(booking.getBookingToken())) {
-      throw new WebApplicationException("Booking token was not set on request.", 400);
-    }
     String bookingId = Long.toString(this.bookingmanagement.saveBooking(booking).getId());
     UriBuilder uriBuilder = this.uriInfo.getAbsolutePathBuilder().path(bookingId);
     return created(uriBuilder.build()).build();

@@ -2,6 +2,7 @@ package com.devonfw.application.bookingmanangement.domain.model;
 
 import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -29,8 +30,11 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity {
 
   private Instant modificationDate;
 
+  @Column(insertable = false, updatable = false)
+  private Long idBooking;
+
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "idBooking", insertable = false, updatable = false)
+  @JoinColumn(name = "idBooking")
   public BookingEntity getBooking() {
 
     return this.booking;
