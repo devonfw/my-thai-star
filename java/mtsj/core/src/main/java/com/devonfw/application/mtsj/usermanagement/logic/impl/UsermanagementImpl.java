@@ -10,9 +10,11 @@ import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.datatype.Role;
+import com.devonfw.application.mtsj.general.common.api.exception.UserAlreadyExistsException;
 import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.application.mtsj.general.common.base.QrCodeService;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
@@ -26,7 +28,6 @@ import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Implementation of component interface of usermanagement
@@ -42,7 +43,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
   @Inject
   private UserRoleRepository userRoleDao;
-  
+
   @Inject
   private PasswordEncoder passwordEncoder;
 
@@ -108,18 +109,23 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserEto saveUser(UserEto user) {
 
     Objects.requireNonNull(user, "user");
-    
+
     if (user.getUserRoleId() == null) {
       user.setUserRoleId(0L);
     }
-    
+
     UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
     userEntity.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
-    
+
     // initialize, validate userEntity here if necessary
-    UserEntity resultEntity = getUserDao().save(userEntity);
-    LOG.debug("User with id '{}' has been created.", resultEntity.getId());
-    return getBeanMapper().map(resultEntity, UserEto.class);
+    UserEntity existingUser = this.userDao.findByUsername(user.getUsername());
+    if (existingUser == null) {
+      UserEntity resultEntity = getUserDao().save(userEntity);
+      LOG.debug("User with id '{}' has been created.", resultEntity.getId());
+      return getBeanMapper().map(resultEntity, UserEto.class);
+    } else {
+      throw new UserAlreadyExistsException();
+    }
   }
 
   @Override

@@ -8,6 +8,8 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./login-dialog.component.scss'],
 })
 export class LoginDialogComponent {
+  showCredentials = false;
+  
   constructor(private dialog: MatDialogRef<LoginDialogComponent>) {}
 
   logInSubmit(formValue: FormGroup): void {
