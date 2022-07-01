@@ -10,6 +10,7 @@ import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
@@ -92,6 +93,10 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   @Override
   public Page<UserEto> findUserEtos(UserSearchCriteriaTo criteria) {
 
+    if (criteria.getPageable() == null) {
+      criteria.setPageable(PageRequest.of(1, 5));
+    }
+
     Page<UserEntity> users = getUserDao().findUsers(criteria);
     return mapPaginatedEntityList(users, UserEto.class);
   }
@@ -160,6 +165,10 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
   @Override
   public Page<UserRoleEto> findUserRoleEtos(UserRoleSearchCriteriaTo criteria) {
+
+    if (criteria.getPageable() == null) {
+      criteria.setPageable(PageRequest.of(1, 5));
+    }
 
     Page<UserRoleEntity> userroles = getUserRoleDao().findUserRoles(criteria);
     return mapPaginatedEntityList(userroles, UserRoleEto.class);
