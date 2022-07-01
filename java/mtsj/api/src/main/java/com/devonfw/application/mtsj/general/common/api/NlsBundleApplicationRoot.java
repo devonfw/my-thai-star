@@ -17,7 +17,7 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("There is currently no user logged in")
   NlsMessage errorNoActiveUser();
 
-  @NlsBundleMessage("Username Already Exists")
+  @NlsBundleMessage("Username is already taken")
   NlsMessage errorUserAlreadyExists();
 
 }
