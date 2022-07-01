@@ -163,6 +163,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   @Override
   public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
+    if (criteria.getPageable() == null) {
+      criteria.setPageable(PageRequest.of(1, 5));
+    }
+
     List<OrderCto> ctos = new ArrayList<>();
     Page<OrderCto> pagListTo = null;
     Page<OrderEntity> orders = getOrderDao().findOrders(criteria);
@@ -285,6 +289,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
   @Override
   public Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria) {
+
+    if (criteria.getPageable() == null) {
+      criteria.setPageable(PageRequest.of(1, 5));
+    }
 
     Page<OrderLineEntity> orderlines = getOrderLineDao().findOrderLines(criteria);
     List<OrderLineCto> orderLinesCto = new ArrayList<>();
