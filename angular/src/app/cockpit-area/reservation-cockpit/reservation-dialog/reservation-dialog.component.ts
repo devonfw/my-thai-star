@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
+  DataColumn,
   FriendsInvite,
   ReservationView,
 } from '../../../shared/view-models/interfaces';
@@ -19,15 +20,15 @@ export class ReservationDialogComponent implements OnInit {
   currentPage = 1;
   pageSize = 4;
 
-  data: any;
-  columnso: any[] = [
+  data: ReservationView;
+  columnso: DataColumn[] = [
     { name: 'email', label: 'Guest email' },
     { name: 'accepted', label: 'Acceptances and declines' },
   ];
   displayedColumnsO: string[] = ['email', 'accepted'];
   pageSizes: number[];
   datat: ReservationView[] = [];
-  columnst: any[];
+  columnst: DataColumn[];
   displayedColumnsT: string[] = [
     'bookingDate',
     'creationDate',
@@ -36,11 +37,11 @@ export class ReservationDialogComponent implements OnInit {
     'tableId',
   ];
 
-  filteredData: any[] = this.datao;
+  filteredData: FriendsInvite[] = this.datao;
 
   constructor(
     private translocoService: TranslocoService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
+    @Inject(MAT_DIALOG_DATA) dialogData: ReservationView,
     private configService: ConfigService,
   ) {
     this.data = dialogData;
@@ -48,7 +49,7 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.subscribe((event: any) => {
+    this.translocoService.langChanges$.subscribe((event: string) => {
       this.setTableHeaders(event);
     });
 
@@ -105,7 +106,7 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   filter(): void {
-    let newData: any[] = this.datao;
+    let newData: FriendsInvite[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }

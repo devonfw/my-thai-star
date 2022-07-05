@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -9,8 +10,9 @@ import { ConfigService } from '../../core/config/config.service';
 import {
   FilterCockpit,
   Pageable,
+  Sort as Sortable
 } from '../../shared/backend-models/interfaces';
-import { OrderListView } from '../../shared/view-models/interfaces';
+import { DataColumn, OrderListView, OrderResponse } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
@@ -26,7 +28,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     pageNumber: 0,
     // total: 1,
   };
-  private sorting: any[] = [];
+  private sorting: Sortable[] = [];
 
   pageSize = 8;
 
@@ -35,7 +37,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   orders: OrderListView[] = [];
   totalOrders: number;
 
-  columns: any[];
+  columns: DataColumn[];
 
   displayedColumns: string[] = [
     'booking.bookingDate',
@@ -62,7 +64,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.applyFilters();
-    this.translocoService.langChanges$.subscribe((event: any) => {
+    this.translocoService.langChanges$.subscribe((event: string) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
     });
@@ -83,7 +85,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     this.waiterCockpitService
       .getOrders(this.pageable, this.sorting, this.filters)
-      .subscribe((data: any) => {
+      .subscribe((data: OrderResponse) => {
         if (!data) {
           this.orders = [];
         } else {
@@ -93,7 +95,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
-  clearFilters(filters: any): void {
+  clearFilters(filters: FormGroup): void {
     filters.reset();
     this.applyFilters();
     this.pagingBar.firstPage();

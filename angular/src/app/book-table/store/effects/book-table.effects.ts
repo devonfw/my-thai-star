@@ -8,6 +8,7 @@ import { Booking } from '../../models/booking.model';
 import { BookTableService } from '../../services/book-table.service';
 import * as bookTableActions from '../actions/book-table.actions';
 import { TranslocoService } from '@ngneat/transloco';
+import { BookingResponse } from 'app/book-table/models/booking-response.model';
 
 @Injectable()
 export class BookTableEffects {
@@ -15,9 +16,9 @@ export class BookTableEffects {
     this.actions$.pipe(
       ofType(bookTableActions.bookTable),
       map((booking) => booking.booking),
-      switchMap((booking: any) => {
-        return this.bookTableService.postBooking({ booking }).pipe(
-          map((res: any) =>
+      switchMap((booking: Booking) => {
+        return this.bookTableService.postBooking(booking).pipe(
+          map((res: BookingResponse) =>
             bookTableActions.bookTableSuccess({
               bookingResponse: {
                 name: res.name,
@@ -71,7 +72,11 @@ export class BookTableEffects {
       map((booking) => booking.booking),
       switchMap((booking: Booking) =>
         this.bookTableService.postBooking(booking).pipe(
-          map((res: any) => bookTableActions.inviteFriendsSuccess(res)),
+          map((res: BookingResponse) =>
+            bookTableActions.inviteFriendsSuccess({
+              bookingResponse: res,
+            }),
+          ),
           catchError((error) =>
             of(
               bookTableActions.inviteFriendsFail({

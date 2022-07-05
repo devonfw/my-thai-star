@@ -5,6 +5,7 @@ import { AuthService } from '../../../core/authentication/auth.service';
 import { TwoFactorResponse } from '../../../shared/view-models/interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -44,7 +45,7 @@ export class QrCodeDialogComponent implements OnInit, OnDestroy {
           this.authService.setTwoFactorStatus(res.twoFactorStatus);
           this.initialize();
         },
-        (err: any) => {
+        (err: HttpErrorResponse) => {
           this.snackBar.fail(err.message);
         },
       );
@@ -61,10 +62,10 @@ export class QrCodeDialogComponent implements OnInit, OnDestroy {
       .changeTwoFactor(this.twoFactorStatus)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
-        (res: any) => {
+        (res: TwoFactorResponse) => {
           this.loadQrCode();
         },
-        (err: any) => {
+        (err: HttpErrorResponse) => {
           this.snackBar.fail(err.message);
         },
       );
@@ -80,7 +81,7 @@ export class QrCodeDialogComponent implements OnInit, OnDestroy {
             this.qrcode = res.base64QrCode;
             this.secret = res.secret;
           },
-          (err: any) => {
+          (err: HttpErrorResponse) => {
             this.snackBar.fail(err.message);
           },
         );

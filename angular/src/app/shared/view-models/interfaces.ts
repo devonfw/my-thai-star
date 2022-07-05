@@ -96,13 +96,15 @@ export interface OrderDishListView {
 // Interface to recieve responeses from the server using httpclient for getReservations
 export interface BookingResponse {
   pageable: Pageable;
-  content: ReservationView;
+  content: ReservationView[];
+  totalElements: number;
 }
 
 // Interface to recieve responeses from the server using httpclient for get orders
 export interface OrderResponse {
   pageable: Pageable;
-  content: OrderListView;
+  content: OrderListView[];
+  totalElements: number;
 }
 
 // Interface to recieve responeses from the server using httpclient for get OrderDishResponse
@@ -189,4 +191,11 @@ export interface TwoFactorResponse {
   twoFactorStatus?: boolean;
   base64QrCode?: string;
   secret?: string;
+}
+
+export interface DataColumn {
+  name: string;
+  label: string;
+  numeric?: boolean;
+  format?: (v: number) => string;
 }

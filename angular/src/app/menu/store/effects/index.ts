@@ -1,3 +1,3 @@
 import { MenuEffects } from './menu.effects';
-export const effects: any[] = [MenuEffects];
+export const effects = [MenuEffects];
 export * from './menu.effects';

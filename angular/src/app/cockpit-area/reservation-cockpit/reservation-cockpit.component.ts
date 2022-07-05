@@ -1,5 +1,5 @@
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { ReservationView } from '../../shared/view-models/interfaces';
+import { BookingResponse, DataColumn, ReservationView } from '../../shared/view-models/interfaces';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
@@ -8,11 +8,13 @@ import { ReservationDialogComponent } from './reservation-dialog/reservation-dia
 import {
   FilterCockpit,
   Pageable,
+  Sort as Sortable
 } from '../../shared/backend-models/interfaces';
 import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -20,7 +22,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./reservation-cockpit.component.scss'],
 })
 export class ReservationCockpitComponent implements OnInit, OnDestroy {
-  private sorting: any[] = [];
+  private sorting: Sortable[] = [];
   private translocoSubscription = Subscription.EMPTY;
   pageable: Pageable = {
     pageSize: 8,
@@ -33,7 +35,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   reservations: ReservationView[] = [];
   totalReservations: number;
 
-  columns: any[];
+  columns: DataColumn[];
   displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
 
   pageSizes: number[];
@@ -54,7 +56,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.subscribe((event: any) => {
+    this.translocoService.langChanges$.subscribe((event: string) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
     });
@@ -81,7 +83,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     this.waiterCockpitService
       .getReservations(this.pageable, this.sorting, this.filters)
-      .subscribe((data: any) => {
+      .subscribe((data: BookingResponse) => {
         if (!data) {
           this.reservations = [];
         } else {
@@ -91,7 +93,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
-  clearFilters(filters: any): void {
+  clearFilters(filters: FormGroup): void {
     filters.reset();
     this.applyFilters();
     this.pagingBar.firstPage();

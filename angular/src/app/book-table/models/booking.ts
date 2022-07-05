@@ -10,6 +10,6 @@ export class ReservationInfo {
   bookingDate: string;
   name: string;
   email: string;
-  bookingType: number;
+  bookingType?: number;
   assistants?: number;
 }

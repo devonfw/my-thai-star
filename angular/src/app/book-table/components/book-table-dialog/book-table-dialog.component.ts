@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Booking, ReservationInfo } from 'app/book-table/models/booking.model';
 import * as moment from 'moment';
 import * as fromApp from '../../../store/reducers';
 import * as bookTableActions from '../../store/actions/book-table.actions';
@@ -11,19 +12,19 @@ import * as bookTableActions from '../../store/actions/book-table.actions';
   styleUrls: ['./book-table-dialog.component.scss'],
 })
 export class BookTableDialogComponent implements OnInit {
-  data: any;
+  data: Booking;
   date: string;
 
   constructor(
     private store: Store<fromApp.State>,
     private dialog: MatDialogRef<BookTableDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
+    @Inject(MAT_DIALOG_DATA) dialogData: ReservationInfo,
   ) {
-    this.data = dialogData;
+    this.data = { booking: dialogData };
   }
 
   ngOnInit(): void {
-    this.date = moment(this.data.bookingDate).format('LLL');
+    this.date = moment(this.data.booking.bookingDate).format('LLL');
   }
 
   sendBooking(): void {

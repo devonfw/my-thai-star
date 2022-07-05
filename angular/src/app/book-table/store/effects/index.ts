@@ -1,3 +1,3 @@
 import { BookTableEffects } from './book-table.effects';
-export const effects: any[] = [BookTableEffects];
+export const effects = [BookTableEffects];
 export * from './book-table.effects';
