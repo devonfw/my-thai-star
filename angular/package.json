@@ -70,7 +70,7 @@
     "highlight.js": "^11.4.0",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ngx-electron": "^2.2.0",
     "ngx-moment": "^5.0.0",
     "rxjs": "~6.6.7",
