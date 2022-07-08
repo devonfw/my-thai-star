@@ -7,5 +7,5 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./comment-alert.component.scss'],
 })
 export class CommentAlertComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: string) {}
 }

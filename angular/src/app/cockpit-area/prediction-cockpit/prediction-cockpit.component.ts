@@ -21,9 +21,9 @@ export class PredictionCockpitComponent implements OnInit {
 
   triggerPredictionId;
 
-  dailyChartCanvas: any;
-  monthlyChartCanvas: any;
-  predictionChartCanvas: any;
+  dailyChartCanvas: Chart;
+  monthlyChartCanvas: Chart;
+  predictionChartCanvas: Chart;
 
   currentStartDate = new FormControl(new Date());
   currentEndDate = new FormControl(new Date());
@@ -247,8 +247,8 @@ export class PredictionCockpitComponent implements OnInit {
         });
       }
 
-      let chartCanvas: any;
-      let ctx: any;
+      let chartCanvas: Chart;
+      let ctx: CanvasRenderingContext2D;
 
       switch (filter.type) {
         case 'monthly':

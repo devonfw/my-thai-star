@@ -4,12 +4,13 @@ import {
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import { ClusteringService } from '../services/clustering.service';
-import { ClustersData } from '../../shared/view-models/interfaces';
+import { ClustersData, DishView } from '../../shared/view-models/interfaces';
 import { MenuService } from '../../menu/services/menu.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 import { SortDirection } from 'app/menu/components/menu-filters/filter-sort/filter-sort.component';
 import * as L from 'leaflet';
+import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.component';
 
 @Component({
   selector: 'app-map-component',
@@ -67,7 +68,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
 
     this.getMenu({
       sort: {
-        name: undefined,
+        property: null,
         direction: SortDirection.DESC,
       },
       categories: {
@@ -81,6 +82,9 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
         vegetarian: false,
         favourites: false,
       },
+      maxPrice: null,
+      minLikes: null,
+      searchBy: null,
     });
     this.drawClusters();
   }
@@ -92,7 +96,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     this.map.invalidateSize();
   }
 
-  getMenu(filters: any): void {
+  getMenu(filters: FilterFormData): void {
     const pageable: Pageable = {
       pageSize: 8,
       pageNumber: 0,
@@ -106,7 +110,7 @@ export class ClusteringCockpitComponent implements OnInit, AfterViewInit {
     this.menuService
       .getDishes(this.menuService.composeFilters(pageable, filters))
       .pipe(
-        map((res: any) => {
+        map((res: { pageable: Pageable; content: DishView[] }) => {
           return res.content.map((item) => item.dish);
         }),
       )

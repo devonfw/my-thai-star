@@ -1,9 +1,11 @@
 export const BookTableDialogComponentStub = {
   data: {
-    assistants: 7,
-    bookingDate: new Date(),
-    email: 'test@gmail.com',
-    name: 'test',
+    booking: {
+      assistants: 7,
+      bookingDate: new Date().toUTCString(),
+      email: 'test@gmail.com',
+      name: 'test',
+    }
   },
   invite: {
     modificationCounter: 0,

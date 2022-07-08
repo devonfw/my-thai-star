@@ -2,9 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, DataColumn, OrderListView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
+
+
 
 @Component({
   selector: 'app-cockpit-order-dialog',
@@ -17,9 +19,9 @@ export class OrderDialogComponent implements OnInit {
 
   pageSize = 4;
 
-  data: any;
+  data: OrderListView;
   datat: BookingView[] = [];
-  columnst: any[];
+  columnst: DataColumn[];
   displayedColumnsT: string[] = [
     'bookingDate',
     'creationDate',
@@ -29,7 +31,7 @@ export class OrderDialogComponent implements OnInit {
   ];
 
   datao: OrderView[] = [];
-  columnso: any[];
+  columnso: DataColumn[];
   displayedColumnsO: string[] = [
     'dish.name',
     'orderLine.comment',
@@ -45,7 +47,7 @@ export class OrderDialogComponent implements OnInit {
   constructor(
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
+    @Inject(MAT_DIALOG_DATA) dialogData: OrderListView,
     private configService: ConfigService,
   ) {
     this.data = dialogData;
@@ -53,7 +55,7 @@ export class OrderDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.subscribe((event: any) => {
+    this.translocoService.langChanges$.subscribe((event: string) => {
       this.setTableHeaders(event);
     });
 
@@ -104,7 +106,7 @@ export class OrderDialogComponent implements OnInit {
   }
 
   filter(): void {
-    let newData: any[] = this.datao;
+    let newData: OrderView[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }

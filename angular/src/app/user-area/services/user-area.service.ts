@@ -70,7 +70,7 @@ export class UserAreaService {
       // .map((res: LoginInfo) => res)
   }
 
-  pairing(): Observable<any> {
+  pairing(): Observable<TwoFactorResponse> {
     return this.authService.getUser().pipe(
       switchMap((user: string) => {
         return this.restServiceRoot$.pipe(
@@ -85,7 +85,7 @@ export class UserAreaService {
     );
   }
 
-  twoFactorStatus(): Observable<any> {
+  twoFactorStatus(): Observable<TwoFactorResponse> {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.authService.getUser().pipe(
@@ -102,7 +102,7 @@ export class UserAreaService {
     );
   }
 
-  changeTwoFactor(status: boolean): Observable<any> {
+  changeTwoFactor(status: boolean): Observable<TwoFactorResponse> {
     return this.authService.getUser().pipe(
       switchMap((user: string) => {
         return this.restServiceRoot$.pipe(

@@ -51,7 +51,7 @@ export class EmailConfirmationsComponent implements OnInit {
                 'green',
               );
             },
-            (error: any) => {
+            (error: Error) => {
               this.snackBarService.openSnack(errorString, 10000, 'red');
             },
           );
@@ -65,7 +65,7 @@ export class EmailConfirmationsComponent implements OnInit {
                 'red',
               );
             },
-            (error: any) => {
+            (error: Error) => {
               this.snackBarService.openSnack(errorString, 10000, 'red');
             },
           );
@@ -79,7 +79,7 @@ export class EmailConfirmationsComponent implements OnInit {
                 'green',
               );
             },
-            (error: any) => {
+            (error: Error) => {
               this.snackBarService.openSnack(errorString, 10000, 'red');
             },
           );
@@ -93,7 +93,7 @@ export class EmailConfirmationsComponent implements OnInit {
                 'green',
               );
             },
-            (error: any) => {
+            (error: Error) => {
               this.snackBarService.openSnack(errorString, 10000, 'red');
             },
           );

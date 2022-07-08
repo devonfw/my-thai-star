@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { SaveOrderResponse } from 'app/shared/view-models/interfaces';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SnackBarService } from '../../../core/snack-bar/snack-bar.service';
@@ -13,9 +14,9 @@ export class SendOrderEffects {
     this.actions$.pipe(
       ofType(sendOrderActions.sendOrders),
       map((tokenData) => tokenData.token),
-      exhaustMap((token: any) => {
+      exhaustMap((token: string) => {
         return this.sidenavService.sendOrders(token).pipe(
-          map((res: any) => {
+          map((res: SaveOrderResponse) => {
             return sendOrderActions.sendOrdersSuccess();
           }),
           catchError((error) => {

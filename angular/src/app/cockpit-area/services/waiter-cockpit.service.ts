@@ -40,7 +40,7 @@ export class WaiterCockpitService {
     pageable: Pageable,
     sorting: Sort[],
     filters: FilterCockpit,
-  ): Observable<OrderResponse[]> {
+  ): Observable<OrderResponse> {
     let path: string;
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
@@ -53,7 +53,7 @@ export class WaiterCockpitService {
     }
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
-        this.http.post<OrderResponse[]>(`${restServiceRoot}${path}`, filters),
+        this.http.post<OrderResponse>(`${restServiceRoot}${path}`, filters),
       ),
     );
   }
@@ -62,12 +62,12 @@ export class WaiterCockpitService {
     pageable: Pageable,
     sorting: Sort[],
     filters: FilterCockpit,
-  ): Observable<BookingResponse[]> {
+  ): Observable<BookingResponse> {
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
-        this.http.post<BookingResponse[]>(
+        this.http.post<BookingResponse>(
           `${restServiceRoot}${this.getReservationsRestPath}`,
           filters,
         ),
