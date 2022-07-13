@@ -8,6 +8,8 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./login-dialog.component.scss'],
 })
 export class LoginDialogComponent {
+  showCredentials = false;
+  
   constructor(private dialog: MatDialogRef<LoginDialogComponent>) {}
 
   logInSubmit(formValue: FormGroup): void {
@@ -15,10 +17,7 @@ export class LoginDialogComponent {
   }
 
   signInSubmit(formValue: FormGroup): void {
-    // Since there is no backend implementation for the signup below code is used to close dialog box after submission.
-    // Once the implementationis done uncomment the below code and remove the existing one.
-    // this.dialog.close(formValue);
-    this.dialog.close();
+    this.dialog.close(formValue);
   }
 
   closeLoginDialog(): void {

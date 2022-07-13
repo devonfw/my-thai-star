@@ -18,6 +18,26 @@ public class UserEto extends AbstractEto implements User {
 
   private Long userRoleId;
 
+ private String password;
+
+  /**
+   * @return password
+   */
+  @Override
+  public String getPassword() {
+
+    return this.password;
+  }
+
+  /**
+   * @param password new value of {@link #getpassword}.
+   */
+  @Override
+  public void setPassword(String password) {
+
+    this.password = password;
+  }
+  
   @Override
   public String getUsername() {
 

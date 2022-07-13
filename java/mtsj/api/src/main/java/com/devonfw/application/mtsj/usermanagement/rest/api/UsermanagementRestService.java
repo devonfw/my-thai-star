@@ -53,7 +53,7 @@ public interface UsermanagementRestService {
    * @return the recently created {@link UserEto}
    */
   @POST
-  @Path("/user/")
+  @Path("/user/register/")
   public UserEto saveUser(UserEto user);
 
   /**

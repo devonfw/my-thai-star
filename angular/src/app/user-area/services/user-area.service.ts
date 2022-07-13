@@ -56,25 +56,18 @@ export class UserAreaService {
     );
   }
 
-  register(email: string, password: string): void {
-    this.restServiceRoot$
+  register(username: string, password: string, email: string): Observable<any> {
+    return this.restServiceRoot$
       .pipe(
         exhaustMap((restServiceRoot) =>
-          this.http.post(`${restServiceRoot}${this.registerRestPath}`, {
-            email,
+          this.http.post(`${restServiceRoot}${this.usermanagementRestPath}${this.registerRestPath}`, {
+            username,
             password,
+            email,
           }),
         ),
-      )
-      // .map((res: LoginInfo) => res)
-      .subscribe(
-        () => {
-          this.snackBar.success(this.authAlerts.registerSuccess);
-        },
-        () => {
-          this.snackBar.fail(this.authAlerts.registerFail);
-        },
       );
+      // .map((res: LoginInfo) => res)
   }
 
   pairing(): Observable<any> {
