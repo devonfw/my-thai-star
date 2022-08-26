@@ -65,7 +65,7 @@
     "@ngrx/store": "^12.2.0",
     "@ngrx/store-devtools": "^12.2.0",
     "chart.js": "^2.9.4",
-    "core-js": "^2.5.3",
+    "core-js": "^3.25.0",
     "flag-icon-css": "^3.3.0",
     "highlight.js": "^11.4.0",
     "leaflet": "^1.7.1",
