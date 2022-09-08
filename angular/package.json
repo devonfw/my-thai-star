@@ -96,7 +96,7 @@
     "@types/selenium-webdriver": "4.0.18",
     "@types/uuid": "^8.3.4",
     "codelyzer": "^6.0.2",
-    "concurrently": "^6.3.0",
+    "concurrently": "^7.4.0",
     "cypress": "^8.7.0",
     "electron": "11.5.0",
     "electron-builder": "22.14.13",
