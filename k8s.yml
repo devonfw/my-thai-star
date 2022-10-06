@@ -108,8 +108,11 @@ spec:
       paths:
       - path: /api(/)(.*)
         backend:
-          serviceName: java
-          servicePort: 8081
+          service: 
+             name: java
+             port:
+               number: 8081        
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -127,6 +130,8 @@ spec:
       paths:
       - path: /*
         backend:
-          serviceName: angular
-          servicePort: 80
+          service: 
+             name: angular
+             port:
+               number: 80
 ---
