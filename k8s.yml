@@ -88,7 +88,7 @@ spec:
     app: mts
     tier: java
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: java
@@ -111,7 +111,7 @@ spec:
           serviceName: java
           servicePort: 8081
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: angular
