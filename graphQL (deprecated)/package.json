@@ -24,7 +24,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.8.1",
     "nodemailer": "^4.0.1",
-    "passport": "^0.3.2",
+    "passport": "^0.6.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0"
   },
