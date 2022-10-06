@@ -17,11 +17,7 @@ jobs:
     - uses: okteto/context@latest
       with:
         token: ${{ secrets.OKTETO_LOGIN_TOKEN }}
-        
-    - name: "Activate personal namespace"
-      uses: okteto/namespace@latest
-      with:
-        name:  devonfw-core
+        namespace: devonfw-core
     
     - name: "Create deployment"
       uses: okteto/apply@latest
