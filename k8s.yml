@@ -107,6 +107,7 @@ spec:
     http:
       paths:
       - path: /api(/)(.*)
+        pathType: Prefix
         backend:
           service: 
              name: java
@@ -129,6 +130,7 @@ spec:
     http:
       paths:
       - path: /*
+        pathType: Prefix
         backend:
           service: 
              name: angular
