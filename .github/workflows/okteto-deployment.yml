@@ -16,7 +16,7 @@ jobs:
 
     - uses: okteto/context@latest
       with:
-        token: ${{ secrets.OKTETO_LOGIN_TOKEN }}
+        token: ${{ secrets.OKTETO_TOKEN }}
         namespace: devonfw-core
     
     - name: "Create deployment"
