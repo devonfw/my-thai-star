@@ -25,7 +25,7 @@
   "dependencies": {
     "@oasp/oasp4fn": "0.6.1",
     "aws-sdk": "^2.814.0",
-    "jsonwebtoken": "^7.4.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "moment": "^2.29.4",
