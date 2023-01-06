@@ -30,7 +30,7 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.SQLite" Version="3.8.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="6.4.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.1.4" />
   </ItemGroup>
 
