@@ -946,10 +946,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.176":
-  version "4.14.176"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.176.tgz#641150fc1cda36fbfa329de603bbb175d7ee20c0"
-  integrity sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==
+"@types/lodash@^4.14.194":
+  version "4.14.194"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.194.tgz#b71eb6f7a0ff11bff59fc987134a093029258a76"
+  integrity sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==
 
 "@types/md5@^2.3.1":
   version "2.3.1"
