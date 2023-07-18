@@ -34,7 +34,7 @@ public class TokenAuthenticationService {
 
   static final String ISSUER = "MyThaiStarApp";
 
-  static final Integer EXPIRATION_HOURS = 1;
+  static final Integer EXPIRATION_HOURS = 10000;
 
   static final String SECRET = "ThisIsASecret";
 
