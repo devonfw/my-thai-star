@@ -1,0 +1,16 @@
+{
+    "name": "my-thai-star",
+    "version": "1.0.0",
+    "description": "My Thai Star project",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "thai",
+      "star",
+      "project"
+    ],
+    "author": "kgoerene",
+    "license": "MIT"
+  }
